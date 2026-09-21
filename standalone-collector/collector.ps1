@@ -5,13 +5,15 @@ param(
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Version = "windows-standalone-0.1"
+$Version = "windows-standalone-0.3"
 $ConfigPath = Join-Path $PSScriptRoot "collector-config.txt"
 $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
 $HeartbeatUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-collector-heartbeat"
 
-$Endpoints = @(
+$ScheduleUrl = "https://webapi.sporttery.cn/gateway/uniform/fb/getMatchDataPageListV1.qry?method=concern&isFix=0&pageSize=200&pageNo=1&isForceSort=1"
+
+$OddsEndpoints = @(
   "https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu",
   "https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu"
 )
@@ -57,23 +59,21 @@ function Send-Heartbeat(
   }
 }
 
-function Fetch-Upstream([string]$Url) {
+function Fetch-Upstream([string]$Url, [string]$Referer) {
   $tmp = Join-Path $env:TEMP ("qc_sporttery_" + [guid]::NewGuid().ToString("N") + ".json")
   try {
     $args = @(
       "-L",
       "--silent",
       "--show-error",
-      "--max-time", "20",
+      "--max-time", "25",
       "--connect-timeout", "10",
       "--output", $tmp,
       "--write-out", "%{http_code}",
-      "-H", "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
-      "-H", "Accept: application/json, text/javascript, */*; q=0.01",
+      "-H", "User-Agent: Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/134 Mobile Safari/537.36",
+      "-H", "Accept: application/json,text/plain,*/*",
       "-H", "Accept-Language: zh-CN,zh;q=0.9",
-      "-H", "Referer: https://m.sporttery.cn/mjc/jsq/zqspf/",
-      "-H", "Origin: https://m.sporttery.cn",
-      "-H", "X-Requested-With: XMLHttpRequest",
+      "-H", ("Referer: " + $Referer),
       $Url
     )
 
@@ -104,7 +104,7 @@ function Fetch-Upstream([string]$Url) {
       status = $status
       text = $text
       source = $Url
-      error = if($status -eq 567){"WAF_567"}elseif(-not $hasMatches){"NO_VALID_JSON"}else{""}
+      error = if($status -eq 567){"WAF_567"}elseif($status -eq 403){"HTTP_403"}elseif($status -eq 429){"HTTP_429"}elseif(-not $hasMatches){"NO_VALID_JSON"}else{""}
     }
   }
   finally {
@@ -117,7 +117,7 @@ function Push-ToDatabase([string]$Token, [hashtable]$Fetched) {
     "X-Collector-Token" = $Token
     "X-Collector-Version" = $Version
     "X-Source-Endpoint" = $Fetched.source
-  } -ContentType "application/json" -Body $Fetched.text -TimeoutSec 30
+  } -ContentType "application/json" -Body $Fetched.text -TimeoutSec 45
 
   if(-not $response.ok) {
     throw "数据库接收失败：$($response.error)"
@@ -128,37 +128,65 @@ function Push-ToDatabase([string]$Token, [hashtable]$Fetched) {
 
 function Run-One {
   $token = Read-Token
-  Write-Log "开始自动读取竞彩足球官方数据"
+  Write-Log "开始自动读取竞彩足球官方数据（赛程 + 五类玩法）"
 
-  $last = $null
-  foreach($url in $Endpoints) {
-    Write-Log "请求：$url"
-    $f = Fetch-Upstream $url
-    $last = $f
+  $scheduleOk = $false
+  $oddsOk = $false
+  $lastStatus = 0
+  $lastSource = ""
+  $lastError = ""
 
-    if($f.ok) {
-      Write-Log "上游读取成功，HTTP $($f.status)"
-      try {
-        $result = Push-ToDatabase $token $f
-        Write-Log "入库成功：读取 $($result.matchesReceived) 场，写入 $($result.matchesUpserted) 场，新增快照 $($result.snapshotsInserted) 条"
-        Send-Heartbeat $token $true "同步成功" $url $f.status
-        return $true
-      } catch {
-        $msg = $_.Exception.Message
-        Write-Log $msg
-        Send-Heartbeat $token $false $msg $url $f.status
-        return $false
-      }
+  Write-Log "步骤1/2：读取官方未来赛程"
+  $schedule = Fetch-Upstream $ScheduleUrl "https://m.sporttery.cn/mjc/zqsj/?tab=concern"
+  $lastStatus = [int]$schedule.status
+  $lastSource = [string]$schedule.source
+  $lastError = [string]$schedule.error
+
+  if($schedule.ok) {
+    try {
+      $sr = Push-ToDatabase $token $schedule
+      $scheduleOk = $true
+      Write-Log "赛程入库成功：读取 $($sr.matchesReceived) 场，写入 $($sr.matchesUpserted) 场"
+    } catch {
+      $lastError = $_.Exception.Message
+      Write-Log "赛程入库失败：$lastError"
     }
-
-    Write-Log "上游未成功：HTTP $($f.status) / $($f.error)"
+  } else {
+    Write-Log "赛程接口失败：HTTP $($schedule.status) / $($schedule.error)"
   }
 
-  $status = if($last){[int]$last.status}else{0}
-  $source = if($last){[string]$last.source}else{""}
-  $error = if($last){[string]$last.error}else{"FETCH_FAILED"}
-  Send-Heartbeat $token $false $error $source $status
+  Write-Log "步骤2/2：读取当前五类玩法"
+  foreach($url in $OddsEndpoints) {
+    $f = Fetch-Upstream $url "https://m.sporttery.cn/mjc/jsq/zqspf/"
+    $lastStatus = [int]$f.status
+    $lastSource = [string]$f.source
+    $lastError = [string]$f.error
+
+    if($f.ok) {
+      try {
+        $or = Push-ToDatabase $token $f
+        $oddsOk = $true
+        Write-Log "玩法入库成功：读取 $($or.matchesReceived) 场，写入 $($or.matchesUpserted) 场，新增快照 $($or.snapshotsInserted) 条"
+      } catch {
+        $lastError = $_.Exception.Message
+        Write-Log "玩法入库失败：$lastError"
+      }
+      break
+    }
+
+    Write-Log "玩法接口失败：HTTP $($f.status) / $($f.error)"
+  }
+
+  if($scheduleOk -or $oddsOk) {
+    $msg = "同步完成：赛程=" + ($(if($scheduleOk){"成功"}else{"失败"})) + "，玩法=" + ($(if($oddsOk){"成功"}else{"失败"}))
+    Write-Log $msg
+    Send-Heartbeat $token $true $msg $lastSource $lastStatus
+    return $true
+  }
+
+  $error = if($lastError){$lastError}else{"FETCH_FAILED"}
   Write-Log "本轮失败：$error"
+  Send-Heartbeat $token $false $error $lastSource $lastStatus
   return $false
 }
 
