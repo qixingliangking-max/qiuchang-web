@@ -78,3 +78,27 @@ body{min-height:100vh}
 .jc-detail-market-head span{font-size:12px;color:var(--green);font-weight:900}
 .jc-detail-outcomes{font-weight:800;line-height:1.8;word-break:break-word}
 .jc-detail-market small{display:block;color:var(--muted);margin-top:8px}
+
+
+/* Date navigation for collected Sporttery schedule */
+.jc-date-nav{position:relative;display:flex;justify-content:center;align-items:center;gap:10px;margin:0 auto 34px;flex-wrap:wrap}
+.jc-date-nav .date-switch{margin:0;width:min(390px,78%);height:62px}
+.date-label-btn{flex:1;border:0;background:transparent!important;color:var(--text)!important;font-size:20px!important;font-weight:900;cursor:pointer}
+.jc-today-btn{height:48px;padding:0 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--muted);font-weight:800;cursor:pointer}
+.jc-date-popover{position:absolute;z-index:18;top:72px;left:50%;transform:translateX(-50%);width:min(390px,96vw);background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 18px 48px rgba(31,42,68,.16)}
+.jc-cal-note{font-size:13px;color:var(--muted);font-weight:800;margin-bottom:14px}
+.jc-cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.jc-cal-week,.jc-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.jc-cal-week span{text-align:center;color:var(--muted);font-size:12px;font-weight:800;padding:5px 0}
+.jc-cal-cell{height:38px;border:0;border-radius:10px;background:#f5f7fb;color:var(--text);font-weight:800}
+.jc-cal-cell.has-data{cursor:pointer;background:#f0f4ff}
+.jc-cal-cell.has-data:hover{background:#e5ecff}
+.jc-cal-cell.selected{background:var(--blue);color:#fff}
+.jc-cal-cell.no-data{opacity:.28}
+.jc-cal-cell.empty{background:transparent}
+@media(max-width:640px){
+  .jc-date-nav{gap:8px}
+  .jc-date-nav .date-switch{width:78%;padding:0 14px;height:58px}
+  .date-label-btn{font-size:18px!important}
+  .jc-today-btn{height:44px;padding:0 12px;font-size:13px}
+}
