@@ -802,14 +802,14 @@ async function setupJcMatchDetail(){
     await loadFacts();
   }
 
-  root.onclick=async e=>{
-    const mainBtn=e.target.closest('[data-main-tab]');
-    if(mainBtn && root.contains(mainBtn)){
+  const mainButtons=$('.jc-main-tabs button',root);
+  mainButtons.forEach(btn=>{
+    btn.onclick=async e=>{
       e.preventDefault();
-      await renderMainTab(mainBtn.dataset.mainTab || 'odds');
-      return;
-    }
-  };
+      e.stopPropagation();
+      await renderMainTab(btn.dataset.mainTab || 'odds');
+    };
+  });
 }
 
 function renderMatch(){
