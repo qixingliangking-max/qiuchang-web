@@ -24,21 +24,74 @@ function jcLatestPools(snapshots){
   return latest;
 }
 
-function jcOutcomeSummary(pool){
+function jcOutcomeLabel(poolCode,key){
+  const k=String(key ?? '').trim();
+  const common={h:'主胜',d:'平',a:'客胜'};
+  if(poolCode==='had' || poolCode==='hhad') return common[k] || k;
+
+  if(poolCode==='ttg'){
+    const m=k.match(/^s([0-7])$/i);
+    if(m) return m[1]==='7' ? '7+球' : m[1]+'球';
+    return k;
+  }
+
+  if(poolCode==='hafu'){
+    const map={
+      hh:'胜/胜',hd:'胜/平',ha:'胜/负',
+      dh:'平/胜',dd:'平/平',da:'平/负',
+      ah:'负/胜',ad:'负/平',aa:'负/负'
+    };
+    return map[k] || k;
+  }
+
+  if(poolCode==='crs'){
+    const special={
+      's-1sh':'胜其他','s-1sd':'平其他','s-1sa':'负其他',
+      's1sh':'胜其他','s1sd':'平其他','s1sa':'负其他'
+    };
+    if(special[k]) return special[k];
+    const m=k.match(/^s(\d{2})s(\d{2})$/i);
+    if(m) return Number(m[1])+'-'+Number(m[2]);
+    return k;
+  }
+
+  return k;
+}
+
+function jcOutcomeSort(poolCode,entries){
+  const order={
+    had:['h','d','a'],
+    hhad:['h','d','a'],
+    ttg:['s0','s1','s2','s3','s4','s5','s6','s7'],
+    hafu:['hh','hd','ha','dh','dd','da','ah','ad','aa']
+  }[poolCode];
+  if(!order) return entries;
+  return [...entries].sort((x,y)=>{
+    const xi=order.indexOf(String(x[0]));
+    const yi=order.indexOf(String(y[0]));
+    return (xi<0?999:xi)-(yi<0?999:yi);
+  });
+}
+
+function jcOutcomeSummary(pool, poolCode){
   if(!pool || !pool.outcomes) return '—';
   const o = pool.outcomes;
-  const entries = Array.isArray(o)
-    ? o.map((x,i)=>[x.label || x.labelZh || x.key || String(i+1), x.odds ?? x.value ?? x])
+  let entries = Array.isArray(o)
+    ? o.map((x,i)=>[x.key || x.label || x.labelZh || String(i+1), x.odds ?? x.value ?? x])
     : Object.entries(o);
 
   if(!entries.length) return '—';
-  return entries.slice(0,8).map(([k,v])=>{
+  entries=jcOutcomeSort(poolCode,entries);
+
+  const limit = poolCode==='crs' ? 40 : 12;
+  return entries.slice(0,limit).map(([k,v])=>{
+    let val=v;
+    let label=jcOutcomeLabel(poolCode,k);
     if(v && typeof v === 'object'){
-      const val = v.odds ?? v.value ?? v.fixedBonus ?? v.sp ?? '';
-      const label = v.labelZh || v.label || k;
-      return val === '' ? String(label) : String(label) + ' ' + String(val);
+      val = v.odds ?? v.value ?? v.fixedBonus ?? v.sp ?? '';
+      label = v.labelZh || v.label || label;
     }
-    return String(k) + ' ' + String(v);
+    return val === '' ? String(label) : String(label)+' '+String(val);
   }).join(' · ');
 }
 
@@ -94,7 +147,7 @@ async function loadJcFrontend(){
       '<div class="jc-market-grid">'+
       ['had','hhad','ttg','hafu','crs'].map(code=>{
         const p=pools[code];
-        return '<div class="jc-market-item '+(p?'has-data':'')+'"><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p)):'暂未采集')+'</span>'+(p?.goal_line?'<small>让球 '+qcEscape(p.goal_line)+'</small>':'')+'</div>';
+        return '<div class="jc-market-item '+(p?'has-data':'')+'"><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未采集')+'</span>'+(p?.goal_line?'<small>让球 '+qcEscape(p.goal_line)+'</small>':'')+'</div>';
       }).join('')+
       '</div>'+
       '<div class="jc-source-line">官方竞彩 · 已采集 '+available.length+'/5 个玩法</div>'+
