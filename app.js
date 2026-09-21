@@ -380,6 +380,142 @@ async function loadJcFrontend(){
   render();
 }
 
+
+function jcPoolHistory(snapshots,code){
+  return (snapshots||[])
+    .filter(s=>s.pool_code===code)
+    .sort((a,b)=>new Date(a.captured_at||0)-new Date(b.captured_at||0));
+}
+
+function jcTrendFromHistory(history,key){
+  if(!history || history.length<2) return '';
+  const a=Number(history[history.length-2]?.outcomes?.[key]);
+  const b=Number(history[history.length-1]?.outcomes?.[key]);
+  if(!Number.isFinite(a)||!Number.isFinite(b)||a===b) return '';
+  return b>a?'up':'down';
+}
+
+function jcTrendFromRaw(pool,key){
+  const v=Number(pool?.raw?.[key+'f']);
+  if(!Number.isFinite(v) || v===0) return '';
+  return v>0?'up':'down';
+}
+
+function jcTrendMark(pool,key,history){
+  const t=jcTrendFromHistory(history,key) || jcTrendFromRaw(pool,key);
+  return t==='up'
+    ? '<span class="jc-trend up">▲</span>'
+    : t==='down'
+      ? '<span class="jc-trend down">▼</span>'
+      : '';
+}
+
+function jcFmtOdd(v){
+  const n=Number(v);
+  if(!Number.isFinite(n)) return '—';
+  return n.toFixed(2);
+}
+
+function jcOddCell(pool,key,history){
+  if(!pool || pool.outcomes?.[key]==null) return '<span class="jc-odd-empty">—</span>';
+  return '<strong>'+jcFmtOdd(pool.outcomes[key])+'</strong>'+jcTrendMark(pool,key,history);
+}
+
+function jcRenderHadDetail(pools,snapshots){
+  const had=pools.had;
+  const hhad=pools.hhad;
+  const hadHist=jcPoolHistory(snapshots,'had');
+  const hhadHist=jcPoolHistory(snapshots,'hhad');
+  return '<section class="jc-odds-section">'+
+    '<h2>赔率</h2>'+
+    '<div class="jc-odds-table">'+
+      '<div class="jc-odds-head"><span>玩法</span><span>主胜</span><span>平局</span><span>客胜</span></div>'+
+      '<div class="jc-odds-row"><b class="jc-play-tag blue">胜平负</b><span>'+jcOddCell(had,'h',hadHist)+'</span><span>'+jcOddCell(had,'d',hadHist)+'</span><span>'+jcOddCell(had,'a',hadHist)+'</span></div>'+
+      '<div class="jc-odds-row"><b class="jc-play-tag orange">让球胜平负 '+(hhad?.goal_line?qcEscape(hhad.goal_line):'')+'</b><span>'+jcOddCell(hhad,'h',hhadHist)+'</span><span>'+jcOddCell(hhad,'d',hhadHist)+'</span><span>'+jcOddCell(hhad,'a',hhadHist)+'</span></div>'+
+    '</div>'+
+  '</section>';
+}
+
+function jcCrsKey(home,away){
+  return 's'+String(home).padStart(2,'0')+'s'+String(away).padStart(2,'0');
+}
+
+function jcScoreItem(pool,key,label,history){
+  return '<div class="jc-score-odd"><b>'+qcEscape(label)+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,history)+'</span></div>';
+}
+
+function jcRenderCrsDetail(pool,snapshots){
+  const hist=jcPoolHistory(snapshots,'crs');
+  if(!pool) return '<section class="jc-odds-section"><h2>比分</h2><div class="jc-empty-market">暂未返回比分玩法</div></section>';
+
+  const homeWins=[
+    [1,0],[2,0],[2,1],[3,0],[3,1],[3,2],[4,0],[4,1],[4,2],[5,0],[5,1],[5,2]
+  ];
+  const draws=[[0,0],[1,1],[2,2],[3,3]];
+  const awayWins=[
+    [0,1],[0,2],[1,2],[0,3],[1,3],[2,3],[0,4],[1,4],[2,4],[0,5],[1,5],[2,5]
+  ];
+
+  const group=(items,specialKey,specialLabel)=>items.map(([h,a])=>jcScoreItem(pool,jcCrsKey(h,a),h+'-'+a,hist)).join('')+
+    jcScoreItem(pool,specialKey,specialLabel,hist);
+
+  return '<section class="jc-odds-section"><h2>比分</h2>'+
+    '<div class="jc-score-group home-win">'+group(homeWins,'s1sh','胜其它')+'</div>'+
+    '<div class="jc-score-group draw">'+group(draws,'s1sd','平其它')+'</div>'+
+    '<div class="jc-score-group away-win">'+group(awayWins,'s1sa','负其它')+'</div>'+
+  '</section>';
+}
+
+function jcRenderTtgDetail(pool,snapshots){
+  const hist=jcPoolHistory(snapshots,'ttg');
+  const labels=['0','1','2','3','4','5','6','7+'];
+  return '<section class="jc-odds-section"><h2>总进球数</h2>'+
+    '<div class="jc-ttg-grid">'+labels.map((label,i)=>{
+      const key='s'+i;
+      return '<div class="jc-ttg-item"><b>'+label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,hist)+'</span></div>';
+    }).join('')+'</div>'+
+  '</section>';
+}
+
+function jcRenderHafuDetail(pool,snapshots){
+  const hist=jcPoolHistory(snapshots,'hafu');
+  const items=[
+    ['hh','胜胜'],['hd','胜平'],['ha','胜负'],
+    ['dh','平胜'],['dd','平平'],['da','平负'],
+    ['ah','负胜'],['ad','负平'],['aa','负负']
+  ];
+  return '<section class="jc-odds-section"><h2>半全场胜平负</h2>'+
+    '<div class="jc-hafu-grid">'+items.map(([key,label])=>
+      '<div class="jc-hafu-item"><b>'+label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,hist)+'</span></div>'
+    ).join('')+'</div>'+
+  '</section>';
+}
+
+function jcSnapshotDateTime(s){
+  const rd=s?.raw?.updateDate || '';
+  const rt=s?.raw?.updateTime || s?.official_update_time || '';
+  if(rd || rt) return (rd+' '+rt).trim();
+  if(!s?.captured_at) return '—';
+  return new Date(s.captured_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
+}
+
+function jcRenderOddsHistory(snapshots){
+  let hist=jcPoolHistory(snapshots,'had');
+  let code='had';
+  if(!hist.length){ hist=jcPoolHistory(snapshots,'hhad'); code='hhad'; }
+  if(!hist.length) return '<section class="jc-odds-section"><h2>赔率变化</h2><div class="jc-empty-market">暂无历史快照</div></section>';
+
+  return '<section class="jc-odds-section"><h2>赔率变化</h2>'+
+    '<div class="jc-history-table">'+
+      '<div class="jc-history-head"><span>时间</span><span>主胜</span><span>平局</span><span>客胜</span></div>'+
+      hist.slice(-12).reverse().map(s=>
+        '<div class="jc-history-row"><span>'+qcEscape(jcSnapshotDateTime(s))+'</span><strong>'+jcFmtOdd(s.outcomes?.h)+'</strong><strong>'+jcFmtOdd(s.outcomes?.d)+'</strong><strong>'+jcFmtOdd(s.outcomes?.a)+'</strong></div>'
+      ).join('')+
+    '</div>'+
+    '<div class="jc-history-note">'+(code==='had'?'胜平负':'让球胜平负')+' · 每次官方赔率变化后自动增加一条记录</div>'+
+  '</section>';
+}
+
 async function setupJcMatchDetail(){
   const root=$('#jcMatchDetailRoot');
   if(!root || !window.qcSupabase) return;
@@ -392,7 +528,7 @@ async function setupJcMatchDetail(){
 
   const {data:m,error}=await window.qcSupabase
     .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,raw,captured_at,official_update_time)')
     .eq('id',id)
     .single();
 
@@ -401,27 +537,26 @@ async function setupJcMatchDetail(){
     return;
   }
 
-  const pools=jcLatestPools(m.jc_market_snapshots || []);
-  const order=['had','hhad','crs','ttg','hafu'];
+  const snapshots=m.jc_market_snapshots || [];
+  const pools=jcLatestPools(snapshots);
+  const status=jcMatchStatusLabel(m,qcBeijingToday());
+  const score=jcScoreInfo(m);
 
   root.innerHTML=
-    '<div class="detail-head">'+
+    '<div class="detail-head jc-odds-headcard">'+
       '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
-      '<div class="detail-title" style="margin-top:18px">'+
+      '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
         '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong>VS</strong><small>'+qcEscape(m.match_status || '赛前')+'</small></div>'+
+        '<div class="center-score"><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
         '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
       '</div>'+
     '</div>'+
-    '<div class="panel"><h2>官方竞彩玩法</h2>'+
-      '<div class="jc-detail-grid">'+order.map(code=>{
-        const p=pools[code];
-        return '<section class="jc-detail-market">'+
-          '<div class="jc-detail-market-head"><strong>'+jcPoolLabel(code)+'</strong>'+(p?.goal_line?'<span>让球 '+qcEscape(p.goal_line)+'</span>':'')+'</div>'+
-          '<div class="jc-detail-outcomes">'+(p?qcEscape(jcOutcomeSummary(p,code)):'该玩法暂未返回')+'</div>'+
-          (p?.official_update_time?'<small>官方更新时间：'+qcEscape(p.official_update_time)+'</small>':'')+
-        '</section>';
-      }).join('')+'</div>'+
+    '<div class="jc-odds-detail-page">'+
+      jcRenderHadDetail(pools,snapshots)+
+      jcRenderCrsDetail(pools.crs,snapshots)+
+      jcRenderTtgDetail(pools.ttg,snapshots)+
+      jcRenderHafuDetail(pools.hafu,snapshots)+
+      jcRenderOddsHistory(snapshots)+
       '<div class="jc-source-line">数据来源：中国体育彩票竞彩足球移动端官方链路</div>'+
     '</div>';
 }
