@@ -10,7 +10,7 @@
   <main class="auth-wrap">
     <form class="auth-card" id="registerForm">
       <h1>球场档案</h1>
-      <div class="subtitle">注册新账号</div>
+      <div class="subtitle">创建账号</div>
 
       <div class="field">
         <label for="regEmail">邮箱</label>
@@ -18,22 +18,13 @@
       </div>
 
       <div class="field">
-        <label for="regNickname">昵称（选填）</label>
-        <input id="regNickname" type="text" maxlength="30" autocomplete="nickname" placeholder="给自己取个名字">
-      </div>
-
-      <div class="field">
         <label for="regPassword">密码</label>
         <input id="regPassword" type="password" minlength="8" required autocomplete="new-password" placeholder="至少8个字符">
       </div>
 
-      <div class="panel" style="margin:18px 0;padding:15px 16px;color:var(--muted);line-height:1.7">
-        注册后，我们会向你的邮箱发送一封确认邮件。请点击邮件中的确认链接完成邮箱验证。
-      </div>
-
-      <div class="turnstile-placeholder">
-        <span class="turnstile-dot">✓</span>
-        <div><b>人机验证</b><small>Cloudflare Turnstile 将在后续接入</small></div>
+      <div class="field">
+        <label for="regPassword2">确认密码</label>
+        <input id="regPassword2" type="password" minlength="8" required autocomplete="new-password" placeholder="再次输入密码">
       </div>
 
       <label class="check">
@@ -41,7 +32,7 @@
         <span>我已阅读并同意《用户服务协议》和《隐私政策》</span>
       </label>
 
-      <button class="primary-btn" type="submit">注册并发送确认邮件</button>
+      <button class="primary-btn" type="submit">注册</button>
       <div id="registerHint" class="code-hint"></div>
       <div class="auth-link">已有账号？ <a href="login.html">立即登录</a></div>
     </form>
