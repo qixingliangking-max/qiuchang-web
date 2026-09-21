@@ -451,19 +451,21 @@ async function setupAdmin(){
     return;
   }
 
-  const { data: profile, error: profileError } = await window.qcSupabase
-    .from('profiles')
-    .select('role,status')
-    .eq('id', user.id)
-    .single();
+  const { data: initialStats, error: adminCheckError } = await window.qcSupabase.rpc('admin_dashboard_stats');
 
-  if(profileError || !profile || profile.role !== 'admin' || profile.status !== 'active'){
-    root.innerHTML = '<div class="profile-card"><h2>无权限访问</h2><p style="color:var(--muted);line-height:1.7">这个页面只允许管理员账号进入。</p><a class="small-btn" href="profile.html" style="display:inline-flex;align-items:center">返回个人中心</a></div>';
+  if(adminCheckError){
+    const raw = adminCheckError.message || '';
+    const message = raw.includes('ADMIN_REQUIRED')
+      ? '当前登录账号没有管理员权限'
+      : '管理员权限校验失败，请重新登录后再试';
+    root.innerHTML = '<div class="profile-card"><h2>无法进入后台</h2><p style="color:var(--muted);line-height:1.7">' + message + '</p><a class="small-btn" href="login.html" style="display:inline-flex;align-items:center">重新登录</a></div>';
     return;
   }
 
   const loadAdminData = async () => {
-    const { data: stats, error: statsError } = await window.qcSupabase.rpc('admin_dashboard_stats');
+    const { data: stats, error: statsError } = initialStats
+      ? { data: initialStats, error: null }
+      : await window.qcSupabase.rpc('admin_dashboard_stats');
 
     if(!statsError && stats){
       $('#adminUsers').textContent = stats.users ?? 0;
