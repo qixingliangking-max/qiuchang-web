@@ -101,6 +101,57 @@ function jcDateTime(m){
   return [d,t].filter(Boolean).join(' ');
 }
 
+
+function qcBeijingToday(){
+  const parts=new Intl.DateTimeFormat('zh-CN',{
+    timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date());
+  const map=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+  return map.year+'-'+map.month+'-'+map.day;
+}
+
+function qcAddDays(dateStr,days){
+  const d=new Date(dateStr+'T12:00:00+08:00');
+  d.setUTCDate(d.getUTCDate()+days);
+  return d.toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});
+}
+
+function qcDateLabel(dateStr){
+  const d=new Date(dateStr+'T12:00:00+08:00');
+  const month=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric'});
+  const day=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',day:'numeric'});
+  const weekday=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+  return month+'月'+day+'日 '+weekday;
+}
+
+function qcRenderDateCalendar(selectedDate,availableDates,onSelect){
+  const box=$('#jcDatePopover');
+  if(!box) return;
+  const base=new Date(selectedDate+'T12:00:00+08:00');
+  const year=Number(base.toLocaleString('en-US',{timeZone:'Asia/Shanghai',year:'numeric'}));
+  const month=Number(base.toLocaleString('en-US',{timeZone:'Asia/Shanghai',month:'numeric'}));
+  const first=new Date(Date.UTC(year,month-1,1,4));
+  const firstWeek=(first.getUTCDay()+6)%7;
+  const daysInMonth=new Date(Date.UTC(year,month,0,4)).getUTCDate();
+  const avail=new Set(availableDates);
+  let cells='';
+  for(let i=0;i<firstWeek;i++) cells+='<span class="jc-cal-cell empty"></span>';
+  for(let day=1;day<=daysInMonth;day++){
+    const ds=year+'-'+String(month).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const has=avail.has(ds);
+    const cls=['jc-cal-cell',has?'has-data':'no-data',ds===selectedDate?'selected':''].filter(Boolean).join(' ');
+    cells+='<button type="button" class="'+cls+'" data-date="'+ds+'" '+(has?'':'disabled')+'>'+day+'</button>';
+  }
+  box.innerHTML=
+    '<div class="jc-cal-note">选择有比赛数据的日期</div>'+
+    '<div class="jc-cal-head"><b>'+year+'年'+month+'月</b></div>'+
+    '<div class="jc-cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>'+
+    '<div class="jc-cal-grid">'+cells+'</div>';
+  $$('.jc-cal-cell.has-data',box).forEach(btn=>{
+    btn.onclick=()=>{onSelect(btn.dataset.date);box.hidden=true;};
+  });
+}
+
 async function loadJcFrontend(){
   const cards = $('#jcLiveCards');
   if(!cards || !window.qcSupabase) return;
@@ -110,7 +161,7 @@ async function loadJcFrontend(){
     .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at)')
     .order('match_date',{ascending:true})
     .order('match_time',{ascending:true})
-    .limit(60);
+    .limit(200);
 
   if(error){
     console.error('读取竞彩前台数据失败',error);
@@ -119,40 +170,87 @@ async function loadJcFrontend(){
     return;
   }
 
-  const rows=(data||[]).filter(m=>{
-    if(!m.match_date) return true;
-    const d=new Date(m.match_date+'T23:59:59');
-    return Number.isNaN(d.getTime()) || d.getTime() >= Date.now()-86400000;
-  });
+  const allRows=(data||[]).filter(m=>m.match_date);
+  const availableDates=[...new Set(allRows.map(m=>m.match_date))].sort();
+  const today=qcBeijingToday();
+  const paramDate=new URLSearchParams(location.search).get('date');
+  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate) ? paramDate : today;
 
-  if($('#jcLiveMeta')) $('#jcLiveMeta').textContent = rows.length ? ('已同步 '+rows.length+' 场') : '暂无比赛';
-
-  if(!rows.length){
-    cards.innerHTML='<div class="profile-card">数据库目前没有可展示的竞彩赛程。</div>';
-    return;
+  if(!availableDates.includes(selectedDate) && availableDates.length){
+    const future=availableDates.find(d=>d>=today);
+    selectedDate=future || availableDates[availableDates.length-1];
   }
 
-  cards.innerHTML=rows.map(m=>{
-    const pools=jcLatestPools(m.jc_market_snapshots || []);
-    const available=['had','hhad','crs','ttg','hafu'].filter(k=>pools[k]);
-    const dateTime=jcDateTime(m);
-    const no=qcEscape(m.match_num || '竞彩');
-    const league=qcEscape(m.league_name || m.league_short_name || '—');
-    const home=qcEscape(m.home_team_name || '—');
-    const away=qcEscape(m.away_team_name || '—');
+  const label=$('#jcDateLabel');
+  const prev=$('#jcPrevDate');
+  const next=$('#jcNextDate');
+  const todayBtn=$('#jcTodayBtn');
+  const pop=$('#jcDatePopover');
 
-    return '<a class="match-card jc-live-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
-      '<div class="match-top"><span><b>'+no+'</b> · '+league+'</span><span>'+qcEscape(dateTime || '时间待定')+'</span></div>'+
-      '<div class="match-main"><div class="team">'+home+'</div><div class="versus">VS</div><div class="team right">'+away+'</div></div>'+
-      '<div class="jc-market-grid">'+
-      ['had','hhad','ttg','hafu','crs'].map(code=>{
-        const p=pools[code];
-        return '<div class="jc-market-item '+(p?'has-data':'')+'"><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未采集')+'</span>'+(p?.goal_line?'<small>让球 '+qcEscape(p.goal_line)+'</small>':'')+'</div>';
-      }).join('')+
-      '</div>'+
-      '<div class="jc-source-line">官方竞彩 · 已采集 '+available.length+'/5 个玩法</div>'+
-    '</a>';
-  }).join('');
+  function setUrlDate(ds){
+    const u=new URL(location.href);
+    u.searchParams.set('date',ds);
+    history.replaceState({},'',u);
+  }
+
+  function render(){
+    const rows=allRows.filter(m=>m.match_date===selectedDate);
+    if(label) label.textContent=qcDateLabel(selectedDate);
+    if($('#jcLiveMeta')) $('#jcLiveMeta').textContent=rows.length ? (selectedDate+' · '+rows.length+'场') : (selectedDate+' · 暂无比赛');
+    setUrlDate(selectedDate);
+
+    if(!rows.length){
+      cards.innerHTML='<div class="profile-card">这一天暂时没有采集到竞彩足球赛程。</div>';
+    }else{
+      cards.innerHTML=rows.map(m=>{
+        const pools=jcLatestPools(m.jc_market_snapshots || []);
+        const available=['had','hhad','crs','ttg','hafu'].filter(k=>pools[k]);
+        const dateTime=jcDateTime(m);
+        const no=qcEscape(m.match_num || '竞彩');
+        const league=qcEscape(m.league_name || m.league_short_name || '—');
+        const home=qcEscape(m.home_team_name || '—');
+        const away=qcEscape(m.away_team_name || '—');
+
+        return '<a class="match-card jc-live-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
+          '<div class="match-top"><span><b>'+no+'</b> · '+league+'</span><span>'+qcEscape(dateTime || '时间待定')+'</span></div>'+
+          '<div class="match-main"><div class="team">'+home+'</div><div class="versus">VS</div><div class="team right">'+away+'</div></div>'+
+          '<div class="jc-market-grid">'+
+          ['had','hhad','ttg','hafu','crs'].map(code=>{
+            const p=pools[code];
+            return '<div class="jc-market-item '+(p?'has-data':'')+'"><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未采集')+'</span>'+(p?.goal_line?'<small>让球 '+qcEscape(p.goal_line)+'</small>':'')+'</div>';
+          }).join('')+
+          '</div>'+
+          '<div class="jc-source-line">官方竞彩 · 已采集 '+available.length+'/5 个玩法</div>'+
+        '</a>';
+      }).join('');
+    }
+
+    qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
+      selectedDate=ds;
+      render();
+    });
+
+    if(prev) prev.disabled=false;
+    if(next) next.disabled=false;
+  }
+
+  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);render();};
+  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);render();};
+  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;render();};
+  if(label) label.onclick=()=>{
+    qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
+      selectedDate=ds;
+      render();
+    });
+    if(pop) pop.hidden=!pop.hidden;
+  };
+  document.addEventListener('click',e=>{
+    if(!pop || pop.hidden) return;
+    if(e.target===label || pop.contains(e.target)) return;
+    pop.hidden=true;
+  });
+
+  render();
 }
 
 async function setupJcMatchDetail(){
