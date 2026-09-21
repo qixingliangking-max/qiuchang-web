@@ -96,7 +96,55 @@ function setupDemoAuth(){
         alert('注册成功');
         location.href = 'profile.html';
       }else{
-        alert('注册成功，请到邮箱完成验证后再登录');
+        sessionStorage.setItem('qc_pending_email', email);
+        alert('验证码已发送到邮箱，请输入验证码完成注册');
+        location.href = 'verify.html';
+      }
+    };
+  }
+
+  const verify = $('#verifyForm');
+  if(verify){
+    const emailInput = $('#verifyEmail');
+    const savedEmail = sessionStorage.getItem('qc_pending_email') || '';
+    if(emailInput && savedEmail) emailInput.value = savedEmail;
+
+    verify.onsubmit = async e => {
+      e.preventDefault();
+
+      if(!window.qcSupabase){
+        alert('数据库连接失败，请刷新页面后重试');
+        return;
+      }
+
+      const email = $('#verifyEmail').value.trim();
+      const token = $('#verifyCode').value.trim();
+      const button = verify.querySelector('button');
+
+      button.disabled = true;
+      button.textContent = '验证中...';
+
+      const { data, error } = await window.qcSupabase.auth.verifyOtp({
+        email,
+        token,
+        type: 'signup'
+      });
+
+      button.disabled = false;
+      button.textContent = '完成验证';
+
+      if(error){
+        alert('验证失败：' + error.message);
+        return;
+      }
+
+      sessionStorage.removeItem('qc_pending_email');
+
+      if(data.session){
+        alert('邮箱验证成功');
+        location.href = 'profile.html';
+      }else{
+        alert('邮箱验证成功，请登录');
         location.href = 'login.html';
       }
     };
