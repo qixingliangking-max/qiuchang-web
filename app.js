@@ -193,7 +193,7 @@ async function setupJcMatchDetail(){
         const p=pools[code];
         return '<section class="jc-detail-market">'+
           '<div class="jc-detail-market-head"><strong>'+jcPoolLabel(code)+'</strong>'+(p?.goal_line?'<span>让球 '+qcEscape(p.goal_line)+'</span>':'')+'</div>'+
-          '<div class="jc-detail-outcomes">'+(p?qcEscape(jcOutcomeSummary(p)):'该玩法暂未返回')+'</div>'+
+          '<div class="jc-detail-outcomes">'+(p?qcEscape(jcOutcomeSummary(p,code)):'该玩法暂未返回')+'</div>'+
           (p?.official_update_time?'<small>官方更新时间：'+qcEscape(p.official_update_time)+'</small>':'')+
         '</section>';
       }).join('')+'</div>'+
