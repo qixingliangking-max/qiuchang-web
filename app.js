@@ -572,29 +572,13 @@ async function setupAdmin(){
       createCollectorBtn.disabled = true;
       createCollectorBtn.textContent = '创建中...';
 
-      const { data: sessionData } = await window.qcSupabase.auth.getSession();
-      const session = sessionData && sessionData.session;
-      if(!session || !session.access_token){
-        createCollectorBtn.disabled = false;
-        createCollectorBtn.textContent = '创建本机采集器凭证';
-        alert('登录状态已失效，请重新登录');
-        return;
-      }
-
       try{
-        const response = await fetch(window.QC_SUPABASE_URL + '/functions/v1/sporttery-collector-enroll', {
-          method:'POST',
-          headers:{
-            'Authorization':'Bearer ' + session.access_token,
-            'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY,
-            'Content-Type':'application/json'
-          },
-          body:JSON.stringify({name:'Windows Chrome Collector'})
+        const { data, error } = await window.qcSupabase.rpc('create_collector_device', {
+          p_name:'Windows Chrome Collector'
         });
-        const data = await response.json();
 
-        if(!response.ok || !data.ok){
-          throw new Error(data.error || 'CREATE_FAILED');
+        if(error || !data || !data.ok){
+          throw new Error(error?.message || data?.error || 'CREATE_FAILED');
         }
 
         $('#collectorToken').textContent = data.token;
@@ -605,11 +589,15 @@ async function setupAdmin(){
         }
         await loadAdminData();
       }catch(err){
+        let message = '采集器凭证创建失败';
+        const raw = err?.message || '';
+        if(raw.includes('NOT_AUTHENTICATED')) message = '登录状态已失效，请重新登录';
+        if(raw.includes('ADMIN_REQUIRED')) message = '当前账号没有管理员权限';
         if(hint){
-          hint.textContent = '采集器凭证创建失败：' + (err.message || '未知错误');
+          hint.textContent = message + (raw ? '：' + raw : '');
           hint.className = 'code-hint error';
         }
-        alert('采集器凭证创建失败');
+        alert(message);
       }finally{
         createCollectorBtn.disabled = false;
         createCollectorBtn.textContent = '创建本机采集器凭证';
