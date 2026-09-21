@@ -566,10 +566,16 @@ async function setupAdmin(){
       syncSportteryBtn.textContent = '同步官方竞彩数据';
 
       if(error || !data || !data.ok){
+        let errorBody = data || null;
+        if(error && error.context && typeof error.context.json === 'function'){
+          try{ errorBody = await error.context.json(); }catch{}
+        }
+        const raw = JSON.stringify(errorBody || {}) + ' ' + (error?.message || '');
         let message = '同步失败，请稍后重试';
-        const raw = JSON.stringify(data || {}) + ' ' + (error?.message || '');
         if(raw.includes('SPORTTERY_WAF_BLOCKED')){
           message = '官方接口拦截了云端服务器请求；数据库结构已接通，下一步改用本地/国内网络采集器。';
+        }else if(raw.includes('SPORTTERY_FETCH_FAILED')){
+          message = '已连接同步服务，但竞彩网上游接口暂时没有返回可用数据。';
         }else if(raw.includes('ADMIN_REQUIRED')){
           message = '当前账号没有管理员权限。';
         }else if(raw.includes('NOT_AUTHENTICATED')){
