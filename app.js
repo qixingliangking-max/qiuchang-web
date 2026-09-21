@@ -537,6 +537,39 @@ function jcRenderOddsHistory(snapshots){
 }
 
 
+
+function jcRenderOddsPlayShell(pools,snapshots,active='had'){
+  return '<div class="jc-odds-play-shell">'+
+    '<div class="jc-odds-play-tabs">'+
+      '<button type="button" class="'+(active==='had'?'active':'')+'" data-odds-play="had">胜平负</button>'+
+      '<button type="button" class="'+(active==='crs'?'active':'')+'" data-odds-play="crs">比分</button>'+
+      '<button type="button" class="'+(active==='ttg'?'active':'')+'" data-odds-play="ttg">总进球</button>'+
+      '<button type="button" class="'+(active==='hafu'?'active':'')+'" data-odds-play="hafu">半全场</button>'+
+    '</div>'+
+    '<div id="jcOddsPlayPanel">'+jcRenderOddsPlayPanel(active,pools,snapshots)+'</div>'+
+    '<div class="jc-source-line">数据来源：中国体育彩票竞彩足球移动端官方链路</div>'+
+  '</div>';
+}
+
+function jcRenderOddsPlayPanel(tab,pools,snapshots){
+  if(tab==='crs') return jcRenderCrsDetail(pools.crs,snapshots);
+  if(tab==='ttg') return jcRenderTtgDetail(pools.ttg,snapshots);
+  if(tab==='hafu') return jcRenderHafuDetail(pools.hafu,snapshots);
+  return jcRenderHadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots);
+}
+
+function jcBindOddsPlayTabs(root,pools,snapshots){
+  if(!root) return;
+  const panel=$('#jcOddsPlayPanel',root) || $('#jcOddsPlayPanel');
+  const buttons=$('.jc-odds-play-tabs button',root);
+  buttons.forEach(btn=>{
+    btn.onclick=()=>{
+      buttons.forEach(b=>b.classList.toggle('active',b===btn));
+      if(panel) panel.innerHTML=jcRenderOddsPlayPanel(btn.dataset.oddsPlay || 'had',pools,snapshots);
+    };
+  });
+}
+
 function jcApiStatusText(s){
   const code=s?.short || '';
   const map={NS:'未开赛',1H:'上半场',HT:'半场',2H:'下半场',ET:'加时',BT:'加时休息',P:'点球',FT:'已结束',AET:'加时结束',PEN:'点球结束',PST:'延期',CANC:'取消',ABD:'中止',INT:'中断'};
@@ -672,15 +705,7 @@ async function setupJcMatchDetail(){
   const status=jcMatchStatusLabel(m,qcBeijingToday());
   const score=jcScoreInfo(m);
 
-  const oddsHtml=
-    '<div class="jc-odds-detail-page">'+
-      jcRenderHadDetail(pools,snapshots)+
-      jcRenderCrsDetail(pools.crs,snapshots)+
-      jcRenderTtgDetail(pools.ttg,snapshots)+
-      jcRenderHafuDetail(pools.hafu,snapshots)+
-      jcRenderOddsHistory(snapshots)+
-      '<div class="jc-source-line">数据来源：中国体育彩票竞彩足球移动端官方链路</div>'+
-    '</div>';
+  const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshots,'had')+'</div>';
 
   root.innerHTML=
     '<div class="detail-head jc-odds-headcard">'+
@@ -699,6 +724,7 @@ async function setupJcMatchDetail(){
     '<div id="jcMainPanel">'+oddsHtml+'</div>';
 
   const panel=$('#jcMainPanel');
+  jcBindOddsPlayTabs(panel,pools,snapshots);
   let factsData=null;
   let factsLoaded=false;
 
@@ -745,8 +771,10 @@ async function setupJcMatchDetail(){
     btn.onclick=async()=>{
       $$('.jc-main-tabs button').forEach(b=>b.classList.toggle('active',b===btn));
       const tab=btn.dataset.mainTab;
-      if(tab==='odds') panel.innerHTML=oddsHtml;
-      else if(tab==='ai') panel.innerHTML=jcRenderAiPlaceholder(m);
+      if(tab==='odds'){
+        panel.innerHTML=oddsHtml;
+        jcBindOddsPlayTabs(panel,pools,snapshots);
+      }else if(tab==='ai') panel.innerHTML=jcRenderAiPlaceholder(m);
       else await loadFacts();
     };
   });
