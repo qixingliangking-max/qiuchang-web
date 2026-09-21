@@ -11,12 +11,18 @@
   <button id="jcTodayBtn" class="jc-today-btn" type="button">回到今日</button>
   <div id="jcDatePopover" class="jc-date-popover" hidden></div>
 </div>
-<div class="section-title" id="jcLiveTitle"><span class="bar" style="background:var(--green)"></span><span>官方竞彩足球</span><span class="section-meta" id="jcLiveMeta">正在读取…</span></div>
-<div class="cards jc-live-cards" id="jcLiveCards"><div class="profile-card">正在读取官方竞彩数据…</div></div>
-<div class="section-title"><span class="bar"></span><span>昨日回收</span><span class="section-meta">09-20 · 5场演示</span></div>
-<div class="table-card"><table class="brief-table"><thead><tr><th>#</th><th>时间</th><th>赛事</th><th>对阵/比分</th><th>方向</th><th>进球</th><th>半全场</th></tr></thead><tbody id="recapRows"></tbody></table></div>
-<div class="section-title" style="margin-top:34px"><span class="bar" style="background:var(--blue)"></span><span>今日模型</span><span class="section-meta">09-21 · 4场演示</span></div><div class="cards" id="matchCards"></div>
+<section class="jc-fixtures-shell">
+  <div class="jc-fixture-toolbar">
+    <div id="jcLeagueFilters" class="jc-league-filters"><button class="active" type="button">全部</button></div>
+    <div class="jc-fixture-count" id="jcDateCount">正在读取…</div>
+  </div>
+  <div class="section-title" id="jcLiveTitle"><span class="bar" style="background:var(--green)"></span><span id="jcSectionTitleText">官方竞彩足球</span><span class="section-meta" id="jcLiveMeta">正在读取…</span></div>
+  <div class="jc-live-cards" id="jcLiveCards"><div class="profile-card">正在读取官方竞彩数据…</div></div>
+</section>
+<div class="section-title qc-demo-section"><span class="bar"></span><span>昨日回收</span><span class="section-meta">09-20 · 5场演示</span></div>
+<div class="table-card qc-demo-section"><table class="brief-table"><thead><tr><th>#</th><th>时间</th><th>赛事</th><th>对阵/比分</th><th>方向</th><th>进球</th><th>半全场</th></tr></thead><tbody id="recapRows"></tbody></table></div>
+<div class="section-title qc-demo-section" style="margin-top:34px"><span class="bar" style="background:var(--blue)"></span><span>今日模型</span><span class="section-meta">09-21 · 4场演示</span></div><div class="cards qc-demo-section" id="matchCards"></div>
 </main><div class="footer-note">本页面用于体育数据研究、赛前模型推演与赛后复盘，不承诺任何结果。请理性使用数据并遵守所在地适用规则。</div>
 </div>
 <div class="drawer-backdrop" id="drawerBackdrop"><nav class="drawer"><a class="active" href="index.html">今日模型</a><a href="index.html">每日赛事</a><a href="index.html">专项模型</a><a href="index.html">精选场次</a><a href="index.html">TOP比分</a><a href="league.html">联赛数据库</a><hr><a href="profile.html" id="navProfile">个人中心</a><a href="login.html" id="navLogin">登录</a><a href="register.html" id="navRegister">注册</a><a href="#" class="logout" id="navLogout" style="display:none">退出登录</a></nav></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="supabase-client.js?v=20260922m"></script><script src="data.js"></script><script src="app.js?v=20260922m"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="supabase-client.js?v=20260922n"></script><script src="data.js"></script><script src="app.js?v=20260922n"></script></body></html>
