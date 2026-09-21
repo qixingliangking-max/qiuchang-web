@@ -67,38 +67,41 @@ function setupDemoAuth(){
       }
 
       const email = $('#regEmail').value.trim();
-      const nickname = $('#regNickname').value.trim();
       const password = $('#regPassword').value;
+      const password2 = $('#regPassword2').value;
       const button = reg.querySelector('button[type="submit"]');
       const hint = $('#registerHint');
 
       if(password.length < 8){
         alert('密码至少需要8个字符');
+        $('#regPassword').focus();
+        return;
+      }
+
+      if(password !== password2){
+        alert('两次输入的密码不一致');
+        $('#regPassword2').focus();
         return;
       }
 
       button.disabled = true;
       button.textContent = '注册中...';
       if(hint){
-        hint.textContent = '正在创建账号并发送确认邮件…';
+        hint.textContent = '正在创建账号…';
         hint.className = 'code-hint';
       }
 
       const { data, error } = await window.qcSupabase.auth.signUp({
         email,
-        password,
-        options: {
-          data: {
-            nickname
-          }
-        }
+        password
       });
 
+      button.disabled = false;
+      button.textContent = '注册';
+
       if(error){
-        button.disabled = false;
-        button.textContent = '注册并发送确认邮件';
         if(hint){
-          hint.textContent = '注册失败，请检查信息后重试。';
+          hint.textContent = '注册失败，请检查邮箱和密码后重试。';
           hint.className = 'code-hint error';
         }
         alert('注册失败：' + error.message);
@@ -114,12 +117,11 @@ function setupDemoAuth(){
         return;
       }
 
-      button.textContent = '确认邮件已发送';
       if(hint){
-        hint.textContent = '确认邮件已发送，请打开邮箱并点击确认链接。完成后返回登录页登录。';
-        hint.className = 'code-hint success';
+        hint.textContent = '账号已创建，但 Supabase 的邮箱确认开关仍处于开启状态。关闭后即可注册并直接登录。';
+        hint.className = 'code-hint error';
       }
-      alert('确认邮件已发送，请打开邮箱并点击确认链接完成注册。');
+      alert('账号已创建，但邮箱确认功能仍然开启。请先在 Supabase 关闭 Confirm email。');
     };
   }
 
