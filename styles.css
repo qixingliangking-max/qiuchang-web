@@ -238,3 +238,10 @@ body{min-height:100vh}
   .jc-score-group .jc-score-odd{flex:1 1 82px}
   .jc-score-group.draw .jc-score-odd{flex:1 1 96px}
 }
+
+.jc-today-odds-stack{display:grid;gap:14px;margin-top:6px}
+.jc-today-odds-stack .jc-odds-section{box-shadow:none;background:#fff}
+.jc-today-odds-stack .jc-odds-section h2{font-size:19px}
+@media(max-width:760px){
+  .jc-today-odds-stack .jc-score-group .jc-score-odd{flex:1 1 76px}
+}
