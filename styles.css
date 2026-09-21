@@ -49,3 +49,10 @@ body{min-height:100vh}
 .turnstile-dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#e8f8ef;color:var(--green);font-weight:900}
 @media(max-width:640px){.code-row{grid-template-columns:1fr 118px}.code-btn{padding:0 8px;font-size:14px}}
 
+
+.created-code-box{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-top:18px;padding:16px;border:1px solid #cdd8f5;border-radius:16px;background:var(--blue-soft)}
+.created-code-box span{color:var(--muted);font-size:13px;font-weight:800}
+.created-code-box strong{font-size:20px;letter-spacing:1px;word-break:break-all}
+.admin-table-wrap{overflow:auto}
+.admin-table-wrap .brief-table{min-width:680px}
+@media(max-width:640px){.created-code-box{grid-template-columns:1fr}.created-code-box .small-btn{width:100%}}
