@@ -3,7 +3,7 @@ param([switch]$Once)
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Version = "windows-standalone-0.3"
+$Version = "windows-standalone-0.4"
 $ConfigPath = Join-Path $PSScriptRoot "collector-config.txt"
 $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
