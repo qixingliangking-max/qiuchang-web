@@ -1,24 +1,21 @@
-# 球场档案｜Windows 竞彩自动采集器
+# 球场档案｜Windows 竞彩自动采集器 v0.3
 
 这是**非浏览器扩展**方案。
 
-工作方式：
+当前正式链路：
 
-Windows 后台任务 → 中国竞彩网移动端官方 API → Supabase → 球场档案网站
+Windows 后台任务
+→ 中国竞彩网移动端赛程接口 `getConditionsV1`
+→ 按日期读取 `getMatchDataPageListV1`
+→ 按每个官方 `matchId` 低频读取 `getFixedBonusV1`
+→ HAD / HHAD / CRS / TTG / HAFU
+→ Supabase
+→ 球场档案前台
 
-使用：
-1. 双击 setup.bat，粘贴后台已有的 qc_col_... 采集器凭证。
-2. 双击 test_once.bat，只测试一次。
-3. 如果 test_once 成功，再双击 install_auto_15min.bat，安装每15分钟自动采集。
-4. 日志在 collector.log。
-5. uninstall_auto.bat 可以删除自动任务。
+这版不再依赖旧的计算器接口，因此能够把官方页面可见的未来赛程先完整拉入数据库，再逐场补五类官方玩法。
 
-官方来源：
-- 页面：https://m.sporttery.cn/mjc/jsq/zqspf/
-- API：getMatchCalculatorV1.qry
-- 玩法：HAD / HHAD / CRS / TTG / HAFU
-
-说明：
-- 该程序不会把凭证上传到 GitHub，凭证只写到你本机 collector-config.txt。
-- 如果日志显示 HTTP 567，说明当前网络出口仍被竞彩网 WAF 拦截。
-- 如果 HTTP 200 且入库成功，此后可完全后台自动运行，不需要打开浏览器或扩展。
+使用顺序：
+1. START_HERE.cmd 保存采集器凭证。
+2. TEST_ONCE.cmd 做一次全链路测试。
+3. 成功后运行 INSTALL_AUTO_15MIN.cmd。
+4. collector.log 查看本机日志。
