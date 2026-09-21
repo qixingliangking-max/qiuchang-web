@@ -427,7 +427,7 @@ function jcRenderHadDetail(pools,snapshots){
   const hadHist=jcPoolHistory(snapshots,'had');
   const hhadHist=jcPoolHistory(snapshots,'hhad');
   return '<section class="jc-odds-section">'+
-    '<h2>赔率</h2>'+
+    '<div class="jc-section-title-row"><h2>赔率</h2><span>当前</span></div>'+
     '<div class="jc-odds-table">'+
       '<div class="jc-odds-head"><span>玩法</span><span>主胜</span><span>平局</span><span>客胜</span></div>'+
       '<div class="jc-odds-row"><b class="jc-play-tag blue">胜平负</b><span>'+jcOddCell(had,'h',hadHist)+'</span><span>'+jcOddCell(had,'d',hadHist)+'</span><span>'+jcOddCell(had,'a',hadHist)+'</span></div>'+
@@ -460,9 +460,9 @@ function jcRenderCrsDetail(pool,snapshots){
     jcScoreItem(pool,specialKey,specialLabel,hist);
 
   return '<section class="jc-odds-section"><h2>比分</h2>'+
-    '<div class="jc-score-group home-win">'+group(homeWins,'s1sh','胜其它')+'</div>'+
-    '<div class="jc-score-group draw">'+group(draws,'s1sd','平其它')+'</div>'+
-    '<div class="jc-score-group away-win">'+group(awayWins,'s1sa','负其它')+'</div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">主胜比分</div><div class="jc-score-group home-win">'+group(homeWins,'s1sh','胜其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">平局比分</div><div class="jc-score-group draw">'+group(draws,'s1sd','平其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">客胜比分</div><div class="jc-score-group away-win">'+group(awayWins,'s1sa','负其它')+'</div></div>'+
   '</section>';
 }
 
