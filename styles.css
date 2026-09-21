@@ -293,7 +293,7 @@ body{min-height:100vh}
 .jc-odds-play-shell{display:grid;gap:14px}
 .jc-odds-play-tabs{
   position:sticky;top:112px;z-index:12;
-  display:grid;grid-template-columns:repeat(4,1fr);
+  display:grid;grid-template-columns:repeat(5,1fr);
   background:#fff;border:1px solid var(--line);border-radius:16px;
   padding:6px;box-shadow:var(--shadow)
 }
@@ -307,8 +307,8 @@ body{min-height:100vh}
 #jcOddsPlayPanel{display:grid;gap:14px}
 #jcOddsPlayPanel .jc-odds-section{margin:0}
 @media(max-width:640px){
-  .jc-odds-play-tabs{top:108px;gap:3px;padding:5px}
-  .jc-odds-play-tabs button{font-size:12px;padding:11px 4px}
+  .jc-odds-play-tabs{top:108px;gap:3px;padding:5px;overflow-x:auto;grid-template-columns:repeat(5,minmax(86px,1fr))}
+  .jc-odds-play-tabs button{font-size:12px;padding:11px 4px;white-space:nowrap}
 }
 
 .legal-link{color:var(--blue)!important;font-weight:800;text-decoration:none}
