@@ -218,3 +218,23 @@ body{min-height:100vh}
   .jc-hafu-grid{grid-template-columns:repeat(3,minmax(80px,1fr))}
   .jc-history-head,.jc-history-row{grid-template-columns:1.7fr repeat(3,.7fr);padding:10px 8px;font-size:12px}
 }
+
+
+/* Odds page visual refinement */
+.jc-section-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.jc-section-title-row h2{margin:0}
+.jc-section-title-row span{font-size:12px;color:var(--muted);background:#f4f6fa;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-weight:800}
+.jc-score-band{padding:2px 0 8px}
+.jc-score-band+.jc-score-band{margin-top:10px;padding-top:12px;border-top:1px solid #eef1f5}
+.jc-score-band-label{font-size:12px;color:var(--muted);font-weight:900;margin:0 0 8px 2px}
+.jc-score-group{display:flex!important;flex-wrap:wrap;gap:8px;margin-bottom:0!important}
+.jc-score-group .jc-score-odd{flex:0 1 88px;min-width:78px}
+.jc-score-group.draw .jc-score-odd{flex:1 1 140px}
+.jc-score-odd{min-height:72px;display:flex;flex-direction:column;justify-content:center}
+.jc-score-odd span,.jc-ttg-item span,.jc-hafu-item span{font-size:16px}
+.jc-ttg-item,.jc-hafu-item{min-height:82px;display:flex;flex-direction:column;justify-content:center}
+.jc-history-row:hover{background:#fafbfd}
+@media(max-width:640px){
+  .jc-score-group .jc-score-odd{flex:1 1 82px}
+  .jc-score-group.draw .jc-score-odd{flex:1 1 96px}
+}
