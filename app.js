@@ -54,7 +54,9 @@ function setupDemoAuth(){
       }
 
       if(data.user){
-        location.href = 'profile.html';
+        const next = new URLSearchParams(location.search).get('next');
+        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'profile.html';
+        location.href = safeNext;
       }
     };
   }
@@ -454,11 +456,27 @@ async function setupAdmin(){
   const { data: initialStats, error: adminCheckError } = await window.qcSupabase.rpc('admin_dashboard_stats');
 
   if(adminCheckError){
+    const params = new URLSearchParams(location.search);
+    const alreadyReauthed = params.get('reauth') === '1';
+
+    if(!alreadyReauthed){
+      await window.qcSupabase.auth.signOut();
+      location.replace('login.html?next=admin.html?reauth=1');
+      return;
+    }
+
     const raw = adminCheckError.message || '';
     const message = raw.includes('ADMIN_REQUIRED')
-      ? '当前登录账号没有管理员权限'
-      : '管理员权限校验失败，请重新登录后再试';
-    root.innerHTML = '<div class="profile-card"><h2>无法进入后台</h2><p style="color:var(--muted);line-height:1.7">' + message + '</p><a class="small-btn" href="login.html" style="display:inline-flex;align-items:center">重新登录</a></div>';
+      ? '当前会话没有识别到管理员权限'
+      : '管理员权限校验失败';
+    const currentEmail = user && user.email ? user.email : '未识别';
+
+    root.innerHTML =
+      '<div class="profile-card"><h2>管理员验证未通过</h2>' +
+      '<p style="color:var(--muted);line-height:1.7">' + message + '。</p>' +
+      '<div class="kv"><span>当前登录邮箱</span><strong>' + currentEmail + '</strong></div>' +
+      '<p style="color:var(--muted);line-height:1.7">请把这一页截图发给我，我可以继续精确定位。</p>' +
+      '<a class="small-btn" href="login.html?next=admin.html?reauth=1" style="display:inline-flex;align-items:center">重新登录管理员账号</a></div>';
     return;
   }
 
