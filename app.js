@@ -495,6 +495,29 @@ async function setupAdmin(){
       $('#adminUsedCodes').textContent = stats.used_codes ?? 0;
     }
 
+    const [{ count: jcMatches }, { count: jcSnapshots }, latestRunResult] = await Promise.all([
+      window.qcSupabase.from('jc_matches').select('*', { count: 'exact', head: true }),
+      window.qcSupabase.from('jc_market_snapshots').select('*', { count: 'exact', head: true }),
+      window.qcSupabase.from('jc_sync_runs')
+        .select('status,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message')
+        .order('started_at', { ascending: false })
+        .limit(1)
+    ]);
+
+    if($('#jcMatchCount')) $('#jcMatchCount').textContent = jcMatches ?? 0;
+    if($('#jcSnapshotCount')) $('#jcSnapshotCount').textContent = jcSnapshots ?? 0;
+
+    const latestRun = latestRunResult.data && latestRunResult.data[0];
+    if($('#jcLastSync')){
+      if(!latestRun){
+        $('#jcLastSync').textContent = '尚未同步';
+      }else{
+        const time = latestRun.finished_at ? new Date(latestRun.finished_at).toLocaleString('zh-CN') : '进行中';
+        const labelMap = {success:'成功',partial:'部分成功',failed:'失败',blocked:'被上游拦截',running:'进行中'};
+        $('#jcLastSync').textContent = `${time} · ${labelMap[latestRun.status] || latestRun.status}`;
+      }
+    }
+
     const { data: codes, error: codesError } = await window.qcSupabase.rpc('admin_redeem_codes');
     const rows = $('#redeemCodeRows');
 
@@ -523,6 +546,53 @@ async function setupAdmin(){
   };
 
   await loadAdminData();
+
+  const syncSportteryBtn = $('#syncSportteryBtn');
+  if(syncSportteryBtn){
+    syncSportteryBtn.onclick = async () => {
+      const hint = $('#jcSyncHint');
+      syncSportteryBtn.disabled = true;
+      syncSportteryBtn.textContent = '同步中...';
+      if(hint){
+        hint.textContent = '正在从中国竞彩网官方数据源读取并写入数据库…';
+        hint.className = 'code-hint';
+      }
+
+      const { data, error } = await window.qcSupabase.functions.invoke('sporttery-sync', {
+        body: {}
+      });
+
+      syncSportteryBtn.disabled = false;
+      syncSportteryBtn.textContent = '同步官方竞彩数据';
+
+      if(error || !data || !data.ok){
+        let message = '同步失败，请稍后重试';
+        const raw = JSON.stringify(data || {}) + ' ' + (error?.message || '');
+        if(raw.includes('SPORTTERY_WAF_BLOCKED')){
+          message = '官方接口拦截了云端服务器请求；数据库结构已接通，下一步改用本地/国内网络采集器。';
+        }else if(raw.includes('ADMIN_REQUIRED')){
+          message = '当前账号没有管理员权限。';
+        }else if(raw.includes('NOT_AUTHENTICATED')){
+          message = '登录状态已失效，请重新登录。';
+        }
+        if(hint){
+          hint.textContent = message;
+          hint.className = 'code-hint error';
+        }
+        alert(message);
+        await loadAdminData();
+        return;
+      }
+
+      const message = `同步完成：读取 ${data.matchesReceived || 0} 场，写入 ${data.matchesUpserted || 0} 场，新增 ${data.snapshotsInserted || 0} 条奖金快照。`;
+      if(hint){
+        hint.textContent = message;
+        hint.className = 'code-hint success';
+      }
+      alert(message);
+      await loadAdminData();
+    };
+  }
 
   const form = $('#createCodeForm');
   if(form){
