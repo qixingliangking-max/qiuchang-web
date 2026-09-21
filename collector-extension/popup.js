@@ -37,11 +37,12 @@ async function refresh(){
 
   const r = data.lastResult;
   if(r.ok){
-    $('#statusText').textContent = '同步成功';
+    $('#statusText').textContent = r.scheduleOnly ? '赛程同步成功' : '同步成功';
     $('#statusDetail').textContent =
       '读取 ' + (r.matchesReceived || 0) + ' 场 · 写入 ' + (r.matchesUpserted || 0) +
       ' 场 · 新增 ' + (r.snapshotsInserted || 0) + ' 条快照' +
-      (r.method ? ' · ' + r.method : '') +
+      (r.scheduleOnly ? '\n赛程已入库；奖金玩法数据继续接入中。' : '') +
+      (r.method ? '\n方式：' + r.method : '') +
       (data.lastSyncAt ? '\n' + new Date(data.lastSyncAt).toLocaleString('zh-CN') : '');
   }else{
     $('#statusText').textContent = r.message || '同步失败';
