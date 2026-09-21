@@ -157,6 +157,19 @@ async function fetchViaOfficialPages(){
       if(result.ok){
         return {...result,pageAttempts};
       }
+
+      const scraped = await scrapeScheduleFromPage(tabId);
+      if(scraped.ok){
+        return {
+          ok:true,
+          method:'schedule-dom',
+          endpoint:pageUrl,
+          payload:buildSchedulePayload(scraped),
+          scrapedCount:scraped.rows.length,
+          page:scraped.page,
+          pageAttempts
+        };
+      }
     }catch(err){
       pageAttempts.push({
         pageUrl,
@@ -172,13 +185,105 @@ async function fetchViaOfficialPages(){
   return {ok:false,error:'UPSTREAM_NO_VALID_JSON',pageAttempts};
 }
 
+
+async function scrapeScheduleFromPage(tabId){
+  const [result] = await chrome.scripting.executeScript({
+    target:{tabId},
+    world:'MAIN',
+    func: () => {
+      const rows = [];
+      const trs = Array.from(document.querySelectorAll('tr'));
+      for(const tr of trs){
+        const cells = Array.from(tr.querySelectorAll('td,th'))
+          .map(el => (el.innerText || '').replace(/\s+/g,' ').trim())
+          .filter(Boolean);
+
+        if(!cells.length) continue;
+
+        const matchNum = cells.find(t => /^周[一二三四五六日][0-9]{3}$/.test(t));
+        const teamCell = cells.find(t => /\sVS\s/i.test(t));
+        const timeCell = cells.find(t => /20\d{2}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(t));
+        if(!matchNum || !teamCell || !timeCell) continue;
+
+        const m = teamCell.split(/\s+VS\s+/i);
+        if(m.length < 2) continue;
+
+        const idx = cells.indexOf(matchNum);
+        const league = idx >= 0 && cells[idx+1] && cells[idx+1] !== teamCell ? cells[idx+1] : '';
+
+        const dt = (timeCell.match(/(20\d{2}-\d{2}-\d{2})\s+(\d{2}:\d{2})/) || []);
+        const statusText = cells.find(t => /待开售|开售|停售|暂停销售|销售中|已结束/.test(t)) || '';
+
+        rows.push({
+          matchNum,
+          league,
+          home:m[0].trim(),
+          away:m.slice(1).join(' VS ').trim(),
+          date:dt[1] || '',
+          time:dt[2] || '',
+          status:statusText,
+          cells
+        });
+      }
+
+      const dedup = [];
+      const seen = new Set();
+      for(const r of rows){
+        const key = r.date + '|' + r.matchNum + '|' + r.home + '|' + r.away;
+        if(!seen.has(key)){
+          seen.add(key);
+          dedup.push(r);
+        }
+      }
+      return {
+        ok:dedup.length > 0,
+        page:{url:location.href,title:document.title || ''},
+        rows:dedup
+      };
+    }
+  });
+
+  return result && result.result ? result.result : {ok:false,rows:[]};
+}
+
+function buildSchedulePayload(scraped){
+  const groupsMap = new Map();
+  for(const r of scraped.rows || []){
+    const date = r.date || new Date().toISOString().slice(0,10);
+    if(!groupsMap.has(date)) groupsMap.set(date, []);
+    groupsMap.get(date).push({
+      matchId:'web-' + date.replaceAll('-','') + '-' + r.matchNum,
+      matchNumStr:r.matchNum,
+      leagueAllName:r.league || null,
+      leagueAbbName:r.league || null,
+      homeTeamAbbName:r.home,
+      awayTeamAbbName:r.away,
+      matchDate:date,
+      matchTime:(r.time || '00:00') + ':00',
+      matchStatus:r.status || 'scheduled',
+      sellStatus:{},
+      source:'sporttery_schedule_dom'
+    });
+  }
+  return {
+    success:true,
+    value:{
+      lastUpdateTime:new Date().toISOString(),
+      matchInfoList:[...groupsMap.entries()].map(([businessDate,subMatchList])=>({
+        businessDate,
+        subMatchList
+      }))
+    }
+  };
+}
+
 async function pushToDatabase(token, fetched){
   const res = await fetch(INGEST_URL, {
     method:'POST',
     headers:{
       'Content-Type':'application/json',
       'X-Collector-Token':token,
-      'X-Collector-Version':'0.1.1',
+      'X-Collector-Version':'0.1.2',
       'X-Source-Endpoint':fetched.endpoint || ''
     },
     body:JSON.stringify(fetched.payload)
@@ -239,7 +344,8 @@ async function runSync(){
       matchesReceived:ingested.matchesReceived || 0,
       matchesUpserted:ingested.matchesUpserted || 0,
       snapshotsInserted:ingested.snapshotsInserted || 0,
-      sourceUpdatedAt:ingested.sourceUpdatedAt || null
+      sourceUpdatedAt:ingested.sourceUpdatedAt || null,
+      scheduleOnly:(fetched.method === 'schedule-dom')
     };
     await saveResult(result);
     return result;
