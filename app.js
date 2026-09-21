@@ -495,12 +495,17 @@ async function setupAdmin(){
       $('#adminUsedCodes').textContent = stats.used_codes ?? 0;
     }
 
-    const [{ count: jcMatches }, { count: jcSnapshots }, latestRunResult] = await Promise.all([
+    const [{ count: jcMatches }, { count: jcSnapshots }, latestRunResult, collectorResult] = await Promise.all([
       window.qcSupabase.from('jc_matches').select('*', { count: 'exact', head: true }),
       window.qcSupabase.from('jc_market_snapshots').select('*', { count: 'exact', head: true }),
       window.qcSupabase.from('jc_sync_runs')
         .select('status,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message')
         .order('started_at', { ascending: false })
+        .limit(1),
+      window.qcSupabase.from('jc_collector_devices')
+        .select('name,status,last_seen_at,last_success_at,last_error')
+        .eq('status','active')
+        .order('created_at', { ascending:false })
         .limit(1)
     ]);
 
@@ -515,6 +520,19 @@ async function setupAdmin(){
         const time = latestRun.finished_at ? new Date(latestRun.finished_at).toLocaleString('zh-CN') : '进行中';
         const labelMap = {success:'成功',partial:'部分成功',failed:'失败',blocked:'被上游拦截',running:'进行中'};
         $('#jcLastSync').textContent = `${time} · ${labelMap[latestRun.status] || latestRun.status}`;
+      }
+    }
+
+    const collector = collectorResult.data && collectorResult.data[0];
+    if($('#collectorStatus')){
+      if(!collector){
+        $('#collectorStatus').textContent = '尚未创建';
+      }else if(collector.last_success_at){
+        $('#collectorStatus').textContent = '正常 · 最近成功 ' + new Date(collector.last_success_at).toLocaleString('zh-CN');
+      }else if(collector.last_seen_at){
+        $('#collectorStatus').textContent = '已连接 · 等待首次成功同步';
+      }else{
+        $('#collectorStatus').textContent = '凭证已创建 · 等待浏览器扩展连接';
       }
     }
 
@@ -547,76 +565,70 @@ async function setupAdmin(){
 
   await loadAdminData();
 
-  const syncSportteryBtn = $('#syncSportteryBtn');
-  if(syncSportteryBtn){
-    syncSportteryBtn.onclick = async () => {
+  const createCollectorBtn = $('#createCollectorBtn');
+  if(createCollectorBtn){
+    createCollectorBtn.onclick = async () => {
       const hint = $('#jcSyncHint');
-      syncSportteryBtn.disabled = true;
-      syncSportteryBtn.textContent = '同步中...';
-      if(hint){
-        hint.textContent = '正在从中国竞彩网官方数据源读取并写入数据库…';
-        hint.className = 'code-hint';
-      }
+      createCollectorBtn.disabled = true;
+      createCollectorBtn.textContent = '创建中...';
 
       const { data: sessionData } = await window.qcSupabase.auth.getSession();
       const session = sessionData && sessionData.session;
-
-      let data = null;
-      let error = null;
-
       if(!session || !session.access_token){
-        error = new Error('NOT_AUTHENTICATED');
-      }else{
-        try{
-          const response = await fetch(window.QC_SUPABASE_URL + '/functions/v1/sporttery-sync', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + session.access_token,
-              'apikey': window.QC_SUPABASE_PUBLISHABLE_KEY,
-              'Content-Type': 'application/json'
-            },
-            body: '{}'
-          });
-          const text = await response.text();
-          try{ data = JSON.parse(text); }catch{ data = { ok:false, error:'INVALID_RESPONSE', detail:text.slice(0,300) }; }
-          if(!response.ok) error = new Error(data?.error || ('HTTP_' + response.status));
-        }catch(err){
-          error = err;
-        }
-      }
-
-      syncSportteryBtn.disabled = false;
-      syncSportteryBtn.textContent = '同步官方竞彩数据';
-
-      if(error || !data || !data.ok){
-        const errorBody = data || null;
-        const raw = JSON.stringify(errorBody || {}) + ' ' + (error?.message || '');
-        let message = '同步失败，请稍后重试';
-        if(raw.includes('SPORTTERY_WAF_BLOCKED')){
-          message = '官方接口拦截了云端服务器请求；数据库结构已接通，下一步改用本地/国内网络采集器。';
-        }else if(raw.includes('SPORTTERY_FETCH_FAILED')){
-          message = '已连接同步服务，但竞彩网上游接口暂时没有返回可用数据。';
-        }else if(raw.includes('ADMIN_REQUIRED')){
-          message = '当前账号没有管理员权限。';
-        }else if(raw.includes('NOT_AUTHENTICATED')){
-          message = '登录状态已失效，请重新登录。';
-        }
-        if(hint){
-          hint.textContent = message;
-          hint.className = 'code-hint error';
-        }
-        alert(message);
-        await loadAdminData();
+        createCollectorBtn.disabled = false;
+        createCollectorBtn.textContent = '创建本机采集器凭证';
+        alert('登录状态已失效，请重新登录');
         return;
       }
 
-      const message = `同步完成：读取 ${data.matchesReceived || 0} 场，写入 ${data.matchesUpserted || 0} 场，新增 ${data.snapshotsInserted || 0} 条奖金快照。`;
-      if(hint){
-        hint.textContent = message;
-        hint.className = 'code-hint success';
+      try{
+        const response = await fetch(window.QC_SUPABASE_URL + '/functions/v1/sporttery-collector-enroll', {
+          method:'POST',
+          headers:{
+            'Authorization':'Bearer ' + session.access_token,
+            'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY,
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({name:'Windows Chrome Collector'})
+        });
+        const data = await response.json();
+
+        if(!response.ok || !data.ok){
+          throw new Error(data.error || 'CREATE_FAILED');
+        }
+
+        $('#collectorToken').textContent = data.token;
+        $('#collectorTokenBox').hidden = false;
+        if(hint){
+          hint.textContent = '凭证已创建。把它复制到“球场档案·竞彩采集器”浏览器扩展里，只需要配置一次。';
+          hint.className = 'code-hint success';
+        }
+        await loadAdminData();
+      }catch(err){
+        if(hint){
+          hint.textContent = '采集器凭证创建失败：' + (err.message || '未知错误');
+          hint.className = 'code-hint error';
+        }
+        alert('采集器凭证创建失败');
+      }finally{
+        createCollectorBtn.disabled = false;
+        createCollectorBtn.textContent = '创建本机采集器凭证';
       }
-      alert(message);
-      await loadAdminData();
+    };
+  }
+
+  const copyCollectorTokenBtn = $('#copyCollectorTokenBtn');
+  if(copyCollectorTokenBtn){
+    copyCollectorTokenBtn.onclick = async () => {
+      const token = ($('#collectorToken')?.textContent || '').trim();
+      if(!token || token === '—') return;
+      try{
+        await navigator.clipboard.writeText(token);
+        copyCollectorTokenBtn.textContent = '已复制';
+        setTimeout(() => copyCollectorTokenBtn.textContent = '复制', 1200);
+      }catch{
+        alert('复制失败，请手动复制');
+      }
     };
   }
 
