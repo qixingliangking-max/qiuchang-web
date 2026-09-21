@@ -27,18 +27,13 @@
         <input id="regPassword" type="password" minlength="8" required autocomplete="new-password" placeholder="至少8个字符">
       </div>
 
-      <div class="field">
-        <label for="regCode">邮箱验证码</label>
-        <div class="code-row">
-          <input id="regCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required placeholder="请输入6位验证码">
-          <button id="sendCodeBtn" class="code-btn" type="button">发送验证码</button>
-        </div>
-        <div class="code-hint" id="codeHint">先填写邮箱和密码，再发送验证码。</div>
+      <div class="panel" style="margin:18px 0;padding:15px 16px;color:var(--muted);line-height:1.7">
+        注册后，我们会向你的邮箱发送一封确认邮件。请点击邮件中的确认链接完成邮箱验证。
       </div>
 
       <div class="turnstile-placeholder">
         <span class="turnstile-dot">✓</span>
-        <div><b>人机验证</b><small>Cloudflare Turnstile 将在下一步接入</small></div>
+        <div><b>人机验证</b><small>Cloudflare Turnstile 将在后续接入</small></div>
       </div>
 
       <label class="check">
@@ -46,7 +41,8 @@
         <span>我已阅读并同意《用户服务协议》和《隐私政策》</span>
       </label>
 
-      <button class="primary-btn" type="submit">验证并注册</button>
+      <button class="primary-btn" type="submit">注册并发送确认邮件</button>
+      <div id="registerHint" class="code-hint"></div>
       <div class="auth-link">已有账号？ <a href="login.html">立即登录</a></div>
     </form>
   </main>
