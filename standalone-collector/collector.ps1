@@ -1,6 +1,4 @@
-param(
-  [switch]$Once
-)
+param([switch]$Once)
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -11,198 +9,255 @@ $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
 $HeartbeatUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-collector-heartbeat"
 
-$ScheduleUrl = "https://webapi.sporttery.cn/gateway/uniform/fb/getMatchDataPageListV1.qry?method=concern&isFix=0&pageSize=200&pageNo=1&isForceSort=1"
+$ConditionsUrl = "https://webapi.sporttery.cn/gateway/uniform/fb/getConditionsV1.qry?method=concern"
+$ListBase = "https://webapi.sporttery.cn/gateway/uniform/fb/getMatchDataPageListV1.qry"
+$FixedBase = "https://webapi.sporttery.cn/gateway/uniform/football/getFixedBonusV1.qry"
+$Referer = "https://m.sporttery.cn/mjc/zqsj/?tab=concern"
 
-$OddsEndpoints = @(
-  "https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu",
-  "https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu"
-)
-
-function Write-Log([string]$Message) {
-  $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $Message"
+function Log([string]$m) {
+  $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $m"
   Add-Content -Path $LogPath -Value $line -Encoding UTF8
   Write-Host $line
 }
 
-function Read-Token {
-  if(-not (Test-Path $ConfigPath)) {
-    throw "collector-config.txt 不存在，请先运行 setup.bat"
-  }
-  $token = (Get-Content $ConfigPath -Raw).Trim()
-  if(-not $token.StartsWith("qc_col_")) {
-    throw "采集器凭证格式不正确，请重新运行 setup.bat"
-  }
-  return $token
+function Token {
+  if(-not (Test-Path $ConfigPath)) { throw "collector-config.txt missing. Run START_HERE.cmd first." }
+  $t=(Get-Content $ConfigPath -Raw).Trim()
+  if(-not $t.StartsWith("qc_col_")) { throw "Collector credential format invalid." }
+  return $t
 }
 
-function Send-Heartbeat(
-  [string]$Token,
-  [bool]$Ok,
-  [string]$Message,
-  [string]$Source,
-  [int]$HttpStatus
-) {
+function Heartbeat($t,$ok,$msg,$src,$status) {
   try {
-    $body = @{
-      ok = $Ok
-      message = $Message
-      source = $Source
-      http_status = $HttpStatus
-      version = $Version
+    $body=@{
+      ok=[bool]$ok
+      message=[string]$msg
+      source=[string]$src
+      http_status=[int]$status
+      version=$Version
     } | ConvertTo-Json -Compress
-
-    Invoke-RestMethod -Uri $HeartbeatUrl -Method Post -Headers @{
-      "X-Collector-Token" = $Token
-    } -ContentType "application/json" -Body $body -TimeoutSec 15 | Out-Null
-  } catch {
-    Write-Log "状态上报失败：$($_.Exception.Message)"
-  }
+    Invoke-RestMethod -Uri $HeartbeatUrl -Method Post -Headers @{"X-Collector-Token"=$t} -ContentType "application/json" -Body $body -TimeoutSec 15 | Out-Null
+  } catch {}
 }
 
-function Fetch-Upstream([string]$Url, [string]$Referer) {
-  $tmp = Join-Path $env:TEMP ("qc_sporttery_" + [guid]::NewGuid().ToString("N") + ".json")
+function FetchJson([string]$url) {
+  $tmp=Join-Path $env:TEMP ("qc_"+[guid]::NewGuid().ToString("N")+".json")
   try {
-    $args = @(
-      "-L",
-      "--silent",
-      "--show-error",
-      "--max-time", "25",
-      "--connect-timeout", "10",
-      "--output", $tmp,
-      "--write-out", "%{http_code}",
-      "-H", "User-Agent: Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/134 Mobile Safari/537.36",
-      "-H", "Accept: application/json,text/plain,*/*",
-      "-H", "Accept-Language: zh-CN,zh;q=0.9",
-      "-H", ("Referer: " + $Referer),
-      $Url
+    $args=@(
+      "-L","--silent","--show-error",
+      "--max-time","25","--connect-timeout","10",
+      "--output",$tmp,
+      "--write-out","%{http_code}",
+      "-H","User-Agent: Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/134 Mobile Safari/537.36",
+      "-H","Accept: application/json,text/plain,*/*",
+      "-H","Accept-Language: zh-CN,zh;q=0.9",
+      "-H","Referer: $Referer",
+      $url
     )
 
-    $statusText = (& curl.exe @args 2>&1 | Out-String).Trim()
-    $curlExit = $LASTEXITCODE
-    $status = 0
-    if($statusText -match '(\d{3})$') { $status = [int]$matches[1] }
+    $out=(& curl.exe @args 2>&1 | Out-String).Trim()
+    $exit=$LASTEXITCODE
+    $status=0
+    if($out -match '(\d{3})$'){ $status=[int]$matches[1] }
 
-    $text = ""
-    if(Test-Path $tmp) {
-      $text = Get-Content $tmp -Raw -Encoding UTF8
-    }
+    $text=""
+    if(Test-Path $tmp){ $text=Get-Content $tmp -Raw -Encoding UTF8 }
 
-    if($curlExit -ne 0) {
-      return @{ ok=$false; status=$status; text=$text; error="curl exit $curlExit"; source=$Url }
-    }
+    $j=$null
+    try { $j=$text | ConvertFrom-Json } catch {}
 
-    $json = $null
-    try { $json = $text | ConvertFrom-Json } catch {}
-
-    $hasMatches = $false
-    if($json -and $json.value -and $json.value.matchInfoList) {
-      $hasMatches = $true
+    $apiOk=$false
+    if($j){
+      $code = if($null -ne $j.errorCode){ [string]$j.errorCode } else { "0" }
+      $apiOk = ($code -eq "0")
     }
 
     return @{
-      ok = ($status -eq 200 -and $hasMatches)
-      status = $status
-      text = $text
-      source = $Url
-      error = if($status -eq 567){"WAF_567"}elseif($status -eq 403){"HTTP_403"}elseif($status -eq 429){"HTTP_429"}elseif(-not $hasMatches){"NO_VALID_JSON"}else{""}
+      ok=($exit -eq 0 -and $status -eq 200 -and $j -and $apiOk)
+      status=$status
+      json=$j
+      text=$text
+      source=$url
+      error=if($status -eq 567){"WAF_567"}elseif($status -eq 403){"HTTP_403"}elseif($status -eq 429){"HTTP_429"}elseif($exit -ne 0){"CURL_$exit"}elseif(-not $j){"NO_VALID_JSON"}elseif(-not $apiOk){"API_ERROR"}else{""}
     }
   }
   finally {
-    if(Test-Path $tmp) { Remove-Item $tmp -Force -ErrorAction SilentlyContinue }
+    if(Test-Path $tmp){ Remove-Item $tmp -Force -ErrorAction SilentlyContinue }
   }
 }
 
-function Push-ToDatabase([string]$Token, [hashtable]$Fetched) {
-  $response = Invoke-RestMethod -Uri $IngestUrl -Method Post -Headers @{
-    "X-Collector-Token" = $Token
-    "X-Collector-Version" = $Version
-    "X-Source-Endpoint" = $Fetched.source
-  } -ContentType "application/json" -Body $Fetched.text -TimeoutSec 45
-
-  if(-not $response.ok) {
-    throw "数据库接收失败：$($response.error)"
+function DateRange([datetime]$start,[datetime]$end) {
+  $d=$start.Date
+  while($d -le $end.Date){
+    $d
+    $d=$d.AddDays(1)
   }
-
-  return $response
 }
 
-function Run-One {
-  $token = Read-Token
-  Write-Log "开始自动读取竞彩足球官方数据（赛程 + 五类玩法）"
+function Latest($rows) {
+  if($null -eq $rows) { return $null }
+  $arr=@($rows)
+  if($arr.Count -eq 0) { return $null }
+  return $arr[$arr.Count-1]
+}
 
-  $scheduleOk = $false
-  $oddsOk = $false
-  $lastStatus = 0
-  $lastSource = ""
-  $lastError = ""
+function CopyMatch($m) {
+  $x=$m | Select-Object *
+  return $x
+}
 
-  Write-Log "步骤1/2：读取官方未来赛程"
-  $schedule = Fetch-Upstream $ScheduleUrl "https://m.sporttery.cn/mjc/zqsj/?tab=concern"
-  $lastStatus = [int]$schedule.status
-  $lastSource = [string]$schedule.source
-  $lastError = [string]$schedule.error
+function AddMarket($obj,[string]$name,$market) {
+  if($null -ne $market){
+    $obj | Add-Member -NotePropertyName $name -NotePropertyValue $market -Force
+  }
+}
 
-  if($schedule.ok) {
-    try {
-      $sr = Push-ToDatabase $token $schedule
-      $scheduleOk = $true
-      Write-Log "赛程入库成功：读取 $($sr.matchesReceived) 场，写入 $($sr.matchesUpserted) 场"
-    } catch {
-      $lastError = $_.Exception.Message
-      Write-Log "赛程入库失败：$lastError"
+function FetchAllSchedule {
+  Log "Reading Sporttery available schedule range..."
+  $cond=FetchJson $ConditionsUrl
+  if(-not $cond.ok){ throw "Conditions failed: HTTP $($cond.status) / $($cond.error)" }
+
+  $value=$cond.json.value
+  $startText=[string]$value.startDate
+  $endText=[string]$value.endDate
+  if(-not $startText -or -not $endText){ throw "Conditions response has no startDate/endDate" }
+
+  $start=[datetime]::ParseExact($startText,"yyyy-MM-dd",$null)
+  $end=[datetime]::ParseExact($endText,"yyyy-MM-dd",$null)
+  Log "Official available range: $startText -> $endText"
+
+  $byId=@{}
+  foreach($d in (DateRange $start $end)){
+    $ds=$d.ToString("yyyy-MM-dd")
+    $url=$ListBase+"?method=concern&matchDate="+$ds+"&pageSize=200&pageNo=1&isFix=0&isForceSort=1"
+    Log "Schedule: $ds"
+    $f=FetchJson $url
+    if(-not $f.ok){
+      if($f.status -in 403,429,567){ throw "STOP_HTTP_$($f.status)" }
+      Log "Schedule skipped: HTTP $($f.status) / $($f.error)"
+      continue
     }
-  } else {
-    Write-Log "赛程接口失败：HTTP $($schedule.status) / $($schedule.error)"
-  }
 
-  Write-Log "步骤2/2：读取当前五类玩法"
-  foreach($url in $OddsEndpoints) {
-    $f = Fetch-Upstream $url "https://m.sporttery.cn/mjc/jsq/zqspf/"
-    $lastStatus = [int]$f.status
-    $lastSource = [string]$f.source
-    $lastError = [string]$f.error
-
-    if($f.ok) {
-      try {
-        $or = Push-ToDatabase $token $f
-        $oddsOk = $true
-        Write-Log "玩法入库成功：读取 $($or.matchesReceived) 场，写入 $($or.matchesUpserted) 场，新增快照 $($or.snapshotsInserted) 条"
-      } catch {
-        $lastError = $_.Exception.Message
-        Write-Log "玩法入库失败：$lastError"
+    foreach($g in @($f.json.value.matchInfoList)){
+      foreach($m in @($g.subMatchList)){
+        if($null -ne $m.matchId){
+          $byId[[string]$m.matchId]=$m
+        }
       }
-      break
+    }
+    Start-Sleep -Milliseconds 350
+  }
+
+  Log "Schedule rows found: $($byId.Count)"
+  return @{
+    start=$startText
+    end=$endText
+    matches=@($byId.Values)
+  }
+}
+
+function EnrichMarkets($matches) {
+  $out=New-Object System.Collections.ArrayList
+  $i=0
+  foreach($m in @($matches)){
+    $i++
+    $x=CopyMatch $m
+    $mid=[string]$m.matchId
+    if(-not $mid){
+      [void]$out.Add($x)
+      continue
     }
 
-    Write-Log "玩法接口失败：HTTP $($f.status) / $($f.error)"
+    $url=$FixedBase+"?clientCode=3001&matchId="+[uri]::EscapeDataString($mid)
+    Log "Markets $i/$(@($matches).Count): $($m.matchNumStr) $($m.homeTeamAbbName) vs $($m.awayTeamAbbName)"
+    $f=FetchJson $url
+
+    if($f.ok){
+      $oh=$f.json.value.oddsHistory
+      if($oh){
+        AddMarket $x "had" (Latest $oh.hadList)
+        AddMarket $x "hhad" (Latest $oh.hhadList)
+        AddMarket $x "crs" (Latest $oh.crsList)
+        AddMarket $x "ttg" (Latest $oh.ttgList)
+        AddMarket $x "hafu" (Latest $oh.hafuList)
+      }
+    }else{
+      if($f.status -in 403,429,567){ throw "STOP_HTTP_$($f.status)" }
+      Log "Market detail unavailable for $mid: HTTP $($f.status) / $($f.error)"
+    }
+
+    [void]$out.Add($x)
+    Start-Sleep -Milliseconds 1500
+  }
+  return @($out)
+}
+
+function BuildPayload($matches) {
+  $groups=@{}
+  foreach($m in @($matches)){
+    $d=[string]$m.businessDate
+    if(-not $d){ $d=[string]$m.matchDate }
+    if(-not $d){ $d=(Get-Date).ToString("yyyy-MM-dd") }
+    if(-not $groups.ContainsKey($d)){ $groups[$d]=New-Object System.Collections.ArrayList }
+    [void]$groups[$d].Add($m)
   }
 
-  if($scheduleOk -or $oddsOk) {
-    $msg = "同步完成：赛程=" + ($(if($scheduleOk){"成功"}else{"失败"})) + "，玩法=" + ($(if($oddsOk){"成功"}else{"失败"}))
-    Write-Log $msg
-    Send-Heartbeat $token $true $msg $lastSource $lastStatus
-    return $true
+  $dayGroups=New-Object System.Collections.ArrayList
+  foreach($d in ($groups.Keys | Sort-Object)){
+    [void]$dayGroups.Add([ordered]@{
+      businessDate=$d
+      subMatchList=@($groups[$d])
+    })
   }
 
-  $error = if($lastError){$lastError}else{"FETCH_FAILED"}
-  Write-Log "本轮失败：$error"
-  Send-Heartbeat $token $false $error $lastSource $lastStatus
-  return $false
+  return [ordered]@{
+    success=$true
+    value=[ordered]@{
+      lastUpdateTime=(Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+      matchInfoList=@($dayGroups)
+    }
+  }
+}
+
+function PushPayload($t,$payload) {
+  $json=$payload | ConvertTo-Json -Depth 40 -Compress
+  return Invoke-RestMethod -Uri $IngestUrl -Method Post -Headers @{
+    "X-Collector-Token"=$t
+    "X-Collector-Version"=$Version
+    "X-Source-Endpoint"=$ListBase
+  } -ContentType "application/json" -Body $json -TimeoutSec 60
+}
+
+function RunOne {
+  $t=Token
+  Log "Starting Sporttery schedule + market collection..."
+  try{
+    $schedule=FetchAllSchedule
+    if(@($schedule.matches).Count -eq 0){
+      throw "NO_SCHEDULE_MATCHES"
+    }
+
+    $enriched=EnrichMarkets $schedule.matches
+    $payload=BuildPayload $enriched
+    $r=PushPayload $t $payload
+    if(-not $r.ok){ throw "Ingest failed: $($r.error)" }
+
+    Log "SUCCESS: schedule $(@($schedule.matches).Count), received $($r.matchesReceived), upserted $($r.matchesUpserted), snapshots $($r.snapshotsInserted)"
+    Heartbeat $t $true "schedule+markets sync success" $ListBase 200
+  }
+  catch{
+    $msg=$_.Exception.Message
+    Log "FAILED: $msg"
+    $status=if($msg -match '567'){567}elseif($msg -match '429'){429}elseif($msg -match '403'){403}else{0}
+    Heartbeat $t $false $msg $ListBase $status
+  }
 }
 
 try {
-  if($Once) {
-    Run-One | Out-Null
-    exit
-  }
-
-  Write-Log "球场档案竞彩自动采集器已启动，每15分钟执行一次。关闭此窗口会停止。"
-  while($true) {
-    Run-One | Out-Null
-    Start-Sleep -Seconds 900
-  }
+  if($Once){ RunOne; exit }
+  while($true){ RunOne; Start-Sleep -Seconds 900 }
 }
 catch {
-  Write-Log "程序错误：$($_.Exception.Message)"
+  Log "PROGRAM ERROR: $($_.Exception.Message)"
   exit 1
 }
