@@ -558,18 +558,38 @@ async function setupAdmin(){
         hint.className = 'code-hint';
       }
 
-      const { data, error } = await window.qcSupabase.functions.invoke('sporttery-sync', {
-        body: {}
-      });
+      const { data: sessionData } = await window.qcSupabase.auth.getSession();
+      const session = sessionData && sessionData.session;
+
+      let data = null;
+      let error = null;
+
+      if(!session || !session.access_token){
+        error = new Error('NOT_AUTHENTICATED');
+      }else{
+        try{
+          const response = await fetch(window.QC_SUPABASE_URL + '/functions/v1/sporttery-sync', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + session.access_token,
+              'apikey': window.QC_SUPABASE_PUBLISHABLE_KEY,
+              'Content-Type': 'application/json'
+            },
+            body: '{}'
+          });
+          const text = await response.text();
+          try{ data = JSON.parse(text); }catch{ data = { ok:false, error:'INVALID_RESPONSE', detail:text.slice(0,300) }; }
+          if(!response.ok) error = new Error(data?.error || ('HTTP_' + response.status));
+        }catch(err){
+          error = err;
+        }
+      }
 
       syncSportteryBtn.disabled = false;
       syncSportteryBtn.textContent = '同步官方竞彩数据';
 
       if(error || !data || !data.ok){
-        let errorBody = data || null;
-        if(error && error.context && typeof error.context.json === 'function'){
-          try{ errorBody = await error.context.json(); }catch{}
-        }
+        const errorBody = data || null;
         const raw = JSON.stringify(errorBody || {}) + ' ' + (error?.message || '');
         let message = '同步失败，请稍后重试';
         if(raw.includes('SPORTTERY_WAF_BLOCKED')){
