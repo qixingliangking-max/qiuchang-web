@@ -545,6 +545,7 @@ function jcRenderOddsPlayShell(pools,snapshots,active='had'){
     '<div class="jc-odds-play-tabs">'+
       '<button type="button" class="'+(active==='had'?'active':'')+'" data-odds-play="had">胜平负</button>'+
       '<button type="button" class="'+(active==='hhad'?'active':'')+'" data-odds-play="hhad">让球胜平负</button>'+
+      '<button type="button" class="'+(active==='crs'?'active':'')+'" data-odds-play="crs">比分</button>'+
       '<button type="button" class="'+(active==='ttg'?'active':'')+'" data-odds-play="ttg">总进球数</button>'+
       '<button type="button" class="'+(active==='hafu'?'active':'')+'" data-odds-play="hafu">半全场</button>'+
     '</div>'+
@@ -555,6 +556,7 @@ function jcRenderOddsPlayShell(pools,snapshots,active='had'){
 
 function jcRenderOddsPlayPanel(tab,pools,snapshots){
   if(tab==='hhad') return jcRenderHhadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots,'hhad');
+  if(tab==='crs') return jcRenderCrsDetail(pools.crs,snapshots);
   if(tab==='ttg') return jcRenderTtgDetail(pools.ttg,snapshots);
   if(tab==='hafu') return jcRenderHafuDetail(pools.hafu,snapshots);
   return jcRenderHadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots,'had');
