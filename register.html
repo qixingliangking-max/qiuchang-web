@@ -1,5 +1,59 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>球场档案｜注册</title><link rel="stylesheet" href="styles.css"></head><body><main class="auth-wrap"><form class="auth-card" id="registerForm"><h1>球场档案</h1><div class="subtitle">注册新账号</div><div class="field"><label>邮箱</label><input id="regEmail" type="email" required placeholder="请输入邮箱"></div><div class="field"><label>昵称（选填）</label><input placeholder="给自己取个名字"></div><div class="field"><label>密码</label><input type="password" minlength="8" required placeholder="至少8个字符"></div><div class="panel" style="margin:18px 0;padding:16px;text-align:center;color:var(--muted)">Cloudflare Turnstile 接入位</div><label class="check"><input type="checkbox" required><span>我已阅读并同意用户服务协议与隐私政策</span></label><button class="primary-btn">发送验证码 / 注册</button><div class="auth-link">已有账号？ <a href="login.html">立即登录</a></div></form></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="supabase-client.js"></script>
-<script src="app.js"></script>
-</body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>球场档案｜注册</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="auth-wrap">
+    <form class="auth-card" id="registerForm">
+      <h1>球场档案</h1>
+      <div class="subtitle">注册新账号</div>
+
+      <div class="field">
+        <label for="regEmail">邮箱</label>
+        <input id="regEmail" type="email" required autocomplete="email" placeholder="请输入邮箱">
+      </div>
+
+      <div class="field">
+        <label for="regNickname">昵称（选填）</label>
+        <input id="regNickname" type="text" maxlength="30" autocomplete="nickname" placeholder="给自己取个名字">
+      </div>
+
+      <div class="field">
+        <label for="regPassword">密码</label>
+        <input id="regPassword" type="password" minlength="8" required autocomplete="new-password" placeholder="至少8个字符">
+      </div>
+
+      <div class="field">
+        <label for="regCode">邮箱验证码</label>
+        <div class="code-row">
+          <input id="regCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required placeholder="请输入6位验证码">
+          <button id="sendCodeBtn" class="code-btn" type="button">发送验证码</button>
+        </div>
+        <div class="code-hint" id="codeHint">先填写邮箱和密码，再发送验证码。</div>
+      </div>
+
+      <div class="turnstile-placeholder">
+        <span class="turnstile-dot">✓</span>
+        <div><b>人机验证</b><small>Cloudflare Turnstile 将在下一步接入</small></div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" required>
+        <span>我已阅读并同意《用户服务协议》和《隐私政策》</span>
+      </label>
+
+      <button class="primary-btn" type="submit">验证并注册</button>
+      <div class="auth-link">已有账号？ <a href="login.html">立即登录</a></div>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
