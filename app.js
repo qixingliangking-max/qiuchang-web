@@ -829,7 +829,7 @@ function setupDemoAuth(){
 
       if(data.user){
         const next = new URLSearchParams(location.search).get('next');
-        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'profile.html';
+        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
         location.href = safeNext;
       }
     };
@@ -894,10 +894,10 @@ function setupDemoAuth(){
 
       if(data.session){
         if(hint){
-          hint.textContent = '注册成功，正在进入个人中心…';
+          hint.textContent = '注册成功，正在进入今日赛事…';
           hint.className = 'code-hint success';
         }
-        location.href = 'profile.html';
+        location.href = 'index.html';
         return;
       }
 
