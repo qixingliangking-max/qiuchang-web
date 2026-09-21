@@ -1,406 +1,292 @@
-const OFFICIAL_PAGES = [
-  'https://www.sporttery.cn/jc/zqszsc/index.html'
-];
+const OFFICIAL_PAGE = 'https://www.sporttery.cn/jc/jsq/zqspf/';
+const SPORTTERY_SCHEDULE_PAGE = 'https://www.sporttery.cn/jc/zqszsc/index.html';
+const FALLBACK_500_PAGE = 'https://trade.500.com/jczq/?playid=269&g=2';
 const INGEST_URL = 'https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest';
-const ENDPOINTS = [
-  {
-    label:'uniform',
-    url:'https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
-  },
-  {
-    label:'jc',
-    url:'https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
-  }
-];
 
 function wait(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
 
 async function getStored(){
-  return await chrome.storage.local.get(['collectorToken','autoSync','lastResult','lastSyncAt']);
+  return await chrome.storage.local.get(['collectorToken','autoSync','lastResult','lastSyncAt','last500Result']);
 }
 
-async function saveResult(result){
-  await chrome.storage.local.set({
-    lastResult: result,
-    lastSyncAt: new Date().toISOString()
-  });
+async function saveResult(key,result){
+  const update = {};
+  update[key] = result;
+  update[key === 'lastResult' ? 'lastSyncAt' : 'last500SyncAt'] = new Date().toISOString();
+  await chrome.storage.local.set(update);
 }
 
-function parsePayload(text){
-  try{
-    const payload = JSON.parse(text);
-    if(payload && payload.value && Array.isArray(payload.value.matchInfoList)){
-      return payload;
-    }
-  }catch{}
-  return null;
-}
-
-async function fetchDirect(){
-  const attempts = [];
-  for(const item of ENDPOINTS){
-    try{
-      const res = await fetch(item.url, {
-        method:'GET',
-        cache:'no-store',
-        credentials:'include',
-        headers:{
-          'Accept':'application/json, text/javascript, */*; q=0.01',
-          'Accept-Language':'zh-CN,zh;q=0.9',
-          'X-Requested-With':'XMLHttpRequest'
-        }
-      });
-      const text = await res.text();
-      const payload = parsePayload(text);
-      attempts.push({
-        label:item.label,
-        endpoint:item.url,
-        status:res.status,
-        contentType:res.headers.get('content-type') || '',
-        prefix:text.slice(0,120)
-      });
-      if(res.ok && payload){
-        return {ok:true,method:'extension-direct',endpoint:item.url,payload,attempts};
-      }
-    }catch(err){
-      attempts.push({
-        label:item.label,
-        endpoint:item.url,
-        error:String(err)
-      });
-    }
-  }
-  return {ok:false,error:'DIRECT_NO_VALID_JSON',attempts};
-}
-
-async function waitForTabComplete(tabId, timeoutMs=25000){
+async function waitForTabComplete(tabId, timeoutMs=30000){
   const started = Date.now();
   while(Date.now() - started < timeoutMs){
     const tab = await chrome.tabs.get(tabId);
     if(tab.status === 'complete') return tab;
     await wait(500);
   }
-  throw new Error('OFFICIAL_PAGE_TIMEOUT');
+  throw new Error('PAGE_TIMEOUT');
 }
 
-async function fetchInsideSporttery(tabId){
-  const [result] = await chrome.scripting.executeScript({
-    target:{tabId},
-    world:'MAIN',
-    func: async (endpoints) => {
-      const page = {
-        url:location.href,
-        title:document.title || ''
-      };
-      if(/Access Restricted/i.test(page.title)){
-        return {ok:false,error:'ACCESS_RESTRICTED',page,attempts:[]};
-      }
-
-      const attempts = [];
-      for(const item of endpoints){
-        try{
-          const res = await fetch(item.url, {
-            method:'GET',
-            credentials:'include',
-            cache:'no-store',
-            headers:{
-              'Accept':'application/json, text/javascript, */*; q=0.01',
-              'X-Requested-With':'XMLHttpRequest'
-            }
-          });
-          const text = await res.text();
-          let payload = null;
-          try{ payload = JSON.parse(text); }catch{}
-          attempts.push({
-            label:item.label,
-            endpoint:item.url,
-            status:res.status,
-            contentType:res.headers.get('content-type') || '',
-            prefix:text.slice(0,120)
-          });
-          if(res.ok && payload && payload.value && Array.isArray(payload.value.matchInfoList)){
-            return {ok:true,method:'official-page',endpoint:item.url,payload,page,attempts};
-          }
-        }catch(err){
-          attempts.push({
-            label:item.label,
-            endpoint:item.url,
-            error:String(err)
-          });
-        }
-      }
-      return {ok:false,error:'PAGE_NO_VALID_JSON',page,attempts};
-    },
-    args:[ENDPOINTS]
-  });
-
-  return result && result.result ? result.result : {ok:false,error:'SCRIPT_NO_RESULT',attempts:[]};
-}
-
-async function fetchViaOfficialPages(){
-  const pageAttempts = [];
-  for(const pageUrl of OFFICIAL_PAGES){
-    let tabId = null;
-    try{
-      const tab = await chrome.tabs.create({url:pageUrl,active:false});
-      tabId = tab.id;
-      await waitForTabComplete(tabId);
-      await wait(1800);
-
-      const result = await fetchInsideSporttery(tabId);
-      pageAttempts.push({
-        pageUrl,
-        page:result.page || null,
-        error:result.error || null,
-        attempts:result.attempts || []
-      });
-      if(result.ok){
-        return {...result,pageAttempts};
-      }
-
-      const scraped = await scrapeScheduleFromPage(tabId);
-      if(scraped.ok){
-        return {
-          ok:true,
-          method:'schedule-dom',
-          endpoint:pageUrl,
-          payload:buildSchedulePayload(scraped),
-          scrapedCount:scraped.rows.length,
-          page:scraped.page,
-          pageAttempts
-        };
-      }
-    }catch(err){
-      pageAttempts.push({
-        pageUrl,
-        error:String(err),
-        attempts:[]
-      });
-    }finally{
-      if(tabId){
-        try{ await chrome.tabs.remove(tabId); }catch{}
-      }
-    }
+function normalizeDate(raw){
+  if(!raw) return '';
+  const s = String(raw).trim().replace(/\//g,'-');
+  if(/^20\d{2}-\d{1,2}-\d{1,2}$/.test(s)){
+    const [y,m,d]=s.split('-');
+    return y+'-'+m.padStart(2,'0')+'-'+d.padStart(2,'0');
   }
-  return {ok:false,error:'UPSTREAM_NO_VALID_JSON',pageAttempts};
+  if(/^\d{1,2}-\d{1,2}$/.test(s)){
+    const now = new Date();
+    const [m,d]=s.split('-');
+    return now.getFullYear()+'-'+m.padStart(2,'0')+'-'+d.padStart(2,'0');
+  }
+  return '';
 }
 
-
-async function scrapeScheduleFromPage(tabId){
-  const [result] = await chrome.scripting.executeScript({
-    target:{tabId},
+async function scrapeRows(tabId, mode){
+  const results = await chrome.scripting.executeScript({
+    target:{tabId,allFrames:true},
     world:'MAIN',
-    func: () => {
-      const rows = [];
-      const trs = Array.from(document.querySelectorAll('tr'));
-      for(const tr of trs){
-        const cells = Array.from(tr.querySelectorAll('td,th'))
-          .map(el => (el.innerText || '').replace(/\s+/g,' ').trim())
-          .filter(Boolean);
+    func:(mode)=>{
+      const clean = v => (v || '').replace(/\s+/g,' ').trim();
+      const rows=[];
+      const diagnostics={
+        url:location.href,
+        title:document.title || '',
+        tableCount:document.querySelectorAll('table').length,
+        trCount:document.querySelectorAll('tr').length,
+        iframeCount:document.querySelectorAll('iframe').length,
+        bodyPrefix:clean(document.body?.innerText || '').slice(0,700)
+      };
 
+      for(const tr of Array.from(document.querySelectorAll('tr'))){
+        const cells=Array.from(tr.querySelectorAll('td,th')).map(x=>clean(x.innerText)).filter(Boolean);
         if(!cells.length) continue;
+        const joined=cells.join(' | ');
+        const numMatch=joined.match(/周[一二三四五六日][0-9]{3}/);
+        if(!numMatch) continue;
+        const matchNum=numMatch[0];
 
-        const matchNum = cells.find(t => /^周[一二三四五六日][0-9]{3}$/.test(t));
-        const teamCell = cells.find(t => /\sVS\s/i.test(t));
-        const timeCell = cells.find(t => /20\d{2}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(t));
-        if(!matchNum || !teamCell || !timeCell) continue;
+        let date='', time='';
+        let dt=joined.match(/(20\d{2}[-\/]\d{1,2}[-\/]\d{1,2})\s+(\d{1,2}:\d{2})/);
+        if(dt){ date=dt[1]; time=dt[2]; }
+        if(!date){
+          dt=joined.match(/(\d{1,2}[-\/]\d{1,2})\s+(\d{1,2}:\d{2})/);
+          if(dt){ date=dt[1]; time=dt[2]; }
+        }
 
-        const m = teamCell.split(/\s+VS\s+/i);
-        if(m.length < 2) continue;
+        const explicitVs=cells.find(x=>/\s(?:VS|vs|Vs)\s/.test(x));
+        let home='',away='';
+        if(explicitVs){
+          const parts=explicitVs.split(/\s+(?:VS|vs|Vs)\s+/);
+          if(parts.length>=2){ home=clean(parts[0]); away=clean(parts.slice(1).join(' ')); }
+        }
 
-        const idx = cells.indexOf(matchNum);
-        const league = idx >= 0 && cells[idx+1] && cells[idx+1] !== teamCell ? cells[idx+1] : '';
+        const teamTexts=Array.from(tr.querySelectorAll('[class*="team"],[class*="Team"]'))
+          .map(x=>clean(x.innerText)).filter(Boolean)
+          .filter((v,i,a)=>a.indexOf(v)===i)
+          .filter(v=>!v.includes(matchNum) && v.length<=30);
+        if((!home || !away) && teamTexts.length>=2){
+          home=teamTexts[0];
+          away=teamTexts[1];
+        }
 
-        const dt = (timeCell.match(/(20\d{2}-\d{2}-\d{2})\s+(\d{2}:\d{2})/) || []);
-        const statusText = cells.find(t => /待开售|开售|停售|暂停销售|销售中|已结束/.test(t)) || '';
+        if(!home || !away){
+          const candidates=cells.filter(v=>{
+            if(v.includes(matchNum)) return false;
+            if(/20\d{2}[-\/]\d{1,2}[-\/]\d{1,2}/.test(v)) return false;
+            if(/^\d{1,2}[-\/]\d{1,2}\s+\d{1,2}:\d{2}$/.test(v)) return false;
+            if(/^\d{1,2}:\d{2}$/.test(v)) return false;
+            if(/^(未|已|停售|开售|待售|销售|析|欧|亚|大|小)/.test(v)) return false;
+            if(/^[+\-]?\d+(\.\d+)?(?:\s+[+\-]?\d+(\.\d+)?)*$/.test(v)) return false;
+            if(v.length<2 || v.length>24) return false;
+            return true;
+          });
+          const unique=candidates.filter((v,i,a)=>a.indexOf(v)===i);
+          if(unique.length>=3){
+            home=home || unique[unique.length-2];
+            away=away || unique[unique.length-1];
+          }else if(unique.length>=2){
+            home=home || unique[0];
+            away=away || unique[1];
+          }
+        }
+
+        let league='';
+        const leagueEl=tr.querySelector('[class*="league"],[class*="match_name"],[class*="matchName"]');
+        if(leagueEl) league=clean(leagueEl.innerText);
+        if(!league){
+          const idx=cells.findIndex(v=>v.includes(matchNum));
+          if(idx>=0 && cells[idx+1] && cells[idx+1]!==home && cells[idx+1]!==away) league=cells[idx+1];
+        }
 
         rows.push({
-          matchNum,
-          league,
-          home:m[0].trim(),
-          away:m.slice(1).join(' VS ').trim(),
-          date:dt[1] || '',
-          time:dt[2] || '',
-          status:statusText,
-          cells
+          matchNum,league,home,away,date,time,cells,mode,
+          rowText:joined.slice(0,1000)
         });
       }
 
-      const dedup = [];
-      const seen = new Set();
-      for(const r of rows){
-        const key = r.date + '|' + r.matchNum + '|' + r.home + '|' + r.away;
-        if(!seen.has(key)){
-          seen.add(key);
-          dedup.push(r);
-        }
-      }
-      return {
-        ok:dedup.length > 0,
-        page:{url:location.href,title:document.title || ''},
-        rows:dedup
-      };
-    }
+      return {diagnostics,rows};
+    },
+    args:[mode]
   });
 
-  return result && result.result ? result.result : {ok:false,rows:[]};
+  const frames=results.map(x=>x.result).filter(Boolean);
+  const allRows=frames.flatMap(x=>x.rows || []);
+  const seen=new Set();
+  const rows=[];
+  for(const r of allRows){
+    const key=[r.matchNum,r.date,r.home,r.away].join('|');
+    if(!seen.has(key)){
+      seen.add(key);
+      rows.push(r);
+    }
+  }
+  return {rows,frames};
 }
 
-function buildSchedulePayload(scraped){
-  const groupsMap = new Map();
-  for(const r of scraped.rows || []){
-    const date = r.date || new Date().toISOString().slice(0,10);
-    if(!groupsMap.has(date)) groupsMap.set(date, []);
-    groupsMap.get(date).push({
-      matchId:'web-' + date.replaceAll('-','') + '-' + r.matchNum,
+function buildPayload(scraped,source){
+  const groups=new Map();
+  for(const r of scraped.rows){
+    if(!r.matchNum || !r.home || !r.away) continue;
+    const date=normalizeDate(r.date) || new Date().toISOString().slice(0,10);
+    if(!groups.has(date)) groups.set(date,[]);
+    groups.get(date).push({
+      matchId:source+'-'+date.replaceAll('-','')+'-'+r.matchNum,
       matchNumStr:r.matchNum,
       leagueAllName:r.league || null,
       leagueAbbName:r.league || null,
       homeTeamAbbName:r.home,
       awayTeamAbbName:r.away,
       matchDate:date,
-      matchTime:(r.time || '00:00') + ':00',
-      matchStatus:r.status || 'scheduled',
+      matchTime:(r.time || '00:00') + (r.time && r.time.length===5 ? ':00' : ''),
+      matchStatus:'scheduled',
       sellStatus:{},
-      source:'sporttery_schedule_dom'
+      source,
+      rawCells:r.cells,
+      rawRowText:r.rowText
     });
   }
   return {
     success:true,
     value:{
       lastUpdateTime:new Date().toISOString(),
-      matchInfoList:[...groupsMap.entries()].map(([businessDate,subMatchList])=>({
-        businessDate,
-        subMatchList
-      }))
+      matchInfoList:[...groups.entries()].map(([businessDate,subMatchList])=>({businessDate,subMatchList}))
     }
   };
 }
 
-async function pushToDatabase(token, fetched){
-  const res = await fetch(INGEST_URL, {
+async function pushToDatabase(token,payload,sourceUrl){
+  const res=await fetch(INGEST_URL,{
     method:'POST',
     headers:{
       'Content-Type':'application/json',
       'X-Collector-Token':token,
-      'X-Collector-Version':'0.1.2',
-      'X-Source-Endpoint':fetched.endpoint || ''
+      'X-Collector-Version':'0.1.3',
+      'X-Source-Endpoint':sourceUrl
     },
-    body:JSON.stringify(fetched.payload)
+    body:JSON.stringify(payload)
   });
-  const text = await res.text();
-  let data = null;
-  try{ data = JSON.parse(text); }catch{
-    data = {ok:false,error:'INGEST_INVALID_RESPONSE',detail:text.slice(0,200)};
-  }
-  if(!res.ok || !data.ok){
-    throw new Error(data.error || ('INGEST_HTTP_' + res.status));
-  }
+  const text=await res.text();
+  let data=null;
+  try{ data=JSON.parse(text); }catch{ data={ok:false,error:'INGEST_INVALID_RESPONSE',detail:text.slice(0,200)}; }
+  if(!res.ok || !data.ok) throw new Error(data.error || ('INGEST_HTTP_'+res.status));
   return data;
 }
 
-async function runSync(){
-  const stored = await getStored();
-  const token = (stored.collectorToken || '').trim();
+async function collectPage(pageUrl,mode,storageKey){
+  const stored=await getStored();
+  const token=(stored.collectorToken || '').trim();
   if(!token){
-    const result = {ok:false,error:'NO_TOKEN',message:'请先在扩展里保存采集器凭证'};
-    await saveResult(result);
+    const result={ok:false,error:'NO_TOKEN',message:'请先保存采集器凭证'};
+    await saveResult(storageKey,result);
     return result;
   }
 
+  let tabId=null;
   try{
-    const direct = await fetchDirect();
-    let fetched = direct;
+    const tab=await chrome.tabs.create({url:pageUrl,active:false});
+    tabId=tab.id;
+    await waitForTabComplete(tabId);
+    await wait(2500);
 
-    if(!direct.ok){
-      const pageResult = await fetchViaOfficialPages();
-      if(pageResult.ok){
-        fetched = pageResult;
-      }else{
-        const hasRestricted = (pageResult.pageAttempts || []).some(x =>
-          x.error === 'ACCESS_RESTRICTED' || /Access Restricted/i.test(x.page?.title || '')
-        );
-        const result = {
-          ok:false,
-          error:hasRestricted ? 'ACCESS_RESTRICTED' : 'UPSTREAM_NO_VALID_JSON',
-          message:hasRestricted
-            ? '当前网络访问竞彩网被限制'
-            : '竞彩网接口没有返回可用 JSON',
-          detail:{
-            directAttempts:direct.attempts || [],
-            pageAttempts:pageResult.pageAttempts || []
-          }
-        };
-        await saveResult(result);
-        return result;
-      }
+    const scraped=await scrapeRows(tabId,mode);
+    const usable=scraped.rows.filter(r=>r.matchNum && r.home && r.away);
+
+    if(!usable.length){
+      const result={
+        ok:false,
+        error:'NO_MATCH_ROWS',
+        message:'页面可以打开，但暂时没有识别到竞彩比赛行',
+        pageUrl,
+        detectedRows:scraped.rows.length,
+        diagnostics:scraped.frames.slice(0,4)
+      };
+      await saveResult(storageKey,result);
+      return result;
     }
 
-    const ingested = await pushToDatabase(token, fetched);
-    const result = {
+    const source=mode==='500' ? '500_trade_dom' : 'sporttery_dom';
+    const payload=buildPayload({rows:usable},source);
+    const ingested=await pushToDatabase(token,payload,pageUrl);
+    const result={
       ok:true,
-      message:'同步成功',
-      method:fetched.method || 'unknown',
+      source,
+      message:'赛程同步成功',
+      detectedRows:scraped.rows.length,
+      parsedMatches:usable.length,
       matchesReceived:ingested.matchesReceived || 0,
       matchesUpserted:ingested.matchesUpserted || 0,
-      snapshotsInserted:ingested.snapshotsInserted || 0,
-      sourceUpdatedAt:ingested.sourceUpdatedAt || null,
-      scheduleOnly:(fetched.method === 'schedule-dom')
+      snapshotsInserted:ingested.snapshotsInserted || 0
     };
-    await saveResult(result);
+    await saveResult(storageKey,result);
     return result;
   }catch(err){
-    const result = {
-      ok:false,
-      error:String(err.message || err),
-      message:'同步失败'
-    };
-    await saveResult(result);
+    const result={ok:false,error:String(err.message || err),message:'采集失败'};
+    await saveResult(storageKey,result);
     return result;
+  }finally{
+    if(tabId){ try{ await chrome.tabs.remove(tabId); }catch{} }
   }
+}
+
+async function runOfficial(){
+  let result=await collectPage(OFFICIAL_PAGE,'sporttery','lastResult');
+  if(!result.ok && result.error==='NO_MATCH_ROWS'){
+    result=await collectPage(SPORTTERY_SCHEDULE_PAGE,'sporttery','lastResult');
+  }
+  return result;
+}
+
+async function run500(){
+  return await collectPage(FALLBACK_500_PAGE,'500','last500Result');
 }
 
 async function ensureAlarm(){
-  const stored = await getStored();
-  if(stored.autoSync === false){
+  const stored=await getStored();
+  if(stored.autoSync===false){
     await chrome.alarms.clear('sportteryAutoSync');
     return;
   }
-  const alarm = await chrome.alarms.get('sportteryAutoSync');
-  if(!alarm){
-    chrome.alarms.create('sportteryAutoSync',{delayInMinutes:2,periodInMinutes:15});
-  }
+  const alarm=await chrome.alarms.get('sportteryAutoSync');
+  if(!alarm) chrome.alarms.create('sportteryAutoSync',{delayInMinutes:2,periodInMinutes:15});
 }
 
-chrome.runtime.onInstalled.addListener(async () => {
-  const stored = await chrome.storage.local.get(['autoSync']);
-  if(typeof stored.autoSync === 'undefined'){
-    await chrome.storage.local.set({autoSync:true});
-  }
+chrome.runtime.onInstalled.addListener(async()=>{
+  const stored=await chrome.storage.local.get(['autoSync']);
+  if(typeof stored.autoSync==='undefined') await chrome.storage.local.set({autoSync:true});
   await ensureAlarm();
 });
-
 chrome.runtime.onStartup.addListener(ensureAlarm);
-
-chrome.alarms.onAlarm.addListener(async alarm => {
-  if(alarm.name === 'sportteryAutoSync'){
-    const stored = await getStored();
-    if(stored.autoSync !== false && stored.collectorToken){
-      await runSync();
-    }
+chrome.alarms.onAlarm.addListener(async alarm=>{
+  if(alarm.name==='sportteryAutoSync'){
+    const stored=await getStored();
+    if(stored.autoSync!==false && stored.collectorToken) await runOfficial();
   }
 });
-
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if(message && message.type === 'RUN_SYNC'){
-    runSync().then(sendResponse);
-    return true;
-  }
-  if(message && message.type === 'SET_AUTO_SYNC'){
-    chrome.storage.local.set({autoSync:Boolean(message.enabled)}).then(async () => {
-      await ensureAlarm();
-      sendResponse({ok:true});
-    });
+chrome.runtime.onMessage.addListener((message,_sender,sendResponse)=>{
+  if(message?.type==='RUN_SYNC'){ runOfficial().then(sendResponse); return true; }
+  if(message?.type==='RUN_500_SYNC'){ run500().then(sendResponse); return true; }
+  if(message?.type==='SET_AUTO_SYNC'){
+    chrome.storage.local.set({autoSync:Boolean(message.enabled)}).then(async()=>{ await ensureAlarm(); sendResponse({ok:true}); });
     return true;
   }
 });
