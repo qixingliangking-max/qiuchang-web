@@ -27,7 +27,7 @@
       <section class="profile-card" style="margin-top:20px">
         <h2>竞彩足球数据</h2>
         <p style="color:var(--muted);line-height:1.7;margin-top:0">
-          官方竞彩数据：赛程、竞彩编号、胜平负、让球胜平负、比分、总进球、半全场。云端直连会被竞彩网 WAF 拦截，因此改为本机浏览器采集后自动写入数据库。
+          官方竞彩数据：赛程、竞彩编号、胜平负、让球胜平负、比分、总进球、半全场。云端直连会被竞彩网 WAF 拦截，因此改为 Windows 本机后台自动采集并写入数据库。
         </p>
         <div class="admin-grid" style="margin:16px 0">
           <div class="metric"><b id="jcMatchCount">—</b><span>竞彩比赛</span></div>
@@ -42,6 +42,24 @@
           <button id="copyCollectorTokenBtn" class="small-btn" type="button">复制</button>
         </div>
         <div id="jcSyncHint" class="code-hint"></div>
+
+        <h3 style="margin-top:24px">最近采集到的比赛</h3>
+        <div class="admin-table-wrap">
+          <table class="brief-table jc-admin-table">
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>日期时间</th>
+                <th>联赛</th>
+                <th>对阵</th>
+                <th>玩法</th>
+              </tr>
+            </thead>
+            <tbody id="jcAdminMatchRows">
+              <tr><td colspan="5">正在读取…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section class="profile-card">
@@ -90,6 +108,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260922g"></script>
-  <script src="app.js?v=20260922h"></script>
+  <script src="app.js?v=20260922i"></script>
 </body>
 </html>
