@@ -1,6 +1,5 @@
 const OFFICIAL_PAGES = [
-  'https://m.sporttery.cn/mjc/jsq/zqspf/',
-  'https://www.sporttery.cn/jc/zqszsc/'
+  'https://www.sporttery.cn/jc/zqszsc/index.html'
 ];
 const INGEST_URL = 'https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest';
 const ENDPOINTS = [
