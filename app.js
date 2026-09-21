@@ -236,7 +236,8 @@ function jcRenderFutureGrid(rows,today){
 
 function jcTodayDetailHtml(m,today){
   if(!m) return '<div class="jc-today-empty">今天暂无比赛。</div>';
-  const pools=jcLatestPools(m.jc_market_snapshots || []);
+  const snapshots=m.jc_market_snapshots || [];
+  const pools=jcLatestPools(snapshots);
   const score=jcScoreInfo(m);
   const status=jcMatchStatusLabel(m,today);
   const league=qcEscape(m.league_name || m.league_short_name || '—');
@@ -247,15 +248,16 @@ function jcTodayDetailHtml(m,today){
   const scoreCenter=score.ft
     ? '<div class="jc-big-score"><small>'+(score.ht?'半 '+qcEscape(score.ht):'')+'</small><strong>'+qcEscape(score.ft)+'</strong><span>'+qcEscape(status)+'</span></div>'
     : '<div class="jc-big-score"><strong>VS</strong><span>'+qcEscape(status)+'</span></div>';
+
   return '<div class="jc-today-detail">'+
     '<div class="jc-today-detail-head"><span>'+num+' · '+league+' · '+qcEscape(m.match_date)+' '+time+'</span></div>'+
     '<div class="jc-today-matchup"><div><b>'+home+'</b></div>'+scoreCenter+'<div class="right"><b>'+away+'</b></div></div>'+
-    '<h3>官方竞彩</h3>'+jcRenderOddsMini(pools)+
-    '<div class="jc-today-more">'+
-      ['ttg','hafu','crs'].map(code=>{
-        const p=pools[code];
-        return '<div><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未返回')+'</span></div>';
-      }).join('')+
+    '<div class="jc-today-odds-stack">'+
+      jcRenderHadDetail(pools,snapshots)+
+      jcRenderCrsDetail(pools.crs,snapshots)+
+      jcRenderTtgDetail(pools.ttg,snapshots)+
+      jcRenderHafuDetail(pools.hafu,snapshots)+
+      jcRenderOddsHistory(snapshots)+
     '</div>'+
   '</div>';
 }
