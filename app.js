@@ -45,7 +45,11 @@ function setupDemoAuth(){
       button.textContent = '登录';
 
       if(error){
-        alert('登录失败：' + error.message);
+        let message = '登录失败，请稍后重试';
+        const raw = error.message || '';
+        if(raw.includes('Invalid login credentials')) message = '邮箱或密码错误';
+        if(raw.includes('Email not confirmed')) message = '邮箱尚未完成验证';
+        alert(message);
         return;
       }
 
@@ -100,11 +104,15 @@ function setupDemoAuth(){
       button.textContent = '注册';
 
       if(error){
+        let message = '注册失败，请检查邮箱和密码后重试';
+        const raw = error.message || '';
+        if(raw.includes('already registered') || raw.includes('User already registered')) message = '这个邮箱已经注册，可以直接登录';
+        if(raw.includes('Password')) message = '密码不符合要求，请使用至少8个字符';
         if(hint){
-          hint.textContent = '注册失败，请检查邮箱和密码后重试。';
+          hint.textContent = message;
           hint.className = 'code-hint error';
         }
-        alert('注册失败：' + error.message);
+        alert(message);
         return;
       }
 
@@ -125,6 +133,40 @@ function setupDemoAuth(){
     };
   }
 
+}
+
+
+async function setupAuthNav(){
+  if(!window.qcSupabase) return;
+
+  const loginLink = $('#navLogin');
+  const registerLink = $('#navRegister');
+  const profileLink = $('#navProfile');
+  const logoutLink = $('#navLogout');
+
+  if(!loginLink && !registerLink && !profileLink && !logoutLink) return;
+
+  const { data } = await window.qcSupabase.auth.getSession();
+  const session = data && data.session;
+
+  if(session){
+    if(loginLink) loginLink.style.display = 'none';
+    if(registerLink) registerLink.style.display = 'none';
+    if(profileLink) profileLink.style.display = 'block';
+    if(logoutLink){
+      logoutLink.style.display = 'block';
+      logoutLink.onclick = async e => {
+        e.preventDefault();
+        await window.qcSupabase.auth.signOut();
+        location.href = 'index.html';
+      };
+    }
+  }else{
+    if(loginLink) loginLink.style.display = 'block';
+    if(registerLink) registerLink.style.display = 'block';
+    if(profileLink) profileLink.style.display = 'block';
+    if(logoutLink) logoutLink.style.display = 'none';
+  }
 }
 
 async function setupProfile(){
@@ -525,4 +567,4 @@ async function setupAdmin(){
   }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile();setupAdmin();})
+document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupAuthNav();setupProfile();setupAdmin();})
