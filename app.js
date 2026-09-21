@@ -88,7 +88,7 @@ async function loadJcFrontend(){
     const home=qcEscape(m.home_team_name || '—');
     const away=qcEscape(m.away_team_name || '—');
 
-    return '<article class="match-card jc-live-card">'+
+    return '<a class="match-card jc-live-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
       '<div class="match-top"><span><b>'+no+'</b> · '+league+'</span><span>'+qcEscape(dateTime || '时间待定')+'</span></div>'+
       '<div class="match-main"><div class="team">'+home+'</div><div class="versus">VS</div><div class="team right">'+away+'</div></div>'+
       '<div class="jc-market-grid">'+
@@ -98,8 +98,54 @@ async function loadJcFrontend(){
       }).join('')+
       '</div>'+
       '<div class="jc-source-line">官方竞彩 · 已采集 '+available.length+'/5 个玩法</div>'+
-    '</article>';
+    '</a>';
   }).join('');
+}
+
+async function setupJcMatchDetail(){
+  const root=$('#jcMatchDetailRoot');
+  if(!root || !window.qcSupabase) return;
+
+  const id=new URLSearchParams(location.search).get('id');
+  if(!id){
+    root.innerHTML='<div class="profile-card">缺少比赛参数。</div>';
+    return;
+  }
+
+  const {data:m,error}=await window.qcSupabase
+    .from('jc_matches')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
+    .eq('id',id)
+    .single();
+
+  if(error || !m){
+    root.innerHTML='<div class="profile-card">这场比赛暂时无法读取。</div>';
+    return;
+  }
+
+  const pools=jcLatestPools(m.jc_market_snapshots || []);
+  const order=['had','hhad','crs','ttg','hafu'];
+
+  root.innerHTML=
+    '<div class="detail-head">'+
+      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_short_name || m.league_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
+      '<div class="detail-title" style="margin-top:18px">'+
+        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
+        '<div class="center-score"><strong>VS</strong><small>'+qcEscape(m.match_status || '赛前')+'</small></div>'+
+        '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="panel"><h2>官方竞彩玩法</h2>'+
+      '<div class="jc-detail-grid">'+order.map(code=>{
+        const p=pools[code];
+        return '<section class="jc-detail-market">'+
+          '<div class="jc-detail-market-head"><strong>'+jcPoolLabel(code)+'</strong>'+(p?.goal_line?'<span>让球 '+qcEscape(p.goal_line)+'</span>':'')+'</div>'+
+          '<div class="jc-detail-outcomes">'+(p?qcEscape(jcOutcomeSummary(p)):'该玩法暂未返回')+'</div>'+
+          (p?.official_update_time?'<small>官方更新时间：'+qcEscape(p.official_update_time)+'</small>':'')+
+        '</section>';
+      }).join('')+'</div>'+
+      '<div class="jc-source-line">数据来源：中国体育彩票竞彩足球移动端官方链路</div>'+
+    '</div>';
 }
 
 function renderMatch(){
@@ -807,4 +853,4 @@ async function setupAdmin(){
   }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();loadJcFrontend();renderMatch();setupDemoAuth();setupAuthNav();setupProfile();setupAdmin();})
+document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();loadJcFrontend();setupJcMatchDetail();renderMatch();setupDemoAuth();setupAuthNav();setupProfile();setupAdmin();})
