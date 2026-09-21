@@ -1,8 +1,17 @@
-const OFFICIAL_PAGE = 'https://m.sporttery.cn/mjc/jsq/zqspf/';
+const OFFICIAL_PAGES = [
+  'https://m.sporttery.cn/mjc/jsq/zqspf/',
+  'https://www.sporttery.cn/jc/zqszsc/'
+];
 const INGEST_URL = 'https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest';
 const ENDPOINTS = [
-  'https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu',
-  'https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
+  {
+    label:'uniform',
+    url:'https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
+  },
+  {
+    label:'jc',
+    url:'https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
+  }
 ];
 
 function wait(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -16,6 +25,53 @@ async function saveResult(result){
     lastResult: result,
     lastSyncAt: new Date().toISOString()
   });
+}
+
+function parsePayload(text){
+  try{
+    const payload = JSON.parse(text);
+    if(payload && payload.value && Array.isArray(payload.value.matchInfoList)){
+      return payload;
+    }
+  }catch{}
+  return null;
+}
+
+async function fetchDirect(){
+  const attempts = [];
+  for(const item of ENDPOINTS){
+    try{
+      const res = await fetch(item.url, {
+        method:'GET',
+        cache:'no-store',
+        credentials:'include',
+        headers:{
+          'Accept':'application/json, text/javascript, */*; q=0.01',
+          'Accept-Language':'zh-CN,zh;q=0.9',
+          'X-Requested-With':'XMLHttpRequest'
+        }
+      });
+      const text = await res.text();
+      const payload = parsePayload(text);
+      attempts.push({
+        label:item.label,
+        endpoint:item.url,
+        status:res.status,
+        contentType:res.headers.get('content-type') || '',
+        prefix:text.slice(0,120)
+      });
+      if(res.ok && payload){
+        return {ok:true,method:'extension-direct',endpoint:item.url,payload,attempts};
+      }
+    }catch(err){
+      attempts.push({
+        label:item.label,
+        endpoint:item.url,
+        error:String(err)
+      });
+    }
+  }
+  return {ok:false,error:'DIRECT_NO_VALID_JSON',attempts};
 }
 
 async function waitForTabComplete(tabId, timeoutMs=25000){
@@ -33,47 +89,88 @@ async function fetchInsideSporttery(tabId){
     target:{tabId},
     world:'MAIN',
     func: async (endpoints) => {
-      if(document.title && /Access Restricted/i.test(document.title)){
-        return {ok:false,error:'ACCESS_RESTRICTED',title:document.title};
+      const page = {
+        url:location.href,
+        title:document.title || ''
+      };
+      if(/Access Restricted/i.test(page.title)){
+        return {ok:false,error:'ACCESS_RESTRICTED',page,attempts:[]};
       }
 
-      const headers = {
-        'Accept':'application/json, text/javascript, */*; q=0.01',
-        'X-Requested-With':'XMLHttpRequest'
-      };
-
       const attempts = [];
-      for(const endpoint of endpoints){
+      for(const item of endpoints){
         try{
-          const res = await fetch(endpoint, {
+          const res = await fetch(item.url, {
             method:'GET',
             credentials:'include',
             cache:'no-store',
-            headers
+            headers:{
+              'Accept':'application/json, text/javascript, */*; q=0.01',
+              'X-Requested-With':'XMLHttpRequest'
+            }
           });
           const text = await res.text();
           let payload = null;
           try{ payload = JSON.parse(text); }catch{}
           attempts.push({
-            endpoint,
+            label:item.label,
+            endpoint:item.url,
             status:res.status,
-            contentType:res.headers.get('content-type'),
+            contentType:res.headers.get('content-type') || '',
             prefix:text.slice(0,120)
           });
           if(res.ok && payload && payload.value && Array.isArray(payload.value.matchInfoList)){
-            return {ok:true,endpoint,payload,attempts};
+            return {ok:true,method:'official-page',endpoint:item.url,payload,page,attempts};
           }
         }catch(err){
-          attempts.push({endpoint,error:String(err)});
+          attempts.push({
+            label:item.label,
+            endpoint:item.url,
+            error:String(err)
+          });
         }
       }
-
-      return {ok:false,error:'UPSTREAM_NO_VALID_JSON',attempts};
+      return {ok:false,error:'PAGE_NO_VALID_JSON',page,attempts};
     },
     args:[ENDPOINTS]
   });
 
-  return result && result.result ? result.result : {ok:false,error:'SCRIPT_NO_RESULT'};
+  return result && result.result ? result.result : {ok:false,error:'SCRIPT_NO_RESULT',attempts:[]};
+}
+
+async function fetchViaOfficialPages(){
+  const pageAttempts = [];
+  for(const pageUrl of OFFICIAL_PAGES){
+    let tabId = null;
+    try{
+      const tab = await chrome.tabs.create({url:pageUrl,active:false});
+      tabId = tab.id;
+      await waitForTabComplete(tabId);
+      await wait(1800);
+
+      const result = await fetchInsideSporttery(tabId);
+      pageAttempts.push({
+        pageUrl,
+        page:result.page || null,
+        error:result.error || null,
+        attempts:result.attempts || []
+      });
+      if(result.ok){
+        return {...result,pageAttempts};
+      }
+    }catch(err){
+      pageAttempts.push({
+        pageUrl,
+        error:String(err),
+        attempts:[]
+      });
+    }finally{
+      if(tabId){
+        try{ await chrome.tabs.remove(tabId); }catch{}
+      }
+    }
+  }
+  return {ok:false,error:'UPSTREAM_NO_VALID_JSON',pageAttempts};
 }
 
 async function pushToDatabase(token, fetched){
@@ -82,7 +179,7 @@ async function pushToDatabase(token, fetched){
     headers:{
       'Content-Type':'application/json',
       'X-Collector-Token':token,
-      'X-Collector-Version':'0.1.0',
+      'X-Collector-Version':'0.1.1',
       'X-Source-Endpoint':fetched.endpoint || ''
     },
     body:JSON.stringify(fetched.payload)
@@ -107,31 +204,39 @@ async function runSync(){
     return result;
   }
 
-  let tabId = null;
   try{
-    const tab = await chrome.tabs.create({url:OFFICIAL_PAGE,active:false});
-    tabId = tab.id;
-    await waitForTabComplete(tabId);
-    await wait(1600);
+    const direct = await fetchDirect();
+    let fetched = direct;
 
-    const fetched = await fetchInsideSporttery(tabId);
-    if(!fetched.ok){
-      const result = {
-        ok:false,
-        error:fetched.error || 'FETCH_FAILED',
-        message:fetched.error === 'ACCESS_RESTRICTED'
-          ? '当前网络打开竞彩网被限制，请关闭代理/VPN或换可正常访问竞彩网的网络后再试'
-          : '竞彩网接口没有返回可用数据',
-        detail:fetched
-      };
-      await saveResult(result);
-      return result;
+    if(!direct.ok){
+      const pageResult = await fetchViaOfficialPages();
+      if(pageResult.ok){
+        fetched = pageResult;
+      }else{
+        const hasRestricted = (pageResult.pageAttempts || []).some(x =>
+          x.error === 'ACCESS_RESTRICTED' || /Access Restricted/i.test(x.page?.title || '')
+        );
+        const result = {
+          ok:false,
+          error:hasRestricted ? 'ACCESS_RESTRICTED' : 'UPSTREAM_NO_VALID_JSON',
+          message:hasRestricted
+            ? '当前网络访问竞彩网被限制'
+            : '竞彩网接口没有返回可用 JSON',
+          detail:{
+            directAttempts:direct.attempts || [],
+            pageAttempts:pageResult.pageAttempts || []
+          }
+        };
+        await saveResult(result);
+        return result;
+      }
     }
 
     const ingested = await pushToDatabase(token, fetched);
     const result = {
       ok:true,
       message:'同步成功',
+      method:fetched.method || 'unknown',
       matchesReceived:ingested.matchesReceived || 0,
       matchesUpserted:ingested.matchesUpserted || 0,
       snapshotsInserted:ingested.snapshotsInserted || 0,
@@ -140,13 +245,13 @@ async function runSync(){
     await saveResult(result);
     return result;
   }catch(err){
-    const result = {ok:false,error:String(err.message || err),message:'同步失败'};
+    const result = {
+      ok:false,
+      error:String(err.message || err),
+      message:'同步失败'
+    };
     await saveResult(result);
     return result;
-  }finally{
-    if(tabId){
-      try{ await chrome.tabs.remove(tabId); }catch{}
-    }
   }
 }
 
