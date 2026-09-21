@@ -80,7 +80,7 @@ $('#syncBtn').onclick = async () => {
 };
 
 $('#openBtn').onclick = () => {
-  chrome.tabs.create({url:'https://www.sporttery.cn/'});
+  chrome.tabs.create({url:'https://www.sporttery.cn/jc/zqszsc/index.html'});
 };
 
 $('#autoSync').onchange = async e => {
