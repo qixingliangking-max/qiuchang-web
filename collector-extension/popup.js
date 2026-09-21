@@ -1,90 +1,66 @@
-const $ = s => document.querySelector(s);
+const $=s=>document.querySelector(s);
 
-function attemptSummary(detail){
-  if(!detail) return '';
-
-  const rows = [];
-  for(const a of detail.directAttempts || []){
-    rows.push('直连 ' + (a.label || '') + '：' +
-      (a.status ? 'HTTP ' + a.status + ' ' + (a.contentType || '') : (a.error || '失败')));
+function diagText(r){
+  if(!r) return '';
+  if(r.ok){
+    return '识别 '+(r.parsedMatches||0)+' 场 · 写入 '+(r.matchesUpserted||0)+' 场 · 快照 '+(r.snapshotsInserted||0)+' 条\n来源：'+(r.source||'—');
   }
-
-  for(const p of detail.pageAttempts || []){
-    const pageName = (p.page && p.page.url) ? new URL(p.page.url).hostname : '官方页';
-    if(p.error === 'ACCESS_RESTRICTED'){
-      rows.push(pageName + '：Access Restricted');
-      continue;
-    }
-    for(const a of p.attempts || []){
-      rows.push(pageName + ' ' + (a.label || '') + '：' +
-        (a.status ? 'HTTP ' + a.status + ' ' + (a.contentType || '') : (a.error || '失败')));
-    }
+  let extra='';
+  const frames=r.diagnostics || [];
+  if(frames.length){
+    const f=frames[0];
+    const d=f.diagnostics || {};
+    extra='\n页面：'+(d.title||'—')+'\n表格 '+(d.tableCount??'—')+' · 行 '+(d.trCount??'—')+' · iframe '+(d.iframeCount??'—');
+    if(d.bodyPrefix) extra+='\n文字：'+d.bodyPrefix.slice(0,180);
   }
-
-  return rows.slice(0,6).join('\n');
+  return (r.error||'失败')+extra;
 }
 
 async function refresh(){
-  const data = await chrome.storage.local.get(['collectorToken','autoSync','lastResult','lastSyncAt']);
-  $('#tokenInput').value = data.collectorToken || '';
-  $('#autoSync').checked = data.autoSync !== false;
-
-  if(!data.lastResult){
-    $('#statusText').textContent = '尚未同步';
-    $('#statusDetail').textContent = '';
+  const data=await chrome.storage.local.get(['collectorToken','autoSync','lastResult','last500Result','lastSyncAt','last500SyncAt']);
+  $('#tokenInput').value=data.collectorToken || '';
+  $('#autoSync').checked=data.autoSync!==false;
+  const r=data.last500Result || data.lastResult;
+  if(!r){
+    $('#statusText').textContent='尚未测试';
+    $('#statusDetail').textContent='';
     return;
   }
-
-  const r = data.lastResult;
-  if(r.ok){
-    $('#statusText').textContent = r.scheduleOnly ? '赛程同步成功' : '同步成功';
-    $('#statusDetail').textContent =
-      '读取 ' + (r.matchesReceived || 0) + ' 场 · 写入 ' + (r.matchesUpserted || 0) +
-      ' 场 · 新增 ' + (r.snapshotsInserted || 0) + ' 条快照' +
-      (r.scheduleOnly ? '\n赛程已入库；奖金玩法数据继续接入中。' : '') +
-      (r.method ? '\n方式：' + r.method : '') +
-      (data.lastSyncAt ? '\n' + new Date(data.lastSyncAt).toLocaleString('zh-CN') : '');
-  }else{
-    $('#statusText').textContent = r.message || '同步失败';
-    const summary = attemptSummary(r.detail);
-    $('#statusDetail').textContent = (r.error || '') + (summary ? '\n' + summary : '');
-  }
+  $('#statusText').textContent=r.ok ? (r.message || '成功') : (r.message || '失败');
+  $('#statusDetail').textContent=diagText(r);
 }
 
-$('#saveTokenBtn').onclick = async () => {
-  const token = $('#tokenInput').value.trim();
-  if(!token.startsWith('qc_col_')){
-    alert('采集器凭证格式不正确');
-    return;
-  }
+$('#saveTokenBtn').onclick=async()=>{
+  const token=$('#tokenInput').value.trim();
+  if(!token.startsWith('qc_col_')){ alert('采集器凭证格式不正确'); return; }
   await chrome.storage.local.set({collectorToken:token});
   alert('凭证已保存');
 };
 
-$('#syncBtn').onclick = async () => {
-  const btn = $('#syncBtn');
-  btn.disabled = true;
-  btn.textContent = '同步中…';
-  $('#statusText').textContent = '正在检测本机网络并读取竞彩网…';
-  $('#statusDetail').textContent = '';
+async function run(button,type,label){
+  button.disabled=true;
+  const old=button.textContent;
+  button.textContent='测试中…';
+  $('#statusText').textContent='正在打开 '+label+'…';
+  $('#statusDetail').textContent='';
   try{
-    const result = await chrome.runtime.sendMessage({type:'RUN_SYNC'});
-    await refresh();
-    if(result && result.ok) alert('同步成功');
+    const result=await chrome.runtime.sendMessage({type});
+    $('#statusText').textContent=result?.ok ? (result.message || '成功') : (result?.message || '失败');
+    $('#statusDetail').textContent=diagText(result);
+    if(result?.ok) alert(label+'测试成功');
   }catch(err){
-    $('#statusText').textContent = '扩展运行失败';
-    $('#statusDetail').textContent = String(err);
+    $('#statusText').textContent='扩展运行失败';
+    $('#statusDetail').textContent=String(err);
   }finally{
-    btn.disabled = false;
-    btn.textContent = '立即同步';
+    button.disabled=false;
+    button.textContent=old;
   }
-};
+}
 
-$('#openBtn').onclick = () => {
-  chrome.tabs.create({url:'https://www.sporttery.cn/jc/zqszsc/index.html'});
-};
+$('#syncBtn').onclick=()=>run($('#syncBtn'),'RUN_SYNC','官方竞彩页');
+$('#sync500Btn').onclick=()=>run($('#sync500Btn'),'RUN_500_SYNC','500.com');
 
-$('#autoSync').onchange = async e => {
+$('#autoSync').onchange=async e=>{
   await chrome.runtime.sendMessage({type:'SET_AUTO_SYNC',enabled:e.target.checked});
 };
 
