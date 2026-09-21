@@ -3,7 +3,7 @@ param([switch]$Once)
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Version = "windows-standalone-0.5"
+$Version = "windows-standalone-0.5.1"
 $ConfigPath = Join-Path $PSScriptRoot "collector-config.txt"
 $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
@@ -238,7 +238,7 @@ function EnrichMarketsAndDetails($matches) {
       AddDetail $x "fixed_bonus" $url $f
     }else{
       if($f.status -in 403,429,567){ throw "STOP_HTTP_$($f.status)" }
-      Log "Fixed bonus unavailable for $mid: HTTP $($f.status) / $($f.error)"
+      Log "Fixed bonus unavailable for ${mid}: HTTP $($f.status) / $($f.error)"
     }
 
     # 比分直播：一次抓全场，再按 matchId 回填，不需要每场网页手点。
@@ -269,7 +269,7 @@ function EnrichMarketsAndDetails($matches) {
           AddDetail $x ([string]$dc.name) ([string]$dc.url) $df
         }else{
           if($df.status -in 403,429,567){ throw "STOP_HTTP_$($df.status)" }
-          Log "Detail $($dc.name) unavailable for $mid: HTTP $($df.status) / $($df.error)"
+          Log "Detail $($dc.name) unavailable for ${mid}: HTTP $($df.status) / $($df.error)"
         }
         Start-Sleep -Milliseconds 550
       }
