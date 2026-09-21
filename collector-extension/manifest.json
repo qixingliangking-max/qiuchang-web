@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "球场档案·竞彩采集器",
+  "version": "0.1.0",
+  "description": "从中国竞彩网官方页面读取竞彩足球数据并同步到球场档案数据库。",
+  "permissions": ["storage", "tabs", "scripting", "alarms"],
+  "host_permissions": [
+    "https://m.sporttery.cn/*",
+    "https://www.sporttery.cn/*",
+    "https://webapi.sporttery.cn/*",
+    "https://oqtloldkfjxildoribkf.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "球场档案·竞彩采集器",
+    "default_popup": "popup.html"
+  }
+}
