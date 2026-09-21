@@ -333,3 +333,11 @@ body{min-height:100vh}
 .jc-ai-context strong{font-size:14px}
 .jc-ai-note{margin-top:16px!important}
 @media(max-width:640px){.jc-ai-context{grid-template-columns:1fr}}
+
+/* Today fixtures are direct links to the standalone match detail page */
+.jc-today-list-links{max-width:900px;margin:0 auto}
+.jc-today-list-links .jc-today-list-item{display:block;text-decoration:none}
+.jc-today-list-links .jc-today-list-item:active{transform:scale(.995)}
+.jc-today-list-links .jc-today-list-item::after{
+  content:"查看详情";display:block;margin-top:10px;color:var(--blue);font-size:12px;font-weight:800
+}
