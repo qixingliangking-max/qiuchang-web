@@ -56,10 +56,49 @@ function setupDemoAuth(){
   }
 
   const reg = $('#registerForm');
+
   if(reg){
-    reg.onsubmit = e => {
+    reg.onsubmit = async e => {
       e.preventDefault();
-      alert('注册功能正在接入');
+
+      if(!window.qcSupabase){
+        alert('数据库连接失败，请刷新页面后重试');
+        return;
+      }
+
+      const email = $('#regEmail').value.trim();
+      const password = reg.querySelector('input[type="password"]').value;
+      const nickname = reg.querySelector('input:not([type])')?.value.trim() || '';
+      const button = reg.querySelector('button');
+
+      button.disabled = true;
+      button.textContent = '注册中...';
+
+      const { data, error } = await window.qcSupabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nickname
+          }
+        }
+      });
+
+      button.disabled = false;
+      button.textContent = '发送验证码 / 注册';
+
+      if(error){
+        alert('注册失败：' + error.message);
+        return;
+      }
+
+      if(data.session){
+        alert('注册成功');
+        location.href = 'profile.html';
+      }else{
+        alert('注册成功，请到邮箱完成验证后再登录');
+        location.href = 'login.html';
+      }
     };
   }
 }
