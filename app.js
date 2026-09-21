@@ -84,7 +84,7 @@ async function loadJcFrontend(){
     const available=['had','hhad','crs','ttg','hafu'].filter(k=>pools[k]);
     const dateTime=jcDateTime(m);
     const no=qcEscape(m.match_num || '竞彩');
-    const league=qcEscape(m.league_short_name || m.league_name || '—');
+    const league=qcEscape(m.league_name || m.league_short_name || '—');
     const home=qcEscape(m.home_team_name || '—');
     const away=qcEscape(m.away_team_name || '—');
 
@@ -128,7 +128,7 @@ async function setupJcMatchDetail(){
 
   root.innerHTML=
     '<div class="detail-head">'+
-      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_short_name || m.league_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
+      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
       '<div class="detail-title" style="margin-top:18px">'+
         '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
         '<div class="center-score"><strong>VS</strong><small>'+qcEscape(m.match_status || '赛前')+'</small></div>'+
