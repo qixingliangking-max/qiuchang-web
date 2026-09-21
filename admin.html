@@ -23,7 +23,22 @@
         <div class="metric"><b id="adminUsedCodes">—</b><span>已使用兑换码</span></div>
       </div>
 
+
       <section class="profile-card" style="margin-top:20px">
+        <h2>竞彩足球数据</h2>
+        <p style="color:var(--muted);line-height:1.7;margin-top:0">
+          官方竞彩数据源：赛程、竞彩编号、胜平负、让球胜平负、比分、总进球、半全场。亚洲盘和大小球暂不接入。
+        </p>
+        <div class="admin-grid" style="margin:16px 0">
+          <div class="metric"><b id="jcMatchCount">—</b><span>竞彩比赛</span></div>
+          <div class="metric"><b id="jcSnapshotCount">—</b><span>奖金快照</span></div>
+        </div>
+        <div class="kv"><span>最近同步</span><strong id="jcLastSync">尚未同步</strong></div>
+        <button class="primary-btn" id="syncSportteryBtn" type="button">同步官方竞彩数据</button>
+        <div id="jcSyncHint" class="code-hint"></div>
+      </section>
+
+      <section class="profile-card">
         <h2>生成会员兑换码</h2>
         <form id="createCodeForm">
           <div class="field">
@@ -68,7 +83,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-  <script src="supabase-client.js?v=20260922b"></script>
-  <script src="app.js?v=20260922b"></script>
+  <script src="supabase-client.js?v=20260922d"></script>
+  <script src="app.js?v=20260922d"></script>
 </body>
 </html>
