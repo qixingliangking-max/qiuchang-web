@@ -1,0 +1,51 @@
+name: Sporttery network probe
+on:
+  push:
+    paths:
+      - '.github/workflows/sporttery-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe Sporttery
+        shell: bash
+        run: |
+          set +e
+          URL1='https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
+          URL2='https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
+          UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
+          : > sporttery-probe-result.txt
+          for U in "$URL1" "$URL2"; do
+            BODY=$(mktemp)
+            CODE=$(curl -L -sS --max-time 25 -o "$BODY" -w '%{http_code}' "$U" \
+              -H "User-Agent: $UA" \
+              -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+              -H 'Accept-Language: zh-CN,zh;q=0.9' \
+              -H 'Referer: https://m.sporttery.cn/mjc/jsq/zqspf/' \
+              -H 'Origin: https://m.sporttery.cn' \
+              -H 'X-Requested-With: XMLHttpRequest')
+            TYPE=$(file -b --mime-type "$BODY" 2>/dev/null || true)
+            SIZE=$(wc -c < "$BODY" | tr -d ' ')
+            PREFIX=$(head -c 160 "$BODY" | tr '\n\r' '  ')
+            {
+              echo "URL=$U"
+              echo "HTTP=$CODE"
+              echo "TYPE=$TYPE"
+              echo "SIZE=$SIZE"
+              echo "PREFIX=$PREFIX"
+              echo "---"
+            } >> sporttery-probe-result.txt
+            rm -f "$BODY"
+          done
+          cat sporttery-probe-result.txt
+      - name: Commit probe result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sporttery-probe-result.txt
+          git commit -m 'Record Sporttery network probe result' || exit 0
+          git push
