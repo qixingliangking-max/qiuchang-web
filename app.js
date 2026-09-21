@@ -391,4 +391,138 @@ function renderMembership(subscription, role){
   });
 }
 
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile()})
+
+async function setupAdmin(){
+  const root = $('#adminRoot');
+  if(!root) return;
+
+  if(!window.qcSupabase){
+    alert('数据库连接失败，请刷新页面后重试');
+    return;
+  }
+
+  const { data: userData, error: userError } = await window.qcSupabase.auth.getUser();
+  const user = userData && userData.user;
+
+  if(userError || !user){
+    location.href = 'login.html';
+    return;
+  }
+
+  const { data: profile, error: profileError } = await window.qcSupabase
+    .from('profiles')
+    .select('role,status')
+    .eq('id', user.id)
+    .single();
+
+  if(profileError || !profile || profile.role !== 'admin' || profile.status !== 'active'){
+    root.innerHTML = '<div class="profile-card"><h2>无权限访问</h2><p style="color:var(--muted);line-height:1.7">这个页面只允许管理员账号进入。</p><a class="small-btn" href="profile.html" style="display:inline-flex;align-items:center">返回个人中心</a></div>';
+    return;
+  }
+
+  const loadAdminData = async () => {
+    const { data: stats, error: statsError } = await window.qcSupabase.rpc('admin_dashboard_stats');
+
+    if(!statsError && stats){
+      $('#adminUsers').textContent = stats.users ?? 0;
+      $('#adminProUsers').textContent = stats.pro_users ?? 0;
+      $('#adminUnusedCodes').textContent = stats.unused_codes ?? 0;
+      $('#adminUsedCodes').textContent = stats.used_codes ?? 0;
+    }
+
+    const { data: codes, error: codesError } = await window.qcSupabase.rpc('admin_redeem_codes');
+    const rows = $('#redeemCodeRows');
+
+    if(codesError){
+      rows.innerHTML = '<tr><td colspan="5">兑换码读取失败</td></tr>';
+      return;
+    }
+
+    if(!codes || !codes.length){
+      rows.innerHTML = '<tr><td colspan="5">暂无兑换码</td></tr>';
+      return;
+    }
+
+    rows.innerHTML = codes.map(item => {
+      const statusText = item.status === 'unused' ? '未使用' : item.status === 'used' ? '已使用' : '已停用';
+      const usedBy = item.used_by_email || '—';
+      const createdAt = item.created_at ? new Date(item.created_at).toLocaleString('zh-CN') : '—';
+      return `<tr>
+        <td><strong>${item.code}</strong></td>
+        <td>${item.duration_days}天</td>
+        <td>${statusText}</td>
+        <td>${usedBy}</td>
+        <td>${createdAt}</td>
+      </tr>`;
+    }).join('');
+  };
+
+  await loadAdminData();
+
+  const form = $('#createCodeForm');
+  if(form){
+    form.onsubmit = async e => {
+      e.preventDefault();
+
+      const days = Number($('#codeDays').value);
+      const note = $('#codeNote').value.trim();
+      const button = form.querySelector('button[type="submit"]');
+      const hint = $('#adminHint');
+      const box = $('#createdCodeBox');
+
+      if(!Number.isInteger(days) || days < 1 || days > 3650){
+        alert('会员天数请输入 1–3650 之间的整数');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '生成中...';
+      hint.textContent = '正在生成兑换码…';
+      hint.className = 'code-hint';
+
+      const { data, error } = await window.qcSupabase.rpc('create_redeem_code', {
+        p_duration_days: days,
+        p_note: note || null
+      });
+
+      button.disabled = false;
+      button.textContent = '生成兑换码';
+
+      if(error){
+        let message = '兑换码生成失败';
+        if((error.message || '').includes('ADMIN_REQUIRED')) message = '当前账号没有管理员权限';
+        if((error.message || '').includes('INVALID_DURATION')) message = '会员天数不正确';
+        hint.textContent = message;
+        hint.className = 'code-hint error';
+        alert(message);
+        return;
+      }
+
+      $('#createdCode').textContent = data.code;
+      box.hidden = false;
+      hint.textContent = `已生成 ${data.duration_days} 天 Pro 会员兑换码。`;
+      hint.className = 'code-hint success';
+      $('#codeNote').value = '';
+
+      await loadAdminData();
+    };
+  }
+
+  const copyBtn = $('#copyCodeBtn');
+  if(copyBtn){
+    copyBtn.onclick = async () => {
+      const code = $('#createdCode').textContent.trim();
+      if(!code || code === '—') return;
+
+      try{
+        await navigator.clipboard.writeText(code);
+        copyBtn.textContent = '已复制';
+        setTimeout(() => copyBtn.textContent = '复制', 1200);
+      }catch{
+        alert('复制失败，请长按兑换码复制');
+      }
+    };
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile()setupAdmin();})
