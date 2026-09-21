@@ -469,6 +469,19 @@ function jcScoreItem(pool,key,label,history){
   return '<div class="jc-score-odd"><b>'+qcEscape(label)+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,history)+'</span></div>';
 }
 
+function jcRenderHhadDetail(pools,snapshots){
+  const pool=pools?.hhad;
+  const hist=jcPoolHistory(snapshots,'hhad');
+  return '<section class="jc-odds-section">'+
+    '<div class="jc-section-title-row"><h2>让球胜平负</h2><span>'+(pool?.goal_line?('让球 '+qcEscape(pool.goal_line)):'当前')+'</span></div>'+
+    '<div class="jc-odds-table">'+
+      '<div class="jc-odds-head"><span>玩法</span><span>主胜</span><span>平局</span><span>客胜</span></div>'+
+      '<div class="jc-odds-row"><b class="jc-play-tag orange">让球胜平负 '+(pool?.goal_line?qcEscape(pool.goal_line):'')+'</b><span>'+jcOddCell(pool,'h',hist)+'</span><span>'+jcOddCell(pool,'d',hist)+'</span><span>'+jcOddCell(pool,'a',hist)+'</span></div>'+
+    '</div>'+
+  '</section>';
+}
+
+
 function jcRenderCrsDetail(pool,snapshots){
   const hist=jcPoolHistory(snapshots,'crs');
   const tpl=JC_FIXED_ODDS_TEMPLATE.crs;
@@ -508,10 +521,10 @@ function jcSnapshotDateTime(s){
   return new Date(s.captured_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
 }
 
-function jcRenderOddsHistory(snapshots){
-  let hist=jcPoolHistory(snapshots,'had');
-  let code='had';
-  if(!hist.length){ hist=jcPoolHistory(snapshots,'hhad'); code='hhad'; }
+function jcRenderOddsHistory(snapshots,preferredCode='had'){
+  let code=preferredCode==='hhad'?'hhad':'had';
+  let hist=jcPoolHistory(snapshots,code);
+  if(!hist.length){ code=code==='had'?'hhad':'had'; hist=jcPoolHistory(snapshots,code); }
   if(!hist.length) return '<section class="jc-odds-section"><h2>赔率变化</h2><div class="jc-empty-market">暂无历史快照</div></section>';
 
   return '<section class="jc-odds-section"><h2>赔率变化</h2>'+
@@ -531,8 +544,8 @@ function jcRenderOddsPlayShell(pools,snapshots,active='had'){
   return '<div class="jc-odds-play-shell">'+
     '<div class="jc-odds-play-tabs">'+
       '<button type="button" class="'+(active==='had'?'active':'')+'" data-odds-play="had">胜平负</button>'+
-      '<button type="button" class="'+(active==='crs'?'active':'')+'" data-odds-play="crs">比分</button>'+
-      '<button type="button" class="'+(active==='ttg'?'active':'')+'" data-odds-play="ttg">总进球</button>'+
+      '<button type="button" class="'+(active==='hhad'?'active':'')+'" data-odds-play="hhad">让球胜平负</button>'+
+      '<button type="button" class="'+(active==='ttg'?'active':'')+'" data-odds-play="ttg">总进球数</button>'+
       '<button type="button" class="'+(active==='hafu'?'active':'')+'" data-odds-play="hafu">半全场</button>'+
     '</div>'+
     '<div id="jcOddsPlayPanel">'+jcRenderOddsPlayPanel(active,pools,snapshots)+'</div>'+
@@ -541,10 +554,10 @@ function jcRenderOddsPlayShell(pools,snapshots,active='had'){
 }
 
 function jcRenderOddsPlayPanel(tab,pools,snapshots){
-  if(tab==='crs') return jcRenderCrsDetail(pools.crs,snapshots);
+  if(tab==='hhad') return jcRenderHhadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots,'hhad');
   if(tab==='ttg') return jcRenderTtgDetail(pools.ttg,snapshots);
   if(tab==='hafu') return jcRenderHafuDetail(pools.hafu,snapshots);
-  return jcRenderHadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots);
+  return jcRenderHadDetail(pools,snapshots)+jcRenderOddsHistory(snapshots,'had');
 }
 
 function jcBindOddsPlayTabs(root,pools,snapshots){
