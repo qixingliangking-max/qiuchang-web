@@ -1,12 +1,10 @@
-URL=https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu
-HTTP=567
-TYPE=text/html
-SIZE=7351
-PREFIX=<!doctype html><html lang=zh-CN><meta charset=UTF-8><meta content="width=device-width,initial-scale=1" name=viewport><title></title><style>*{margin:0;padding:0;
----
-URL=https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu
-HTTP=567
-TYPE=text/html
-SIZE=7351
-PREFIX=<!doctype html><html lang=zh-CN><meta charset=UTF-8><meta content="width=device-width,initial-scale=1" name=viewport><title></title><style>*{margin:0;padding:0;
----
+{
+  "page": {
+    "url": "https://m.sporttery.cn/mjc/jsq/zqspf/",
+    "title": "Access Restricted",
+    "source_prefix": "<html lang=\"en\"><head><meta charset=\"UTF-8\"><meta content=\"width=device-width,initial-scale=1\" name=\"viewport\"><title>Access Restricted</title><style>*{margin:0;padding:0;box-sizing:border-box}html{background:#fff;font-family:\"PingFang SC\",-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetic"
+  },
+  "api": {
+    "error": "TypeError: Failed to fetch"
+  }
+}
