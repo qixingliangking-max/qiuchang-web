@@ -152,13 +152,130 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect){
   });
 }
 
+
+function jcPoolNumber(pool,key){
+  if(!pool || !pool.outcomes) return null;
+  const raw=pool.outcomes[key];
+  if(raw==null) return null;
+  if(typeof raw==='object') return raw.odds ?? raw.value ?? raw.fixedBonus ?? raw.sp ?? null;
+  return raw;
+}
+
+function jcMatchStatusLabel(m,today){
+  const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
+  const ft=String(m?.raw?.sectionsNo999 || '').trim();
+  if(ft) return '已结束';
+  if(/完成|结束|finished/i.test(rawStatus)) return '已结束';
+  if(/进行|live/i.test(rawStatus)) return '进行中';
+  if(m.match_date>today) return '未开赛';
+  if(/Selling|销售|开售|未开赛|2|3/.test(rawStatus)) return '未开赛';
+  return rawStatus || '未开赛';
+}
+
+function jcScoreInfo(m){
+  const ft=String(m?.raw?.sectionsNo999 || '').trim().replace(':','-');
+  const ht=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
+  return {ft:ft || '',ht:ht || ''};
+}
+
+function jcRelativeDayLabel(dateStr,today){
+  if(dateStr===today) return '今天';
+  if(dateStr===qcAddDays(today,1)) return '明天';
+  if(dateStr===qcAddDays(today,2)) return '后天';
+  return '';
+}
+
+function jcRenderOddsMini(pools){
+  const had=pools.had;
+  const hhad=pools.hhad;
+  const cell=v=>v==null?'<span class="muted-dash">—</span>':qcEscape(v);
+  return '<div class="jc-mini-odds">'+
+    '<div class="jc-mini-head"><span>玩法</span><span>主胜</span><span>平局</span><span>客胜</span></div>'+
+    '<div class="jc-mini-row"><b class="jc-play-tag blue">胜平负</b><strong>'+cell(jcPoolNumber(had,'h'))+'</strong><strong>'+cell(jcPoolNumber(had,'d'))+'</strong><strong>'+cell(jcPoolNumber(had,'a'))+'</strong></div>'+
+    '<div class="jc-mini-row"><b class="jc-play-tag orange">让球胜平负'+(hhad?.goal_line?' '+qcEscape(hhad.goal_line):'')+'</b><strong>'+cell(jcPoolNumber(hhad,'h'))+'</strong><strong>'+cell(jcPoolNumber(hhad,'d'))+'</strong><strong>'+cell(jcPoolNumber(hhad,'a'))+'</strong></div>'+
+  '</div>';
+}
+
+function jcRenderLeagueFilters(rows,activeLeague,onChange){
+  const box=$('#jcLeagueFilters');
+  if(!box) return;
+  const leagues=[...new Set(rows.map(m=>m.league_name || m.league_short_name || '其他'))];
+  const all=[{key:'全部',label:'全部'},...leagues.map(x=>({key:x,label:x}))];
+  box.innerHTML=all.map(item=>'<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+qcEscape(item.label)+'</button>').join('');
+  $$('button',box).forEach(btn=>{
+    btn.onclick=()=>onChange(btn.dataset.league || '全部');
+  });
+}
+
+function jcRenderFutureGrid(rows,today){
+  if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的比赛。</div>';
+  return '<div class="jc-future-grid">'+rows.map(m=>{
+    const pools=jcLatestPools(m.jc_market_snapshots || []);
+    const league=qcEscape(m.league_name || m.league_short_name || '—');
+    const num=qcEscape(m.match_num || '竞彩');
+    const home=qcEscape(m.home_team_name || '—');
+    const away=qcEscape(m.away_team_name || '—');
+    const rel=jcRelativeDayLabel(m.match_date,today);
+    const time=(m.match_time || '').slice(0,5);
+    const status=jcMatchStatusLabel(m,today);
+    return '<a class="jc-fixture-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
+      '<div class="jc-card-top"><span><em>'+league+'</em> <b>'+num+'</b></span><time>'+(rel?rel+' ':'')+qcEscape(m.match_date.slice(5)+' '+time)+'</time></div>'+
+      '<div class="jc-card-teams"><div class="jc-team home-team">'+home+'</div><span class="jc-vs">VS</span><div class="jc-team away-team">'+away+'</div></div>'+
+      '<div class="jc-status-strip">◷ '+qcEscape(status)+'</div>'+
+      jcRenderOddsMini(pools)+
+      '<div class="jc-model-pending"><b>玩法：</b><span>待生成</span></div>'+
+    '</a>';
+  }).join('')+'</div>';
+}
+
+function jcTodayDetailHtml(m,today){
+  if(!m) return '<div class="jc-today-empty">今天暂无比赛。</div>';
+  const pools=jcLatestPools(m.jc_market_snapshots || []);
+  const score=jcScoreInfo(m);
+  const status=jcMatchStatusLabel(m,today);
+  const league=qcEscape(m.league_name || m.league_short_name || '—');
+  const num=qcEscape(m.match_num || '竞彩');
+  const home=qcEscape(m.home_team_name || '—');
+  const away=qcEscape(m.away_team_name || '—');
+  const time=qcEscape((m.match_time || '').slice(0,5));
+  const scoreCenter=score.ft
+    ? '<div class="jc-big-score"><small>'+(score.ht?'半 '+qcEscape(score.ht):'')+'</small><strong>'+qcEscape(score.ft)+'</strong><span>'+qcEscape(status)+'</span></div>'
+    : '<div class="jc-big-score"><strong>VS</strong><span>'+qcEscape(status)+'</span></div>';
+  return '<div class="jc-today-detail">'+
+    '<div class="jc-today-detail-head"><span>'+num+' · '+league+' · '+qcEscape(m.match_date)+' '+time+'</span></div>'+
+    '<div class="jc-today-matchup"><div><b>'+home+'</b></div>'+scoreCenter+'<div class="right"><b>'+away+'</b></div></div>'+
+    '<h3>官方竞彩</h3>'+jcRenderOddsMini(pools)+
+    '<div class="jc-today-more">'+
+      ['ttg','hafu','crs'].map(code=>{
+        const p=pools[code];
+        return '<div><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未返回')+'</span></div>';
+      }).join('')+
+    '</div>'+
+  '</div>';
+}
+
+function jcRenderTodayLayout(rows,today){
+  if(!rows.length) return '<div class="profile-card">今天暂时没有采集到竞彩足球赛程。</div>';
+  const first=rows[0];
+  const list=rows.map((m,i)=>{
+    const score=jcScoreInfo(m);
+    const status=jcMatchStatusLabel(m,today);
+    return '<button type="button" class="jc-today-list-item '+(i===0?'active':'')+'" data-id="'+qcEscape(m.id)+'">'+
+      '<div class="jc-today-list-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><time>'+qcEscape((m.match_time || '').slice(0,5))+'</time></div>'+
+      '<div class="jc-today-list-teams"><b>'+qcEscape(m.home_team_name || '—')+'</b><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><b>'+qcEscape(m.away_team_name || '—')+'</b></div>'+
+      '<small>'+qcEscape(status)+'</small>'+
+    '</button>';
+  }).join('');
+  return '<div class="jc-today-layout"><div class="jc-today-list">'+list+'</div><div id="jcTodayDetailPane">'+jcTodayDetailHtml(first,today)+'</div></div>';
+}
+
 async function loadJcFrontend(){
-  const cards = $('#jcLiveCards');
+  const cards=$('#jcLiveCards');
   if(!cards || !window.qcSupabase) return;
 
-  const {data,error} = await window.qcSupabase
+  const {data,error}=await window.qcSupabase
     .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at)')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
     .order('match_date',{ascending:true})
     .order('match_time',{ascending:true})
     .limit(200);
@@ -174,7 +291,8 @@ async function loadJcFrontend(){
   const availableDates=[...new Set(allRows.map(m=>m.match_date))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
-  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate) ? paramDate : today;
+  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  let activeLeague='全部';
 
   if(!availableDates.includes(selectedDate) && availableDates.length){
     const future=availableDates.find(d=>d>=today);
@@ -193,57 +311,60 @@ async function loadJcFrontend(){
     history.replaceState({},'',u);
   }
 
+  function bindTodaySelection(rows){
+    $$('.jc-today-list-item').forEach(btn=>{
+      btn.onclick=()=>{
+        $$('.jc-today-list-item').forEach(x=>x.classList.toggle('active',x===btn));
+        const m=rows.find(x=>x.id===btn.dataset.id);
+        const pane=$('#jcTodayDetailPane');
+        if(pane) pane.innerHTML=jcTodayDetailHtml(m,today);
+      };
+    });
+  }
+
   function render(){
-    const rows=allRows.filter(m=>m.match_date===selectedDate);
+    const dateRows=allRows.filter(m=>m.match_date===selectedDate);
+    const filtered=activeLeague==='全部'
+      ? dateRows
+      : dateRows.filter(m=>(m.league_name || m.league_short_name || '其他')===activeLeague);
+
     if(label) label.textContent=qcDateLabel(selectedDate);
-    if($('#jcLiveMeta')) $('#jcLiveMeta').textContent=rows.length ? (selectedDate+' · '+rows.length+'场') : (selectedDate+' · 暂无比赛');
+    if($('#jcLiveMeta')) $('#jcLiveMeta').textContent=(selectedDate===today?'今日 · ':'')+(dateRows.length?dateRows.length+'场':'暂无比赛');
+    if($('#jcDateCount')) $('#jcDateCount').textContent='共 '+filtered.length+' 场';
+    if($('#jcSectionTitleText')) $('#jcSectionTitleText').textContent=selectedDate===today?'今日赛事':'全部赛程';
     setUrlDate(selectedDate);
 
-    if(!rows.length){
-      cards.innerHTML='<div class="profile-card">这一天暂时没有采集到竞彩足球赛程。</div>';
-    }else{
-      cards.innerHTML=rows.map(m=>{
-        const pools=jcLatestPools(m.jc_market_snapshots || []);
-        const available=['had','hhad','crs','ttg','hafu'].filter(k=>pools[k]);
-        const dateTime=jcDateTime(m);
-        const no=qcEscape(m.match_num || '竞彩');
-        const league=qcEscape(m.league_name || m.league_short_name || '—');
-        const home=qcEscape(m.home_team_name || '—');
-        const away=qcEscape(m.away_team_name || '—');
+    jcRenderLeagueFilters(dateRows,activeLeague,(league)=>{
+      activeLeague=league;
+      render();
+    });
 
-        return '<a class="match-card jc-live-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
-          '<div class="match-top"><span><b>'+no+'</b> · '+league+'</span><span>'+qcEscape(dateTime || '时间待定')+'</span></div>'+
-          '<div class="match-main"><div class="team">'+home+'</div><div class="versus">VS</div><div class="team right">'+away+'</div></div>'+
-          '<div class="jc-market-grid">'+
-          ['had','hhad','ttg','hafu','crs'].map(code=>{
-            const p=pools[code];
-            return '<div class="jc-market-item '+(p?'has-data':'')+'"><b>'+jcPoolLabel(code)+'</b><span>'+(p?qcEscape(jcOutcomeSummary(p,code)):'暂未采集')+'</span>'+(p?.goal_line?'<small>让球 '+qcEscape(p.goal_line)+'</small>':'')+'</div>';
-          }).join('')+
-          '</div>'+
-          '<div class="jc-source-line">官方竞彩 · 已采集 '+available.length+'/5 个玩法</div>'+
-        '</a>';
-      }).join('');
+    if(selectedDate===today){
+      cards.innerHTML=jcRenderTodayLayout(filtered,today);
+      bindTodaySelection(filtered);
+    }else{
+      cards.innerHTML=jcRenderFutureGrid(filtered,today);
     }
 
     qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
       selectedDate=ds;
+      activeLeague='全部';
       render();
     });
-
-    if(prev) prev.disabled=false;
-    if(next) next.disabled=false;
   }
 
-  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);render();};
-  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);render();};
-  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;render();};
+  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
+  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
+  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
   if(label) label.onclick=()=>{
     qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
       selectedDate=ds;
+      activeLeague='全部';
       render();
     });
     if(pop) pop.hidden=!pop.hidden;
   };
+
   document.addEventListener('click',e=>{
     if(!pop || pop.hidden) return;
     if(e.target===label || pop.contains(e.target)) return;
