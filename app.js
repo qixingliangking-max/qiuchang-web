@@ -671,11 +671,39 @@ function jcRenderFactsShell(){
   '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
 }
 
-function jcRenderAiPlaceholder(m){
+function jcRenderAiPlaceholder(m,pools){
+  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
   return '<div class="jc-ai-placeholder">'+
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析</h2>'+
-    '<p>这一层将接入我们自己的模型结果：模型方向、主要进球区间、半全场、TOP3、比赛路径与风险点。</p>'+
-    '<div class="jc-ai-grid"><div><b>模型方向</b><span>待接入</span></div><div><b>主要进球区间</b><span>待接入</span></div><div><b>半全场</b><span>待接入</span></div><div><b>TOP3</b><span>待接入</span></div></div>'+
+    '<div class="jc-ai-status"><b>模型状态</b><span>等待本场模型结果写入</span></div>'+
+    '<div class="jc-ai-grid">'+
+      '<div><b>模型方向</b><span>待生成</span></div>'+
+      '<div><b>主要进球区间</b><span>待生成</span></div>'+
+      '<div><b>半全场</b><span>待生成</span></div>'+
+      '<div><b>TOP3</b><span>待生成</span></div>'+
+    '</div>'+
+    '<div class="jc-ai-context">'+
+      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
+      '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
+    '</div>'+
+    '<p class="jc-ai-note">这里不会用占位预测冒充模型结果。等主模型输出写入后，会自动显示方向、区间、半全场、TOP3、比赛路径和风险点。</p>'+
+  '</div>';
+}
+
+function jcRenderFactsFallback(m,message){
+  const score=jcScoreInfo(m);
+  return '<div class="jc-facts-panel">'+
+    '<div class="jc-facts-score"><div><b>'+qcEscape(m.home_team_name || '主队')+'</b></div>'+
+      '<div class="jc-facts-score-center"><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><span>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</span></div>'+
+      '<div class="right"><b>'+qcEscape(m.away_team_name || '客队')+'</b></div></div>'+
+    '<div class="jc-facts-kpis">'+
+      '<div><span>竞彩编号</span><b>'+qcEscape(m.match_num || '—')+'</b></div>'+
+      '<div><span>联赛</span><b>'+qcEscape(m.league_name || m.league_short_name || '—')+'</b></div>'+
+      '<div><span>比赛时间</span><b>'+qcEscape(jcDateTime(m) || '—')+'</b></div>'+
+      '<div><span>半场比分</span><b>'+qcEscape(score.ht || '—')+'</b></div>'+
+    '</div>'+
+    '<div class="jc-empty-market">'+qcEscape(message || '赛况数据源正在匹配，基础赛事信息已正常显示。')+'</div>'+
   '</div>';
 }
 
@@ -737,17 +765,18 @@ async function setupJcMatchDetail(){
         const res=await fetch(window.QC_SUPABASE_URL+'/functions/v1/api-football-match?jc_match_id='+encodeURIComponent(id));
         const payload=await res.json();
         if(!res.ok || !payload?.ok){
-          if(payload?.error==='FIXTURE_NOT_LINKED'){
-            content.innerHTML='<div class="jc-empty-market">这场竞彩比赛正在匹配赛况数据源；赔率页面不受影响。</div>';
-          }else{
-            content.innerHTML='<div class="jc-empty-market">赛况数据暂时读取失败，请稍后再试。</div>';
-          }
+          content.innerHTML=jcRenderFactsFallback(
+            m,
+            payload?.error==='FIXTURE_NOT_LINKED'
+              ? '这场比赛的 API-Football 赛况源正在匹配；基础赛事信息已可查看。'
+              : '赛况数据暂时读取失败；基础赛事信息已可查看。'
+          );
           return;
         }
         factsData=payload.data || {};
         factsLoaded=true;
       }catch(e){
-        content.innerHTML='<div class="jc-empty-market">赛况数据暂时读取失败，请稍后再试。</div>';
+        content.innerHTML=jcRenderFactsFallback(m,'赛况数据暂时读取失败；基础赛事信息已可查看。');
         return;
       }
     }
@@ -767,17 +796,28 @@ async function setupJcMatchDetail(){
     renderFactsTab('data');
   }
 
-  $$('.jc-main-tabs button').forEach(btn=>{
-    btn.onclick=async()=>{
-      $$('.jc-main-tabs button').forEach(b=>b.classList.toggle('active',b===btn));
-      const tab=btn.dataset.mainTab;
-      if(tab==='odds'){
-        panel.innerHTML=oddsHtml;
-        jcBindOddsPlayTabs(panel,pools,snapshots);
-      }else if(tab==='ai') panel.innerHTML=jcRenderAiPlaceholder(m);
-      else await loadFacts();
-    };
-  });
+  async function renderMainTab(tab){
+    $('.jc-main-tabs button',root).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
+    if(tab==='odds'){
+      panel.innerHTML=oddsHtml;
+      jcBindOddsPlayTabs(panel,pools,snapshots);
+      return;
+    }
+    if(tab==='ai'){
+      panel.innerHTML=jcRenderAiPlaceholder(m,pools);
+      return;
+    }
+    await loadFacts();
+  }
+
+  root.onclick=async e=>{
+    const mainBtn=e.target.closest('[data-main-tab]');
+    if(mainBtn && root.contains(mainBtn)){
+      e.preventDefault();
+      await renderMainTab(mainBtn.dataset.mainTab || 'odds');
+      return;
+    }
+  };
 }
 
 function renderMatch(){
