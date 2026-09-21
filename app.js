@@ -124,6 +124,12 @@ function qcDateLabel(dateStr){
   return month+'月'+day+'日 '+weekday;
 }
 
+function jcBusinessDate(m){
+  // 竞彩足球必须按官方销售日/竞彩编号所属星期归档。
+  // 例如“周二002”即使 09-23 02:00 开球，也属于 09-22 周二页面。
+  return m?.business_date || m?.match_date || '';
+}
+
 function qcRenderDateCalendar(selectedDate,availableDates,onSelect){
   const box=$('#jcDatePopover');
   if(!box) return;
@@ -288,7 +294,7 @@ async function loadJcFrontend(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
-  const availableDates=[...new Set(allRows.map(m=>m.match_date))].sort();
+  const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
   let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
@@ -323,13 +329,13 @@ async function loadJcFrontend(){
   }
 
   function render(){
-    const dateRows=allRows.filter(m=>m.match_date===selectedDate);
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const filtered=activeLeague==='全部'
       ? dateRows
       : dateRows.filter(m=>(m.league_name || m.league_short_name || '其他')===activeLeague);
 
     if(label) label.textContent=qcDateLabel(selectedDate);
-    if($('#jcLiveMeta')) $('#jcLiveMeta').textContent=(selectedDate===today?'今日 · ':'')+(dateRows.length?dateRows.length+'场':'暂无比赛');
+    if($('#jcLiveMeta')) $('#jcLiveMeta').textContent=(selectedDate===today?'今日竞彩日 · ':'竞彩日 · ')+(dateRows.length?dateRows.length+'场':'暂无比赛');
     if($('#jcDateCount')) $('#jcDateCount').textContent='共 '+filtered.length+' 场';
     if($('#jcSectionTitleText')) $('#jcSectionTitleText').textContent=selectedDate===today?'今日赛事':'全部赛程';
     setUrlDate(selectedDate);
