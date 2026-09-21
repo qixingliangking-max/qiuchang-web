@@ -308,20 +308,23 @@ async function setupProfile(){
       button.disabled = true;
       button.textContent = '保存中...';
 
-      const { error } = await window.qcSupabase
-        .from('profiles')
-        .update({ nickname: value, updated_at: new Date().toISOString() })
-        .eq('id', user.id);
+      const { data: nicknameResult, error } = await window.qcSupabase.rpc('update_my_nickname', {
+        p_nickname: value
+      });
 
       button.disabled = false;
       button.textContent = '保存昵称';
 
       if(error){
+        let message = '昵称保存失败，请稍后重试。';
+        const raw = error.message || '';
+        if(raw.includes('INVALID_NICKNAME')) message = '昵称长度需要在1到30个字符之间';
+        if(raw.includes('NOT_AUTHENTICATED')) message = '登录状态已失效，请重新登录';
         if(hint){
-          hint.textContent = '昵称保存失败，请稍后重试。';
+          hint.textContent = message;
           hint.className = 'code-hint error';
         }
-        alert('昵称保存失败：' + error.message);
+        alert(message);
         return;
       }
 
