@@ -572,7 +572,7 @@ function jcBindOddsPlayTabs(root,pools,snapshots){
 
 function jcApiStatusText(s){
   const code=s?.short || '';
-  const map={NS:'未开赛',1H:'上半场',HT:'半场',2H:'下半场',ET:'加时',BT:'加时休息',P:'点球',FT:'已结束',AET:'加时结束',PEN:'点球结束',PST:'延期',CANC:'取消',ABD:'中止',INT:'中断'};
+  const map={NS:'未开赛','1H':'上半场',HT:'半场','2H':'下半场',ET:'加时',BT:'加时休息',P:'点球',FT:'已结束',AET:'加时结束',PEN:'点球结束',PST:'延期',CANC:'取消',ABD:'中止',INT:'中断'};
   const base=map[code] || s?.long || '状态待更新';
   return s?.elapsed ? base+' · '+s.elapsed+"'" : base;
 }
