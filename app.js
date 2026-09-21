@@ -789,7 +789,7 @@ async function setupJcMatchDetail(){
   }
 
   async function renderMainTab(tab){
-    $('.jc-main-tabs button',root).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
+    Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
     if(tab==='odds'){
       panel.innerHTML=oddsHtml;
       jcBindOddsPlayTabs(panel,pools,snapshots);
@@ -802,7 +802,7 @@ async function setupJcMatchDetail(){
     await loadFacts();
   }
 
-  const mainButtons=$('.jc-main-tabs button',root);
+  const mainButtons=Array.from(root.querySelectorAll('.jc-main-tabs button'));
   mainButtons.forEach(btn=>{
     btn.onclick=async e=>{
       e.preventDefault();
