@@ -58,6 +58,102 @@ function setupDemoAuth(){
   const reg = $('#registerForm');
 
   if(reg){
+    const emailInput = $('#regEmail');
+    const nicknameInput = $('#regNickname');
+    const passwordInput = $('#regPassword');
+    const codeInput = $('#regCode');
+    const sendCodeBtn = $('#sendCodeBtn');
+    const codeHint = $('#codeHint');
+    let countdownTimer = null;
+
+    const setHint = (message, state='') => {
+      if(!codeHint) return;
+      codeHint.textContent = message;
+      codeHint.className = 'code-hint' + (state ? ' ' + state : '');
+    };
+
+    const startCountdown = (seconds=50) => {
+      if(countdownTimer) clearInterval(countdownTimer);
+      let left = seconds;
+      sendCodeBtn.disabled = true;
+      sendCodeBtn.textContent = left + '秒后重发';
+      countdownTimer = setInterval(() => {
+        left -= 1;
+        if(left <= 0){
+          clearInterval(countdownTimer);
+          countdownTimer = null;
+          sendCodeBtn.disabled = false;
+          sendCodeBtn.textContent = '重新发送';
+          return;
+        }
+        sendCodeBtn.textContent = left + '秒后重发';
+      }, 1000);
+    };
+
+    const sendSignupCode = async () => {
+      if(!window.qcSupabase){
+        alert('数据库连接失败，请刷新页面后重试');
+        return;
+      }
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const nickname = nicknameInput.value.trim();
+
+      if(!email){
+        alert('请先填写邮箱');
+        emailInput.focus();
+        return;
+      }
+
+      if(password.length < 8){
+        alert('密码至少需要8个字符');
+        passwordInput.focus();
+        return;
+      }
+
+      sendCodeBtn.disabled = true;
+      sendCodeBtn.textContent = '发送中...';
+      setHint('正在发送验证码…');
+
+      const pendingEmail = sessionStorage.getItem('qc_pending_email');
+      let error = null;
+
+      if(pendingEmail === email){
+        const result = await window.qcSupabase.auth.resend({
+          type: 'signup',
+          email
+        });
+        error = result.error;
+      }else{
+        const result = await window.qcSupabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              nickname
+            }
+          }
+        });
+        error = result.error;
+      }
+
+      if(error){
+        sendCodeBtn.disabled = false;
+        sendCodeBtn.textContent = '发送验证码';
+        setHint('验证码发送失败，请检查邮箱后重试。', 'error');
+        alert('发送验证码失败：' + error.message);
+        return;
+      }
+
+      sessionStorage.setItem('qc_pending_email', email);
+      setHint('验证码已发送，请检查邮箱（包括垃圾邮件文件夹）。', 'success');
+      startCountdown(50);
+      codeInput.focus();
+    };
+
+    sendCodeBtn.onclick = sendSignupCode;
+
     reg.onsubmit = async e => {
       e.preventDefault();
 
@@ -66,39 +162,49 @@ function setupDemoAuth(){
         return;
       }
 
-      const email = $('#regEmail').value.trim();
-      const password = reg.querySelector('input[type="password"]').value;
-      const nickname = reg.querySelector('input:not([type])')?.value.trim() || '';
-      const button = reg.querySelector('button');
+      const email = emailInput.value.trim();
+      const token = codeInput.value.trim();
+      const button = reg.querySelector('button[type="submit"]');
+
+      if(!/^\d{6}$/.test(token)){
+        alert('请输入邮件中的6位验证码');
+        codeInput.focus();
+        return;
+      }
+
+      const pendingEmail = sessionStorage.getItem('qc_pending_email');
+      if(!pendingEmail || pendingEmail !== email){
+        alert('请先点击“发送验证码”');
+        return;
+      }
 
       button.disabled = true;
-      button.textContent = '注册中...';
+      button.textContent = '验证中...';
 
-      const { data, error } = await window.qcSupabase.auth.signUp({
+      const { data, error } = await window.qcSupabase.auth.verifyOtp({
         email,
-        password,
-        options: {
-          data: {
-            nickname
-          }
-        }
+        token,
+        type: 'signup'
       });
 
       button.disabled = false;
-      button.textContent = '发送验证码 / 注册';
+      button.textContent = '验证并注册';
 
       if(error){
-        alert('注册失败：' + error.message);
+        setHint('验证码错误或已过期，请重新输入。', 'error');
+        alert('验证失败：' + error.message);
         return;
       }
+
+      sessionStorage.removeItem('qc_pending_email');
+      setHint('邮箱验证成功。', 'success');
 
       if(data.session){
         alert('注册成功');
         location.href = 'profile.html';
       }else{
-        sessionStorage.setItem('qc_pending_email', email);
-        alert('验证码已发送到邮箱，请输入验证码完成注册');
-        location.href = 'verify.html';
+        alert('注册成功，请登录');
+        location.href = 'login.html';
       }
     };
   }
