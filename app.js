@@ -525,4 +525,4 @@ async function setupAdmin(){
   }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile()setupAdmin();})
+document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile();setupAdmin();})
