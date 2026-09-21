@@ -126,4 +126,269 @@ function setupDemoAuth(){
   }
 
 }
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth()})
+
+async function setupProfile(){
+  const root = $('#profileRoot');
+  if(!root) return;
+
+  if(!window.qcSupabase){
+    alert('数据库连接失败，请刷新页面后重试');
+    return;
+  }
+
+  const { data: userData, error: userError } = await window.qcSupabase.auth.getUser();
+  const user = userData && userData.user;
+
+  if(userError || !user){
+    location.href = 'login.html';
+    return;
+  }
+
+  const emailEl = $('#profileEmail');
+  const nicknameEl = $('#profileNickname');
+  const roleEl = $('#profileRole');
+  const statusEl = $('#profileStatus');
+  const nicknameInput = $('#nicknameInput');
+
+  if(emailEl) emailEl.textContent = user.email || '—';
+
+  const { data: profile, error: profileError } = await window.qcSupabase
+    .from('profiles')
+    .select('email,nickname,role,status')
+    .eq('id', user.id)
+    .single();
+
+  if(profileError){
+    console.error('读取用户资料失败', profileError);
+  }
+
+  const nickname = (profile && profile.nickname ? profile.nickname.trim() : '') || (user.email ? user.email.split('@')[0] : '用户');
+  const role = profile && profile.role ? profile.role : 'basic';
+  const status = profile && profile.status ? profile.status : 'active';
+
+  if(nicknameEl) nicknameEl.textContent = nickname;
+  if(nicknameInput) nicknameInput.value = nickname;
+  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : role === 'pro' ? 'Pro会员' : '基础用户';
+  if(statusEl){
+    statusEl.textContent = status === 'active' ? '正常' : '已停用';
+    statusEl.style.color = status === 'active' ? 'var(--green)' : 'var(--red)';
+  }
+
+  const { data: subscriptions, error: subscriptionError } = await window.qcSupabase
+    .from('subscriptions')
+    .select('plan,expires_at,status')
+    .eq('user_id', user.id)
+    .eq('status', 'active')
+    .gt('expires_at', new Date().toISOString())
+    .order('expires_at', { ascending: false })
+    .limit(1);
+
+  if(subscriptionError){
+    console.error('读取会员信息失败', subscriptionError);
+  }
+
+  const activeSubscription = subscriptions && subscriptions.length ? subscriptions[0] : null;
+  renderMembership(activeSubscription, role);
+
+  const redeemForm = $('#redeemForm');
+  if(redeemForm){
+    redeemForm.onsubmit = async e => {
+      e.preventDefault();
+      const codeInput = $('#redeemCode');
+      const hint = $('#redeemHint');
+      const button = redeemForm.querySelector('button');
+      const code = codeInput.value.trim();
+
+      if(!code){
+        alert('请输入兑换码');
+        codeInput.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '兑换中...';
+      if(hint){
+        hint.textContent = '正在验证兑换码…';
+        hint.className = 'code-hint';
+      }
+
+      const { data, error } = await window.qcSupabase.rpc('redeem_membership', {
+        p_code: code
+      });
+
+      button.disabled = false;
+      button.textContent = '兑换';
+
+      if(error){
+        let message = '兑换失败，请检查兑换码';
+        if((error.message || '').includes('INVALID_CODE')) message = '兑换码不存在';
+        if((error.message || '').includes('CODE_ALREADY_USED')) message = '这个兑换码已经使用过';
+        if((error.message || '').includes('NOT_AUTHENTICATED')) message = '登录状态已失效，请重新登录';
+        if(hint){
+          hint.textContent = message;
+          hint.className = 'code-hint error';
+        }
+        alert(message);
+        return;
+      }
+
+      codeInput.value = '';
+      if(hint){
+        hint.textContent = '兑换成功，会员有效期已更新。';
+        hint.className = 'code-hint success';
+      }
+
+      const expiry = data && data.expires_at ? data.expires_at : null;
+      renderMembership(expiry ? {plan: data.plan || 'pro', expires_at: expiry, status: 'active'} : null, 'pro');
+
+      if(roleEl) roleEl.textContent = 'Pro会员';
+      alert('兑换成功');
+    };
+  }
+
+  const nicknameForm = $('#nicknameForm');
+  if(nicknameForm){
+    nicknameForm.onsubmit = async e => {
+      e.preventDefault();
+      const input = $('#nicknameInput');
+      const hint = $('#nicknameHint');
+      const button = nicknameForm.querySelector('button');
+      const value = input.value.trim();
+
+      if(!value){
+        alert('昵称不能为空');
+        input.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '保存中...';
+
+      const { error } = await window.qcSupabase
+        .from('profiles')
+        .update({ nickname: value, updated_at: new Date().toISOString() })
+        .eq('id', user.id);
+
+      button.disabled = false;
+      button.textContent = '保存昵称';
+
+      if(error){
+        if(hint){
+          hint.textContent = '昵称保存失败，请稍后重试。';
+          hint.className = 'code-hint error';
+        }
+        alert('昵称保存失败：' + error.message);
+        return;
+      }
+
+      if(nicknameEl) nicknameEl.textContent = value;
+      if(hint){
+        hint.textContent = '昵称已保存。';
+        hint.className = 'code-hint success';
+      }
+    };
+  }
+
+  const passwordForm = $('#passwordForm');
+  if(passwordForm){
+    passwordForm.onsubmit = async e => {
+      e.preventDefault();
+
+      const current = $('#currentPassword').value;
+      const next = $('#newPassword').value;
+      const confirmNext = $('#confirmNewPassword').value;
+      const button = passwordForm.querySelector('button');
+      const hint = $('#passwordHint');
+
+      if(next.length < 8){
+        alert('新密码至少需要8个字符');
+        return;
+      }
+
+      if(next !== confirmNext){
+        alert('两次输入的新密码不一致');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '修改中...';
+
+      const { error: reauthError } = await window.qcSupabase.auth.signInWithPassword({
+        email: user.email,
+        password: current
+      });
+
+      if(reauthError){
+        button.disabled = false;
+        button.textContent = '修改密码';
+        if(hint){
+          hint.textContent = '当前密码不正确。';
+          hint.className = 'code-hint error';
+        }
+        return;
+      }
+
+      const { error } = await window.qcSupabase.auth.updateUser({ password: next });
+
+      button.disabled = false;
+      button.textContent = '修改密码';
+
+      if(error){
+        if(hint){
+          hint.textContent = '密码修改失败，请稍后重试。';
+          hint.className = 'code-hint error';
+        }
+        alert('密码修改失败：' + error.message);
+        return;
+      }
+
+      passwordForm.reset();
+      if(hint){
+        hint.textContent = '密码修改成功。';
+        hint.className = 'code-hint success';
+      }
+      alert('密码修改成功');
+    };
+  }
+
+  const logoutBtn = $('#logoutBtn');
+  if(logoutBtn){
+    logoutBtn.onclick = async e => {
+      e.preventDefault();
+      await window.qcSupabase.auth.signOut();
+      location.href = 'login.html';
+    };
+  }
+}
+
+function renderMembership(subscription, role){
+  const planEl = $('#membershipPlan');
+  const daysEl = $('#membershipDays');
+  const expiryEl = $('#membershipExpiry');
+
+  if(!planEl || !daysEl || !expiryEl) return;
+
+  if(!subscription){
+    planEl.textContent = role === 'pro' ? 'Pro会员' : '基础用户';
+    daysEl.textContent = role === 'pro' ? '会员状态待刷新' : '未开通 Pro';
+    expiryEl.textContent = '有效期至：未开通';
+    return;
+  }
+
+  const expiry = new Date(subscription.expires_at);
+  const now = new Date();
+  const remainingMs = Math.max(0, expiry.getTime() - now.getTime());
+  const remainingDays = Math.ceil(remainingMs / 86400000);
+
+  planEl.textContent = (subscription.plan || 'pro').toLowerCase() === 'pro' ? 'Pro会员' : subscription.plan;
+  daysEl.textContent = '剩余 ' + remainingDays + ' 天';
+  expiryEl.textContent = '有效期至：' + expiry.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth();setupProfile()})
