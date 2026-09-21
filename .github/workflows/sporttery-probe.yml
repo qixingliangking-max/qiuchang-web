@@ -11,41 +11,62 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Probe Sporttery
+      - name: Browser-like Sporttery probe
         shell: bash
         run: |
           set +e
-          URL1='https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
-          URL2='https://webapi.sporttery.cn/gateway/jc/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu'
-          UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
-          : > sporttery-probe-result.txt
-          for U in "$URL1" "$URL2"; do
-            BODY=$(mktemp)
-            CODE=$(curl -L -sS --max-time 25 -o "$BODY" -w '%{http_code}' "$U" \
-              -H "User-Agent: $UA" \
-              -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-              -H 'Accept-Language: zh-CN,zh;q=0.9' \
-              -H 'Referer: https://m.sporttery.cn/mjc/jsq/zqspf/' \
-              -H 'Origin: https://m.sporttery.cn' \
-              -H 'X-Requested-With: XMLHttpRequest')
-            TYPE=$(file -b --mime-type "$BODY" 2>/dev/null || true)
-            SIZE=$(wc -c < "$BODY" | tr -d ' ')
-            PREFIX=$(head -c 160 "$BODY" | tr '\n\r' '  ')
-            {
-              echo "URL=$U"
-              echo "HTTP=$CODE"
-              echo "TYPE=$TYPE"
-              echo "SIZE=$SIZE"
-              echo "PREFIX=$PREFIX"
-              echo "---"
-            } >> sporttery-probe-result.txt
-            rm -f "$BODY"
-          done
-          cat sporttery-probe-result.txt
+          python -m pip install -q selenium
+          cat > /tmp/probe.py <<'PY'
+          import json, time
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+
+          opts = Options()
+          opts.add_argument("--headless=new")
+          opts.add_argument("--no-sandbox")
+          opts.add_argument("--disable-dev-shm-usage")
+          opts.add_argument("--window-size=1280,900")
+          opts.add_argument("--lang=zh-CN")
+          opts.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36")
+
+          out = {"page": {}, "api": {}}
+          driver = webdriver.Chrome(options=opts)
+          try:
+              page = "https://m.sporttery.cn/mjc/jsq/zqspf/"
+              driver.get(page)
+              time.sleep(5)
+              out["page"] = {
+                  "url": driver.current_url,
+                  "title": driver.title,
+                  "source_prefix": driver.page_source[:300]
+              }
+              script = r'''
+              const done = arguments[0];
+              fetch('https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=had,hhad,crs,ttg,hafu', {
+                method:'GET',
+                credentials:'include',
+                headers:{'Accept':'application/json, text/javascript, */*; q=0.01','X-Requested-With':'XMLHttpRequest'}
+              }).then(async r => {
+                const t = await r.text();
+                done({ok:r.ok,status:r.status,type:r.headers.get('content-type'),prefix:t.slice(0,300),length:t.length});
+              }).catch(e => done({error:String(e)}));
+              '''
+              driver.set_script_timeout(30)
+              out["api"] = driver.execute_async_script(script)
+          except Exception as e:
+              out["error"] = repr(e)
+          finally:
+              driver.quit()
+
+          with open("sporttery-probe-result.txt","w",encoding="utf-8") as f:
+              f.write(json.dumps(out, ensure_ascii=False, indent=2))
+          print(json.dumps(out, ensure_ascii=False, indent=2))
+          PY
+          python /tmp/probe.py
       - name: Commit probe result
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add sporttery-probe-result.txt
-          git commit -m 'Record Sporttery network probe result' || exit 0
+          git commit -m 'Record browser Sporttery probe result' || exit 0
           git push
