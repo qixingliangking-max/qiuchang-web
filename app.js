@@ -17,5 +17,50 @@ function renderMatch(){
  }
  $$('#topTabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));show('model')
 }
-function setupDemoAuth(){const login=$('#loginForm');if(login)login.onsubmit=e=>{e.preventDefault();localStorage.setItem('qc_user','demo@qiuchang.local');location.href='profile.html'};const reg=$('#registerForm');if(reg)reg.onsubmit=e=>{e.preventDefault();localStorage.setItem('qc_user',$('#regEmail').value||'demo@qiuchang.local');location.href='profile.html'} }
+function setupDemoAuth(){
+  const login = $('#loginForm');
+
+  if(login){
+    login.onsubmit = async e => {
+      e.preventDefault();
+
+      if(!window.qcSupabase){
+        alert('数据库连接失败，请刷新页面后重试');
+        return;
+      }
+
+      const email = login.querySelector('input[type="email"]').value.trim();
+      const password = login.querySelector('input[type="password"]').value;
+      const button = login.querySelector('button');
+
+      button.disabled = true;
+      button.textContent = '登录中...';
+
+      const { data, error } = await window.qcSupabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      button.disabled = false;
+      button.textContent = '登录';
+
+      if(error){
+        alert('登录失败：' + error.message);
+        return;
+      }
+
+      if(data.user){
+        location.href = 'profile.html';
+      }
+    };
+  }
+
+  const reg = $('#registerForm');
+  if(reg){
+    reg.onsubmit = e => {
+      e.preventDefault();
+      alert('注册功能正在接入');
+    };
+  }
+}
 document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();renderMatch();setupDemoAuth()})
