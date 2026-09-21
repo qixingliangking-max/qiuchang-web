@@ -536,6 +536,116 @@ function jcRenderOddsHistory(snapshots){
   '</section>';
 }
 
+
+function jcApiStatusText(s){
+  const code=s?.short || '';
+  const map={NS:'未开赛',1H:'上半场',HT:'半场',2H:'下半场',ET:'加时',BT:'加时休息',P:'点球',FT:'已结束',AET:'加时结束',PEN:'点球结束',PST:'延期',CANC:'取消',ABD:'中止',INT:'中断'};
+  const base=map[code] || s?.long || '状态待更新';
+  return s?.elapsed ? base+' · '+s.elapsed+"'" : base;
+}
+
+function jcStatZh(type){
+  const map={
+    'Ball Possession':'控球率',
+    'Total Shots':'总射门',
+    'Shots on Goal':'射正',
+    'Shots off Goal':'射偏',
+    'Shots insidebox':'禁区内射门',
+    'Shots outsidebox':'禁区外射门',
+    'Corner Kicks':'角球',
+    'Fouls':'犯规',
+    'Yellow Cards':'黄牌',
+    'Red Cards':'红牌',
+    'Goalkeeper Saves':'扑救',
+    'Total passes':'传球',
+    'Passes accurate':'成功传球',
+    'Passes %':'传球成功率',
+    'expected_goals':'预期进球(xG)'
+  };
+  return map[type] || type;
+}
+
+function jcRenderFactsData(data){
+  const home=data?.teams?.home?.name || '主队';
+  const away=data?.teams?.away?.name || '客队';
+  const hs=data?.goals?.home;
+  const as=data?.goals?.away;
+  const venue=[data?.venue?.name,data?.venue?.city].filter(Boolean).join(' · ') || '—';
+  const round=data?.league?.round || '—';
+  const referee=data?.referee || '—';
+  const events=Array.isArray(data?.events)?data.events:[];
+
+  return '<div class="jc-facts-panel">'+
+    '<div class="jc-facts-score"><div><b>'+qcEscape(home)+'</b></div><div class="jc-facts-score-center"><strong>'+((hs==null||as==null)?'VS':qcEscape(hs)+' - '+qcEscape(as))+'</strong><span>'+qcEscape(jcApiStatusText(data?.status))+'</span></div><div class="right"><b>'+qcEscape(away)+'</b></div></div>'+
+    '<div class="jc-facts-kpis">'+
+      '<div><span>赛事</span><b>'+qcEscape(data?.league?.name || '—')+'</b></div>'+
+      '<div><span>轮次</span><b>'+qcEscape(round)+'</b></div>'+
+      '<div><span>场地</span><b>'+qcEscape(venue)+'</b></div>'+
+      '<div><span>裁判</span><b>'+qcEscape(referee)+'</b></div>'+
+    '</div>'+
+    '<h3>比赛事件</h3>'+
+    (events.length
+      ? '<div class="jc-event-list">'+events.map(ev=>{
+          const tm=(ev?.time?.elapsed ?? '')+(ev?.time?.extra?('+'+ev.time.extra):'');
+          const who=ev?.player?.name || ev?.team?.name || '';
+          const detail=[ev?.type,ev?.detail].filter(Boolean).join(' · ');
+          return '<div class="jc-event-item"><time>'+qcEscape(tm)+"'</time><b>"+qcEscape(who)+'</b><span>'+qcEscape(detail)+'</span></div>';
+        }).join('')+'</div>'
+      : '<div class="jc-empty-market">未开赛；比赛开始后这里会自动出现进球、红黄牌、换人等事件。</div>')+
+  '</div>';
+}
+
+function jcRenderFactsLineups(data){
+  const lineups=Array.isArray(data?.lineups)?data.lineups:[];
+  if(!lineups.length) return '<div class="jc-empty-market">阵容尚未发布；官方数据返回后会自动显示首发、替补和阵型。</div>';
+  return '<div class="jc-lineups-grid">'+lineups.map(team=>{
+    const starters=Array.isArray(team?.startXI)?team.startXI:[];
+    const subs=Array.isArray(team?.substitutes)?team.substitutes:[];
+    return '<section class="jc-lineup-card"><h3>'+qcEscape(team?.team?.name || '球队')+' <small>'+qcEscape(team?.formation || '')+'</small></h3>'+
+      '<b>首发</b><div class="jc-player-list">'+starters.map(x=>'<span>'+qcEscape(x?.player?.number || '')+' '+qcEscape(x?.player?.name || '—')+'</span>').join('')+'</div>'+
+      '<b>替补</b><div class="jc-player-list">'+subs.slice(0,12).map(x=>'<span>'+qcEscape(x?.player?.number || '')+' '+qcEscape(x?.player?.name || '—')+'</span>').join('')+'</div>'+
+    '</section>';
+  }).join('')+'</div>';
+}
+
+function jcRenderFactsStats(data){
+  const stats=Array.isArray(data?.statistics)?data.statistics:[];
+  if(!stats.length) return '<div class="jc-empty-market">技术统计尚未返回；比赛进行后会自动更新控球率、射门、角球等数据。</div>';
+
+  const teams=stats.slice(0,2);
+  const byType={};
+  teams.forEach((team,idx)=>{
+    (team?.statistics||[]).forEach(s=>{
+      if(!byType[s.type]) byType[s.type]=['—','—'];
+      byType[s.type][idx]=s.value ?? '—';
+    });
+  });
+
+  const preferred=['Ball Possession','expected_goals','Total Shots','Shots on Goal','Shots insidebox','Corner Kicks','Fouls','Yellow Cards'];
+  const keys=[...preferred.filter(k=>byType[k]),...Object.keys(byType).filter(k=>!preferred.includes(k)).slice(0,6)];
+  return '<div class="jc-stats-table">'+
+    '<div class="jc-stats-head"><b>'+qcEscape(teams[0]?.team?.name || '主队')+'</b><span>技术统计</span><b>'+qcEscape(teams[1]?.team?.name || '客队')+'</b></div>'+
+    keys.map(k=>'<div class="jc-stats-row"><strong>'+qcEscape(byType[k]?.[0] ?? '—')+'</strong><span>'+qcEscape(jcStatZh(k))+'</span><strong>'+qcEscape(byType[k]?.[1] ?? '—')+'</strong></div>').join('')+
+  '</div>';
+}
+
+function jcRenderFactsShell(){
+  return '<div class="jc-facts-subtabs">'+
+    '<button type="button" class="active" data-facts-tab="data">数据</button>'+
+    '<button type="button" data-facts-tab="lineups">阵容</button>'+
+    '<button type="button" data-facts-tab="stats">技术统计</button>'+
+  '</div>'+
+  '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
+}
+
+function jcRenderAiPlaceholder(m){
+  return '<div class="jc-ai-placeholder">'+
+    '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析</h2>'+
+    '<p>这一层将接入我们自己的模型结果：模型方向、主要进球区间、半全场、TOP3、比赛路径与风险点。</p>'+
+    '<div class="jc-ai-grid"><div><b>模型方向</b><span>待接入</span></div><div><b>主要进球区间</b><span>待接入</span></div><div><b>半全场</b><span>待接入</span></div><div><b>TOP3</b><span>待接入</span></div></div>'+
+  '</div>';
+}
+
 async function setupJcMatchDetail(){
   const root=$('#jcMatchDetailRoot');
   if(!root || !window.qcSupabase) return;
@@ -562,15 +672,7 @@ async function setupJcMatchDetail(){
   const status=jcMatchStatusLabel(m,qcBeijingToday());
   const score=jcScoreInfo(m);
 
-  root.innerHTML=
-    '<div class="detail-head jc-odds-headcard">'+
-      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
-      '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
-        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
-        '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
-      '</div>'+
-    '</div>'+
+  const oddsHtml=
     '<div class="jc-odds-detail-page">'+
       jcRenderHadDetail(pools,snapshots)+
       jcRenderCrsDetail(pools.crs,snapshots)+
@@ -579,6 +681,75 @@ async function setupJcMatchDetail(){
       jcRenderOddsHistory(snapshots)+
       '<div class="jc-source-line">数据来源：中国体育彩票竞彩足球移动端官方链路</div>'+
     '</div>';
+
+  root.innerHTML=
+    '<div class="detail-head jc-odds-headcard">'+
+      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
+      '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
+        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
+        '<div class="center-score"><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
+        '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
+      '</div>'+
+      '<div class="jc-main-tabs">'+
+        '<button type="button" data-main-tab="facts">赛况数据</button>'+
+        '<button type="button" class="active" data-main-tab="odds">赔率详情</button>'+
+        '<button type="button" data-main-tab="ai">AI分析</button>'+
+      '</div>'+
+    '</div>'+
+    '<div id="jcMainPanel">'+oddsHtml+'</div>';
+
+  const panel=$('#jcMainPanel');
+  let factsData=null;
+  let factsLoaded=false;
+
+  async function loadFacts(){
+    panel.innerHTML=jcRenderFactsShell();
+    const content=$('#jcFactsContent');
+
+    if(!factsLoaded){
+      try{
+        const res=await fetch(window.QC_SUPABASE_URL+'/functions/v1/api-football-match?jc_match_id='+encodeURIComponent(id));
+        const payload=await res.json();
+        if(!res.ok || !payload?.ok){
+          if(payload?.error==='FIXTURE_NOT_LINKED'){
+            content.innerHTML='<div class="jc-empty-market">这场竞彩比赛正在匹配赛况数据源；赔率页面不受影响。</div>';
+          }else{
+            content.innerHTML='<div class="jc-empty-market">赛况数据暂时读取失败，请稍后再试。</div>';
+          }
+          return;
+        }
+        factsData=payload.data || {};
+        factsLoaded=true;
+      }catch(e){
+        content.innerHTML='<div class="jc-empty-market">赛况数据暂时读取失败，请稍后再试。</div>';
+        return;
+      }
+    }
+
+    function renderFactsTab(tab){
+      $$('.jc-facts-subtabs button').forEach(b=>b.classList.toggle('active',b.dataset.factsTab===tab));
+      const c=$('#jcFactsContent');
+      if(!c) return;
+      if(tab==='lineups') c.innerHTML=jcRenderFactsLineups(factsData);
+      else if(tab==='stats') c.innerHTML=jcRenderFactsStats(factsData);
+      else c.innerHTML=jcRenderFactsData(factsData);
+    }
+
+    $$('.jc-facts-subtabs button').forEach(btn=>{
+      btn.onclick=()=>renderFactsTab(btn.dataset.factsTab);
+    });
+    renderFactsTab('data');
+  }
+
+  $$('.jc-main-tabs button').forEach(btn=>{
+    btn.onclick=async()=>{
+      $$('.jc-main-tabs button').forEach(b=>b.classList.toggle('active',b===btn));
+      const tab=btn.dataset.mainTab;
+      if(tab==='odds') panel.innerHTML=oddsHtml;
+      else if(tab==='ai') panel.innerHTML=jcRenderAiPlaceholder(m);
+      else await loadFacts();
+    };
+  });
 }
 
 function renderMatch(){
