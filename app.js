@@ -383,6 +383,40 @@ async function loadJcFrontend(){
 }
 
 
+const JC_FIXED_ODDS_TEMPLATE = Object.freeze({
+  had: Object.freeze([
+    Object.freeze({key:'h',label:'主胜'}),
+    Object.freeze({key:'d',label:'平局'}),
+    Object.freeze({key:'a',label:'客胜'})
+  ]),
+  ttg: Object.freeze([
+    Object.freeze({key:'s0',label:'0'}),
+    Object.freeze({key:'s1',label:'1'}),
+    Object.freeze({key:'s2',label:'2'}),
+    Object.freeze({key:'s3',label:'3'}),
+    Object.freeze({key:'s4',label:'4'}),
+    Object.freeze({key:'s5',label:'5'}),
+    Object.freeze({key:'s6',label:'6'}),
+    Object.freeze({key:'s7',label:'7+'})
+  ]),
+  hafu: Object.freeze([
+    Object.freeze({key:'hh',label:'胜胜'}),
+    Object.freeze({key:'hd',label:'胜平'}),
+    Object.freeze({key:'ha',label:'胜负'}),
+    Object.freeze({key:'dh',label:'平胜'}),
+    Object.freeze({key:'dd',label:'平平'}),
+    Object.freeze({key:'da',label:'平负'}),
+    Object.freeze({key:'ah',label:'负胜'}),
+    Object.freeze({key:'ad',label:'负平'}),
+    Object.freeze({key:'aa',label:'负负'})
+  ]),
+  crs: Object.freeze({
+    home: Object.freeze([[1,0],[2,0],[2,1],[3,0],[3,1],[3,2],[4,0],[4,1],[4,2],[5,0],[5,1],[5,2]]),
+    draw: Object.freeze([[0,0],[1,1],[2,2],[3,3]]),
+    away: Object.freeze([[0,1],[0,2],[1,2],[0,3],[1,3],[2,3],[0,4],[1,4],[2,4],[0,5],[1,5],[2,5]])
+  })
+});
+
 function jcPoolHistory(snapshots,code){
   return (snapshots||[])
     .filter(s=>s.pool_code===code)
@@ -448,47 +482,31 @@ function jcScoreItem(pool,key,label,history){
 
 function jcRenderCrsDetail(pool,snapshots){
   const hist=jcPoolHistory(snapshots,'crs');
-  if(!pool) return '<section class="jc-odds-section"><h2>比分</h2><div class="jc-empty-market">暂未返回比分玩法</div></section>';
-
-  const homeWins=[
-    [1,0],[2,0],[2,1],[3,0],[3,1],[3,2],[4,0],[4,1],[4,2],[5,0],[5,1],[5,2]
-  ];
-  const draws=[[0,0],[1,1],[2,2],[3,3]];
-  const awayWins=[
-    [0,1],[0,2],[1,2],[0,3],[1,3],[2,3],[0,4],[1,4],[2,4],[0,5],[1,5],[2,5]
-  ];
-
+  const tpl=JC_FIXED_ODDS_TEMPLATE.crs;
   const group=(items,specialKey,specialLabel)=>items.map(([h,a])=>jcScoreItem(pool,jcCrsKey(h,a),h+'-'+a,hist)).join('')+
     jcScoreItem(pool,specialKey,specialLabel,hist);
 
   return '<section class="jc-odds-section"><h2>比分</h2>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">主胜比分</div><div class="jc-score-group home-win">'+group(homeWins,'s1sh','胜其它')+'</div></div>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">平局比分</div><div class="jc-score-group draw">'+group(draws,'s1sd','平其它')+'</div></div>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">客胜比分</div><div class="jc-score-group away-win">'+group(awayWins,'s1sa','负其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">主胜比分</div><div class="jc-score-group home-win">'+group(tpl.home,'s1sh','胜其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">平局比分</div><div class="jc-score-group draw">'+group(tpl.draw,'s1sd','平其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">客胜比分</div><div class="jc-score-group away-win">'+group(tpl.away,'s1sa','负其它')+'</div></div>'+
   '</section>';
 }
 
 function jcRenderTtgDetail(pool,snapshots){
   const hist=jcPoolHistory(snapshots,'ttg');
-  const labels=['0','1','2','3','4','5','6','7+'];
   return '<section class="jc-odds-section"><h2>总进球数</h2>'+
-    '<div class="jc-ttg-grid">'+labels.map((label,i)=>{
-      const key='s'+i;
-      return '<div class="jc-ttg-item"><b>'+label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,hist)+'</span></div>';
-    }).join('')+'</div>'+
+    '<div class="jc-ttg-grid">'+JC_FIXED_ODDS_TEMPLATE.ttg.map(item=>
+      '<div class="jc-ttg-item"><b>'+item.label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[item.key])+jcTrendMark(pool,item.key,hist)+'</span></div>'
+    ).join('')+'</div>'+
   '</section>';
 }
 
 function jcRenderHafuDetail(pool,snapshots){
   const hist=jcPoolHistory(snapshots,'hafu');
-  const items=[
-    ['hh','胜胜'],['hd','胜平'],['ha','胜负'],
-    ['dh','平胜'],['dd','平平'],['da','平负'],
-    ['ah','负胜'],['ad','负平'],['aa','负负']
-  ];
   return '<section class="jc-odds-section"><h2>半全场胜平负</h2>'+
-    '<div class="jc-hafu-grid">'+items.map(([key,label])=>
-      '<div class="jc-hafu-item"><b>'+label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[key])+jcTrendMark(pool,key,hist)+'</span></div>'
+    '<div class="jc-hafu-grid">'+JC_FIXED_ODDS_TEMPLATE.hafu.map(item=>
+      '<div class="jc-hafu-item"><b>'+item.label+'</b><span>'+jcFmtOdd(pool?.outcomes?.[item.key])+jcTrendMark(pool,item.key,hist)+'</span></div>'
     ).join('')+'</div>'+
   '</section>';
 }
