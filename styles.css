@@ -486,3 +486,128 @@ body{min-height:100vh}
   }
   .qc-home .jc-review-table{min-width:720px}
 }
+
+
+/* 2026-09-22 locked site IA: 今日速览 + 竞彩足球 */
+.qc-overview-page .shell,.qc-football-page .shell{max-width:1600px}
+.qc-site-header{
+  height:72px!important;align-items:center!important;padding:0 22px!important;
+  display:grid!important;grid-template-columns:auto 1fr auto;gap:26px;
+  background:#fffdfa
+}
+.qc-site-header .brand{font-size:21px;white-space:nowrap}
+.qc-site-header .brand span{font-size:15px;margin-left:2px}
+.qc-primary-nav{display:flex;align-self:stretch;gap:8px}
+.qc-primary-nav a{
+  min-width:92px;display:flex;align-items:center;justify-content:center;
+  padding:0 14px;border-bottom:3px solid transparent;color:#747d8f;
+  font-size:15px;font-weight:800
+}
+.qc-primary-nav a:hover{color:var(--text)}
+.qc-primary-nav a.active{color:var(--blue);border-bottom-color:var(--blue)}
+.qc-site-header .menu-btn{width:42px;height:42px;border-radius:12px;font-size:21px}
+.qc-overview-page .content,.qc-football-page .content{padding:20px 18px 80px}
+.qc-overview-page .jc-home-controls{margin-bottom:14px}
+.qc-overview-page .jc-review-shell{margin-bottom:28px}
+.qc-overview-page .jc-prediction-shell{margin-top:0}
+.qc-overview-page .jc-home-section-title{font-size:20px;margin:15px 0 10px}
+.qc-overview-page .jc-home-section-title .bar{height:28px;width:4px}
+.qc-overview-page .jc-review-table-wrap{border-radius:12px}
+.qc-overview-page .jc-review-table{min-width:980px}
+.qc-overview-page .jc-review-table th{
+  padding:11px 8px;font-size:12px;background:#eef2f8
+}
+.qc-overview-page .jc-review-table td{
+  padding:12px 8px;font-size:13px;cursor:pointer
+}
+.qc-overview-page .jc-overview-row:hover td{background:#fbfcff}
+.qc-overview-page .jc-overview-league{
+  display:inline-flex;padding:5px 9px;border-radius:999px;background:#f2f3f6;
+  color:#626c7e;font-size:12px;font-weight:800
+}
+.qc-overview-page .jc-review-match{
+  grid-template-columns:minmax(120px,1fr) 74px minmax(120px,1fr);gap:10px
+}
+.qc-overview-page .jc-score-stack{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px
+}
+.qc-overview-page .jc-score-half{font-size:11px!important;color:#a0a8b8!important;font-weight:700!important}
+.qc-overview-page .jc-score-full{font-size:18px!important;color:var(--text)!important;font-weight:900!important}
+.qc-overview-page .jc-score-full.vs{font-size:14px!important;color:#9ba4b4!important}
+.qc-overview-page .jc-result-stack{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.qc-overview-page .jc-landed{color:#c46d18;font-weight:900}
+.qc-overview-page .jc-landed.secondary{color:#6f788a;font-weight:800}
+.qc-overview-page .jc-overview-pending{
+  display:inline-flex;padding:4px 8px;border-radius:999px;background:#f3f5f8;
+  color:#929bad;font-size:12px;font-weight:800
+}
+
+/* Red review ring is ready for later model-settlement hits. */
+.qc-overview-page .jc-hit-ring{
+  display:inline-flex;border:2px solid #ef625b;border-radius:999px;
+  padding:3px 7px;color:#c46d18;font-weight:900
+}
+
+/* 竞彩足球 card page */
+.qc-football-toolbar{
+  position:relative;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:14px 16px;margin-bottom:22px;box-shadow:0 8px 24px rgba(31,42,68,.05)
+}
+.jc-football-league-filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.jc-football-league-filters button{
+  border:1px solid var(--line);border-radius:999px;background:#fff;color:#667084;
+  padding:8px 14px;font-weight:800;cursor:pointer
+}
+.jc-football-league-filters button.active{
+  background:#edf3ff;color:#2e64dc;border-color:#cad8ff
+}
+.jc-football-date-zone{position:relative;display:flex;align-items:center;gap:8px}
+.jc-football-date-zone>button{
+  min-height:38px;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:0 12px;color:#6d7688;font-weight:800;cursor:pointer
+}
+.jc-football-date-label{min-width:122px;color:var(--text)!important}
+.jc-football-today{background:#f3f5f8!important}
+.qc-football-page .jc-date-popover{top:48px;left:auto;right:0;transform:none}
+.jc-football-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px
+}
+.jc-football-card{
+  display:block;background:#fff;border:1px solid var(--line);border-radius:22px;
+  padding:18px;box-shadow:0 9px 28px rgba(31,42,68,.055);transition:.15s
+}
+.jc-football-card:hover{transform:translateY(-2px);box-shadow:0 13px 34px rgba(31,42,68,.085)}
+.jc-football-card .jc-card-teams{min-height:52px}
+.jc-football-card .jc-team{font-size:16px}
+.jc-football-card .jc-card-top time{font-size:12px}
+.jc-football-card .jc-status-strip{margin-bottom:14px}
+.jc-football-card .jc-model-pending{margin-top:14px}
+
+/* Detail page uses the same two-item product navigation. */
+.jc-odds-page .qc-site-header{max-width:none}
+.jc-odds-page .qc-site-header .qc-primary-nav{margin-right:auto}
+
+@media(max-width:1100px){
+  .jc-football-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .qc-site-header{
+    grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;
+    height:76px!important;padding:0 14px!important
+  }
+  .qc-site-header .brand{font-size:18px}
+  .qc-site-header .brand span{font-size:12px;display:block;margin-top:2px}
+  .qc-primary-nav{
+    grid-column:1/-1;order:3;height:42px;margin:0 -14px;padding:0 14px;
+    background:#fff;border-top:1px solid var(--line)
+  }
+  .qc-primary-nav a{min-width:92px;font-size:14px}
+  .qc-site-header .menu-btn{grid-column:2;grid-row:1}
+  .qc-overview-page .content,.qc-football-page .content{padding:16px 12px 72px}
+  .qc-football-toolbar{align-items:flex-start;flex-direction:column;padding:12px}
+  .jc-football-date-zone{width:100%;overflow-x:auto;padding-bottom:2px}
+  .jc-football-date-zone .jc-fixture-count{margin-left:auto}
+  .jc-football-grid{grid-template-columns:1fr}
+  .qc-overview-page .jc-review-table-wrap{margin-left:-12px;margin-right:-12px;border-radius:0}
+}
