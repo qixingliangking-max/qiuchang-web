@@ -1513,3 +1513,28 @@ button.qc-date-locked-control:disabled{
   color:var(--text)!important;
   font-weight:900!important;
 }
+
+
+/* 2026-09-22 live stage/time labels */
+.qc-overview-page .jc-score-live{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px!important;font-weight:900!important;color:#d86722!important;
+  white-space:nowrap
+}
+.qc-overview-page .jc-score-live::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block
+}
+.center-score small.jc-live-stage{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  width:max-content;margin:5px auto 0;padding:3px 8px;border-radius:999px;
+  background:#fff3e9;color:#d86722;font-weight:900
+}
+.center-score small.jc-live-stage::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block
+}
+.jc-status-pill.is-live{
+  background:#fff3e9;color:#d86722
+}
+.jc-status-pill.is-live::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:5px
+}
