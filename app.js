@@ -353,7 +353,7 @@ function jcRenderYesterdayReview(rows,today){
 function jcRenderFootballCards(rows,today){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
-  return '<div class="jc-football-grid">'+ordered.map(m=>{
+  return '<div class="jc-football-grid">'+ordered.map((m,index)=>{
     const score=jcScoreInfo(m);
     const status=jcMatchStatusLabel(m,today);
     const relative=jcRelativeDayLabel(m.match_date,today);
@@ -362,7 +362,10 @@ function jcRenderFootballCards(rows,today){
     return '<article class="jc-football-card jc-football-card-lite">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
-          '<span><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em><b>'+qcEscape(m.match_num||'竞彩')+'</b></span>'+
+          '<span class="jc-card-top-left">'+
+            (index<3?'<img class="jc-card-mini-logo" src="football-mark.svg" alt="">':'')+
+            '<span class="jc-card-top-meta"><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em><b>'+qcEscape(m.match_num||'竞彩')+'</b></span>'+
+          '</span>'+
           '<time>'+qcEscape(when)+'</time>'+
         '</div>'+
         '<div class="jc-card-teams">'+
