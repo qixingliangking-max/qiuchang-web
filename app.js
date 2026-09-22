@@ -617,7 +617,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         scoreMeta='未开赛';
       }
       const scoreStack=displayScore
-        ? '<span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span><strong class="jc-score-full">'+qcEscape(displayScore)+'</strong>'
+        ? '<strong class="jc-score-full">'+qcEscape(displayScore)+'</strong><span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span>'
         : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
       return '<tr class="jc-overview-row" data-href="'+href+'">'+
