@@ -1233,3 +1233,22 @@ body{min-height:100vh}
   }
   .jc-football-league-menu{max-height:calc(58vh - 52px)}
 }
+
+
+/* 2026-09-22 odds tabs: keep all 5 play types visible on mobile */
+@media(max-width:640px){
+  .jc-odds-play-tabs{
+    display:grid!important;
+    grid-template-columns:.9fr 1.35fr .85fr 1.15fr .95fr!important;
+    gap:2px!important;
+    overflow:visible!important;
+    padding:4px!important;
+  }
+  .jc-odds-play-tabs button{
+    min-width:0!important;
+    padding:10px 2px!important;
+    font-size:10px!important;
+    letter-spacing:-.2px!important;
+    white-space:nowrap!important;
+  }
+}
