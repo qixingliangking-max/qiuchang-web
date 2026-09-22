@@ -860,3 +860,175 @@ body{min-height:100vh}
   .qc-overview-page .jc-overview-pending,
   .qc-overview-page .jc-landed{font-size:12px!important}
 }
+
+
+/* 2026-09-22 homepage mobile FINAL: dense table layout, not per-match cards */
+@media(max-width:760px){
+  .qc-overview-page .jc-review-table-wrap{
+    margin:0!important;
+    border:1px solid var(--line)!important;
+    border-radius:12px!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    box-shadow:0 4px 16px rgba(31,42,68,.04)!important
+  }
+  .qc-overview-page .jc-review-table{
+    display:table!important;
+    width:100%!important;
+    min-width:0!important;
+    table-layout:fixed!important;
+    border-collapse:collapse!important
+  }
+  .qc-overview-page .jc-review-table thead{display:table-header-group!important}
+  .qc-overview-page .jc-review-table tbody{display:table-row-group!important}
+  .qc-overview-page .jc-review-table tr.jc-overview-row{
+    display:table-row!important;
+    width:auto!important;
+    background:#fff!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important
+  }
+  .qc-overview-page .jc-review-table th,
+  .qc-overview-page .jc-review-table td{
+    display:table-cell!important;
+    width:auto!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+    vertical-align:middle!important;
+    border-bottom:1px solid #edf0f5!important;
+    padding:7px 2px!important;
+  }
+  .qc-overview-page .jc-review-table th{
+    background:#eef2f7!important;
+    color:#6d778c!important;
+    font-size:9px!important;
+    line-height:1.15!important;
+    font-weight:900!important;
+    white-space:nowrap!important
+  }
+  .qc-overview-page .jc-review-table td{
+    font-size:10px!important;
+    line-height:1.2!important;
+    background:#fff!important
+  }
+  .qc-overview-page .jc-review-table td:first-child{
+    border-left:3px solid #35b36e!important;
+    padding-left:3px!important
+  }
+
+  .qc-overview-page .jc-overview-table th:nth-child(1),
+  .qc-overview-page .jc-overview-table td:nth-child(1){width:8%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(2),
+  .qc-overview-page .jc-overview-table td:nth-child(2){width:8%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(3),
+  .qc-overview-page .jc-overview-table td:nth-child(3){width:10%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(4),
+  .qc-overview-page .jc-overview-table td:nth-child(4){width:32%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(5),
+  .qc-overview-page .jc-overview-table td:nth-child(5){width:18%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(6),
+  .qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(7),
+  .qc-overview-page .jc-overview-table td:nth-child(7){width:12%!important}
+
+  .qc-overview-page .jc-review-table td:nth-child(1),
+  .qc-overview-page .jc-review-table td:nth-child(2){
+    white-space:nowrap!important;font-weight:800!important
+  }
+  .qc-overview-page .jc-overview-league{
+    display:inline!important;
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    color:#667085!important;
+    font-size:9px!important;
+    font-weight:800!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important
+  }
+
+  .qc-overview-page .jc-review-match{
+    display:grid!important;
+    width:100%!important;
+    grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr)!important;
+    gap:2px!important;
+    align-items:center!important
+  }
+  .qc-overview-page .jc-review-match>span:first-child{
+    text-align:right!important;
+    color:#316be9!important;
+    font-size:10px!important;
+    font-weight:900!important;
+    line-height:1.15!important;
+    overflow-wrap:anywhere!important
+  }
+  .qc-overview-page .jc-review-match>span:last-child{
+    text-align:left!important;
+    color:#d9802f!important;
+    font-size:10px!important;
+    font-weight:900!important;
+    line-height:1.15!important;
+    overflow-wrap:anywhere!important
+  }
+  .qc-overview-page .jc-score-stack{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:0!important
+  }
+  .qc-overview-page .jc-score-full{font-size:12px!important;line-height:1!important}
+  .qc-overview-page .jc-score-full.vs{font-size:11px!important}
+  .qc-overview-page .jc-score-half{font-size:8px!important;line-height:1.05!important;margin-top:2px!important}
+
+  .qc-overview-page .jc-review-table td:nth-child(5),
+  .qc-overview-page .jc-review-table td:nth-child(6),
+  .qc-overview-page .jc-review-table td:nth-child(7){
+    position:static!important;
+    min-height:0!important;
+    padding:7px 2px!important
+  }
+  .qc-overview-page .jc-review-table td:nth-child(5)::before,
+  .qc-overview-page .jc-review-table td:nth-child(6)::before,
+  .qc-overview-page .jc-review-table td:nth-child(7)::before{content:none!important}
+
+  .qc-overview-page .jc-result-stack{
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:2px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-wrap:nowrap!important
+  }
+  .qc-overview-page .jc-overview-pending,
+  .qc-overview-page .jc-landed{
+    display:inline!important;
+    padding:0!important;
+    background:transparent!important;
+    border-radius:0!important;
+    font-size:9px!important;
+    line-height:1.2!important;
+    white-space:normal!important
+  }
+  .qc-overview-page .jc-landed{color:#c66b12!important;font-weight:900!important}
+  .qc-overview-page .jc-landed.secondary{color:#7a8496!important}
+
+  .qc-overview-page .jc-home-section-title{
+    font-size:19px!important;
+    margin:18px 0 9px!important
+  }
+  .qc-overview-page .section-meta{font-size:11px!important}
+  .qc-overview-page .jc-fixture-count{font-size:11px!important}
+}
+@media(max-width:390px){
+  .qc-overview-page .jc-review-table th{font-size:8px!important}
+  .qc-overview-page .jc-review-table td{font-size:9px!important;padding:6px 1px!important}
+  .qc-overview-page .jc-review-match{grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr)!important}
+  .qc-overview-page .jc-review-match>span:first-child,
+  .qc-overview-page .jc-review-match>span:last-child{font-size:9px!important}
+  .qc-overview-page .jc-overview-pending,
+  .qc-overview-page .jc-landed{font-size:8px!important}
+}
