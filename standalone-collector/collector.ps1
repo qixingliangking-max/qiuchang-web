@@ -3,7 +3,7 @@ param([switch]$Once)
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Version = "windows-standalone-0.5.1"
+$Version = "windows-standalone-0.5.2"
 $ConfigPath = Join-Path $PSScriptRoot "collector-config.txt"
 $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
@@ -319,6 +319,10 @@ function PushPayload($t,$payload) {
 }
 
 function RunOne {
+  Write-Host ""
+  Write-Host "============================================"
+  Write-Host "QiuChang Collector VERSION: $Version"
+  Write-Host "============================================"
   $t=Token
   Log "Starting Sporttery schedule + fixed-bonus history + preview/live collection..."
   try{
