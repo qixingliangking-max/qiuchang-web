@@ -405,12 +405,16 @@ async function loadJcFootball(){
   let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
   let activeLeague='全部';
 
+  const leagueKey=m=>m.league_short_name||m.league_name||'其他';
   const label=$('#jcFootballDateLabel');
   const prev=$('#jcFootballPrevDate');
   const next=$('#jcFootballNextDate');
   const todayBtn=$('#jcFootballTodayBtn');
   const count=$('#jcFootballCount');
-  const pop=$('#jcDatePopover');
+  const datePop=$('#jcDatePopover');
+  const leagueToggle=$('#jcFootballLeagueToggle');
+  const leaguePop=$('#jcFootballLeaguePopover');
+  const leagueMenu=$('#jcFootballLeagueMenu');
 
   function setUrlDate(ds){
     const u=new URL(location.href);
@@ -418,36 +422,112 @@ async function loadJcFootball(){
     history.replaceState({},'',u);
   }
 
-  function renderLeagueChips(rows){
-    const box=$('#jcFootballLeagueFilters');
-    if(!box) return;
-    const leagues=[...new Set(rows.map(m=>m.league_short_name||m.league_name||'其他'))];
-    const items=['全部',...leagues];
-    box.innerHTML=items.map(x=>'<button type="button" class="'+(activeLeague===x?'active':'')+'" data-league="'+qcEscape(x)+'">'+qcEscape(x)+'</button>').join('');
-    $$('button',box).forEach(btn=>{
-      btn.onclick=()=>{activeLeague=btn.dataset.league||'全部';render();};
+  function closeLeague(){
+    if(leaguePop) leaguePop.hidden=true;
+    if(leagueToggle) leagueToggle.setAttribute('aria-expanded','false');
+  }
+
+  function renderLeagueMenu(rows){
+    if(!leagueMenu) return;
+    const counts={};
+    rows.forEach(m=>{
+      const k=leagueKey(m);
+      counts[k]=(counts[k]||0)+1;
+    });
+    const items=[
+      {key:'全部',label:'全部赛事',count:rows.length},
+      ...Object.keys(counts).sort((x,y)=>x.localeCompare(y,'zh-CN')).map(k=>({key:k,label:k,count:counts[k]}))
+    ];
+    leagueMenu.innerHTML=items.map(item=>
+      '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+
+        '<span class="jc-football-league-check">'+(activeLeague===item.key?'✓':'')+'</span>'+
+        '<span class="jc-football-league-name">'+qcEscape(item.label)+'</span>'+
+        '<b>'+item.count+'</b>'+
+      '</button>'
+    ).join('');
+    $$('button',leagueMenu).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        activeLeague=btn.dataset.league||'全部';
+        closeLeague();
+        render();
+      };
     });
   }
 
   function render(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
-    const filtered=activeLeague==='全部'?dateRows:dateRows.filter(m=>(m.league_short_name||m.league_name||'其他')===activeLeague);
-    if(label) label.textContent=selectedDate.slice(5)+' '+new Date(selectedDate+'T12:00:00+08:00').toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+    if(activeLeague!=='全部' && !dateRows.some(m=>leagueKey(m)===activeLeague)) activeLeague='全部';
+    const filtered=activeLeague==='全部'?dateRows:dateRows.filter(m=>leagueKey(m)===activeLeague);
+
+    if(label){
+      const d=new Date(selectedDate+'T12:00:00+08:00');
+      label.textContent=selectedDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+    }
     if(count) count.textContent='共 '+filtered.length+' 场';
-    renderLeagueChips(dateRows);
+    if(leagueToggle){
+      leagueToggle.textContent=activeLeague==='全部'?'赛事':activeLeague;
+      leagueToggle.title=activeLeague==='全部'?'选择赛事':'当前：'+activeLeague;
+    }
+
+    renderLeagueMenu(dateRows);
     cards.innerHTML=jcRenderFootballCards(filtered,today);
     setUrlDate(selectedDate);
-    qcRenderDateCalendar(selectedDate,availableDates,ds=>{selectedDate=ds;activeLeague='全部';render();});
+    qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+      selectedDate=ds;
+      activeLeague='全部';
+      closeLeague();
+      render();
+    });
   }
 
-  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
-  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
-  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
-  if(label) label.onclick=()=>{qcRenderDateCalendar(selectedDate,availableDates,ds=>{selectedDate=ds;activeLeague='全部';render();});if(pop)pop.hidden=!pop.hidden;};
+  if(prev) prev.onclick=()=>{
+    selectedDate=qcAddDays(selectedDate,-1);
+    activeLeague='全部';
+    closeLeague();
+    render();
+  };
+  if(next) next.onclick=()=>{
+    selectedDate=qcAddDays(selectedDate,1);
+    activeLeague='全部';
+    closeLeague();
+    render();
+  };
+  if(todayBtn) todayBtn.onclick=()=>{
+    selectedDate=today;
+    activeLeague='全部';
+    closeLeague();
+    render();
+  };
+  if(label) label.onclick=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+      selectedDate=ds;
+      activeLeague='全部';
+      render();
+    });
+    if(datePop) datePop.hidden=!datePop.hidden;
+    closeLeague();
+  };
+  if(leagueToggle) leagueToggle.onclick=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    if(datePop) datePop.hidden=true;
+    if(leaguePop){
+      leaguePop.hidden=!leaguePop.hidden;
+      leagueToggle.setAttribute('aria-expanded',String(!leaguePop.hidden));
+    }
+  };
+
+  document.addEventListener('click',e=>{
+    if(datePop && !datePop.hidden && e.target!==label && !datePop.contains(e.target)) datePop.hidden=true;
+    if(leaguePop && !leaguePop.hidden && e.target!==leagueToggle && !leaguePop.contains(e.target)) closeLeague();
+  });
 
   render();
 }
-
 
 async function loadJcFrontend(){
   const cards=$('#jcLiveCards');
