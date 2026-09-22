@@ -220,7 +220,11 @@ function jcRenderLeagueFilters(rows,activeLeague,onChange){
     '</button>'
   ).join('');
   $('button',box).forEach(btn=>{
-    btn.onclick=()=>onChange(btn.dataset.league || '全部');
+    btn.onclick=e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      onChange(btn.dataset.league || '全部');
+    };
   });
 }
 
