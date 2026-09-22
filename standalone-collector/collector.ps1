@@ -3,7 +3,7 @@ param([switch]$Once)
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Version = "windows-standalone-0.5.2"
+$Version = "windows-standalone-0.5.3"
 $ConfigPath = Join-Path $PSScriptRoot "collector-config.txt"
 $LogPath = Join-Path $PSScriptRoot "collector.log"
 $IngestUrl = "https://oqtloldkfjxildoribkf.supabase.co/functions/v1/sporttery-ingest"
@@ -42,7 +42,8 @@ function Heartbeat($t,$ok,$msg,$src,$status) {
       http_status=[int]$status
       version=$Version
     } | ConvertTo-Json -Compress
-    Invoke-RestMethod -Uri $HeartbeatUrl -Method Post -Headers @{"X-Collector-Token"=$t} -ContentType "application/json" -Body $body -TimeoutSec 15 | Out-Null
+    $bodyBytes=[System.Text.Encoding]::UTF8.GetBytes($body)
+    Invoke-RestMethod -Uri $HeartbeatUrl -Method Post -Headers @{"X-Collector-Token"=$t} -ContentType "application/json; charset=utf-8" -Body $bodyBytes -TimeoutSec 15 | Out-Null
   } catch {}
 }
 
@@ -311,11 +312,16 @@ function BuildPayload($matches) {
 
 function PushPayload($t,$payload) {
   $json=$payload | ConvertTo-Json -Depth 40 -Compress
+
+  # Windows PowerShell 5.1 may send string bodies using a legacy code page.
+  # Always send raw UTF-8 bytes so Chinese league/team/match labels are preserved.
+  $bodyBytes=[System.Text.Encoding]::UTF8.GetBytes($json)
+
   return Invoke-RestMethod -Uri $IngestUrl -Method Post -Headers @{
     "X-Collector-Token"=$t
     "X-Collector-Version"=$Version
     "X-Source-Endpoint"=$ListBase
-  } -ContentType "application/json" -Body $json -TimeoutSec 60
+  } -ContentType "application/json; charset=utf-8" -Body $bodyBytes -TimeoutSec 60
 }
 
 function RunOne {
@@ -324,7 +330,7 @@ function RunOne {
   Write-Host "QiuChang Collector VERSION: $Version"
   Write-Host "============================================"
   $t=Token
-  Log "Starting Sporttery schedule + fixed-bonus history + preview/live collection..."
+  Log "Starting Sporttery schedule + fixed-bonus history + preview/live collection (UTF-8 upload enabled)..."
   try{
     $schedule=FetchAllSchedule
     if(@($schedule.matches).Count -eq 0){
