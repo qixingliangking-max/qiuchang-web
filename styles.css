@@ -611,3 +611,44 @@ body{min-height:100vh}
   .jc-football-grid{grid-template-columns:1fr}
   .qc-overview-page .jc-review-table-wrap{margin-left:-12px;margin-right:-12px;border-radius:0}
 }
+
+
+/* 2026-09-22 match facts: five switchable sub-tabs + Sporttery detail blocks */
+.jc-facts-subtabs{overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.jc-facts-subtabs::-webkit-scrollbar{display:none}
+.jc-facts-subtabs button{flex:0 0 auto}
+.jc-stat-pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:18px}
+.jc-stat-pair{
+  display:grid;grid-template-columns:1.2fr .7fr .7fr;align-items:center;gap:8px;
+  border:1px solid var(--line);border-radius:12px;background:#fafbfd;padding:11px 12px
+}
+.jc-stat-pair span{color:var(--muted);font-size:12px;font-weight:800}
+.jc-stat-pair strong{text-align:center}
+.jc-empty-inline{padding:10px 0 14px;color:var(--muted);font-size:13px}
+.jc-injury-list{display:grid;gap:7px;margin:8px 0 14px}
+.jc-injury-list>div{
+  display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
+  border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fafbfd
+}
+.jc-injury-list span{color:var(--muted);font-size:12px}
+.jc-injury-list em{
+  font-style:normal;color:#c76228;background:#fff1e6;border-radius:999px;
+  padding:3px 7px;font-size:11px;font-weight:900
+}
+.jc-api-block{margin-bottom:18px}
+.jc-h2h-list{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.jc-h2h-row{
+  display:grid;grid-template-columns:92px 1fr 70px 1fr 78px;gap:8px;align-items:center;
+  padding:12px 14px;border-top:1px solid var(--line);text-align:center
+}
+.jc-h2h-row:first-child{border-top:0}
+.jc-h2h-row time,.jc-h2h-row small{color:var(--muted);font-size:12px}
+.jc-h2h-row span:first-of-type{text-align:right;color:#3268d7;font-weight:800}
+.jc-h2h-row span:last-of-type{text-align:left;color:#c27925;font-weight:800}
+.jc-h2h-row strong{font-size:16px}
+@media(max-width:640px){
+  .jc-facts-subtabs{gap:14px;padding:0 12px}
+  .jc-stat-pairs{grid-template-columns:1fr}
+  .jc-h2h-row{grid-template-columns:72px 1fr 54px 1fr}
+  .jc-h2h-row small{grid-column:2/5;text-align:center}
+}
