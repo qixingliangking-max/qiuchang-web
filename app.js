@@ -314,25 +314,40 @@ async function loadJcFrontend(){
     if($('#jcDateCount')) $('#jcDateCount').textContent=filtered.length+'场';
     if(leagueToggle) leagueToggle.textContent=activeLeague==='全部'?'赛事':activeLeague;
     if($('#jcSectionTitleText')) $('#jcSectionTitleText').textContent=selectedDate===today?'今日赛事':'全部赛程';
-    setUrlDate(selectedDate);
 
-    jcRenderLeagueFilters(dateRows,activeLeague,(league)=>{
-      activeLeague=league;
-      if(leaguePop) leaguePop.hidden=true;
-      render();
-    });
-
-    if(selectedDate===today){
-      cards.innerHTML=jcRenderTodayLayout(filtered,today);
-    }else{
-      cards.innerHTML=jcRenderFutureGrid(filtered,today);
+    try{
+      cards.innerHTML=jcRenderCompactFixtures(
+        filtered,
+        today,
+        selectedDate===today?'今天暂时没有采集到竞彩足球赛程。':'这一天暂时没有符合筛选条件的比赛。'
+      );
+    }catch(err){
+      console.error('首页赛事列表渲染失败',err);
+      cards.innerHTML='<div class="jc-compact-list">'+filtered.map(m=>
+        '<a class="jc-compact-match" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
+          '<div class="jc-compact-top"><span><b>'+qcEscape(m.match_num||'竞彩')+'</b><em>'+qcEscape(m.league_name||m.league_short_name||'—')+'</em></span><time>'+qcEscape(String(m.match_time||'').slice(0,5))+'</time></div>'+
+          '<div class="jc-compact-main"><strong class="jc-compact-team">'+qcEscape(m.home_team_name||'—')+'</strong><div class="jc-compact-score"><b>VS</b></div><strong class="jc-compact-team away">'+qcEscape(m.away_team_name||'—')+'</strong></div>'+
+        '</a>'
+      ).join('')+'</div>';
     }
 
-    qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-      selectedDate=ds;
-      activeLeague='全部';
-      render();
-    });
+    try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
+
+    try{
+      jcRenderLeagueFilters(dateRows,activeLeague,(league)=>{
+        activeLeague=league;
+        if(leaguePop) leaguePop.hidden=true;
+        render();
+      });
+    }catch(err){ console.error('赛事筛选渲染失败',err); }
+
+    try{
+      qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
+        selectedDate=ds;
+        activeLeague='全部';
+        render();
+      });
+    }catch(err){ console.error('日期日历渲染失败',err); }
   }
 
   if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
@@ -1522,4 +1537,15 @@ async function setupAdmin(){
   }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{setupDrawer();renderIndex();loadJcFrontend();setupJcMatchDetail();renderMatch();setupDemoAuth();setupAuthNav();setupProfile();setupAdmin();})
+document.addEventListener('DOMContentLoaded',()=>{
+  const safe=(name,fn)=>{try{const r=fn();if(r&&typeof r.catch==='function')r.catch(e=>console.error(name,e));}catch(e){console.error(name,e);}};
+  safe('drawer',()=>setupDrawer());
+  safe('legacy-index',()=>renderIndex());
+  safe('jc-frontend',()=>loadJcFrontend());
+  safe('jc-detail',()=>setupJcMatchDetail());
+  safe('legacy-match',()=>renderMatch());
+  safe('auth',()=>setupDemoAuth());
+  safe('auth-nav',()=>setupAuthNav());
+  safe('profile',()=>setupProfile());
+  safe('admin',()=>setupAdmin());
+})
