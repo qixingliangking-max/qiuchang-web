@@ -577,7 +577,7 @@ function jcRenderFootballCards(rows,today){
           '<span class="jc-vs">'+(score.current?qcEscape(score.current):'VS')+'</span>'+
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
-        '<div class="jc-card-status-row"><span class="jc-status-pill">半场 '+qcEscape(score.ht||'—')+'</span></div>'+
+        '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(score.finished?'已结束':(score.started?(score.statusShort==='HT'?('半场 '+(score.ht||'—')):(score.elapsed!=null?(score.elapsed+'′ 进行中'):status)):status))+'</span></div>'+
         (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
           '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
           '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
