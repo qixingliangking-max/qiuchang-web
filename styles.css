@@ -1552,3 +1552,26 @@ button.qc-date-locked-control:disabled{
 .jc-status-pill.is-live::before{
   content:"";width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:5px
 }
+
+/* 2026-09-22 review: keep all prematch choices, ring only landed choice */
+.qc-overview-page .jc-review-choices .jc-hit-ring{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #ef625b;
+  border-radius:999px;
+  padding:2px 5px;
+  line-height:1.05;
+}
+.qc-overview-page .jc-goal-choices.jc-review-choices .jc-hit-ring{
+  color:#c66b12;
+}
+.qc-overview-page .jc-choice-secondary.jc-hit-ring{
+  color:#8b95a7;
+}
+@media(max-width:760px){
+  .qc-overview-page .jc-review-choices .jc-hit-ring{
+    padding:2px 4px;
+    border-width:1.5px;
+  }
+}
