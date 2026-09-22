@@ -1818,14 +1818,36 @@ async function setupDemoAuth(){
     const button = resetForm.querySelector('button[type="submit"]');
 
     const refreshRecoveryState = async () => {
+      const params = new URLSearchParams(location.search);
+      const tokenHash = params.get('token_hash') || '';
+      const recoveryType = params.get('type') || '';
+
+      if(tokenHash && recoveryType === 'recovery'){
+        const { error: verifyError } = await window.qcSupabase.auth.verifyOtp({
+          token_hash: tokenHash,
+          type: 'recovery'
+        });
+
+        if(verifyError){
+          button.disabled = true;
+          if(hint){
+            hint.textContent = '修改密码链接无效或已过期，请重新申请。';
+            hint.className = 'code-hint error';
+          }
+          return false;
+        }
+
+        history.replaceState({},'',location.pathname);
+      }
+
       const { data, error } = await window.qcSupabase.auth.getSession();
       const session = data && data.session;
       const ready = !error && Boolean(session);
       button.disabled = !ready;
       if(hint){
         hint.textContent = ready
-          ? '身份验证已通过，请设置新的登录密码。'
-          : '重置链接无效或已过期，请重新申请密码重置邮件。';
+          ? '请直接设置新的登录密码。'
+          : '修改密码链接无效或已过期，请重新申请。';
         hint.className = ready ? 'code-hint success' : 'code-hint error';
       }
       return ready;
@@ -1837,7 +1859,7 @@ async function setupDemoAuth(){
       if(event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN'){
         button.disabled = !session;
         if(hint && session){
-          hint.textContent = '身份验证已通过，请设置新的登录密码。';
+          hint.textContent = '请直接设置新的登录密码。';
           hint.className = 'code-hint success';
         }
       }
