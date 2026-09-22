@@ -1297,3 +1297,59 @@ body{min-height:100vh}
   .jc-card-top-left{gap:6px!important}
   .jc-card-top-meta{gap:5px!important}
 }
+
+
+/* 2026-09-22 locked model + AI report */
+.qc-overview-page .jc-model-main{font-weight:900;color:var(--text)}
+.qc-overview-page .jc-model-sub{
+  display:block;margin-top:3px;color:#6f788a;font-size:11px;font-weight:800
+}
+.jc-football-card-lite .jc-card-model-lite{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.jc-football-card-lite .jc-card-model-lite>div{
+  padding:5px 4px
+}
+.jc-football-card-lite .jc-card-model-lite .jc-card-model-top{
+  grid-column:1/-1;border-top:1px dashed #e6eaf1;padding-top:10px;margin-top:2px
+}
+.jc-football-card-lite .jc-card-model-lite b{
+  white-space:normal;line-height:1.35
+}
+.jc-ai-model-summary{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;margin:16px 0
+}
+.jc-ai-model-summary>div{
+  border:1px solid var(--line);border-radius:14px;padding:13px;background:#fafbfd
+}
+.jc-ai-model-summary span{
+  display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:6px
+}
+.jc-ai-model-summary b{
+  display:block;font-size:15px;line-height:1.45
+}
+.jc-ai-report{
+  display:grid;gap:12px;margin-top:18px
+}
+.jc-ai-report-section{
+  border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff
+}
+.jc-ai-report-section h3{
+  margin:0 0 9px;font-size:16px
+}
+.jc-ai-report-section p{
+  margin:0!important;color:#4f596d!important;line-height:1.85!important;font-size:14px
+}
+.jc-ai-wait{
+  margin-top:18px;padding:16px;border-radius:15px;background:#f8fafc;border:1px dashed var(--line)
+}
+.jc-ai-wait b{display:block;margin-bottom:7px}
+.jc-ai-wait p{margin:0!important}
+
+@media(max-width:640px){
+  .jc-ai-model-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .jc-ai-model-summary>div{padding:11px}
+  .jc-ai-model-summary b{font-size:13px}
+  .jc-ai-report-section{padding:14px}
+}
