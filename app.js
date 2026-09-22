@@ -281,32 +281,158 @@ function jcHandicapResult(score,goalLine){
   return label+'让'+r;
 }
 
-function jcRenderYesterdayReview(rows,today){
+function jcPredictionPlaceholder(){
+  return '<span class="jc-overview-pending">待生成</span>';
+}
+
+function jcRenderOverviewTable(rows,today,mode='today'){
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
-  if(!ordered.length) return '<div class="jc-review-empty">昨日暂无已回收赛事</div>';
-  return '<div class="jc-review-table-wrap"><table class="jc-review-table">'+
-    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>赛果 / 让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
+  if(!ordered.length){
+    return '<div class="jc-review-empty">'+(mode==='yesterday'?'昨日暂无已回收赛事':'今日暂无竞彩赛事')+'</div>';
+  }
+
+  return '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
+    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负 / 让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const pools=jcLatestPools(m.jc_market_snapshots||[]);
-      const ft=score.ft||'—';
-      const ht=score.ht||'';
-      const ftParts=String(score.ft||'').split('-').map(Number);
-      const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
-      const hafu=ht && score.ft ? jcShortResultByScore(ht)+'/'+jcShortResultByScore(score.ft) : '—';
-      const hhad=jcHandicapResult(score.ft,pools.hhad?.goal_line);
-      const result=jcResultTextByScore(score.ft);
-      return '<tr>'+
-        '<td><b>'+qcEscape(m.match_num||'—')+'</b></td>'+
-        '<td>'+qcEscape(String(m.match_time||'').slice(0,5)||'—')+'</td>'+
-        '<td>'+qcEscape(m.league_short_name||m.league_name||'—')+'</td>'+
-        '<td><a class="jc-review-match" href="jc-match.html?id='+encodeURIComponent(m.id)+'"><span>'+qcEscape(m.home_team_name||'—')+'</span><strong>'+qcEscape(ft)+'</strong><span>'+qcEscape(m.away_team_name||'—')+'</span></a>'+(ht?'<small>半 '+qcEscape(ht)+'</small>':'')+'</td>'+
-        '<td><strong class="jc-review-result">'+qcEscape(result)+'</strong>'+(hhad?'<small>'+qcEscape(hhad)+'</small>':'')+'</td>'+
-        '<td><strong>'+qcEscape(total)+'</strong></td>'+
-        '<td><strong>'+qcEscape(hafu)+'</strong></td>'+
+      const href='jc-match.html?id='+encodeURIComponent(m.id);
+      const league=qcEscape(m.league_short_name||m.league_name||'—');
+      const num=qcEscape(m.match_num||'—');
+      const time=qcEscape(String(m.match_time||'').slice(0,5)||'—');
+      const home=qcEscape(m.home_team_name||'—');
+      const away=qcEscape(m.away_team_name||'—');
+
+      let market=jcPredictionPlaceholder();
+      let goals=jcPredictionPlaceholder();
+      let hafu=jcPredictionPlaceholder();
+
+      if(mode==='yesterday' && score.ft){
+        const ftParts=String(score.ft).split('-').map(Number);
+        const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
+        const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
+        const result=jcResultTextByScore(score.ft);
+        const hhad=jcHandicapResult(score.ft,pools.hhad?.goal_line);
+        market='<span class="jc-landed">'+qcEscape(result)+'</span>'+(hhad?'<span class="jc-landed secondary">'+qcEscape(hhad)+'</span>':'');
+        goals='<span class="jc-landed">'+qcEscape(total)+'</span>';
+        hafu='<span class="jc-landed">'+qcEscape(htft)+'</span>';
+      }
+
+      const scoreStack=score.ft
+        ? '<span class="jc-score-half">'+(score.ht?qcEscape(score.ht):'—')+'</span><strong class="jc-score-full">'+qcEscape(score.ft)+'</strong>'
+        : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">半场 —</span>';
+
+      return '<tr class="jc-overview-row" data-href="'+href+'">'+
+        '<td><b>'+num+'</b></td>'+
+        '<td>'+time+'</td>'+
+        '<td><span class="jc-overview-league">'+league+'</span></td>'+
+        '<td><a class="jc-review-match" href="'+href+'"><span>'+home+'</span><span class="jc-score-stack">'+scoreStack+'</span><span>'+away+'</span></a></td>'+
+        '<td><div class="jc-result-stack">'+market+'</div></td>'+
+        '<td>'+goals+'</td>'+
+        '<td>'+hafu+'</td>'+
       '</tr>';
     }).join('')+'</tbody></table></div>';
 }
+
+function jcBindOverviewRows(root=document){
+  $$('.jc-overview-row',root).forEach(row=>{
+    row.onclick=e=>{
+      if(e.target.closest('a')) return;
+      const href=row.dataset.href;
+      if(href) location.href=href;
+    };
+  });
+}
+
+function jcRenderYesterdayReview(rows,today){
+  return jcRenderOverviewTable(rows,today,'yesterday');
+}
+
+function jcRenderFootballCards(rows,today){
+  if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
+  const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+  return '<div class="jc-football-grid">'+ordered.map(m=>{
+    const pools=jcLatestPools(m.jc_market_snapshots||[]);
+    const score=jcScoreInfo(m);
+    const status=jcMatchStatusLabel(m,today);
+    const relative=jcRelativeDayLabel(m.match_date,today);
+    const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
+    return '<a class="jc-football-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
+      '<div class="jc-card-top"><span><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em> <b>'+qcEscape(m.match_num||'竞彩')+'</b></span><time>'+qcEscape(when)+'</time></div>'+
+      '<div class="jc-card-teams"><strong class="jc-team">'+qcEscape(m.home_team_name||'—')+'</strong><span class="jc-vs">'+(score.ft?qcEscape(score.ft):'VS')+'</span><strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong></div>'+
+      '<div class="jc-status-strip">'+qcEscape(status)+'</div>'+
+      jcRenderOddsMini(pools)+
+      '<div class="jc-model-pending"><b>玩法：</b><span>待生成</span></div>'+
+    '</a>';
+  }).join('')+'</div>';
+}
+
+async function loadJcFootball(){
+  const cards=$('#jcFootballCards');
+  if(!cards || !window.qcSupabase) return;
+
+  const {data,error}=await window.qcSupabase
+    .from('jc_matches')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
+    .order('match_date',{ascending:true})
+    .order('match_time',{ascending:true})
+    .limit(300);
+
+  if(error){
+    cards.innerHTML='<div class="profile-card">竞彩足球数据暂时读取失败，请稍后刷新。</div>';
+    return;
+  }
+
+  const allRows=(data||[]).filter(m=>m.match_date);
+  const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
+  const today=qcBeijingToday();
+  const paramDate=new URLSearchParams(location.search).get('date');
+  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  let activeLeague='全部';
+
+  const label=$('#jcFootballDateLabel');
+  const prev=$('#jcFootballPrevDate');
+  const next=$('#jcFootballNextDate');
+  const todayBtn=$('#jcFootballTodayBtn');
+  const count=$('#jcFootballCount');
+  const pop=$('#jcDatePopover');
+
+  function setUrlDate(ds){
+    const u=new URL(location.href);
+    u.searchParams.set('date',ds);
+    history.replaceState({},'',u);
+  }
+
+  function renderLeagueChips(rows){
+    const box=$('#jcFootballLeagueFilters');
+    if(!box) return;
+    const leagues=[...new Set(rows.map(m=>m.league_short_name||m.league_name||'其他'))];
+    const items=['全部',...leagues];
+    box.innerHTML=items.map(x=>'<button type="button" class="'+(activeLeague===x?'active':'')+'" data-league="'+qcEscape(x)+'">'+qcEscape(x)+'</button>').join('');
+    $$('button',box).forEach(btn=>{
+      btn.onclick=()=>{activeLeague=btn.dataset.league||'全部';render();};
+    });
+  }
+
+  function render(){
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    const filtered=activeLeague==='全部'?dateRows:dateRows.filter(m=>(m.league_short_name||m.league_name||'其他')===activeLeague);
+    if(label) label.textContent=selectedDate.slice(5)+' '+new Date(selectedDate+'T12:00:00+08:00').toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+    if(count) count.textContent='共 '+filtered.length+' 场';
+    renderLeagueChips(dateRows);
+    cards.innerHTML=jcRenderFootballCards(filtered,today);
+    setUrlDate(selectedDate);
+    qcRenderDateCalendar(selectedDate,availableDates,ds=>{selectedDate=ds;activeLeague='全部';render();});
+  }
+
+  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
+  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
+  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
+  if(label) label.onclick=()=>{qcRenderDateCalendar(selectedDate,availableDates,ds=>{selectedDate=ds;activeLeague='全部';render();});if(pop)pop.hidden=!pop.hidden;};
+
+  render();
+}
+
 
 async function loadJcFrontend(){
   const cards=$('#jcLiveCards');
@@ -364,18 +490,18 @@ async function loadJcFrontend(){
     if($('#jcPredictionTitle')) $('#jcPredictionTitle').textContent=selectedDate===today?'今日预测':'当日赛程';
 
     try{
-      if(reviewCards) reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,today);
+      if(reviewCards){
+        reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,today);
+        jcBindOverviewRows(reviewCards);
+      }
     }catch(err){
       console.error('昨日回看渲染失败',err);
       if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时无法显示</div>';
     }
 
     try{
-      cards.innerHTML=jcRenderCompactFixtures(
-        filtered,
-        today,
-        selectedDate===today?'今天暂时没有采集到竞彩足球赛程。':'这一天暂时没有符合筛选条件的比赛。'
-      );
+      cards.innerHTML=jcRenderOverviewTable(filtered,today,'today');
+      jcBindOverviewRows(cards);
     }catch(err){
       console.error('今日预测渲染失败',err);
       cards.innerHTML='<div class="profile-card">今日预测列表暂时无法显示</div>';
@@ -1592,6 +1718,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('drawer',()=>setupDrawer());
   safe('legacy-index',()=>renderIndex());
   safe('jc-frontend',()=>loadJcFrontend());
+  safe('jc-football',()=>loadJcFootball());
   safe('jc-detail',()=>setupJcMatchDetail());
   safe('legacy-match',()=>renderMatch());
   safe('auth',()=>setupDemoAuth());
