@@ -1637,10 +1637,17 @@ function renderMatch(){
  }
  $$('#topTabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));show('model')
 }
-function setupDemoAuth(){
+async function setupDemoAuth(){
   const login = $('#loginForm');
 
   if(login){
+    const loginHint=$('#loginHint');
+    if(loginHint && new URLSearchParams(location.search).get('reset')==='success'){
+      loginHint.textContent='密码修改成功，请使用新密码重新登录。';
+      loginHint.className='code-hint success';
+      history.replaceState({},'',location.pathname);
+    }
+
     login.onsubmit = async e => {
       e.preventDefault();
 
@@ -1752,6 +1759,125 @@ function setupDemoAuth(){
         hint.className = 'code-hint error';
       }
       alert('账号已创建，但邮箱确认功能仍然开启。请先在 Supabase 关闭 Confirm email。');
+    };
+  }
+
+  const forgotForm = $('#forgotPasswordForm');
+  if(forgotForm){
+    forgotForm.onsubmit = async e => {
+      e.preventDefault();
+      if(!window.qcSupabase){
+        alert('数据库连接失败，请刷新页面后重试');
+        return;
+      }
+
+      const email = $('#forgotEmail').value.trim();
+      const button = forgotForm.querySelector('button[type="submit"]');
+      const hint = $('#forgotHint');
+
+      button.disabled = true;
+      button.textContent = '发送中...';
+      if(hint){
+        hint.textContent = '正在发送密码重置邮件…';
+        hint.className = 'code-hint';
+      }
+
+      const resetUrl = new URL('reset-password.html', location.href);
+      resetUrl.search = '';
+      resetUrl.hash = '';
+
+      const { error } = await window.qcSupabase.auth.resetPasswordForEmail(email, {
+        redirectTo: resetUrl.href
+      });
+
+      button.disabled = false;
+      button.textContent = '发送重置邮件';
+
+      if(error){
+        const raw = error.message || '';
+        const message = /rate|limit|too many/i.test(raw)
+          ? '请求过于频繁，请稍后再试。'
+          : '暂时无法发送重置邮件，请稍后重试。';
+        if(hint){
+          hint.textContent = message;
+          hint.className = 'code-hint error';
+        }
+        return;
+      }
+
+      if(hint){
+        hint.textContent = '如果该邮箱已注册，我们已发送密码重置邮件，请检查邮箱。';
+        hint.className = 'code-hint success';
+      }
+    };
+  }
+
+  const resetForm = $('#resetPasswordForm');
+  if(resetForm){
+    const hint = $('#resetPasswordHint');
+    const button = resetForm.querySelector('button[type="submit"]');
+
+    const refreshRecoveryState = async () => {
+      const { data, error } = await window.qcSupabase.auth.getSession();
+      const session = data && data.session;
+      const ready = !error && Boolean(session);
+      button.disabled = !ready;
+      if(hint){
+        hint.textContent = ready
+          ? '身份验证已通过，请设置新的登录密码。'
+          : '重置链接无效或已过期，请重新申请密码重置邮件。';
+        hint.className = ready ? 'code-hint success' : 'code-hint error';
+      }
+      return ready;
+    };
+
+    await refreshRecoveryState();
+
+    window.qcSupabase.auth.onAuthStateChange((event, session) => {
+      if(event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN'){
+        button.disabled = !session;
+        if(hint && session){
+          hint.textContent = '身份验证已通过，请设置新的登录密码。';
+          hint.className = 'code-hint success';
+        }
+      }
+    });
+
+    resetForm.onsubmit = async e => {
+      e.preventDefault();
+
+      const ready = await refreshRecoveryState();
+      if(!ready) return;
+
+      const password = $('#resetPassword').value;
+      const password2 = $('#resetPassword2').value;
+
+      if(password.length < 8){
+        alert('新密码至少需要8个字符');
+        return;
+      }
+      if(password !== password2){
+        alert('两次输入的新密码不一致');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = '修改中...';
+
+      const { error } = await window.qcSupabase.auth.updateUser({ password });
+
+      if(error){
+        button.disabled = false;
+        button.textContent = '确认修改';
+        if(hint){
+          hint.textContent = '密码修改失败，请重新打开邮件中的重置链接后再试。';
+          hint.className = 'code-hint error';
+        }
+        return;
+      }
+
+      await window.qcSupabase.auth.signOut();
+      location.replace('login.html?reset=success');
     };
   }
 
