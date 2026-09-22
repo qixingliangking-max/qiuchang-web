@@ -332,6 +332,66 @@ function jcHandicapResult(score,goalLine){
   return label+'让'+r;
 }
 
+let qcAccessStatePromise=null;
+
+async function qcGetAccessState(force=false){
+  if(force) qcAccessStatePromise=null;
+  if(qcAccessStatePromise) return qcAccessStatePromise;
+
+  qcAccessStatePromise=(async()=>{
+    if(!window.qcSupabase) return {loggedIn:false,isPro:false};
+    try{
+      const {data:sessionData}=await window.qcSupabase.auth.getSession();
+      const session=sessionData?.session||null;
+      if(!session) return {loggedIn:false,isPro:false};
+
+      const {data:isPro,error}=await window.qcSupabase.rpc('has_active_pro_access');
+      if(error) console.warn('读取Pro权限失败',error);
+      return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
+    }catch(err){
+      console.warn('读取会员权限失败',err);
+      return {loggedIn:false,isPro:false};
+    }
+  })();
+
+  return qcAccessStatePromise;
+}
+
+function qcMatchHasStarted(m){
+  const score=jcScoreInfo(m);
+  if(score.started || score.finished) return true;
+  const kickoff=new Date(m?.kickoff_at||'').getTime();
+  return Number.isFinite(kickoff) && kickoff<=Date.now();
+}
+
+function qcCanViewPrematchContent(m,access){
+  return Boolean(access?.isPro || qcMatchHasStarted(m));
+}
+
+function qcPremiumGateHtml(access,kind='prediction'){
+  const loggedIn=Boolean(access?.loggedIn);
+  const isAi=kind==='ai';
+  const title=loggedIn
+    ? (isAi?'当前账号暂无完整分析权限':'当前账号暂无查看权限')
+    : (isAi?'登录后查看完整分析报告':'登录后查看今日预测');
+  const desc=loggedIn
+    ? (isAi?'赛前AI分析与锁板结论属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
+    : '新注册账号自动获得 1 天 Pro 体验，可查看赛前预测与完整 AI 分析。';
+  const primaryHref=loggedIn?'profile.html':'login.html?next='+encodeURIComponent(location.pathname+location.search);
+  const primaryText=loggedIn?'进入个人中心':'登录查看';
+  const secondary=!loggedIn
+    ? '<a class="qc-premium-secondary" href="register.html">注册免费体验 1 天 Pro</a>'
+    : '';
+
+  return '<div class="qc-premium-gate">'+
+    '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
+    '<h3>'+qcEscape(title)+'</h3>'+
+    '<p>'+qcEscape(desc)+'</p>'+
+    '<a class="qc-premium-primary" href="'+primaryHref+'">'+qcEscape(primaryText)+'</a>'+
+    secondary+
+  '</div>';
+}
+
 function jcPublicModel(m){
   const list=Array.isArray(m?.jc_model_outputs)?m.jc_model_outputs:[];
   return list.find(x=>x?.is_locked===true && x?.is_current===true && x?.stage==='FINAL') || list[0] || null;
@@ -554,7 +614,7 @@ function jcRenderYesterdayReview(rows,today){
   return jcRenderOverviewTable(rows,today,'yesterday');
 }
 
-function jcRenderFootballCards(rows,today){
+function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   return '<div class="jc-football-grid">'+ordered.map((m,index)=>{
@@ -563,6 +623,13 @@ function jcRenderFootballCards(rows,today){
     const relative=jcRelativeDayLabel(m.match_date,today);
     const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
     const href='jc-match.html?id='+encodeURIComponent(m.id);
+    const canViewPrematch=qcCanViewPrematchContent(m,access);
+    const modelBlock=canViewPrematch ? (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
+      '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
+      '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+      '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
+      '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
+    '</div>';})() : '';
     return '<article class="jc-football-card jc-football-card-lite">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
@@ -578,12 +645,7 @@ function jcRenderFootballCards(rows,today){
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
         '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(score.finished?'已结束':(score.started?(score.statusShort==='HT'?('半场 '+(score.ht||'—')):(score.elapsed!=null?(score.elapsed+'′ 进行中'):status)):status))+'</span></div>'+
-        (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
-          '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
-          '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
-          '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
-          '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
-        '</div>';})()+
+        modelBlock+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
       '</a>'+
     '</article>';
@@ -607,6 +669,7 @@ async function loadJcFootball(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
+  const access=await qcGetAccessState();
   await jcAttachModels(allRows);
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
@@ -679,7 +742,7 @@ async function loadJcFootball(){
     }
 
     renderLeagueMenu(dateRows);
-    cards.innerHTML=jcRenderFootballCards(filtered,today);
+    cards.innerHTML=jcRenderFootballCards(filtered,today,access);
     setUrlDate(selectedDate);
     qcRenderDateCalendar(selectedDate,availableDates,ds=>{
       selectedDate=ds;
@@ -765,6 +828,7 @@ async function loadJcFrontend(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
+  const access=await qcGetAccessState();
   await jcAttachModels(allRows);
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
@@ -809,8 +873,13 @@ async function loadJcFrontend(){
     }
 
     try{
-      cards.innerHTML=jcRenderOverviewTable(filtered,today,'today');
-      jcBindOverviewRows(cards);
+      const premiumDate=selectedDate>=today;
+      if(premiumDate && !access.isPro){
+        cards.innerHTML=qcPremiumGateHtml(access,'prediction');
+      }else{
+        cards.innerHTML=jcRenderOverviewTable(filtered,today,'today');
+        jcBindOverviewRows(cards);
+      }
     }catch(err){
       console.error('今日预测渲染失败',err);
       cards.innerHTML='<div class="profile-card">今日预测列表暂时无法显示</div>';
@@ -1273,6 +1342,26 @@ function jcRenderFactsShell(){
   '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
 }
 
+function jcRenderAiLockedPanel(m,pools,access){
+  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
+  return '<div class="jc-ai-placeholder jc-ai-page jc-ai-locked">'+
+    '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
+    '<div class="jc-ai-lock-note">'+
+      '<b>🔒 '+(access?.loggedIn?'Pro会员可查看完整分析报告':'登录后查看完整分析报告')+'</b>'+
+      '<span>本页不会向未授权用户展示模型方向、单选、让球方向、进球区间或 TOP 比分。</span>'+
+    '</div>'+
+    '<div class="jc-ai-context jc-ai-context-public">'+
+      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
+      '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
+    '</div>'+
+    '<div class="jc-ai-locked-preview" aria-hidden="true">'+
+      '<div></div><div></div><div></div>'+
+    '</div>'+
+    qcPremiumGateHtml(access,'ai')+
+  '</div>';
+}
+
 function jcRenderAiPanel(m,pools,model,analysis){
   const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
   const modelReady=!!model;
@@ -1372,6 +1461,9 @@ async function setupJcMatchDetail(){
     return;
   }
 
+  const access=await qcGetAccessState();
+  const canViewPremium=qcCanViewPrematchContent(m,access);
+
   const {data:detailRows,error:detailError}=await window.qcSupabase
     .from('jc_match_details')
     .select('detail_type,payload,source_endpoint,fetched_at')
@@ -1380,27 +1472,31 @@ async function setupJcMatchDetail(){
   if(detailError) console.warn('读取竞彩详情数据失败',detailError);
   const sportteryDetails=jcSportteryDetailsMap(detailRows||[]);
 
-  const {data:modelRows,error:modelError}=await window.qcSupabase
-    .from('jc_model_outputs')
-    .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-    .eq('jc_match_id',id)
-    .eq('is_locked',true)
-    .eq('is_current',true)
-    .order('locked_at',{ascending:false})
-    .limit(1);
-  if(modelError) console.warn('读取模型锁板结果失败',modelError);
-  const model=(modelRows||[])[0]||null;
-
+  let model=null;
   let aiAnalysis=null;
-  if(model){
-    const {data:aiRows,error:aiError}=await window.qcSupabase
-      .from('jc_match_ai_analysis')
-      .select('status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
-      .eq('model_output_id',model.id)
-      .order('generated_at',{ascending:false})
+
+  if(canViewPremium){
+    const {data:modelRows,error:modelError}=await window.qcSupabase
+      .from('jc_model_outputs')
+      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+      .eq('jc_match_id',id)
+      .eq('is_locked',true)
+      .eq('is_current',true)
+      .order('locked_at',{ascending:false})
       .limit(1);
-    if(aiError) console.warn('读取AI分析失败',aiError);
-    aiAnalysis=(aiRows||[])[0]||null;
+    if(modelError) console.warn('读取模型锁板结果失败',modelError);
+    model=(modelRows||[])[0]||null;
+
+    if(model){
+      const {data:aiRows,error:aiError}=await window.qcSupabase
+        .from('jc_match_ai_analysis')
+        .select('status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+        .eq('model_output_id',model.id)
+        .order('generated_at',{ascending:false})
+        .limit(1);
+      if(aiError) console.warn('读取AI分析失败',aiError);
+      aiAnalysis=(aiRows||[])[0]||null;
+    }
   }
 
   await jcAttachLiveScores([m]);
@@ -1426,7 +1522,7 @@ async function setupJcMatchDetail(){
         '<button type="button" class="active" data-main-tab="ai">AI分析</button>'+
       '</div>'+
     '</div>'+
-    '<div id="jcMainPanel">'+jcRenderAiPanel(m,pools,model,aiAnalysis)+'</div>';
+    '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>';
 
   const panel=$('#jcMainPanel');
   let factsData=null;
@@ -1480,7 +1576,7 @@ async function setupJcMatchDetail(){
       return;
     }
     if(tab==='ai'){
-      panel.innerHTML=jcRenderAiPanel(m,pools,model,aiAnalysis);
+      panel.innerHTML=canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access);
       return;
     }
     await loadFacts();
@@ -1610,7 +1706,7 @@ function setupDemoAuth(){
 
       if(data.session){
         if(hint){
-          hint.textContent = '注册成功，正在进入今日赛事…';
+          hint.textContent = '注册成功，已赠送 1 天 Pro 体验，正在进入今日赛事…';
           hint.className = 'code-hint success';
         }
         location.href = 'index.html';
@@ -1702,7 +1798,7 @@ async function setupProfile(){
 
   if(nicknameEl) nicknameEl.textContent = nickname;
   if(nicknameInput) nicknameInput.value = nickname;
-  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : role === 'pro' ? 'Pro会员' : '基础用户';
+  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : '正在读取会员状态…';
   if(statusEl){
     statusEl.textContent = status === 'active' ? '正常' : '已停用';
     statusEl.style.color = status === 'active' ? 'var(--green)' : 'var(--red)';
@@ -1722,6 +1818,7 @@ async function setupProfile(){
   }
 
   const activeSubscription = subscriptions && subscriptions.length ? subscriptions[0] : null;
+  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : activeSubscription ? 'Pro会员' : '基础用户';
   renderMembership(activeSubscription, role);
 
   const redeemForm = $('#redeemForm');
@@ -1906,9 +2003,9 @@ function renderMembership(subscription, role){
   if(!planEl || !daysEl || !expiryEl) return;
 
   if(!subscription){
-    planEl.textContent = role === 'pro' ? 'Pro会员' : '基础用户';
-    daysEl.textContent = role === 'pro' ? '会员状态待刷新' : '未开通 Pro';
-    expiryEl.textContent = '有效期至：未开通';
+    planEl.textContent = role === 'admin' ? '管理员' : '基础用户';
+    daysEl.textContent = role === 'admin' ? '拥有完整查看权限' : '未开通 Pro';
+    expiryEl.textContent = role === 'admin' ? '有效期：管理员权限' : '有效期至：未开通';
     return;
   }
 
