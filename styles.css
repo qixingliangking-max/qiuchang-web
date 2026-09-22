@@ -1362,6 +1362,18 @@ body{min-height:100vh}
   gap:2px;
   line-height:1.15;
 }
+.qc-overview-page .jc-choice-inline{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  white-space:nowrap;
+  line-height:1.15;
+}
+.qc-overview-page .jc-choice-sep{
+  color:#9aa3b2;
+  font-weight:700;
+}
 .qc-overview-page .jc-choice-primary{
   color:#c66b12;
   font-weight:900;
