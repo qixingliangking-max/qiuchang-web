@@ -590,7 +590,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
   }
 
   return '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
-    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负</th><th>总进球</th><th>半全场</th></tr></thead>'+
+    '<thead><tr><th>编号 时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const pools=jcLatestPools(m.jc_market_snapshots||[]);
@@ -645,8 +645,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
       return '<tr class="jc-overview-row" data-href="'+href+'">'+
-        '<td><b>'+num+'</b></td>'+
-        '<td>'+time+'</td>'+
+        '<td class="jc-num-time"><b>'+num+'</b><time>'+time+'</time></td>'+
         '<td><span class="jc-overview-league">'+league+'</span></td>'+
         '<td><a class="jc-review-match" href="'+href+'"><span>'+home+'</span><span class="jc-score-stack">'+scoreStack+'</span><span>'+away+'</span></a></td>'+
         '<td><div class="jc-result-stack">'+market+'</div></td>'+
