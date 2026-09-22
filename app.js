@@ -212,7 +212,8 @@ function jcShouldFetchLive(m){
   const t=new Date(m?.kickoff_at || '').getTime();
   if(!Number.isFinite(t)) return false;
   const now=Date.now();
-  return t<=now+20*60*1000 && t>=now-4*60*60*1000;
+  // 覆盖开赛前20分钟至赛后约26小时，方便昨日回看读取已缓存完赛比分。
+  return t<=now+20*60*1000 && t>=now-26*60*60*1000;
 }
 
 async function jcAttachLiveScores(rows){
@@ -846,7 +847,9 @@ async function loadJcFrontend(){
 
   async function refreshOverviewLive(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
-    await jcAttachLiveScores(dateRows);
+    const previousDate=qcAddDays(selectedDate,-1);
+    const reviewRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
+    await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
   }
   refreshOverviewLive();
