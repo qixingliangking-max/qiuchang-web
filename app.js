@@ -224,6 +224,31 @@ function jcRenderLeagueFilters(rows,activeLeague,onChange){
   });
 }
 
+function jcRenderCompactFixtures(rows,today,emptyText){
+  if(!rows.length) return '<div class="profile-card">'+qcEscape(emptyText || '暂无比赛')+'</div>';
+  const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+  return '<div class="jc-compact-list">'+ordered.map(m=>{
+    const score=jcScoreInfo(m);
+    const status=jcMatchStatusLabel(m,today);
+    const league=qcEscape(m.league_name || m.league_short_name || '—');
+    const num=qcEscape(m.match_num || '竞彩');
+    const time=qcEscape((m.match_time || '').slice(0,5) || '—');
+    const home=qcEscape(m.home_team_name || '—');
+    const away=qcEscape(m.away_team_name || '—');
+    const middle=score.ft?qcEscape(score.ft):'VS';
+    const ht=score.ht?'<span class="jc-compact-ht">半 '+qcEscape(score.ht)+'</span>':'';
+    return '<a class="jc-compact-match" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
+      '<div class="jc-compact-top"><span><b>'+num+'</b><em>'+league+'</em></span><time>'+time+'</time></div>'+
+      '<div class="jc-compact-main">'+
+        '<strong class="jc-compact-team">'+home+'</strong>'+
+        '<div class="jc-compact-score"><b>'+middle+'</b>'+ht+'</div>'+
+        '<strong class="jc-compact-team away">'+away+'</strong>'+
+      '</div>'+
+      '<div class="jc-compact-status">'+qcEscape(status)+'</div>'+
+    '</a>';
+  }).join('')+'</div>';
+}
+
 function jcRenderFutureGrid(rows,today){
   return jcRenderCompactFixtures(rows,today,'这一天暂时没有符合筛选条件的比赛。');
 }
