@@ -775,3 +775,88 @@ body{min-height:100vh}
   .qc-brand-line .qc-brand-sep{font-size:14px!important}
   .qc-brand-line .qc-brand-sub{font-size:12px!important}
 }
+
+
+/* 2026-09-22 homepage mobile: show every core field without horizontal clipping */
+.qc-overview-page .jc-date-nav{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  max-width:560px!important;
+}
+@media(max-width:760px){
+  .qc-overview-page .jc-date-nav{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:8px!important
+  }
+  .qc-overview-page .jc-review-table-wrap{
+    margin:0!important;border:0!important;border-radius:0!important;
+    overflow:visible!important;background:transparent!important;box-shadow:none!important
+  }
+  .qc-overview-page .jc-review-table{
+    min-width:0!important;width:100%!important;display:block!important;
+    table-layout:auto!important
+  }
+  .qc-overview-page .jc-review-table thead{display:none!important}
+  .qc-overview-page .jc-review-table tbody{
+    display:grid!important;gap:12px!important;width:100%!important
+  }
+  .qc-overview-page .jc-review-table tr.jc-overview-row{
+    display:grid!important;grid-template-columns:1fr .8fr 1.2fr!important;
+    width:100%!important;overflow:hidden!important;
+    background:#fff!important;border:1px solid var(--line)!important;
+    border-left:4px solid #35b36e!important;border-radius:16px!important;
+    box-shadow:0 5px 18px rgba(31,42,68,.045)!important
+  }
+  .qc-overview-page .jc-review-table td{
+    display:block!important;width:auto!important;min-width:0!important;
+    padding:10px 8px!important;border:0!important;text-align:center!important;
+    font-size:12px!important
+  }
+  .qc-overview-page .jc-review-table td:nth-child(1),
+  .qc-overview-page .jc-review-table td:nth-child(2),
+  .qc-overview-page .jc-review-table td:nth-child(3){
+    background:#f7f9fc!important;border-bottom:1px solid #edf0f5!important
+  }
+  .qc-overview-page .jc-review-table td:nth-child(1){text-align:left!important;padding-left:12px!important}
+  .qc-overview-page .jc-review-table td:nth-child(3){text-align:right!important;padding-right:12px!important}
+  .qc-overview-page .jc-review-table td:nth-child(4){
+    grid-column:1/-1!important;padding:16px 12px!important;border-bottom:1px solid #edf0f5!important
+  }
+  .qc-overview-page .jc-review-table td:nth-child(5),
+  .qc-overview-page .jc-review-table td:nth-child(6),
+  .qc-overview-page .jc-review-table td:nth-child(7){
+    position:relative!important;padding:30px 6px 12px!important;min-height:64px!important
+  }
+  .qc-overview-page .jc-review-table td:nth-child(5)::before,
+  .qc-overview-page .jc-review-table td:nth-child(6)::before,
+  .qc-overview-page .jc-review-table td:nth-child(7)::before{
+    position:absolute;top:9px;left:0;right:0;color:var(--muted);
+    font-size:10px;font-weight:800;text-align:center
+  }
+  .qc-overview-page .jc-review-table td:nth-child(5)::before{content:"方向 / 让球"}
+  .qc-overview-page .jc-review-table td:nth-child(6)::before{content:"总进球"}
+  .qc-overview-page .jc-review-table td:nth-child(7)::before{content:"半全场"}
+  .qc-overview-page .jc-review-match{
+    width:100%!important;display:grid!important;
+    grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr)!important;
+    gap:7px!important;align-items:center!important
+  }
+  .qc-overview-page .jc-review-match>span:first-child{
+    text-align:right!important;color:#316be9!important;font-weight:900!important;
+    font-size:15px!important;line-height:1.25!important;overflow-wrap:anywhere
+  }
+  .qc-overview-page .jc-review-match>span:last-child{
+    text-align:left!important;color:#d9802f!important;font-weight:900!important;
+    font-size:15px!important;line-height:1.25!important;overflow-wrap:anywhere
+  }
+  .qc-overview-page .jc-score-full{font-size:18px!important}
+  .qc-overview-page .jc-score-half{font-size:10px!important}
+  .qc-overview-page .jc-overview-league{
+    padding:4px 7px!important;font-size:10px!important;max-width:100%;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+  }
+  .qc-overview-page .jc-result-stack{
+    min-height:22px!important;gap:3px!important;flex-direction:column!important
+  }
+  .qc-overview-page .jc-overview-pending,
+  .qc-overview-page .jc-landed{font-size:12px!important}
+}
