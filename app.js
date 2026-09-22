@@ -477,6 +477,62 @@ function jcOverviewDirectionChoices(model,m){
   return [...new Set(choices)];
 }
 
+function jcPrekickLatestPools(m){
+  const kickoff=new Date(m?.kickoff_at||'').getTime();
+  const snaps=(m?.jc_market_snapshots||[]).filter(s=>{
+    const t=new Date(s?.captured_at||0).getTime();
+    return !Number.isFinite(kickoff) || !Number.isFinite(t) || t<=kickoff;
+  });
+  return jcLatestPools(snaps);
+}
+
+function jcFootballHitOddsHtml(m,model,score){
+  if(!model || !score?.finished || !score?.ft) return '';
+  const pools=jcPrekickLatestPools(m);
+  const hits=[];
+
+  const actual=jcShortResultByScore(score.ft);
+  const directionChoices=jcOverviewDirectionChoices(model,m);
+  const hadKey={胜:'h',平:'d',负:'a'}[actual];
+  const hadOdd=hadKey?jcPoolNumber(pools.had,hadKey):null;
+  if(directionChoices.includes(actual) && hadOdd!=null){
+    hits.push({kind:'胜平负',label:actual,odds:hadOdd});
+  }
+
+  const hhad=pools.hhad;
+  if(hhad?.goal_line!=null){
+    const full=jcHandicapResult(score.ft,hhad.goal_line);
+    const handicapLabel=String(full||'').replace(/^[+-]?\d+(?:\.\d+)?/,'');
+    const handicapChoices=jcCompactHandicapPick(model.handicap_direction)
+      .split('/').map(x=>x.trim()).filter(Boolean);
+    const hk={让胜:'h',让平:'d',让负:'a'}[handicapLabel];
+    const ho=hk?jcPoolNumber(hhad,hk):null;
+    if(handicapChoices.includes(handicapLabel) && ho!=null){
+      hits.push({kind:'让球',label:handicapLabel,odds:ho});
+    }
+  }
+
+  const top=Array.isArray(model.top_scores)?model.top_scores.map(String):[];
+  if(top.includes(String(score.ft))){
+    const parts=String(score.ft).split('-').map(Number);
+    if(parts.length===2 && parts.every(Number.isFinite)){
+      const key='s'+String(parts[0]).padStart(2,'0')+'s'+String(parts[1]).padStart(2,'0');
+      const odd=jcPoolNumber(pools.crs,key);
+      if(odd!=null) hits.push({kind:'比分',label:String(score.ft),odds:odd});
+    }
+  }
+
+  if(!hits.length) return '';
+  return '<div class="jc-card-hit-band">'+
+    '<span class="jc-card-hit-title">赛后命中</span>'+
+    '<div class="jc-card-hit-items">'+hits.map(x=>
+      '<span class="jc-card-hit-chip" title="'+qcEscape(x.kind)+'">'+
+        '<b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
+      '</span>'
+    ).join('')+'</div>'+
+  '</div>';
+}
+
 function jcOverviewChoicesHtml(choices){
   const list=(choices||[]).filter(Boolean);
   if(!list.length) return jcPredictionPlaceholder();
@@ -679,12 +735,14 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
     const href='jc-match.html?id='+encodeURIComponent(m.id);
     const canViewPrematch=qcCanViewPrematchContent(m,access);
-    const modelBlock=canViewPrematch ? (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
+    const model=canViewPrematch?jcPublicModel(m):null;
+    const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
       '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
       '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
       '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
       '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
     '</div>';})() : '';
+    const hitOddsBlock=canViewPrematch?jcFootballHitOddsHtml(m,model,score):'';
     return '<article class="jc-football-card jc-football-card-lite">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
@@ -701,6 +759,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
         '</div>'+
         '<div class="jc-card-status-row"><span class="jc-status-pill'+(score.started&&!score.finished?' is-live':'')+'">'+qcEscape(score.finished && score.ht ? '半 '+score.ht : jcMatchStatusLabel(m,today))+'</span></div>'+
         modelBlock+
+        hitOddsBlock+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
       '</a>'+
     '</article>';
