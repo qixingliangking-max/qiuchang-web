@@ -334,11 +334,23 @@ function jcHandicapResult(score,goalLine){
 
 let qcAccessStatePromise=null;
 
+function qcIsBasicPreview(){
+  return new URLSearchParams(location.search).get('preview')==='basic';
+}
+
+function qcPreviewHref(path){
+  if(!qcIsBasicPreview()) return path;
+  const u=new URL(path,location.href);
+  u.searchParams.set('preview','basic');
+  return u.pathname.split('/').pop() + (u.search||'');
+}
+
 async function qcGetAccessState(force=false){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
 
   qcAccessStatePromise=(async()=>{
+    if(qcIsBasicPreview()) return {loggedIn:true,isPro:false,previewBasic:true};
     if(!window.qcSupabase) return {loggedIn:false,isPro:false};
     try{
       const {data:sessionData}=await window.qcSupabase.auth.getSession();
@@ -377,8 +389,10 @@ function qcPremiumGateHtml(access,kind='prediction'){
   const desc=loggedIn
     ? (isAi?'赛前AI分析与锁板结论属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
     : '新注册账号自动获得 1 天 Pro 体验，可查看赛前预测与完整 AI 分析。';
-  const primaryHref=loggedIn?'profile.html':'login.html?next='+encodeURIComponent(location.pathname+location.search);
-  const primaryText=loggedIn?'进入个人中心':'登录查看';
+  const primaryHref=access?.previewBasic
+    ? '#'
+    : (loggedIn?'profile.html':'login.html?next='+encodeURIComponent(location.pathname+location.search));
+  const primaryText=access?.previewBasic?'Basic会员暂无权限':(loggedIn?'进入个人中心':'登录查看');
   const secondary=!loggedIn
     ? '<a class="qc-premium-secondary" href="register.html">注册免费体验 1 天 Pro</a>'
     : '';
@@ -387,7 +401,7 @@ function qcPremiumGateHtml(access,kind='prediction'){
     '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
     '<h3>'+qcEscape(title)+'</h3>'+
     '<p>'+qcEscape(desc)+'</p>'+
-    '<a class="qc-premium-primary" href="'+primaryHref+'">'+qcEscape(primaryText)+'</a>'+
+    '<a class="qc-premium-primary'+(access?.previewBasic?' is-disabled':'')+'" href="'+primaryHref+'"'+(access?.previewBasic?' onclick="return false" aria-disabled="true"':'')+'>'+qcEscape(primaryText)+'</a>'+
     secondary+
   '</div>';
 }
@@ -549,7 +563,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const pools=jcLatestPools(m.jc_market_snapshots||[]);
-      const href='jc-match.html?id='+encodeURIComponent(m.id);
+      const href=qcPreviewHref('jc-match.html?id='+encodeURIComponent(m.id));
       const league=qcEscape(m.league_short_name||m.league_name||'—');
       const num=qcEscape(String(m.match_num||'—').replace(/^周[一二三四五六日天]/,''));
       const time=qcEscape(String(m.match_time||'').slice(0,5)||'—');
@@ -622,7 +636,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const status=jcMatchStatusLabel(m,today);
     const relative=jcRelativeDayLabel(m.match_date,today);
     const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
-    const href='jc-match.html?id='+encodeURIComponent(m.id);
+    const href=qcPreviewHref('jc-match.html?id='+encodeURIComponent(m.id));
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const modelBlock=canViewPrematch ? (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
       '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
@@ -1768,18 +1782,20 @@ async function setupAuthNav(){
 
   if(!loginLink && !registerLink && !profileLink && !logoutLink) return;
 
+  const previewBasic=qcIsBasicPreview();
   const { data } = await window.qcSupabase.auth.getSession();
   const session = data && data.session;
 
-  if(session){
+  if(session || previewBasic){
     if(loginLink) loginLink.style.display = 'none';
     if(registerLink) registerLink.style.display = 'none';
     if(profileLink) profileLink.style.display = 'block';
     if(logoutLink){
       logoutLink.style.display = 'block';
+      logoutLink.textContent = previewBasic ? '退出Basic预览' : '退出登录';
       logoutLink.onclick = async e => {
         e.preventDefault();
-        await window.qcSupabase.auth.signOut();
+        if(!previewBasic) await window.qcSupabase.auth.signOut();
         location.href = 'index.html';
       };
     }
