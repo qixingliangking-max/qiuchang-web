@@ -674,7 +674,10 @@ async function loadJcFootball(){
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
-  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  const dateLocked=!access.loggedIn;
+  let selectedDate=dateLocked
+    ? today
+    : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
   let activeLeague='全部';
 
   const leagueKey=m=>m.league_short_name||m.league_name||'其他';
@@ -687,9 +690,19 @@ async function loadJcFootball(){
   const leaguePop=$('#jcFootballLeaguePopover');
   const leagueMenu=$('#jcFootballLeagueMenu');
 
+  if(dateLocked){
+    [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
+      el.disabled=true;
+      el.setAttribute('aria-disabled','true');
+      el.classList.add('qc-date-locked-control');
+    });
+    if(datePop) datePop.hidden=true;
+  }
+
   function setUrlDate(ds){
     const u=new URL(location.href);
-    u.searchParams.set('date',ds);
+    if(dateLocked) u.searchParams.delete('date');
+    else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
   }
 
@@ -744,43 +757,47 @@ async function loadJcFootball(){
     renderLeagueMenu(dateRows);
     cards.innerHTML=jcRenderFootballCards(filtered,today,access);
     setUrlDate(selectedDate);
-    qcRenderDateCalendar(selectedDate,availableDates,ds=>{
-      selectedDate=ds;
+    if(!dateLocked){
+      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        selectedDate=ds;
+        activeLeague='全部';
+        closeLeague();
+        render();
+      });
+    }
+  }
+
+  if(!dateLocked){
+    if(prev) prev.onclick=()=>{
+      selectedDate=qcAddDays(selectedDate,-1);
       activeLeague='全部';
       closeLeague();
       render();
-    });
-  }
-
-  if(prev) prev.onclick=()=>{
-    selectedDate=qcAddDays(selectedDate,-1);
-    activeLeague='全部';
-    closeLeague();
-    render();
-  };
-  if(next) next.onclick=()=>{
-    selectedDate=qcAddDays(selectedDate,1);
-    activeLeague='全部';
-    closeLeague();
-    render();
-  };
-  if(todayBtn) todayBtn.onclick=()=>{
-    selectedDate=today;
-    activeLeague='全部';
-    closeLeague();
-    render();
-  };
-  if(label) label.onclick=e=>{
-    e.preventDefault();
-    e.stopPropagation();
-    qcRenderDateCalendar(selectedDate,availableDates,ds=>{
-      selectedDate=ds;
+    };
+    if(next) next.onclick=()=>{
+      selectedDate=qcAddDays(selectedDate,1);
       activeLeague='全部';
+      closeLeague();
       render();
-    });
-    if(datePop) datePop.hidden=!datePop.hidden;
-    closeLeague();
-  };
+    };
+    if(todayBtn) todayBtn.onclick=()=>{
+      selectedDate=today;
+      activeLeague='全部';
+      closeLeague();
+      render();
+    };
+    if(label) label.onclick=e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        selectedDate=ds;
+        activeLeague='全部';
+        render();
+      });
+      if(datePop) datePop.hidden=!datePop.hidden;
+      closeLeague();
+    };
+  }
   if(leagueToggle) leagueToggle.onclick=e=>{
     e.preventDefault();
     e.stopPropagation();
@@ -833,7 +850,10 @@ async function loadJcFrontend(){
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
-  let selectedDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  const dateLocked=!access.loggedIn;
+  let selectedDate=dateLocked
+    ? today
+    : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
   let activeLeague='全部';
 
   const label=$('#jcDateLabel');
@@ -844,9 +864,19 @@ async function loadJcFrontend(){
   const leagueToggle=$('#jcLeagueToggle');
   const leaguePop=$('#jcLeaguePopover');
 
+  if(dateLocked){
+    [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
+      el.disabled=true;
+      el.setAttribute('aria-disabled','true');
+      el.classList.add('qc-date-locked-control');
+    });
+    if(pop) pop.hidden=true;
+  }
+
   function setUrlDate(ds){
     const u=new URL(location.href);
-    u.searchParams.set('date',ds);
+    if(dateLocked) u.searchParams.delete('date');
+    else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
   }
 
@@ -888,25 +918,29 @@ async function loadJcFrontend(){
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
 
     try{
+      if(!dateLocked){
+        qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
+          selectedDate=ds;
+          activeLeague='全部';
+          render();
+        });
+      }
+    }catch(err){ console.error('日期日历渲染失败',err); }
+  }
+
+  if(!dateLocked){
+    if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
+    if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
+    if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
+    if(label) label.onclick=()=>{
       qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
         selectedDate=ds;
         activeLeague='全部';
         render();
       });
-    }catch(err){ console.error('日期日历渲染失败',err); }
+      if(pop) pop.hidden=!pop.hidden;
+    };
   }
-
-  if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
-  if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
-  if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
-  if(label) label.onclick=()=>{
-    qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-      selectedDate=ds;
-      activeLeague='全部';
-      render();
-    });
-    if(pop) pop.hidden=!pop.hidden;
-  };
 
   document.addEventListener('click',e=>{
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
