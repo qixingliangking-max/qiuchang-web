@@ -183,16 +183,35 @@ function jcApiLiveInfo(m){
 
 function jcMatchStatusLabel(m,today){
   const api=jcApiLiveInfo(m);
-  if(api.finished) return '已结束';
-  if(api.short==='HT') return '半场';
-  if(api.started) return '进行中';
+  const minute=api.elapsed!=null ? String(api.elapsed)+"'" : '';
+  const map={
+    'HT':'半场',
+    'BT':'加时中场',
+    'P':'点球',
+    'INT':'中断',
+    'SUSP':'暂停',
+    'PST':'延期',
+    'CANC':'取消',
+    'ABD':'中止',
+    'FT':'完场',
+    'AET':'加时完场',
+    'PEN':'点球完场',
+    'AWD':'判定结束',
+    'WO':'判定结束'
+  };
+  if(api.short==='1H') return '上半'+(minute?' '+minute:'');
+  if(api.short==='2H') return '下半'+(minute?' '+minute:'');
+  if(api.short==='ET') return '加时'+(minute?' '+minute:'');
+  if(map[api.short]) return map[api.short];
+  if(api.started) return minute ? minute+' 进行中' : '进行中';
+
   const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
   const ft=String(m?.raw?.sectionsNo999 || '').trim();
-  if(ft) return '已结束';
-  if(/完成|结束|finished/i.test(rawStatus)) return '已结束';
+  if(ft) return '完场';
+  if(/完成|结束|finished/i.test(rawStatus)) return '完场';
   if(/进行|live/i.test(rawStatus)) return '进行中';
   if(m.match_date>today) return '未开赛';
-  if(/Selling|销售|开售|未开赛|2|3/.test(rawStatus)) return '未开赛';
+  if(/Selling|销售|开售|暂停销售|未开赛|2|3/.test(rawStatus)) return '未开赛';
   return rawStatus || '未开赛';
 }
 
@@ -201,7 +220,8 @@ function jcScoreInfo(m){
   const officialHt=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
   const api=jcApiLiveInfo(m);
   const ft=officialFt || (api.finished?api.current:'');
-  const ht=officialHt || api.ht || '';
+  const htReady=['HT','2H','ET','BT','P','FT','AET','PEN'].includes(api.short);
+  const ht=officialHt || (htReady?api.ht:'') || '';
   const current=api.current || officialFt || '';
   const started=api.started || Boolean(officialFt);
   const finished=api.finished || Boolean(officialFt);
@@ -584,9 +604,21 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       }
 
       const displayScore=mode==='yesterday'?score.ft:score.current;
+      let scoreMeta='';
+      let scoreMetaClass='jc-score-half';
+      if(mode==='yesterday'){
+        scoreMeta=score.ht?'半 '+score.ht:'半 —';
+      }else if(score.started && !score.finished){
+        scoreMeta=jcMatchStatusLabel(m,today);
+        scoreMetaClass='jc-score-live';
+      }else if(score.finished){
+        scoreMeta='完场';
+      }else{
+        scoreMeta='未开赛';
+      }
       const scoreStack=displayScore
-        ? '<span class="jc-score-half">'+(score.ht?'半 '+qcEscape(score.ht):'半 —')+'</span><strong class="jc-score-full">'+qcEscape(displayScore)+'</strong>'
-        : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">半 —</span>';
+        ? '<span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span><strong class="jc-score-full">'+qcEscape(displayScore)+'</strong>'
+        : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
       return '<tr class="jc-overview-row" data-href="'+href+'">'+
         '<td><b>'+num+'</b></td>'+
@@ -644,7 +676,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<span class="jc-vs">'+(score.current?qcEscape(score.current):'VS')+'</span>'+
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
-        '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(score.finished?'已结束':(score.started?(score.statusShort==='HT'?('半场 '+(score.ht||'—')):(score.elapsed!=null?(score.elapsed+'′ 进行中'):status)):status))+'</span></div>'+
+        '<div class="jc-card-status-row"><span class="jc-status-pill'+(score.started&&!score.finished?' is-live':'')+'">'+qcEscape(jcMatchStatusLabel(m,today))+'</span></div>'+
         modelBlock+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
       '</a>'+
@@ -1547,7 +1579,7 @@ async function setupJcMatchDetail(){
       '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
         '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong>'+(score.current?qcEscape(score.current):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
+        '<div class="center-score"><strong>'+(score.current?qcEscape(score.current):'VS')+'</strong><small class="'+(score.started&&!score.finished?'jc-live-stage':'')+'">'+qcEscape(status)+'</small></div>'+
         '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
       '</div>'+
       '<div class="jc-main-tabs">'+
