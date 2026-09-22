@@ -1038,8 +1038,8 @@ body{min-height:100vh}
 .qc-football-page .jc-football-toolbar{
   position:relative;
   display:block;
-  padding:12px 14px;
-  margin-bottom:16px;
+  padding:8px 10px;
+  margin-bottom:10px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:16px;
@@ -1048,7 +1048,7 @@ body{min-height:100vh}
 .qc-football-page .jc-football-date-zone{
   position:relative;
   display:grid;
-  grid-template-columns:42px minmax(120px,190px) 42px auto auto auto;
+  grid-template-columns:42px minmax(120px,190px) 42px auto auto;
   align-items:center;
   gap:8px;
   width:100%;
@@ -1175,7 +1175,7 @@ body{min-height:100vh}
 }
 @media(max-width:760px){
   .qc-football-page .jc-football-toolbar{
-    padding:9px 10px!important;
+    padding:6px 8px!important;
     border-radius:0!important;
     border-left:0!important;
     border-right:0!important;
@@ -1210,15 +1210,6 @@ body{min-height:100vh}
     min-width:56px!important;
     max-width:90px!important;
     padding:0 8px!important
-  }
-  .qc-football-page .jc-fixture-count{
-    grid-column:1/-1;
-    justify-self:end;
-    height:auto;
-    border:0;
-    background:transparent;
-    padding:3px 2px 0;
-    font-size:11px
   }
   .qc-football-page .jc-date-popover{
     top:44px!important;
@@ -1305,13 +1296,13 @@ body{min-height:100vh}
   display:block;margin-top:3px;color:#6f788a;font-size:11px;font-weight:800
 }
 .jc-football-card-lite .jc-card-model-lite{
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
 }
 .jc-football-card-lite .jc-card-model-lite>div{
   padding:5px 4px
 }
 .jc-football-card-lite .jc-card-model-lite .jc-card-model-top{
-  grid-column:1/-1;border-top:1px dashed #e6eaf1;padding-top:10px;margin-top:2px
+  grid-column:1/-1;border-top:1px dashed #e6eaf1;padding-top:9px;margin-top:2px
 }
 .jc-football-card-lite .jc-card-model-lite b{
   white-space:normal;line-height:1.35
@@ -1346,6 +1337,13 @@ body{min-height:100vh}
 }
 .jc-ai-wait b{display:block;margin-bottom:7px}
 .jc-ai-wait p{margin:0!important}
+
+@media(max-width:640px){
+  .jc-football-card-lite .jc-card-model-lite{grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+  .jc-football-card-lite .jc-card-model-lite>div{padding:5px 2px}
+  .jc-football-card-lite .jc-card-model-lite span{font-size:9px}
+  .jc-football-card-lite .jc-card-model-lite b{font-size:11px;line-height:1.35}
+}
 
 @media(max-width:640px){
   .jc-ai-model-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
