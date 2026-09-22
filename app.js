@@ -743,21 +743,29 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
       '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
     '</div>';})() : '';
     const hitOddsBlock=canViewPrematch?jcFootballHitOddsHtml(m,model,score):'';
-    return '<article class="jc-football-card jc-football-card-lite">'+
+    const centerMeta=score.finished && score.ht
+      ? '半 '+score.ht
+      : jcMatchStatusLabel(m,today);
+    const centerScore=score.current?qcEscape(score.current):'VS';
+    const centerStateClass=score.started&&!score.finished?' is-live':'';
+
+    return '<article class="jc-football-card jc-football-card-lite jc-football-card-final">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
           '<span class="jc-card-top-left">'+
             (index<3?'<img class="jc-card-mini-logo" src="football-mark.svg" alt="">':'')+
             '<span class="jc-card-top-meta"><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em><b>'+qcEscape(m.match_num||'竞彩')+'</b></span>'+
           '</span>'+
-          '<time>'+qcEscape(when)+'</time>'+
+          '<time>'+qcEscape(String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5))+'</time>'+
         '</div>'+
-        '<div class="jc-card-teams">'+
-          '<strong class="jc-team">'+qcEscape(m.home_team_name||'—')+'</strong>'+
-          '<span class="jc-vs">'+(score.current?qcEscape(score.current):'VS')+'</span>'+
-          '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
+        '<div class="jc-card-score-axis">'+
+          '<strong class="jc-team jc-team-home">'+qcEscape(m.home_team_name||'—')+'</strong>'+
+          '<span class="jc-score-center">'+
+            '<b class="jc-score-main">'+centerScore+'</b>'+
+            '<small class="jc-score-meta'+centerStateClass+'">'+qcEscape(centerMeta)+'</small>'+
+          '</span>'+
+          '<strong class="jc-team away-team jc-team-away">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
-        '<div class="jc-card-status-row"><span class="jc-status-pill'+(score.started&&!score.finished?' is-live':'')+'">'+qcEscape(score.finished && score.ht ? '半 '+score.ht : jcMatchStatusLabel(m,today))+'</span></div>'+
         modelBlock+
         hitOddsBlock+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
