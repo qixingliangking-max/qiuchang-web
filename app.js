@@ -430,6 +430,27 @@ function jcOverviewGoalsHtml(range){
   return '<span class="jc-goal-choices">'+values.map(x=>'<span>'+qcEscape(x)+'</span>').join('')+'</span>';
 }
 
+function jcOverviewGoalValues(range){
+  const s=String(range||'').trim();
+  const m=s.match(/(\d+)\s*[—–-]\s*(\d+)\s*球?/);
+  let values=[];
+  if(m){
+    const a=Number(m[1]),b=Number(m[2]);
+    if(Number.isFinite(a)&&Number.isFinite(b)&&b>=a&&b-a<=6){
+      for(let n=a;n<=b;n++) values.push(n+'球');
+    }
+  }
+  if(!values.length){
+    values=s.split(/[、,，｜|/\s]+/).map(x=>x.trim()).filter(Boolean).map(x=>/球$/.test(x)?x:x+'球');
+  }
+  return [...new Set(values)];
+}
+
+function jcReviewResultHtml(value,hit){
+  const cls=hit?'jc-hit-ring':'jc-landed';
+  return '<span class="'+cls+'">'+qcEscape(value||'—')+'</span>';
+}
+
 function jcOverviewHtftHtml(model){
   const values=[model?.htft_top1,model?.htft_top2].filter(Boolean);
   return jcOverviewChoicesHtml(values);
@@ -489,10 +510,16 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         const ftParts=String(score.ft).split('-').map(Number);
         const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
         const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
+        const resultShort=jcShortResultByScore(score.ft);
         const result=jcResultTextByScore(score.ft);
-        market='<span class="jc-landed">'+qcEscape(result)+'</span>';
-        goals='<span class="jc-landed">'+qcEscape(total)+'</span>';
-        hafu='<span class="jc-landed">'+qcEscape(htft)+'</span>';
+
+        const directionChoices=model?jcOverviewDirectionChoices(model,m):[];
+        const goalChoices=model?jcOverviewGoalValues(model.goal_range):[];
+        const htftChoices=model?[model.htft_top1,model.htft_top2].filter(Boolean):[];
+
+        market=jcReviewResultHtml(result,directionChoices.includes(resultShort));
+        goals=jcReviewResultHtml(total,goalChoices.includes(total));
+        hafu=jcReviewResultHtml(htft,htftChoices.includes(htft));
       }
 
       const displayScore=mode==='yesterday'?score.ft:score.current;
@@ -714,7 +741,7 @@ async function loadJcFootball(){
   }
   refreshFootballLive();
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
-  window.__jcFootballLiveTimer=setInterval(refreshFootballLive,60000);
+  window.__jcFootballLiveTimer=setInterval(refreshFootballLive,300000);
 }
 
 async function loadJcFrontend(){
@@ -824,7 +851,7 @@ async function loadJcFrontend(){
   }
   refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
-  window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,60000);
+  window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,300000);
 }
 
 
