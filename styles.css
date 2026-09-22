@@ -1494,3 +1494,22 @@ body{min-height:100vh}
   .qc-premium-primary{width:100%;min-width:0}
   .jc-ai-lock-note{padding:14px}
 }
+
+
+/* 2026-09-22 anonymous date lock */
+.qc-date-locked-control{
+  cursor:default!important;
+  pointer-events:none!important;
+  user-select:none!important;
+}
+button.qc-date-locked-control:disabled{
+  opacity:.58!important;
+  color:#7f899d!important;
+  background:#fff!important;
+}
+.date-label-btn.qc-date-locked-control:disabled,
+.jc-football-date-label.qc-date-locked-control:disabled{
+  opacity:1!important;
+  color:var(--text)!important;
+  font-weight:900!important;
+}
