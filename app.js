@@ -283,6 +283,47 @@ function jcHandicapResult(score,goalLine){
   return label+'让'+r;
 }
 
+function jcPublicModel(m){
+  const list=Array.isArray(m?.jc_model_outputs)?m.jc_model_outputs:[];
+  return list.find(x=>x?.is_locked===true && x?.is_current===true && x?.stage==='FINAL') || list[0] || null;
+}
+
+function jcModelTopText(model){
+  const top=Array.isArray(model?.top_scores)?model.top_scores:[];
+  return top.length?top.join('｜'):'待生成';
+}
+
+function jcShortTeamPick(text,m){
+  let s=String(text||'').trim();
+  const home=String(m?.home_team_name||'').trim();
+  const away=String(m?.away_team_name||'').trim();
+  const variants=[
+    [home,home.replace(/亚运男足|U23|亚足/g,'').trim()],
+    [away,away.replace(/亚运男足|U23|亚足/g,'').trim()]
+  ];
+  for(const [full,short] of variants){
+    if(full && short && full!==short) s=s.replace(full,short);
+  }
+  return s;
+}
+
+async function jcAttachModels(rows){
+  if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
+  const ids=rows.map(x=>x.id).filter(Boolean);
+  if(!ids.length) return rows;
+  const {data,error}=await window.qcSupabase
+    .from('jc_model_outputs')
+    .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+    .in('jc_match_id',ids)
+    .eq('is_locked',true)
+    .eq('is_current',true);
+  if(error){ console.warn('读取模型锁板结果失败',error); return rows; }
+  const map=new Map();
+  (data||[]).forEach(x=>map.set(x.jc_match_id,x));
+  rows.forEach(m=>{ m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[]; });
+  return rows;
+}
+
 function jcPredictionPlaceholder(){
   return '<span class="jc-overview-pending">待生成</span>';
 }
@@ -308,6 +349,17 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       let market=jcPredictionPlaceholder();
       let goals=jcPredictionPlaceholder();
       let hafu=jcPredictionPlaceholder();
+      const model=jcPublicModel(m);
+
+      if(mode!=='yesterday' && model){
+        const direction=jcShortTeamPick(model.direction,m);
+        const handicap=model.handicap_direction||'';
+        market='<span class="jc-model-main">'+qcEscape(direction||'待生成')+'</span>'+
+          (handicap?'<span class="jc-model-sub">'+qcEscape(handicap)+'</span>':'');
+        goals='<span class="jc-model-main">'+qcEscape(model.goal_range||'待生成')+'</span>';
+        const htft=[model.htft_top1,model.htft_top2].filter(Boolean).join('｜');
+        hafu='<span class="jc-model-main">'+qcEscape(htft||'待生成')+'</span>';
+      }
 
       if(mode==='yesterday' && score.ft){
         const ftParts=String(score.ft).split('-').map(Number);
@@ -374,11 +426,11 @@ function jcRenderFootballCards(rows,today){
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
         '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(status)+'</span></div>'+
-        '<div class="jc-card-model-lite">'+
-          '<div><span>方向</span><b>待生成</b></div>'+
-          '<div><span>进球区间</span><b>待生成</b></div>'+
-          '<div><span>TOP比分</span><b>待生成</b></div>'+
-        '</div>'+
+        (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
+          '<div><span>模型方向</span><b>'+(model?qcEscape(jcShortTeamPick(model.direction,m)+grade):'待生成')+'</b></div>'+
+          '<div><span>单选</span><b>'+(model?qcEscape(jcShortTeamPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+          '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
+        '</div>';})()+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
       '</a>'+
     '</article>';
@@ -402,6 +454,7 @@ async function loadJcFootball(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
+  await jcAttachModels(allRows);
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
@@ -552,6 +605,7 @@ async function loadJcFrontend(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
+  await jcAttachModels(allRows);
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
