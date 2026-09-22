@@ -927,9 +927,9 @@ body{min-height:100vh}
   .qc-overview-page .jc-overview-table th:nth-child(4),
   .qc-overview-page .jc-overview-table td:nth-child(4){width:32%!important}
   .qc-overview-page .jc-overview-table th:nth-child(5),
-  .qc-overview-page .jc-overview-table td:nth-child(5){width:18%!important}
+  .qc-overview-page .jc-overview-table td:nth-child(5){width:15%!important}
   .qc-overview-page .jc-overview-table th:nth-child(6),
-  .qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table td:nth-child(6){width:15%!important}
   .qc-overview-page .jc-overview-table th:nth-child(7),
   .qc-overview-page .jc-overview-table td:nth-child(7){width:12%!important}
 
@@ -1350,4 +1350,46 @@ body{min-height:100vh}
   .jc-ai-model-summary>div{padding:11px}
   .jc-ai-model-summary b{font-size:13px}
   .jc-ai-report-section{padding:14px}
+}
+
+
+/* 2026-09-22 daily overview hierarchy: primary / secondary choices */
+.qc-overview-page .jc-choice-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  line-height:1.15;
+}
+.qc-overview-page .jc-choice-primary{
+  color:#c66b12;
+  font-weight:900;
+}
+.qc-overview-page .jc-choice-secondary{
+  color:#8b95a7;
+  font-weight:800;
+}
+.qc-overview-page .jc-goal-choices{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  flex-wrap:wrap;
+  color:#c66b12;
+  font-weight:900;
+  line-height:1.2;
+}
+.qc-overview-page .jc-goal-choices span{white-space:nowrap}
+@media(max-width:760px){
+  .qc-overview-page .jc-choice-stack{gap:1px}
+  .qc-overview-page .jc-choice-primary,
+  .qc-overview-page .jc-choice-secondary,
+  .qc-overview-page .jc-goal-choices{font-size:9px}
+  .qc-overview-page .jc-goal-choices{gap:2px}
+}
+@media(max-width:390px){
+  .qc-overview-page .jc-choice-primary,
+  .qc-overview-page .jc-choice-secondary,
+  .qc-overview-page .jc-goal-choices{font-size:8px}
 }
