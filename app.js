@@ -1102,23 +1102,65 @@ function jcRenderFactsShell(){
   '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
 }
 
-function jcRenderAiPlaceholder(m,pools){
+function jcRenderAiPanel(m,pools,model,analysis){
   const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
-  return '<div class="jc-ai-placeholder">'+
+  const modelReady=!!model;
+  const statusText=modelReady
+    ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
+    : '等待本场模型结果写入';
+
+  const direction=model?qcEscape(jcShortTeamPick(model.direction,m)):'待生成';
+  const single=model?qcEscape(jcShortTeamPick(model.single_pick,m)+(model.raw_input?.single_prob!=null?'｜'+model.raw_input.single_prob+'%':'')):'待生成';
+  const handicap=model?qcEscape(model.handicap_direction||'待生成'):'待生成';
+  const htft=model?qcEscape([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
+  const goals=model?qcEscape(model.goal_range||'待生成'):'待生成';
+  const top=model?qcEscape(jcModelTopText(model)):'待生成';
+
+  const modelBlock=
+    '<div class="jc-ai-model-summary">'+
+      '<div><span>模型方向</span><b>'+direction+'</b></div>'+
+      '<div><span>单选</span><b>'+single+'</b></div>'+
+      '<div><span>官方让球</span><b>'+handicap+'</b></div>'+
+      '<div><span>半全场</span><b>'+htft+'</b></div>'+
+      '<div><span>进球区间</span><b>'+goals+'</b></div>'+
+      '<div><span>TOP</span><b>'+top+'</b></div>'+
+    '</div>';
+
+  let analysisHtml='';
+  if(analysis?.status==='ready'){
+    const sections=[
+      ['模型摘要',analysis.summary],
+      ['实力基线',analysis.strength_baseline],
+      ['近期状态',analysis.recent_form],
+      ['攻防效率',analysis.attack_defense],
+      ['主客场表现',analysis.home_away],
+      ['阵容完整度',analysis.squad_integrity],
+      ['历史交锋',analysis.h2h_analysis],
+      ['市场变化',analysis.market_movement],
+      ['比赛路径',analysis.match_path],
+      ['综合观察',analysis.comprehensive_observation],
+      ['风险因素',analysis.risk_factors]
+    ];
+    analysisHtml='<div class="jc-ai-report">'+sections.filter(x=>x[1]).map(([title,body])=>
+      '<section class="jc-ai-report-section"><h3>'+qcEscape(title)+'</h3><p>'+qcEscape(body)+'</p></section>'
+    ).join('')+'</div>';
+  }else{
+    analysisHtml='<div class="jc-ai-wait">'+
+      '<b>'+qcEscape(statusText)+'</b>'+
+      '<p>锁板结果会作为固定结论，AI只负责结合官方数据、阵容、交锋和市场变化生成解释，不会改写模型方向。</p>'+
+    '</div>';
+  }
+
+  return '<div class="jc-ai-placeholder jc-ai-page">'+
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析</h2>'+
-    '<div class="jc-ai-status"><b>模型状态</b><span>等待本场模型结果写入</span></div>'+
-    '<div class="jc-ai-grid">'+
-      '<div><b>模型方向</b><span>待生成</span></div>'+
-      '<div><b>主要进球区间</b><span>待生成</span></div>'+
-      '<div><b>半全场</b><span>待生成</span></div>'+
-      '<div><b>TOP3</b><span>待生成</span></div>'+
-    '</div>'+
+    '<div class="jc-ai-status"><b>分析状态</b><span>'+qcEscape(statusText)+'</span></div>'+
+    modelBlock+
     '<div class="jc-ai-context">'+
       '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
       '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
       '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
     '</div>'+
-    '<p class="jc-ai-note">这里不会用占位预测冒充模型结果。等主模型输出写入后，会自动显示方向、区间、半全场、TOP3、比赛路径和风险点。</p>'+
+    analysisHtml+
   '</div>';
 }
 
@@ -1166,6 +1208,29 @@ async function setupJcMatchDetail(){
 
   if(detailError) console.warn('读取竞彩详情数据失败',detailError);
   const sportteryDetails=jcSportteryDetailsMap(detailRows||[]);
+
+  const {data:modelRows,error:modelError}=await window.qcSupabase
+    .from('jc_model_outputs')
+    .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+    .eq('jc_match_id',id)
+    .eq('is_locked',true)
+    .eq('is_current',true)
+    .order('locked_at',{ascending:false})
+    .limit(1);
+  if(modelError) console.warn('读取模型锁板结果失败',modelError);
+  const model=(modelRows||[])[0]||null;
+
+  let aiAnalysis=null;
+  if(model){
+    const {data:aiRows,error:aiError}=await window.qcSupabase
+      .from('jc_match_ai_analysis')
+      .select('status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+      .eq('model_output_id',model.id)
+      .order('generated_at',{ascending:false})
+      .limit(1);
+    if(aiError) console.warn('读取AI分析失败',aiError);
+    aiAnalysis=(aiRows||[])[0]||null;
+  }
 
   const snapshots=m.jc_market_snapshots || [];
   const pools=jcLatestPools(snapshots);
@@ -1243,7 +1308,7 @@ async function setupJcMatchDetail(){
       return;
     }
     if(tab==='ai'){
-      panel.innerHTML=jcRenderAiPlaceholder(m,pools);
+      panel.innerHTML=jcRenderAiPanel(m,pools,model,aiAnalysis);
       return;
     }
     await loadFacts();
