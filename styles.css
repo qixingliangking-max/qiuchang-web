@@ -1252,3 +1252,18 @@ body{min-height:100vh}
     white-space:nowrap!important;
   }
 }
+
+
+/* 2026-09-22 odds detail: four top-level plays; handicap remains inside 胜平负 */
+.jc-odds-play-tabs{
+  grid-template-columns:repeat(4,1fr)!important;
+}
+@media(max-width:640px){
+  .jc-odds-play-tabs{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  .jc-odds-play-tabs button{
+    font-size:11px!important;
+    padding:10px 3px!important;
+  }
+}
