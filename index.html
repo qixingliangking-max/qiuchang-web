@@ -1,43 +1,81 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>球场档案｜赛事数据管家</title><link rel="stylesheet" href="styles.css?v=20260922home2"></head><body class="qc-home"><div class="shell">
-<header class="header"><div class="brand">球场档案<span>·赛事数据管家</span></div><button class="menu-btn" id="menuBtn">☰</button></header>
-<div class="ticker"><div class="ticker-track">赛事数据持续更新；临近开赛与完赛后将自动补充最新赛况。</div></div>
-<main class="content">
-<div class="jc-home-controls">
-  <div class="jc-date-nav">
-    <div class="date-switch">
-      <button id="jcPrevDate" type="button" aria-label="上一天">◀</button>
-      <button id="jcDateLabel" class="date-label-btn" type="button">读取日期…</button>
-      <button id="jcNextDate" type="button" aria-label="下一天">▶</button>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>球场档案｜今日速览</title>
+  <link rel="stylesheet" href="styles.css?v=20260922nav1">
+</head>
+<body class="qc-home qc-overview-page">
+<div class="shell">
+  <header class="header qc-site-header">
+    <div class="brand">球场档案<span>·赛事数据管家</span></div>
+    <nav class="qc-primary-nav" aria-label="主导航">
+      <a class="active" href="index.html">今日速览</a>
+      <a href="football.html">竞彩足球</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="账户菜单">☰</button>
+  </header>
+
+  <div class="ticker"><div class="ticker-track">赛事数据持续更新；临近开赛与完赛后将自动补充最新赛况。</div></div>
+
+  <main class="content">
+    <div class="jc-home-controls qc-overview-controls">
+      <div class="jc-date-nav">
+        <div class="date-switch">
+          <button id="jcPrevDate" type="button" aria-label="上一天">◀</button>
+          <button id="jcDateLabel" class="date-label-btn" type="button">读取日期…</button>
+          <button id="jcNextDate" type="button" aria-label="下一天">▶</button>
+        </div>
+        <button id="jcTodayBtn" class="jc-today-btn" type="button">回到今日</button>
+        <button id="jcLeagueToggle" class="jc-league-toggle" type="button">赛事</button>
+        <div id="jcDatePopover" class="jc-date-popover" hidden></div>
+        <div id="jcLeaguePopover" class="jc-league-popover" hidden>
+          <div class="jc-league-popover-title">选择赛事</div>
+          <div id="jcLeagueFilters" class="jc-league-filters"></div>
+        </div>
+      </div>
     </div>
-    <button id="jcTodayBtn" class="jc-today-btn" type="button">回到今日</button>
-    <button id="jcLeagueToggle" class="jc-league-toggle" type="button">赛事</button>
-    <div id="jcDatePopover" class="jc-date-popover" hidden></div>
-    <div id="jcLeaguePopover" class="jc-league-popover" hidden>
-      <div class="jc-league-popover-title">选择赛事</div>
-      <div id="jcLeagueFilters" class="jc-league-filters"></div>
-    </div>
-  </div>
+
+    <section class="jc-review-shell">
+      <div class="section-title jc-home-section-title jc-review-heading">
+        <span class="bar"></span>
+        <span>昨日回看</span>
+        <span class="section-meta" id="jcYesterdayMeta">正在读取…</span>
+      </div>
+      <div id="jcYesterdayCards"><div class="jc-review-empty">正在读取昨日赛果…</div></div>
+    </section>
+
+    <section class="jc-fixtures-shell jc-prediction-shell">
+      <div class="section-title jc-home-section-title jc-prediction-heading">
+        <span class="bar"></span>
+        <span id="jcPredictionTitle">今日预测</span>
+        <span class="section-meta" id="jcPredictionMeta">正在读取…</span>
+        <span class="jc-fixture-count" id="jcPredictionCount">—</span>
+      </div>
+      <div class="jc-live-cards" id="jcLiveCards"><div class="profile-card">正在读取官方竞彩数据…</div></div>
+    </section>
+  </main>
+
+  <div class="footer-note">本页面用于体育数据研究、赛前模型推演与赛后复盘，不承诺任何结果。请理性使用数据并遵守所在地适用规则。</div>
 </div>
 
-<section class="jc-review-shell">
-  <div class="section-title jc-home-section-title jc-review-heading">
-    <span class="bar"></span>
-    <span>昨日回看</span>
-    <span class="section-meta" id="jcYesterdayMeta">正在读取…</span>
-  </div>
-  <div id="jcYesterdayCards"><div class="jc-review-empty">正在读取昨日赛果…</div></div>
-</section>
-
-<section class="jc-fixtures-shell jc-prediction-shell">
-  <div class="section-title jc-home-section-title jc-prediction-heading">
-    <span class="bar"></span>
-    <span id="jcPredictionTitle">今日预测</span>
-    <span class="section-meta" id="jcPredictionMeta">正在读取…</span>
-    <span class="jc-fixture-count" id="jcPredictionCount">—</span>
-  </div>
-  <div class="jc-live-cards" id="jcLiveCards"><div class="profile-card">正在读取官方竞彩数据…</div></div>
-</section>
-</main><div class="footer-note">本页面用于体育数据研究、赛前模型推演与赛后复盘，不承诺任何结果。请理性使用数据并遵守所在地适用规则。</div>
+<div class="drawer-backdrop" id="drawerBackdrop">
+  <nav class="drawer">
+    <a class="active" href="index.html">今日速览</a>
+    <a href="football.html">竞彩足球</a>
+    <hr>
+    <a href="profile.html" id="navProfile">个人中心</a>
+    <a href="login.html" id="navLogin">登录</a>
+    <a href="register.html" id="navRegister">注册</a>
+    <a href="#" class="logout" id="navLogout" style="display:none">退出登录</a>
+  </nav>
 </div>
-<div class="drawer-backdrop" id="drawerBackdrop"><nav class="drawer"><a class="active" href="index.html">今日赛事</a><a href="index.html?view=yesterday">昨日回看</a><a href="index.html?view=selected">精选场次</a><a href="league.html">联赛数据库</a><hr><a href="profile.html" id="navProfile">个人中心</a><a href="login.html" id="navLogin">登录</a><a href="register.html" id="navRegister">注册</a><a href="#" class="logout" id="navLogout" style="display:none">退出登录</a></nav></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="supabase-client.js?v=20260922p"></script><script src="data.js"></script><script src="app.js?v=20260922home2"></script></body></html>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js?v=20260922p"></script>
+<script src="data.js"></script>
+<script src="app.js?v=20260922nav1"></script>
+</body>
+</html>
