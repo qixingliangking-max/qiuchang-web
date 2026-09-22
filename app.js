@@ -587,7 +587,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         hafu=jcOverviewHtftHtml(model);
       }
 
-      if(mode==='yesterday' && score.ft){
+      if(score.finished && score.ft){
         const ftParts=String(score.ft).split('-').map(Number);
         const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
         const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
@@ -612,7 +612,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         scoreMeta=jcMatchStatusLabel(m,today);
         scoreMetaClass='jc-score-live';
       }else if(score.finished){
-        scoreMeta='完场';
+        scoreMeta=score.ht?'半 '+score.ht:'完场';
       }else{
         scoreMeta='未开赛';
       }
@@ -1569,8 +1569,10 @@ async function setupJcMatchDetail(){
 
   const snapshots=m.jc_market_snapshots || [];
   const pools=jcLatestPools(snapshots);
-  const status=jcMatchStatusLabel(m,qcBeijingToday());
   const score=jcScoreInfo(m);
+  const status=score.finished && score.ht
+    ? '半 '+score.ht+' · 完场'
+    : jcMatchStatusLabel(m,qcBeijingToday());
 
   const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshots,'had')+'</div>';
 
