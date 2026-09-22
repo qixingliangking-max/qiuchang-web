@@ -1267,3 +1267,33 @@ body{min-height:100vh}
     padding:10px 3px!important;
   }
 }
+
+
+/* 2026-09-22 trial: small football mark on first three Sporttery cards */
+.jc-card-top-left{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important
+}
+.jc-card-top-meta{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-width:0!important
+}
+.jc-card-mini-logo{
+  width:26px!important;
+  height:26px!important;
+  flex:0 0 26px!important;
+  display:block!important
+}
+@media(max-width:760px){
+  .jc-card-mini-logo{
+    width:24px!important;
+    height:24px!important;
+    flex-basis:24px!important
+  }
+  .jc-card-top-left{gap:6px!important}
+  .jc-card-top-meta{gap:5px!important}
+}
