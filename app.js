@@ -336,6 +336,48 @@ function jcCompactHandicapPick(text){
     .replace(/[｜|]/g,' / ');
 }
 
+function jcOverviewDirectionChoices(model,m){
+  const raw=jcCompactResultPick(model?.direction,m);
+  let choices=String(raw||'').split('/').map(x=>x.trim()).filter(Boolean);
+  if(!choices.length) return [];
+  const single=jcCompactResultPick(model?.single_pick,m);
+  if(single && !String(single).includes('/')){
+    const idx=choices.indexOf(single);
+    if(idx>0) choices=[choices[idx],...choices.filter((_,i)=>i!==idx)];
+  }
+  return [...new Set(choices)];
+}
+
+function jcOverviewChoicesHtml(choices){
+  const list=(choices||[]).filter(Boolean);
+  if(!list.length) return jcPredictionPlaceholder();
+  return '<span class="jc-choice-stack">'+list.map((x,i)=>
+    '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+'">'+qcEscape(x)+'</span>'
+  ).join('')+'</span>';
+}
+
+function jcOverviewGoalsHtml(range){
+  const s=String(range||'').trim();
+  const m=s.match(/(\d+)\s*[—–-]\s*(\d+)\s*球?/);
+  let values=[];
+  if(m){
+    const a=Number(m[1]),b=Number(m[2]);
+    if(Number.isFinite(a)&&Number.isFinite(b)&&b>=a&&b-a<=6){
+      for(let n=a;n<=b;n++) values.push(n+'球');
+    }
+  }
+  if(!values.length){
+    values=s.split(/[、,，｜|/\s]+/).map(x=>x.trim()).filter(Boolean).map(x=>/球$/.test(x)?x:x+'球');
+  }
+  if(!values.length) return jcPredictionPlaceholder();
+  return '<span class="jc-goal-choices">'+values.map(x=>'<span>'+qcEscape(x)+'</span>').join('')+'</span>';
+}
+
+function jcOverviewHtftHtml(model){
+  const values=[model?.htft_top1,model?.htft_top2].filter(Boolean);
+  return jcOverviewChoicesHtml(values);
+}
+
 async function jcAttachModels(rows){
   if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
   const ids=rows.map(x=>x.id).filter(Boolean);
@@ -364,7 +406,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
   }
 
   return '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
-    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负 / 让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
+    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const pools=jcLatestPools(m.jc_market_snapshots||[]);
@@ -381,13 +423,9 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const model=jcPublicModel(m);
 
       if(mode!=='yesterday' && model){
-        const direction=jcShortTeamPick(model.direction,m);
-        const handicap=model.handicap_direction||'';
-        market='<span class="jc-model-main">'+qcEscape(direction||'待生成')+'</span>'+
-          (handicap?'<span class="jc-model-sub">'+qcEscape(handicap)+'</span>':'');
-        goals='<span class="jc-model-main">'+qcEscape(model.goal_range||'待生成')+'</span>';
-        const htft=[model.htft_top1,model.htft_top2].filter(Boolean).join('｜');
-        hafu='<span class="jc-model-main">'+qcEscape(htft||'待生成')+'</span>';
+        market=jcOverviewChoicesHtml(jcOverviewDirectionChoices(model,m));
+        goals=jcOverviewGoalsHtml(model.goal_range);
+        hafu=jcOverviewHtftHtml(model);
       }
 
       if(mode==='yesterday' && score.ft){
@@ -395,8 +433,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
         const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
         const result=jcResultTextByScore(score.ft);
-        const hhad=jcHandicapResult(score.ft,pools.hhad?.goal_line);
-        market='<span class="jc-landed">'+qcEscape(result)+'</span>'+(hhad?'<span class="jc-landed secondary">'+qcEscape(hhad)+'</span>':'');
+        market='<span class="jc-landed">'+qcEscape(result)+'</span>';
         goals='<span class="jc-landed">'+qcEscape(total)+'</span>';
         hafu='<span class="jc-landed">'+qcEscape(htft)+'</span>';
       }
