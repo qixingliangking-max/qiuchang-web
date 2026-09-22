@@ -802,7 +802,7 @@ function jcRenderOddsPlayShell(pools,snapshots,active='had'){
   return '<div class="jc-odds-play-shell">'+
     '<div class="jc-odds-play-tabs">'+
       '<button type="button" class="'+(active==='had'?'active':'')+'" data-odds-play="had">胜平负</button>'+
-      '<button type="button" class="'+(active==='hhad'?'active':'')+'" data-odds-play="hhad">让球胜平负</button>'+
+
       '<button type="button" class="'+(active==='crs'?'active':'')+'" data-odds-play="crs">比分</button>'+
       '<button type="button" class="'+(active==='ttg'?'active':'')+'" data-odds-play="ttg">总进球数</button>'+
       '<button type="button" class="'+(active==='hafu'?'active':'')+'" data-odds-play="hafu">半全场</button>'+
