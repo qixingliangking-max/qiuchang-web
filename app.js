@@ -532,6 +532,31 @@ function jcReviewResultHtml(value,hit){
   return '<span class="'+cls+'">'+qcEscape(value||'—')+'</span>';
 }
 
+function jcReviewInlineChoicesHtml(choices,hitValue){
+  const list=(choices||[]).filter(Boolean);
+  if(!list.length) return jcPredictionPlaceholder();
+  return '<span class="jc-choice-inline jc-review-choices">'+list.map((x,i)=>
+    (i?'<span class="jc-choice-sep">/</span>':'')+
+    '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+(x===hitValue?' jc-hit-ring':'')+'">'+qcEscape(x)+'</span>'
+  ).join('')+'</span>';
+}
+
+function jcReviewGoalChoicesHtml(choices,hitValue){
+  const list=(choices||[]).filter(Boolean);
+  if(!list.length) return jcPredictionPlaceholder();
+  return '<span class="jc-goal-choices jc-review-choices">'+list.map(x=>
+    '<span class="'+(x===hitValue?'jc-hit-ring':'')+'">'+qcEscape(x)+'</span>'
+  ).join('')+'</span>';
+}
+
+function jcReviewHtftChoicesHtml(choices,hitValue){
+  const list=(choices||[]).filter(Boolean);
+  if(!list.length) return jcPredictionPlaceholder();
+  return '<span class="jc-choice-stack jc-review-choices">'+list.map((x,i)=>
+    '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+(x===hitValue?' jc-hit-ring':'')+'">'+qcEscape(x)+'</span>'
+  ).join('')+'</span>';
+}
+
 function jcOverviewHtftHtml(model){
   const values=[model?.htft_top1,model?.htft_top2].filter(Boolean);
   return jcOverviewChoicesHtml(values);
@@ -587,20 +612,19 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         hafu=jcOverviewHtftHtml(model);
       }
 
-      if(score.finished && score.ft){
+      if(score.finished && score.ft && model){
         const ftParts=String(score.ft).split('-').map(Number);
         const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
         const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
         const resultShort=jcShortResultByScore(score.ft);
-        const result=jcResultTextByScore(score.ft);
 
-        const directionChoices=model?jcOverviewDirectionChoices(model,m):[];
-        const goalChoices=model?jcOverviewGoalValues(model.goal_range):[];
-        const htftChoices=model?[model.htft_top1,model.htft_top2].filter(Boolean):[];
+        const directionChoices=jcOverviewDirectionChoices(model,m);
+        const goalChoices=jcOverviewGoalValues(model.goal_range);
+        const htftChoices=[model.htft_top1,model.htft_top2].filter(Boolean);
 
-        market=jcReviewResultHtml(result,directionChoices.includes(resultShort));
-        goals=jcReviewResultHtml(total,goalChoices.includes(total));
-        hafu=jcReviewResultHtml(htft,htftChoices.includes(htft));
+        market=jcReviewInlineChoicesHtml(directionChoices,resultShort);
+        goals=jcReviewGoalChoicesHtml(goalChoices,total);
+        hafu=jcReviewHtftChoicesHtml(htftChoices,htft);
       }
 
       const displayScore=mode==='yesterday'?score.ft:score.current;
