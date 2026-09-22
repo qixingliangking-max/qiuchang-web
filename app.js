@@ -676,7 +676,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<span class="jc-vs">'+(score.current?qcEscape(score.current):'VS')+'</span>'+
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
-        '<div class="jc-card-status-row"><span class="jc-status-pill'+(score.started&&!score.finished?' is-live':'')+'">'+qcEscape(jcMatchStatusLabel(m,today))+'</span></div>'+
+        '<div class="jc-card-status-row"><span class="jc-status-pill'+(score.started&&!score.finished?' is-live':'')+'">'+qcEscape(score.finished && score.ht ? '半 '+score.ht : jcMatchStatusLabel(m,today))+'</span></div>'+
         modelBlock+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
       '</a>'+
@@ -1571,7 +1571,7 @@ async function setupJcMatchDetail(){
   const pools=jcLatestPools(snapshots);
   const score=jcScoreInfo(m);
   const status=score.finished && score.ht
-    ? '半 '+score.ht+' · 完场'
+    ? '半 '+score.ht
     : jcMatchStatusLabel(m,qcBeijingToday());
 
   const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshots,'had')+'</div>';
