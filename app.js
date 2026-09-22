@@ -356,6 +356,15 @@ function jcOverviewChoicesHtml(choices){
   ).join('')+'</span>';
 }
 
+function jcOverviewInlineChoicesHtml(choices){
+  const list=(choices||[]).filter(Boolean);
+  if(!list.length) return jcPredictionPlaceholder();
+  return '<span class="jc-choice-inline">'+list.map((x,i)=>
+    (i?'<span class="jc-choice-sep">/</span>':'')+
+    '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+'">'+qcEscape(x)+'</span>'
+  ).join('')+'</span>';
+}
+
 function jcOverviewGoalsHtml(range){
   const s=String(range||'').trim();
   const m=s.match(/(\d+)\s*[—–-]\s*(\d+)\s*球?/);
@@ -423,7 +432,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const model=jcPublicModel(m);
 
       if(mode!=='yesterday' && model){
-        market=jcOverviewChoicesHtml(jcOverviewDirectionChoices(model,m));
+        market=jcOverviewInlineChoicesHtml(jcOverviewDirectionChoices(model,m));
         goals=jcOverviewGoalsHtml(model.goal_range);
         hafu=jcOverviewHtftHtml(model);
       }
@@ -1314,14 +1323,13 @@ async function setupJcMatchDetail(){
       '</div>'+
       '<div class="jc-main-tabs">'+
         '<button type="button" data-main-tab="facts">赛况数据</button>'+
-        '<button type="button" class="active" data-main-tab="odds">赔率详情</button>'+
-        '<button type="button" data-main-tab="ai">AI分析</button>'+
+        '<button type="button" data-main-tab="odds">赔率详情</button>'+
+        '<button type="button" class="active" data-main-tab="ai">AI分析</button>'+
       '</div>'+
     '</div>'+
-    '<div id="jcMainPanel">'+oddsHtml+'</div>';
+    '<div id="jcMainPanel">'+jcRenderAiPanel(m,pools,model,aiAnalysis)+'</div>';
 
   const panel=$('#jcMainPanel');
-  jcBindOddsPlayTabs(panel,pools,snapshots);
   let factsData=null;
   let factsLoaded=false;
 
@@ -1384,7 +1392,7 @@ async function setupJcMatchDetail(){
     btn.onclick=async e=>{
       e.preventDefault();
       e.stopPropagation();
-      await renderMainTab(btn.dataset.mainTab || 'odds');
+      await renderMainTab(btn.dataset.mainTab || 'ai');
     };
   });
 }
