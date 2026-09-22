@@ -334,8 +334,16 @@ function jcHandicapResult(score,goalLine){
 
 let qcAccessStatePromise=null;
 
+const QC_BASIC_TEST_EMAIL='basic.test@qiuchang.local';
+const QC_BASIC_TEST_PASSWORD='Basic0922!';
+
 function qcIsBasicPreview(){
-  return new URLSearchParams(location.search).get('preview')==='basic';
+  try{
+    return new URLSearchParams(location.search).get('preview')==='basic'
+      || localStorage.getItem('qc_basic_test')==='1';
+  }catch{
+    return new URLSearchParams(location.search).get('preview')==='basic';
+  }
 }
 
 function qcPreviewHref(path){
@@ -1667,6 +1675,20 @@ function setupDemoAuth(){
       const password = login.querySelector('input[type="password"]').value;
       const button = login.querySelector('button');
 
+      if(email.toLowerCase()===QC_BASIC_TEST_EMAIL && password===QC_BASIC_TEST_PASSWORD){
+        button.disabled = true;
+        button.textContent = '登录中...';
+        try{ await window.qcSupabase.auth.signOut(); }catch{}
+        try{ localStorage.setItem('qc_basic_test','1'); }catch{}
+        button.disabled = false;
+        button.textContent = '登录';
+        const next = new URLSearchParams(location.search).get('next');
+        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
+        location.href = safeNext;
+        return;
+      }
+
+      try{ localStorage.removeItem('qc_basic_test'); }catch{}
       button.disabled = true;
       button.textContent = '登录中...';
 
@@ -1795,7 +1817,11 @@ async function setupAuthNav(){
       logoutLink.textContent = previewBasic ? '退出Basic预览' : '退出登录';
       logoutLink.onclick = async e => {
         e.preventDefault();
-        if(!previewBasic) await window.qcSupabase.auth.signOut();
+        if(previewBasic){
+          try{ localStorage.removeItem('qc_basic_test'); }catch{}
+        }else{
+          await window.qcSupabase.auth.signOut();
+        }
         location.href = 'index.html';
       };
     }
@@ -1813,6 +1839,41 @@ async function setupProfile(){
 
   if(!window.qcSupabase){
     alert('数据库连接失败，请刷新页面后重试');
+    return;
+  }
+
+  if(qcIsBasicPreview()){
+    const emailEl = $('#profileEmail');
+    const nicknameEl = $('#profileNickname');
+    const roleEl = $('#profileRole');
+    const statusEl = $('#profileStatus');
+    const nicknameInput = $('#nicknameInput');
+    if(emailEl) emailEl.textContent = QC_BASIC_TEST_EMAIL;
+    if(nicknameEl) nicknameEl.textContent = 'Basic测试账号';
+    if(nicknameInput){ nicknameInput.value='Basic测试账号'; nicknameInput.disabled=true; }
+    if(roleEl) roleEl.textContent = '基础用户';
+    if(statusEl){ statusEl.textContent='正常'; statusEl.style.color='var(--green)'; }
+    renderMembership(null,'basic');
+
+    const redeemForm=$('#redeemForm');
+    const nicknameForm=$('#nicknameForm');
+    const passwordForm=$('#passwordForm');
+    [redeemForm,nicknameForm,passwordForm].filter(Boolean).forEach(form=>{
+      Array.from(form.elements||[]).forEach(el=>el.disabled=true);
+    });
+    const redeemHint=$('#redeemHint');
+    if(redeemHint){
+      redeemHint.textContent='Basic测试账号仅用于查看普通会员权限效果，不写入真实会员数据库。';
+      redeemHint.className='code-hint';
+    }
+    const logoutBtn=$('#logoutBtn');
+    if(logoutBtn){
+      logoutBtn.onclick=e=>{
+        e.preventDefault();
+        try{ localStorage.removeItem('qc_basic_test'); }catch{}
+        location.href='login.html';
+      };
+    }
     return;
   }
 
