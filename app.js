@@ -165,7 +165,27 @@ function jcPoolNumber(pool,key){
   return raw;
 }
 
+function jcApiLiveInfo(m){
+  const p=m?._apiFootballLive || null;
+  const short=String(p?.status?.short || '').trim().toUpperCase();
+  const elapsed=Number(p?.status?.elapsed);
+  const home=p?.goals?.home;
+  const away=p?.goals?.away;
+  const htHome=p?.score?.halftime?.home;
+  const htAway=p?.score?.halftime?.away;
+  const finished=['FT','AET','PEN','CANC','ABD','AWD','WO'].includes(short);
+  const notStarted=['NS','TBD','PST'].includes(short);
+  const started=Boolean(short && !notStarted) || (home!=null && away!=null && Number.isFinite(elapsed));
+  const current=(started && home!=null && away!=null)?String(home)+'-'+String(away):'';
+  const ht=(htHome!=null && htAway!=null)?String(htHome)+'-'+String(htAway):'';
+  return {short,elapsed:Number.isFinite(elapsed)?elapsed:null,started,finished,current,ht};
+}
+
 function jcMatchStatusLabel(m,today){
+  const api=jcApiLiveInfo(m);
+  if(api.finished) return '已结束';
+  if(api.short==='HT') return '半场';
+  if(api.started) return '进行中';
   const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
   const ft=String(m?.raw?.sectionsNo999 || '').trim();
   if(ft) return '已结束';
@@ -177,9 +197,37 @@ function jcMatchStatusLabel(m,today){
 }
 
 function jcScoreInfo(m){
-  const ft=String(m?.raw?.sectionsNo999 || '').trim().replace(':','-');
-  const ht=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
-  return {ft:ft || '',ht:ht || ''};
+  const officialFt=String(m?.raw?.sectionsNo999 || '').trim().replace(':','-');
+  const officialHt=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
+  const api=jcApiLiveInfo(m);
+  const ft=officialFt || (api.finished?api.current:'');
+  const ht=officialHt || api.ht || '';
+  const current=api.current || officialFt || '';
+  const started=api.started || Boolean(officialFt);
+  const finished=api.finished || Boolean(officialFt);
+  return {ft,ht,current,started,finished,elapsed:api.elapsed,statusShort:api.short};
+}
+
+function jcShouldFetchLive(m){
+  const t=new Date(m?.kickoff_at || '').getTime();
+  if(!Number.isFinite(t)) return false;
+  const now=Date.now();
+  return t<=now+20*60*1000 && t>=now-4*60*60*1000;
+}
+
+async function jcAttachLiveScores(rows){
+  const list=(rows||[]).filter(m=>m?.id && jcShouldFetchLive(m));
+  if(!list.length || !window.QC_SUPABASE_URL) return rows||[];
+  await Promise.all(list.map(async m=>{
+    try{
+      const res=await fetch(window.QC_SUPABASE_URL+'/functions/v1/api-football-match?jc_match_id='+encodeURIComponent(m.id),{cache:'no-store'});
+      const payload=await res.json();
+      if(res.ok && payload?.ok && payload?.data) m._apiFootballLive=payload.data;
+    }catch(err){
+      console.warn('实时比分读取失败',m?.match_num||m?.id,err);
+    }
+  }));
+  return rows||[];
 }
 
 function jcRelativeDayLabel(dateStr,today){
@@ -237,7 +285,7 @@ function jcRenderCompactFixtures(rows,today,emptyText){
     const time=qcEscape((m.match_time || '').slice(0,5) || '—');
     const home=qcEscape(m.home_team_name || '—');
     const away=qcEscape(m.away_team_name || '—');
-    const middle=score.ft?qcEscape(score.ft):'VS';
+    const middle=score.current?qcEscape(score.current):'VS';
     const ht=score.ht?'<span class="jc-compact-ht">半 '+qcEscape(score.ht)+'</span>':'';
     return '<a class="jc-compact-match" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
       '<div class="jc-compact-top"><span><b>'+num+'</b><em>'+league+'</em></span><time>'+time+'</time></div>'+
@@ -447,9 +495,10 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         hafu='<span class="jc-landed">'+qcEscape(htft)+'</span>';
       }
 
-      const scoreStack=score.ft
-        ? '<span class="jc-score-half">'+(score.ht?qcEscape(score.ht):'—')+'</span><strong class="jc-score-full">'+qcEscape(score.ft)+'</strong>'
-        : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">半场 —</span>';
+      const displayScore=mode==='yesterday'?score.ft:score.current;
+      const scoreStack=displayScore
+        ? '<span class="jc-score-half">'+(score.ht?'半 '+qcEscape(score.ht):'半 —')+'</span><strong class="jc-score-full">'+qcEscape(displayScore)+'</strong>'
+        : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">半 —</span>';
 
       return '<tr class="jc-overview-row" data-href="'+href+'">'+
         '<td><b>'+num+'</b></td>'+
@@ -497,10 +546,10 @@ function jcRenderFootballCards(rows,today){
         '</div>'+
         '<div class="jc-card-teams">'+
           '<strong class="jc-team">'+qcEscape(m.home_team_name||'—')+'</strong>'+
-          '<span class="jc-vs">'+(score.ft?qcEscape(score.ft):'VS')+'</span>'+
+          '<span class="jc-vs">'+(score.current?qcEscape(score.current):'VS')+'</span>'+
           '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
-        '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(status)+'</span></div>'+
+        '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(score.started?('半场 '+(score.ht||'—')):status)+'</span></div>'+
         (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
           '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
           '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
@@ -657,6 +706,15 @@ async function loadJcFootball(){
   });
 
   render();
+
+  async function refreshFootballLive(){
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    await jcAttachLiveScores(dateRows);
+    render();
+  }
+  refreshFootballLive();
+  if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
+  window.__jcFootballLiveTimer=setInterval(refreshFootballLive,60000);
 }
 
 async function loadJcFrontend(){
@@ -758,6 +816,15 @@ async function loadJcFrontend(){
   });
 
   render();
+
+  async function refreshOverviewLive(){
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    await jcAttachLiveScores(dateRows);
+    render();
+  }
+  refreshOverviewLive();
+  if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
+  window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,60000);
 }
 
 
@@ -1306,6 +1373,8 @@ async function setupJcMatchDetail(){
     aiAnalysis=(aiRows||[])[0]||null;
   }
 
+  await jcAttachLiveScores([m]);
+
   const snapshots=m.jc_market_snapshots || [];
   const pools=jcLatestPools(snapshots);
   const status=jcMatchStatusLabel(m,qcBeijingToday());
@@ -1318,7 +1387,7 @@ async function setupJcMatchDetail(){
       '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
         '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong>'+(score.ft?qcEscape(score.ft):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
+        '<div class="center-score"><strong>'+(score.current?qcEscape(score.current):'VS')+'</strong><small>'+qcEscape(status)+'</small></div>'+
         '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
       '</div>'+
       '<div class="jc-main-tabs">'+
