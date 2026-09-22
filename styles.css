@@ -1575,3 +1575,70 @@ button.qc-date-locked-control:disabled{
     border-width:1.5px;
   }
 }
+
+
+/* 2026-09-22 overview mobile matchup horizontal refinement */
+@media(max-width:760px){
+  .qc-overview-page .jc-prediction-heading .jc-fixture-count{
+    display:none!important;
+  }
+
+  .qc-overview-page .jc-overview-table th:nth-child(1),
+  .qc-overview-page .jc-overview-table td:nth-child(1){width:6%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(2),
+  .qc-overview-page .jc-overview-table td:nth-child(2){width:7%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(3),
+  .qc-overview-page .jc-overview-table td:nth-child(3){width:7%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(4),
+  .qc-overview-page .jc-overview-table td:nth-child(4){width:46%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(5),
+  .qc-overview-page .jc-overview-table td:nth-child(5){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(6),
+  .qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(7),
+  .qc-overview-page .jc-overview-table td:nth-child(7){width:10%!important}
+
+  .qc-overview-page .jc-review-match{
+    grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr)!important;
+    gap:2px!important;
+  }
+  .qc-overview-page .jc-review-match>span:first-child,
+  .qc-overview-page .jc-review-match>span:last-child{
+    min-width:0!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    overflow-wrap:normal!important;
+    word-break:keep-all!important;
+    font-size:9px!important;
+    line-height:1.05!important;
+    letter-spacing:-.35px!important;
+  }
+  .qc-overview-page .jc-score-full{
+    font-size:12px!important;
+    white-space:nowrap!important;
+  }
+  .qc-overview-page .jc-score-half{
+    font-size:7.5px!important;
+    white-space:nowrap!important;
+  }
+
+  .qc-overview-page .jc-review-table td:nth-child(1),
+  .qc-overview-page .jc-review-table td:nth-child(2){
+    padding-left:1px!important;
+    padding-right:1px!important;
+  }
+  .qc-overview-page .jc-overview-league{
+    font-size:8px!important;
+    line-height:1.05!important;
+  }
+}
+@media(max-width:390px){
+  .qc-overview-page .jc-review-match{
+    grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr)!important;
+  }
+  .qc-overview-page .jc-review-match>span:first-child,
+  .qc-overview-page .jc-review-match>span:last-child{
+    font-size:8.5px!important;
+    letter-spacing:-.45px!important;
+  }
+}
