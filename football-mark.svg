@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="足球">
+  <circle cx="32" cy="32" r="29" fill="#ffffff" stroke="#dfe6f1" stroke-width="3"/>
+  <circle cx="32" cy="32" r="22" fill="#f7f9fc"/>
+  <path d="M32 18l8 6-3 10H27l-3-10 8-6zm-8 6l-8 5 2 10 9 5m13-20l8 5-2 10-9 5M18 39l6 9h16l6-9" fill="none" stroke="#316be9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M27 34h10l3 10-8 6-8-6 3-10z" fill="#316be9" opacity=".12"/>
+</svg>
