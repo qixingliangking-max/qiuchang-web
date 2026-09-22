@@ -300,7 +300,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const pools=jcLatestPools(m.jc_market_snapshots||[]);
       const href='jc-match.html?id='+encodeURIComponent(m.id);
       const league=qcEscape(m.league_short_name||m.league_name||'—');
-      const num=qcEscape(m.match_num||'—');
+      const num=qcEscape(String(m.match_num||'—').replace(/^周[一二三四五六日天]/,''));
       const time=qcEscape(String(m.match_time||'').slice(0,5)||'—');
       const home=qcEscape(m.home_team_name||'—');
       const away=qcEscape(m.away_team_name||'—');
