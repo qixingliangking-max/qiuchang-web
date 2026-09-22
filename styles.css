@@ -1032,3 +1032,204 @@ body{min-height:100vh}
   .qc-overview-page .jc-overview-pending,
   .qc-overview-page .jc-landed{font-size:8px!important}
 }
+
+
+/* 2026-09-22 Sporttery toolbar: scalable league selector for many competitions */
+.qc-football-page .jc-football-toolbar{
+  position:relative;
+  display:block;
+  padding:12px 14px;
+  margin-bottom:16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 6px 20px rgba(31,42,68,.045)
+}
+.qc-football-page .jc-football-date-zone{
+  position:relative;
+  display:grid;
+  grid-template-columns:42px minmax(120px,190px) 42px auto auto auto;
+  align-items:center;
+  gap:8px;
+  width:100%;
+}
+.qc-football-page .jc-football-date-zone>button{
+  height:42px;
+  min-height:42px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:12px;
+  padding:0 12px;
+  color:#667084;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap
+}
+.qc-football-page .jc-football-arrow{
+  padding:0!important;
+  font-size:24px!important
+}
+.qc-football-page .jc-football-date-label{
+  min-width:0!important;
+  color:var(--text)!important;
+  font-size:16px
+}
+.qc-football-page .jc-football-today{
+  background:#f6f7f9!important
+}
+.qc-football-page .jc-football-league-toggle{
+  min-width:70px;
+  color:var(--text)!important;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:150px
+}
+.qc-football-page .jc-fixture-count{
+  justify-self:end;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:38px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:#758095;
+  font-weight:900;
+  white-space:nowrap
+}
+.qc-football-page .jc-date-popover{
+  top:50px!important;
+  left:50px!important;
+  right:auto!important;
+  transform:none!important
+}
+.jc-football-league-popover{
+  position:absolute;
+  z-index:30;
+  top:50px;
+  right:0;
+  width:min(340px,calc(100vw - 32px));
+  max-height:min(460px,70vh);
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 18px 50px rgba(31,42,68,.18)
+}
+.jc-football-league-title{
+  position:sticky;
+  top:0;
+  z-index:1;
+  padding:14px 16px;
+  background:#edf3ff;
+  color:var(--blue);
+  font-weight:900;
+  border-bottom:1px solid var(--line)
+}
+.jc-football-league-menu{
+  max-height:390px;
+  overflow-y:auto;
+  overscroll-behavior:contain
+}
+.jc-football-league-menu button{
+  width:100%;
+  min-height:52px;
+  border:0;
+  border-bottom:1px solid #edf0f5;
+  background:#fff;
+  display:grid;
+  grid-template-columns:30px minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+  padding:10px 15px;
+  text-align:left;
+  color:var(--text);
+  cursor:pointer
+}
+.jc-football-league-menu button:last-child{border-bottom:0}
+.jc-football-league-menu button.active{
+  background:#f7f9ff;
+  color:var(--blue)
+}
+.jc-football-league-check{
+  width:24px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  border:1px solid #dce3ef;
+  border-radius:7px;
+  color:var(--blue);
+  font-weight:900
+}
+.jc-football-league-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-weight:850
+}
+.jc-football-league-menu b{
+  color:#778196;
+  font-size:12px
+}
+@media(max-width:760px){
+  .qc-football-page .jc-football-toolbar{
+    padding:9px 10px!important;
+    border-radius:0!important;
+    border-left:0!important;
+    border-right:0!important;
+    margin-left:-12px!important;
+    margin-right:-12px!important;
+    box-shadow:none!important
+  }
+  .qc-football-page .jc-football-date-zone{
+    grid-template-columns:34px minmax(105px,1fr) 34px auto auto!important;
+    gap:5px!important;
+    overflow:visible!important;
+    padding:0!important
+  }
+  .qc-football-page .jc-football-date-zone>button{
+    height:38px!important;
+    min-height:38px!important;
+    border-radius:10px!important;
+    padding:0 9px!important;
+    font-size:12px!important
+  }
+  .qc-football-page .jc-football-arrow{
+    padding:0!important;
+    font-size:20px!important
+  }
+  .qc-football-page .jc-football-date-label{
+    font-size:14px!important
+  }
+  .qc-football-page .jc-football-today{
+    padding:0 8px!important
+  }
+  .qc-football-page .jc-football-league-toggle{
+    min-width:56px!important;
+    max-width:90px!important;
+    padding:0 8px!important
+  }
+  .qc-football-page .jc-fixture-count{
+    grid-column:1/-1;
+    justify-self:end;
+    height:auto;
+    border:0;
+    background:transparent;
+    padding:3px 2px 0;
+    font-size:11px
+  }
+  .qc-football-page .jc-date-popover{
+    top:44px!important;
+    left:0!important;
+    width:min(360px,calc(100vw - 24px))!important
+  }
+  .jc-football-league-popover{
+    top:44px;
+    right:0;
+    width:min(330px,calc(100vw - 20px));
+    max-height:58vh
+  }
+  .jc-football-league-menu{max-height:calc(58vh - 52px)}
+}
