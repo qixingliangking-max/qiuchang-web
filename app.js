@@ -307,6 +307,35 @@ function jcShortTeamPick(text,m){
   return s;
 }
 
+function jcCompactResultPick(text,m){
+  const s=String(text||'').replace(/\s+/g,'').trim();
+  if(!s) return '待生成';
+
+  const home=String(m?.home_team_name||'').replace(/\s+/g,'').trim();
+  const away=String(m?.away_team_name||'').replace(/\s+/g,'').trim();
+  const homeShort=home.replace(/亚运男足|U23|亚足/g,'');
+  const awayShort=away.replace(/亚运男足|U23|亚足/g,'');
+  const hasTeam=(name,short)=>Boolean((name&&s.includes(name))||(short&&short!==name&&s.includes(short)));
+  const homeHit=hasTeam(home,homeShort);
+  const awayHit=hasTeam(away,awayShort);
+
+  if(/分胜负|主胜.*客胜|客胜.*主胜/.test(s)) return '胜 / 负';
+  if(/主队?不败/.test(s) || (homeHit && /不败/.test(s))) return '胜 / 平';
+  if(/客队?不败/.test(s) || (awayHit && /不败/.test(s))) return '平 / 负';
+  if(/^主胜$/.test(s) || (homeHit && /胜/.test(s))) return '胜';
+  if(/^客胜$/.test(s) || (awayHit && /胜/.test(s))) return '负';
+  if(/^平局?$/.test(s)) return '平';
+
+  return jcShortTeamPick(text,m);
+}
+
+function jcCompactHandicapPick(text){
+  return String(text||'待生成')
+    .replace(/\s+/g,'')
+    .replace(/[＋+]/g,' / ')
+    .replace(/[｜|]/g,' / ');
+}
+
 async function jcAttachModels(rows){
   if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
   const ids=rows.map(x=>x.id).filter(Boolean);
@@ -427,8 +456,9 @@ function jcRenderFootballCards(rows,today){
         '</div>'+
         '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(status)+'</span></div>'+
         (()=>{const model=jcPublicModel(m);const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
-          '<div><span>模型方向</span><b>'+(model?qcEscape(jcShortTeamPick(model.direction,m)+grade):'待生成')+'</b></div>'+
-          '<div><span>单选</span><b>'+(model?qcEscape(jcShortTeamPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+          '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
+          '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+          '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
           '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
         '</div>';})()+
         '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
@@ -466,7 +496,6 @@ async function loadJcFootball(){
   const prev=$('#jcFootballPrevDate');
   const next=$('#jcFootballNextDate');
   const todayBtn=$('#jcFootballTodayBtn');
-  const count=$('#jcFootballCount');
   const datePop=$('#jcDatePopover');
   const leagueToggle=$('#jcFootballLeagueToggle');
   const leaguePop=$('#jcFootballLeaguePopover');
@@ -521,7 +550,6 @@ async function loadJcFootball(){
       const d=new Date(selectedDate+'T12:00:00+08:00');
       label.textContent=selectedDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
     }
-    if(count) count.textContent='共 '+filtered.length+' 场';
     if(leagueToggle){
       leagueToggle.textContent=activeLeague==='全部'?'赛事':activeLeague;
       leagueToggle.title=activeLeague==='全部'?'选择赛事':'当前：'+activeLeague;
