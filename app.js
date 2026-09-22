@@ -356,18 +356,31 @@ function jcRenderFootballCards(rows,today){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   return '<div class="jc-football-grid">'+ordered.map(m=>{
-    const pools=jcLatestPools(m.jc_market_snapshots||[]);
     const score=jcScoreInfo(m);
     const status=jcMatchStatusLabel(m,today);
     const relative=jcRelativeDayLabel(m.match_date,today);
     const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
-    return '<a class="jc-football-card" href="jc-match.html?id='+encodeURIComponent(m.id)+'">'+
-      '<div class="jc-card-top"><span><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em> <b>'+qcEscape(m.match_num||'竞彩')+'</b></span><time>'+qcEscape(when)+'</time></div>'+
-      '<div class="jc-card-teams"><strong class="jc-team">'+qcEscape(m.home_team_name||'—')+'</strong><span class="jc-vs">'+(score.ft?qcEscape(score.ft):'VS')+'</span><strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong></div>'+
-      '<div class="jc-status-strip">'+qcEscape(status)+'</div>'+
-      jcRenderOddsMini(pools)+
-      '<div class="jc-model-pending"><b>玩法：</b><span>待生成</span></div>'+
-    '</a>';
+    const href='jc-match.html?id='+encodeURIComponent(m.id);
+    return '<article class="jc-football-card jc-football-card-lite">'+
+      '<a class="jc-card-link" href="'+href+'">'+
+        '<div class="jc-card-top">'+
+          '<span><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em><b>'+qcEscape(m.match_num||'竞彩')+'</b></span>'+
+          '<time>'+qcEscape(when)+'</time>'+
+        '</div>'+
+        '<div class="jc-card-teams">'+
+          '<strong class="jc-team">'+qcEscape(m.home_team_name||'—')+'</strong>'+
+          '<span class="jc-vs">'+(score.ft?qcEscape(score.ft):'VS')+'</span>'+
+          '<strong class="jc-team away-team">'+qcEscape(m.away_team_name||'—')+'</strong>'+
+        '</div>'+
+        '<div class="jc-card-status-row"><span class="jc-status-pill">'+qcEscape(status)+'</span></div>'+
+        '<div class="jc-card-model-lite">'+
+          '<div><span>方向</span><b>待生成</b></div>'+
+          '<div><span>进球区间</span><b>待生成</b></div>'+
+          '<div><span>TOP比分</span><b>待生成</b></div>'+
+        '</div>'+
+        '<div class="jc-card-detail-btn">查看详情 <span>›</span></div>'+
+      '</a>'+
+    '</article>';
   }).join('')+'</div>';
 }
 
