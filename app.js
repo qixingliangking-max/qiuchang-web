@@ -963,7 +963,7 @@ function jcRenderFactsShell(){
     '<button type="button" data-facts-tab="lineups">阵容</button>'+
     '<button type="button" data-facts-tab="standings">排名</button>'+
     '<button type="button" data-facts-tab="stats">技术统计</button>'+
-    '<button type="button" data-facts-tab="h2h">对决</button>'+
+    '<button type="button" data-facts-tab="h2h">历史交锋</button>'+
   '</div>'+
   '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
 }
