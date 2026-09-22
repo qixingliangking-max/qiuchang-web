@@ -116,12 +116,10 @@ function qcAddDays(dateStr,days){
   return d.toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});
 }
 
-function qcDateLabel(dateStr){
-  const d=new Date(dateStr+'T12:00:00+08:00');
-  const month=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric'});
-  const day=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',day:'numeric'});
-  const weekday=d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
-  return month+'月'+day+'日 '+weekday;
+function qcDateLabel(ds){
+  const d=new Date(ds+'T12:00:00+08:00');
+  if(Number.isNaN(d.getTime())) return ds;
+  return (d.getMonth()+1)+'月'+d.getDate()+'日 '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
 }
 
 function jcBusinessDate(m){
@@ -495,15 +493,12 @@ async function loadJcFrontend(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
-    const filtered=activeLeague==='全部'
-      ? dateRows
-      : dateRows.filter(m=>(m.league_name || m.league_short_name || '其他')===activeLeague);
+    const filtered=dateRows;
 
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')) $('#jcPredictionMeta').textContent=(selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=filtered.length+'场';
     if($('#jcYesterdayMeta')) $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+previousRows.length+'场';
-    if(leagueToggle) leagueToggle.textContent=activeLeague==='全部'?'赛事':activeLeague;
     if($('#jcPredictionTitle')) $('#jcPredictionTitle').textContent=selectedDate===today?'今日预测':'当日赛程';
 
     try{
@@ -527,14 +522,6 @@ async function loadJcFrontend(){
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
 
     try{
-      jcRenderLeagueFilters(dateRows,activeLeague,(league)=>{
-        activeLeague=league;
-        if(leaguePop) leaguePop.hidden=true;
-        render();
-      });
-    }catch(err){ console.error('赛事筛选渲染失败',err); }
-
-    try{
       qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
         selectedDate=ds;
         activeLeague='全部';
@@ -553,17 +540,10 @@ async function loadJcFrontend(){
       render();
     });
     if(pop) pop.hidden=!pop.hidden;
-    if(leaguePop) leaguePop.hidden=true;
-  };
-  if(leagueToggle) leagueToggle.onclick=e=>{
-    e.stopPropagation();
-    if(leaguePop) leaguePop.hidden=!leaguePop.hidden;
-    if(pop) pop.hidden=true;
   };
 
   document.addEventListener('click',e=>{
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
-    if(leaguePop && !leaguePop.hidden && e.target!==leagueToggle && !leaguePop.contains(e.target)) leaguePop.hidden=true;
   });
 
   render();
