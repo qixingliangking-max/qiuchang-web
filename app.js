@@ -2435,6 +2435,12 @@ async function setupAdmin(){
       $('#adminUsedCodes').textContent = stats.used_codes ?? 0;
     }
 
+    const { data:userOverview, error:userOverviewError } = await window.qcSupabase.rpc('admin_user_overview');
+    if(!userOverviewError && userOverview){
+      if($('#adminTodayNew')) $('#adminTodayNew').textContent = userOverview.today_new ?? 0;
+      if($('#adminLogin24h')) $('#adminLogin24h').textContent = userOverview.login_24h ?? 0;
+    }
+
     const [{ count: jcMatches }, { count: jcSnapshots }, latestRunResult, collectorResult, jcRecentResult] = await Promise.all([
       window.qcSupabase.from('jc_matches').select('*', { count: 'exact', head: true }),
       window.qcSupabase.from('jc_market_snapshots').select('*', { count: 'exact', head: true }),
@@ -2651,6 +2657,79 @@ async function setupAdmin(){
   }
 }
 
+
+async function setupAdminUsers(){
+  const root=$('#adminUsersRoot');
+  if(!root) return;
+
+  if(!window.qcSupabase){
+    root.innerHTML='<div class="profile-card">数据库连接失败，请刷新页面后重试。</div>';
+    return;
+  }
+
+  const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
+  const user=userData&&userData.user;
+  if(userError||!user){
+    location.href='login.html?next=admin-users.html';
+    return;
+  }
+
+  const {data:overview,error:overviewError}=await window.qcSupabase.rpc('admin_user_overview');
+  if(overviewError){
+    const raw=overviewError.message||'';
+    root.innerHTML='<div class="profile-card"><h2>无法读取用户数据</h2><p style="color:var(--muted)">'+
+      qcEscape(raw.includes('ADMIN_REQUIRED')?'当前账号没有管理员权限':'管理员权限校验失败')+
+      '</p><a class="small-btn" href="admin.html">返回后台</a></div>';
+    return;
+  }
+
+  if($('#usersTotal')) $('#usersTotal').textContent=overview?.total_users??0;
+  if($('#usersPro')) $('#usersPro').textContent=overview?.pro_users??0;
+  if($('#usersToday')) $('#usersToday').textContent=overview?.today_new??0;
+  if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview?.login_24h??0;
+
+  const {data:users,error:listError}=await window.qcSupabase.rpc('admin_users_list');
+  const rows=$('#adminUserRows');
+  if(!rows) return;
+
+  if(listError){
+    rows.innerHTML='<tr><td colspan="6">用户数据读取失败</td></tr>';
+    return;
+  }
+
+  const fmt=(v)=>v?new Date(v).toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+  const render=(items)=>{
+    if(!items.length){
+      rows.innerHTML='<tr><td colspan="6">没有匹配用户</td></tr>';
+      return;
+    }
+    rows.innerHTML=items.map(item=>{
+      const status=item.account_status==='active'?'正常':'停用';
+      const membership=item.membership||'基础用户';
+      const expiry=membership==='Pro会员'?fmt(item.pro_expires_at):membership==='管理员'?'管理员权限':'—';
+      return '<tr>'+
+        '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
+        '<td>'+qcEscape(fmt(item.created_at))+'</td>'+
+        '<td>'+qcEscape(fmt(item.last_sign_in_at))+'</td>'+
+        '<td>'+qcEscape(membership)+'</td>'+
+        '<td>'+qcEscape(expiry)+'</td>'+
+        '<td>'+qcEscape(status)+'</td>'+
+      '</tr>';
+    }).join('');
+  };
+
+  const all=users||[];
+  render(all);
+
+  const search=$('#adminUserSearch');
+  if(search){
+    search.oninput=()=>{
+      const q=search.value.trim().toLowerCase();
+      render(!q?all:all.filter(x=>String(x.email||'').toLowerCase().includes(q)));
+    };
+  }
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   const safe=(name,fn)=>{try{const r=fn();if(r&&typeof r.catch==='function')r.catch(e=>console.error(name,e));}catch(e){console.error(name,e);}};
   safe('drawer',()=>setupDrawer());
@@ -2663,4 +2742,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('auth-nav',()=>setupAuthNav());
   safe('profile',()=>setupProfile());
   safe('admin',()=>setupAdmin());
+  safe('admin-users',()=>setupAdminUsers());
 })
