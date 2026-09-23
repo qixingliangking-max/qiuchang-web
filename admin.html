@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜后台管理</title>
-  <link rel="stylesheet" href="styles.css?v=20260922livetime1">
+  <link rel="stylesheet" href="styles.css?v=20260923adminusers1">
 </head>
 <body>
   <div class="shell">
@@ -22,6 +22,20 @@
         <div class="metric"><b id="adminUnusedCodes">—</b><span>可用兑换码</span></div>
         <div class="metric"><b id="adminUsedCodes">—</b><span>已使用兑换码</span></div>
       </div>
+
+      <section class="profile-card admin-user-compact">
+        <div class="admin-user-compact-head">
+          <div>
+            <h2>用户管理</h2>
+            <p>注册与登录数据</p>
+          </div>
+          <a class="small-btn" href="admin-users.html">查看用户数据 ›</a>
+        </div>
+        <div class="admin-user-mini-stats">
+          <div><b id="adminTodayNew">—</b><span>今日新增</span></div>
+          <div><b id="adminLogin24h">—</b><span>24小时登录</span></div>
+        </div>
+      </section>
 
 
       <section class="profile-card" style="margin-top:20px">
@@ -108,6 +122,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260922k"></script>
-  <script src="app.js?v=20260922livetime1"></script>
+  <script src="app.js?v=20260923adminusers1"></script>
 </body>
 </html>
