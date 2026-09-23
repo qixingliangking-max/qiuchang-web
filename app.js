@@ -583,6 +583,25 @@ function jcOverviewGoalValues(range){
   return [...new Set(values)];
 }
 
+function jcPublicTotalGoalsText(range){
+  const values=jcOverviewGoalValues(range);
+  return values.length ? values.join(' ') : '待生成';
+}
+
+function jcNormalizePublicAiText(text){
+  let s=String(text||'');
+  if(!s) return s;
+  s=s.replace(/主要进球区间/g,'总进球').replace(/进球区间/g,'总进球');
+  s=s.replace(/(\d+)\s*[—–-]\s*(\d+)\s*球/g,(all,a,b)=>{
+    const start=Number(a),end=Number(b);
+    if(!Number.isFinite(start)||!Number.isFinite(end)||end<start||end-start>6) return all;
+    const out=[];
+    for(let n=start;n<=end;n++) out.push(n+'球');
+    return out.join('、');
+  });
+  return s;
+}
+
 function jcReviewResultHtml(value,hit){
   const cls=hit?'jc-hit-ring':'jc-landed';
   return '<span class="'+cls+'">'+qcEscape(value||'—')+'</span>';
@@ -1504,7 +1523,7 @@ function jcRenderAiLockedPanel(m,pools,access){
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
     '<div class="jc-ai-lock-note">'+
       '<b>🔒 '+(access?.loggedIn?'Pro会员可查看完整分析报告':'登录后查看完整分析报告')+'</b>'+
-      '<span>本页不会向未授权用户展示模型方向、单选、让球方向、进球区间或 TOP 比分。</span>'+
+      '<span>本页不会向未授权用户展示模型方向、单选、官方让球、总进球或 TOP 比分。</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
       '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
@@ -1534,7 +1553,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   ):'待生成';
   const handicap=model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成';
   const htft=model?qcEscape([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
-  const goals=model?qcEscape(model.goal_range||'待生成'):'待生成';
+  const goals=model?qcEscape(jcPublicTotalGoalsText(model.goal_range)):'待生成';
   const top=model?qcEscape(jcModelTopText(model)):'待生成';
 
   const modelBlock=
@@ -1543,7 +1562,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
       '<div><span>单选</span><b>'+single+'</b></div>'+
       '<div><span>官方让球</span><b>'+handicap+'</b></div>'+
       '<div><span>半全场</span><b>'+htft+'</b></div>'+
-      '<div><span>进球区间</span><b>'+goals+'</b></div>'+
+      '<div><span>总进球</span><b>'+goals+'</b></div>'+
       '<div><span>TOP</span><b>'+top+'</b></div>'+
     '</div>';
 
@@ -1563,7 +1582,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
       ['风险因素',analysis.risk_factors]
     ];
     analysisHtml='<div class="jc-ai-report">'+sections.filter(x=>x[1]).map(([title,body])=>
-      '<section class="jc-ai-report-section"><h3>'+qcEscape(title)+'</h3><p>'+qcEscape(body)+'</p></section>'
+      '<section class="jc-ai-report-section"><h3>'+qcEscape(title==='进球区间'?'总进球':title)+'</h3><p>'+qcEscape(jcNormalizePublicAiText(body))+'</p></section>'
     ).join('')+'</div>';
   }else{
     analysisHtml='<div class="jc-ai-wait">'+
