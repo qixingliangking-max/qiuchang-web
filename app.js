@@ -1857,15 +1857,37 @@ async function setupDemoAuth(){
       button.textContent = '注册';
 
       if(error){
-        let message = '注册失败，请检查邮箱和密码后重试';
-        const raw = error.message || '';
-        if(raw.includes('already registered') || raw.includes('User already registered')) message = '这个邮箱已经注册，可以直接登录';
-        if(raw.includes('Password')) message = '密码不符合要求，请使用至少8个字符';
+        const raw = String(error.message || '');
+        const code = String(error.code || error.status || 'AUTH_ERROR');
+        let message = '注册暂时失败，请稍后重试';
+
+        if(/already registered|user already registered|user_already_exists/i.test(raw+' '+code)){
+          message = '这个邮箱已经注册，可以直接登录';
+        }else if(/rate|too many|over_email_send_rate_limit|over_request_rate_limit/i.test(raw+' '+code)){
+          message = '注册请求过于频繁，请稍等1—2分钟后再试';
+        }else if(/invalid email|email_address_invalid|email.*invalid/i.test(raw+' '+code)){
+          message = '邮箱地址无效，请检查邮箱后重试';
+        }else if(/weak password|weak_password|password.*weak|password.*leak|leaked/i.test(raw+' '+code)){
+          message = '密码安全性不足，请换一个至少8位且不常见的密码';
+        }else if(/signup.*disabled|signups not allowed|signup_disabled/i.test(raw+' '+code)){
+          message = '当前注册暂时关闭，请联系管理员';
+        }else if(/database error saving new user|unexpected_failure/i.test(raw+' '+code)){
+          message = '账号资料初始化失败，请稍后重试';
+        }else if(/password/i.test(raw)){
+          message = '密码不符合要求，请使用至少8个字符';
+        }
+
+        const publicCode = code && code !== 'AUTH_ERROR'
+          ? '（错误代码：'+code+'）'
+          : '';
+
+        console.error('注册失败', {code:error.code,status:error.status,message:raw});
+
         if(hint){
-          hint.textContent = message;
+          hint.textContent = message + publicCode;
           hint.className = 'code-hint error';
         }
-        alert(message);
+        alert(message + publicCode);
         return;
       }
 
