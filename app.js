@@ -437,7 +437,10 @@ function jcShortTeamPick(text,m){
 }
 
 function jcCompactResultPick(text,m){
-  const s=String(text||'').replace(/\s+/g,'').trim();
+  const s=String(text||'')
+    .replace(/[｜|]\s*[ABC](?:[+-])?\s*$/i,'')
+    .replace(/\s*(?:评级|等级|置信等级)\s*[：:]?\s*[ABC](?:[+-])?\s*$/i,'')
+    .replace(/\s+/g,'').trim();
   if(!s) return '待生成';
 
   const home=String(m?.home_team_name||'').replace(/\s+/g,'').trim();
@@ -593,6 +596,8 @@ function jcNormalizePublicAiText(text){
   if(!s) return s;
   s=s.replace(/主要进球区间/g,'总进球').replace(/进球区间/g,'总进球');
   s=s.replace(/单选(?!倾向)/g,'单选倾向');
+  s=s.replace(/[，,；;]?\s*(?:模型方向|方向)?(?:评级|等级|置信等级)\s*[：:]?\s*[ABC](?:[+-])?/gi,'');
+  s=s.replace(/[｜|]\s*[ABC](?:[+-])?(?=\s*(?:[，,。；;]|$))/gi,'');
   s=s.replace(/(\d+)\s*[—–-]\s*(\d+)\s*球/g,(all,a,b)=>{
     const start=Number(a),end=Number(b);
     if(!Number.isFinite(start)||!Number.isFinite(end)||end<start||end-start>6) return all;
@@ -756,8 +761,8 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const href='jc-match.html?id='+encodeURIComponent(m.id);
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const model=canViewPrematch?jcPublicModel(m):null;
-    const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
-      '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
+    const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
+      '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)):'待生成')+'</b></div>'+
       '<div><span>单选倾向</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
       '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
       '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
