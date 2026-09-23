@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜用户管理</title>
-  <link rel="stylesheet" href="styles.css?v=20260923adminusers1">
+  <link rel="stylesheet" href="styles.css?v=20260923adminops1">
 </head>
 <body>
   <div class="shell">
@@ -24,6 +24,7 @@
         <div class="admin-users-toolbar">
           <input id="adminUserSearch" type="search" placeholder="搜索邮箱">
         </div>
+        <p class="admin-note">停用后会同时封禁该账号登录；历史用户与会员记录仍保留，可随时恢复。</p>
         <div class="admin-table-wrap">
           <table class="brief-table">
             <thead>
@@ -34,10 +35,11 @@
                 <th>会员</th>
                 <th>到期时间</th>
                 <th>状态</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody id="adminUserRows">
-              <tr><td colspan="6">正在读取…</td></tr>
+              <tr><td colspan="7">正在读取…</td></tr>
             </tbody>
           </table>
         </div>
@@ -47,6 +49,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260922k"></script>
-  <script src="app.js?v=20260923adminusers1"></script>
+  <script src="app.js?v=20260923adminops1"></script>
 </body>
 </html>
