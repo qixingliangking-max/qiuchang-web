@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜后台管理</title>
-  <link rel="stylesheet" href="styles.css?v=20260923adminusers1">
+  <link rel="stylesheet" href="styles.css?v=20260923adminops1">
 </head>
 <body>
   <div class="shell">
@@ -23,105 +23,37 @@
         <div class="metric"><b id="adminUsedCodes">—</b><span>已使用兑换码</span></div>
       </div>
 
-      <section class="profile-card admin-user-compact">
-        <div class="admin-user-compact-head">
-          <div>
-            <h2>用户管理</h2>
-            <p>注册与登录数据</p>
-          </div>
-          <a class="small-btn" href="admin-users.html">查看用户数据 ›</a>
-        </div>
-        <div class="admin-user-mini-stats">
-          <div><b id="adminTodayNew">—</b><span>今日新增</span></div>
-          <div><b id="adminLogin24h">—</b><span>24小时登录</span></div>
-        </div>
-      </section>
+      <div class="admin-module-grid">
+        <a class="admin-module-card" href="admin-users.html">
+          <div><span class="admin-module-kicker">账号</span><h2>用户管理</h2></div>
+          <p><b id="adminTodayNew">—</b> 今日新增 · <b id="adminLogin24h">—</b> 24小时登录</p>
+          <strong>查看用户数据 ›</strong>
+        </a>
 
+        <a class="admin-module-card" href="admin-codes.html">
+          <div><span class="admin-module-kicker">会员</span><h2>兑换码管理</h2></div>
+          <p>生成 Pro 兑换码、查看使用记录与状态。</p>
+          <strong>生成 / 查看兑换码 ›</strong>
+        </a>
 
-      <section class="profile-card" style="margin-top:20px">
-        <h2>竞彩足球数据</h2>
-        <p style="color:var(--muted);line-height:1.7;margin-top:0">
-          官方竞彩数据：赛程、竞彩编号、胜平负、让球胜平负、比分、总进球、半全场。云端直连会被竞彩网 WAF 拦截，因此改为 Windows 本机后台自动采集并写入数据库。
-        </p>
-        <div class="admin-grid" style="margin:16px 0">
-          <div class="metric"><b id="jcMatchCount">—</b><span>竞彩比赛</span></div>
-          <div class="metric"><b id="jcSnapshotCount">—</b><span>奖金快照</span></div>
-        </div>
-        <div class="kv"><span>最近同步</span><strong id="jcLastSync">尚未同步</strong></div>
-        <div class="kv"><span>本机采集器</span><strong id="collectorStatus">尚未创建</strong></div>
-        <button class="primary-btn" id="createCollectorBtn" type="button">创建本机采集器凭证</button>
-        <div id="collectorTokenBox" class="created-code-box" hidden>
-          <span>采集器凭证（只显示这一次）</span>
-          <strong id="collectorToken" style="word-break:break-all">—</strong>
-          <button id="copyCollectorTokenBtn" class="small-btn" type="button">复制</button>
-        </div>
-        <div id="jcSyncHint" class="code-hint"></div>
+        <a class="admin-module-card" href="admin-data.html">
+          <div><span class="admin-module-kicker">数据</span><h2>数据采集中心</h2></div>
+          <p id="adminCollectorSummary">历史保留 · 正在读取状态…</p>
+          <strong>查看采集数据 ›</strong>
+        </a>
 
-        <h3 style="margin-top:24px">最近采集到的比赛</h3>
-        <div class="admin-table-wrap">
-          <table class="brief-table jc-admin-table">
-            <thead>
-              <tr>
-                <th>编号</th>
-                <th>日期时间</th>
-                <th>联赛</th>
-                <th>对阵</th>
-                <th>玩法</th>
-              </tr>
-            </thead>
-            <tbody id="jcAdminMatchRows">
-              <tr><td colspan="5">正在读取…</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="profile-card">
-        <h2>生成会员兑换码</h2>
-        <form id="createCodeForm">
-          <div class="field">
-            <label for="codeDays">会员天数</label>
-            <input id="codeDays" type="number" min="1" max="3650" value="7" required>
-          </div>
-          <div class="field">
-            <label for="codeNote">备注（选填）</label>
-            <input id="codeNote" type="text" maxlength="100" placeholder="例如：7天体验码">
-          </div>
-          <button class="primary-btn" type="submit">生成兑换码</button>
-        </form>
-        <div id="createdCodeBox" class="created-code-box" hidden>
-          <span>新兑换码</span>
-          <strong id="createdCode">—</strong>
-          <button id="copyCodeBtn" class="small-btn" type="button">复制</button>
-        </div>
-        <div id="adminHint" class="code-hint"></div>
-      </section>
-
-      <section class="profile-card">
-        <h2>最近兑换码</h2>
-        <div class="admin-table-wrap">
-          <table class="brief-table">
-            <thead>
-              <tr>
-                <th>兑换码</th>
-                <th>天数</th>
-                <th>状态</th>
-                <th>使用账号</th>
-                <th>创建时间</th>
-              </tr>
-            </thead>
-            <tbody id="redeemCodeRows">
-              <tr><td colspan="5">加载中...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <a class="admin-module-card" href="admin-logs.html">
+          <div><span class="admin-module-kicker">系统</span><h2>系统活动</h2></div>
+          <p id="adminLogSummary">正在读取最近活动…</p>
+          <strong>查看系统活动 ›</strong>
+        </a>
+      </div>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260922k"></script>
-  <script src="app.js?v=20260923adminusers1"></script>
+  <script src="app.js?v=20260923adminops1"></script>
 </body>
 </html>
