@@ -2419,354 +2419,409 @@ function renderMembership(subscription, role){
 }
 
 
-async function setupAdmin(){
-  const root = $('#adminRoot');
-  if(!root) return;
 
+async function qcAdminSession(root,nextPage){
   if(!window.qcSupabase){
-    alert('数据库连接失败，请刷新页面后重试');
-    return;
-  }
-
-  const { data: userData, error: userError } = await window.qcSupabase.auth.getUser();
-  const user = userData && userData.user;
-
-  if(userError || !user){
-    location.href = 'login.html';
-    return;
-  }
-
-  const { data: initialStats, error: adminCheckError } = await window.qcSupabase.rpc('admin_dashboard_stats');
-
-  if(adminCheckError){
-    const params = new URLSearchParams(location.search);
-    const alreadyReauthed = params.get('reauth') === '1';
-
-    if(!alreadyReauthed){
-      await window.qcSupabase.auth.signOut();
-      location.replace('login.html?next=admin.html?reauth=1');
-      return;
-    }
-
-    const raw = adminCheckError.message || '';
-    const message = raw.includes('ADMIN_REQUIRED')
-      ? '当前会话没有识别到管理员权限'
-      : '管理员权限校验失败';
-    const currentEmail = user && user.email ? user.email : '未识别';
-
-    root.innerHTML =
-      '<div class="profile-card"><h2>管理员验证未通过</h2>' +
-      '<p style="color:var(--muted);line-height:1.7">' + message + '。</p>' +
-      '<div class="kv"><span>当前登录邮箱</span><strong>' + currentEmail + '</strong></div>' +
-      '<p style="color:var(--muted);line-height:1.7">请把这一页截图发给我，我可以继续精确定位。</p>' +
-      '<a class="small-btn" href="login.html?next=admin.html?reauth=1" style="display:inline-flex;align-items:center">重新登录管理员账号</a></div>';
-    return;
-  }
-
-  const loadAdminData = async () => {
-    const { data: stats, error: statsError } = initialStats
-      ? { data: initialStats, error: null }
-      : await window.qcSupabase.rpc('admin_dashboard_stats');
-
-    if(!statsError && stats){
-      $('#adminUsers').textContent = stats.users ?? 0;
-      $('#adminProUsers').textContent = stats.pro_users ?? 0;
-      $('#adminUnusedCodes').textContent = stats.unused_codes ?? 0;
-      $('#adminUsedCodes').textContent = stats.used_codes ?? 0;
-    }
-
-    const { data:userOverview, error:userOverviewError } = await window.qcSupabase.rpc('admin_user_overview');
-    if(!userOverviewError && userOverview){
-      if($('#adminTodayNew')) $('#adminTodayNew').textContent = userOverview.today_new ?? 0;
-      if($('#adminLogin24h')) $('#adminLogin24h').textContent = userOverview.login_24h ?? 0;
-    }
-
-    const [{ count: jcMatches }, { count: jcSnapshots }, latestRunResult, collectorResult, jcRecentResult] = await Promise.all([
-      window.qcSupabase.from('jc_matches').select('*', { count: 'exact', head: true }),
-      window.qcSupabase.from('jc_market_snapshots').select('*', { count: 'exact', head: true }),
-      window.qcSupabase.from('jc_sync_runs')
-        .select('status,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message')
-        .order('started_at', { ascending: false })
-        .limit(1),
-      window.qcSupabase.from('jc_collector_devices')
-        .select('name,status,last_seen_at,last_success_at,last_error')
-        .eq('status','active')
-        .order('created_at', { ascending:false })
-        .limit(1),
-      window.qcSupabase.from('jc_matches')
-        .select('id,match_num,match_date,match_time,league_name,league_short_name,home_team_name,away_team_name,jc_market_snapshots(pool_code,captured_at)')
-        .order('match_date',{ascending:true})
-        .order('match_time',{ascending:true})
-        .limit(30)
-    ]);
-
-    if($('#jcMatchCount')) $('#jcMatchCount').textContent = jcMatches ?? 0;
-    if($('#jcSnapshotCount')) $('#jcSnapshotCount').textContent = jcSnapshots ?? 0;
-
-    const latestRun = latestRunResult.data && latestRunResult.data[0];
-    if($('#jcLastSync')){
-      if(!latestRun){
-        $('#jcLastSync').textContent = '尚未同步';
-      }else{
-        const time = latestRun.finished_at ? new Date(latestRun.finished_at).toLocaleString('zh-CN') : '进行中';
-        const labelMap = {success:'成功',partial:'部分成功',failed:'失败',blocked:'被上游拦截',running:'进行中'};
-        $('#jcLastSync').textContent = `${time} · ${labelMap[latestRun.status] || latestRun.status}`;
-      }
-    }
-
-    const collector = collectorResult.data && collectorResult.data[0];
-    if($('#collectorStatus')){
-      if(!collector){
-        $('#collectorStatus').textContent = '尚未创建';
-      }else if(collector.last_success_at){
-        $('#collectorStatus').textContent = '正常 · 最近成功 ' + new Date(collector.last_success_at).toLocaleString('zh-CN');
-      }else if(collector.last_seen_at){
-        $('#collectorStatus').textContent = '已连接 · 等待首次成功同步';
-      }else{
-        $('#collectorStatus').textContent = '凭证已创建 · 等待自动采集器连接';
-      }
-    }
-
-    const jcAdminRows = $('#jcAdminMatchRows');
-    if(jcAdminRows){
-      const items = jcRecentResult.data || [];
-      if(!items.length){
-        jcAdminRows.innerHTML = '<tr><td colspan="5">暂无竞彩比赛</td></tr>';
-      }else{
-        jcAdminRows.innerHTML = items.map(m=>{
-          const pools = jcLatestPools(m.jc_market_snapshots || []);
-          const poolNames = ['had','hhad','crs','ttg','hafu'].filter(k=>pools[k]).map(jcPoolLabel).join(' / ');
-          return '<tr>'+
-            '<td><strong>'+qcEscape(m.match_num || '—')+'</strong></td>'+
-            '<td>'+qcEscape(jcDateTime(m) || '—')+'</td>'+
-            '<td>'+qcEscape(m.league_short_name || m.league_name || '—')+'</td>'+
-            '<td>'+qcEscape(m.home_team_name || '—')+' vs '+qcEscape(m.away_team_name || '—')+'</td>'+
-            '<td>'+qcEscape(poolNames || '暂无')+'</td>'+
-          '</tr>';
-        }).join('');
-      }
-    }
-
-    const { data: codes, error: codesError } = await window.qcSupabase.rpc('admin_redeem_codes');
-    const rows = $('#redeemCodeRows');
-
-    if(codesError){
-      rows.innerHTML = '<tr><td colspan="5">兑换码读取失败</td></tr>';
-      return;
-    }
-
-    if(!codes || !codes.length){
-      rows.innerHTML = '<tr><td colspan="5">暂无兑换码</td></tr>';
-      return;
-    }
-
-    rows.innerHTML = codes.map(item => {
-      const statusText = item.status === 'unused' ? '未使用' : item.status === 'used' ? '已使用' : '已停用';
-      const usedBy = item.used_by_email || '—';
-      const createdAt = item.created_at ? new Date(item.created_at).toLocaleString('zh-CN') : '—';
-      return `<tr>
-        <td><strong>${item.code}</strong></td>
-        <td>${item.duration_days}天</td>
-        <td>${statusText}</td>
-        <td>${usedBy}</td>
-        <td>${createdAt}</td>
-      </tr>`;
-    }).join('');
-  };
-
-  await loadAdminData();
-
-  const createCollectorBtn = $('#createCollectorBtn');
-  if(createCollectorBtn){
-    createCollectorBtn.onclick = async () => {
-      const hint = $('#jcSyncHint');
-      createCollectorBtn.disabled = true;
-      createCollectorBtn.textContent = '创建中...';
-
-      try{
-        const { data, error } = await window.qcSupabase.rpc('create_collector_device', {
-          p_name:'Windows Auto Collector'
-        });
-
-        if(error || !data || !data.ok){
-          throw new Error(error?.message || data?.error || 'CREATE_FAILED');
-        }
-
-        $('#collectorToken').textContent = data.token;
-        $('#collectorTokenBox').hidden = false;
-        if(hint){
-          hint.textContent = '凭证已创建。把它保存到 Windows 自动采集器里，只需要配置一次。';
-          hint.className = 'code-hint success';
-        }
-        await loadAdminData();
-      }catch(err){
-        let message = '采集器凭证创建失败';
-        const raw = err?.message || '';
-        if(raw.includes('NOT_AUTHENTICATED')) message = '登录状态已失效，请重新登录';
-        if(raw.includes('ADMIN_REQUIRED')) message = '当前账号没有管理员权限';
-        if(hint){
-          hint.textContent = message + (raw ? '：' + raw : '');
-          hint.className = 'code-hint error';
-        }
-        alert(message);
-      }finally{
-        createCollectorBtn.disabled = false;
-        createCollectorBtn.textContent = '创建本机采集器凭证';
-      }
-    };
-  }
-
-  const copyCollectorTokenBtn = $('#copyCollectorTokenBtn');
-  if(copyCollectorTokenBtn){
-    copyCollectorTokenBtn.onclick = async () => {
-      const token = ($('#collectorToken')?.textContent || '').trim();
-      if(!token || token === '—') return;
-      try{
-        await navigator.clipboard.writeText(token);
-        copyCollectorTokenBtn.textContent = '已复制';
-        setTimeout(() => copyCollectorTokenBtn.textContent = '复制', 1200);
-      }catch{
-        alert('复制失败，请手动复制');
-      }
-    };
-  }
-
-  const form = $('#createCodeForm');
-  if(form){
-    form.onsubmit = async e => {
-      e.preventDefault();
-
-      const days = Number($('#codeDays').value);
-      const note = $('#codeNote').value.trim();
-      const button = form.querySelector('button[type="submit"]');
-      const hint = $('#adminHint');
-      const box = $('#createdCodeBox');
-
-      if(!Number.isInteger(days) || days < 1 || days > 3650){
-        alert('会员天数请输入 1–3650 之间的整数');
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = '生成中...';
-      hint.textContent = '正在生成兑换码…';
-      hint.className = 'code-hint';
-
-      const { data, error } = await window.qcSupabase.rpc('create_redeem_code', {
-        p_duration_days: days,
-        p_note: note || null
-      });
-
-      button.disabled = false;
-      button.textContent = '生成兑换码';
-
-      if(error){
-        let message = '兑换码生成失败';
-        if((error.message || '').includes('ADMIN_REQUIRED')) message = '当前账号没有管理员权限';
-        if((error.message || '').includes('INVALID_DURATION')) message = '会员天数不正确';
-        hint.textContent = message;
-        hint.className = 'code-hint error';
-        alert(message);
-        return;
-      }
-
-      $('#createdCode').textContent = data.code;
-      box.hidden = false;
-      hint.textContent = `已生成 ${data.duration_days} 天 Pro 会员兑换码。`;
-      hint.className = 'code-hint success';
-      $('#codeNote').value = '';
-
-      await loadAdminData();
-    };
-  }
-
-  const copyBtn = $('#copyCodeBtn');
-  if(copyBtn){
-    copyBtn.onclick = async () => {
-      const code = $('#createdCode').textContent.trim();
-      if(!code || code === '—') return;
-
-      try{
-        await navigator.clipboard.writeText(code);
-        copyBtn.textContent = '已复制';
-        setTimeout(() => copyBtn.textContent = '复制', 1200);
-      }catch{
-        alert('复制失败，请长按兑换码复制');
-      }
-    };
-  }
-}
-
-
-async function setupAdminUsers(){
-  const root=$('#adminUsersRoot');
-  if(!root) return;
-
-  if(!window.qcSupabase){
-    root.innerHTML='<div class="profile-card">数据库连接失败，请刷新页面后重试。</div>';
-    return;
+    if(root) root.innerHTML='<div class="profile-card">数据库连接失败，请刷新页面后重试。</div>';
+    return null;
   }
 
   const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
   const user=userData&&userData.user;
   if(userError||!user){
-    location.href='login.html?next=admin-users.html';
-    return;
+    location.href='login.html?next='+encodeURIComponent(nextPage||'admin.html');
+    return null;
   }
 
-  const {data:overview,error:overviewError}=await window.qcSupabase.rpc('admin_user_overview');
-  if(overviewError){
-    const raw=overviewError.message||'';
-    root.innerHTML='<div class="profile-card"><h2>无法读取用户数据</h2><p style="color:var(--muted)">'+
-      qcEscape(raw.includes('ADMIN_REQUIRED')?'当前账号没有管理员权限':'管理员权限校验失败')+
-      '</p><a class="small-btn" href="admin.html">返回后台</a></div>';
-    return;
+  const {data:stats,error}=await window.qcSupabase.rpc('admin_dashboard_stats');
+  if(error){
+    const raw=String(error.message||'');
+    if(root){
+      root.innerHTML=
+        '<div class="profile-card"><h2>管理员验证未通过</h2>'+
+        '<p style="color:var(--muted);line-height:1.7">'+
+        qcEscape(raw.includes('ADMIN_REQUIRED')?'当前账号没有管理员权限':'管理员权限校验失败')+
+        '。</p><a class="small-btn" href="admin.html">返回后台</a></div>';
+    }
+    return null;
+  }
+  return {user,stats};
+}
+
+function qcAdminFmt(v){
+  if(!v) return '—';
+  return new Date(v).toLocaleString('zh-CN',{
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'
+  });
+}
+
+async function setupAdmin(){
+  const root=$('#adminRoot');
+  if(!root) return;
+
+  const session=await qcAdminSession(root,'admin.html');
+  if(!session) return;
+
+  const stats=session.stats||{};
+  if($('#adminUsers')) $('#adminUsers').textContent=stats.users??0;
+  if($('#adminProUsers')) $('#adminProUsers').textContent=stats.pro_users??0;
+  if($('#adminUnusedCodes')) $('#adminUnusedCodes').textContent=stats.unused_codes??0;
+  if($('#adminUsedCodes')) $('#adminUsedCodes').textContent=stats.used_codes??0;
+
+  const [{data:overview},latestRunResult,activityResult]=await Promise.all([
+    window.qcSupabase.rpc('admin_user_overview'),
+    window.qcSupabase.from('jc_sync_runs')
+      .select('status,finished_at,started_at,matches_received,snapshots_inserted')
+      .order('started_at',{ascending:false})
+      .limit(1),
+    window.qcSupabase.rpc('admin_system_activity',{p_limit:1})
+  ]);
+
+  if(overview){
+    if($('#adminTodayNew')) $('#adminTodayNew').textContent=overview.today_new??0;
+    if($('#adminLogin24h')) $('#adminLogin24h').textContent=overview.login_24h??0;
   }
 
-  if($('#usersTotal')) $('#usersTotal').textContent=overview?.total_users??0;
-  if($('#usersPro')) $('#usersPro').textContent=overview?.pro_users??0;
-  if($('#usersToday')) $('#usersToday').textContent=overview?.today_new??0;
-  if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview?.login_24h??0;
+  const run=latestRunResult.data&&latestRunResult.data[0];
+  if($('#adminCollectorSummary')){
+    $('#adminCollectorSummary').textContent=run
+      ? '历史保留 · 最近同步 '+qcAdminFmt(run.finished_at||run.started_at)
+      : '历史保留 · 暂无同步记录';
+  }
 
-  const {data:users,error:listError}=await window.qcSupabase.rpc('admin_users_list');
+  const activity=activityResult.data&&activityResult.data[0];
+  if($('#adminLogSummary')){
+    $('#adminLogSummary').textContent=activity
+      ? qcAdminFmt(activity.event_time)+' · '+String(activity.title||'系统活动')
+      : '暂无系统活动';
+  }
+}
+
+async function setupAdminUsers(){
+  const root=$('#adminUsersRoot');
+  if(!root) return;
+
+  const session=await qcAdminSession(root,'admin-users.html');
+  if(!session) return;
+
   const rows=$('#adminUserRows');
-  if(!rows) return;
+  const search=$('#adminUserSearch');
+  let all=[];
 
-  if(listError){
-    rows.innerHTML='<tr><td colspan="6">用户数据读取失败</td></tr>';
-    return;
-  }
+  const updateOverview=async()=>{
+    const {data:overview}=await window.qcSupabase.rpc('admin_user_overview');
+    if(!overview) return;
+    if($('#usersTotal')) $('#usersTotal').textContent=overview.total_users??0;
+    if($('#usersPro')) $('#usersPro').textContent=overview.pro_users??0;
+    if($('#usersToday')) $('#usersToday').textContent=overview.today_new??0;
+    if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview.login_24h??0;
+  };
 
-  const fmt=(v)=>v?new Date(v).toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
   const render=(items)=>{
+    if(!rows) return;
     if(!items.length){
-      rows.innerHTML='<tr><td colspan="6">没有匹配用户</td></tr>';
+      rows.innerHTML='<tr><td colspan="7">没有匹配用户</td></tr>';
       return;
     }
     rows.innerHTML=items.map(item=>{
-      const status=item.account_status==='active'?'正常':'停用';
+      const active=item.account_status==='active';
       const membership=item.membership||'基础用户';
-      const expiry=membership==='Pro会员'?fmt(item.pro_expires_at):membership==='管理员'?'管理员权限':'—';
+      const expiry=membership==='Pro会员'
+        ? qcAdminFmt(item.pro_expires_at)
+        : membership==='管理员'?'管理员权限':'—';
+      const status=active
+        ? '<span class="admin-status ok">正常</span>'
+        : '<span class="admin-status off">已停用</span>';
+      const action=item.role==='admin'
+        ? '<span class="admin-action-muted">—</span>'
+        : '<button class="admin-user-action '+(active?'danger':'restore')+'" type="button" data-user-id="'+
+          qcEscape(item.user_id||'')+'" data-email="'+qcEscape(item.email||'')+'" data-action="'+
+          (active?'disable':'restore')+'">'+(active?'停用':'恢复')+'</button>';
       return '<tr>'+
         '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
-        '<td>'+qcEscape(fmt(item.created_at))+'</td>'+
-        '<td>'+qcEscape(fmt(item.last_sign_in_at))+'</td>'+
+        '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
+        '<td>'+qcEscape(qcAdminFmt(item.last_sign_in_at))+'</td>'+
         '<td>'+qcEscape(membership)+'</td>'+
         '<td>'+qcEscape(expiry)+'</td>'+
-        '<td>'+qcEscape(status)+'</td>'+
+        '<td>'+status+'</td>'+
+        '<td>'+action+'</td>'+
+      '</tr>';
+    }).join('');
+
+    $$('.admin-user-action',rows).forEach(btn=>{
+      btn.onclick=async()=>{
+        const action=btn.dataset.action;
+        const email=btn.dataset.email||'该账号';
+        const rpc=action==='disable'?'admin_disable_user':'admin_restore_user';
+        const verb=action==='disable'?'停用':'恢复';
+        if(!confirm('确认'+verb+'账号：'+email+'？')) return;
+
+        btn.disabled=true;
+        btn.textContent=verb+'中…';
+        const {data,error}=await window.qcSupabase.rpc(rpc,{target_user:btn.dataset.userId});
+        if(error||!data?.ok){
+          const raw=String(error?.message||data?.error||'');
+          let msg=verb+'失败';
+          if(raw.includes('CANNOT_DISABLE_SELF')) msg='不能停用当前管理员账号';
+          if(raw.includes('CANNOT_DISABLE_ADMIN')) msg='不能停用管理员账号';
+          if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
+          alert(msg);
+          btn.disabled=false;
+          btn.textContent=verb;
+          return;
+        }
+
+        await Promise.all([loadUsers(),updateOverview()]);
+      };
+    });
+  };
+
+  const applyFilter=()=>{
+    const q=(search?.value||'').trim().toLowerCase();
+    render(!q?all:all.filter(x=>String(x.email||'').toLowerCase().includes(q)));
+  };
+
+  const loadUsers=async()=>{
+    const {data:users,error}=await window.qcSupabase.rpc('admin_users_list');
+    if(error){
+      if(rows) rows.innerHTML='<tr><td colspan="7">用户数据读取失败</td></tr>';
+      return;
+    }
+    all=users||[];
+    applyFilter();
+  };
+
+  if(search) search.oninput=applyFilter;
+  await Promise.all([loadUsers(),updateOverview()]);
+}
+
+async function setupAdminCodes(){
+  const root=$('#adminCodesRoot');
+  if(!root) return;
+
+  const session=await qcAdminSession(root,'admin-codes.html');
+  if(!session) return;
+
+  const loadCodes=async()=>{
+    const [{data:stats},codesResult]=await Promise.all([
+      window.qcSupabase.rpc('admin_dashboard_stats'),
+      window.qcSupabase.rpc('admin_redeem_codes')
+    ]);
+
+    if(stats){
+      if($('#codesUnused')) $('#codesUnused').textContent=stats.unused_codes??0;
+      if($('#codesUsed')) $('#codesUsed').textContent=stats.used_codes??0;
+    }
+
+    const rows=$('#redeemCodeRows');
+    if(!rows) return;
+    if(codesResult.error){
+      rows.innerHTML='<tr><td colspan="5">兑换码读取失败</td></tr>';
+      return;
+    }
+    const codes=codesResult.data||[];
+    if(!codes.length){
+      rows.innerHTML='<tr><td colspan="5">暂无兑换码</td></tr>';
+      return;
+    }
+
+    rows.innerHTML=codes.map(item=>{
+      const statusText=item.status==='unused'?'未使用':item.status==='used'?'已使用':'已停用';
+      return '<tr>'+
+        '<td><strong>'+qcEscape(item.code||'—')+'</strong></td>'+
+        '<td>'+qcEscape(item.duration_days)+'天</td>'+
+        '<td>'+qcEscape(statusText)+'</td>'+
+        '<td>'+qcEscape(item.used_by_email||'—')+'</td>'+
+        '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
       '</tr>';
     }).join('');
   };
 
-  const all=users||[];
-  render(all);
+  await loadCodes();
 
-  const search=$('#adminUserSearch');
-  if(search){
-    search.oninput=()=>{
-      const q=search.value.trim().toLowerCase();
-      render(!q?all:all.filter(x=>String(x.email||'').toLowerCase().includes(q)));
+  const form=$('#createCodeForm');
+  if(form){
+    form.onsubmit=async e=>{
+      e.preventDefault();
+      const days=Number($('#codeDays').value);
+      const note=($('#codeNote').value||'').trim();
+      const button=form.querySelector('button[type="submit"]');
+      const hint=$('#adminHint');
+      const box=$('#createdCodeBox');
+
+      if(!Number.isInteger(days)||days<1||days>3650){
+        alert('会员天数请输入 1–3650 之间的整数');
+        return;
+      }
+
+      button.disabled=true;
+      button.textContent='生成中…';
+      if(hint){hint.textContent='正在生成兑换码…';hint.className='code-hint';}
+
+      const {data,error}=await window.qcSupabase.rpc('create_redeem_code',{
+        p_duration_days:days,p_note:note||null
+      });
+
+      button.disabled=false;
+      button.textContent='生成兑换码';
+
+      if(error){
+        const raw=String(error.message||'');
+        let msg='兑换码生成失败';
+        if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
+        if(raw.includes('INVALID_DURATION')) msg='会员天数不正确';
+        if(hint){hint.textContent=msg;hint.className='code-hint error';}
+        alert(msg);
+        return;
+      }
+
+      if($('#createdCode')) $('#createdCode').textContent=data.code;
+      if(box) box.hidden=false;
+      if(hint){hint.textContent='已生成 '+data.duration_days+' 天 Pro 会员兑换码。';hint.className='code-hint success';}
+      $('#codeNote').value='';
+      await loadCodes();
     };
+  }
+
+  const copyBtn=$('#copyCodeBtn');
+  if(copyBtn){
+    copyBtn.onclick=async()=>{
+      const code=($('#createdCode')?.textContent||'').trim();
+      if(!code||code==='—') return;
+      try{
+        await navigator.clipboard.writeText(code);
+        copyBtn.textContent='已复制';
+        setTimeout(()=>copyBtn.textContent='复制',1200);
+      }catch{
+        alert('复制失败，请手动复制');
+      }
+    };
+  }
+}
+
+async function setupAdminData(){
+  const root=$('#adminDataRoot');
+  if(!root) return;
+
+  const session=await qcAdminSession(root,'admin-data.html');
+  if(!session) return;
+
+  const [{count:matches},{count:snapshots},latestRunResult,collectorResult,runsResult]=await Promise.all([
+    window.qcSupabase.from('jc_matches').select('*',{count:'exact',head:true}),
+    window.qcSupabase.from('jc_market_snapshots').select('*',{count:'exact',head:true}),
+    window.qcSupabase.from('jc_sync_runs')
+      .select('status,started_at,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message,source')
+      .order('started_at',{ascending:false}).limit(1),
+    window.qcSupabase.from('jc_collector_devices')
+      .select('name,status,last_seen_at,last_success_at,last_error')
+      .order('created_at',{ascending:false}).limit(1),
+    window.qcSupabase.from('jc_sync_runs')
+      .select('status,started_at,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message,source')
+      .order('started_at',{ascending:false}).limit(30)
+  ]);
+
+  if($('#dataMatchCount')) $('#dataMatchCount').textContent=matches??0;
+  if($('#dataSnapshotCount')) $('#dataSnapshotCount').textContent=snapshots??0;
+
+  const run=latestRunResult.data&&latestRunResult.data[0];
+  if($('#dataLastSync')){
+    $('#dataLastSync').textContent=run?qcAdminFmt(run.finished_at||run.started_at)+' · '+String(run.status||'—'):'尚无记录';
+  }
+
+  const collector=collectorResult.data&&collectorResult.data[0];
+  if($('#dataCollectorStatus')){
+    if(!collector) $('#dataCollectorStatus').textContent='尚未创建';
+    else if(collector.last_success_at) $('#dataCollectorStatus').textContent='最近成功 '+qcAdminFmt(collector.last_success_at);
+    else if(collector.last_seen_at) $('#dataCollectorStatus').textContent='最近连接 '+qcAdminFmt(collector.last_seen_at);
+    else $('#dataCollectorStatus').textContent='已保留';
+  }
+
+  const rows=$('#dataRunRows');
+  if(rows){
+    const items=runsResult.data||[];
+    rows.innerHTML=items.length?items.map(x=>{
+      const detail=String(x.matches_received??0)+'场 / '+String(x.snapshots_inserted??0)+'条快照';
+      return '<tr>'+
+        '<td>'+qcEscape(qcAdminFmt(x.finished_at||x.started_at))+'</td>'+
+        '<td>'+qcEscape(x.status||'—')+'</td>'+
+        '<td>'+qcEscape(detail)+'</td>'+
+        '<td>'+qcEscape(x.error_message||'—')+'</td>'+
+      '</tr>';
+    }).join(''):'<tr><td colspan="4">暂无历史同步记录</td></tr>';
+  }
+
+  const createCollectorBtn=$('#createCollectorBtn');
+  if(createCollectorBtn){
+    createCollectorBtn.onclick=async()=>{
+      if(!confirm('确认创建一个新的 Windows 采集器凭证？旧凭证和历史数据不会删除。')) return;
+      const hint=$('#jcSyncHint');
+      createCollectorBtn.disabled=true;
+      createCollectorBtn.textContent='创建中…';
+      const {data,error}=await window.qcSupabase.rpc('create_collector_device',{p_name:'Windows Auto Collector'});
+      createCollectorBtn.disabled=false;
+      createCollectorBtn.textContent='创建新的采集器凭证';
+      if(error||!data?.ok){
+        const msg='采集器凭证创建失败';
+        if(hint){hint.textContent=msg;hint.className='code-hint error';}
+        alert(msg);
+        return;
+      }
+      if($('#collectorToken')) $('#collectorToken').textContent=data.token;
+      if($('#collectorTokenBox')) $('#collectorTokenBox').hidden=false;
+      if(hint){hint.textContent='凭证已创建。只在需要重新启用本机采集器时使用。';hint.className='code-hint success';}
+    };
+  }
+
+  const copyCollectorTokenBtn=$('#copyCollectorTokenBtn');
+  if(copyCollectorTokenBtn){
+    copyCollectorTokenBtn.onclick=async()=>{
+      const token=($('#collectorToken')?.textContent||'').trim();
+      if(!token||token==='—') return;
+      try{
+        await navigator.clipboard.writeText(token);
+        copyCollectorTokenBtn.textContent='已复制';
+        setTimeout(()=>copyCollectorTokenBtn.textContent='复制',1200);
+      }catch{
+        alert('复制失败，请手动复制');
+      }
+    };
+  }
+}
+
+async function setupAdminLogs(){
+  const root=$('#adminLogsRoot');
+  if(!root) return;
+
+  const session=await qcAdminSession(root,'admin-logs.html');
+  if(!session) return;
+
+  const {data:events,error}=await window.qcSupabase.rpc('admin_system_activity',{p_limit:150});
+  const rows=$('#adminLogRows');
+  if(error){
+    if(rows) rows.innerHTML='<tr><td colspan="5">系统活动读取失败</td></tr>';
+    return;
+  }
+
+  const items=events||[];
+  const signupCount=items.filter(x=>x.event_type==='signup').length;
+  const loginCount=items.filter(x=>x.event_type==='login').length;
+  const collectorCount=items.filter(x=>x.event_type==='collector').length;
+  if($('#logSignupCount')) $('#logSignupCount').textContent=signupCount;
+  if($('#logLoginCount')) $('#logLoginCount').textContent=loginCount;
+  if($('#logCollectorCount')) $('#logCollectorCount').textContent=collectorCount;
+
+  const typeLabel={signup:'注册',login:'登录',collector:'采集'};
+  const statusLabel={success:'成功',failed:'失败',partial:'部分成功',blocked:'被拦截',running:'进行中'};
+  if(rows){
+    rows.innerHTML=items.length?items.map(x=>
+      '<tr>'+
+        '<td>'+qcEscape(qcAdminFmt(x.event_time))+'</td>'+
+        '<td>'+qcEscape(typeLabel[x.event_type]||x.event_type||'系统')+'</td>'+
+        '<td>'+qcEscape(x.title||'—')+'</td>'+
+        '<td>'+qcEscape(x.detail||'—')+'</td>'+
+        '<td>'+qcEscape(statusLabel[x.status]||x.status||'—')+'</td>'+
+      '</tr>'
+    ).join(''):'<tr><td colspan="5">暂无系统活动</td></tr>';
   }
 }
 
@@ -2783,4 +2838,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('profile',()=>setupProfile());
   safe('admin',()=>setupAdmin());
   safe('admin-users',()=>setupAdminUsers());
+  safe('admin-codes',()=>setupAdminCodes());
+  safe('admin-data',()=>setupAdminData());
+  safe('admin-logs',()=>setupAdminLogs());
 })
