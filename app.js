@@ -1848,20 +1848,47 @@ async function setupDemoAuth(){
         hint.className = 'code-hint';
       }
 
-      const { data, error } = await window.qcSupabase.auth.signUp({
-        email,
-        password
-      });
+      const signUpOnce = () => window.qcSupabase.auth.signUp({ email, password });
+      let { data, error } = await signUpOnce();
+
+      const firstRaw = String(error?.message || '');
+      const firstName = String(error?.name || '');
+      const firstCode = String(error?.code || '');
+      const firstStatus = Number(error?.status || 0);
+      const firstLooksNetwork = Boolean(error) && (
+        !firstCode && !firstStatus ||
+        /failed to fetch|network|fetch failed|load failed|retryable/i.test(firstRaw+' '+firstName)
+      );
+
+      if(firstLooksNetwork){
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        const retry = await signUpOnce();
+        data = retry.data;
+        error = retry.error;
+      }
 
       button.disabled = false;
       button.textContent = '注册';
 
       if(error){
         const raw = String(error.message || '');
-        const code = String(error.code || error.status || 'AUTH_ERROR');
-        let message = '注册暂时失败，请稍后重试';
+        const name = String(error.name || '');
+        const code = String(error.code || '');
+        const status = Number(error.status || 0);
+        const diag = [name,code,status||''].filter(Boolean).join('/');
 
-        if(/already registered|user already registered|user_already_exists/i.test(raw+' '+code)){
+        let message = '注册暂时失败，请稍后重试';
+        let publicCode = code || (status ? String(status) : '');
+
+        const looksNetwork = (
+          (!code && !status) ||
+          /failed to fetch|network|fetch failed|load failed|retryable/i.test(raw+' '+name)
+        );
+
+        if(looksNetwork){
+          message = '注册接口连接失败，请切换 Wi‑Fi/移动数据，或换 Safari/Chrome 后重试';
+          publicCode = 'NETWORK_AUTH';
+        }else if(/already registered|user already registered|user_already_exists/i.test(raw+' '+code)){
           message = '这个邮箱已经注册，可以直接登录';
         }else if(/rate|too many|over_email_send_rate_limit|over_request_rate_limit/i.test(raw+' '+code)){
           message = '注册请求过于频繁，请稍等1—2分钟后再试';
@@ -1877,17 +1904,14 @@ async function setupDemoAuth(){
           message = '密码不符合要求，请使用至少8个字符';
         }
 
-        const publicCode = code && code !== 'AUTH_ERROR'
-          ? '（错误代码：'+code+'）'
-          : '';
-
-        console.error('注册失败', {code:error.code,status:error.status,message:raw});
+        const suffix = publicCode ? '（诊断：'+publicCode+'）' : '';
+        console.error('注册失败', {name,errorCode:code,status,message:raw,diag,navigatorOnline:navigator.onLine});
 
         if(hint){
-          hint.textContent = message + publicCode;
+          hint.textContent = message + suffix;
           hint.className = 'code-hint error';
         }
-        alert(message + publicCode);
+        alert(message + suffix);
         return;
       }
 
