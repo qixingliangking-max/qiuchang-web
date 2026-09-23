@@ -1,42 +1,61 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>球场档案｜数据采集中心</title>
-<link rel="stylesheet" href="styles.css?v=20260923adminusers1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>球场档案｜数据采集中心</title>
+  <link rel="stylesheet" href="styles.css?v=20260923adminops1">
 </head>
 <body>
-<div class="shell">
-<header class="header">
-<div class="brand">球场档案<span>·Admin</span></div>
-<a class="small-btn" href="admin.html">返回后台</a>
-</header>
-<main class="content">
-<h1>数据采集中心</h1>
-<section class="profile-card">
-<h2>采集状态</h2>
-<div class="admin-grid">
-<div class="metric"><b>暂停</b><span>当前状态</span></div>
-<div class="metric"><b>保留</b><span>历史数据</span></div>
-<div class="metric"><b>—</b><span>最近同步</span></div>
-<div class="metric"><b>—</b><span>异常记录</span></div>
-</div>
-</section>
-<section class="profile-card">
-<h2>数据源管理</h2>
-<p style="color:var(--muted);line-height:1.7">当前采集模块保留，不参与日常运行。后续可恢复采集、切换数据源或查看同步日志。</p>
-<div class="kv"><span>竞彩数据采集</span><strong>已保留</strong></div>
-<div class="kv"><span>自动同步</span><strong>未启用</strong></div>
-</section>
-<section class="profile-card">
-<h2>历史记录</h2>
-<table class="brief-table">
-<thead><tr><th>时间</th><th>类型</th><th>状态</th></tr></thead>
-<tbody><tr><td colspan="3">暂无新的采集任务</td></tr></tbody>
-</table>
-</section>
-</main>
-</div>
+  <div class="shell">
+    <header class="header">
+      <div class="brand">球场档案<span>·Admin</span></div>
+      <a class="small-btn" href="admin.html" style="display:flex;align-items:center">返回后台</a>
+    </header>
+
+    <main class="content" id="adminDataRoot">
+      <h1>数据采集中心</h1>
+      <p class="admin-note">当前作为备用采集工具保留，不删除历史数据；需要时可以重新启用。</p>
+
+      <div class="admin-grid">
+        <div class="metric"><b>备用</b><span>当前用途</span></div>
+        <div class="metric"><b>保留</b><span>历史数据</span></div>
+        <div class="metric"><b id="dataMatchCount">—</b><span>竞彩比赛</span></div>
+        <div class="metric"><b id="dataSnapshotCount">—</b><span>奖金快照</span></div>
+      </div>
+
+      <section class="profile-card" style="margin-top:20px">
+        <h2>采集状态</h2>
+        <div class="kv"><span>最近同步</span><strong id="dataLastSync">正在读取…</strong></div>
+        <div class="kv"><span>Windows 采集器</span><strong id="dataCollectorStatus">正在读取…</strong></div>
+      </section>
+
+      <section class="profile-card">
+        <h2>采集器工具</h2>
+        <p class="admin-note">平时不需要操作。只有重新启用 Windows 本机采集时再创建新凭证。</p>
+        <button class="primary-btn" id="createCollectorBtn" type="button">创建新的采集器凭证</button>
+        <div id="collectorTokenBox" class="created-code-box" hidden>
+          <span>采集器凭证（只显示这一次）</span>
+          <strong id="collectorToken" style="word-break:break-all">—</strong>
+          <button id="copyCollectorTokenBtn" class="small-btn" type="button">复制</button>
+        </div>
+        <div id="jcSyncHint" class="code-hint"></div>
+      </section>
+
+      <section class="profile-card">
+        <h2>历史同步记录</h2>
+        <div class="admin-table-wrap">
+          <table class="brief-table">
+            <thead><tr><th>时间</th><th>状态</th><th>数据量</th><th>异常</th></tr></thead>
+            <tbody id="dataRunRows"><tr><td colspan="4">正在读取…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js?v=20260922k"></script>
+  <script src="app.js?v=20260923adminops1"></script>
 </body>
 </html>
