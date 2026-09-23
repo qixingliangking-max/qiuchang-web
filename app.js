@@ -1787,20 +1787,60 @@ async function setupDemoAuth(){
       button.disabled = true;
       button.textContent = '登录中...';
 
-      const { data, error } = await window.qcSupabase.auth.signInWithPassword({
-        email,
-        password
-      });
+      const signInOnce = () => window.qcSupabase.auth.signInWithPassword({ email, password });
+      let { data, error } = await signInOnce();
+
+      const firstRaw = String(error?.message || '');
+      const firstName = String(error?.name || '');
+      const firstCode = String(error?.code || '');
+      const firstStatus = Number(error?.status || 0);
+      const firstLooksNetwork = Boolean(error) && (
+        (!firstCode && !firstStatus) ||
+        /failed to fetch|network|fetch failed|load failed|retryable/i.test(firstRaw+' '+firstName)
+      );
+
+      if(firstLooksNetwork){
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        const retry = await signInOnce();
+        data = retry.data;
+        error = retry.error;
+      }
 
       button.disabled = false;
       button.textContent = '登录';
 
       if(error){
+        const raw = String(error.message || '');
+        const name = String(error.name || '');
+        const code = String(error.code || '');
+        const status = Number(error.status || 0);
         let message = '登录失败，请稍后重试';
-        const raw = error.message || '';
-        if(raw.includes('Invalid login credentials')) message = '邮箱或密码错误';
-        if(raw.includes('Email not confirmed')) message = '邮箱尚未完成验证';
-        alert(message);
+        let publicCode = code || (status ? String(status) : '');
+
+        const looksNetwork = (
+          (!code && !status) ||
+          /failed to fetch|network|fetch failed|load failed|retryable/i.test(raw+' '+name)
+        );
+
+        if(looksNetwork){
+          message = '登录接口连接失败，当前网络无法稳定访问账号服务';
+          publicCode = 'NETWORK_AUTH';
+        }else if(/invalid login credentials|invalid_credentials/i.test(raw+' '+code)){
+          message = '邮箱或密码错误';
+          publicCode = 'INVALID_CREDENTIALS';
+        }else if(/email not confirmed|email_not_confirmed/i.test(raw+' '+code)){
+          message = '邮箱尚未完成验证';
+        }else if(/rate|too many|over_request_rate_limit/i.test(raw+' '+code)){
+          message = '登录请求过于频繁，请稍后再试';
+        }
+
+        const suffix = publicCode ? '（诊断：'+publicCode+'）' : '';
+        console.error('登录失败', {name,errorCode:code,status,message:raw,navigatorOnline:navigator.onLine});
+        if(loginHint){
+          loginHint.textContent = message + suffix;
+          loginHint.className = 'code-hint error';
+        }
+        alert(message + suffix);
         return;
       }
 
