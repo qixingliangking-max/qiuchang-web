@@ -1525,9 +1525,14 @@ function jcRenderAiPanel(m,pools,model,analysis){
     ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
     : '等待本场模型结果写入';
 
-  const direction=model?qcEscape(jcShortTeamPick(model.direction,m)):'待生成';
-  const single=model?qcEscape(jcShortTeamPick(model.single_pick,m)+(model.raw_input?.single_prob!=null?'｜'+model.raw_input.single_prob+'%':'')):'待生成';
-  const handicap=model?qcEscape(model.handicap_direction||'待生成'):'待生成';
+  // Keep the six public model fields in the detail page identical to the overview semantics.
+  // Stored model conclusions remain untouched; only the public display mapping is normalized.
+  const direction=model?qcEscape(jcCompactResultPick(model.direction,m)):'待生成';
+  const single=model?qcEscape(
+    jcCompactResultPick(model.single_pick,m)+
+    (model.raw_input?.single_prob!=null?'｜'+model.raw_input.single_prob+'%':'')
+  ):'待生成';
+  const handicap=model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成';
   const htft=model?qcEscape([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
   const goals=model?qcEscape(model.goal_range||'待生成'):'待生成';
   const top=model?qcEscape(jcModelTopText(model)):'待生成';
