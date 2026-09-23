@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>球场档案｜用户管理</title>
+  <link rel="stylesheet" href="styles.css?v=20260923adminusers1">
+</head>
+<body>
+  <div class="shell">
+    <header class="header">
+      <div class="brand">球场档案<span>·Admin</span></div>
+      <a class="small-btn" href="admin.html" style="display:flex;align-items:center">返回后台</a>
+    </header>
+    <main class="content admin-user-page" id="adminUsersRoot">
+      <h1>用户管理</h1>
+      <div class="admin-grid">
+        <div class="metric"><b id="usersTotal">—</b><span>注册用户</span></div>
+        <div class="metric"><b id="usersPro">—</b><span>Pro会员</span></div>
+        <div class="metric"><b id="usersToday">—</b><span>今日新增</span></div>
+        <div class="metric"><b id="usersLogin24h">—</b><span>24小时登录</span></div>
+      </div>
+      <section class="profile-card">
+        <div class="admin-users-toolbar">
+          <input id="adminUserSearch" type="search" placeholder="搜索邮箱">
+        </div>
+        <div class="admin-table-wrap">
+          <table class="brief-table">
+            <thead>
+              <tr>
+                <th>邮箱</th>
+                <th>注册时间</th>
+                <th>最近登录</th>
+                <th>会员</th>
+                <th>到期时间</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody id="adminUserRows">
+              <tr><td colspan="6">正在读取…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js?v=20260922k"></script>
+  <script src="app.js?v=20260923adminusers1"></script>
+</body>
+</html>
