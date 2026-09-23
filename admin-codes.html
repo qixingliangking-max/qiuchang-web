@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>球场档案｜兑换码管理</title>
+  <link rel="stylesheet" href="styles.css?v=20260923adminops1">
+</head>
+<body>
+  <div class="shell">
+    <header class="header">
+      <div class="brand">球场档案<span>·Admin</span></div>
+      <a class="small-btn" href="admin.html" style="display:flex;align-items:center">返回后台</a>
+    </header>
+    <main class="content" id="adminCodesRoot">
+      <h1>兑换码管理</h1>
+      <div class="admin-grid">
+        <div class="metric"><b id="codesUnused">—</b><span>可用兑换码</span></div>
+        <div class="metric"><b id="codesUsed">—</b><span>已使用兑换码</span></div>
+      </div>
+
+      <section class="profile-card" style="margin-top:20px">
+        <h2>生成会员兑换码</h2>
+        <form id="createCodeForm">
+          <div class="field">
+            <label for="codeDays">会员天数</label>
+            <input id="codeDays" type="number" min="1" max="3650" value="7" required>
+          </div>
+          <div class="field">
+            <label for="codeNote">备注（选填）</label>
+            <input id="codeNote" type="text" maxlength="100" placeholder="例如：7天体验码">
+          </div>
+          <button class="primary-btn" type="submit">生成兑换码</button>
+        </form>
+        <div id="createdCodeBox" class="created-code-box" hidden>
+          <span>新兑换码</span>
+          <strong id="createdCode">—</strong>
+          <button id="copyCodeBtn" class="small-btn" type="button">复制</button>
+        </div>
+        <div id="adminHint" class="code-hint"></div>
+      </section>
+
+      <section class="profile-card">
+        <h2>最近兑换码</h2>
+        <div class="admin-table-wrap">
+          <table class="brief-table">
+            <thead><tr><th>兑换码</th><th>天数</th><th>状态</th><th>使用账号</th><th>创建时间</th></tr></thead>
+            <tbody id="redeemCodeRows"><tr><td colspan="5">加载中…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js?v=20260922k"></script>
+  <script src="app.js?v=20260923adminops1"></script>
+</body>
+</html>
