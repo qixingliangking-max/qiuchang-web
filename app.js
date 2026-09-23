@@ -592,6 +592,7 @@ function jcNormalizePublicAiText(text){
   let s=String(text||'');
   if(!s) return s;
   s=s.replace(/主要进球区间/g,'总进球').replace(/进球区间/g,'总进球');
+  s=s.replace(/单选(?!倾向)/g,'单选倾向');
   s=s.replace(/(\d+)\s*[—–-]\s*(\d+)\s*球/g,(all,a,b)=>{
     const start=Number(a),end=Number(b);
     if(!Number.isFinite(start)||!Number.isFinite(end)||end<start||end-start>6) return all;
@@ -757,7 +758,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const model=canViewPrematch?jcPublicModel(m):null;
     const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const grade=raw.direction_grade?('｜'+raw.direction_grade):'';const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
       '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)+grade):'待生成')+'</b></div>'+
-      '<div><span>单选</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+      '<div><span>单选倾向</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
       '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
       '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
     '</div>';})() : '';
@@ -1523,7 +1524,7 @@ function jcRenderAiLockedPanel(m,pools,access){
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
     '<div class="jc-ai-lock-note">'+
       '<b>🔒 '+(access?.loggedIn?'Pro会员可查看完整分析报告':'登录后查看完整分析报告')+'</b>'+
-      '<span>本页不会向未授权用户展示模型方向、单选、官方让球、总进球或 TOP 比分。</span>'+
+      '<span>本页不会向未授权用户展示模型方向、单选倾向、官方让球、总进球或 TOP 比分。</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
       '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
@@ -1559,7 +1560,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   const modelBlock=
     '<div class="jc-ai-model-summary">'+
       '<div><span>模型方向</span><b>'+direction+'</b></div>'+
-      '<div><span>单选</span><b>'+single+'</b></div>'+
+      '<div><span>单选倾向</span><b>'+single+'</b></div>'+
       '<div><span>官方让球</span><b>'+handicap+'</b></div>'+
       '<div><span>半全场</span><b>'+htft+'</b></div>'+
       '<div><span>总进球</span><b>'+goals+'</b></div>'+
