@@ -976,6 +976,27 @@ async function loadJcFrontend(){
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
 
+  const initialToday=qcBeijingToday();
+  const initialYesterday=qcAddDays(initialToday,-1);
+  const initialDate=new URLSearchParams(location.search).get('date');
+  const cacheKey='qc-finished-review-'+initialYesterday;
+  let cachedReviewShown=false;
+  if(!initialDate || initialDate===initialToday){
+    const dateLabel=$('#jcDateLabel');
+    if(dateLabel) dateLabel.textContent=qcDateLabel(initialToday);
+    try{
+      const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
+      if(Array.isArray(cached?.rows) && cached.rows.length &&
+        cached.rows.every(m=>jcBusinessDate(m)===initialYesterday && jcScoreInfo(m).finished)){
+        reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,initialToday);
+        jcBindOverviewRows(reviewCards);
+        cachedReviewShown=true;
+        const meta=$('#jcYesterdayMeta');
+        if(meta) meta.textContent=initialYesterday.slice(5)+' · '+cached.rows.length+'场';
+      }
+    }catch(err){ console.warn('昨日赛果缓存不可用',err); }
+  }
+
   const accessPromise=qcGetAccessState();
   const {data,error}=await window.qcSupabase
     .from('jc_matches')
@@ -987,7 +1008,7 @@ async function loadJcFrontend(){
   if(error){
     console.error('读取竞彩前台数据失败',error);
     cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
-    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
+    if(reviewCards && !cachedReviewShown) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
     return;
   }
 
@@ -1001,6 +1022,7 @@ async function loadJcFrontend(){
     ? today
     : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
   let activeLeague='全部';
+  let modelsLoaded=false;
 
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
@@ -1042,6 +1064,20 @@ async function loadJcFrontend(){
       if(reviewCards){
         reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,today);
         jcBindOverviewRows(reviewCards);
+        if(modelsLoaded && previousDate===initialYesterday && previousRows.length &&
+          previousRows.every(m=>jcScoreInfo(m).finished)){
+          try{
+            const finished=previousRows.map(m=>({
+              id:m.id,match_num:m.match_num,business_date:m.business_date,
+              league_name:m.league_name,league_short_name:m.league_short_name,
+              home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+              match_date:m.match_date,match_time:m.match_time,match_status:m.match_status,
+              raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1},
+              _apiFootballLive:m._apiFootballLive,jc_model_outputs:m.jc_model_outputs
+            }));
+            localStorage.setItem(cacheKey,JSON.stringify({rows:finished}));
+          }catch(err){ console.warn('昨日赛果缓存写入失败',err); }
+        }
       }
     }catch(err){
       console.error('昨日回看渲染失败',err);
@@ -1101,7 +1137,7 @@ async function loadJcFrontend(){
     await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
   }
-  jcAttachModels(allRows).then(render).catch(err=>console.warn('首页模型读取失败',err));
+  jcAttachModels(allRows).then(()=>{ modelsLoaded=true; render(); }).catch(err=>console.warn('首页模型读取失败',err));
   refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,300000);
