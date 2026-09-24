@@ -581,7 +581,7 @@ function jcFootballHitOddsHtml(m,model,score){
   return '<div class="jc-card-hit-band jc-card-hit-play">'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="'+qcEscape(x.kind)+'">'+
-        '<b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
+        '<small>'+qcEscape(x.kind)+'</small><b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
       '</span>'
     ).join('')+'</div>'+
   '</div>';
@@ -821,7 +821,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
       ? '半 '+score.ht
       : jcMatchStatusLabel(m,today);
     const centerScore=score.current?qcEscape(score.current):'VS';
-    const centerStateClass=score.started&&!score.finished?' is-live':'';
+    const centerStateClass=score.finished?' is-finished':(score.started?' is-live':'');
 
     return '<article class="jc-football-card jc-football-card-lite jc-football-card-final">'+
       '<a class="jc-card-link" href="'+href+'">'+
@@ -835,7 +835,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
         '<div class="jc-card-score-axis">'+
           '<strong class="jc-team jc-team-home">'+qcEscape(m.home_team_name||'—')+'</strong>'+
           '<span class="jc-score-center">'+
-            '<b class="jc-score-main">'+centerScore+'</b>'+
+            '<b class="jc-score-main'+centerStateClass+'">'+centerScore+'</b>'+
             '<small class="jc-score-meta'+centerStateClass+'">'+qcEscape(centerMeta)+'</small>'+
           '</span>'+
           '<strong class="jc-team away-team jc-team-away">'+qcEscape(m.away_team_name||'—')+'</strong>'+
