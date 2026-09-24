@@ -1780,15 +1780,31 @@ async function setupJcMatchDetail(){
     return;
   }
 
+  const {data:dayMatches}=await window.qcSupabase
+    .from('jc_matches')
+    .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status,raw')
+    .eq('business_date',m.business_date)
+    .order('match_date',{ascending:true}).order('match_time',{ascending:true});
+  const sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+  const detailNav='<aside class="jc-detail-sidebar">'+
+    '<div class="jc-detail-sidebar-head"><a href="football.html">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
+    '<div class="jc-detail-match-list">'+sameDay.map(x=>
+      '<a class="jc-detail-match-item'+(String(x.id)===String(m.id)?' active':'')+'" href="jc-match.html?id='+encodeURIComponent(x.id)+'">'+
+        '<span><b>'+qcEscape(x.match_num||'竞彩')+'</b><em>'+qcEscape(x.league_short_name||'—')+'</em></span>'+
+        '<strong>'+qcEscape(x.home_team_name||'—')+' <i>vs</i> '+qcEscape(x.away_team_name||'—')+'</strong>'+
+        '<time>'+qcEscape(String(x.match_date||'').slice(5)+' '+String(x.match_time||'').slice(0,5))+'</time>'+
+      '</a>').join('')+'</div></aside>';
+  const detailShell=content=>'<div class="jc-detail-layout">'+detailNav+'<section class="jc-detail-main">'+content+'</section></div>';
+
   // Show the match as soon as its basic record arrives. Premium data stays hidden
   // until access has been checked.
-  root.innerHTML='<div class="detail-head jc-odds-headcard">'+
+  root.innerHTML=detailShell('<div class="detail-head jc-odds-headcard">'+
     '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
     '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
       '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
       '<div class="center-score"><strong>'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
       '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
-    '<div class="profile-card">正在读取比赛分析…</div>';
+    '<div class="profile-card">正在读取比赛分析…</div>');
 
   const [access,detailResult,snapshotResult]=await Promise.all([
     qcGetAccessState(),
@@ -1842,7 +1858,7 @@ async function setupJcMatchDetail(){
 
   const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshotRows,'had')+'</div>';
 
-  root.innerHTML=
+  root.innerHTML=detailShell(
     '<div class="detail-head jc-odds-headcard">'+
       '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
@@ -1856,7 +1872,7 @@ async function setupJcMatchDetail(){
         '<button type="button" class="active" data-main-tab="ai">AI分析</button>'+
       '</div>'+
     '</div>'+
-    '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>';
+    '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>');
 
   const panel=$('#jcMainPanel');
   let factsData=null;
