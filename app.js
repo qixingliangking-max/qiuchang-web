@@ -1638,7 +1638,7 @@ async function setupJcMatchDetail(){
 
   const {data:m,error}=await window.qcSupabase
     .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,raw,captured_at,official_update_time)')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
     .eq('id',id)
     .single();
 
@@ -1647,16 +1647,32 @@ async function setupJcMatchDetail(){
     return;
   }
 
-  const access=await qcGetAccessState();
-  const canViewPremium=qcCanViewPrematchContent(m,access);
+  // Show the match as soon as its basic record arrives. Premium data stays hidden
+  // until access has been checked.
+  root.innerHTML='<div class="detail-head jc-odds-headcard">'+
+    '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
+    '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
+      '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
+      '<div class="center-score"><strong>'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
+      '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
+    '<div class="profile-card">正在读取比赛分析…</div>';
 
-  const {data:detailRows,error:detailError}=await window.qcSupabase
-    .from('jc_match_details')
-    .select('detail_type,payload,source_endpoint,fetched_at')
-    .eq('jc_match_id',id);
+  const [access,detailResult,snapshotResult]=await Promise.all([
+    qcGetAccessState(),
+    window.qcSupabase.from('jc_match_details')
+      .select('detail_type,payload,source_endpoint,fetched_at').eq('jc_match_id',id),
+    window.qcSupabase.from('jc_market_snapshots')
+      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time').eq('jc_match_id',id)
+  ]);
+  const canViewPremium=qcCanViewPrematchContent(m,access);
+  const {data:detailRows,error:detailError}=detailResult;
+  const {data:snapshots,error:snapshotError}=snapshotResult;
 
   if(detailError) console.warn('读取竞彩详情数据失败',detailError);
+  if(snapshotError) console.warn('读取赔率快照失败',snapshotError);
   const sportteryDetails=jcSportteryDetailsMap(detailRows||[]);
+  const snapshotRows=snapshots||[];
+  m.jc_market_snapshots=snapshotRows;
 
   let model=null;
   let aiAnalysis=null;
@@ -1685,16 +1701,13 @@ async function setupJcMatchDetail(){
     }
   }
 
-  await jcAttachLiveScores([m]);
-
-  const snapshots=m.jc_market_snapshots || [];
-  const pools=jcLatestPools(snapshots);
+  const pools=jcLatestPools(snapshotRows);
   const score=jcScoreInfo(m);
   const status=score.finished && score.ht
     ? '半 '+score.ht
     : jcMatchStatusLabel(m,qcBeijingToday());
 
-  const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshots,'had')+'</div>';
+  const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshotRows,'had')+'</div>';
 
   root.innerHTML=
     '<div class="detail-head jc-odds-headcard">'+
@@ -1760,7 +1773,7 @@ async function setupJcMatchDetail(){
     Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
     if(tab==='odds'){
       panel.innerHTML=oddsHtml;
-      jcBindOddsPlayTabs(panel,pools,snapshots);
+      jcBindOddsPlayTabs(panel,pools,snapshotRows);
       return;
     }
     if(tab==='ai'){
@@ -1778,6 +1791,17 @@ async function setupJcMatchDetail(){
       await renderMainTab(btn.dataset.mainTab || 'ai');
     };
   });
+
+  // Live data comes from the cache and should never hold up the first render.
+  if(jcShouldFetchLive(m)){
+    jcAttachLiveScores([m]).then(()=>{
+      const live=jcScoreInfo(m);
+      const scoreEl=$('.jc-odds-matchup .center-score strong',root);
+      const statusEl=$('.jc-odds-matchup .center-score small',root);
+      if(scoreEl) scoreEl.textContent=live.current||'VS';
+      if(statusEl) statusEl.textContent=live.finished&&live.ht?'半 '+live.ht:jcMatchStatusLabel(m,qcBeijingToday());
+    });
+  }
 }
 
 function renderMatch(){
