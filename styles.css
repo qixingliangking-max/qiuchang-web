@@ -3,6 +3,7 @@
   --blue:#3764ed;--blue-soft:#edf2ff;--orange:#d97c24;--orange-soft:#fff3e5;
   --green:#25a664;--red:#df4337;--shadow:0 14px 36px rgba(31,42,68,.07);
 }
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
 a{color:inherit;text-decoration:none}
@@ -2347,6 +2348,121 @@ button.qc-date-locked-control:disabled{
   }
 }
 
+/* 2026-09-25 overview replay table: compact seven-column layout */
+.qc-overview-page .jc-review-table-wrap{
+  background:#fff!important;
+  border:1px solid #e1e7f0!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  box-shadow:0 8px 24px rgba(31,42,68,.06)!important;
+}
+.qc-overview-page .jc-review-table{
+  background:#fff!important;
+  table-layout:fixed!important;
+  border-collapse:collapse!important;
+}
+.qc-overview-page .jc-review-table thead th{
+  background:#eef2f7!important;
+  color:#66738a!important;
+  border-bottom:1px solid #dfe5ee!important;
+  white-space:nowrap!important;
+}
+.qc-overview-page .jc-review-table tbody td{
+  background:#fff!important;
+  border-bottom:1px solid #e8edf3!important;
+}
+.qc-overview-page .jc-review-table tbody tr:last-child td{border-bottom:0!important}
+.qc-overview-page .jc-overview-table th:nth-child(1),
+.qc-overview-page .jc-overview-table td:nth-child(1){width:8%!important}
+.qc-overview-page .jc-overview-table th:nth-child(2),
+.qc-overview-page .jc-overview-table td:nth-child(2){width:10%!important}
+.qc-overview-page .jc-overview-table th:nth-child(3),
+.qc-overview-page .jc-overview-table td:nth-child(3){width:12%!important}
+.qc-overview-page .jc-overview-table th:nth-child(4),
+.qc-overview-page .jc-overview-table td:nth-child(4){width:30%!important}
+.qc-overview-page .jc-overview-table th:nth-child(5),
+.qc-overview-page .jc-overview-table td:nth-child(5){width:16%!important}
+.qc-overview-page .jc-overview-table th:nth-child(6),
+.qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+.qc-overview-page .jc-overview-table th:nth-child(7),
+.qc-overview-page .jc-overview-table td:nth-child(7){width:12%!important}
+.qc-overview-page .jc-num,
+.qc-overview-page .jc-time{text-align:center!important;white-space:nowrap!important}
+.qc-overview-page .jc-num b{font-weight:900!important;color:#29364f!important}
+.qc-overview-page .jc-time time{color:#7b8598!important;font-weight:700!important}
+
+@media(max-width:760px){
+  .qc-overview-page .jc-review-table-wrap{
+    margin:0 10px!important;
+    border-radius:16px!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  .qc-overview-page .jc-review-table{
+    display:table!important;width:100%!important;min-width:0!important;
+    table-layout:fixed!important;
+  }
+  .qc-overview-page .jc-review-table thead{display:table-header-group!important}
+  .qc-overview-page .jc-review-table tbody{display:table-row-group!important}
+  .qc-overview-page .jc-review-table tr.jc-overview-row{
+    display:table-row!important;width:auto!important;background:#fff!important;
+    border:0!important;border-left:0!important;border-radius:0!important;
+    box-shadow:none!important;
+  }
+  .qc-overview-page .jc-review-table th,
+  .qc-overview-page .jc-review-table td{
+    display:table-cell!important;min-width:0!important;
+    padding:9px 3px!important;vertical-align:middle!important;
+    text-align:center!important;border:0!important;border-bottom:1px solid #e8edf3!important;
+  }
+  .qc-overview-page .jc-review-table th{
+    height:42px!important;font-size:10px!important;font-weight:900!important;
+  }
+  .qc-overview-page .jc-review-table td{height:70px!important;font-size:10px!important}
+  .qc-overview-page .jc-review-table th:nth-child(1),
+  .qc-overview-page .jc-review-table td:nth-child(1){width:9%!important}
+  .qc-overview-page .jc-review-table th:nth-child(2),
+  .qc-overview-page .jc-review-table td:nth-child(2){width:12%!important}
+  .qc-overview-page .jc-review-table th:nth-child(3),
+  .qc-overview-page .jc-review-table td:nth-child(3){width:12%!important}
+  .qc-overview-page .jc-review-table th:nth-child(4),
+  .qc-overview-page .jc-review-table td:nth-child(4){width:29%!important}
+  .qc-overview-page .jc-review-table th:nth-child(5),
+  .qc-overview-page .jc-review-table td:nth-child(5){width:15%!important}
+  .qc-overview-page .jc-review-table th:nth-child(6),
+  .qc-overview-page .jc-review-table td:nth-child(6){width:11%!important}
+  .qc-overview-page .jc-review-table th:nth-child(7),
+  .qc-overview-page .jc-review-table td:nth-child(7){width:12%!important}
+  .qc-overview-page .jc-review-table td:nth-child(1),
+  .qc-overview-page .jc-review-table td:nth-child(2),
+  .qc-overview-page .jc-review-table td:nth-child(3){background:#fff!important}
+  .qc-overview-page .jc-review-match{
+    display:grid!important;grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr)!important;
+    gap:2px!important;width:100%!important;
+  }
+  .qc-overview-page .jc-review-match>span:first-child,
+  .qc-overview-page .jc-review-match>span:last-child{
+    min-width:0!important;max-width:100%!important;overflow:hidden!important;
+    text-overflow:ellipsis!important;white-space:nowrap!important;font-size:11px!important;
+  }
+  .qc-overview-page .jc-score-stack{width:42px!important;min-width:42px!important;gap:2px!important}
+  .qc-overview-page .jc-score-full{font-size:16px!important}
+  .qc-overview-page .jc-score-half{font-size:9px!important}
+  .qc-overview-page .jc-overview-league{max-width:100%!important;padding:4px 2px!important;font-size:9px!important}
+  .qc-overview-page .jc-result-stack,
+  .qc-overview-page .jc-choice-inline,
+  .qc-overview-page .jc-goal-choices,
+  .qc-overview-page .jc-choice-stack{gap:2px!important;min-height:26px!important}
+  .qc-overview-page .jc-choice-primary,
+  .qc-overview-page .jc-choice-secondary,
+  .qc-overview-page .jc-goal-choices{font-size:10px!important;line-height:1.15!important}
+  .qc-overview-page .jc-review-table td:nth-child(5) .jc-hit-ring,
+  .qc-overview-page .jc-review-table td:nth-child(6) .jc-hit-ring,
+  .qc-overview-page .jc-review-table td:nth-child(7) .jc-hit-ring{
+    min-width:0!important;min-height:0!important;padding:2px 3px!important;border-width:2px!important;
+  }
+}
+
 @media (min-width:1440px){
   .qc-football-page .jc-football-grid{
     grid-template-columns:repeat(4,minmax(0,1fr));
@@ -2576,4 +2692,40 @@ button.qc-date-locked-control:disabled{
     padding:3px 7px!important;
     border-width:2px!important;
   }
+}
+
+/* Final replay table overrides: keep the seven columns aligned after legacy rules. */
+@media (min-width:1024px){
+  .qc-overview-page .jc-overview-table th:nth-child(1),.qc-overview-page .jc-overview-table td:nth-child(1){width:8%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(2),.qc-overview-page .jc-overview-table td:nth-child(2){width:10%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(3),.qc-overview-page .jc-overview-table td:nth-child(3){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(4),.qc-overview-page .jc-overview-table td:nth-child(4){width:30%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(5),.qc-overview-page .jc-overview-table td:nth-child(5){width:16%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(6),.qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(7),.qc-overview-page .jc-overview-table td:nth-child(7){width:12%!important}
+  .qc-overview-page .jc-review-table th,.qc-overview-page .jc-review-table td{box-sizing:border-box!important}
+}
+
+@media(max-width:760px){
+  /* Give the direction column enough room; never let hit rings touch the next column. */
+  .qc-overview-page .jc-overview-table th:nth-child(1),.qc-overview-page .jc-overview-table td:nth-child(1){width:8%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(2),.qc-overview-page .jc-overview-table td:nth-child(2){width:11%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(3),.qc-overview-page .jc-overview-table td:nth-child(3){width:11%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(4),.qc-overview-page .jc-overview-table td:nth-child(4){width:25%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(5),.qc-overview-page .jc-overview-table td:nth-child(5){width:20%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(6),.qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(7),.qc-overview-page .jc-overview-table td:nth-child(7){width:13%!important}
+  .qc-overview-page .jc-review-table td:nth-child(5),
+  .qc-overview-page .jc-review-table td:nth-child(6),
+  .qc-overview-page .jc-review-table td:nth-child(7){
+    position:static!important;padding:7px 2px!important;min-height:0!important;
+  }
+  .qc-overview-page .jc-review-table td:nth-child(5)::before,
+  .qc-overview-page .jc-review-table td:nth-child(6)::before,
+  .qc-overview-page .jc-review-table td:nth-child(7)::before{content:none!important}
+  .qc-overview-page .jc-result-stack{width:100%!important;min-height:0!important;gap:2px!important}
+  .qc-overview-page .jc-choice-inline{max-width:100%!important;gap:2px!important;white-space:normal!important;flex-wrap:wrap!important;font-size:10px!important}
+  .qc-overview-page .jc-choice-inline .jc-choice-primary,
+  .qc-overview-page .jc-choice-inline .jc-choice-secondary{font-size:10px!important}
+  .qc-overview-page .jc-review-choices .jc-hit-ring{padding:1px 3px!important;min-width:0!important;min-height:0!important}
 }
