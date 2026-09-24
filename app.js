@@ -827,7 +827,6 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
           '<span class="jc-card-top-left">'+
-            (index<3?'<img class="jc-card-mini-logo" src="football-mark.svg" alt="">':'')+
             '<span class="jc-card-top-meta"><em>'+qcEscape(m.league_short_name||m.league_name||'—')+'</em><b>'+qcEscape(m.match_num||'竞彩')+'</b></span>'+
           '</span>'+
           '<time>'+qcEscape(String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5))+'</time>'+
