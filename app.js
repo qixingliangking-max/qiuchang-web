@@ -674,7 +674,6 @@ function jcRenderOverviewTable(rows,today,mode='today'){
     '<thead><tr><th>编号 时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
-      const pools=jcLatestPools(m.jc_market_snapshots||[]);
       const href='jc-match.html?id='+encodeURIComponent(m.id);
       const league=qcEscape(m.league_short_name||m.league_name||'—');
       const num=qcEscape(String(m.match_num||'—').replace(/^周[一二三四五六日天]/,''));
@@ -977,9 +976,10 @@ async function loadJcFrontend(){
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
 
+  const accessPromise=qcGetAccessState();
   const {data,error}=await window.qcSupabase
     .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
     .order('match_date',{ascending:true})
     .order('match_time',{ascending:true})
     .limit(300);
@@ -992,8 +992,7 @@ async function loadJcFrontend(){
   }
 
   const allRows=(data||[]).filter(m=>m.match_date);
-  const access=await qcGetAccessState();
-  await jcAttachModels(allRows);
+  const access=await accessPromise;
   const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
   const today=qcBeijingToday();
   const paramDate=new URLSearchParams(location.search).get('date');
@@ -1102,6 +1101,7 @@ async function loadJcFrontend(){
     await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
   }
+  jcAttachModels(allRows).then(render).catch(err=>console.warn('首页模型读取失败',err));
   refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,300000);
