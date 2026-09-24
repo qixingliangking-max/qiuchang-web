@@ -2713,11 +2713,12 @@ button.qc-date-locked-control:disabled{
   /* Give the direction column enough room; never let hit rings touch the next column. */
   .qc-overview-page .jc-overview-table th:nth-child(1),.qc-overview-page .jc-overview-table td:nth-child(1){width:7%!important}
   .qc-overview-page .jc-overview-table th:nth-child(2),.qc-overview-page .jc-overview-table td:nth-child(2){width:9%!important}
-  .qc-overview-page .jc-overview-table th:nth-child(3),.qc-overview-page .jc-overview-table td:nth-child(3){width:10%!important}
-  .qc-overview-page .jc-overview-table th:nth-child(4),.qc-overview-page .jc-overview-table td:nth-child(4){width:38%!important}
-  .qc-overview-page .jc-overview-table th:nth-child(5),.qc-overview-page .jc-overview-table td:nth-child(5){width:18%!important}
-  .qc-overview-page .jc-overview-table th:nth-child(6),.qc-overview-page .jc-overview-table td:nth-child(6){width:8%!important}
-  .qc-overview-page .jc-overview-table th:nth-child(7),.qc-overview-page .jc-overview-table td:nth-child(7){width:10%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(3),.qc-overview-page .jc-overview-table td:nth-child(3){width:9%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(4),.qc-overview-page .jc-overview-table td:nth-child(4){width:34%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(5),.qc-overview-page .jc-overview-table td:nth-child(5){width:16%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(6),.qc-overview-page .jc-overview-table td:nth-child(6){width:12%!important}
+  .qc-overview-page .jc-overview-table th:nth-child(7),.qc-overview-page .jc-overview-table td:nth-child(7){width:13%!important}
+  .qc-overview-page .jc-review-table th{font-size:9px!important;letter-spacing:-.35px!important;padding-left:1px!important;padding-right:1px!important}
   .qc-overview-page .jc-review-table td:nth-child(5),
   .qc-overview-page .jc-review-table td:nth-child(6),
   .qc-overview-page .jc-review-table td:nth-child(7){
@@ -2733,6 +2734,7 @@ button.qc-date-locked-control:disabled{
   .qc-overview-page .jc-review-match>span:first-child,
   .qc-overview-page .jc-review-match>span:last-child{font-size:10px!important;font-weight:700!important}
   .qc-overview-page .jc-review-choices .jc-hit-ring{padding:1px 3px!important;min-width:0!important;min-height:0!important}
+  .qc-overview-page .jc-choice-stack{display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important;white-space:nowrap!important}
 }
 
 /* Align the table frame with the section marker and reclaim the side space. */
@@ -2740,7 +2742,7 @@ button.qc-date-locked-control:disabled{
   .qc-overview-page .jc-review-table-wrap{
     width:100%!important;margin-left:0!important;margin-right:0!important;
     border-left:6px solid #35b36e!important;
-    border-radius:18px!important;
+    border-radius:0 18px 18px 0!important;
   }
   .qc-overview-page .jc-review-table td:first-child{border-left:0!important}
 }
