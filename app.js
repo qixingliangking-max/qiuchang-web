@@ -794,7 +794,9 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const model=canViewPrematch?jcPublicModel(m):null;
     const oddsMini=jcRenderOddsMini(jcPrekickLatestPools(m));
-    const cardCta='<div class="jc-card-detail-btn">查看详情 <span class="jc-card-detail-sep">｜</span>全部玩法数据 <span>›</span></div>';
+    const cardCta=canViewPrematch
+      ? '<div class="jc-card-detail-btn">查看详情 <span class="jc-card-detail-sep">｜</span>全部玩法数据 <span>›</span></div>'
+      : '<div class="jc-card-login-btn"><span aria-hidden="true">🔒</span> 登录查看全部玩法数据</div>';
     const modelBlock=canViewPrematch ? (()=>{const sp=jcDisplaySingleSuffix(model,m);return '<div class="jc-card-model-lite">'+
       '<div><span>模型方向</span><b>'+(model?qcEscape(jcDisplayModelDirection(model,m)):'待生成')+'</b></div>'+
       '<div><span>单选倾向</span><b>'+(model?qcEscape(jcDisplaySinglePick(model,m)+sp):'待生成')+'</b></div>'+
