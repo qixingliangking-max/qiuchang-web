@@ -793,6 +793,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const href='jc-match.html?id='+encodeURIComponent(m.id);
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const model=canViewPrematch?jcPublicModel(m):null;
+    const oddsMini=jcRenderOddsMini(jcPrekickLatestPools(m));
     const cardCta=canViewPrematch
       ? '<div class="jc-card-detail-btn">查看详情 <span class="jc-card-detail-sep">｜</span>全部玩法数据 <span>›</span></div>'
       : '<div class="jc-card-login-btn"><span aria-hidden="true">🔒</span> 登录查看全部玩法数据</div>';
@@ -826,6 +827,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '</span>'+
           '<strong class="jc-team away-team jc-team-away">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
+        oddsMini+
         modelBlock+
         hitOddsBlock+
         cardCta+
