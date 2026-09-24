@@ -469,7 +469,8 @@ function jcCompactHandicapPick(text){
 }
 
 function jcOverviewDirectionChoices(model,m){
-  const raw=jcCompactResultPick(model?.direction,m);
+  const hasHad=(m?.jc_market_snapshots||[]).some(s=>s?.pool_code==='had');
+  const raw=hasHad ? jcCompactResultPick(model?.direction,m) : jcCompactHandicapPick(model?.handicap_direction);
   let choices=String(raw||'').split('/').map(x=>x.trim()).filter(Boolean);
   if(!choices.length) return [];
   const single=jcCompactResultPick(model?.single_pick,m);
@@ -671,7 +672,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
   }
 
   return '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
-    '<thead><tr><th>编号 时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负</th><th>总进球</th><th>半全场</th></tr></thead>'+
+    '<thead><tr><th>编号 时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负/让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const href='jc-match.html?id='+encodeURIComponent(m.id);
@@ -800,11 +801,20 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
 
 const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
 const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
+const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code)';
 
 async function jcFetchDateRows(dateStr,withSnapshots=false){
   if(!dateStr || !window.qcSupabase) return {data:[],error:null};
   return window.qcSupabase.from('jc_matches')
     .select(withSnapshots?JC_MATCH_WITH_SNAPSHOTS_SELECT:JC_MATCH_BASE_SELECT)
+    .eq('business_date',dateStr)
+    .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
+}
+
+async function jcFetchOverviewDateRows(dateStr){
+  if(!dateStr || !window.qcSupabase) return {data:[],error:null};
+  return window.qcSupabase.from('jc_matches')
+    .select(JC_MATCH_OVERVIEW_SELECT)
     .eq('business_date',dateStr)
     .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
 }
@@ -1022,8 +1032,8 @@ async function loadJcFrontend(){
   const requestedDate=initialDate && /^\d{4}-\d{2}-\d{2}$/.test(initialDate)?initialDate:initialToday;
   const requestedPrevious=qcAddDays(requestedDate,-1);
   const [currentResult,previousResult,availableDates]=await Promise.all([
-    jcFetchDateRows(requestedDate,false),
-    jcFetchDateRows(requestedPrevious,false),
+    jcFetchOverviewDateRows(requestedDate),
+    jcFetchOverviewDateRows(requestedPrevious),
     jcFetchAvailableDates()
   ]);
   const data=[...(currentResult.data||[]),...(previousResult.data||[])];
@@ -1076,8 +1086,8 @@ async function loadJcFrontend(){
     if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在读取昨日赛果…</div>';
     const prev=qcAddDays(ds,-1);
     const [currentResult,previousResult]=await Promise.all([
-      jcFetchDateRows(ds,false),
-      jcFetchDateRows(prev,false)
+      jcFetchOverviewDateRows(ds),
+      jcFetchOverviewDateRows(prev)
     ]);
     if(currentResult.error||previousResult.error){
       cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
