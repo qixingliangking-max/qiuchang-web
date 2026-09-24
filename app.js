@@ -558,9 +558,9 @@ function jcFootballHitOddsHtml(m,model,score){
     }
   }
 
-  if(!hits.length) return '';
-  return '<div class="jc-card-hit-band">'+
-    '<span class="jc-card-hit-title">赛后命中</span>'+
+  if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play"><span class="jc-card-hit-title">玩法：</span><span class="jc-card-no-hit">暂无命中</span></div>';
+  return '<div class="jc-card-hit-band jc-card-hit-play">'+
+    '<span class="jc-card-hit-title">玩法：</span>'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="'+qcEscape(x.kind)+'">'+
         '<b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+

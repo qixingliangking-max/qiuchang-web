@@ -1764,6 +1764,10 @@ button.qc-date-locked-control:disabled{
   font-size:10px;
   font-weight:800;
 }
+.jc-card-hit-play{display:flex;align-items:center;justify-content:flex-start;gap:6px;text-align:left;padding:10px 0 2px}
+.jc-card-hit-play .jc-card-hit-title{display:inline;margin:0;color:#4d55b8;font-size:12px}
+.jc-card-no-hit{color:#7d8798;font-size:12px;font-weight:800}
+.jc-card-hit-play .jc-card-hit-items{justify-content:flex-start}
 .jc-card-hit-items{
   display:flex;
   justify-content:center;
