@@ -185,6 +185,11 @@ body{min-height:100vh}
 .jc-odds-row+.jc-odds-row{border-top:1px solid var(--line)}
 .jc-odds-row>span{text-align:center}
 .jc-odds-row strong{font-size:18px}
+.jc-odds-row>span:nth-child(2){color:#2f63d7}
+.jc-odds-row>span:nth-child(3){color:#465064}
+.jc-odds-row>span:nth-child(4){color:#c87425}
+.jc-detail-score-finished{color:#d94f4f!important}
+.jc-odds-matchup .center-score small{color:#c85a5a}
 .jc-odd-empty{color:#aab2c0}
 .jc-trend{font-size:10px;margin-left:4px;vertical-align:2px}
 .jc-trend.up{color:#e34a43}

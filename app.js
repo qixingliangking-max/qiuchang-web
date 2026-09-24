@@ -1800,9 +1800,9 @@ async function setupJcMatchDetail(){
   // until access has been checked.
   root.innerHTML=detailShell('<div class="detail-head jc-odds-headcard">'+
     '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
-    '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
+      '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
       '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
-      '<div class="center-score"><strong>'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
+      '<div class="center-score"><strong class="'+(jcScoreInfo(m).finished?'jc-detail-score-finished':'')+'">'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
       '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
     '<div class="profile-card">正在读取比赛分析…</div>');
 
@@ -1863,7 +1863,7 @@ async function setupJcMatchDetail(){
       '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
         '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong>'+(score.current?qcEscape(score.current):'VS')+'</strong><small class="'+(score.started&&!score.finished?'jc-live-stage':'')+'">'+qcEscape(status)+'</small></div>'+
+        '<div class="center-score"><strong class="'+(score.finished?'jc-detail-score-finished':'')+'">'+(score.current?qcEscape(score.current):'VS')+'</strong><small class="'+(score.started&&!score.finished?'jc-live-stage':'')+'">'+qcEscape(status)+'</small></div>'+
         '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
       '</div>'+
       '<div class="jc-main-tabs">'+
