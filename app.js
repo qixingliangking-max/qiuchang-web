@@ -468,12 +468,30 @@ function jcCompactHandicapPick(text){
     .replace(/[｜|]/g,' / ');
 }
 
+function jcHasOrdinaryResult(m){
+  return (m?.jc_market_snapshots||[]).some(s=>s?.pool_code==='had');
+}
+
+function jcDisplayModelDirection(model,m){
+  return jcHasOrdinaryResult(m)
+    ? jcCompactResultPick(model?.direction,m)
+    : jcCompactHandicapPick(model?.handicap_direction);
+}
+
+function jcDisplaySinglePick(model,m){
+  if(jcHasOrdinaryResult(m)) return jcCompactResultPick(model?.single_pick,m);
+  const pick=jcCompactResultPick(model?.single_pick,m);
+  return String(pick||'').split('/').map(x=>{
+    const v=x.trim();
+    return /^让/.test(v)?v:(v==='胜'?'让胜':v==='平'?'让平':v==='负'?'让负':v);
+  }).filter(Boolean).join(' / ');
+}
+
 function jcOverviewDirectionChoices(model,m){
-  const hasHad=(m?.jc_market_snapshots||[]).some(s=>s?.pool_code==='had');
-  const raw=hasHad ? jcCompactResultPick(model?.direction,m) : jcCompactHandicapPick(model?.handicap_direction);
+  const raw=jcDisplayModelDirection(model,m);
   let choices=String(raw||'').split('/').map(x=>x.trim()).filter(Boolean);
   if(!choices.length) return [];
-  const single=jcCompactResultPick(model?.single_pick,m);
+  const single=jcDisplaySinglePick(model,m);
   if(single && !String(single).includes('/')){
     const idx=choices.indexOf(single);
     if(idx>0) choices=[choices[idx],...choices.filter((_,i)=>i!==idx)];
@@ -762,8 +780,8 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const model=canViewPrematch?jcPublicModel(m):null;
     const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
-      '<div><span>模型方向</span><b>'+(model?qcEscape(jcCompactResultPick(model.direction,m)):'待生成')+'</b></div>'+
-      '<div><span>单选倾向</span><b>'+(model?qcEscape(jcCompactResultPick(model.single_pick,m)+sp):'待生成')+'</b></div>'+
+      '<div><span>模型方向</span><b>'+(model?qcEscape(jcDisplayModelDirection(model,m)):'待生成')+'</b></div>'+
+      '<div><span>单选倾向</span><b>'+(model?qcEscape(jcDisplaySinglePick(model,m)+sp):'待生成')+'</b></div>'+
       '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
       '<div class="jc-card-model-top"><span>TOP</span><b>'+(model?qcEscape(jcModelTopText(model)):'待生成')+'</b></div>'+
     '</div>';})() : '';
@@ -1637,9 +1655,9 @@ function jcRenderAiPanel(m,pools,model,analysis){
 
   // Keep the six public model fields in the detail page identical to the overview semantics.
   // Stored model conclusions remain untouched; only the public display mapping is normalized.
-  const direction=model?qcEscape(jcCompactResultPick(model.direction,m)):'待生成';
+  const direction=model?qcEscape(jcDisplayModelDirection(model,m)):'待生成';
   const single=model?qcEscape(
-    jcCompactResultPick(model.single_pick,m)+
+    jcDisplaySinglePick(model,m)+
     (model.raw_input?.single_prob!=null?'｜'+model.raw_input.single_prob+'%':'')
   ):'待生成';
   const handicap=model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成';
