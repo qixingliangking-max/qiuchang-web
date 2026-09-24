@@ -487,6 +487,20 @@ function jcDisplaySinglePick(model,m){
   }).filter(Boolean).join(' / ');
 }
 
+function jcDisplaySingleSuffix(model,m){
+  return jcHasOrdinaryResult(m) && model?.raw_input?.single_prob!=null
+    ? '｜'+model.raw_input.single_prob+'%'
+    : '';
+}
+
+function jcOverviewActualDirection(model,m,score){
+  if(jcHasOrdinaryResult(m)) return jcShortResultByScore(score?.ft);
+  const hhad=jcLatestPools(m?.jc_market_snapshots||[]).hhad;
+  const line=hhad?.goal_line ?? model?.raw_input?.handicap_line;
+  const full=jcHandicapResult(score?.ft,line);
+  return String(full||'').replace(/^[+-]?\d+(?:\.\d+)?/,'');
+}
+
 function jcOverviewDirectionChoices(model,m){
   const raw=jcDisplayModelDirection(model,m);
   let choices=String(raw||'').split('/').map(x=>x.trim()).filter(Boolean);
@@ -721,7 +735,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         const goalChoices=jcOverviewGoalValues(model.goal_range);
         const htftChoices=[model.htft_top1,model.htft_top2].filter(Boolean);
 
-        market=jcReviewInlineChoicesHtml(directionChoices,resultShort);
+        market=jcReviewInlineChoicesHtml(directionChoices,jcOverviewActualDirection(model,m,score));
         goals=jcReviewGoalChoicesHtml(goalChoices,total);
         hafu=jcReviewHtftChoicesHtml(htftChoices,htft);
       }
@@ -779,7 +793,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const href='jc-match.html?id='+encodeURIComponent(m.id);
     const canViewPrematch=qcCanViewPrematchContent(m,access);
     const model=canViewPrematch?jcPublicModel(m):null;
-    const modelBlock=canViewPrematch ? (()=>{const raw=model?.raw_input||{};const sp=raw.single_prob!=null?('｜'+raw.single_prob+'%'):'';return '<div class="jc-card-model-lite">'+
+    const modelBlock=canViewPrematch ? (()=>{const sp=jcDisplaySingleSuffix(model,m);return '<div class="jc-card-model-lite">'+
       '<div><span>模型方向</span><b>'+(model?qcEscape(jcDisplayModelDirection(model,m)):'待生成')+'</b></div>'+
       '<div><span>单选倾向</span><b>'+(model?qcEscape(jcDisplaySinglePick(model,m)+sp):'待生成')+'</b></div>'+
       '<div><span>让球胜平负</span><b>'+(model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成')+'</b></div>'+
@@ -819,7 +833,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
 
 const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
 const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
-const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code)';
+const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,captured_at)';
 
 async function jcFetchDateRows(dateStr,withSnapshots=false){
   if(!dateStr || !window.qcSupabase) return {data:[],error:null};
@@ -1658,7 +1672,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   const direction=model?qcEscape(jcDisplayModelDirection(model,m)):'待生成';
   const single=model?qcEscape(
     jcDisplaySinglePick(model,m)+
-    (model.raw_input?.single_prob!=null?'｜'+model.raw_input.single_prob+'%':'')
+    jcDisplaySingleSuffix(model,m)
   ):'待生成';
   const handicap=model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成';
   const htft=model?qcEscape([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
