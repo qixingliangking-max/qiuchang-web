@@ -558,9 +558,8 @@ function jcFootballHitOddsHtml(m,model,score){
     }
   }
 
-  if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play"><span class="jc-card-hit-title">玩法：</span><span class="jc-card-no-hit">暂无命中</span></div>';
+  if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
   return '<div class="jc-card-hit-band jc-card-hit-play">'+
-    '<span class="jc-card-hit-title">玩法：</span>'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="'+qcEscape(x.kind)+'">'+
         '<b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
@@ -798,7 +797,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const modelBlock='';
     const hitOddsBlock=score.finished && canViewPrematch
       ? jcFootballHitOddsHtml(m,model,score)
-      : '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"><span class="jc-card-hit-title">玩法：</span></div>';
+      : '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
     const centerMeta=score.finished && score.ht
       ? '半 '+score.ht
       : jcMatchStatusLabel(m,today);
