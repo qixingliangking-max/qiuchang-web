@@ -2734,3 +2734,13 @@ button.qc-date-locked-control:disabled{
   .qc-overview-page .jc-review-match>span:last-child{font-size:10px!important;font-weight:700!important}
   .qc-overview-page .jc-review-choices .jc-hit-ring{padding:1px 3px!important;min-width:0!important;min-height:0!important}
 }
+
+/* Align the table frame with the section marker and reclaim the side space. */
+@media(max-width:760px){
+  .qc-overview-page .jc-review-table-wrap{
+    margin-left:0!important;margin-right:0!important;
+    border-left:6px solid #35b36e!important;
+    border-radius:18px!important;
+  }
+  .qc-overview-page .jc-review-table td:first-child{border-left:0!important}
+}
