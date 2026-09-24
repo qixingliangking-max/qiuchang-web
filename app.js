@@ -1054,7 +1054,8 @@ async function loadJcFootball(){
   }
   refreshFootballLive();
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
-  window.__jcFootballLiveTimer=setInterval(refreshFootballLive,300000);
+  // 赛中每2分钟刷新一次，完赛后自动显示最终比分并重新计算命中区
+  window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
 }
 
 async function loadJcFrontend(){
@@ -1244,7 +1245,8 @@ async function loadJcFrontend(){
   jcAttachModels(allRows).then(()=>{ modelsLoaded=true; render(); }).catch(err=>console.warn('首页模型读取失败',err));
   refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
-  window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,300000);
+  // 首页同步使用2分钟刷新，避免完赛后仍长时间停留在旧状态
+  window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
 }
 
 
