@@ -798,28 +798,42 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   }).join('')+'</div>';
 }
 
+const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
+const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
+
+async function jcFetchDateRows(dateStr,withSnapshots=false){
+  if(!dateStr || !window.qcSupabase) return {data:[],error:null};
+  return window.qcSupabase.from('jc_matches')
+    .select(withSnapshots?JC_MATCH_WITH_SNAPSHOTS_SELECT:JC_MATCH_BASE_SELECT)
+    .eq('business_date',dateStr)
+    .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
+}
+
+async function jcFetchAvailableDates(){
+  if(!window.qcSupabase) return [];
+  const {data,error}=await window.qcSupabase.from('jc_matches').select('business_date').not('business_date','is',null).limit(10000);
+  if(error){ console.warn('读取竞彩日期索引失败',error); return []; }
+  return [...new Set((data||[]).map(x=>x.business_date).filter(Boolean))].sort();
+}
+
 async function loadJcFootball(){
   const cards=$('#jcFootballCards');
   if(!cards || !window.qcSupabase) return;
 
-  const {data,error}=await window.qcSupabase
-    .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw,jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)')
-    .order('match_date',{ascending:true})
-    .order('match_time',{ascending:true})
-    .limit(300);
+  const today=qcBeijingToday();
+  const paramDate=new URLSearchParams(location.search).get('date');
+  const initialDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  const [initial,availableDates]=await Promise.all([jcFetchDateRows(initialDate,true),jcFetchAvailableDates()]);
+  const {data,error}=initial;
 
   if(error){
     cards.innerHTML='<div class="profile-card">竞彩足球数据暂时读取失败，请稍后刷新。</div>';
     return;
   }
 
-  const allRows=(data||[]).filter(m=>m.match_date);
+  let allRows=(data||[]).filter(m=>m.match_date);
   const access=await qcGetAccessState();
   await jcAttachModels(allRows);
-  const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
-  const today=qcBeijingToday();
-  const paramDate=new URLSearchParams(location.search).get('date');
   const dateLocked=!access.loggedIn;
   let selectedDate=dateLocked
     ? today
@@ -886,6 +900,17 @@ async function loadJcFootball(){
     });
   }
 
+  async function loadFootballDate(ds){
+    cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
+    const result=await jcFetchDateRows(ds,true);
+    if(result.error){ cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>'; return; }
+    allRows=(result.data||[]).filter(m=>m.match_date);
+    await jcAttachModels(allRows);
+    selectedDate=ds;
+    activeLeague='全部';
+    render();
+  }
+
   function render(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     if(activeLeague!=='全部' && !dateRows.some(m=>leagueKey(m)===activeLeague)) activeLeague='全部';
@@ -905,10 +930,8 @@ async function loadJcFootball(){
     setUrlDate(selectedDate);
     if(!dateLocked){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
-        selectedDate=ds;
-        activeLeague='全部';
         closeLeague();
-        render();
+        loadFootballDate(ds);
       });
     }
   }
@@ -918,27 +941,25 @@ async function loadJcFootball(){
       selectedDate=qcAddDays(selectedDate,-1);
       activeLeague='全部';
       closeLeague();
-      render();
+      loadFootballDate(selectedDate);
     };
     if(next) next.onclick=()=>{
       selectedDate=qcAddDays(selectedDate,1);
       activeLeague='全部';
       closeLeague();
-      render();
+      loadFootballDate(selectedDate);
     };
     if(todayBtn) todayBtn.onclick=()=>{
       selectedDate=today;
       activeLeague='全部';
       closeLeague();
-      render();
+      loadFootballDate(selectedDate);
     };
     if(label) label.onclick=e=>{
       e.preventDefault();
       e.stopPropagation();
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
-        selectedDate=ds;
-        activeLeague='全部';
-        render();
+        loadFootballDate(ds);
       });
       if(datePop) datePop.hidden=!datePop.hidden;
       closeLeague();
@@ -998,12 +1019,15 @@ async function loadJcFrontend(){
   }
 
   const accessPromise=qcGetAccessState();
-  const {data,error}=await window.qcSupabase
-    .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
-    .order('match_date',{ascending:true})
-    .order('match_time',{ascending:true})
-    .limit(300);
+  const requestedDate=initialDate && /^\d{4}-\d{2}-\d{2}$/.test(initialDate)?initialDate:initialToday;
+  const requestedPrevious=qcAddDays(requestedDate,-1);
+  const [currentResult,previousResult,availableDates]=await Promise.all([
+    jcFetchDateRows(requestedDate,false),
+    jcFetchDateRows(requestedPrevious,false),
+    jcFetchAvailableDates()
+  ]);
+  const data=[...(currentResult.data||[]),...(previousResult.data||[])];
+  const error=currentResult.error||previousResult.error;
 
   if(error){
     console.error('读取竞彩前台数据失败',error);
@@ -1012,10 +1036,9 @@ async function loadJcFrontend(){
     return;
   }
 
-  const allRows=(data||[]).filter(m=>m.match_date);
+  let allRows=(data||[]).filter(m=>m.match_date);
   const access=await accessPromise;
-  const availableDates=[...new Set(allRows.map(m=>jcBusinessDate(m)).filter(Boolean))].sort();
-  const today=qcBeijingToday();
+  const today=initialToday;
   const paramDate=new URLSearchParams(location.search).get('date');
   const dateLocked=!access.loggedIn;
   let selectedDate=dateLocked
@@ -1046,6 +1069,26 @@ async function loadJcFrontend(){
     if(dateLocked) u.searchParams.delete('date');
     else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
+  }
+
+  async function loadFrontendDateBundle(ds){
+    cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
+    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在读取昨日赛果…</div>';
+    const prev=qcAddDays(ds,-1);
+    const [currentResult,previousResult]=await Promise.all([
+      jcFetchDateRows(ds,false),
+      jcFetchDateRows(prev,false)
+    ]);
+    if(currentResult.error||previousResult.error){
+      cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
+      return;
+    }
+    allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
+    await jcAttachModels(allRows);
+    selectedDate=ds;
+    activeLeague='全部';
+    modelsLoaded=true;
+    render();
   }
 
   function render(){
@@ -1102,23 +1145,19 @@ async function loadJcFrontend(){
     try{
       if(!dateLocked){
         qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-          selectedDate=ds;
-          activeLeague='全部';
-          render();
+          loadFrontendDateBundle(ds);
         });
       }
     }catch(err){ console.error('日期日历渲染失败',err); }
   }
 
   if(!dateLocked){
-    if(prev) prev.onclick=()=>{selectedDate=qcAddDays(selectedDate,-1);activeLeague='全部';render();};
-    if(next) next.onclick=()=>{selectedDate=qcAddDays(selectedDate,1);activeLeague='全部';render();};
-    if(todayBtn) todayBtn.onclick=()=>{selectedDate=today;activeLeague='全部';render();};
+    if(prev) prev.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,-1));};
+    if(next) next.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,1));};
+    if(todayBtn) todayBtn.onclick=()=>{loadFrontendDateBundle(today);};
     if(label) label.onclick=()=>{
       qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-        selectedDate=ds;
-        activeLeague='全部';
-        render();
+        loadFrontendDateBundle(ds);
       });
       if(pop) pop.hidden=!pop.hidden;
     };
