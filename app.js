@@ -718,7 +718,7 @@ function jcPredictionPlaceholder(){
 function jcOverviewTeamLabel(name){
   const value=String(name||'—').trim();
   const chars=Array.from(value);
-  return qcEscape(chars.length>5 ? chars.slice(0,5).join('')+'…' : value);
+  return qcEscape(chars.length>5 ? chars.slice(0,5).join('') : value);
 }
 
 function jcRenderOverviewTable(rows,today,mode='today'){
