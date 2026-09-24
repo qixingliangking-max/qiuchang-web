@@ -2738,7 +2738,7 @@ button.qc-date-locked-control:disabled{
 /* Align the table frame with the section marker and reclaim the side space. */
 @media(max-width:760px){
   .qc-overview-page .jc-review-table-wrap{
-    margin-left:0!important;margin-right:0!important;
+    width:100%!important;margin-left:0!important;margin-right:0!important;
     border-left:6px solid #35b36e!important;
     border-radius:18px!important;
   }
