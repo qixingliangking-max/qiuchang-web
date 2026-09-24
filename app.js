@@ -558,6 +558,25 @@ function jcFootballHitOddsHtml(m,model,score){
     }
   }
 
+  const totalGoals=(Number(score.ft?.[0])||0)+(Number(score.ft?.[2])||0);
+  const goalChoices=String(model.goal_range||'').match(/[0-7](?:\+)?球/g)||[];
+  const goalLabel=totalGoals>=7?'7+球':totalGoals+'球';
+  if(goalChoices.some(x=>x.replace('球','')===String(totalGoals) || (x.startsWith('7')&&totalGoals>=7))){
+    const odd=jcPoolNumber(pools.ttg,'s'+Math.min(totalGoals,7));
+    if(odd!=null) hits.push({kind:'总进球',label:goalLabel,odds:odd});
+  }
+
+  const ht=score.ht;
+  if(ht && model.htft_top1 || ht && model.htft_top2){
+    const htft=jcShortResultByScore(ht)+'/'+actual;
+    const choices=[model.htft_top1,model.htft_top2].filter(Boolean).map(String);
+    if(choices.includes(htft)){
+      const map={'胜/胜':'hh','胜/平':'hd','胜/负':'ha','平/胜':'dh','平/平':'dd','平/负':'da','负/胜':'ah','负/平':'ad','负/负':'aa'};
+      const odd=jcPoolNumber(pools.hafu,map[htft]);
+      if(odd!=null) hits.push({kind:'半全场',label:htft,odds:odd});
+    }
+  }
+
   if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
   return '<div class="jc-card-hit-band jc-card-hit-play">'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
@@ -822,9 +841,8 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<strong class="jc-team away-team jc-team-away">'+qcEscape(m.away_team_name||'—')+'</strong>'+
         '</div>'+
         oddsMini+
-        modelBlock+
-        hitOddsBlock+
         cardCta+
+        hitOddsBlock+
       '</a>'+
     '</article>';
   }).join('')+'</div>';
