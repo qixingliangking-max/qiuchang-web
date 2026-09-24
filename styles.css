@@ -755,6 +755,14 @@ body{min-height:100vh}
   padding-top:12px;color:var(--blue);font-size:13px;font-weight:900
 }
 .jc-card-detail-btn span{font-size:18px;line-height:1}
+.jc-card-detail-sep{font-size:13px!important;color:#b4bdca}
+.jc-card-login-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:10px;padding:12px 8px;border-radius:14px;
+  background:linear-gradient(100deg,#f0f1ff,#fff8ee);
+  color:#626d80;font-size:13px;font-weight:900;
+}
+.jc-card-login-btn span{font-size:12px}
 
 @media(max-width:760px){
   .qc-site-header{height:68px!important;padding:0 14px!important}
