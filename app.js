@@ -869,9 +869,16 @@ async function jcFetchOverviewDateRows(dateStr){
 
 async function jcFetchAvailableDates(){
   if(!window.qcSupabase) return [];
+  const cacheKey='qc-jc-available-dates-v1';
+  try{
+    const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
+    if(Array.isArray(cached?.dates) && cached.savedAt && Date.now()-cached.savedAt<300000) return cached.dates;
+  }catch(e){ /* ignore stale browser cache */ }
   const {data,error}=await window.qcSupabase.from('jc_matches').select('business_date').not('business_date','is',null).limit(10000);
   if(error){ console.warn('读取竞彩日期索引失败',error); return []; }
-  return [...new Set((data||[]).map(x=>x.business_date).filter(Boolean))].sort();
+  const dates=[...new Set((data||[]).map(x=>x.business_date).filter(Boolean))].sort();
+  try{ localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),dates})); }catch(e){ /* storage unavailable */ }
+  return dates;
 }
 
 async function loadJcFootball(){
@@ -1782,7 +1789,7 @@ async function setupJcMatchDetail(){
 
   const {data:dayMatches}=await window.qcSupabase
     .from('jc_matches')
-    .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status,raw')
+    .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status')
     .eq('business_date',m.business_date)
     .order('match_date',{ascending:true}).order('match_time',{ascending:true});
   const sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
