@@ -715,6 +715,12 @@ function jcPredictionPlaceholder(){
   return '<span class="jc-overview-pending">待生成</span>';
 }
 
+function jcOverviewTeamLabel(name){
+  const value=String(name||'—').trim();
+  const chars=Array.from(value);
+  return qcEscape(chars.length>5 ? chars.slice(0,5).join('')+'…' : value);
+}
+
 function jcRenderOverviewTable(rows,today,mode='today'){
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   if(!ordered.length){
@@ -722,15 +728,15 @@ function jcRenderOverviewTable(rows,today,mode='today'){
   }
 
   return '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
-    '<thead><tr><th>编号 时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负/让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
+    '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th><th>胜平负/让球</th><th>总进球</th><th>半全场</th></tr></thead>'+
     '<tbody>'+ordered.map(m=>{
       const score=jcScoreInfo(m);
       const href='jc-match.html?id='+encodeURIComponent(m.id);
       const league=qcEscape(m.league_short_name||m.league_name||'—');
       const num=qcEscape(String(m.match_num||'—').replace(/^周[一二三四五六日天]/,''));
       const time=qcEscape(String(m.match_time||'').slice(0,5)||'—');
-      const home=qcEscape(m.home_team_name||'—');
-      const away=qcEscape(m.away_team_name||'—');
+      const home=jcOverviewTeamLabel(m.home_team_name);
+      const away=jcOverviewTeamLabel(m.away_team_name);
 
       let market=jcPredictionPlaceholder();
       let goals=jcPredictionPlaceholder();
@@ -776,7 +782,8 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
       return '<tr class="jc-overview-row" data-href="'+href+'">'+
-        '<td class="jc-num-time"><b>'+num+'</b><time>'+time+'</time></td>'+
+        '<td class="jc-num"><b>'+num+'</b></td>'+
+        '<td class="jc-time"><time>'+time+'</time></td>'+
         '<td><span class="jc-overview-league">'+league+'</span></td>'+
         '<td><a class="jc-review-match" href="'+href+'"><span>'+home+'</span><span class="jc-score-stack">'+scoreStack+'</span><span>'+away+'</span></a></td>'+
         '<td><div class="jc-result-stack">'+market+'</div></td>'+
