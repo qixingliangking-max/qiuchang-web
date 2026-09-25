@@ -409,12 +409,12 @@ function qcPremiumGateHtml(access,kind='prediction'){
   const loggedIn=Boolean(access?.loggedIn);
   const isAi=kind==='ai';
   const title=loggedIn
-    ? (isAi?'当前账号暂无完整分析权限':'当前账号暂无查看权限')
-    : (isAi?'登录后查看完整分析报告':'登录后查看今日预测');
+    ? (isAi?'当前账号暂无赛前分析权限':'当前账号暂无查看权限')
+    : (isAi?'登录后查看完整赛前分析报告':'登录后查看今日预测');
   const desc=loggedIn
-    ? (isAi?'赛前AI分析与锁板结论属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
+    ? (isAi?'赛前分析报告属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
     : (isAi
-      ? '登录后可查看完整 AI 分析报告。'
+      ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。'
       : '今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
   const primaryHref=loggedIn?'profile.html':'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn?'进入个人中心':'立即登录';
