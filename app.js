@@ -1136,6 +1136,7 @@ async function loadJcFrontend(){
     : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
   let activeLeague='全部';
   let modelsLoaded=false;
+  let reviewPendingExpanded=false;
 
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
@@ -1185,7 +1186,12 @@ async function loadJcFrontend(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
+    const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
+    const pendingPrevious=previousRows.filter(m=>!jcScoreInfo(m).finished);
     const filtered=dateRows;
+    const premiumDate=selectedDate>=today;
+    const gateBeforePending=premiumDate && !access.isPro;
+    const predictionShell=$('.jc-prediction-shell');
 
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')) $('#jcPredictionMeta').textContent=(selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
@@ -1195,8 +1201,46 @@ async function loadJcFrontend(){
 
     try{
       if(reviewCards){
-        reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
+        const finishedHtml=finishedPrevious.length
+          ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
+          : '<div class="jc-review-empty">上一竞彩日暂时还没有完赛场次</div>';
+
+        const gateHtml=gateBeforePending
+          ? '<div class="jc-review-inline-gate">'+qcPremiumGateHtml(access,'prediction')+'</div>'
+          : '';
+
+        let pendingHtml='';
+        if(pendingPrevious.length){
+          const liveCount=pendingPrevious.filter(m=>{
+            const sc=jcScoreInfo(m);
+            return sc.started && !sc.finished;
+          }).length;
+          const pendingLabel=liveCount>0
+            ? '还有 '+pendingPrevious.length+' 场进行中 / 待赛'
+            : '还有 '+pendingPrevious.length+' 场待赛';
+          pendingHtml=
+            '<div class="jc-review-pending-zone">'+
+              '<button type="button" class="jc-review-pending-toggle" aria-expanded="'+(reviewPendingExpanded?'true':'false')+'">'+
+                '<span>'+qcEscape(pendingLabel)+'</span><b>'+(reviewPendingExpanded?'收起':'展开查看')+' '+(reviewPendingExpanded?'↑':'↓')+'</b>'+
+              '</button>'+
+              '<div class="jc-review-pending-list" '+(reviewPendingExpanded?'':'hidden')+'>'+
+                jcRenderYesterdayReview(pendingPrevious,calendarToday)+
+              '</div>'+
+            '</div>';
+        }
+
+        reviewCards.innerHTML=finishedHtml+gateHtml+pendingHtml;
         jcBindOverviewRows(reviewCards);
+
+        const pendingToggle=$('.jc-review-pending-toggle',reviewCards);
+        if(pendingToggle){
+          pendingToggle.onclick=e=>{
+            e.preventDefault();
+            reviewPendingExpanded=!reviewPendingExpanded;
+            render();
+          };
+        }
+
         if(modelsLoaded && previousDate===initialYesterday && previousRows.length &&
           previousRows.every(m=>jcScoreInfo(m).finished)){
           try{
@@ -1218,15 +1262,19 @@ async function loadJcFrontend(){
     }
 
     try{
-      const premiumDate=selectedDate>=today;
-      if(premiumDate && !access.isPro){
-        cards.innerHTML=qcPremiumGateHtml(access,'prediction');
+      if(gateBeforePending){
+        // The access gate is already placed directly after the latest finished review row.
+        // Hide the duplicate lower "today prediction" gate so users see the call-to-action early.
+        if(predictionShell) predictionShell.hidden=true;
+        cards.innerHTML='';
       }else{
+        if(predictionShell) predictionShell.hidden=false;
         cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
         jcBindOverviewRows(cards);
       }
     }catch(err){
       console.error('今日预测渲染失败',err);
+      if(predictionShell) predictionShell.hidden=false;
       cards.innerHTML='<div class="profile-card">今日预测列表暂时无法显示</div>';
     }
 
@@ -1240,7 +1288,6 @@ async function loadJcFrontend(){
       }
     }catch(err){ console.error('日期日历渲染失败',err); }
   }
-
   if(!dateLocked){
     if(prev) prev.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,-1));};
     if(next) next.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,1));};
