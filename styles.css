@@ -3422,3 +3422,33 @@ button.qc-date-locked-control:disabled{
     height:14px;
   }
 }
+
+
+/* 2026-09-26 seamless in-page match switching */
+.jc-detail-main{
+  position:relative;
+}
+.jc-detail-switch-loader{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  gap:8px;
+  padding-top:22px;
+  background:rgba(246,248,252,.72);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  backdrop-filter:blur(1px);
+  animation:jcLoaderReveal .12s ease .18s forwards;
+}
+@media(max-width:640px){
+  .jc-detail-switch-loader{
+    padding-top:16px;
+    background:rgba(246,248,252,.62);
+  }
+}
