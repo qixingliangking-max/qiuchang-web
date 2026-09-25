@@ -397,7 +397,7 @@ function qcPremiumGateHtml(access,kind='prediction'){
   const desc=loggedIn
     ? (isAi?'赛前AI分析与锁板结论属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
     : '新注册账号自动获得 1 天 Pro 体验，可查看赛前预测与完整 AI 分析。';
-  const primaryHref=loggedIn?'profile.html':'login.html?next='+encodeURIComponent(location.pathname+location.search);
+  const primaryHref=loggedIn?'profile.html':'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn?'进入个人中心':'登录查看';
   const secondary=!loggedIn
     ? '<a class="qc-premium-secondary" href="register.html">注册免费体验 1 天 Pro</a>'
@@ -2371,7 +2371,7 @@ async function setupDemoAuth(){
       }
 
       await window.qcSupabase.auth.signOut();
-      location.replace('login.html?reset=success');
+      location.replace('login.html?v=20260926login3&reset=success');
     };
   }
 
@@ -2425,7 +2425,7 @@ async function setupProfile(){
   const user = userData && userData.user;
 
   if(userError || !user){
-    location.href = 'login.html';
+    location.href = 'login.html?v=20260926login3';
     return;
   }
 
@@ -2645,7 +2645,7 @@ async function setupProfile(){
     logoutBtn.onclick = async e => {
       e.preventDefault();
       await window.qcSupabase.auth.signOut();
-      location.href = 'login.html';
+      location.href = 'login.html?v=20260926login3';
     };
   }
 }
@@ -2691,7 +2691,7 @@ async function qcAdminSession(root,nextPage){
   const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
   const user=userData&&userData.user;
   if(userError||!user){
-    location.href='login.html?next='+encodeURIComponent(nextPage||'admin.html');
+    location.href='login.html?v=20260926login3&next='+encodeURIComponent(nextPage||'admin.html');
     return null;
   }
 
