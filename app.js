@@ -1693,72 +1693,89 @@ function jcRenderAiLockedPanel(m,pools,access){
 }
 
 function jcRenderAiPanel(m,pools,model,analysis){
-  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
   const modelReady=!!model;
   const statusText=modelReady
     ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
     : '等待本场模型结果写入';
 
-  // Keep the six public model fields in the detail page identical to the overview semantics.
-  // Stored model conclusions remain untouched; only the public display mapping is normalized.
-  const direction=model?qcEscape(jcDisplayModelDirection(model,m)):'待生成';
-  const single=model?qcEscape(
-    jcDisplaySinglePick(model,m)+
-    jcDisplaySingleSuffix(model,m)
-  ):'待生成';
-  const handicap=model?qcEscape(jcCompactHandicapPick(model.handicap_direction)):'待生成';
-  const htft=model?qcEscape([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
-  const goals=model?qcEscape(jcPublicTotalGoalsText(model.goal_range)):'待生成';
-  const top=model?qcEscape(jcModelTopText(model)):'待生成';
+  // 2026-09-25: AI report is a single continuous article with five fixed sections.
+  // The stored model output remains the source of truth; legacy analysis fields are
+  // folded into the new reading structure without changing the locked conclusions.
+  const directionText=model?jcDisplayModelDirection(model,m):'待生成';
+  const singlePickText=model?jcDisplaySinglePick(model,m):'待生成';
+  const singleText=model
+    ? singlePickText+jcDisplaySingleSuffix(model,m)
+    : '待生成';
+  const handicapText=model?jcCompactHandicapPick(model.handicap_direction):'待生成';
+  const htftText=model?([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
+  const goalsText=model?jcPublicTotalGoalsText(model.goal_range):'待生成';
+  const topText=model?jcModelTopText(model):'待生成';
 
-  const modelBlock=
-    '<div class="jc-ai-model-summary">'+
-      '<div><span>模型方向</span><b>'+direction+'</b></div>'+
-      '<div><span>单选倾向</span><b>'+single+'</b></div>'+
-      '<div><span>官方让球</span><b>'+handicap+'</b></div>'+
-      '<div><span>半全场</span><b>'+htft+'</b></div>'+
-      '<div><span>总进球</span><b>'+goals+'</b></div>'+
-      '<div><span>TOP</span><b>'+top+'</b></div>'+
-    '</div>';
+  const aiParagraphs=(values)=>{
+    const list=(values||[])
+      .map(v=>jcNormalizePublicAiText(v))
+      .map(v=>String(v||'').trim())
+      .filter(Boolean);
+    return list.map(v=>'<p>'+qcEscape(v)+'</p>').join('');
+  };
 
   let analysisHtml='';
   if(analysis?.status==='ready'){
+    const logicText=model
+      ? '当前锁定数据为：模型方向「'+directionText+'」，单选倾向「'+singleText+'」，让球保护「'+handicapText+'」，半全场「'+htftText+'」，总进球「'+goalsText+'」，TOP「'+topText+'」。这些结果放在同一条比赛路径中理解，不再拆成多个独立说明卡片。'
+      : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
+
     const sections=[
-      ['模型摘要',analysis.summary],
-      ['实力基线',analysis.strength_baseline],
-      ['近期状态',analysis.recent_form],
-      ['攻防效率',analysis.attack_defense],
-      ['主客场表现',analysis.home_away],
-      ['阵容完整度',analysis.squad_integrity],
-      ['历史交锋',analysis.h2h_analysis],
-      ['市场变化',analysis.market_movement],
-      ['比赛路径',analysis.match_path],
-      ['综合观察',analysis.comprehensive_observation],
-      ['风险因素',analysis.risk_factors]
+      {
+        title:'一、比赛背景与近期状态',
+        body:aiParagraphs([
+          analysis.strength_baseline,
+          analysis.recent_form,
+          analysis.attack_defense,
+          analysis.home_away,
+          analysis.squad_integrity,
+          analysis.h2h_analysis
+        ])
+      },
+      {
+        title:'二、方向为什么选择「'+directionText+'」',
+        body:aiParagraphs([analysis.summary,analysis.market_movement])
+      },
+      {
+        title:'三、单选为什么选择「'+singlePickText+'」',
+        body:aiParagraphs([analysis.comprehensive_observation||analysis.summary])
+      },
+      {
+        title:'四、六项数据的逻辑关系',
+        body:'<p>'+qcEscape(logicText)+'</p>'
+      },
+      {
+        title:'五、比赛路径与风险',
+        body:aiParagraphs([analysis.match_path,analysis.risk_factors])
+      }
     ];
-    analysisHtml='<div class="jc-ai-report">'+sections.filter(x=>x[1]).map(([title,body])=>
-      '<section class="jc-ai-report-section"><h3>'+qcEscape(title==='进球区间'?'总进球':title)+'</h3><p>'+qcEscape(jcNormalizePublicAiText(body))+'</p></section>'
-    ).join('')+'</div>';
+
+    analysisHtml='<article class="jc-ai-report jc-ai-report-article">'+sections.map(section=>
+      '<section class="jc-ai-report-section">'+
+        '<h3>'+qcEscape(section.title)+'</h3>'+
+        (section.body||'<p>暂无更多可核验信息。</p>')+
+      '</section>'
+    ).join('')+'</article>';
   }else{
     analysisHtml='<div class="jc-ai-wait">'+
       '<b>'+qcEscape(statusText)+'</b>'+
-      '<p>锁板结果会作为固定结论，AI只负责结合官方数据、阵容、交锋和市场变化生成解释，不会改写模型方向。</p>'+
+      '<p>锁板结果会作为固定结论，AI只负责结合真实比赛资料解释，不会改写模型方向。</p>'+
     '</div>';
   }
 
-  return '<div class="jc-ai-placeholder jc-ai-page">'+
-    '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析</h2>'+
-    '<div class="jc-ai-status"><b>分析状态</b><span>'+qcEscape(statusText)+'</span></div>'+
-    modelBlock+
-    '<div class="jc-ai-context">'+
-      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
-      '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
-      '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
+  return '<div class="jc-ai-placeholder jc-ai-page jc-ai-article-page">'+
+    '<div class="jc-ai-article-head">'+
+      '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析报告</h2>'+
+      '<span>'+qcEscape(statusText)+'</span>'+
     '</div>'+
     analysisHtml+
   '</div>';
 }
-
 function jcRenderFactsFallback(m,message){
   const score=jcScoreInfo(m);
   return '<div class="jc-facts-panel">'+
