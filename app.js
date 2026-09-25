@@ -410,11 +410,13 @@ function qcPremiumGateHtml(access,kind='prediction'){
     : (isAi?'登录后查看完整分析报告':'登录后查看今日预测');
   const desc=loggedIn
     ? (isAi?'赛前AI分析与锁板结论属于 Pro 内容，请开通或续费 Pro 后查看。':'今日赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
-    : '新注册账号自动获得 1 天 Pro 体验，可查看赛前预测与完整 AI 分析。';
+    : (isAi
+      ? '登录后可查看完整 AI 分析报告。'
+      : '今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
   const primaryHref=loggedIn?'profile.html':'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
-  const primaryText=loggedIn?'进入个人中心':'登录查看';
-  const secondary=!loggedIn
-    ? '<a class="qc-premium-secondary" href="register.html">注册免费体验 1 天 Pro</a>'
+  const primaryText=loggedIn?'进入个人中心':'立即登录';
+  const secondary=!loggedIn && !isAi
+    ? '<a class="qc-premium-secondary" href="register.html">还没有账号？立即注册</a>'
     : '';
 
   return '<div class="qc-premium-gate">'+
