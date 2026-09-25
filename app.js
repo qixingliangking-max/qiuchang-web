@@ -2226,13 +2226,12 @@ async function setupDemoAuth(){
           message = '登录请求过于频繁，请稍后再试';
         }
 
-        const suffix = publicCode ? '（诊断：'+publicCode+'）' : '';
         console.error('登录失败', {name,errorCode:code,status,message:raw,navigatorOnline:navigator.onLine});
         if(loginHint){
-          loginHint.textContent = message + suffix;
+          loginHint.textContent = message;
           loginHint.className = 'code-hint error';
         }
-        alert(message + suffix);
+        alert(message);
         return;
       }
 
