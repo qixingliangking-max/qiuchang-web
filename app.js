@@ -1974,7 +1974,7 @@ function jcShowDetailSwitchLoader(root){
 
 function jcBindDetailMatchSwitches(root){
   if(!root) return;
-  $('.jc-detail-match-item',root).forEach(link=>{
+  $$('.jc-detail-match-item',root).forEach(link=>{
     link.onclick=e=>{
       if(e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const url=new URL(link.href,location.href);
@@ -1985,7 +1985,7 @@ function jcBindDetailMatchSwitches(root){
       if(String(targetId)===String(currentId)) return;
 
       history.pushState({jcMatch:true},'',url.pathname+url.search);
-      $('.jc-detail-match-item',root).forEach(x=>x.classList.toggle('active',x===link));
+      $$('.jc-detail-match-item',root).forEach(x=>x.classList.toggle('active',x===link));
       jcShowDetailSwitchLoader(root);
       setupJcMatchDetail({id:targetId,switching:true});
     };
