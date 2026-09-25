@@ -2828,3 +2828,23 @@ button.qc-date-locked-control:disabled{
     line-height:1.9!important;
   }
 }
+
+
+/* 2026-09-25 gameplay block + AI report stack */
+.jc-ai-page-stack{
+  display:grid;
+  gap:18px;
+}
+.jc-ai-play-panel{
+  padding:22px;
+}
+.jc-ai-play-panel .jc-ai-model-summary{
+  margin-top:0;
+}
+.jc-ai-play-panel .jc-ai-context{
+  margin-top:12px;
+}
+@media(max-width:640px){
+  .jc-ai-page-stack{gap:14px}
+  .jc-ai-play-panel{padding:16px}
+}
