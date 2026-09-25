@@ -1086,8 +1086,10 @@ async function loadJcFrontend(){
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
 
+  // 今日速览按自然日切换：北京时间 00:00 自动进入新日期。
+  // 竞彩足球页单独使用 qcBeijingBusinessToday() 的跨凌晨竞彩日逻辑。
   const calendarToday=qcBeijingToday();
-  const initialToday=qcBeijingBusinessToday();
+  const initialToday=calendarToday;
   const initialYesterday=qcAddDays(initialToday,-1);
   const initialDate=new URLSearchParams(location.search).get('date');
   const cacheKey='qc-finished-review-'+initialYesterday;
