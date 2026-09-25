@@ -399,7 +399,10 @@ function qcMatchHasStarted(m){
 }
 
 function qcCanViewPrematchContent(m,access){
-  return Boolean(access?.isPro || qcMatchHasStarted(m));
+  // Core analysis is never exposed anonymously, even after kickoff.
+  // Logged-in users keep the existing rule: Pro can view pre-match,
+  // while standard accounts can view once the match has started.
+  return Boolean(access?.loggedIn && (access?.isPro || qcMatchHasStarted(m)));
 }
 
 function qcPremiumGateHtml(access,kind='prediction'){
@@ -1760,11 +1763,15 @@ function jcRenderFactsShell(){
 
 function jcRenderAiLockedPanel(m,pools,access){
   const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
+  const loggedIn=Boolean(access?.loggedIn);
+  const loginHref='login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   return '<div class="jc-ai-placeholder jc-ai-page jc-ai-locked">'+
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
     '<div class="jc-ai-lock-note">'+
-      '<b>🔒 '+(access?.loggedIn?'Pro会员可查看完整分析报告':'登录后查看完整分析报告')+'</b>'+
-      '<span>本页不会向未授权用户展示模型方向、单选倾向、官方让球、总进球或 TOP 比分。</span>'+
+      '<b>🔒 '+(loggedIn?'当前账号暂无赛前分析权限':'登录后查看完整赛前分析报告')+'</b>'+
+      '<span>'+(loggedIn
+        ? '赛前分析报告属于 Pro 内容；比赛开始后，已登录用户可按现有规则查看。'
+        : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。')+'</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
       '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
@@ -1774,7 +1781,9 @@ function jcRenderAiLockedPanel(m,pools,access){
     '<div class="jc-ai-locked-preview" aria-hidden="true">'+
       '<div></div><div></div><div></div>'+
     '</div>'+
-    qcPremiumGateHtml(access,'ai')+
+    (loggedIn
+      ? qcPremiumGateHtml(access,'ai')
+      : '<div class="jc-ai-login-cta"><a class="qc-premium-primary" href="'+loginHref+'">🔒 登录查看完整报告</a></div>')+
   '</div>';
 }
 
@@ -1880,7 +1889,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
     '</section>'+
     '<section class="jc-ai-placeholder jc-ai-page jc-ai-article-page">'+
       '<div class="jc-ai-article-head">'+
-        '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析报告</h2>'+
+        '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
         '<span>'+qcEscape(statusText)+'</span>'+
       '</div>'+
       analysisHtml+
