@@ -1307,8 +1307,31 @@ async function loadJcFrontend(){
   render();
 
   async function refreshOverviewLive(){
-    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const previousDate=qcAddDays(selectedDate,-1);
+    try{
+      // Re-read both竞彩日 bundles so newly finished matches move above the gate
+      // without requiring a manual page refresh.
+      const [currentResult,previousResult]=await Promise.all([
+        jcFetchOverviewDateRows(selectedDate),
+        jcFetchOverviewDateRows(previousDate)
+      ]);
+      if(!currentResult.error && !previousResult.error){
+        const oldById=new Map(allRows.map(x=>[String(x.id),x]));
+        allRows=[...(currentResult.data||[]),...(previousResult.data||[])]
+          .filter(m=>m.match_date)
+          .map(m=>{
+            const old=oldById.get(String(m.id));
+            if(old?.jc_model_outputs) m.jc_model_outputs=old.jc_model_outputs;
+            if(old?._apiFootballLive) m._apiFootballLive=old._apiFootballLive;
+            return m;
+          });
+        if(modelsLoaded) await jcAttachModels(allRows);
+      }
+    }catch(err){
+      console.warn('首页赛果自动回读失败，继续使用当前数据',err);
+    }
+
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const reviewRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
     await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
