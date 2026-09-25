@@ -417,14 +417,14 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
       ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，开通或续费 Pro 后可查看完整内容。'
       : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。')
     : (loggedIn
-      ? dayLabel+'预测包含本站 AI 玩法推荐与比分判断，请联系管理员开通或续费 Pro 后查看。'
+      ? dayLabel+'预测包含本站 AI 玩法推荐与比分判断，开通或续费 Pro 后查看。如需开通或续费，请联系管理员。'
       : dayLabel+'预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
 
   const primaryHref=loggedIn
     ? (isAi?'profile.html':'profile.html')
     : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn
-    ? (isAi?'订阅查看完整报告':'联系管理员开通')
+    ? (isAi?'订阅查看完整报告':'进入个人中心')
     : '立即登录';
 
   return '<div class="qc-premium-gate">'+
