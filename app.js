@@ -767,7 +767,9 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       let hafu=jcPredictionPlaceholder();
       const model=jcPublicModel(m);
 
-      if(mode!=='yesterday' && model){
+      // 已锁板的赛前模型数据在跨日进入“昨日回看”后继续保留。
+      // 完赛前先展示原始预测；完赛后再由下方逻辑叠加命中圈。
+      if(model){
         market=jcOverviewInlineChoicesHtml(jcOverviewDirectionChoices(model,m));
         goals=jcOverviewGoalsHtml(model.goal_range);
         hafu=jcOverviewHtftHtml(model);
