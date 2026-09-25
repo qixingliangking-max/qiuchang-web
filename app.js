@@ -1787,15 +1787,18 @@ function jcRenderAiPanel(m,pools,model,analysis){
     '</div>';
   }
 
-  return '<div class="jc-ai-placeholder jc-ai-page jc-ai-article-page">'+
-    '<div class="jc-ai-article-head">'+
-      '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析报告</h2>'+
-      '<span>'+qcEscape(statusText)+'</span>'+
-    '</div>'+
-    '<div class="jc-ai-status"><b>分析状态</b><span>'+qcEscape(statusText)+'</span></div>'+
-    modelBlock+
-    contextBlock+
-    analysisHtml+
+  return '<div class="jc-ai-page-stack">'+
+    '<section class="jc-ai-placeholder jc-ai-page jc-ai-play-panel">'+
+      modelBlock+
+      contextBlock+
+    '</section>'+
+    '<section class="jc-ai-placeholder jc-ai-page jc-ai-article-page">'+
+      '<div class="jc-ai-article-head">'+
+        '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析报告</h2>'+
+        '<span>'+qcEscape(statusText)+'</span>'+
+      '</div>'+
+      analysisHtml+
+    '</section>'+
   '</div>';
 }
 function jcRenderFactsFallback(m,message){
