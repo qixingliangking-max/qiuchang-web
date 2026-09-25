@@ -110,6 +110,20 @@ function qcBeijingToday(){
   return map.year+'-'+map.month+'-'+map.day;
 }
 
+function qcBeijingBusinessToday(){
+  // 竞彩足球展示日按北京时间切换：
+  // 当天赛事通常从中午12点后开始并延续到次日10点前；
+  // 00:00-09:59仍归前一竞彩日，10:00起切到新的竞彩日（10-12点为预备窗口）。
+  const parts=new Intl.DateTimeFormat('zh-CN',{
+    timeZone:'Asia/Shanghai',
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'
+  }).formatToParts(new Date());
+  const map=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+  const calendarDate=map.year+'-'+map.month+'-'+map.day;
+  const hour=Number(map.hour||0);
+  return hour<10 ? qcAddDays(calendarDate,-1) : calendarDate;
+}
+
 function qcAddDays(dateStr,days){
   const d=new Date(dateStr+'T12:00:00+08:00');
   d.setUTCDate(d.getUTCDate()+days);
@@ -893,7 +907,8 @@ async function loadJcFootball(){
   const cards=$('#jcFootballCards');
   if(!cards || !window.qcSupabase) return;
 
-  const today=qcBeijingToday();
+  const calendarToday=qcBeijingToday();
+  const today=qcBeijingBusinessToday();
   const paramDate=new URLSearchParams(location.search).get('date');
   const initialDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
   const [initial,availableDates]=await Promise.all([jcFetchDateRows(initialDate,true),jcFetchAvailableDates()]);
@@ -999,7 +1014,7 @@ async function loadJcFootball(){
     }
 
     renderLeagueMenu(dateRows);
-    cards.innerHTML=jcRenderFootballCards(filtered,today,access);
+    cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
@@ -1071,7 +1086,8 @@ async function loadJcFrontend(){
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
 
-  const initialToday=qcBeijingToday();
+  const calendarToday=qcBeijingToday();
+  const initialToday=qcBeijingBusinessToday();
   const initialYesterday=qcAddDays(initialToday,-1);
   const initialDate=new URLSearchParams(location.search).get('date');
   const cacheKey='qc-finished-review-'+initialYesterday;
@@ -1083,7 +1099,7 @@ async function loadJcFrontend(){
       const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
       if(Array.isArray(cached?.rows) && cached.rows.length &&
         cached.rows.every(m=>jcBusinessDate(m)===initialYesterday && jcScoreInfo(m).finished)){
-        reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,initialToday);
+        reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
         jcBindOverviewRows(reviewCards);
         cachedReviewShown=true;
         const meta=$('#jcYesterdayMeta');
@@ -1179,7 +1195,7 @@ async function loadJcFrontend(){
 
     try{
       if(reviewCards){
-        reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,today);
+        reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
         jcBindOverviewRows(reviewCards);
         if(modelsLoaded && previousDate===initialYesterday && previousRows.length &&
           previousRows.every(m=>jcScoreInfo(m).finished)){
@@ -1206,7 +1222,7 @@ async function loadJcFrontend(){
       if(premiumDate && !access.isPro){
         cards.innerHTML=qcPremiumGateHtml(access,'prediction');
       }else{
-        cards.innerHTML=jcRenderOverviewTable(filtered,today,'today');
+        cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
         jcBindOverviewRows(cards);
       }
     }catch(err){
@@ -1863,7 +1879,7 @@ async function setupJcMatchDetail(){
     .order('match_date',{ascending:true}).order('match_time',{ascending:true});
   const sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   const detailNav='<aside class="jc-detail-sidebar">'+
-    '<div class="jc-detail-sidebar-head"><a href="football.html">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
+    '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
     '<div class="jc-detail-match-list">'+sameDay.map(x=>
       '<a class="jc-detail-match-item'+(String(x.id)===String(m.id)?' active':'')+'" href="jc-match.html?id='+encodeURIComponent(x.id)+'">'+
         '<span><b>'+qcEscape(x.match_num||'竞彩')+'</b><em>'+qcEscape(x.league_short_name||'—')+'</em></span>'+
