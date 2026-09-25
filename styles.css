@@ -2920,3 +2920,71 @@ button.qc-date-locked-control:disabled{
     gap:5px;
   }
 }
+
+
+/* 2026-09-26 mobile login agreement + compact hierarchy */
+.auth-login-page .auth-agreement{
+  margin:16px 0 18px;
+  line-height:1.65;
+}
+.auth-login-page .auth-agreement .legal-link{
+  font-weight:800;
+}
+.auth-login-page .auth-link-muted{
+  margin-top:10px;
+  font-size:14px;
+}
+.auth-login-page .auth-link-muted a{
+  color:#8a94a6;
+  font-weight:700;
+}
+
+@media(max-width:640px){
+  .auth-login-page .auth-wrap{
+    min-height:100dvh;
+    padding:18px;
+  }
+  .auth-login-page .auth-card{
+    padding:30px 22px 26px;
+    border-radius:24px;
+  }
+  .auth-login-page .auth-card h1{
+    font-size:30px;
+    margin-bottom:8px;
+  }
+  .auth-login-page .auth-card .subtitle{
+    font-size:16px;
+    margin-bottom:26px;
+  }
+  .auth-login-page .field{
+    margin:14px 0;
+  }
+  .auth-login-page .field label{
+    margin-bottom:7px;
+  }
+  .auth-login-page .field input{
+    height:52px;
+    font-size:16px;
+  }
+  .auth-login-page .auth-agreement{
+    margin:15px 0 17px;
+    font-size:13px;
+    gap:8px;
+  }
+  .auth-login-page .auth-agreement input{
+    width:19px;
+    height:19px;
+    flex:0 0 19px;
+  }
+  .auth-login-page .primary-btn{
+    height:54px;
+    font-size:17px;
+  }
+  .auth-login-page .auth-link{
+    margin-top:16px;
+  }
+  .auth-login-page .auth-link-muted{
+    margin-top:9px;
+    font-size:13px;
+  }
+}
