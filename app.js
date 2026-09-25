@@ -1818,6 +1818,23 @@ function jcRenderFactsFallback(m,message){
   '</div>';
 }
 
+function jcSyncDetailNavToCurrent(root){
+  if(!root) return;
+  const sync=()=>{
+    const list=$('.jc-detail-match-list',root);
+    const active=$('.jc-detail-match-item.active',root);
+    if(!list || !active) return;
+
+    // Mobile/tablet detail navigation should always open with the current match
+    // aligned at the left edge, so the next match remains immediately tappable.
+    if(window.matchMedia && window.matchMedia('(max-width: 900px)').matches){
+      const target=Math.max(0,active.offsetLeft-list.offsetLeft-2);
+      list.scrollLeft=target;
+    }
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(sync));
+}
+
 async function setupJcMatchDetail(){
   const root=$('#jcMatchDetailRoot');
   if(!root || !window.qcSupabase) return;
@@ -1864,6 +1881,7 @@ async function setupJcMatchDetail(){
       '<div class="center-score"><strong class="'+(jcScoreInfo(m).finished?'jc-detail-score-finished':'')+'">'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
       '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
     '<div class="profile-card">正在读取比赛分析…</div>');
+  jcSyncDetailNavToCurrent(root);
 
   const [access,detailResult,snapshotResult]=await Promise.all([
     qcGetAccessState(),
@@ -1932,6 +1950,7 @@ async function setupJcMatchDetail(){
       '</div>'+
     '</div>'+
     '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>');
+  jcSyncDetailNavToCurrent(root);
 
   const panel=$('#jcMainPanel');
   let factsData=null;
