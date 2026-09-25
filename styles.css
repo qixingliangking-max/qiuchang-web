@@ -3387,3 +3387,38 @@ button.qc-date-locked-control:disabled{
     border-radius:10px;
   }
 }
+
+
+/* 2026-09-26 compact delayed loading indicator */
+.jc-match-loading-shell{
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+  opacity:0;
+  animation:jcLoaderReveal .14s ease .18s forwards;
+}
+.jc-match-spinner{
+  width:16px;
+  height:16px;
+  border:2px solid #dfe5f0;
+  border-top-color:var(--blue);
+  border-radius:50%;
+  animation:jcLoaderSpin .72s linear infinite;
+}
+@keyframes jcLoaderReveal{to{opacity:1}}
+@keyframes jcLoaderSpin{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+  .jc-match-loading-shell{
+    min-height:48px;
+    font-size:12px;
+  }
+  .jc-match-spinner{
+    width:14px;
+    height:14px;
+  }
+}
