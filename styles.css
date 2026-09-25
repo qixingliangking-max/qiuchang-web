@@ -3124,3 +3124,266 @@ button.qc-date-locked-control:disabled{
     min-width:0;
   }
 }
+
+
+/* 2026-09-26 mobile match-detail compact layout */
+.jc-detail-num-mobile,
+.jc-detail-match-time-mobile{display:none}
+
+@media(max-width:640px){
+  .jc-odds-page .content{
+    padding:10px 8px 72px;
+  }
+
+  .jc-odds-page .jc-detail-layout{
+    gap:8px;
+  }
+
+  .jc-odds-page .jc-detail-sidebar{
+    padding:8px;
+    border-radius:14px;
+    max-height:none;
+    overflow:hidden;
+  }
+
+  .jc-odds-page .jc-detail-sidebar-head{
+    padding:2px 4px 7px;
+    font-size:12px;
+  }
+
+  .jc-odds-page .jc-detail-match-list{
+    display:flex;
+    gap:6px;
+    padding-top:7px;
+    padding-bottom:0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+
+  .jc-odds-page .jc-detail-match-list::-webkit-scrollbar{
+    display:none;
+  }
+
+  .jc-odds-page .jc-detail-match-item{
+    min-width:170px;
+    gap:3px;
+    padding:7px 8px;
+    border-radius:10px;
+  }
+
+  .jc-odds-page .jc-detail-match-item span{
+    gap:5px;
+    font-size:11px;
+    line-height:1.15;
+    white-space:nowrap;
+  }
+
+  .jc-odds-page .jc-detail-match-item span em{
+    padding:0;
+    border-radius:0;
+    background:transparent;
+  }
+
+  .jc-odds-page .jc-detail-num-desktop,
+  .jc-odds-page .jc-detail-match-time-desktop{
+    display:none;
+  }
+
+  .jc-odds-page .jc-detail-num-mobile,
+  .jc-odds-page .jc-detail-match-time-mobile{
+    display:inline;
+  }
+
+  .jc-odds-page .jc-detail-match-time-mobile{
+    margin-left:auto;
+    color:var(--muted);
+    font-size:11px;
+  }
+
+  .jc-odds-page .jc-detail-match-item strong{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:12.5px;
+    line-height:1.3;
+  }
+
+  .jc-odds-page .detail-head{
+    padding:14px 14px 10px;
+    border-radius:16px;
+    margin-bottom:8px;
+  }
+
+  .jc-odds-page .jc-odds-headcard{
+    margin-bottom:8px;
+  }
+
+  .jc-odds-page .match-top{
+    font-size:12px;
+  }
+
+  .jc-odds-page .jc-odds-matchup{
+    margin-top:12px!important;
+  }
+
+  .jc-odds-page .team-badge{
+    gap:7px;
+    font-size:15px;
+  }
+
+  .jc-odds-page .badge-circle{
+    width:30px;
+    height:30px;
+    font-size:10px;
+  }
+
+  .jc-odds-page .center-score strong{
+    font-size:30px;
+  }
+
+  .jc-odds-page .jc-main-tabs{
+    margin-top:12px;
+    padding:4px;
+    gap:4px;
+    border-radius:13px;
+  }
+
+  .jc-odds-page .jc-main-tabs button{
+    padding:10px 5px;
+    border-radius:10px;
+    font-size:13px;
+  }
+
+  .jc-odds-page .jc-ai-page-stack{
+    gap:8px;
+  }
+
+  .jc-odds-page .jc-ai-placeholder{
+    padding:14px;
+    border-radius:16px;
+  }
+
+  .jc-odds-page .jc-ai-play-panel{
+    padding:14px;
+  }
+
+  .jc-odds-page .jc-ai-model-summary{
+    gap:6px;
+    margin:8px 0;
+  }
+
+  .jc-odds-page .jc-ai-model-summary>div{
+    padding:9px;
+    border-radius:11px;
+  }
+
+  .jc-odds-page .jc-ai-model-summary span{
+    margin-bottom:4px;
+    font-size:11px;
+  }
+
+  .jc-odds-page .jc-ai-model-summary b{
+    font-size:12px;
+  }
+
+  .jc-odds-page .jc-ai-play-panel .jc-ai-context,
+  .jc-odds-page .jc-ai-locked .jc-ai-context{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+    margin-top:8px;
+  }
+
+  .jc-odds-page .jc-ai-play-panel .jc-ai-context>div,
+  .jc-odds-page .jc-ai-locked .jc-ai-context>div{
+    min-width:0;
+    padding:8px 6px;
+    border-radius:10px;
+  }
+
+  .jc-odds-page .jc-ai-play-panel .jc-ai-context span,
+  .jc-odds-page .jc-ai-locked .jc-ai-context span{
+    margin-bottom:3px;
+    font-size:10px;
+    line-height:1.2;
+  }
+
+  .jc-odds-page .jc-ai-play-panel .jc-ai-context strong,
+  .jc-odds-page .jc-ai-locked .jc-ai-context strong{
+    display:block;
+    overflow-wrap:anywhere;
+    font-size:11px;
+    line-height:1.25;
+  }
+
+  .jc-odds-page .jc-ai-article-page{
+    padding:16px 14px;
+  }
+
+  .jc-odds-page .jc-ai-article-head{
+    gap:5px;
+    padding-bottom:12px;
+  }
+
+  .jc-odds-page .jc-ai-article-head h2{
+    font-size:19px;
+  }
+
+  .jc-odds-page .jc-ai-report-article .jc-ai-report-section{
+    padding:16px 0;
+  }
+
+  .jc-odds-page .jc-ai-locked{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .jc-odds-page .jc-ai-locked>h2{
+    order:1;
+    margin:0;
+    font-size:19px;
+    line-height:1.35;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-lock-note{
+    order:2;
+    gap:5px;
+    margin:9px 0 0;
+    padding:11px 12px;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-lock-note b{
+    font-size:15px;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-lock-note span{
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-login-cta{
+    order:3;
+    margin:10px 0 0;
+    padding:0;
+  }
+
+  .jc-odds-page .jc-ai-locked .qc-premium-primary{
+    min-height:46px;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-context{
+    order:4;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-locked-preview{
+    order:5;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+    margin-top:10px;
+  }
+
+  .jc-odds-page .jc-ai-locked .jc-ai-locked-preview div{
+    height:42px;
+    border-radius:10px;
+  }
+}
