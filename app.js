@@ -399,34 +399,39 @@ function qcMatchHasStarted(m){
 }
 
 function qcCanViewPrematchContent(m,access){
-  // Core analysis is never exposed anonymously, even after kickoff.
-  // Logged-in users keep the existing rule: Pro can view pre-match,
-  // while standard accounts can view once the match has started.
-  return Boolean(access?.loggedIn && (access?.isPro || qcMatchHasStarted(m)));
+  // Core prediction and analysis content is Pro-only at every match stage.
+  return Boolean(access?.loggedIn && access?.isPro);
 }
 
 function qcPremiumGateHtml(access,kind='prediction',scope='today'){
   const loggedIn=Boolean(access?.loggedIn);
   const isAi=kind==='ai';
   const dayLabel=scope==='selected'?'当日':'今日';
-  const title=loggedIn
-    ? (isAi?'当前账号暂无赛前分析权限':'当前账号暂无查看权限')
-    : (isAi?'登录后查看完整赛前分析报告':'登录后查看'+dayLabel+'预测');
-  const desc=loggedIn
-    ? (isAi?'赛前分析报告属于 Pro 内容，请开通或续费 Pro 后查看。':dayLabel+'赛前预测属于 Pro 内容，请开通或续费 Pro 后查看。')
-    : (isAi
-      ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。'
+
+  const title=isAi
+    ? (loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告')
+    : (loggedIn?'订阅后查看'+dayLabel+'预测':'登录后查看'+dayLabel+'预测');
+
+  const desc=isAi
+    ? (loggedIn
+      ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，开通或续费 Pro 后可查看完整内容。'
+      : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。')
+    : (loggedIn
+      ? dayLabel+'预测包含本站 AI 玩法推荐与比分判断，开通或续费 Pro 后查看。'
       : dayLabel+'预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
-  const primaryHref=loggedIn?'profile.html':'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
-  const primaryText=loggedIn?'进入个人中心':'立即登录';
-  const secondary='';
+
+  const primaryHref=loggedIn
+    ? 'profile.html'
+    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
+  const primaryText=loggedIn
+    ? (isAi?'订阅查看完整报告':'进入个人中心')
+    : '立即登录';
 
   return '<div class="qc-premium-gate">'+
     '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
     '<h3>'+qcEscape(title)+'</h3>'+
     '<p>'+qcEscape(desc)+'</p>'+
     '<a class="qc-premium-primary" href="'+primaryHref+'">'+qcEscape(primaryText)+'</a>'+
-    secondary+
   '</div>';
 }
 
@@ -1204,22 +1209,22 @@ async function loadJcFrontend(){
     const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
     const filtered=dateRows;
     const premiumDate=selectedDate>=today;
-    const anonymousRestricted=!access.loggedIn;
+    const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
 
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')){
-      $('#jcPredictionMeta').textContent=!access.loggedIn
+      $('#jcPredictionMeta').textContent=predictionRestricted
         ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
         : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=filtered.length+'场';
     if($('#jcYesterdayMeta')){
-      const reviewCount=anonymousRestricted?finishedPrevious.length:previousRows.length;
+      const reviewCount=predictionRestricted?finishedPrevious.length:previousRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=!access.loggedIn
+      $('#jcPredictionTitle').textContent=predictionRestricted
         ? '今日预测'
         : (selectedDate===today?'今日预测':'当日赛程');
     }
@@ -1239,8 +1244,8 @@ async function loadJcFrontend(){
 
     try{
       if(reviewCards){
-        if(anonymousRestricted){
-          // 未登录首页只展示已经完赛的复盘；未完赛场次完全不显示。
+        if(predictionRestricted){
+          // 未登录或无有效 Pro：首页只展示已经完赛的复盘；未完赛场次完全不显示。
           reviewCards.innerHTML=finishedPrevious.length
             ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
             : '<div class="jc-review-empty">上一日暂时还没有完赛场次</div>';
@@ -1273,12 +1278,9 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(anonymousRestricted){
-        // 未登录：完赛复盘下面始终直接显示“今日预测”登录门槛。
+      if(predictionRestricted){
+        // 未登录或无有效 Pro：历史只看完赛复盘，预测入口始终固定到今日。
         cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
-      }else if(premiumDate && !access.isPro){
-        // 已登录但无 Pro：保持原来的今日预测区权限提示。
-        cards.innerHTML=qcPremiumGateHtml(access,'prediction',selectedDate===today?'today':'selected');
       }else{
         cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
         jcBindOverviewRows(cards);
@@ -1781,14 +1783,20 @@ function jcRenderFactsShell(){
 function jcRenderAiLockedPanel(m,pools,access){
   const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
   const loggedIn=Boolean(access?.loggedIn);
-  const loginHref='login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
+  const actionHref=loggedIn
+    ? 'profile.html'
+    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
+  const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
+  const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
+  const lockDesc=loggedIn
+    ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，开通或续费 Pro 后可查看完整内容。'
+    : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。';
+
   return '<div class="jc-ai-placeholder jc-ai-page jc-ai-locked">'+
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
     '<div class="jc-ai-lock-note">'+
-      '<b>🔒 '+(loggedIn?'当前账号暂无赛前分析权限':'登录后查看完整赛前分析报告')+'</b>'+
-      '<span>'+(loggedIn
-        ? '赛前分析报告属于 Pro 内容；比赛开始后，已登录用户可按现有规则查看。'
-        : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。')+'</span>'+
+      '<b>🔒 '+qcEscape(lockTitle)+'</b>'+
+      '<span>'+qcEscape(lockDesc)+'</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
       '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
@@ -1798,9 +1806,7 @@ function jcRenderAiLockedPanel(m,pools,access){
     '<div class="jc-ai-locked-preview" aria-hidden="true">'+
       '<div></div><div></div><div></div>'+
     '</div>'+
-    (loggedIn
-      ? qcPremiumGateHtml(access,'ai')
-      : '<div class="jc-ai-login-cta"><a class="qc-premium-primary" href="'+loginHref+'">🔒 登录查看完整报告</a></div>')+
+    '<div class="jc-ai-login-cta"><a class="qc-premium-primary" href="'+actionHref+'">'+actionText+'</a></div>'+
   '</div>';
 }
 
