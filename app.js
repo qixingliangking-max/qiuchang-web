@@ -1093,9 +1093,13 @@ async function loadJcFrontend(){
   const initialYesterday=qcAddDays(initialToday,-1);
   const overviewMinDate=qcAddDays(initialToday,-3);
   const overviewMaxDate=qcAddDays(initialToday,1);
-  const isOverviewDateAllowed=ds=>/^\d{4}-\d{2}-\d{2}$/.test(ds||'') && ds>=overviewMinDate && ds<=overviewMaxDate;
+  const isValidOverviewDate=ds=>/^\d{4}-\d{2}-\d{2}$/.test(ds||'');
+  const isOverviewDateAllowed=ds=>isValidOverviewDate(ds) && ds>=overviewMinDate && ds<=overviewMaxDate;
+  const access=await qcGetAccessState();
   const initialDateRaw=new URLSearchParams(location.search).get('date');
-  const initialDate=isOverviewDateAllowed(initialDateRaw)?initialDateRaw:initialToday;
+  const initialDate=access.loggedIn
+    ? (isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday)
+    : (isOverviewDateAllowed(initialDateRaw)?initialDateRaw:initialToday);
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
     qcAddDays(initialToday,-2),
@@ -1121,7 +1125,6 @@ async function loadJcFrontend(){
     }catch(err){ console.warn('昨日赛果缓存不可用',err); }
   }
 
-  const accessPromise=qcGetAccessState();
   const requestedDate=initialDate;
   const requestedPrevious=qcAddDays(requestedDate,-1);
   const [currentResult,previousResult,availableDates]=await Promise.all([
@@ -1140,7 +1143,6 @@ async function loadJcFrontend(){
   }
 
   let allRows=(data||[]).filter(m=>m.match_date);
-  const access=await accessPromise;
   const today=initialToday;
   let selectedDate=initialDate;
   let activeLeague='全部';
@@ -1157,13 +1159,14 @@ async function loadJcFrontend(){
 
   function setUrlDate(ds){
     const u=new URL(location.href);
-    if(dateLocked) u.searchParams.delete('date');
+    if(ds===today) u.searchParams.delete('date');
     else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
   }
 
   async function loadFrontendDateBundle(ds){
-    if(!isOverviewDateAllowed(ds)) return;
+    if(!isValidOverviewDate(ds)) return;
+    if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
     cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
     if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在读取昨日赛果…</div>';
     const prev=qcAddDays(ds,-1);
@@ -1201,11 +1204,11 @@ async function loadJcFrontend(){
     if($('#jcPredictionTitle')) $('#jcPredictionTitle').textContent=selectedDate===today?'今日预测':'当日赛程';
 
     if(prev){
-      prev.disabled=selectedDate<=overviewMinDate;
+      prev.disabled=!access.loggedIn && selectedDate<=overviewMinDate;
       prev.setAttribute('aria-disabled',String(prev.disabled));
     }
     if(next){
-      next.disabled=selectedDate>=overviewMaxDate;
+      next.disabled=!access.loggedIn && selectedDate>=overviewMaxDate;
       next.setAttribute('aria-disabled',String(next.disabled));
     }
     if(todayBtn){
@@ -1297,27 +1300,27 @@ async function loadJcFrontend(){
     try{
       qcRenderDateCalendar(
         selectedDate,
-        overviewSelectableDates,
+        access.loggedIn ? availableDates : overviewSelectableDates,
         ds=>{ loadFrontendDateBundle(ds); },
-        '今日速览仅可查看前3天、今天和明天'
+        access.loggedIn ? '选择有比赛数据的日期' : '未登录仅可查看前3天、今天和明天'
       );
     }catch(err){ console.error('日期日历渲染失败',err); }
   }
   if(prev) prev.onclick=()=>{
     const ds=qcAddDays(selectedDate,-1);
-    if(isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
+    if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
   };
   if(next) next.onclick=()=>{
     const ds=qcAddDays(selectedDate,1);
-    if(isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
+    if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
   };
   if(todayBtn) todayBtn.onclick=()=>{loadFrontendDateBundle(today);};
   if(label) label.onclick=()=>{
     qcRenderDateCalendar(
       selectedDate,
-      overviewSelectableDates,
+      access.loggedIn ? availableDates : overviewSelectableDates,
       ds=>{ loadFrontendDateBundle(ds); },
-      '今日速览仅可查看前3天、今天和明天'
+      access.loggedIn ? '选择有比赛数据的日期' : '未登录仅可查看前3天、今天和明天'
     );
     if(pop) pop.hidden=!pop.hidden;
   };
