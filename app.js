@@ -1000,7 +1000,7 @@ async function loadJcFootball(){
   }
 
   async function loadFootballDate(ds){
-    cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
+    cards.innerHTML='<div class="profile-card">正在加载中…</div>';
     const result=await jcFetchDateRows(ds,true);
     if(result.error){ cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>'; return; }
     allRows=(result.data||[]).filter(m=>m.match_date);
@@ -1184,8 +1184,8 @@ async function loadJcFrontend(){
   async function loadFrontendDateBundle(ds){
     if(!isValidOverviewDate(ds)) return;
     if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
-    cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
-    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在读取昨日赛果…</div>';
+    cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在加载中…</div>';
     const prev=qcAddDays(ds,-1);
     const [currentResult,previousResult]=await Promise.all([
       jcFetchOverviewDateRows(ds),
@@ -1779,7 +1779,7 @@ function jcRenderFactsShell(){
     '<button type="button" data-facts-tab="stats">技术统计</button>'+
     '<button type="button" data-facts-tab="h2h">历史交锋</button>'+
   '</div>'+
-  '<div id="jcFactsContent"><div class="profile-card">正在读取赛况数据…</div></div>';
+  '<div id="jcFactsContent"><div class="profile-card">正在加载中…</div></div>';
 }
 
 function jcRenderAiLockedPanel(m,pools,access){
@@ -2007,7 +2007,7 @@ async function setupJcMatchDetail(){
       '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
       '<div class="center-score"><strong class="'+(jcScoreInfo(m).finished?'jc-detail-score-finished':'')+'">'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
       '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
-    '<div class="profile-card">正在读取比赛分析…</div>');
+    '<div class="jc-match-loading-shell" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div>');
   jcSyncDetailNavToCurrent(root);
 
   const [access,detailResult,snapshotResult]=await Promise.all([
@@ -2598,7 +2598,7 @@ async function setupProfile(){
 
   if(nicknameEl) nicknameEl.textContent = nickname;
   if(nicknameInput) nicknameInput.value = nickname;
-  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : '正在读取会员状态…';
+  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : '正在加载中…';
   if(statusEl){
     statusEl.textContent = status === 'active' ? '正常' : '已停用';
     statusEl.style.color = status === 'active' ? 'var(--green)' : 'var(--red)';
