@@ -2848,3 +2848,75 @@ button.qc-date-locked-control:disabled{
   .jc-ai-page-stack{gap:14px}
   .jc-ai-play-panel{padding:16px}
 }
+
+
+/* 2026-09-25 mobile football card density + post-match hit label */
+.jc-card-hit-play .jc-card-hit-title{
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  margin:0;
+  color:#d95a51;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.2;
+}
+
+@media(max-width:760px){
+  .qc-football-page .jc-football-grid{
+    gap:12px;
+  }
+
+  .qc-football-page .jc-football-card-final .jc-card-link{
+    min-height:0!important;
+    padding:12px 14px 9px!important;
+  }
+
+  .qc-football-page .jc-football-card-final .jc-card-top{
+    margin-bottom:7px;
+  }
+
+  .qc-football-page .jc-football-card-final .jc-card-score-axis{
+    min-height:78px;
+    padding:0 0 8px;
+  }
+
+  .qc-football-page .jc-mini-head,
+  .qc-football-page .jc-mini-row{
+    gap:5px;
+    padding:8px 10px;
+  }
+
+  .qc-football-page .jc-football-card-final .jc-card-detail-btn{
+    margin-top:5px!important;
+    padding-top:8px;
+    padding-bottom:2px;
+  }
+
+  .qc-football-page .jc-card-hit-placeholder{
+    display:none!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+  }
+
+  .qc-football-page .jc-card-hit-play:not(.jc-card-hit-placeholder){
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+    margin-top:4px;
+    padding:8px 0 2px;
+  }
+
+  .qc-football-page .jc-card-hit-play .jc-card-hit-title{
+    padding:3px 7px;
+    border-radius:999px;
+    background:#fff2f0;
+    font-size:10px;
+  }
+
+  .qc-football-page .jc-card-hit-items{
+    gap:5px;
+  }
+}
