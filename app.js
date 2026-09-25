@@ -579,8 +579,9 @@ function jcFootballHitOddsHtml(m,model,score){
 
   if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
   return '<div class="jc-card-hit-band jc-card-hit-play">'+
+    '<span class="jc-card-hit-title">赛后命中玩法</span>'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
-      '<span class="jc-card-hit-chip" title="'+qcEscape(x.kind)+'">'+
+      '<span class="jc-card-hit-chip" title="赛后命中｜'+qcEscape(x.kind)+'">'+
         '<small>'+qcEscape(x.kind)+'</small><b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
       '</span>'
     ).join('')+'</div>'+
