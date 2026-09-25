@@ -1693,6 +1693,7 @@ function jcRenderAiLockedPanel(m,pools,access){
 }
 
 function jcRenderAiPanel(m,pools,model,analysis){
+  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
   const modelReady=!!model;
   const statusText=modelReady
     ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
@@ -1710,6 +1711,24 @@ function jcRenderAiPanel(m,pools,model,analysis){
   const htftText=model?([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
   const goalsText=model?jcPublicTotalGoalsText(model.goal_range):'待生成';
   const topText=model?jcModelTopText(model):'待生成';
+
+  // Fixed data overview: this block is intentionally preserved exactly above the article report.
+  const modelBlock=
+    '<div class="jc-ai-model-summary">'+
+      '<div><span>模型方向</span><b>'+qcEscape(directionText)+'</b></div>'+
+      '<div><span>单选倾向</span><b>'+qcEscape(singleText)+'</b></div>'+
+      '<div><span>官方让球</span><b>'+qcEscape(handicapText)+'</b></div>'+
+      '<div><span>半全场</span><b>'+qcEscape(htftText)+'</b></div>'+
+      '<div><span>总进球</span><b>'+qcEscape(goalsText)+'</b></div>'+
+      '<div><span>TOP</span><b>'+qcEscape(topText)+'</b></div>'+
+    '</div>';
+
+  const contextBlock=
+    '<div class="jc-ai-context">'+
+      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
+      '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
+    '</div>';
 
   const aiParagraphs=(values)=>{
     const list=(values||[])
@@ -1773,6 +1792,9 @@ function jcRenderAiPanel(m,pools,model,analysis){
       '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜AI分析报告</h2>'+
       '<span>'+qcEscape(statusText)+'</span>'+
     '</div>'+
+    '<div class="jc-ai-status"><b>分析状态</b><span>'+qcEscape(statusText)+'</span></div>'+
+    modelBlock+
+    contextBlock+
     analysisHtml+
   '</div>';
 }
