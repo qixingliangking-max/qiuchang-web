@@ -3105,3 +3105,22 @@ button.qc-date-locked-control:disabled{
     font-size:13px;
   }
 }
+
+
+/* 2026-09-26 locked pre-match report login CTA */
+.jc-ai-login-cta{
+  display:flex;
+  justify-content:center;
+  margin-top:22px;
+  padding:4px 0 2px;
+}
+.jc-ai-login-cta .qc-premium-primary{
+  min-width:260px;
+}
+@media(max-width:640px){
+  .jc-ai-login-cta{margin-top:20px}
+  .jc-ai-login-cta .qc-premium-primary{
+    width:100%;
+    min-width:0;
+  }
+}
