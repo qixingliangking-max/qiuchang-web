@@ -142,7 +142,7 @@ function jcBusinessDate(m){
   return m?.business_date || m?.match_date || '';
 }
 
-function qcRenderDateCalendar(selectedDate,availableDates,onSelect){
+function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选择有比赛数据的日期'){
   const box=$('#jcDatePopover');
   if(!box) return;
   const base=new Date(selectedDate+'T12:00:00+08:00');
@@ -161,7 +161,7 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect){
     cells+='<button type="button" class="'+cls+'" data-date="'+ds+'" '+(has?'':'disabled')+'>'+day+'</button>';
   }
   box.innerHTML=
-    '<div class="jc-cal-note">选择有比赛数据的日期</div>'+
+    '<div class="jc-cal-note">'+qcEscape(noteText)+'</div>'+
     '<div class="jc-cal-head"><b>'+year+'年'+month+'月</b></div>'+
     '<div class="jc-cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>'+
     '<div class="jc-cal-grid">'+cells+'</div>';
@@ -949,7 +949,7 @@ async function loadJcFootball(){
 
   function setUrlDate(ds){
     const u=new URL(location.href);
-    if(dateLocked) u.searchParams.delete('date');
+    if(ds===today) u.searchParams.delete('date');
     else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
   }
@@ -1091,7 +1091,18 @@ async function loadJcFrontend(){
   const calendarToday=qcBeijingToday();
   const initialToday=calendarToday;
   const initialYesterday=qcAddDays(initialToday,-1);
-  const initialDate=new URLSearchParams(location.search).get('date');
+  const overviewMinDate=qcAddDays(initialToday,-3);
+  const overviewMaxDate=qcAddDays(initialToday,1);
+  const isOverviewDateAllowed=ds=>/^\d{4}-\d{2}-\d{2}$/.test(ds||'') && ds>=overviewMinDate && ds<=overviewMaxDate;
+  const initialDateRaw=new URLSearchParams(location.search).get('date');
+  const initialDate=isOverviewDateAllowed(initialDateRaw)?initialDateRaw:initialToday;
+  const overviewSelectableDates=[
+    qcAddDays(initialToday,-3),
+    qcAddDays(initialToday,-2),
+    qcAddDays(initialToday,-1),
+    initialToday,
+    qcAddDays(initialToday,1)
+  ];
   const cacheKey='qc-finished-review-'+initialYesterday;
   let cachedReviewShown=false;
   if(!initialDate || initialDate===initialToday){
@@ -1111,7 +1122,7 @@ async function loadJcFrontend(){
   }
 
   const accessPromise=qcGetAccessState();
-  const requestedDate=initialDate && /^\d{4}-\d{2}-\d{2}$/.test(initialDate)?initialDate:initialToday;
+  const requestedDate=initialDate;
   const requestedPrevious=qcAddDays(requestedDate,-1);
   const [currentResult,previousResult,availableDates]=await Promise.all([
     jcFetchOverviewDateRows(requestedDate),
@@ -1131,11 +1142,7 @@ async function loadJcFrontend(){
   let allRows=(data||[]).filter(m=>m.match_date);
   const access=await accessPromise;
   const today=initialToday;
-  const paramDate=new URLSearchParams(location.search).get('date');
-  const dateLocked=!access.loggedIn;
-  let selectedDate=dateLocked
-    ? today
-    : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
+  let selectedDate=initialDate;
   let activeLeague='全部';
   let modelsLoaded=false;
   let reviewPendingExpanded=false;
@@ -1148,15 +1155,6 @@ async function loadJcFrontend(){
   const leagueToggle=$('#jcLeagueToggle');
   const leaguePop=$('#jcLeaguePopover');
 
-  if(dateLocked){
-    [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
-      el.disabled=true;
-      el.setAttribute('aria-disabled','true');
-      el.classList.add('qc-date-locked-control');
-    });
-    if(pop) pop.hidden=true;
-  }
-
   function setUrlDate(ds){
     const u=new URL(location.href);
     if(dateLocked) u.searchParams.delete('date');
@@ -1165,6 +1163,7 @@ async function loadJcFrontend(){
   }
 
   async function loadFrontendDateBundle(ds){
+    if(!isOverviewDateAllowed(ds)) return;
     cards.innerHTML='<div class="profile-card">正在读取该日期赛程…</div>';
     if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在读取昨日赛果…</div>';
     const prev=qcAddDays(ds,-1);
@@ -1200,6 +1199,19 @@ async function loadJcFrontend(){
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=filtered.length+'场';
     if($('#jcYesterdayMeta')) $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+previousRows.length+'场';
     if($('#jcPredictionTitle')) $('#jcPredictionTitle').textContent=selectedDate===today?'今日预测':'当日赛程';
+
+    if(prev){
+      prev.disabled=selectedDate<=overviewMinDate;
+      prev.setAttribute('aria-disabled',String(prev.disabled));
+    }
+    if(next){
+      next.disabled=selectedDate>=overviewMaxDate;
+      next.setAttribute('aria-disabled',String(next.disabled));
+    }
+    if(todayBtn){
+      todayBtn.disabled=selectedDate===today;
+      todayBtn.setAttribute('aria-disabled',String(todayBtn.disabled));
+    }
 
     try{
       if(reviewCards){
@@ -1283,24 +1295,32 @@ async function loadJcFrontend(){
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
 
     try{
-      if(!dateLocked){
-        qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-          loadFrontendDateBundle(ds);
-        });
-      }
+      qcRenderDateCalendar(
+        selectedDate,
+        overviewSelectableDates,
+        ds=>{ loadFrontendDateBundle(ds); },
+        '今日速览仅可查看前3天、今天和明天'
+      );
     }catch(err){ console.error('日期日历渲染失败',err); }
   }
-  if(!dateLocked){
-    if(prev) prev.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,-1));};
-    if(next) next.onclick=()=>{loadFrontendDateBundle(qcAddDays(selectedDate,1));};
-    if(todayBtn) todayBtn.onclick=()=>{loadFrontendDateBundle(today);};
-    if(label) label.onclick=()=>{
-      qcRenderDateCalendar(selectedDate,availableDates,(ds)=>{
-        loadFrontendDateBundle(ds);
-      });
-      if(pop) pop.hidden=!pop.hidden;
-    };
-  }
+  if(prev) prev.onclick=()=>{
+    const ds=qcAddDays(selectedDate,-1);
+    if(isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
+  };
+  if(next) next.onclick=()=>{
+    const ds=qcAddDays(selectedDate,1);
+    if(isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
+  };
+  if(todayBtn) todayBtn.onclick=()=>{loadFrontendDateBundle(today);};
+  if(label) label.onclick=()=>{
+    qcRenderDateCalendar(
+      selectedDate,
+      overviewSelectableDates,
+      ds=>{ loadFrontendDateBundle(ds); },
+      '今日速览仅可查看前3天、今天和明天'
+    );
+    if(pop) pop.hidden=!pop.hidden;
+  };
 
   document.addEventListener('click',e=>{
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
