@@ -1194,7 +1194,7 @@ async function loadJcFrontend(){
     const pendingPrevious=previousRows.filter(m=>!jcScoreInfo(m).finished);
     const filtered=dateRows;
     const premiumDate=selectedDate>=today;
-    const gateBeforePending=premiumDate && !access.isPro;
+    const anonymousDynamicGate=premiumDate && !access.loggedIn;
     const predictionShell=$('.jc-prediction-shell');
 
     if(label) label.textContent=qcDateLabel(selectedDate);
@@ -1218,44 +1218,48 @@ async function loadJcFrontend(){
 
     try{
       if(reviewCards){
-        const finishedHtml=finishedPrevious.length
-          ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
-          : '<div class="jc-review-empty">上一竞彩日暂时还没有完赛场次</div>';
+        if(anonymousDynamicGate){
+          const finishedHtml=finishedPrevious.length
+            ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
+            : '<div class="jc-review-empty">上一竞彩日暂时还没有完赛场次</div>';
 
-        const gateHtml=gateBeforePending
-          ? '<div class="jc-review-inline-gate">'+qcPremiumGateHtml(access,'prediction')+'</div>'
-          : '';
+          const gateHtml='<div class="jc-review-inline-gate">'+qcPremiumGateHtml(access,'prediction')+'</div>';
 
-        let pendingHtml='';
-        if(pendingPrevious.length){
-          const liveCount=pendingPrevious.filter(m=>{
-            const sc=jcScoreInfo(m);
-            return sc.started && !sc.finished;
-          }).length;
-          const pendingLabel=liveCount>0
-            ? '还有 '+pendingPrevious.length+' 场进行中 / 待赛'
-            : '还有 '+pendingPrevious.length+' 场待赛';
-          pendingHtml=
-            '<div class="jc-review-pending-zone">'+
-              '<button type="button" class="jc-review-pending-toggle" aria-expanded="'+(reviewPendingExpanded?'true':'false')+'">'+
-                '<span>'+qcEscape(pendingLabel)+'</span><b>'+(reviewPendingExpanded?'收起':'展开查看')+' '+(reviewPendingExpanded?'↑':'↓')+'</b>'+
-              '</button>'+
-              '<div class="jc-review-pending-list" '+(reviewPendingExpanded?'':'hidden')+'>'+
-                jcRenderYesterdayReview(pendingPrevious,calendarToday)+
-              '</div>'+
-            '</div>';
-        }
+          let pendingHtml='';
+          if(pendingPrevious.length){
+            const liveCount=pendingPrevious.filter(m=>{
+              const sc=jcScoreInfo(m);
+              return sc.started && !sc.finished;
+            }).length;
+            const pendingLabel=liveCount>0
+              ? '还有 '+pendingPrevious.length+' 场进行中 / 待赛'
+              : '还有 '+pendingPrevious.length+' 场待赛';
+            pendingHtml=
+              '<div class="jc-review-pending-zone">'+
+                '<button type="button" class="jc-review-pending-toggle" aria-expanded="'+(reviewPendingExpanded?'true':'false')+'">'+
+                  '<span>'+qcEscape(pendingLabel)+'</span><b>'+(reviewPendingExpanded?'收起':'展开查看')+' '+(reviewPendingExpanded?'↑':'↓')+'</b>'+
+                '</button>'+
+                '<div class="jc-review-pending-list" '+(reviewPendingExpanded?'':'hidden')+'>'+
+                  jcRenderYesterdayReview(pendingPrevious,calendarToday)+
+                '</div>'+
+              '</div>';
+          }
 
-        reviewCards.innerHTML=finishedHtml+gateHtml+pendingHtml;
-        jcBindOverviewRows(reviewCards);
+          reviewCards.innerHTML=finishedHtml+gateHtml+pendingHtml;
+          jcBindOverviewRows(reviewCards);
 
-        const pendingToggle=$('.jc-review-pending-toggle',reviewCards);
-        if(pendingToggle){
-          pendingToggle.onclick=e=>{
-            e.preventDefault();
-            reviewPendingExpanded=!reviewPendingExpanded;
-            render();
-          };
+          const pendingToggle=$('.jc-review-pending-toggle',reviewCards);
+          if(pendingToggle){
+            pendingToggle.onclick=e=>{
+              e.preventDefault();
+              reviewPendingExpanded=!reviewPendingExpanded;
+              render();
+            };
+          }
+        }else{
+          // 登录后恢复原来的页面结构：昨日回看完整显示，不插入登录卡或动态分界。
+          reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
+          jcBindOverviewRows(reviewCards);
         }
 
         if(modelsLoaded && previousDate===initialYesterday && previousRows.length &&
@@ -1279,15 +1283,19 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(gateBeforePending){
-        // The access gate is already placed directly after the latest finished review row.
-        // Hide the duplicate lower "today prediction" gate so users see the call-to-action early.
+      if(anonymousDynamicGate){
+        // 未登录首页：登录卡提前插在最新完赛之后，避免重复出现下方预测门槛。
         if(predictionShell) predictionShell.hidden=true;
         cards.innerHTML='';
       }else{
         if(predictionShell) predictionShell.hidden=false;
-        cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
-        jcBindOverviewRows(cards);
+        if(premiumDate && !access.isPro){
+          // 登录但无 Pro：保持原来的今日预测区权限提示，不改变页面结构。
+          cards.innerHTML=qcPremiumGateHtml(access,'prediction');
+        }else{
+          cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
+          jcBindOverviewRows(cards);
+        }
       }
     }catch(err){
       console.error('今日预测渲染失败',err);
