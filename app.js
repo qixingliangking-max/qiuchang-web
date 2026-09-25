@@ -1954,33 +1954,120 @@ function jcSyncDetailNavToCurrent(root){
   requestAnimationFrame(()=>requestAnimationFrame(sync));
 }
 
-async function setupJcMatchDetail(){
+const jcDetailMatchCache=new Map();
+let jcDetailDayCache=null;
+let jcDetailLoadSeq=0;
+let jcDetailPopstateBound=false;
+
+function jcShowDetailSwitchLoader(root){
+  const main=$('.jc-detail-main',root);
+  if(!main) return;
+  main.classList.add('jc-detail-switching');
+  if($('.jc-detail-switch-loader',main)) return;
+  const loader=document.createElement('div');
+  loader.className='jc-detail-switch-loader';
+  loader.setAttribute('role','status');
+  loader.setAttribute('aria-live','polite');
+  loader.innerHTML='<span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span>';
+  main.appendChild(loader);
+}
+
+function jcBindDetailMatchSwitches(root){
+  if(!root) return;
+  $('.jc-detail-match-item',root).forEach(link=>{
+    link.onclick=e=>{
+      if(e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const url=new URL(link.href,location.href);
+      const targetId=url.searchParams.get('id');
+      if(!targetId) return;
+      e.preventDefault();
+      const currentId=new URLSearchParams(location.search).get('id');
+      if(String(targetId)===String(currentId)) return;
+
+      history.pushState({jcMatch:true},'',url.pathname+url.search);
+      $('.jc-detail-match-item',root).forEach(x=>x.classList.toggle('active',x===link));
+      jcShowDetailSwitchLoader(root);
+      setupJcMatchDetail({id:targetId,switching:true});
+    };
+  });
+}
+
+function jcPrefetchDetailNeighbors(rows,currentId){
+  if(!window.qcSupabase || !Array.isArray(rows) || rows.length<2) return;
+  const idx=rows.findIndex(x=>String(x.id)===String(currentId));
+  if(idx<0) return;
+  const ids=[rows[idx-1]?.id,rows[idx+1]?.id]
+    .filter(Boolean)
+    .filter(id=>!jcDetailMatchCache.has(String(id)));
+  if(!ids.length) return;
+  window.qcSupabase
+    .from('jc_matches')
+    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
+    .in('id',ids)
+    .then(({data,error})=>{
+      if(error) return;
+      (data||[]).forEach(row=>jcDetailMatchCache.set(String(row.id),row));
+    });
+}
+
+function jcBindDetailPopstate(){
+  if(jcDetailPopstateBound) return;
+  jcDetailPopstateBound=true;
+  window.addEventListener('popstate',()=>{
+    const root=$('#jcMatchDetailRoot');
+    if(!root) return;
+    const id=new URLSearchParams(location.search).get('id');
+    if(!id) return;
+    jcShowDetailSwitchLoader(root);
+    setupJcMatchDetail({id,switching:true});
+  });
+}
+
+async function setupJcMatchDetail(options={}){
   const root=$('#jcMatchDetailRoot');
   if(!root || !window.qcSupabase) return;
 
-  const id=new URLSearchParams(location.search).get('id');
+  const loadSeq=++jcDetailLoadSeq;
+  const id=options.id || new URLSearchParams(location.search).get('id');
   if(!id){
     root.innerHTML='<div class="profile-card">缺少比赛参数。</div>';
     return;
   }
 
-  const {data:m,error}=await window.qcSupabase
-    .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
-    .eq('id',id)
-    .single();
+  jcBindDetailPopstate();
+
+  let m=jcDetailMatchCache.get(String(id))||null;
+  let error=null;
+  if(!m){
+    const matchResult=await window.qcSupabase
+      .from('jc_matches')
+      .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
+      .eq('id',id)
+      .single();
+    if(loadSeq!==jcDetailLoadSeq) return;
+    m=matchResult.data||null;
+    error=matchResult.error||null;
+    if(m) jcDetailMatchCache.set(String(m.id),m);
+  }
 
   if(error || !m){
     root.innerHTML='<div class="profile-card">这场比赛暂时无法读取。</div>';
     return;
   }
 
-  const {data:dayMatches}=await window.qcSupabase
-    .from('jc_matches')
-    .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status')
-    .eq('business_date',m.business_date)
-    .order('match_date',{ascending:true}).order('match_time',{ascending:true});
-  const sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+  let sameDay=null;
+  if(jcDetailDayCache?.date===m.business_date){
+    sameDay=jcDetailDayCache.rows;
+  }else{
+    const {data:dayMatches}=await window.qcSupabase
+      .from('jc_matches')
+      .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status')
+      .eq('business_date',m.business_date)
+      .order('match_date',{ascending:true}).order('match_time',{ascending:true});
+    if(loadSeq!==jcDetailLoadSeq) return;
+    sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+    jcDetailDayCache={date:m.business_date,rows:sameDay};
+  }
   const detailNav='<aside class="jc-detail-sidebar">'+
     '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
     '<div class="jc-detail-match-list">'+sameDay.map(x=>{
@@ -2009,15 +2096,33 @@ async function setupJcMatchDetail(){
       '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
     '<div class="jc-match-loading-shell" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div>');
   jcSyncDetailNavToCurrent(root);
+  jcBindDetailMatchSwitches(root);
+  jcPrefetchDetailNeighbors(sameDay,m.id);
 
-  const [access,detailResult,snapshotResult]=await Promise.all([
-    qcGetAccessState(),
-    window.qcSupabase.from('jc_match_details')
-      .select('detail_type,payload,source_endpoint,fetched_at').eq('jc_match_id',id),
-    window.qcSupabase.from('jc_market_snapshots')
-      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time').eq('jc_match_id',id)
-  ]);
+  const access=await qcGetAccessState();
+  if(loadSeq!==jcDetailLoadSeq) return;
   const canViewPremium=qcCanViewPrematchContent(m,access);
+  const detailPromise=window.qcSupabase.from('jc_match_details')
+      .select('detail_type,payload,source_endpoint,fetched_at').eq('jc_match_id',id);
+  const snapshotPromise=window.qcSupabase.from('jc_market_snapshots')
+      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time').eq('jc_match_id',id);
+  const modelPromise=canViewPremium
+    ? window.qcSupabase.from('jc_model_outputs')
+      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+      .eq('jc_match_id',id)
+      .eq('is_locked',true)
+      .eq('is_current',true)
+      .order('locked_at',{ascending:false})
+      .limit(1)
+    : Promise.resolve({data:[],error:null});
+
+  const [detailResult,snapshotResult,modelResult]=await Promise.all([
+    detailPromise,
+    snapshotPromise,
+    modelPromise
+  ]);
+  if(loadSeq!==jcDetailLoadSeq) return;
+
   const {data:detailRows,error:detailError}=detailResult;
   const {data:snapshots,error:snapshotError}=snapshotResult;
 
@@ -2031,16 +2136,10 @@ async function setupJcMatchDetail(){
   let aiAnalysis=null;
 
   if(canViewPremium){
-    const {data:modelRows,error:modelError}=await window.qcSupabase
-      .from('jc_model_outputs')
-      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-      .eq('jc_match_id',id)
-      .eq('is_locked',true)
-      .eq('is_current',true)
-      .order('locked_at',{ascending:false})
-      .limit(1);
+    const modelRows=modelResult?.data||[];
+    const modelError=modelResult?.error||null;
     if(modelError) console.warn('读取模型锁板结果失败',modelError);
-    model=(modelRows||[])[0]||null;
+    model=modelRows[0]||null;
 
     if(model){
       const {data:aiRows,error:aiError}=await window.qcSupabase
@@ -2049,6 +2148,7 @@ async function setupJcMatchDetail(){
         .eq('model_output_id',model.id)
         .order('generated_at',{ascending:false})
         .limit(1);
+      if(loadSeq!==jcDetailLoadSeq) return;
       if(aiError) console.warn('读取AI分析失败',aiError);
       aiAnalysis=(aiRows||[])[0]||null;
     }
@@ -2078,6 +2178,8 @@ async function setupJcMatchDetail(){
     '</div>'+
     '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>');
   jcSyncDetailNavToCurrent(root);
+  jcBindDetailMatchSwitches(root);
+  jcPrefetchDetailNeighbors(sameDay,m.id);
 
   const panel=$('#jcMainPanel');
   let factsData=null;
