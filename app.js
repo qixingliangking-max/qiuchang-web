@@ -1147,7 +1147,7 @@ async function loadJcFrontend(){
   let selectedDate=initialDate;
   let activeLeague='全部';
   let modelsLoaded=false;
-  let reviewPendingExpanded=false;
+  let reviewPendingExpanded=true;
 
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
