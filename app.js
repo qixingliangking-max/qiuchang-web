@@ -1983,12 +1983,20 @@ async function setupJcMatchDetail(){
   const sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   const detailNav='<aside class="jc-detail-sidebar">'+
     '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
-    '<div class="jc-detail-match-list">'+sameDay.map(x=>
-      '<a class="jc-detail-match-item'+(String(x.id)===String(m.id)?' active':'')+'" href="jc-match.html?id='+encodeURIComponent(x.id)+'">'+
-        '<span><b>'+qcEscape(x.match_num||'竞彩')+'</b><em>'+qcEscape(x.league_short_name||'—')+'</em></span>'+
+    '<div class="jc-detail-match-list">'+sameDay.map(x=>{
+      const compactNum=String(x.match_num||'竞彩').replace(/^周[一二三四五六日天]/,'');
+      const compactTime=String(x.match_time||'').slice(0,5);
+      return '<a class="jc-detail-match-item'+(String(x.id)===String(m.id)?' active':'')+'" href="jc-match.html?id='+encodeURIComponent(x.id)+'">'+
+        '<span>'+
+          '<b class="jc-detail-num-desktop">'+qcEscape(x.match_num||'竞彩')+'</b>'+
+          '<b class="jc-detail-num-mobile">'+qcEscape(compactNum)+'</b>'+
+          '<em>'+qcEscape(x.league_short_name||'—')+'</em>'+
+          '<time class="jc-detail-match-time-mobile">'+qcEscape(compactTime)+'</time>'+
+        '</span>'+
         '<strong>'+qcEscape(x.home_team_name||'—')+' <i>vs</i> '+qcEscape(x.away_team_name||'—')+'</strong>'+
-        '<time>'+qcEscape(String(x.match_date||'').slice(5)+' '+String(x.match_time||'').slice(0,5))+'</time>'+
-      '</a>').join('')+'</div></aside>';
+        '<time class="jc-detail-match-time-desktop">'+qcEscape(String(x.match_date||'').slice(5)+' '+compactTime)+'</time>'+
+      '</a>';
+    }).join('')+'</div></aside>';
   const detailShell=content=>'<div class="jc-detail-layout">'+detailNav+'<section class="jc-detail-main">'+content+'</section></div>';
 
   // Show the match as soon as its basic record arrives. Premium data stays hidden
