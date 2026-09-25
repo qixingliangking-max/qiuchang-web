@@ -415,9 +415,7 @@ function qcPremiumGateHtml(access,kind='prediction'){
       : '今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
   const primaryHref=loggedIn?'profile.html':'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn?'进入个人中心':'立即登录';
-  const secondary=!loggedIn && !isAi
-    ? '<a class="qc-premium-secondary" href="register.html">还没有账号？立即注册</a>'
-    : '';
+  const secondary='';
 
   return '<div class="qc-premium-gate">'+
     '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
