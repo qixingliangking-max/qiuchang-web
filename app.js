@@ -1131,11 +1131,18 @@ async function loadJcFrontend(){
 
   const requestedDate=initialDate;
   const requestedPrevious=qcAddDays(requestedDate,-1);
-  const [currentResult,previousResult,availableDates]=await Promise.all([
+  const todayResultPromise=requestedDate===initialToday
+    ? Promise.resolve(null)
+    : jcFetchOverviewDateRows(initialToday);
+  const [currentResult,previousResult,availableDates,todayResult]=await Promise.all([
     jcFetchOverviewDateRows(requestedDate),
     jcFetchOverviewDateRows(requestedPrevious),
-    jcFetchAvailableDates()
+    jcFetchAvailableDates(),
+    todayResultPromise
   ]);
+  let todayPredictionCount=requestedDate===initialToday
+    ? (currentResult.data||[]).length
+    : (todayResult?.data||[]).length;
   const data=[...(currentResult.data||[]),...(previousResult.data||[])];
   const error=currentResult.error||previousResult.error;
 
@@ -1182,6 +1189,7 @@ async function loadJcFrontend(){
       return;
     }
     allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
+    if(ds===today) todayPredictionCount=(currentResult.data||[]).length;
     await jcAttachModels(allRows);
     selectedDate=ds;
     activeLeague='全部';
@@ -1200,16 +1208,20 @@ async function loadJcFrontend(){
     const predictionShell=$('.jc-prediction-shell');
 
     if(label) label.textContent=qcDateLabel(selectedDate);
-    if($('#jcPredictionMeta')) $('#jcPredictionMeta').textContent=(selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
+    if($('#jcPredictionMeta')){
+      $('#jcPredictionMeta').textContent=!access.loggedIn
+        ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
+        : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
+    }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=filtered.length+'场';
     if($('#jcYesterdayMeta')){
       const reviewCount=anonymousRestricted?finishedPrevious.length:previousRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=selectedDate===today
+      $('#jcPredictionTitle').textContent=!access.loggedIn
         ? '今日预测'
-        : (access.loggedIn?'当日赛程':'当日预测');
+        : (selectedDate===today?'今日预测':'当日赛程');
     }
 
     if(prev){
@@ -1263,7 +1275,7 @@ async function loadJcFrontend(){
       if(predictionShell) predictionShell.hidden=false;
       if(anonymousRestricted){
         // 未登录：完赛复盘下面始终直接显示“今日预测”登录门槛。
-        cards.innerHTML=qcPremiumGateHtml(access,'prediction',selectedDate===today?'today':'selected');
+        cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
       }else if(premiumDate && !access.isPro){
         // 已登录但无 Pro：保持原来的今日预测区权限提示。
         cards.innerHTML=qcPremiumGateHtml(access,'prediction',selectedDate===today?'today':'selected');
