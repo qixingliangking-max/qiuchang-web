@@ -970,6 +970,72 @@ const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_
 const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
 const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
 const qcJcDateRowsCache=new Map();
+const qcFrozenOverviewRowsCache=new Map();
+let qcFrozenOverviewManifestPromise=null;
+
+function qcLoadFrozenOverviewManifest(){
+  if(qcFrozenOverviewManifestPromise) return qcFrozenOverviewManifestPromise;
+  qcFrozenOverviewManifestPromise=fetch('data/overview/manifest.json',{cache:'no-cache'})
+    .then(async res=>{
+      if(!res.ok) return {version:1,dates:{}};
+      const data=await res.json();
+      return data && typeof data==='object' ? data : {version:1,dates:{}};
+    })
+    .catch(error=>{
+      console.warn('读取历史冻结索引失败，继续使用数据库',error);
+      return {version:1,dates:{}};
+    });
+  return qcFrozenOverviewManifestPromise;
+}
+
+function qcPrepareFrozenOverviewRows(rows){
+  return (Array.isArray(rows)?rows:[]).map(row=>{
+    const m={...row};
+    m.jc_model_outputs=Array.isArray(m.jc_model_outputs)?m.jc_model_outputs:[];
+    m.jc_market_snapshots=Array.isArray(m.jc_market_snapshots)?m.jc_market_snapshots:[];
+    m._jcModelsLoaded=true;
+    m._jcModelsLoading=false;
+    m._jcModelLoadFailed=false;
+    m._jcLatestSnapshotsLoaded=true;
+    m._jcFrozenOverview=true;
+    return m;
+  });
+}
+
+async function qcFetchFrozenOverviewDate(dateStr){
+  const key=String(dateStr||'');
+  const cached=qcFrozenOverviewRowsCache.get(key);
+  if(cached?.data) return {data:cached.data,error:null,fromFrozen:true};
+  if(cached?.promise) return cached.promise;
+
+  const manifest=await qcLoadFrozenOverviewManifest();
+  const file=manifest?.dates?.[key];
+  if(!file) return null;
+
+  const promise=fetch(file,{cache:'force-cache'})
+    .then(async res=>{
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const payload=await res.json();
+      const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
+      qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
+      return {data:rows,error:null,fromFrozen:true};
+    })
+    .catch(error=>{
+      qcFrozenOverviewRowsCache.delete(key);
+      console.warn('读取历史冻结快照失败 '+key,error);
+      return null;
+    });
+
+  qcFrozenOverviewRowsCache.set(key,{promise,savedAt:Date.now(),file});
+  return promise;
+}
+
+async function qcPrimeFrozenOverviewDates(dateList){
+  const manifest=await qcLoadFrozenOverviewManifest();
+  const dates=[...new Set((dateList||[]).filter(ds=>manifest?.dates?.[ds]))];
+  if(!dates.length) return;
+  await Promise.allSettled(dates.map(ds=>qcFetchFrozenOverviewDate(ds)));
+}
 
 async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
   if(!dateStr || !window.qcSupabase) return {data:[],error:null};
@@ -1009,6 +1075,10 @@ async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
 }
 
 async function jcFetchOverviewDateRows(dateStr,force=false){
+  // Frozen historical days bypass Supabase entirely.
+  // The manifest lookup is tiny and shared; if a day is not frozen we fall back to live data.
+  const frozen=await qcFetchFrozenOverviewDate(dateStr);
+  if(frozen) return frozen;
   return jcFetchDateRows(dateStr,false,force);
 }
 
@@ -1274,7 +1344,8 @@ async function loadJcFrontend(){
   const initialDateRaw=new URLSearchParams(location.search).get('date');
   const candidateDate=isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday;
 
-  // Auth and the likely first date bundle run together instead of serially.
+  // Auth, frozen-history index and the likely first date bundle all start together.
+  qcLoadFrozenOverviewManifest();
   const accessPromise=qcGetAccessState();
   const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
   const candidatePreviousPromise=jcFetchOverviewDateRows(qcAddDays(candidateDate,-1));
@@ -1307,6 +1378,17 @@ async function loadJcFrontend(){
       if(Array.isArray(dates) && dates.length) availableDates=dates;
     }).catch(err=>console.warn('日期索引延后读取失败',err));
   }
+
+  // Preload frozen history in the background. Guests get the full visible window
+  // (plus the previous day needed by "昨日回看"); signed-in users get up to 45 recent frozen days.
+  qcLoadFrozenOverviewManifest().then(manifest=>{
+    const frozenDates=Object.keys(manifest?.dates||{}).sort();
+    const guestDates=[qcAddDays(overviewMinDate,-1),...overviewSelectableDates];
+    const primeDates=access.loggedIn ? frozenDates.slice(-45) : guestDates;
+    const run=()=>qcPrimeFrozenOverviewDates(primeDates).catch(()=>{});
+    if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:700});
+    else setTimeout(run,120);
+  }).catch(()=>{});
 
   const cacheKey='qc-finished-review-'+initialYesterday;
   const dateLabel=$('#jcDateLabel');
@@ -1436,16 +1518,6 @@ async function loadJcFrontend(){
     if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
     const token=++loadToken;
     const dsPrev=qcAddDays(ds,-1);
-    const cacheA=qcJcDateRowsCache.get(ds);
-    const cacheB=qcJcDateRowsCache.get(dsPrev);
-    const cacheFresh=Boolean(
-      cacheA?.data && cacheB?.data &&
-      Date.now()-cacheA.savedAt<45000 &&
-      Date.now()-cacheB.savedAt<45000
-    );
-
-    if(label && !cacheFresh) label.textContent='加载中…';
-
     const [nextCurrent,nextPrevious]=await Promise.all([
       jcFetchOverviewDateRows(ds),
       jcFetchOverviewDateRows(dsPrev)
