@@ -630,9 +630,9 @@ function jcFootballHitOddsHtml(m,model,score){
 
   if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
   return '<div class="jc-card-hit-band jc-card-hit-play">'+
-    '<span class="jc-card-hit-title">赛后命中玩法</span>'+
+    '<span class="jc-card-hit-title">赛前预测命中</span>'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
-      '<span class="jc-card-hit-chip" title="赛后命中｜'+qcEscape(x.kind)+'">'+
+      '<span class="jc-card-hit-chip" title="赛前预测命中｜'+qcEscape(x.kind)+'">'+
         '<small>'+qcEscape(x.kind)+'</small><b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
       '</span>'
     ).join('')+'</div>'+
@@ -906,8 +906,9 @@ function jcRenderYesterdayReview(rows,today){
 
 function jcFootballHitBlock(m,access){
   const score=jcScoreInfo(m);
-  const canViewPrematch=qcCanViewPrematchContent(m,access);
-  if(score.finished && canViewPrematch){
+  // 完赛后的“赛前预测命中”属于公开赛果核验信息：
+  // 未登录、普通用户与 Pro 都可查看；赛前完整预测权限仍保持不变。
+  if(score.finished){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
     if(hit) return hit;
@@ -1301,7 +1302,9 @@ async function loadJcFootball(){
   }
 
   async function hydrateFootballRows(rows,ds,token){
-    const modelRows=access.isPro?rows:[];
+    // Pro 读取全部赛前模型；未登录/普通用户只在完赛后读取已锁定模型，
+    // 用于计算并展示“赛前预测命中”，不会开放未完赛的预测内容。
+    const modelRows=access.isPro?rows:rows.filter(m=>jcScoreInfo(m).finished);
     // Public odds stay visible for every listed match. Use only the latest
     // pre-kickoff snapshot per play, so this remains lightweight for guests.
     const snapshotRows=rows;
@@ -1403,6 +1406,11 @@ async function loadJcFootball(){
   async function refreshFootballLive(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     await jcAttachLiveScores(dateRows);
+    // 页面停留期间若比赛刚刚完赛，立即补取该场已锁定模型并展示命中项。
+    if(!access.isPro){
+      const newlyFinished=dateRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
+      if(newlyFinished.length) await jcAttachModels(newlyFinished);
+    }
     render();
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
