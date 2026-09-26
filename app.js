@@ -722,21 +722,52 @@ async function jcAttachModels(rows){
   if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
   const ids=rows.map(x=>x.id).filter(Boolean);
   if(!ids.length) return rows;
-  const {data,error}=await window.qcSupabase
-    .from('jc_model_outputs')
-    .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-    .in('jc_match_id',ids)
-    .eq('is_locked',true)
-    .eq('is_current',true);
-  if(error){ console.warn('读取模型锁板结果失败',error); return rows; }
-  const map=new Map();
-  (data||[]).forEach(x=>map.set(x.jc_match_id,x));
-  rows.forEach(m=>{ m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[]; });
+
+  rows.forEach(m=>{
+    m._jcModelsLoading=true;
+    m._jcModelLoadFailed=false;
+  });
+
+  const delays=[0,400,1100,2200];
+  let lastError=null;
+
+  for(let attempt=0;attempt<delays.length;attempt++){
+    if(delays[attempt]) await new Promise(resolve=>setTimeout(resolve,delays[attempt]));
+    try{
+      const {data,error}=await window.qcSupabase
+        .from('jc_model_outputs')
+        .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+        .in('jc_match_id',ids)
+        .eq('is_locked',true)
+        .eq('is_current',true);
+
+      if(error) throw error;
+
+      const map=new Map();
+      (data||[]).forEach(x=>map.set(x.jc_match_id,x));
+      rows.forEach(m=>{
+        m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[];
+        m._jcModelsLoading=false;
+        m._jcModelLoadFailed=false;
+      });
+      return rows;
+    }catch(error){
+      lastError=error;
+      console.warn('读取模型锁板结果失败，第'+(attempt+1)+'次尝试',error);
+    }
+  }
+
+  rows.forEach(m=>{
+    m._jcModelsLoading=false;
+    m._jcModelLoadFailed=true;
+  });
+  console.warn('读取模型锁板结果连续失败，等待下一次自动刷新',lastError);
   return rows;
 }
 
-function jcPredictionPlaceholder(){
-  return '<span class="jc-overview-pending">待生成</span>';
+function jcPredictionPlaceholder(state='pending'){
+  const text=state==='loading'?'加载中':state==='error'?'暂时不可用':'待生成';
+  return '<span class="jc-overview-pending">'+text+'</span>';
 }
 
 function jcOverviewTeamLabel(name){
@@ -762,9 +793,10 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const home=jcOverviewTeamLabel(m.home_team_name);
       const away=jcOverviewTeamLabel(m.away_team_name);
 
-      let market=jcPredictionPlaceholder();
-      let goals=jcPredictionPlaceholder();
-      let hafu=jcPredictionPlaceholder();
+      const placeholderState=m?._jcModelsLoading?'loading':(m?._jcModelLoadFailed?'error':'pending');
+      let market=jcPredictionPlaceholder(placeholderState);
+      let goals=jcPredictionPlaceholder(placeholderState);
+      let hafu=jcPredictionPlaceholder(placeholderState);
       const model=jcPublicModel(m);
 
       // 已锁板的赛前模型数据在跨日进入“昨日回看”后继续保留。
@@ -1327,6 +1359,12 @@ async function loadJcFrontend(){
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
   });
 
+  if(access.isPro){
+    allRows.forEach(m=>{
+      m._jcModelsLoading=true;
+      m._jcModelLoadFailed=false;
+    });
+  }
   render();
 
   async function refreshOverviewLive(){
@@ -1359,7 +1397,18 @@ async function loadJcFrontend(){
     await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
   }
-  jcAttachModels(allRows).then(()=>{ modelsLoaded=true; render(); }).catch(err=>console.warn('首页模型读取失败',err));
+  jcAttachModels(allRows).then(()=>{
+    modelsLoaded=true;
+    render();
+  }).catch(err=>{
+    console.warn('首页模型读取失败',err);
+    allRows.forEach(m=>{
+      m._jcModelsLoading=false;
+      m._jcModelLoadFailed=true;
+    });
+    modelsLoaded=true;
+    render();
+  });
   refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   // 首页同步使用2分钟刷新，避免完赛后仍长时间停留在旧状态
