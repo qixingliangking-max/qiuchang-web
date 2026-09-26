@@ -381,12 +381,24 @@ async function qcGetAccessState(force=false){
 
     try{
       let session=null;
-      const sessionAttempts=qcIsInAppBrowser()?2:1;
+      let recentAuthHandoff=false;
+      try{
+        const handoffAt=Number(sessionStorage.getItem('qc-auth-handoff')||0);
+        recentAuthHandoff=Boolean(handoffAt && Date.now()-handoffAt<12000);
+      }catch(_){}
+      const sessionAttempts=recentAuthHandoff?4:(qcIsInAppBrowser()?2:1);
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
         const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
         if(sessionError) console.warn('读取登录状态失败',sessionError);
         session=sessionData?.session||null;
-        if(!session && attempt+1<sessionAttempts) await new Promise(resolve=>setTimeout(resolve,220));
+        if(!session && attempt+1<sessionAttempts){
+          const delay=recentAuthHandoff ? 120+(attempt*120) : 220;
+          await new Promise(resolve=>setTimeout(resolve,delay));
+        }
+      }
+
+      if(session){
+        try{ sessionStorage.removeItem('qc-auth-handoff'); }catch(_){}
       }
 
       if(!session){
@@ -3020,7 +3032,17 @@ async function setupDemoAuth(){
       if(data.user){
         const next = new URLSearchParams(location.search).get('next');
         const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
-        location.href = safeNext;
+
+        // 确认 Supabase 会话已经写入浏览器存储，再进入数据页，避免登录后首屏仍按旧状态渲染。
+        qcAccessStatePromise=null;
+        qcLastAccessState=null;
+        try{ sessionStorage.setItem('qc-auth-handoff',String(Date.now())); }catch(_){}
+        for(let attempt=0;attempt<3;attempt++){
+          const {data:sessionData}=await window.qcSupabase.auth.getSession();
+          if(sessionData?.session) break;
+          await new Promise(resolve=>setTimeout(resolve,120+(attempt*120)));
+        }
+        location.replace(safeNext);
       }
     };
   }
@@ -3270,9 +3292,8 @@ let qcAuthRecoveryBound=false;
 
 function setupAuthStateRecovery(){
   if(qcAuthRecoveryBound || !window.qcSupabase) return;
-  // Late-session recovery is only needed for embedded browsers that delay auth storage.
-  // Normal Safari/Chrome/Edge sessions should never trigger a second page data load.
-  if(!qcIsInAppBrowser()) return;
+  // 登录跳转后的会话写入在移动 Safari / Chrome / 内置浏览器都可能晚于首屏读取。
+  // 只在首屏曾判定为未登录、随后收到真实会话时触发一次恢复。
   qcAuthRecoveryBound=true;
 
   window.qcSupabase.auth.onAuthStateChange((event,session)=>{
