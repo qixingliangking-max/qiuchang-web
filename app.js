@@ -2301,8 +2301,7 @@ async function qcDirectAuthRequest(path,body){
       cache:'no-store',
       headers:{
         'Content-Type':'application/json',
-        'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY,
-        'Authorization':'Bearer '+window.QC_SUPABASE_PUBLISHABLE_KEY
+        'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY
       },
       body:JSON.stringify(body||{})
     });
@@ -2385,7 +2384,10 @@ async function setupDemoAuth(){
       e.preventDefault();
 
       if(!window.qcSupabase){
-        alert('数据库连接失败，请刷新页面后重试');
+        if(loginHint){
+          loginHint.textContent=qcAuthNetworkMessage();
+          loginHint.className='code-hint error';
+        }
         return;
       }
 
@@ -2443,7 +2445,11 @@ async function setupDemoAuth(){
       e.preventDefault();
 
       if(!window.qcSupabase){
-        alert('数据库连接失败，请刷新页面后重试');
+        const hint=$('#registerHint');
+        if(hint){
+          hint.textContent=qcAuthNetworkMessage();
+          hint.className='code-hint error';
+        }
         return;
       }
 
