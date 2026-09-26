@@ -1463,19 +1463,17 @@ async function loadJcFrontend(){
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
 
   let currentResult,previousResult;
-  if(access.isPro){
-    [currentResult,previousResult]=await Promise.all([
-      fetchOverviewDatePreferred(initialDate),
-      fetchOverviewDatePreferred(qcAddDays(initialDate,-1))
-    ]);
-  }else if(initialDate===candidateDate){
-    [currentResult,previousResult]=await Promise.all([candidateCurrentPromise,candidatePreviousPromise]);
-  }else{
-    [currentResult,previousResult]=await Promise.all([
-      jcFetchOverviewDateRows(initialDate),
-      jcFetchOverviewDateRows(qcAddDays(initialDate,-1))
-    ]);
-  }
+  const initialPrevDate=qcAddDays(initialDate,-1);
+  [currentResult,previousResult]=await Promise.all([
+    fetchOverviewDateReady(
+      initialDate,
+      initialDate===candidateDate ? candidateCurrentPromise : null
+    ),
+    fetchOverviewDateReady(
+      initialPrevDate,
+      initialDate===candidateDate ? candidatePreviousPromise : null
+    )
+  ]);
 
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
@@ -1585,6 +1583,36 @@ async function loadJcFrontend(){
     if(old?._apiFootballLive) merged._apiFootballLive=old._apiFootballLive;
     return merged;
   }
+  async function fetchOverviewDateReady(ds,freshHint=null){
+    const preferredPromise=fetchOverviewDatePreferred(ds);
+
+    // Fully frozen historical files already carry final score + prediction data.
+    if(qcFrozenOverviewManifestCache?.dates?.[ds]){
+      return preferredPromise;
+    }
+
+    const freshPromise=freshHint || jcFetchDateRows(ds,false,true);
+    const [preferred,fresh]=await Promise.all([preferredPromise,freshPromise]);
+    if(preferred?.error) return preferred;
+    if(fresh?.error || !Array.isArray(fresh?.data)) return preferred;
+
+    const preferredRows=Array.isArray(preferred?.data)?preferred.data:[];
+    const oldById=new Map(preferredRows.map(row=>[String(row.id),row]));
+    const merged=[];
+    const seen=new Set();
+
+    fresh.data.forEach(row=>{
+      const key=String(row.id);
+      merged.push(preserveOverviewStaticData(row,oldById.get(key)));
+      seen.add(key);
+    });
+    preferredRows.forEach(row=>{
+      const key=String(row.id);
+      if(!seen.has(key)) merged.push(row);
+    });
+
+    return {...preferred,data:merged,fromReadyOverview:true};
+  }
 
   async function refreshOverviewDynamicState(ds,token){
     const prevDs=qcAddDays(ds,-1);
@@ -1668,8 +1696,8 @@ async function loadJcFrontend(){
     const promise=(async()=>{
       const prevDs=qcAddDays(ds,-1);
       const [cur,prevRowsResult]=await Promise.all([
-        fetchOverviewDatePreferred(ds),
-        fetchOverviewDatePreferred(prevDs)
+        fetchOverviewDateReady(ds),
+        fetchOverviewDateReady(prevDs)
       ]);
       if(cur.error||prevRowsResult.error) return;
 
@@ -1700,8 +1728,8 @@ async function loadJcFrontend(){
     const token=++loadToken;
     const dsPrev=qcAddDays(ds,-1);
     const [nextCurrent,nextPrevious]=await Promise.all([
-      fetchOverviewDatePreferred(ds),
-      fetchOverviewDatePreferred(dsPrev)
+      fetchOverviewDateReady(ds),
+      fetchOverviewDateReady(dsPrev)
     ]);
     if(token!==loadToken) return;
     if(nextCurrent.error||nextPrevious.error){
