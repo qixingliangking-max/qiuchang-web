@@ -2973,6 +2973,23 @@ async function setupDemoAuth(){
 
   if(login){
     const loginHint=$('#loginHint');
+    const loginAgreement=$('#loginAgreement');
+
+    // 首次仍由用户主动确认；确认过一次后记住选择，后续登录自动勾选。
+    // 如果未来协议有重大更新，只需升级这个 key（例如 v2）即可重新要求确认。
+    if(loginAgreement){
+      const agreementKey='qc-login-agreement-v1';
+      try{
+        loginAgreement.checked=localStorage.getItem(agreementKey)==='1';
+      }catch(_){}
+      loginAgreement.addEventListener('change',()=>{
+        try{
+          if(loginAgreement.checked) localStorage.setItem(agreementKey,'1');
+          else localStorage.removeItem(agreementKey);
+        }catch(_){}
+      });
+    }
+
     if(loginHint && new URLSearchParams(location.search).get('reset')==='success'){
       loginHint.textContent='密码修改成功，请使用新密码重新登录。';
       loginHint.className='code-hint success';
