@@ -3465,3 +3465,32 @@ button.qc-date-locked-control:disabled{
     background:rgba(246,248,252,.62);
   }
 }
+
+
+/* 2026-09-27 auto login option */
+.auth-login-page .auth-auto-login{
+  margin:10px 0 6px;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.auth-login-page .auth-auto-login > span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:1;
+}
+.auth-login-page .auth-auto-login b{
+  color:#26334f;
+  font-size:14px;
+}
+.auth-login-page .auth-auto-login small{
+  color:#9aa3b2;
+  font-size:12px;
+  font-weight:500;
+}
+@media(max-width:640px){
+  .auth-login-page .auth-auto-login{
+    margin:8px 0 4px;
+  }
+}
