@@ -2171,9 +2171,107 @@ function jcSyncDetailNavToCurrent(root){
 }
 
 const jcDetailMatchCache=new Map();
+const jcDetailFastDataCache=new Map();
+const jcDetailFactsCache=new Map();
+const jcDetailOddsHistoryCache=new Map();
 let jcDetailDayCache=null;
 let jcDetailLoadSeq=0;
 let jcDetailPopstateBound=false;
+
+function jcDetailCacheFresh(entry,maxAge=60000){
+  return Boolean(entry && entry.savedAt && Date.now()-entry.savedAt<maxAge);
+}
+
+async function jcFetchDetailFastData(id,access,force=false){
+  const key=String(id);
+  const cached=jcDetailFastDataCache.get(key);
+  if(!force && jcDetailCacheFresh(cached)) return cached.data;
+  if(!force && cached?.promise) return cached.promise;
+
+  const canViewPremium=Boolean(access?.loggedIn && access?.isPro);
+  const latestPromise=window.qcSupabase
+    .from('jc_prekick_latest_market_snapshots')
+    .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
+    .eq('jc_match_id',id);
+
+  const modelPromise=canViewPremium
+    ? window.qcSupabase.from('jc_model_outputs')
+      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+      .eq('jc_match_id',id)
+      .eq('is_locked',true)
+      .eq('is_current',true)
+      .order('locked_at',{ascending:false})
+      .limit(1)
+    : Promise.resolve({data:[],error:null});
+
+  const aiPromise=canViewPremium
+    ? window.qcSupabase.from('jc_match_ai_analysis')
+      .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+      .eq('jc_match_id',id)
+      .order('generated_at',{ascending:false})
+      .limit(1)
+    : Promise.resolve({data:[],error:null});
+
+  const promise=Promise.all([latestPromise,modelPromise,aiPromise]).then(([latestResult,modelResult,aiResult])=>{
+    if(latestResult.error) console.warn('读取详情最新赔率摘要失败',latestResult.error);
+    if(modelResult.error) console.warn('读取详情模型失败',modelResult.error);
+    if(aiResult.error) console.warn('读取详情AI分析失败',aiResult.error);
+    const data={
+      latestSnapshots:latestResult.data||[],
+      model:(modelResult.data||[])[0]||null,
+      analysis:(aiResult.data||[])[0]||null
+    };
+    jcDetailFastDataCache.set(key,{data,savedAt:Date.now()});
+    return data;
+  }).catch(error=>{
+    jcDetailFastDataCache.delete(key);
+    console.warn('读取详情快速数据失败',error);
+    return {latestSnapshots:[],model:null,analysis:null};
+  });
+
+  jcDetailFastDataCache.set(key,{promise,savedAt:Date.now()});
+  return promise;
+}
+
+function jcPrefetchDetailFastNeighbors(rows,currentId,access){
+  if(!window.qcSupabase || !access?.isPro || !Array.isArray(rows) || rows.length<2) return;
+  const idx=rows.findIndex(x=>String(x.id)===String(currentId));
+  if(idx<0) return;
+  const targets=[rows[idx-1],rows[idx+1]].filter(Boolean)
+    .filter(x=>!jcDetailCacheFresh(jcDetailFastDataCache.get(String(x.id))));
+  if(!targets.length) return;
+  const ids=targets.map(x=>x.id);
+
+  const latestPromise=window.qcSupabase
+    .from('jc_prekick_latest_market_snapshots')
+    .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
+    .in('jc_match_id',ids);
+  const modelPromise=window.qcSupabase.from('jc_model_outputs')
+    .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+    .in('jc_match_id',ids)
+    .eq('is_locked',true)
+    .eq('is_current',true);
+  const aiPromise=window.qcSupabase.from('jc_match_ai_analysis')
+    .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+    .in('jc_match_id',ids)
+    .order('generated_at',{ascending:false});
+
+  Promise.all([latestPromise,modelPromise,aiPromise]).then(([latestResult,modelResult,aiResult])=>{
+    if(latestResult.error || modelResult.error || aiResult.error) return;
+    for(const target of targets){
+      const key=String(target.id);
+      const snaps=(latestResult.data||[]).filter(x=>String(x.jc_match_id)===key);
+      const models=(modelResult.data||[]).filter(x=>String(x.jc_match_id)===key)
+        .sort((a,b)=>new Date(b.locked_at||0)-new Date(a.locked_at||0));
+      const analyses=(aiResult.data||[]).filter(x=>String(x.jc_match_id)===key)
+        .sort((a,b)=>new Date(b.generated_at||0)-new Date(a.generated_at||0));
+      jcDetailFastDataCache.set(key,{
+        data:{latestSnapshots:snaps,model:models[0]||null,analysis:analyses[0]||null},
+        savedAt:Date.now()
+      });
+    }
+  }).catch(()=>{});
+}
 
 function jcShowDetailSwitchLoader(root){
   const main=$('.jc-detail-main',root);
@@ -2252,6 +2350,9 @@ async function setupJcMatchDetail(options={}){
 
   jcBindDetailPopstate();
 
+  // Start access resolution immediately; do not put it in front of the match request.
+  const accessPromise=qcGetAccessState();
+
   let m=jcDetailMatchCache.get(String(id))||null;
   let error=null;
   if(!m){
@@ -2271,19 +2372,33 @@ async function setupJcMatchDetail(options={}){
     return;
   }
 
-  let sameDay=null;
-  if(jcDetailDayCache?.date===m.business_date){
-    sameDay=jcDetailDayCache.rows;
-  }else{
-    const {data:dayMatches}=await window.qcSupabase
+  // Same-day navigation and access now run in parallel.
+  const dayPromise=jcDetailDayCache?.date===m.business_date
+    ? Promise.resolve(jcDetailDayCache.rows)
+    : window.qcSupabase
       .from('jc_matches')
       .select('id,match_num,league_short_name,home_team_name,away_team_name,match_date,match_time,match_status')
       .eq('business_date',m.business_date)
-      .order('match_date',{ascending:true}).order('match_time',{ascending:true});
-    if(loadSeq!==jcDetailLoadSeq) return;
-    sameDay=(dayMatches||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
-    jcDetailDayCache={date:m.business_date,rows:sameDay};
-  }
+      .order('match_date',{ascending:true}).order('match_time',{ascending:true})
+      .then(({data,error})=>{
+        if(error) throw error;
+        const rows=(data||[]).sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
+        jcDetailDayCache={date:m.business_date,rows};
+        return rows;
+      })
+      .catch(error=>{
+        console.warn('读取同日比赛失败',error);
+        return [m];
+      });
+
+  const access=await accessPromise;
+  if(loadSeq!==jcDetailLoadSeq) return;
+
+  // Fast AI/model/odds-summary data starts as soon as access is known.
+  const fastDataPromise=jcFetchDetailFastData(id,access);
+  const sameDay=await dayPromise;
+  if(loadSeq!==jcDetailLoadSeq) return;
+
   const detailNav='<aside class="jc-detail-sidebar">'+
     '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
     '<div class="jc-detail-match-list">'+sameDay.map(x=>{
@@ -2302,89 +2417,15 @@ async function setupJcMatchDetail(options={}){
     }).join('')+'</div></aside>';
   const detailShell=content=>'<div class="jc-detail-layout">'+detailNav+'<section class="jc-detail-main">'+content+'</section></div>';
 
-  // Show the match as soon as its basic record arrives. Premium data stays hidden
-  // until access has been checked.
-  root.innerHTML=detailShell('<div class="detail-head jc-odds-headcard">'+
-    '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
-      '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
-      '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
-      '<div class="center-score"><strong class="'+(jcScoreInfo(m).finished?'jc-detail-score-finished':'')+'">'+qcEscape(jcScoreInfo(m).current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
-      '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div></div></div>'+
-    '<div class="jc-match-loading-shell" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div>');
-  jcSyncDetailNavToCurrent(root);
-  jcBindDetailMatchSwitches(root);
-  jcPrefetchDetailNeighbors(sameDay,m.id);
-
-  const access=await qcGetAccessState();
-  if(loadSeq!==jcDetailLoadSeq) return;
-  const canViewPremium=qcCanViewPrematchContent(m,access);
-  const detailPromise=window.qcSupabase.from('jc_match_details')
-      .select('detail_type,payload,source_endpoint,fetched_at').eq('jc_match_id',id);
-  const snapshotPromise=window.qcSupabase.from('jc_market_snapshots')
-      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time').eq('jc_match_id',id);
-  const modelPromise=canViewPremium
-    ? window.qcSupabase.from('jc_model_outputs')
-      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-      .eq('jc_match_id',id)
-      .eq('is_locked',true)
-      .eq('is_current',true)
-      .order('locked_at',{ascending:false})
-      .limit(1)
-    : Promise.resolve({data:[],error:null});
-
-  const [detailResult,snapshotResult,modelResult]=await Promise.all([
-    detailPromise,
-    snapshotPromise,
-    modelPromise
-  ]);
-  if(loadSeq!==jcDetailLoadSeq) return;
-
-  const {data:detailRows,error:detailError}=detailResult;
-  const {data:snapshots,error:snapshotError}=snapshotResult;
-
-  if(detailError) console.warn('读取竞彩详情数据失败',detailError);
-  if(snapshotError) console.warn('读取赔率快照失败',snapshotError);
-  const sportteryDetails=jcSportteryDetailsMap(detailRows||[]);
-  const snapshotRows=snapshots||[];
-  m.jc_market_snapshots=snapshotRows;
-
-  let model=null;
-  let aiAnalysis=null;
-
-  if(canViewPremium){
-    const modelRows=modelResult?.data||[];
-    const modelError=modelResult?.error||null;
-    if(modelError) console.warn('读取模型锁板结果失败',modelError);
-    model=modelRows[0]||null;
-
-    if(model){
-      const {data:aiRows,error:aiError}=await window.qcSupabase
-        .from('jc_match_ai_analysis')
-        .select('status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
-        .eq('model_output_id',model.id)
-        .order('generated_at',{ascending:false})
-        .limit(1);
-      if(loadSeq!==jcDetailLoadSeq) return;
-      if(aiError) console.warn('读取AI分析失败',aiError);
-      aiAnalysis=(aiRows||[])[0]||null;
-    }
-  }
-
-  const pools=jcLatestPools(snapshotRows);
-  const score=jcScoreInfo(m);
-  const status=score.finished && score.ht
-    ? '半 '+score.ht
-    : jcMatchStatusLabel(m,qcBeijingToday());
-
-  const oddsHtml='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(pools,snapshotRows,'had')+'</div>';
-
+  // Paint the selected match immediately. Only the small main panel waits for fast data.
+  const scoreNow=jcScoreInfo(m);
   root.innerHTML=detailShell(
     '<div class="detail-head jc-odds-headcard">'+
-      '<div class="match-top"><span>'+qcEscape(m.match_num || '竞彩')+' · '+qcEscape(m.league_name || m.league_short_name || '—')+'</span><span>'+qcEscape(jcDateTime(m) || '时间待定')+'</span></div>'+
+      '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
-        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name || '—')+'</div>'+
-        '<div class="center-score"><strong class="'+(score.finished?'jc-detail-score-finished':'')+'">'+(score.current?qcEscape(score.current):'VS')+'</strong><small class="'+(score.started&&!score.finished?'jc-live-stage':'')+'">'+qcEscape(status)+'</small></div>'+
-        '<div class="team-badge right">'+qcEscape(m.away_team_name || '—')+'<span class="badge-circle">客</span></div>'+
+        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
+        '<div class="center-score"><strong class="'+(scoreNow.finished?'jc-detail-score-finished':'')+'">'+qcEscape(scoreNow.current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
+        '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div>'+
       '</div>'+
       '<div class="jc-main-tabs">'+
         '<button type="button" data-main-tab="facts">赛况数据</button>'+
@@ -2392,18 +2433,97 @@ async function setupJcMatchDetail(options={}){
         '<button type="button" class="active" data-main-tab="ai">AI分析</button>'+
       '</div>'+
     '</div>'+
-    '<div id="jcMainPanel">'+(canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access))+'</div>');
+    '<div id="jcMainPanel"><div class="jc-match-loading-shell compact" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div></div>'
+  );
   jcSyncDetailNavToCurrent(root);
   jcBindDetailMatchSwitches(root);
   jcPrefetchDetailNeighbors(sameDay,m.id);
 
-  const panel=$('#jcMainPanel');
+  const fastData=await fastDataPromise;
+  if(loadSeq!==jcDetailLoadSeq) return;
+
+  const canViewPremium=qcCanViewPrematchContent(m,access);
+  const snapshotRowsFast=fastData.latestSnapshots||[];
+  const pools=jcLatestPools(snapshotRowsFast);
+  const model=canViewPremium?fastData.model:null;
+  const aiAnalysis=canViewPremium?fastData.analysis:null;
+  const score=jcScoreInfo(m);
+  const status=score.finished && score.ht
+    ? '半 '+score.ht
+    : jcMatchStatusLabel(m,qcBeijingToday());
+
+  const panel=$('#jcMainPanel',root);
+  if(panel){
+    panel.innerHTML=canViewPremium
+      ? jcRenderAiPanel(m,pools,model,aiAnalysis)
+      : jcRenderAiLockedPanel(m,pools,access);
+  }
+
+  // Cache/prefetch neighboring premium bundles only after current AI is already visible.
+  setTimeout(()=>jcPrefetchDetailFastNeighbors(sameDay,m.id,access),250);
+
+  let detailRows=null;
+  let sportteryDetails=null;
+  let snapshotRowsFull=null;
   let factsData=null;
   let factsLoaded=false;
 
+  async function ensureDetailRows(){
+    const key=String(id);
+    const cached=jcDetailFactsCache.get(key);
+    if(jcDetailCacheFresh(cached,120000)) return cached.data;
+    if(cached?.promise) return cached.promise;
+
+    const promise=window.qcSupabase.from('jc_match_details')
+      .select('detail_type,payload,source_endpoint,fetched_at')
+      .eq('jc_match_id',id)
+      .then(({data,error})=>{
+        if(error) console.warn('读取竞彩详情数据失败',error);
+        const rows=data||[];
+        jcDetailFactsCache.set(key,{data:rows,savedAt:Date.now()});
+        return rows;
+      })
+      .catch(error=>{
+        jcDetailFactsCache.delete(key);
+        console.warn('读取竞彩详情数据失败',error);
+        return [];
+      });
+    jcDetailFactsCache.set(key,{promise,savedAt:Date.now()});
+    return promise;
+  }
+
+  async function ensureSnapshotHistory(){
+    const key=String(id);
+    const cached=jcDetailOddsHistoryCache.get(key);
+    if(jcDetailCacheFresh(cached,120000)) return cached.data;
+    if(cached?.promise) return cached.promise;
+
+    const promise=window.qcSupabase.from('jc_market_snapshots')
+      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time')
+      .eq('jc_match_id',id)
+      .then(({data,error})=>{
+        if(error) console.warn('读取赔率快照失败',error);
+        const rows=data||[];
+        jcDetailOddsHistoryCache.set(key,{data:rows,savedAt:Date.now()});
+        return rows;
+      })
+      .catch(error=>{
+        jcDetailOddsHistoryCache.delete(key);
+        console.warn('读取赔率快照失败',error);
+        return snapshotRowsFast;
+      });
+    jcDetailOddsHistoryCache.set(key,{promise,savedAt:Date.now()});
+    return promise;
+  }
+
   async function loadFacts(){
+    if(!panel) return;
     panel.innerHTML=jcRenderFactsShell();
     let activeFactsTab='data';
+
+    detailRows=detailRows || await ensureDetailRows();
+    if(loadSeq!==jcDetailLoadSeq) return;
+    sportteryDetails=sportteryDetails || jcSportteryDetailsMap(detailRows||[]);
 
     function renderFactsTab(tab){
       activeFactsTab=tab;
@@ -2417,7 +2537,6 @@ async function setupJcMatchDetail(options={}){
       else content.innerHTML=jcRenderFeatureBlock(m,sportteryDetails,factsData);
     }
 
-    // Bind immediately. Tabs must remain usable even when API-Football has no fixture mapping.
     $$('.jc-facts-subtabs button',panel).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
@@ -2427,12 +2546,11 @@ async function setupJcMatchDetail(options={}){
     renderFactsTab('data');
 
     if(factsLoaded) return;
-
     try{
       const res=await fetch(window.QC_SUPABASE_URL+'/functions/v1/api-football-match?jc_match_id='+encodeURIComponent(id));
       const payload=await res.json();
       if(res.ok && payload?.ok){
-        factsData=payload.data || {};
+        factsData=payload.data||{};
         factsLoaded=true;
         renderFactsTab(activeFactsTab);
       }
@@ -2441,30 +2559,40 @@ async function setupJcMatchDetail(options={}){
     }
   }
 
+  async function renderOdds(){
+    if(!panel) return;
+    panel.innerHTML='<div class="jc-match-loading-shell compact"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div>';
+    snapshotRowsFull=snapshotRowsFull || await ensureSnapshotHistory();
+    if(loadSeq!==jcDetailLoadSeq) return;
+    const fullPools=jcLatestPools(snapshotRowsFull||[]);
+    panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(fullPools,snapshotRowsFull||[],'had')+'</div>';
+    jcBindOddsPlayTabs(panel,fullPools,snapshotRowsFull||[]);
+  }
+
   async function renderMainTab(tab){
     Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
     if(tab==='odds'){
-      panel.innerHTML=oddsHtml;
-      jcBindOddsPlayTabs(panel,pools,snapshotRows);
+      await renderOdds();
       return;
     }
     if(tab==='ai'){
-      panel.innerHTML=canViewPremium?jcRenderAiPanel(m,pools,model,aiAnalysis):jcRenderAiLockedPanel(m,pools,access);
+      panel.innerHTML=canViewPremium
+        ? jcRenderAiPanel(m,pools,model,aiAnalysis)
+        : jcRenderAiLockedPanel(m,pools,access);
       return;
     }
     await loadFacts();
   }
 
-  const mainButtons=Array.from(root.querySelectorAll('.jc-main-tabs button'));
-  mainButtons.forEach(btn=>{
+  Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(btn=>{
     btn.onclick=async e=>{
       e.preventDefault();
       e.stopPropagation();
-      await renderMainTab(btn.dataset.mainTab || 'ai');
+      await renderMainTab(btn.dataset.mainTab||'ai');
     };
   });
 
-  // Live data comes from the cache and should never hold up the first render.
+  // Live score refresh is never allowed to hold up AI rendering.
   if(jcShouldFetchLive(m)){
     jcAttachLiveScores([m]).then(()=>{
       const live=jcScoreInfo(m);
