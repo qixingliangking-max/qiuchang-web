@@ -1178,21 +1178,8 @@ async function loadJcFrontend(){
   ];
   const cacheKey='qc-finished-review-'+initialYesterday;
   let cachedReviewShown=false;
-  if(!initialDate || initialDate===initialToday){
-    const dateLabel=$('#jcDateLabel');
-    if(dateLabel) dateLabel.textContent=qcDateLabel(initialToday);
-    try{
-      const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
-      if(Array.isArray(cached?.rows) && cached.rows.length &&
-        cached.rows.every(m=>jcBusinessDate(m)===initialYesterday && jcScoreInfo(m).finished)){
-        reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
-        jcBindOverviewRows(reviewCards);
-        cachedReviewShown=true;
-        const meta=$('#jcYesterdayMeta');
-        if(meta) meta.textContent=initialYesterday.slice(5)+' · '+cached.rows.length+'场';
-      }
-    }catch(err){ console.warn('昨日赛果缓存不可用',err); }
-  }
+  const dateLabel=$('#jcDateLabel');
+  if(dateLabel) dateLabel.textContent=qcDateLabel(initialToday);
 
   const requestedDate=initialDate;
   const requestedPrevious=qcAddDays(requestedDate,-1);
@@ -1385,12 +1372,10 @@ async function loadJcFrontend(){
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
   });
 
-  if(access.isPro){
-    allRows.forEach(m=>{
-      m._jcModelsLoading=true;
-      m._jcModelLoadFailed=false;
-    });
-  }
+  // Keep the initial loading placeholder visible until model data is ready.
+  // This avoids the visible "page is done, then loads again" repaint on every browser.
+  await jcAttachModels(allRows);
+  modelsLoaded=true;
   render();
 
   async function refreshOverviewLive(){
@@ -1423,18 +1408,6 @@ async function loadJcFrontend(){
     await jcAttachLiveScores([...dateRows,...reviewRows]);
     render();
   }
-  jcAttachModels(allRows).then(()=>{
-    modelsLoaded=true;
-    render();
-  }).catch(err=>{
-    console.warn('首页模型读取失败',err);
-    allRows.forEach(m=>{
-      m._jcModelsLoading=false;
-      m._jcModelLoadFailed=true;
-    });
-    modelsLoaded=true;
-    render();
-  });
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   // 首屏已经完成一次完整读取，不再立刻重复请求；2分钟后再进入自动刷新。
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
