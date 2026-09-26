@@ -1148,7 +1148,9 @@ async function loadJcFootball(){
 
   async function hydrateFootballRows(rows,ds,token){
     const modelRows=access.isPro?rows:[];
-    const snapshotRows=rows.filter(m=>jcScoreInfo(m).finished);
+    // Public odds stay visible for every listed match. Use only the latest
+    // pre-kickoff snapshot per play, so this remains lightweight for guests.
+    const snapshotRows=rows;
     await Promise.all([
       snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows),
       modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
