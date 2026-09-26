@@ -367,24 +367,51 @@ function jcHandicapResult(score,goalLine){
 }
 
 let qcAccessStatePromise=null;
+let qcLastAccessState=null;
 
 async function qcGetAccessState(force=false){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
 
   qcAccessStatePromise=(async()=>{
-    if(!window.qcSupabase) return {loggedIn:false,isPro:false};
-    try{
-      const {data:sessionData}=await window.qcSupabase.auth.getSession();
-      const session=sessionData?.session||null;
-      if(!session) return {loggedIn:false,isPro:false};
+    if(!window.qcSupabase){
+      qcLastAccessState={loggedIn:false,isPro:false};
+      return qcLastAccessState;
+    }
 
-      const {data:isPro,error}=await window.qcSupabase.rpc('has_active_pro_access');
-      if(error) console.warn('读取Pro权限失败',error);
-      return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
+    try{
+      let session=null;
+      for(let attempt=0;attempt<2 && !session;attempt++){
+        const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+        if(sessionError) console.warn('读取登录状态失败',sessionError);
+        session=sessionData?.session||null;
+        if(!session && attempt===0) await new Promise(resolve=>setTimeout(resolve,280));
+      }
+
+      if(!session){
+        qcLastAccessState={loggedIn:false,isPro:false};
+        return qcLastAccessState;
+      }
+
+      let isPro=false;
+      let proError=null;
+      for(let attempt=0;attempt<2;attempt++){
+        const result=await window.qcSupabase.rpc('has_active_pro_access');
+        proError=result.error||null;
+        if(!proError){
+          isPro=result.data===true;
+          break;
+        }
+        if(attempt===0) await new Promise(resolve=>setTimeout(resolve,320));
+      }
+      if(proError) console.warn('读取Pro权限失败',proError);
+
+      qcLastAccessState={loggedIn:true,isPro,userId:session.user?.id||null};
+      return qcLastAccessState;
     }catch(err){
       console.warn('读取会员权限失败',err);
-      return {loggedIn:false,isPro:false};
+      qcLastAccessState={loggedIn:false,isPro:false};
+      return qcLastAccessState;
     }
   })();
 
@@ -2330,7 +2357,7 @@ function qcAuthLooksNetwork(error){
 }
 
 function qcIsInAppBrowser(){
-  return /MicroMessenger|MQQBrowser|QQ\/|TBS\/|Weibo|FBAN|FBAV|Instagram|Line\//i.test(navigator.userAgent||'');
+  return /MicroMessenger|MQQBrowser|QQ\/|TBS\/|Weibo|FBAN|FBAV|Instagram|Line\/|Quark|UCBrowser/i.test(navigator.userAgent||'');
 }
 
 function qcAuthNetworkMessage(){
@@ -2414,8 +2441,28 @@ async function qcAuthSignUpResilient(email,password){
     primary={data:null,error};
   }
   if(!qcAuthLooksNetwork(primary?.error)) return primary;
-  await new Promise(resolve=>setTimeout(resolve,350));
-  return qcDirectAuthRequest('/auth/v1/signup',{email,password});
+
+  // Some embedded/mobile browsers can lose the signup response even though the
+  // server has already created the account. Verify that case by logging in once.
+  await new Promise(resolve=>setTimeout(resolve,420));
+  const recoveredLogin=await qcDirectAuthRequest('/auth/v1/token?grant_type=password',{email,password});
+  if(!recoveredLogin?.error && recoveredLogin?.data?.session){
+    return recoveredLogin;
+  }
+
+  // If the account does not exist yet, retry signup through the direct Auth endpoint.
+  const directSignup=await qcDirectAuthRequest('/auth/v1/signup',{email,password});
+  if(!directSignup?.error) return directSignup;
+
+  // One last login verification covers the case where the direct signup reached
+  // the server but its response was also lost.
+  if(qcAuthLooksNetwork(directSignup.error)){
+    await new Promise(resolve=>setTimeout(resolve,500));
+    const finalLogin=await qcDirectAuthRequest('/auth/v1/token?grant_type=password',{email,password});
+    if(!finalLogin?.error && finalLogin?.data?.session) return finalLogin;
+  }
+
+  return directSignup;
 }
 
 async function setupDemoAuth(){
@@ -2727,6 +2774,39 @@ async function setupDemoAuth(){
 
 }
 
+
+let qcAuthRecoveryBound=false;
+
+function setupAuthStateRecovery(){
+  if(qcAuthRecoveryBound || !window.qcSupabase) return;
+  qcAuthRecoveryBound=true;
+
+  window.qcSupabase.auth.onAuthStateChange((event,session)=>{
+    if(session) qcAccessStatePromise=null;
+
+    const lateSession=Boolean(
+      session &&
+      qcLastAccessState &&
+      qcLastAccessState.loggedIn===false &&
+      ['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)
+    );
+    if(!lateSession) return;
+
+    const hasProtectedDataPage=Boolean(
+      $('#jcLiveCards') || $('#jcFootballCards') || $('#jcMatchDetailRoot')
+    );
+    if(!hasProtectedDataPage) return;
+
+    const key='qc-auth-recovery:'+location.pathname+location.search;
+    const last=Number(sessionStorage.getItem(key)||0);
+    if(Date.now()-last<10000) return;
+    sessionStorage.setItem(key,String(Date.now()));
+
+    // Automatic one-time refresh fixes late session restoration in Quark/QQ
+    // without requiring the user to manually refresh the page.
+    setTimeout(()=>location.reload(),80);
+  });
+}
 
 async function setupAuthNav(){
   if(!window.qcSupabase) return;
@@ -3446,6 +3526,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('jc-detail',()=>setupJcMatchDetail());
   safe('legacy-match',()=>renderMatch());
   safe('auth',()=>setupDemoAuth());
+  safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
   safe('profile',()=>setupProfile());
   safe('admin',()=>setupAdmin());
