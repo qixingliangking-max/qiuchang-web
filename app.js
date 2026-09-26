@@ -756,40 +756,31 @@ async function jcAttachModels(rows){
     m._jcModelLoadFailed=false;
   });
 
-  const delays=[0,400,1100,2200];
-  let lastError=null;
+  try{
+    const {data,error}=await window.qcSupabase
+      .from('jc_model_outputs')
+      .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
+      .in('jc_match_id',ids)
+      .eq('is_locked',true)
+      .eq('is_current',true);
 
-  for(let attempt=0;attempt<delays.length;attempt++){
-    if(delays[attempt]) await new Promise(resolve=>setTimeout(resolve,delays[attempt]));
-    try{
-      const {data,error}=await window.qcSupabase
-        .from('jc_model_outputs')
-        .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-        .in('jc_match_id',ids)
-        .eq('is_locked',true)
-        .eq('is_current',true);
+    if(error) throw error;
 
-      if(error) throw error;
-
-      const map=new Map();
-      (data||[]).forEach(x=>map.set(x.jc_match_id,x));
-      rows.forEach(m=>{
-        m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[];
-        m._jcModelsLoading=false;
-        m._jcModelLoadFailed=false;
-      });
-      return rows;
-    }catch(error){
-      lastError=error;
-      console.warn('读取模型锁板结果失败，第'+(attempt+1)+'次尝试',error);
-    }
+    const map=new Map();
+    (data||[]).forEach(x=>map.set(x.jc_match_id,x));
+    rows.forEach(m=>{
+      m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[];
+      m._jcModelsLoading=false;
+      m._jcModelLoadFailed=false;
+    });
+  }catch(error){
+    rows.forEach(m=>{
+      m._jcModelsLoading=false;
+      m._jcModelLoadFailed=true;
+    });
+    console.warn('读取模型锁板结果失败',error);
   }
 
-  rows.forEach(m=>{
-    m._jcModelsLoading=false;
-    m._jcModelLoadFailed=true;
-  });
-  console.warn('读取模型锁板结果连续失败，等待下一次自动刷新',lastError);
   return rows;
 }
 
