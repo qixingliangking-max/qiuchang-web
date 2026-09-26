@@ -2974,6 +2974,29 @@ async function setupDemoAuth(){
   if(login){
     const loginHint=$('#loginHint');
     const loginAgreement=$('#loginAgreement');
+    const loginAutoLogin=$('#loginAutoLogin');
+
+    if(loginAutoLogin){
+      loginAutoLogin.checked=Boolean(window.qcGetAutoLoginPreference?.());
+      loginAutoLogin.addEventListener('change',()=>{
+        window.qcSetAutoLoginPreference?.(loginAutoLogin.checked);
+      });
+    }
+
+    // 已开启自动登录且会话仍有效时，直接进入目标页，不再停留在登录页。
+    if(window.qcGetAutoLoginPreference?.() && window.qcSupabase){
+      try{
+        const {data:autoSessionData}=await window.qcSupabase.auth.getSession();
+        if(autoSessionData?.session){
+          const next = new URLSearchParams(location.search).get('next');
+          const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
+          location.replace(safeNext);
+          return;
+        }
+      }catch(err){
+        console.warn('自动登录会话恢复失败',err);
+      }
+    }
 
     // 首次仍由用户主动确认；确认过一次后记住选择，后续登录自动勾选。
     // 如果未来协议有重大更新，只需升级这个 key（例如 v2）即可重新要求确认。
@@ -3013,6 +3036,9 @@ async function setupDemoAuth(){
 
       button.disabled = true;
       button.textContent = '登录中...';
+
+      // 必须在登录请求前写入偏好，确保 Supabase 把本次会话存到正确的存储层。
+      window.qcSetAutoLoginPreference?.(Boolean(loginAutoLogin?.checked));
 
       let { data, error } = await qcAuthSignInResilient(email,password);
 
