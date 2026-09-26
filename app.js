@@ -910,30 +910,32 @@ function jcRenderYesterdayReview(rows,today){
   return jcRenderOverviewTable(rows,today,'yesterday');
 }
 
+function jcFootballHitBlock(m,access){
+  const score=jcScoreInfo(m);
+  const canViewPrematch=qcCanViewPrematchContent(m,access);
+  if(score.finished && canViewPrematch){
+    const model=jcPublicModel(m);
+    const hit=jcFootballHitOddsHtml(m,model,score);
+    if(hit) return hit;
+  }
+  return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
+}
+
 function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
-  return '<div class="jc-football-grid">'+ordered.map((m,index)=>{
+  return '<div class="jc-football-grid">'+ordered.map(m=>{
     const score=jcScoreInfo(m);
-    const status=jcMatchStatusLabel(m,today);
-    const relative=jcRelativeDayLabel(m.match_date,today);
-    const when=(relative?relative+' ':'')+String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
     const href='jc-match.html?id='+encodeURIComponent(m.id);
-    const canViewPrematch=qcCanViewPrematchContent(m,access);
-    const model=canViewPrematch?jcPublicModel(m):null;
     const oddsMini=jcRenderOddsMini(jcPrekickLatestPools(m));
     const cardCta='<div class="jc-card-detail-btn">查看详情 <span class="jc-card-detail-sep">｜</span>全部玩法数据 <span>›</span></div>';
-    const modelBlock='';
-    const hitOddsBlock=score.finished && canViewPrematch
-      ? jcFootballHitOddsHtml(m,model,score)
-      : '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
     const centerMeta=score.finished && score.ht
       ? '半 '+score.ht
       : jcMatchStatusLabel(m,today);
     const centerScore=score.current?qcEscape(score.current):'VS';
     const centerStateClass=score.finished?' is-finished':(score.started?' is-live':'');
 
-    return '<article class="jc-football-card jc-football-card-lite jc-football-card-final">'+
+    return '<article class="jc-football-card jc-football-card-lite jc-football-card-final" data-match-id="'+qcEscape(m.id)+'">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
           '<span class="jc-card-top-left">'+
@@ -951,42 +953,110 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
         '</div>'+
         oddsMini+
         cardCta+
-        hitOddsBlock+
+        jcFootballHitBlock(m,access)+
       '</a>'+
     '</article>';
   }).join('')+'</div>';
 }
 
-const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
-const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
-const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,captured_at)';
-
-async function jcFetchDateRows(dateStr,withSnapshots=false){
-  if(!dateStr || !window.qcSupabase) return {data:[],error:null};
-  return window.qcSupabase.from('jc_matches')
-    .select(withSnapshots?JC_MATCH_WITH_SNAPSHOTS_SELECT:JC_MATCH_BASE_SELECT)
-    .eq('business_date',dateStr)
-    .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
+function jcPatchFootballExtras(root,rows,access){
+  if(!root || !Array.isArray(rows) || !rows.length) return;
+  const byId=new Map(rows.map(m=>[String(m.id),m]));
+  $$('.jc-football-card[data-match-id]',root).forEach(card=>{
+    const m=byId.get(String(card.dataset.matchId||''));
+    if(!m) return;
+    const odds=$('.jc-mini-odds',card);
+    if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
+    const hit=$('.jc-card-hit-band',card);
+    if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
+  });
 }
 
-async function jcFetchOverviewDateRows(dateStr){
+const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
+const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
+const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
+const qcJcDateRowsCache=new Map();
+
+async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
   if(!dateStr || !window.qcSupabase) return {data:[],error:null};
-  return window.qcSupabase.from('jc_matches')
-    .select(JC_MATCH_OVERVIEW_SELECT)
+  if(withSnapshots){
+    return window.qcSupabase.from('jc_matches')
+      .select(JC_MATCH_WITH_SNAPSHOTS_SELECT)
+      .eq('business_date',dateStr)
+      .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
+  }
+
+  const now=Date.now();
+  const cached=qcJcDateRowsCache.get(dateStr);
+  if(!force && cached?.data && now-cached.savedAt<45000){
+    return {data:cached.data,error:null,fromCache:true};
+  }
+  if(!force && cached?.promise) return cached.promise;
+
+  const promise=window.qcSupabase.from('jc_matches')
+    .select(JC_MATCH_BASE_SELECT)
     .eq('business_date',dateStr)
-    .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
+    .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100)
+    .then(result=>{
+      if(!result.error){
+        qcJcDateRowsCache.set(dateStr,{data:result.data||[],savedAt:Date.now()});
+      }else{
+        qcJcDateRowsCache.delete(dateStr);
+      }
+      return result;
+    })
+    .catch(error=>{
+      qcJcDateRowsCache.delete(dateStr);
+      return {data:[],error};
+    });
+
+  qcJcDateRowsCache.set(dateStr,{promise,savedAt:now});
+  return promise;
+}
+
+async function jcFetchOverviewDateRows(dateStr,force=false){
+  return jcFetchDateRows(dateStr,false,force);
+}
+
+async function jcAttachLatestSnapshots(rows){
+  if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
+  const targets=rows.filter(m=>m?.id && !m._jcLatestSnapshotsLoaded);
+  if(!targets.length) return rows;
+  const ids=targets.map(m=>m.id);
+  const {data,error}=await window.qcSupabase
+    .from('jc_prekick_latest_market_snapshots')
+    .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
+    .in('jc_match_id',ids);
+  if(error){
+    console.warn('读取最新赔率摘要失败',error);
+    return rows;
+  }
+  const grouped=new Map();
+  (data||[]).forEach(x=>{
+    const key=String(x.jc_match_id);
+    if(!grouped.has(key)) grouped.set(key,[]);
+    grouped.get(key).push(x);
+  });
+  targets.forEach(m=>{
+    m.jc_market_snapshots=grouped.get(String(m.id))||[];
+    m._jcLatestSnapshotsLoaded=true;
+  });
+  return rows;
 }
 
 async function jcFetchAvailableDates(){
   if(!window.qcSupabase) return [];
-  const cacheKey='qc-jc-available-dates-v1';
+  const cacheKey='qc-jc-available-dates-v2';
   try{
     const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
-    if(Array.isArray(cached?.dates) && cached.savedAt && Date.now()-cached.savedAt<300000) return cached.dates;
+    if(Array.isArray(cached?.dates) && cached.savedAt && Date.now()-cached.savedAt<600000) return cached.dates;
   }catch(e){ /* ignore stale browser cache */ }
-  const {data,error}=await window.qcSupabase.from('jc_matches').select('business_date').not('business_date','is',null).limit(10000);
+  const {data,error}=await window.qcSupabase
+    .from('jc_available_business_dates')
+    .select('business_date')
+    .order('business_date',{ascending:true});
   if(error){ console.warn('读取竞彩日期索引失败',error); return []; }
-  const dates=[...new Set((data||[]).map(x=>x.business_date).filter(Boolean))].sort();
+  const dates=(data||[]).map(x=>x.business_date).filter(Boolean);
   try{ localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),dates})); }catch(e){ /* storage unavailable */ }
   return dates;
 }
