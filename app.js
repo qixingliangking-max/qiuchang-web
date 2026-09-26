@@ -2454,9 +2454,10 @@ async function qcAuthSignUpResilient(email,password){
   const directSignup=await qcDirectAuthRequest('/auth/v1/signup',{email,password});
   if(!directSignup?.error) return directSignup;
 
-  // One last login verification covers the case where the direct signup reached
-  // the server but its response was also lost.
-  if(qcAuthLooksNetwork(directSignup.error)){
+  // One last login verification covers both a lost response and the race where
+  // signup completed but the retry only sees "already registered".
+  const directRaw=String(directSignup?.error?.message||'')+' '+String(directSignup?.error?.code||'');
+  if(qcAuthLooksNetwork(directSignup.error) || /already registered|user_already_exists/i.test(directRaw)){
     await new Promise(resolve=>setTimeout(resolve,500));
     const finalLogin=await qcDirectAuthRequest('/auth/v1/token?grant_type=password',{email,password});
     if(!finalLogin?.error && finalLogin?.data?.session) return finalLogin;
