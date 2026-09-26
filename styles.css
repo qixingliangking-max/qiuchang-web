@@ -3494,3 +3494,11 @@ button.qc-date-locked-control:disabled{
     margin:8px 0 4px;
   }
 }
+
+
+/* Overview first-paint guard: never show transitional loading states. */
+.qc-overview-page.qc-overview-booting .qc-overview-controls,
+.qc-overview-page.qc-overview-booting .jc-review-shell,
+.qc-overview-page.qc-overview-booting .jc-prediction-shell{
+  visibility:hidden;
+}
