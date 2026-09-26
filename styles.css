@@ -3291,29 +3291,42 @@ button.qc-date-locked-control:disabled{
   .jc-odds-page .jc-ai-locked .jc-ai-context{
     grid-template-columns:repeat(3,minmax(0,1fr));
     gap:6px;
-    margin-top:8px;
+    margin-top:6px;
   }
 
   .jc-odds-page .jc-ai-play-panel .jc-ai-context>div,
   .jc-odds-page .jc-ai-locked .jc-ai-context>div{
     min-width:0;
-    padding:8px 6px;
+    height:52px;
+    box-sizing:border-box;
+    padding:6px 7px;
     border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
   }
 
   .jc-odds-page .jc-ai-play-panel .jc-ai-context span,
   .jc-odds-page .jc-ai-locked .jc-ai-context span{
-    margin-bottom:3px;
+    margin-bottom:2px;
     font-size:10px;
-    line-height:1.2;
+    line-height:1.1;
   }
 
   .jc-odds-page .jc-ai-play-panel .jc-ai-context strong,
   .jc-odds-page .jc-ai-locked .jc-ai-context strong{
     display:block;
-    overflow-wrap:anywhere;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     font-size:11px;
-    line-height:1.25;
+    line-height:1.15;
+  }
+
+  .jc-odds-page .jc-ai-play-panel .jc-ai-context>div:last-child strong,
+  .jc-odds-page .jc-ai-locked .jc-ai-context>div:last-child strong{
+    font-size:10px;
+    letter-spacing:-.15px;
   }
 
   .jc-odds-page .jc-ai-article-page{
