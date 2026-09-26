@@ -381,11 +381,12 @@ async function qcGetAccessState(force=false){
 
     try{
       let session=null;
-      for(let attempt=0;attempt<2 && !session;attempt++){
+      const sessionAttempts=qcIsInAppBrowser()?2:1;
+      for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
         const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
         if(sessionError) console.warn('读取登录状态失败',sessionError);
         session=sessionData?.session||null;
-        if(!session && attempt===0) await new Promise(resolve=>setTimeout(resolve,280));
+        if(!session && attempt+1<sessionAttempts) await new Promise(resolve=>setTimeout(resolve,220));
       }
 
       if(!session){
@@ -803,6 +804,52 @@ function jcOverviewTeamLabel(name){
   return qcEscape(chars.length>5 ? chars.slice(0,5).join('') : value);
 }
 
+function jcOverviewPredictionParts(m){
+  const score=jcScoreInfo(m);
+  const placeholderState=m?._jcModelsLoading?'loading':(m?._jcModelLoadFailed?'error':'pending');
+  let market=jcPredictionPlaceholder(placeholderState);
+  let goals=jcPredictionPlaceholder(placeholderState);
+  let hafu=jcPredictionPlaceholder(placeholderState);
+  const model=jcPublicModel(m);
+
+  if(model){
+    market=jcOverviewInlineChoicesHtml(jcOverviewDirectionChoices(model,m));
+    goals=jcOverviewGoalsHtml(model.goal_range);
+    hafu=jcOverviewHtftHtml(model);
+  }
+
+  if(score.finished && score.ft && model){
+    const ftParts=String(score.ft).split('-').map(Number);
+    const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
+    const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
+    const directionChoices=jcOverviewDirectionChoices(model,m);
+    const goalChoices=jcOverviewGoalValues(model.goal_range);
+    const htftChoices=[model.htft_top1,model.htft_top2].filter(Boolean);
+
+    market=jcReviewInlineChoicesHtml(directionChoices,jcOverviewActualDirection(model,m,score));
+    goals=jcReviewGoalChoicesHtml(goalChoices,total);
+    hafu=jcReviewHtftChoicesHtml(htftChoices,htft);
+  }
+
+  return {market,goals,hafu};
+}
+
+function jcPatchOverviewPredictionCells(root,rows){
+  if(!root || !Array.isArray(rows) || !rows.length) return;
+  const map=new Map(rows.map(m=>[String(m.id),m]));
+  $$('.jc-overview-row[data-match-id]',root).forEach(row=>{
+    const m=map.get(String(row.dataset.matchId||''));
+    if(!m) return;
+    const parts=jcOverviewPredictionParts(m);
+    const market=$('.jc-overview-market',row);
+    const goals=$('.jc-overview-goals',row);
+    const hafu=$('.jc-overview-htft',row);
+    if(market) market.innerHTML='<div class="jc-result-stack">'+parts.market+'</div>';
+    if(goals) goals.innerHTML=parts.goals;
+    if(hafu) hafu.innerHTML=parts.hafu;
+  });
+}
+
 function jcRenderOverviewTable(rows,today,mode='today'){
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
   if(!ordered.length){
@@ -819,35 +866,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const time=qcEscape(String(m.match_time||'').slice(0,5)||'—');
       const home=jcOverviewTeamLabel(m.home_team_name);
       const away=jcOverviewTeamLabel(m.away_team_name);
-
-      const placeholderState=m?._jcModelsLoading?'loading':(m?._jcModelLoadFailed?'error':'pending');
-      let market=jcPredictionPlaceholder(placeholderState);
-      let goals=jcPredictionPlaceholder(placeholderState);
-      let hafu=jcPredictionPlaceholder(placeholderState);
-      const model=jcPublicModel(m);
-
-      // 已锁板的赛前模型数据在跨日进入“昨日回看”后继续保留。
-      // 完赛前先展示原始预测；完赛后再由下方逻辑叠加命中圈。
-      if(model){
-        market=jcOverviewInlineChoicesHtml(jcOverviewDirectionChoices(model,m));
-        goals=jcOverviewGoalsHtml(model.goal_range);
-        hafu=jcOverviewHtftHtml(model);
-      }
-
-      if(score.finished && score.ft && model){
-        const ftParts=String(score.ft).split('-').map(Number);
-        const total=ftParts.length===2 && ftParts.every(Number.isFinite)?(ftParts[0]+ftParts[1])+'球':'—';
-        const htft=score.ht ? jcShortResultByScore(score.ht)+'/'+jcShortResultByScore(score.ft) : '—';
-        const resultShort=jcShortResultByScore(score.ft);
-
-        const directionChoices=jcOverviewDirectionChoices(model,m);
-        const goalChoices=jcOverviewGoalValues(model.goal_range);
-        const htftChoices=[model.htft_top1,model.htft_top2].filter(Boolean);
-
-        market=jcReviewInlineChoicesHtml(directionChoices,jcOverviewActualDirection(model,m,score));
-        goals=jcReviewGoalChoicesHtml(goalChoices,total);
-        hafu=jcReviewHtftChoicesHtml(htftChoices,htft);
-      }
+      const prediction=jcOverviewPredictionParts(m);
 
       const displayScore=mode==='yesterday'?score.ft:score.current;
       let scoreMeta='';
@@ -866,18 +885,17 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         ? '<strong class="jc-score-full">'+qcEscape(displayScore)+'</strong><span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span>'
         : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
-      return '<tr class="jc-overview-row" data-href="'+href+'">'+
+      return '<tr class="jc-overview-row" data-match-id="'+qcEscape(m.id)+'" data-href="'+href+'">'+
         '<td class="jc-num"><b>'+num+'</b></td>'+
         '<td class="jc-time"><time>'+time+'</time></td>'+
         '<td><span class="jc-overview-league">'+league+'</span></td>'+
         '<td><a class="jc-review-match" href="'+href+'"><span>'+home+'</span><span class="jc-score-stack">'+scoreStack+'</span><span>'+away+'</span></a></td>'+
-        '<td><div class="jc-result-stack">'+market+'</div></td>'+
-        '<td>'+goals+'</td>'+
-        '<td>'+hafu+'</td>'+
+        '<td class="jc-overview-market"><div class="jc-result-stack">'+prediction.market+'</div></td>'+
+        '<td class="jc-overview-goals">'+prediction.goals+'</td>'+
+        '<td class="jc-overview-htft">'+prediction.hafu+'</td>'+
       '</tr>';
     }).join('')+'</tbody></table></div>';
 }
-
 function jcBindOverviewRows(root=document){
   $$('.jc-overview-row',root).forEach(row=>{
     row.onclick=e=>{
@@ -1186,12 +1204,13 @@ async function loadJcFrontend(){
   const todayResultPromise=requestedDate===initialToday
     ? Promise.resolve(null)
     : jcFetchOverviewDateRows(initialToday);
-  const [currentResult,previousResult,availableDates,todayResult]=await Promise.all([
+  const availableDatesPromise=access.loggedIn?jcFetchAvailableDates():Promise.resolve(overviewSelectableDates);
+  const [currentResult,previousResult,todayResult]=await Promise.all([
     jcFetchOverviewDateRows(requestedDate),
     jcFetchOverviewDateRows(requestedPrevious),
-    jcFetchAvailableDates(),
     todayResultPromise
   ]);
+  let availableDates=overviewSelectableDates;
   let todayPredictionCount=requestedDate===initialToday
     ? (currentResult.data||[]).length
     : (todayResult?.data||[]).length;
@@ -1372,11 +1391,37 @@ async function loadJcFrontend(){
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
   });
 
-  // Keep the initial loading placeholder visible until model data is ready.
-  // This avoids the visible "page is done, then loads again" repaint on every browser.
-  await jcAttachModels(allRows);
-  modelsLoaded=true;
+  // Fast first paint for both guest/basic users and Pro users.
+  // Only the small prediction cells hydrate afterward; the page itself is not rebuilt.
+  const initialPreviousDate=qcAddDays(selectedDate,-1);
+  const initialModelRows=access.isPro
+    ? allRows
+    : allRows.filter(m=>jcBusinessDate(m)===initialPreviousDate && jcScoreInfo(m).finished);
+
+  initialModelRows.forEach(m=>{
+    m._jcModelsLoading=true;
+    m._jcModelLoadFailed=false;
+  });
   render();
+
+  availableDatesPromise.then(dates=>{
+    if(Array.isArray(dates) && dates.length) availableDates=dates;
+  }).catch(err=>console.warn('日期索引延后读取失败',err));
+
+  jcAttachModels(initialModelRows).then(()=>{
+    modelsLoaded=true;
+    jcPatchOverviewPredictionCells(cards,allRows);
+    jcPatchOverviewPredictionCells(reviewCards,allRows);
+  }).catch(err=>{
+    console.warn('首页模型读取失败',err);
+    initialModelRows.forEach(m=>{
+      m._jcModelsLoading=false;
+      m._jcModelLoadFailed=true;
+    });
+    modelsLoaded=true;
+    jcPatchOverviewPredictionCells(cards,allRows);
+    jcPatchOverviewPredictionCells(reviewCards,allRows);
+  });
 
   async function refreshOverviewLive(){
     const previousDate=qcAddDays(selectedDate,-1);
