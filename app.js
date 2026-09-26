@@ -972,6 +972,7 @@ const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
 const qcJcDateRowsCache=new Map();
 const qcFrozenOverviewRowsCache=new Map();
 let qcFrozenOverviewManifestPromise=null;
+let qcFrozenOverviewManifestCache=null;
 
 function qcLoadFrozenOverviewManifest(){
   if(qcFrozenOverviewManifestPromise) return qcFrozenOverviewManifestPromise;
@@ -979,11 +980,13 @@ function qcLoadFrozenOverviewManifest(){
     .then(async res=>{
       if(!res.ok) return {version:1,dates:{}};
       const data=await res.json();
-      return data && typeof data==='object' ? data : {version:1,dates:{}};
+      qcFrozenOverviewManifestCache=data && typeof data==='object' ? data : {version:1,dates:{}};
+      return qcFrozenOverviewManifestCache;
     })
     .catch(error=>{
       console.warn('读取历史冻结索引失败，继续使用数据库',error);
-      return {version:1,dates:{}};
+      qcFrozenOverviewManifestCache={version:1,dates:{}};
+      return qcFrozenOverviewManifestCache;
     });
   return qcFrozenOverviewManifestPromise;
 }
@@ -1075,10 +1078,15 @@ async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
 }
 
 async function jcFetchOverviewDateRows(dateStr,force=false){
-  // Frozen historical days bypass Supabase entirely.
-  // The manifest lookup is tiny and shared; if a day is not frozen we fall back to live data.
-  const frozen=await qcFetchFrozenOverviewDate(dateStr);
-  if(frozen) return frozen;
+  // Current / near-current dates must not wait for the static manifest before starting live reads.
+  // Older history checks the frozen layer first; once the manifest is cached, any explicitly
+  // frozen date (including yesterday) also bypasses Supabase.
+  const manifestFile=qcFrozenOverviewManifestCache?.dates?.[dateStr];
+  const oldEnough=String(dateStr||'')<=qcAddDays(qcBeijingToday(),-2);
+  if(manifestFile || oldEnough){
+    const frozen=await qcFetchFrozenOverviewDate(dateStr);
+    if(frozen) return frozen;
+  }
   return jcFetchDateRows(dateStr,false,force);
 }
 
