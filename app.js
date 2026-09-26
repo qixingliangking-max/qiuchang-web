@@ -2457,7 +2457,6 @@ async function setupJcMatchDetail(options={}){
 
   let detailRows=null;
   let sportteryDetails=null;
-  let snapshotRowsFull=null;
   let factsData=null;
   let factsLoaded=false;
 
@@ -2482,30 +2481,6 @@ async function setupJcMatchDetail(options={}){
         return [];
       });
     jcDetailFactsCache.set(key,{promise,savedAt:Date.now()});
-    return promise;
-  }
-
-  async function ensureSnapshotHistory(){
-    const key=String(id);
-    const cached=jcDetailOddsHistoryCache.get(key);
-    if(jcDetailCacheFresh(cached,120000)) return cached.data;
-    if(cached?.promise) return cached.promise;
-
-    const promise=window.qcSupabase.from('jc_market_snapshots')
-      .select('pool_code,goal_line,outcomes,raw,captured_at,official_update_time')
-      .eq('jc_match_id',id)
-      .then(({data,error})=>{
-        if(error) console.warn('读取赔率快照失败',error);
-        const rows=data||[];
-        jcDetailOddsHistoryCache.set(key,{data:rows,savedAt:Date.now()});
-        return rows;
-      })
-      .catch(error=>{
-        jcDetailOddsHistoryCache.delete(key);
-        console.warn('读取赔率快照失败',error);
-        return snapshotRowsFast;
-      });
-    jcDetailOddsHistoryCache.set(key,{promise,savedAt:Date.now()});
     return promise;
   }
 
@@ -2554,12 +2529,12 @@ async function setupJcMatchDetail(options={}){
 
   async function renderOdds(){
     if(!panel) return;
-    panel.innerHTML='<div class="jc-match-loading-shell compact"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div>';
-    snapshotRowsFull=snapshotRowsFull || await ensureSnapshotHistory();
-    if(loadSeq!==jcDetailLoadSeq) return;
-    const fullPools=jcLatestPools(snapshotRowsFull||[]);
-    panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(fullPools,snapshotRowsFull||[],'had')+'</div>';
-    jcBindOddsPlayTabs(panel,fullPools,snapshotRowsFull||[]);
+    // Frontend always renders the latest pre-kickoff snapshot only.
+    // Full historical snapshots stay in storage for backend audit/research and never block UI.
+    const latestRows=snapshotRowsFast||[];
+    const latestPools=jcLatestPools(latestRows);
+    panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(latestPools,latestRows,'had')+'</div>';
+    jcBindOddsPlayTabs(panel,latestPools,latestRows);
   }
 
   async function renderMainTab(tab){
