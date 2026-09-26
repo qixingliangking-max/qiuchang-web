@@ -1519,6 +1519,7 @@ async function loadJcFrontend(){
     console.error('读取竞彩前台数据失败',error);
     cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
     if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
+    document.body.classList.remove('qc-overview-booting');
     return;
   }
 
@@ -1827,6 +1828,7 @@ async function loadJcFrontend(){
     }
 
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
+    document.body.classList.remove('qc-overview-booting');
 
     try{
       qcRenderDateCalendar(
@@ -4238,6 +4240,7 @@ async function setupAdminLogs(){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>document.body.classList.remove('qc-overview-booting'),2500);
   const safe=(name,fn)=>{try{const r=fn();if(r&&typeof r.catch==='function')r.catch(e=>console.error(name,e));}catch(e){console.error(name,e);}};
   safe('drawer',()=>setupDrawer());
   safe('legacy-index',()=>renderIndex());
