@@ -557,6 +557,8 @@ function jcDisplaySingleSuffix(model,m){
 }
 
 function jcOverviewActualDirection(model,m,score){
+  const reviewOverride=String(model?.raw_input?.review_direction_result||'').trim();
+  if(reviewOverride) return reviewOverride;
   if(jcHasOrdinaryResult(m)) return jcShortResultByScore(score?.ft);
   const hhad=jcLatestPools(m?.jc_market_snapshots||[]).hhad;
   const line=hhad?.goal_line ?? model?.raw_input?.handicap_line;
