@@ -1801,7 +1801,7 @@ function jcRenderAiLockedPanel(m,pools,access){
       '<span>'+qcEscape(lockDesc)+'</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
-      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
       '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
       '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
     '</div>'+
@@ -1845,7 +1845,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
 
   const contextBlock=
     '<div class="jc-ai-context">'+
-      '<div><span>官方竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
       '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
       '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
     '</div>';
