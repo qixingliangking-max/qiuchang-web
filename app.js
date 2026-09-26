@@ -2258,7 +2258,10 @@ function jcRenderFactsShell(){
 }
 
 function jcRenderAiLockedPanel(m,pools,access){
-  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
+  const poolCount=pools && typeof pools==='object'
+    ? ['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length
+    : null;
+  const poolCountText=poolCount===null?'—':poolCount+'/5';
   const loggedIn=Boolean(access?.loggedIn);
   const actionHref=loggedIn
     ? 'profile.html'
@@ -2276,7 +2279,7 @@ function jcRenderAiLockedPanel(m,pools,access){
       '<span>'+qcEscape(lockDesc)+'</span>'+
     '</div>'+
     '<div class="jc-ai-context jc-ai-context-public">'+
-      '<div><span>竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>竞彩玩法</span><strong>'+poolCountText+'</strong></div>'+
       '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
       '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
     '</div>'+
@@ -2288,7 +2291,10 @@ function jcRenderAiLockedPanel(m,pools,access){
 }
 
 function jcRenderAiPanel(m,pools,model,analysis){
-  const poolCount=['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length;
+  const poolCount=pools && typeof pools==='object'
+    ? ['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length
+    : null;
+  const poolCountText=poolCount===null?'—':poolCount+'/5';
   const modelReady=!!model;
   const statusText=modelReady
     ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
@@ -2320,7 +2326,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
 
   const contextBlock=
     '<div class="jc-ai-context">'+
-      '<div><span>竞彩玩法</span><strong>'+poolCount+'/5</strong></div>'+
+      '<div><span>竞彩玩法</span><strong>'+poolCountText+'</strong></div>'+
       '<div><span>比赛状态</span><strong>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</strong></div>'+
       '<div><span>比赛时间</span><strong>'+qcEscape(jcDateTime(m) || '—')+'</strong></div>'+
     '</div>';
@@ -2431,6 +2437,7 @@ function jcSyncDetailNavToCurrent(root){
 
 const jcDetailMatchCache=new Map();
 const jcDetailFastDataCache=new Map();
+const jcDetailPredictionSnapshotCache=new Map();
 const jcDetailFactsCache=new Map();
 const jcDetailOddsHistoryCache=new Map();
 let jcDetailDayCache=null;
@@ -2439,6 +2446,85 @@ let jcDetailPopstateBound=false;
 
 function jcDetailCacheFresh(entry,maxAge=60000){
   return Boolean(entry && entry.savedAt && Date.now()-entry.savedAt<maxAge);
+}
+
+function jcDetailSnapshotBundle(record){
+  if(!record?.payload) return null;
+  const payload=record.payload||{};
+  return {
+    model:payload.model||null,
+    analysis:payload.analysis||null,
+    details:Array.isArray(payload.details)?payload.details:[],
+    marketPoolCodes:Array.isArray(payload.market_pool_codes)?payload.market_pool_codes:[],
+    generatedAt:record.generated_at||null
+  };
+}
+
+async function jcFetchDetailPredictionSnapshot(id,access){
+  if(!window.qcSupabase || !access?.loggedIn || !access?.isPro) return null;
+  const key=String(id);
+  if(jcDetailPredictionSnapshotCache.has(key)){
+    return jcDetailPredictionSnapshotCache.get(key);
+  }
+
+  const {data,error}=await window.qcSupabase
+    .from('jc_detail_prediction_snapshots')
+    .select('jc_match_id,payload,generated_at')
+    .eq('jc_match_id',id)
+    .maybeSingle();
+
+  if(error){
+    console.warn('读取详情锁板快照失败，回退常规读取',error);
+    return null;
+  }
+
+  const bundle=jcDetailSnapshotBundle(data);
+  if(bundle) jcDetailPredictionSnapshotCache.set(key,bundle);
+  return bundle;
+}
+
+function jcPoolsFromCodes(codes){
+  const pools={};
+  (Array.isArray(codes)?codes:[]).forEach(code=>{
+    if(code) pools[String(code).toLowerCase()]={snapshot:true};
+  });
+  return pools;
+}
+
+async function jcFetchDetailLatestSnapshots(id){
+  if(!window.qcSupabase) return [];
+  const {data,error}=await window.qcSupabase
+    .from('jc_prekick_latest_market_snapshots')
+    .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
+    .eq('jc_match_id',id);
+  if(error){
+    console.warn('读取详情最新赔率摘要失败',error);
+    return [];
+  }
+  return data||[];
+}
+
+function jcPrefetchDetailPredictionSnapshots(rows,currentId,access){
+  if(!window.qcSupabase || !access?.isPro || !Array.isArray(rows) || rows.length<2) return;
+  const idx=rows.findIndex(x=>String(x.id)===String(currentId));
+  if(idx<0) return;
+  const ids=[rows[idx-1]?.id,rows[idx+1]?.id]
+    .filter(Boolean)
+    .filter(id=>!jcDetailPredictionSnapshotCache.has(String(id)));
+  if(!ids.length) return;
+
+  window.qcSupabase
+    .from('jc_detail_prediction_snapshots')
+    .select('jc_match_id,payload,generated_at')
+    .in('jc_match_id',ids)
+    .then(({data,error})=>{
+      if(error) return;
+      (data||[]).forEach(record=>{
+        const bundle=jcDetailSnapshotBundle(record);
+        if(bundle) jcDetailPredictionSnapshotCache.set(String(record.jc_match_id),bundle);
+      });
+    })
+    .catch(()=>{});
 }
 
 async function jcFetchDetailFastData(id,access,force=false){
@@ -2653,8 +2739,12 @@ async function setupJcMatchDetail(options={}){
   const access=await accessPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
-  // Fast AI/model/odds-summary data starts as soon as access is known.
-  const fastDataPromise=jcFetchDetailFastData(id,access);
+  // Locked model + first successful AI report are immutable. Read the single
+  // detail snapshot first; dynamic odds and score no longer block AI rendering.
+  const canViewPremium=qcCanViewPrematchContent(m,access);
+  const detailSnapshotPromise=canViewPremium
+    ? jcFetchDetailPredictionSnapshot(id,access)
+    : Promise.resolve(null);
   const sameDay=await dayPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
@@ -2698,30 +2788,49 @@ async function setupJcMatchDetail(options={}){
   jcBindDetailMatchSwitches(root);
   jcPrefetchDetailNeighbors(sameDay,m.id);
 
-  const fastData=await fastDataPromise;
+  const lockedSnapshot=await detailSnapshotPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
-  const canViewPremium=qcCanViewPrematchContent(m,access);
-  const snapshotRowsFast=fastData.latestSnapshots||[];
-  const pools=jcLatestPools(snapshotRowsFast);
-  const model=canViewPremium?fastData.model:null;
-  const aiAnalysis=canViewPremium?fastData.analysis:null;
-  const score=jcScoreInfo(m);
-  const status=score.finished && score.ht
-    ? '半 '+score.ht
-    : jcMatchStatusLabel(m,qcBeijingToday());
+  let snapshotRowsFast=null;
+  let pools=null;
+  let model=null;
+  let aiAnalysis=null;
+  let snapshotDetails=[];
+
+  if(canViewPremium && lockedSnapshot){
+    model=lockedSnapshot.model;
+    aiAnalysis=lockedSnapshot.analysis;
+    snapshotDetails=lockedSnapshot.details||[];
+    pools=jcPoolsFromCodes(lockedSnapshot.marketPoolCodes);
+  }else if(canViewPremium){
+    // Safety fallback for a newly generated match whose snapshot has not been captured yet.
+    const fastData=await jcFetchDetailFastData(id,access);
+    if(loadSeq!==jcDetailLoadSeq) return;
+    snapshotRowsFast=fastData.latestSnapshots||[];
+    pools=jcLatestPools(snapshotRowsFast);
+    model=fastData.model||null;
+    aiAnalysis=fastData.analysis||null;
+  }
 
   const panel=$('#jcMainPanel',root);
   if(panel){
     panel.innerHTML=canViewPremium
       ? jcRenderAiPanel(m,pools,model,aiAnalysis)
-      : jcRenderAiLockedPanel(m,pools,access);
+      : jcRenderAiLockedPanel(m,null,access);
   }
 
-  // Cache/prefetch neighboring premium bundles only after current AI is already visible.
-  setTimeout(()=>jcPrefetchDetailFastNeighbors(sameDay,m.id,access),250);
+  // Immutable neighbor snapshots can be prefetched once and reused for instant match switching.
+  setTimeout(()=>jcPrefetchDetailPredictionSnapshots(sameDay,m.id,access),120);
 
-  let detailRows=null;
+  let latestRowsPromise=null;
+  async function ensureLatestSnapshotRows(){
+    if(Array.isArray(snapshotRowsFast)) return snapshotRowsFast;
+    if(!latestRowsPromise) latestRowsPromise=jcFetchDetailLatestSnapshots(id);
+    snapshotRowsFast=await latestRowsPromise;
+    return snapshotRowsFast;
+  }
+
+  let detailRows=snapshotDetails.length?snapshotDetails:null;
   let sportteryDetails=null;
   let factsData=null;
   let factsLoaded=false;
@@ -2795,9 +2904,10 @@ async function setupJcMatchDetail(options={}){
 
   async function renderOdds(){
     if(!panel) return;
-    // Frontend always renders the latest pre-kickoff snapshot only.
-    // Full historical snapshots stay in storage for backend audit/research and never block UI.
-    const latestRows=snapshotRowsFast||[];
+    // Odds stay dynamic: fetch the newest pre-kickoff snapshot only when this tab is opened.
+    // This keeps the immutable AI/detail snapshot off the critical rendering path.
+    const latestRows=await ensureLatestSnapshotRows();
+    if(loadSeq!==jcDetailLoadSeq) return;
     const latestPools=jcLatestPools(latestRows);
     panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(latestPools,latestRows,'had')+'</div>';
     jcBindOddsPlayTabs(panel,latestPools,latestRows);
@@ -2812,7 +2922,7 @@ async function setupJcMatchDetail(options={}){
     if(tab==='ai'){
       panel.innerHTML=canViewPremium
         ? jcRenderAiPanel(m,pools,model,aiAnalysis)
-        : jcRenderAiLockedPanel(m,pools,access);
+        : jcRenderAiLockedPanel(m,null,access);
       return;
     }
     await loadFacts();
