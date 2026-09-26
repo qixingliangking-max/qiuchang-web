@@ -1568,9 +1568,15 @@ async function loadJcFrontend(){
   function preserveOverviewStaticData(fresh,old){
     if(!old) return fresh;
     const merged={...old,...fresh};
-    if(old?.jc_model_outputs) merged.jc_model_outputs=old.jc_model_outputs;
+
+    // Dynamic score/status refreshes must never discard prediction state that
+    // has already been loaded (or is still loading) on the current row.
+    if(Array.isArray(old?.jc_model_outputs)) merged.jc_model_outputs=old.jc_model_outputs;
     if(old?._jcModelsLoaded) merged._jcModelsLoaded=true;
-    if(old?.jc_market_snapshots) merged.jc_market_snapshots=old.jc_market_snapshots;
+    if(old?._jcModelsLoading) merged._jcModelsLoading=true;
+    if(old?._jcModelLoadFailed) merged._jcModelLoadFailed=true;
+
+    if(Array.isArray(old?.jc_market_snapshots)) merged.jc_market_snapshots=old.jc_market_snapshots;
     if(old?._jcLatestSnapshotsLoaded) merged._jcLatestSnapshotsLoaded=true;
     if(old?._jcProtectedPredictionSnapshot) merged._jcProtectedPredictionSnapshot=true;
     if(old?._jcFrozenOverview) merged._jcFrozenOverview=true;
@@ -1713,8 +1719,12 @@ async function loadJcFrontend(){
     });
 
     render();
-    hydrateOverviewRows(allRows,ds,token);
-    refreshOverviewDynamicState(ds,token);
+    // Finish prediction hydration before the dynamic score overlay. Running
+    // both concurrently can replace hydrated rows with match-only rows and
+    // make the prediction columns fall back to "加载中".
+    hydrateOverviewRows(allRows,ds,token)
+      .then(()=>refreshOverviewDynamicState(ds,token))
+      .catch(err=>console.warn('速览补充数据失败',err));
     primeOverviewNeighbors(ds);
   }
 
@@ -1828,14 +1838,17 @@ async function loadJcFrontend(){
     m._jcModelLoadFailed=false;
   });
   render();
-  hydrateOverviewRows(allRows,selectedDate,initialToken);
+  // Initial entry uses the same serialized hydration -> score overlay order as
+  // date switching, for both guests and Pro users.
+  hydrateOverviewRows(allRows,selectedDate,initialToken)
+    .then(()=>refreshOverviewDynamicState(selectedDate,initialToken))
+    .catch(err=>console.warn('速览补充数据失败',err));
   if(access.isPro){
     qcPrimeProOverviewSnapshots().then(()=>{
       // If the initial day was loaded conventionally, the protected snapshot is now warm for the next visit.
       primeOverviewNeighbors(selectedDate);
     }).catch(()=>{});
   }
-  refreshOverviewDynamicState(selectedDate,initialToken);
   primeOverviewNeighbors(selectedDate);
 
   async function refreshOverviewLive(){
