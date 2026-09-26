@@ -2271,6 +2271,105 @@ function renderMatch(){
  }
  $$('#topTabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab));show('model')
 }
+function qcAuthLooksNetwork(error){
+  if(!error) return false;
+  const raw=String(error.message||'');
+  const name=String(error.name||'');
+  const code=String(error.code||'');
+  const status=Number(error.status||0);
+  return (!code && !status) || /failed to fetch|network|fetch failed|load failed|retryable|networkerror/i.test(raw+' '+name);
+}
+
+function qcIsInAppBrowser(){
+  return /MicroMessenger|MQQBrowser|QQ\/|TBS\/|Weibo|FBAN|FBAV|Instagram|Line\//i.test(navigator.userAgent||'');
+}
+
+function qcAuthNetworkMessage(){
+  return qcIsInAppBrowser()
+    ? '当前内置浏览器无法稳定连接账号服务，请点右上角菜单，选择“在浏览器打开”，再用 Safari / Chrome 重试。'
+    : '账号服务连接失败，请检查网络后重试。';
+}
+
+async function qcDirectAuthRequest(path,body){
+  if(!window.QC_SUPABASE_URL || !window.QC_SUPABASE_PUBLISHABLE_KEY){
+    return {data:null,error:{message:'账号服务配置缺失'}};
+  }
+  try{
+    const res=await fetch(window.QC_SUPABASE_URL+path,{
+      method:'POST',
+      mode:'cors',
+      cache:'no-store',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY,
+        'Authorization':'Bearer '+window.QC_SUPABASE_PUBLISHABLE_KEY
+      },
+      body:JSON.stringify(body||{})
+    });
+    let payload={};
+    try{ payload=await res.json(); }catch(_){}
+    if(!res.ok){
+      return {
+        data:null,
+        error:{
+          name:'AuthApiError',
+          message:String(payload?.msg||payload?.message||payload?.error_description||payload?.error||('HTTP '+res.status)),
+          code:String(payload?.code||payload?.error_code||''),
+          status:res.status
+        }
+      };
+    }
+
+    const session=(payload?.access_token && payload?.refresh_token)
+      ? {
+          access_token:payload.access_token,
+          refresh_token:payload.refresh_token,
+          token_type:payload.token_type,
+          expires_in:payload.expires_in,
+          expires_at:payload.expires_at,
+          user:payload.user||null
+        }
+      : null;
+
+    if(session && window.qcSupabase){
+      const setResult=await window.qcSupabase.auth.setSession({
+        access_token:session.access_token,
+        refresh_token:session.refresh_token
+      });
+      if(setResult?.error) return {data:null,error:setResult.error};
+      return {data:{user:setResult?.data?.user||payload.user||null,session:setResult?.data?.session||session},error:null};
+    }
+
+    return {data:{user:payload?.user||null,session},error:null};
+  }catch(error){
+    return {data:null,error};
+  }
+}
+
+async function qcAuthSignInResilient(email,password){
+  let primary;
+  try{
+    primary=await window.qcSupabase.auth.signInWithPassword({email,password});
+  }catch(error){
+    primary={data:null,error};
+  }
+  if(!qcAuthLooksNetwork(primary?.error)) return primary;
+  await new Promise(resolve=>setTimeout(resolve,350));
+  return qcDirectAuthRequest('/auth/v1/token?grant_type=password',{email,password});
+}
+
+async function qcAuthSignUpResilient(email,password){
+  let primary;
+  try{
+    primary=await window.qcSupabase.auth.signUp({email,password});
+  }catch(error){
+    primary={data:null,error};
+  }
+  if(!qcAuthLooksNetwork(primary?.error)) return primary;
+  await new Promise(resolve=>setTimeout(resolve,350));
+  return qcDirectAuthRequest('/auth/v1/signup',{email,password});
+}
+
 async function setupDemoAuth(){
   const login = $('#loginForm');
 
@@ -2297,24 +2396,7 @@ async function setupDemoAuth(){
       button.disabled = true;
       button.textContent = '登录中...';
 
-      const signInOnce = () => window.qcSupabase.auth.signInWithPassword({ email, password });
-      let { data, error } = await signInOnce();
-
-      const firstRaw = String(error?.message || '');
-      const firstName = String(error?.name || '');
-      const firstCode = String(error?.code || '');
-      const firstStatus = Number(error?.status || 0);
-      const firstLooksNetwork = Boolean(error) && (
-        (!firstCode && !firstStatus) ||
-        /failed to fetch|network|fetch failed|load failed|retryable/i.test(firstRaw+' '+firstName)
-      );
-
-      if(firstLooksNetwork){
-        await new Promise(resolve => setTimeout(resolve, 1200));
-        const retry = await signInOnce();
-        data = retry.data;
-        error = retry.error;
-      }
+      let { data, error } = await qcAuthSignInResilient(email,password);
 
       button.disabled = false;
       button.textContent = '登录';
@@ -2325,19 +2407,12 @@ async function setupDemoAuth(){
         const code = String(error.code || '');
         const status = Number(error.status || 0);
         let message = '登录失败，请稍后重试';
-        let publicCode = code || (status ? String(status) : '');
-
-        const looksNetwork = (
-          (!code && !status) ||
-          /failed to fetch|network|fetch failed|load failed|retryable/i.test(raw+' '+name)
-        );
+        const looksNetwork = qcAuthLooksNetwork(error);
 
         if(looksNetwork){
-          message = '登录接口连接失败，当前网络无法稳定访问账号服务';
-          publicCode = 'NETWORK_AUTH';
+          message = qcAuthNetworkMessage();
         }else if(/invalid login credentials|invalid_credentials/i.test(raw+' '+code)){
           message = '邮箱或密码错误';
-          publicCode = 'INVALID_CREDENTIALS';
         }else if(/email not confirmed|email_not_confirmed/i.test(raw+' '+code)){
           message = '邮箱尚未完成验证';
         }else if(/rate|too many|over_request_rate_limit/i.test(raw+' '+code)){
@@ -2349,7 +2424,7 @@ async function setupDemoAuth(){
           loginHint.textContent = message;
           loginHint.className = 'code-hint error';
         }
-        alert(message);
+        if(!looksNetwork) alert(message);
         return;
       }
 
@@ -2397,24 +2472,7 @@ async function setupDemoAuth(){
         hint.className = 'code-hint';
       }
 
-      const signUpOnce = () => window.qcSupabase.auth.signUp({ email, password });
-      let { data, error } = await signUpOnce();
-
-      const firstRaw = String(error?.message || '');
-      const firstName = String(error?.name || '');
-      const firstCode = String(error?.code || '');
-      const firstStatus = Number(error?.status || 0);
-      const firstLooksNetwork = Boolean(error) && (
-        !firstCode && !firstStatus ||
-        /failed to fetch|network|fetch failed|load failed|retryable/i.test(firstRaw+' '+firstName)
-      );
-
-      if(firstLooksNetwork){
-        await new Promise(resolve => setTimeout(resolve, 1200));
-        const retry = await signUpOnce();
-        data = retry.data;
-        error = retry.error;
-      }
+      let { data, error } = await qcAuthSignUpResilient(email,password);
 
       button.disabled = false;
       button.textContent = '注册';
@@ -2424,19 +2482,11 @@ async function setupDemoAuth(){
         const name = String(error.name || '');
         const code = String(error.code || '');
         const status = Number(error.status || 0);
-        const diag = [name,code,status||''].filter(Boolean).join('/');
-
         let message = '注册暂时失败，请稍后重试';
-        let publicCode = code || (status ? String(status) : '');
-
-        const looksNetwork = (
-          (!code && !status) ||
-          /failed to fetch|network|fetch failed|load failed|retryable/i.test(raw+' '+name)
-        );
+        const looksNetwork = qcAuthLooksNetwork(error);
 
         if(looksNetwork){
-          message = '注册接口连接失败，请切换 Wi‑Fi/移动数据，或换 Safari/Chrome 后重试';
-          publicCode = 'NETWORK_AUTH';
+          message = qcAuthNetworkMessage();
         }else if(/already registered|user already registered|user_already_exists/i.test(raw+' '+code)){
           message = '这个邮箱已经注册，可以直接登录';
         }else if(/rate|too many|over_email_send_rate_limit|over_request_rate_limit/i.test(raw+' '+code)){
@@ -2453,14 +2503,12 @@ async function setupDemoAuth(){
           message = '密码不符合要求，请使用至少8个字符';
         }
 
-        const suffix = publicCode ? '（诊断：'+publicCode+'）' : '';
-        console.error('注册失败', {name,errorCode:code,status,message:raw,diag,navigatorOnline:navigator.onLine});
-
+        console.error('注册失败', {name,errorCode:code,status,message:raw,navigatorOnline:navigator.onLine});
         if(hint){
-          hint.textContent = message + suffix;
+          hint.textContent = message;
           hint.className = 'code-hint error';
         }
-        alert(message + suffix);
+        if(!looksNetwork) alert(message);
         return;
       }
 
