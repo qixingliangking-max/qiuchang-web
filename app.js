@@ -748,10 +748,11 @@ function jcOverviewHtftHtml(model){
 
 async function jcAttachModels(rows){
   if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
-  const ids=rows.map(x=>x.id).filter(Boolean);
+  const targets=rows.filter(m=>m?.id && !m._jcModelsLoaded);
+  const ids=targets.map(x=>x.id).filter(Boolean);
   if(!ids.length) return rows;
 
-  rows.forEach(m=>{
+  targets.forEach(m=>{
     m._jcModelsLoading=true;
     m._jcModelLoadFailed=false;
   });
@@ -767,14 +768,16 @@ async function jcAttachModels(rows){
     if(error) throw error;
 
     const map=new Map();
-    (data||[]).forEach(x=>map.set(x.jc_match_id,x));
-    rows.forEach(m=>{
-      m.jc_model_outputs=map.has(m.id)?[map.get(m.id)]:[];
+    (data||[]).forEach(x=>map.set(String(x.jc_match_id),x));
+    targets.forEach(m=>{
+      const model=map.get(String(m.id))||null;
+      m.jc_model_outputs=model?[model]:[];
       m._jcModelsLoading=false;
       m._jcModelLoadFailed=false;
+      m._jcModelsLoaded=true;
     });
   }catch(error){
-    rows.forEach(m=>{
+    targets.forEach(m=>{
       m._jcModelsLoading=false;
       m._jcModelLoadFailed=true;
     });
@@ -1354,14 +1357,16 @@ async function loadJcFrontend(){
 
   async function hydrateOverviewRows(rows,ds,token){
     const modelRows=modelRowsForBundle(rows,ds);
-    modelRows.forEach(m=>{
+    const pendingModels=modelRows.filter(m=>!m._jcModelsLoaded);
+
+    pendingModels.forEach(m=>{
       m._jcModelsLoading=true;
       m._jcModelLoadFailed=false;
     });
 
     await Promise.all([
       jcAttachLatestSnapshots(rows),
-      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
+      pendingModels.length?jcAttachModels(pendingModels):Promise.resolve(pendingModels)
     ]);
 
     if(token!==loadToken || selectedDate!==ds) return;
@@ -1380,11 +1385,50 @@ async function loadJcFrontend(){
           home_team_name:m.home_team_name,away_team_name:m.away_team_name,
           match_date:m.match_date,match_time:m.match_time,match_status:m.match_status,
           raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1},
-          _apiFootballLive:m._apiFootballLive,jc_model_outputs:m.jc_model_outputs
+          _apiFootballLive:m._apiFootballLive,
+          jc_model_outputs:m.jc_model_outputs,
+          _jcModelsLoaded:m._jcModelsLoaded,
+          _jcLatestSnapshotsLoaded:m._jcLatestSnapshotsLoaded,
+          jc_market_snapshots:m.jc_market_snapshots
         }));
         localStorage.setItem(cacheKey,JSON.stringify({rows:finished}));
       }catch(err){ console.warn('昨日赛果缓存写入失败',err); }
     }
+  }
+
+  const overviewPrimeInFlight=new Map();
+  async function primeOverviewDateBundle(ds){
+    if(!isValidOverviewDate(ds)) return;
+    if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
+    if(overviewPrimeInFlight.has(ds)) return overviewPrimeInFlight.get(ds);
+
+    const promise=(async()=>{
+      const prevDs=qcAddDays(ds,-1);
+      const [cur,prevRowsResult]=await Promise.all([
+        jcFetchOverviewDateRows(ds),
+        jcFetchOverviewDateRows(prevDs)
+      ]);
+      if(cur.error||prevRowsResult.error) return;
+
+      const rows=[...(cur.data||[]),...(prevRowsResult.data||[])].filter(m=>m.match_date);
+      const modelRows=modelRowsForBundle(rows,ds).filter(m=>!m._jcModelsLoaded);
+      const snapshotRows=rows.filter(m=>!m._jcLatestSnapshotsLoaded);
+
+      await Promise.all([
+        modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows),
+        snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows)
+      ]);
+    })().finally(()=>overviewPrimeInFlight.delete(ds));
+
+    overviewPrimeInFlight.set(ds,promise);
+    return promise;
+  }
+
+  function primeOverviewNeighbors(ds){
+    const targets=[qcAddDays(ds,-1),qcAddDays(ds,1)];
+    setTimeout(()=>{
+      targets.forEach(target=>primeOverviewDateBundle(target).catch(()=>{}));
+    },80);
   }
 
   async function loadFrontendDateBundle(ds){
@@ -1418,13 +1462,14 @@ async function loadJcFrontend(){
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
 
     const modelRows=modelRowsForBundle(allRows,ds);
-    modelRows.forEach(m=>{
+    modelRows.filter(m=>!m._jcModelsLoaded).forEach(m=>{
       m._jcModelsLoading=true;
       m._jcModelLoadFailed=false;
     });
 
     render();
     hydrateOverviewRows(allRows,ds,token);
+    primeOverviewNeighbors(ds);
   }
 
   function render(){
@@ -1532,12 +1577,13 @@ async function loadJcFrontend(){
 
   const initialToken=++loadToken;
   const initialModels=modelRowsForBundle(allRows,selectedDate);
-  initialModels.forEach(m=>{
+  initialModels.filter(m=>!m._jcModelsLoaded).forEach(m=>{
     m._jcModelsLoading=true;
     m._jcModelLoadFailed=false;
   });
   render();
   hydrateOverviewRows(allRows,selectedDate,initialToken);
+  primeOverviewNeighbors(selectedDate);
 
   async function refreshOverviewLive(){
     const token=loadToken;
@@ -1556,6 +1602,7 @@ async function loadJcFrontend(){
           .map(m=>{
             const old=oldById.get(String(m.id));
             if(old?.jc_model_outputs) m.jc_model_outputs=old.jc_model_outputs;
+            if(old?._jcModelsLoaded) m._jcModelsLoaded=true;
             if(old?.jc_market_snapshots) m.jc_market_snapshots=old.jc_market_snapshots;
             if(old?._jcLatestSnapshotsLoaded) m._jcLatestSnapshotsLoaded=true;
             if(old?._apiFootballLive) m._apiFootballLive=old._apiFootballLive;
