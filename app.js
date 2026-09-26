@@ -1157,8 +1157,9 @@ async function loadJcFootball(){
 
   async function hydrateFootballRows(rows,ds,token){
     const modelRows=access.isPro?rows:[];
+    const snapshotRows=rows.filter(m=>jcScoreInfo(m).finished);
     await Promise.all([
-      jcAttachLatestSnapshots(rows),
+      snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows),
       modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
     ]);
     if(token!==loadToken || selectedDate!==ds) return;
