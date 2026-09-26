@@ -1461,7 +1461,12 @@ async function loadJcFrontend(){
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
 
   let currentResult,previousResult;
-  if(initialDate===candidateDate){
+  if(access.isPro){
+    [currentResult,previousResult]=await Promise.all([
+      fetchOverviewDatePreferred(initialDate),
+      fetchOverviewDatePreferred(qcAddDays(initialDate,-1))
+    ]);
+  }else if(initialDate===candidateDate){
     [currentResult,previousResult]=await Promise.all([candidateCurrentPromise,candidatePreviousPromise]);
   }else{
     [currentResult,previousResult]=await Promise.all([
