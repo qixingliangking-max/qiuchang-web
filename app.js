@@ -1145,9 +1145,8 @@ async function loadJcFootball(){
     await jcAttachLiveScores(dateRows);
     render();
   }
-  refreshFootballLive();
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
-  // 赛中每2分钟刷新一次，完赛后自动显示最终比分并重新计算命中区
+  // 首屏不重复刷新；后续每2分钟更新赛中比分和完赛状态。
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
 }
 
@@ -1436,9 +1435,8 @@ async function loadJcFrontend(){
     modelsLoaded=true;
     render();
   });
-  refreshOverviewLive();
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
-  // 首页同步使用2分钟刷新，避免完赛后仍长时间停留在旧状态
+  // 首屏已经完成一次完整读取，不再立刻重复请求；2分钟后再进入自动刷新。
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
 }
 
@@ -2803,9 +2801,13 @@ function setupAuthStateRecovery(){
     if(Date.now()-last<10000) return;
     sessionStorage.setItem(key,String(Date.now()));
 
-    // Automatic one-time refresh fixes late session restoration in Quark/QQ
-    // without requiring the user to manually refresh the page.
-    setTimeout(()=>location.reload(),80);
+    // Recover late sessions in place. Quark/QQ should not visibly reload the
+    // whole page after the user has already seen the homepage.
+    setTimeout(()=>{
+      if($('#jcLiveCards')) loadJcFrontend();
+      else if($('#jcFootballCards')) loadJcFootball();
+      else if($('#jcMatchDetailRoot')) setupJcMatchDetail();
+    },120);
   });
 }
 
