@@ -485,16 +485,19 @@ function jcCompactResultPick(text,m){
 }
 
 function jcCompactHandicapPick(text){
-  const normalized=String(text||'待生成')
-    .replace(/\s+/g,'')
-    .replace(/[＋+]/g,'/')
-    .replace(/[｜|]/g,'/');
-  const lineMatch=normalized.match(/^([+-]?\d+(?:\.\d+)?)\/(.+)$/);
+  const source=String(text||'待生成').replace(/\s+/g,'');
+  const lineMatch=source.match(/^([+-]?\d+(?:\.\d+)?)\s*[｜|]\s*(.+)$/);
   if(lineMatch){
-    const picks=lineMatch[2].split('/').filter(Boolean).join(' / ');
+    const picks=lineMatch[2]
+      .replace(/[＋+]/g,'/')
+      .replace(/[｜|]/g,'/')
+      .split('/').map(x=>x.trim()).filter(Boolean).join(' / ');
     return lineMatch[1]+'｜'+picks;
   }
-  return normalized.split('/').filter(Boolean).join(' / ');
+  return source
+    .replace(/[＋+]/g,'/')
+    .replace(/[｜|]/g,'/')
+    .split('/').map(x=>x.trim()).filter(Boolean).join(' / ');
 }
 
 function jcHasOrdinaryResult(m){
@@ -502,18 +505,15 @@ function jcHasOrdinaryResult(m){
 }
 
 function jcDisplayModelDirection(model,m){
-  return jcHasOrdinaryResult(m)
-    ? jcCompactResultPick(model?.direction,m)
-    : jcCompactHandicapPick(model?.handicap_direction);
+  // Locked model direction is the source of truth for display.
+  // Do not substitute the handicap recommendation when HAD odds are absent.
+  return jcCompactResultPick(model?.direction,m);
 }
 
 function jcDisplaySinglePick(model,m){
-  if(jcHasOrdinaryResult(m)) return jcCompactResultPick(model?.single_pick,m);
-  const pick=jcCompactResultPick(model?.single_pick,m);
-  return String(pick||'').split('/').map(x=>{
-    const v=x.trim();
-    return /^让/.test(v)?v:(v==='胜'?'让胜':v==='平'?'让平':v==='负'?'让负':v);
-  }).filter(Boolean).join(' / ');
+  // Locked TEST single pick is the source of truth for display.
+  // Do not convert it into a handicap pick when HAD odds are absent.
+  return jcCompactResultPick(model?.single_pick,m);
 }
 
 function jcDisplaySingleSuffix(model,m){
