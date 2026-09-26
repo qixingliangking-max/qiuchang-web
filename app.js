@@ -386,7 +386,7 @@ async function qcGetAccessState(force=false){
         const handoffAt=Number(sessionStorage.getItem('qc-auth-handoff')||0);
         recentAuthHandoff=Boolean(handoffAt && Date.now()-handoffAt<12000);
       }catch(_){}
-      const sessionAttempts=recentAuthHandoff?4:(qcIsInAppBrowser()?2:1);
+      const sessionAttempts=recentAuthHandoff?4:1;
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
         const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
         if(sessionError) console.warn('读取登录状态失败',sessionError);
@@ -1447,11 +1447,59 @@ async function loadJcFrontend(){
   const initialDateRaw=new URLSearchParams(location.search).get('date');
   const candidateDate=isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday;
 
-  // Auth, frozen-history index and the likely first date bundle all start together.
+  // Auth and data start together. Yesterday's finished review is public, so it can
+  // paint immediately without waiting for login/Pro detection.
   qcLoadFrozenOverviewManifest();
   const accessPromise=qcGetAccessState();
   const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
-  const candidatePreviousPromise=jcFetchOverviewDateRows(qcAddDays(candidateDate,-1));
+  const candidatePreviousDate=qcAddDays(candidateDate,-1);
+  const candidatePreviousPromise=jcFetchOverviewDateRows(candidatePreviousDate);
+
+  // Browser cache gives repeat opens an immediate first frame.
+  try{
+    const cached=JSON.parse(localStorage.getItem('qc-finished-review-'+candidatePreviousDate)||'null');
+    if(Array.isArray(cached?.rows) && cached.rows.length){
+      reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
+      jcBindOverviewRows(reviewCards);
+      const meta=$('#jcYesterdayMeta');
+      if(meta) meta.textContent=candidatePreviousDate.slice(5)+' · '+cached.rows.length+'场';
+    }
+  }catch(_){}
+
+  // Network refresh also does not wait for auth. Only finished rows are exposed here.
+  candidatePreviousPromise.then(async result=>{
+    if(result?.error) return;
+    const publicRows=(result.data||[]).filter(m=>jcScoreInfo(m).finished);
+    if(!publicRows.length) return;
+    publicRows.forEach(m=>{
+      m._jcModelsLoading=!m._jcModelsLoaded;
+      m._jcModelLoadFailed=false;
+    });
+    await Promise.all([
+      jcAttachLatestSnapshots(publicRows),
+      jcAttachModels(publicRows)
+    ]);
+    reviewCards.innerHTML=jcRenderYesterdayReview(publicRows,calendarToday);
+    jcBindOverviewRows(reviewCards);
+    const meta=$('#jcYesterdayMeta');
+    if(meta) meta.textContent=candidatePreviousDate.slice(5)+' · '+publicRows.length+'场';
+    try{
+      const finished=publicRows.map(m=>({
+        id:m.id,match_num:m.match_num,business_date:m.business_date,
+        league_name:m.league_name,league_short_name:m.league_short_name,
+        home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+        match_date:m.match_date,match_time:m.match_time,kickoff_at:m.kickoff_at,
+        match_status:m.match_status,
+        raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1,matchStatusName:m.raw?.matchStatusName},
+        jc_model_outputs:m.jc_model_outputs,
+        jc_market_snapshots:m.jc_market_snapshots,
+        _jcModelsLoaded:m._jcModelsLoaded,
+        _jcLatestSnapshotsLoaded:m._jcLatestSnapshotsLoaded
+      }));
+      localStorage.setItem('qc-finished-review-'+candidatePreviousDate,JSON.stringify({rows:finished,savedAt:Date.now()}));
+    }catch(_){}
+  }).catch(()=>{});
+
   const access=await accessPromise;
   if(access.isPro){
     // One protected row per locked day. Prime them after auth so Pro date switching can be memory-first.
@@ -1668,10 +1716,9 @@ async function loadJcFrontend(){
 
     const previousDate=qcAddDays(ds,-1);
     const previousRows=rows.filter(m=>jcBusinessDate(m)===previousDate);
-    if(previousDate===initialYesterday && previousRows.length &&
-       previousRows.every(m=>jcScoreInfo(m).finished)){
+    if(previousDate===initialYesterday && previousRows.some(m=>jcScoreInfo(m).finished)){
       try{
-        const finished=previousRows.map(m=>({
+        const finished=previousRows.filter(m=>jcScoreInfo(m).finished).map(m=>({
           id:m.id,match_num:m.match_num,business_date:m.business_date,
           league_name:m.league_name,league_short_name:m.league_short_name,
           home_team_name:m.home_team_name,away_team_name:m.away_team_name,
