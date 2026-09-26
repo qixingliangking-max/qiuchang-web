@@ -1069,7 +1069,12 @@ async function loadJcFootball(){
   const today=qcBeijingBusinessToday();
   const paramDate=new URLSearchParams(location.search).get('date');
   const initialDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
-  const [initial,availableDates]=await Promise.all([jcFetchDateRows(initialDate,true),jcFetchAvailableDates()]);
+
+  // Base schedule and auth resolve in parallel. Odds/model/date-index data never blocks first paint.
+  const [initial,access]=await Promise.all([
+    jcFetchDateRows(initialDate,false),
+    qcGetAccessState()
+  ]);
   const {data,error}=initial;
 
   if(error){
@@ -1078,13 +1083,13 @@ async function loadJcFootball(){
   }
 
   let allRows=(data||[]).filter(m=>m.match_date);
-  const access=await qcGetAccessState();
-  await jcAttachModels(allRows);
   const dateLocked=!access.loggedIn;
   let selectedDate=dateLocked
     ? today
     : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
   let activeLeague='全部';
+  let availableDates=[selectedDate];
+  let loadToken=0;
 
   const leagueKey=m=>m.league_short_name||m.league_name||'其他';
   const label=$('#jcFootballDateLabel');
@@ -1103,6 +1108,10 @@ async function loadJcFootball(){
       el.classList.add('qc-date-locked-control');
     });
     if(datePop) datePop.hidden=true;
+  }else{
+    jcFetchAvailableDates().then(dates=>{
+      if(Array.isArray(dates) && dates.length) availableDates=dates;
+    }).catch(err=>console.warn('日期索引延后读取失败',err));
   }
 
   function setUrlDate(ds){
@@ -1146,15 +1155,33 @@ async function loadJcFootball(){
     });
   }
 
+  async function hydrateFootballRows(rows,ds,token){
+    const modelRows=access.isPro?rows:[];
+    await Promise.all([
+      jcAttachLatestSnapshots(rows),
+      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
+    ]);
+    if(token!==loadToken || selectedDate!==ds) return;
+    jcPatchFootballExtras(cards,rows,access);
+  }
+
   async function loadFootballDate(ds){
-    cards.innerHTML='<div class="profile-card">正在加载中…</div>';
-    const result=await jcFetchDateRows(ds,true);
-    if(result.error){ cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>'; return; }
+    const token=++loadToken;
+    const cache=qcJcDateRowsCache.get(ds);
+    const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
+    if(!cacheFresh) cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+
+    const result=await jcFetchDateRows(ds,false);
+    if(token!==loadToken) return;
+    if(result.error){
+      cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
+      return;
+    }
     allRows=(result.data||[]).filter(m=>m.match_date);
-    await jcAttachModels(allRows);
     selectedDate=ds;
     activeLeague='全部';
     render();
+    hydrateFootballRows(allRows,ds,token);
   }
 
   function render(){
@@ -1184,29 +1211,24 @@ async function loadJcFootball(){
 
   if(!dateLocked){
     if(prev) prev.onclick=()=>{
-      selectedDate=qcAddDays(selectedDate,-1);
       activeLeague='全部';
       closeLeague();
-      loadFootballDate(selectedDate);
+      loadFootballDate(qcAddDays(selectedDate,-1));
     };
     if(next) next.onclick=()=>{
-      selectedDate=qcAddDays(selectedDate,1);
       activeLeague='全部';
       closeLeague();
-      loadFootballDate(selectedDate);
+      loadFootballDate(qcAddDays(selectedDate,1));
     };
     if(todayBtn) todayBtn.onclick=()=>{
-      selectedDate=today;
       activeLeague='全部';
       closeLeague();
-      loadFootballDate(selectedDate);
+      loadFootballDate(today);
     };
     if(label) label.onclick=e=>{
       e.preventDefault();
       e.stopPropagation();
-      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
-        loadFootballDate(ds);
-      });
+      qcRenderDateCalendar(selectedDate,availableDates,ds=>loadFootballDate(ds));
       if(datePop) datePop.hidden=!datePop.hidden;
       closeLeague();
     };
@@ -1226,7 +1248,9 @@ async function loadJcFootball(){
     if(leaguePop && !leaguePop.hidden && e.target!==leagueToggle && !leaguePop.contains(e.target)) closeLeague();
   });
 
+  const initialToken=++loadToken;
   render();
+  hydrateFootballRows(allRows,selectedDate,initialToken);
 
   async function refreshFootballLive(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
@@ -1234,7 +1258,6 @@ async function loadJcFootball(){
     render();
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
-  // 首屏不重复刷新；后续每2分钟更新赛中比分和完赛状态。
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
 }
 
