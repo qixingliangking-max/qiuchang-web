@@ -971,8 +971,11 @@ const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(
 const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
 const qcJcDateRowsCache=new Map();
 const qcFrozenOverviewRowsCache=new Map();
+const qcProOverviewRowsCache=new Map();
 let qcFrozenOverviewManifestPromise=null;
 let qcFrozenOverviewManifestCache=null;
+let qcProOverviewPrimePromise=null;
+let qcProOverviewSnapshotsPrimed=false;
 
 function qcLoadFrozenOverviewManifest(){
   if(qcFrozenOverviewManifestPromise) return qcFrozenOverviewManifestPromise;
@@ -1038,6 +1041,76 @@ async function qcPrimeFrozenOverviewDates(dateList){
   const dates=[...new Set((dateList||[]).filter(ds=>manifest?.dates?.[ds]))];
   if(!dates.length) return;
   await Promise.allSettled(dates.map(ds=>qcFetchFrozenOverviewDate(ds)));
+}
+
+function qcPrepareProOverviewRows(rows){
+  return (Array.isArray(rows)?rows:[]).map(row=>{
+    const m={...row};
+    m.jc_model_outputs=Array.isArray(m.jc_model_outputs)?m.jc_model_outputs:[];
+    m.jc_market_snapshots=Array.isArray(m.jc_market_snapshots)?m.jc_market_snapshots:[];
+    m._jcModelsLoaded=true;
+    m._jcModelsLoading=false;
+    m._jcModelLoadFailed=false;
+    m._jcLatestSnapshotsLoaded=true;
+    m._jcProtectedPredictionSnapshot=true;
+    return m;
+  });
+}
+
+function qcCacheProOverviewSnapshot(record){
+  const ds=String(record?.business_date||'');
+  if(!ds) return null;
+  const rows=qcPrepareProOverviewRows(record?.payload?.rows||[]);
+  qcProOverviewRowsCache.set(ds,{
+    data:rows,
+    savedAt:Date.now(),
+    generatedAt:record?.generated_at||record?.payload?.generated_at||null
+  });
+  return {data:rows,error:null,fromPredictionSnapshot:true};
+}
+
+async function qcPrimeProOverviewSnapshots(){
+  if(qcProOverviewPrimePromise) return qcProOverviewPrimePromise;
+  if(!window.qcSupabase) return null;
+
+  qcProOverviewPrimePromise=window.qcSupabase
+    .from('jc_overview_prediction_snapshots')
+    .select('business_date,payload,generated_at')
+    .order('business_date',{ascending:false})
+    .limit(90)
+    .then(result=>{
+      if(result.error) throw result.error;
+      (result.data||[]).forEach(qcCacheProOverviewSnapshot);
+      qcProOverviewSnapshotsPrimed=true;
+      return result.data||[];
+    })
+    .catch(error=>{
+      console.warn('读取Pro锁板日快照失败，继续使用常规读取',error);
+      qcProOverviewPrimePromise=null;
+      return null;
+    });
+  return qcProOverviewPrimePromise;
+}
+
+async function qcFetchProOverviewDate(dateStr){
+  const key=String(dateStr||'');
+  const cached=qcProOverviewRowsCache.get(key);
+  if(cached?.data) return {data:cached.data,error:null,fromPredictionSnapshot:true};
+  if(qcProOverviewSnapshotsPrimed) return null;
+  if(!window.qcSupabase) return null;
+
+  const {data,error}=await window.qcSupabase
+    .from('jc_overview_prediction_snapshots')
+    .select('business_date,payload,generated_at')
+    .eq('business_date',key)
+    .limit(1);
+
+  if(error){
+    console.warn('读取Pro锁板日快照失败 '+key,error);
+    return null;
+  }
+  const record=(data||[])[0];
+  return record?qcCacheProOverviewSnapshot(record):null;
 }
 
 async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
@@ -1358,6 +1431,10 @@ async function loadJcFrontend(){
   const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
   const candidatePreviousPromise=jcFetchOverviewDateRows(qcAddDays(candidateDate,-1));
   const access=await accessPromise;
+  if(access.isPro){
+    // One protected row per locked day. Prime them after auth so Pro date switching can be memory-first.
+    qcPrimeProOverviewSnapshots().catch(()=>{});
+  }
 
   const initialDate=access.loggedIn
     ? candidateDate
@@ -1445,6 +1522,69 @@ async function loadJcFrontend(){
     return rows.filter(m=>jcBusinessDate(m)===previousDate && jcScoreInfo(m).finished);
   }
 
+  async function fetchOverviewDatePreferred(ds){
+    // Fully-finalized history stays on public static JSON.
+    const finalFrozen=Boolean(qcFrozenOverviewManifestCache?.dates?.[ds]);
+    if(finalFrozen){
+      const frozen=await qcFetchFrozenOverviewDate(ds);
+      if(frozen) return frozen;
+    }
+
+    // Locked prediction days are served from a single Pro-only snapshot row.
+    // This is never requested for non-Pro users, and RLS enforces the same boundary.
+    if(access.isPro){
+      const protectedSnapshot=await qcFetchProOverviewDate(ds);
+      if(protectedSnapshot) return protectedSnapshot;
+    }
+
+    return jcFetchOverviewDateRows(ds);
+  }
+
+  function preserveOverviewStaticData(fresh,old){
+    if(!old) return fresh;
+    const merged={...old,...fresh};
+    if(old?.jc_model_outputs) merged.jc_model_outputs=old.jc_model_outputs;
+    if(old?._jcModelsLoaded) merged._jcModelsLoaded=true;
+    if(old?.jc_market_snapshots) merged.jc_market_snapshots=old.jc_market_snapshots;
+    if(old?._jcLatestSnapshotsLoaded) merged._jcLatestSnapshotsLoaded=true;
+    if(old?._jcProtectedPredictionSnapshot) merged._jcProtectedPredictionSnapshot=true;
+    if(old?._jcFrozenOverview) merged._jcFrozenOverview=true;
+    if(old?._apiFootballLive) merged._apiFootballLive=old._apiFootballLive;
+    return merged;
+  }
+
+  async function refreshOverviewDynamicState(ds,token){
+    const prevDs=qcAddDays(ds,-1);
+    const dynamicDates=[ds,prevDs].filter((d,i,a)=>
+      a.indexOf(d)===i && !qcFrozenOverviewManifestCache?.dates?.[d]
+    );
+    if(!dynamicDates.length) return;
+
+    try{
+      const results=await Promise.all(dynamicDates.map(d=>jcFetchDateRows(d,false,true)));
+      if(token!==loadToken || selectedDate!==ds) return;
+
+      const freshById=new Map();
+      results.forEach(result=>{
+        if(result?.error) return;
+        (result?.data||[]).forEach(m=>freshById.set(String(m.id),m));
+      });
+
+      if(freshById.size){
+        allRows=allRows.map(old=>{
+          const fresh=freshById.get(String(old.id));
+          return fresh?preserveOverviewStaticData(fresh,old):old;
+        });
+      }
+
+      const liveRows=allRows.filter(m=>dynamicDates.includes(jcBusinessDate(m)));
+      await jcAttachLiveScores(liveRows);
+      if(token===loadToken && selectedDate===ds) render();
+    }catch(err){
+      console.warn('动态比分回读失败，继续使用锁板快照',err);
+    }
+  }
+
   async function hydrateOverviewRows(rows,ds,token){
     const modelRows=modelRowsForBundle(rows,ds);
     const pendingModels=modelRows.filter(m=>!m._jcModelsLoaded);
@@ -1495,8 +1635,8 @@ async function loadJcFrontend(){
     const promise=(async()=>{
       const prevDs=qcAddDays(ds,-1);
       const [cur,prevRowsResult]=await Promise.all([
-        jcFetchOverviewDateRows(ds),
-        jcFetchOverviewDateRows(prevDs)
+        fetchOverviewDatePreferred(ds),
+        fetchOverviewDatePreferred(prevDs)
       ]);
       if(cur.error||prevRowsResult.error) return;
 
@@ -1527,8 +1667,8 @@ async function loadJcFrontend(){
     const token=++loadToken;
     const dsPrev=qcAddDays(ds,-1);
     const [nextCurrent,nextPrevious]=await Promise.all([
-      jcFetchOverviewDateRows(ds),
-      jcFetchOverviewDateRows(dsPrev)
+      fetchOverviewDatePreferred(ds),
+      fetchOverviewDatePreferred(dsPrev)
     ]);
     if(token!==loadToken) return;
     if(nextCurrent.error||nextPrevious.error){
@@ -1549,6 +1689,7 @@ async function loadJcFrontend(){
 
     render();
     hydrateOverviewRows(allRows,ds,token);
+    refreshOverviewDynamicState(ds,token);
     primeOverviewNeighbors(ds);
   }
 
@@ -1663,40 +1804,18 @@ async function loadJcFrontend(){
   });
   render();
   hydrateOverviewRows(allRows,selectedDate,initialToken);
+  if(access.isPro){
+    qcPrimeProOverviewSnapshots().then(()=>{
+      // If the initial day was loaded conventionally, the protected snapshot is now warm for the next visit.
+      primeOverviewNeighbors(selectedDate);
+    }).catch(()=>{});
+  }
+  refreshOverviewDynamicState(selectedDate,initialToken);
   primeOverviewNeighbors(selectedDate);
 
   async function refreshOverviewLive(){
     const token=loadToken;
-    const previousDate=qcAddDays(selectedDate,-1);
-    try{
-      const [freshCurrent,freshPrevious]=await Promise.all([
-        jcFetchOverviewDateRows(selectedDate,true),
-        jcFetchOverviewDateRows(previousDate,true)
-      ]);
-      if(token!==loadToken) return;
-
-      if(!freshCurrent.error && !freshPrevious.error){
-        const oldById=new Map(allRows.map(x=>[String(x.id),x]));
-        allRows=[...(freshCurrent.data||[]),...(freshPrevious.data||[])]
-          .filter(m=>m.match_date)
-          .map(m=>{
-            const old=oldById.get(String(m.id));
-            if(old?.jc_model_outputs) m.jc_model_outputs=old.jc_model_outputs;
-            if(old?._jcModelsLoaded) m._jcModelsLoaded=true;
-            if(old?.jc_market_snapshots) m.jc_market_snapshots=old.jc_market_snapshots;
-            if(old?._jcLatestSnapshotsLoaded) m._jcLatestSnapshotsLoaded=true;
-            if(old?._apiFootballLive) m._apiFootballLive=old._apiFootballLive;
-            return m;
-          });
-      }
-    }catch(err){
-      console.warn('首页赛果自动回读失败，继续使用当前数据',err);
-    }
-
-    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
-    const reviewRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
-    await jcAttachLiveScores([...dateRows,...reviewRows]);
-    if(token===loadToken) render();
+    await refreshOverviewDynamicState(selectedDate,token);
   }
 
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
