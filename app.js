@@ -485,10 +485,16 @@ function jcCompactResultPick(text,m){
 }
 
 function jcCompactHandicapPick(text){
-  return String(text||'待生成')
+  const normalized=String(text||'待生成')
     .replace(/\s+/g,'')
-    .replace(/[＋+]/g,' / ')
-    .replace(/[｜|]/g,' / ');
+    .replace(/[＋+]/g,'/')
+    .replace(/[｜|]/g,'/');
+  const lineMatch=normalized.match(/^([+-]?\d+(?:\.\d+)?)\/(.+)$/);
+  if(lineMatch){
+    const picks=lineMatch[2].split('/').filter(Boolean).join(' / ');
+    return lineMatch[1]+'｜'+picks;
+  }
+  return normalized.split('/').filter(Boolean).join(' / ');
 }
 
 function jcHasOrdinaryResult(m){
