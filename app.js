@@ -487,14 +487,8 @@ function jcCompactResultPick(text,m){
 function jcCompactHandicapPick(text){
   const source=String(text||'待生成').replace(/\s+/g,'');
   const lineMatch=source.match(/^([+-]?\d+(?:\.\d+)?)\s*[｜|]\s*(.+)$/);
-  if(lineMatch){
-    const picks=lineMatch[2]
-      .replace(/[＋+]/g,'/')
-      .replace(/[｜|]/g,'/')
-      .split('/').map(x=>x.trim()).filter(Boolean).join(' / ');
-    return lineMatch[1]+'｜'+picks;
-  }
-  return source
+  const picksSource=lineMatch ? lineMatch[2] : source;
+  return picksSource
     .replace(/[＋+]/g,'/')
     .replace(/[｜|]/g,'/')
     .split('/').map(x=>x.trim()).filter(Boolean).join(' / ');
