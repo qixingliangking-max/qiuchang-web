@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜登录</title>
-  <link rel="stylesheet" href="styles.css?v=20260926login3">
+  <link rel="stylesheet" href="styles.css?v=20260927autologin1">
 </head>
 <body class="auth-login-page">
   <main class="auth-wrap">
@@ -22,6 +22,10 @@
         <input id="loginPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="请输入密码">
       </div>
 
+      <label class="check auth-auto-login">
+        <span><input id="loginAutoLogin" type="checkbox"><b>自动登录</b><small>仅建议在个人设备开启</small></span>
+      </label>
+
       <label class="check auth-agreement">
         <input id="loginAgreement" type="checkbox" required>
         <span>我已阅读并同意 <a class="legal-link" href="terms.html" target="_blank" rel="noopener">《用户服务协议》</a> 和 <a class="legal-link" href="privacy.html" target="_blank" rel="noopener">《隐私政策》</a></span>
@@ -37,7 +41,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-  <script src="supabase-client.js?v=20260922b"></script>
-  <script src="app.js?v=20260927agreement1"></script>
+  <script src="supabase-client.js?v=20260927autologin1"></script>
+  <script src="app.js?v=20260927autologin1"></script>
 </body>
 </html>
