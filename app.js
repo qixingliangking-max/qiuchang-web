@@ -1068,13 +1068,15 @@ async function loadJcFootball(){
   const calendarToday=qcBeijingToday();
   const today=qcBeijingBusinessToday();
   const paramDate=new URLSearchParams(location.search).get('date');
-  const initialDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
+  const candidateDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
 
   // Base schedule and auth resolve in parallel. Odds/model/date-index data never blocks first paint.
-  const [initial,access]=await Promise.all([
-    jcFetchDateRows(initialDate,false),
-    qcGetAccessState()
-  ]);
+  const candidatePromise=jcFetchDateRows(candidateDate,false);
+  const access=await qcGetAccessState();
+  const initialDate=access.loggedIn?candidateDate:today;
+  const initial=initialDate===candidateDate
+    ? await candidatePromise
+    : await jcFetchDateRows(initialDate,false);
   const {data,error}=initial;
 
   if(error){
@@ -1084,9 +1086,7 @@ async function loadJcFootball(){
 
   let allRows=(data||[]).filter(m=>m.match_date);
   const dateLocked=!access.loggedIn;
-  let selectedDate=dateLocked
-    ? today
-    : (paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today);
+  let selectedDate=initialDate;
   let activeLeague='全部';
   let availableDates=[selectedDate];
   let loadToken=0;
@@ -2919,6 +2919,9 @@ let qcAuthRecoveryBound=false;
 
 function setupAuthStateRecovery(){
   if(qcAuthRecoveryBound || !window.qcSupabase) return;
+  // Late-session recovery is only needed for embedded browsers that delay auth storage.
+  // Normal Safari/Chrome/Edge sessions should never trigger a second page data load.
+  if(!qcIsInAppBrowser()) return;
   qcAuthRecoveryBound=true;
 
   window.qcSupabase.auth.onAuthStateChange((event,session)=>{
