@@ -1266,8 +1266,7 @@ async function loadJcFrontend(){
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
 
-  // 今日速览按自然日切换：北京时间 00:00 自动进入新日期。
-  // 竞彩足球页单独使用 qcBeijingBusinessToday() 的跨凌晨竞彩日逻辑。
+  // 今日速览按北京时间自然日；竞彩足球页继续使用独立的竞彩日规则。
   const calendarToday=qcBeijingToday();
   const initialToday=calendarToday;
   const initialYesterday=qcAddDays(initialToday,-1);
@@ -1275,11 +1274,29 @@ async function loadJcFrontend(){
   const overviewMaxDate=qcAddDays(initialToday,1);
   const isValidOverviewDate=ds=>/^\d{4}-\d{2}-\d{2}$/.test(ds||'');
   const isOverviewDateAllowed=ds=>isValidOverviewDate(ds) && ds>=overviewMinDate && ds<=overviewMaxDate;
-  const access=await qcGetAccessState();
   const initialDateRaw=new URLSearchParams(location.search).get('date');
+  const candidateDate=isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday;
+
+  // Auth and the likely first date bundle run together instead of serially.
+  const accessPromise=qcGetAccessState();
+  const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
+  const candidatePreviousPromise=jcFetchOverviewDateRows(qcAddDays(candidateDate,-1));
+  const access=await accessPromise;
+
   const initialDate=access.loggedIn
-    ? (isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday)
-    : (isOverviewDateAllowed(initialDateRaw)?initialDateRaw:initialToday);
+    ? candidateDate
+    : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
+
+  let currentResult,previousResult;
+  if(initialDate===candidateDate){
+    [currentResult,previousResult]=await Promise.all([candidateCurrentPromise,candidatePreviousPromise]);
+  }else{
+    [currentResult,previousResult]=await Promise.all([
+      jcFetchOverviewDateRows(initialDate),
+      jcFetchOverviewDateRows(qcAddDays(initialDate,-1))
+    ]);
+  }
+
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
     qcAddDays(initialToday,-2),
@@ -1287,49 +1304,46 @@ async function loadJcFrontend(){
     initialToday,
     qcAddDays(initialToday,1)
   ];
-  const cacheKey='qc-finished-review-'+initialYesterday;
-  let cachedReviewShown=false;
-  const dateLabel=$('#jcDateLabel');
-  if(dateLabel) dateLabel.textContent=qcDateLabel(initialToday);
-
-  const requestedDate=initialDate;
-  const requestedPrevious=qcAddDays(requestedDate,-1);
-  const todayResultPromise=requestedDate===initialToday
-    ? Promise.resolve(null)
-    : jcFetchOverviewDateRows(initialToday);
-  const availableDatesPromise=access.loggedIn?jcFetchAvailableDates():Promise.resolve(overviewSelectableDates);
-  const [currentResult,previousResult,todayResult]=await Promise.all([
-    jcFetchOverviewDateRows(requestedDate),
-    jcFetchOverviewDateRows(requestedPrevious),
-    todayResultPromise
-  ]);
   let availableDates=overviewSelectableDates;
-  let todayPredictionCount=requestedDate===initialToday
-    ? (currentResult.data||[]).length
-    : (todayResult?.data||[]).length;
-  const data=[...(currentResult.data||[]),...(previousResult.data||[])];
-  const error=currentResult.error||previousResult.error;
+  if(access.loggedIn){
+    jcFetchAvailableDates().then(dates=>{
+      if(Array.isArray(dates) && dates.length) availableDates=dates;
+    }).catch(err=>console.warn('日期索引延后读取失败',err));
+  }
 
+  const cacheKey='qc-finished-review-'+initialYesterday;
+  const dateLabel=$('#jcDateLabel');
+  if(dateLabel) dateLabel.textContent=qcDateLabel(initialDate);
+
+  let todayPredictionCount=initialDate===initialToday
+    ? (currentResult.data||[]).length
+    : null;
+
+  if(initialDate!==initialToday){
+    jcFetchOverviewDateRows(initialToday).then(result=>{
+      if(!result?.error) todayPredictionCount=(result.data||[]).length;
+    }).catch(()=>{});
+  }
+
+  const error=currentResult.error||previousResult.error;
   if(error){
     console.error('读取竞彩前台数据失败',error);
     cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
-    if(reviewCards && !cachedReviewShown) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
+    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
     return;
   }
 
-  let allRows=(data||[]).filter(m=>m.match_date);
+  let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
   const today=initialToday;
   let selectedDate=initialDate;
-  let activeLeague='全部';
   let modelsLoaded=false;
+  let loadToken=0;
 
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
   const next=$('#jcNextDate');
   const todayBtn=$('#jcTodayBtn');
   const pop=$('#jcDatePopover');
-  const leagueToggle=$('#jcLeagueToggle');
-  const leaguePop=$('#jcLeaguePopover');
 
   function setUrlDate(ds){
     const u=new URL(location.href);
@@ -1338,27 +1352,85 @@ async function loadJcFrontend(){
     history.replaceState({},'',u);
   }
 
+  function modelRowsForBundle(rows,ds){
+    if(access.isPro) return rows;
+    const previousDate=qcAddDays(ds,-1);
+    return rows.filter(m=>jcBusinessDate(m)===previousDate && jcScoreInfo(m).finished);
+  }
+
+  async function hydrateOverviewRows(rows,ds,token){
+    const modelRows=modelRowsForBundle(rows,ds);
+    modelRows.forEach(m=>{
+      m._jcModelsLoading=true;
+      m._jcModelLoadFailed=false;
+    });
+
+    await Promise.all([
+      jcAttachLatestSnapshots(rows),
+      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
+    ]);
+
+    if(token!==loadToken || selectedDate!==ds) return;
+    modelsLoaded=true;
+    jcPatchOverviewPredictionCells(cards,rows);
+    jcPatchOverviewPredictionCells(reviewCards,rows);
+
+    const previousDate=qcAddDays(ds,-1);
+    const previousRows=rows.filter(m=>jcBusinessDate(m)===previousDate);
+    if(previousDate===initialYesterday && previousRows.length &&
+       previousRows.every(m=>jcScoreInfo(m).finished)){
+      try{
+        const finished=previousRows.map(m=>({
+          id:m.id,match_num:m.match_num,business_date:m.business_date,
+          league_name:m.league_name,league_short_name:m.league_short_name,
+          home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+          match_date:m.match_date,match_time:m.match_time,match_status:m.match_status,
+          raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1},
+          _apiFootballLive:m._apiFootballLive,jc_model_outputs:m.jc_model_outputs
+        }));
+        localStorage.setItem(cacheKey,JSON.stringify({rows:finished}));
+      }catch(err){ console.warn('昨日赛果缓存写入失败',err); }
+    }
+  }
+
   async function loadFrontendDateBundle(ds){
     if(!isValidOverviewDate(ds)) return;
     if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
-    cards.innerHTML='<div class="profile-card">正在加载中…</div>';
-    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">正在加载中…</div>';
-    const prev=qcAddDays(ds,-1);
-    const [currentResult,previousResult]=await Promise.all([
+    const token=++loadToken;
+    const dsPrev=qcAddDays(ds,-1);
+    const cacheA=qcJcDateRowsCache.get(ds);
+    const cacheB=qcJcDateRowsCache.get(dsPrev);
+    const cacheFresh=Boolean(
+      cacheA?.data && cacheB?.data &&
+      Date.now()-cacheA.savedAt<45000 &&
+      Date.now()-cacheB.savedAt<45000
+    );
+
+    if(label && !cacheFresh) label.textContent='加载中…';
+
+    const [nextCurrent,nextPrevious]=await Promise.all([
       jcFetchOverviewDateRows(ds),
-      jcFetchOverviewDateRows(prev)
+      jcFetchOverviewDateRows(dsPrev)
     ]);
-    if(currentResult.error||previousResult.error){
-      cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
+    if(token!==loadToken) return;
+    if(nextCurrent.error||nextPrevious.error){
+      if(label) label.textContent=qcDateLabel(selectedDate);
       return;
     }
-    allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
-    if(ds===today) todayPredictionCount=(currentResult.data||[]).length;
-    await jcAttachModels(allRows);
+
+    allRows=[...(nextCurrent.data||[]),...(nextPrevious.data||[])].filter(m=>m.match_date);
     selectedDate=ds;
-    activeLeague='全部';
-    modelsLoaded=true;
+    modelsLoaded=false;
+    if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
+
+    const modelRows=modelRowsForBundle(allRows,ds);
+    modelRows.forEach(m=>{
+      m._jcModelsLoading=true;
+      m._jcModelLoadFailed=false;
+    });
+
     render();
+    hydrateOverviewRows(allRows,ds,token);
   }
 
   function render(){
@@ -1366,8 +1438,6 @@ async function loadJcFrontend(){
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
     const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
-    const filtered=dateRows;
-    const premiumDate=selectedDate>=today;
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
 
@@ -1377,7 +1447,7 @@ async function loadJcFrontend(){
         ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
         : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     }
-    if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=filtered.length+'场';
+    if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
     if($('#jcYesterdayMeta')){
       const reviewCount=predictionRestricted?finishedPrevious.length:previousRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
@@ -1404,31 +1474,13 @@ async function loadJcFrontend(){
     try{
       if(reviewCards){
         if(predictionRestricted){
-          // 未登录或无有效 Pro：首页只展示已经完赛的复盘；未完赛场次完全不显示。
           reviewCards.innerHTML=finishedPrevious.length
             ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
             : '<div class="jc-review-empty">上一日暂时还没有完赛场次</div>';
-          jcBindOverviewRows(reviewCards);
         }else{
-          // 登录后保持原来的完整回看结构。
           reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
-          jcBindOverviewRows(reviewCards);
         }
-
-        if(modelsLoaded && previousDate===initialYesterday && previousRows.length &&
-          previousRows.every(m=>jcScoreInfo(m).finished)){
-          try{
-            const finished=previousRows.map(m=>({
-              id:m.id,match_num:m.match_num,business_date:m.business_date,
-              league_name:m.league_name,league_short_name:m.league_short_name,
-              home_team_name:m.home_team_name,away_team_name:m.away_team_name,
-              match_date:m.match_date,match_time:m.match_time,match_status:m.match_status,
-              raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1},
-              _apiFootballLive:m._apiFootballLive,jc_model_outputs:m.jc_model_outputs
-            }));
-            localStorage.setItem(cacheKey,JSON.stringify({rows:finished}));
-          }catch(err){ console.warn('昨日赛果缓存写入失败',err); }
-        }
+        jcBindOverviewRows(reviewCards);
       }
     }catch(err){
       console.error('昨日回看渲染失败',err);
@@ -1438,10 +1490,9 @@ async function loadJcFrontend(){
     try{
       if(predictionShell) predictionShell.hidden=false;
       if(predictionRestricted){
-        // 未登录或无有效 Pro：历史只看完赛复盘，预测入口始终固定到今日。
         cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
       }else{
-        cards.innerHTML=jcRenderOverviewTable(filtered,calendarToday,'today');
+        cards.innerHTML=jcRenderOverviewTable(dateRows,calendarToday,'today');
         jcBindOverviewRows(cards);
       }
     }catch(err){
@@ -1456,11 +1507,12 @@ async function loadJcFrontend(){
       qcRenderDateCalendar(
         selectedDate,
         access.loggedIn ? availableDates : overviewSelectableDates,
-        ds=>{ loadFrontendDateBundle(ds); },
+        ds=>loadFrontendDateBundle(ds),
         access.loggedIn ? '选择有比赛数据的日期' : '未登录仅可查看前3天、今天和明天'
       );
     }catch(err){ console.error('日期日历渲染失败',err); }
   }
+
   if(prev) prev.onclick=()=>{
     const ds=qcAddDays(selectedDate,-1);
     if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
@@ -1469,12 +1521,12 @@ async function loadJcFrontend(){
     const ds=qcAddDays(selectedDate,1);
     if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
   };
-  if(todayBtn) todayBtn.onclick=()=>{loadFrontendDateBundle(today);};
+  if(todayBtn) todayBtn.onclick=()=>loadFrontendDateBundle(today);
   if(label) label.onclick=()=>{
     qcRenderDateCalendar(
       selectedDate,
       access.loggedIn ? availableDates : overviewSelectableDates,
-      ds=>{ loadFrontendDateBundle(ds); },
+      ds=>loadFrontendDateBundle(ds),
       access.loggedIn ? '选择有比赛数据的日期' : '未登录仅可查看前3天、今天和明天'
     );
     if(pop) pop.hidden=!pop.hidden;
@@ -1484,58 +1536,37 @@ async function loadJcFrontend(){
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
   });
 
-  // Fast first paint for both guest/basic users and Pro users.
-  // Only the small prediction cells hydrate afterward; the page itself is not rebuilt.
-  const initialPreviousDate=qcAddDays(selectedDate,-1);
-  const initialModelRows=access.isPro
-    ? allRows
-    : allRows.filter(m=>jcBusinessDate(m)===initialPreviousDate && jcScoreInfo(m).finished);
-
-  initialModelRows.forEach(m=>{
+  const initialToken=++loadToken;
+  const initialModels=modelRowsForBundle(allRows,selectedDate);
+  initialModels.forEach(m=>{
     m._jcModelsLoading=true;
     m._jcModelLoadFailed=false;
   });
   render();
-
-  availableDatesPromise.then(dates=>{
-    if(Array.isArray(dates) && dates.length) availableDates=dates;
-  }).catch(err=>console.warn('日期索引延后读取失败',err));
-
-  jcAttachModels(initialModelRows).then(()=>{
-    modelsLoaded=true;
-    jcPatchOverviewPredictionCells(cards,allRows);
-    jcPatchOverviewPredictionCells(reviewCards,allRows);
-  }).catch(err=>{
-    console.warn('首页模型读取失败',err);
-    initialModelRows.forEach(m=>{
-      m._jcModelsLoading=false;
-      m._jcModelLoadFailed=true;
-    });
-    modelsLoaded=true;
-    jcPatchOverviewPredictionCells(cards,allRows);
-    jcPatchOverviewPredictionCells(reviewCards,allRows);
-  });
+  hydrateOverviewRows(allRows,selectedDate,initialToken);
 
   async function refreshOverviewLive(){
+    const token=loadToken;
     const previousDate=qcAddDays(selectedDate,-1);
     try{
-      // Re-read both竞彩日 bundles so newly finished matches move above the gate
-      // without requiring a manual page refresh.
-      const [currentResult,previousResult]=await Promise.all([
-        jcFetchOverviewDateRows(selectedDate),
-        jcFetchOverviewDateRows(previousDate)
+      const [freshCurrent,freshPrevious]=await Promise.all([
+        jcFetchOverviewDateRows(selectedDate,true),
+        jcFetchOverviewDateRows(previousDate,true)
       ]);
-      if(!currentResult.error && !previousResult.error){
+      if(token!==loadToken) return;
+
+      if(!freshCurrent.error && !freshPrevious.error){
         const oldById=new Map(allRows.map(x=>[String(x.id),x]));
-        allRows=[...(currentResult.data||[]),...(previousResult.data||[])]
+        allRows=[...(freshCurrent.data||[]),...(freshPrevious.data||[])]
           .filter(m=>m.match_date)
           .map(m=>{
             const old=oldById.get(String(m.id));
             if(old?.jc_model_outputs) m.jc_model_outputs=old.jc_model_outputs;
+            if(old?.jc_market_snapshots) m.jc_market_snapshots=old.jc_market_snapshots;
+            if(old?._jcLatestSnapshotsLoaded) m._jcLatestSnapshotsLoaded=true;
             if(old?._apiFootballLive) m._apiFootballLive=old._apiFootballLive;
             return m;
           });
-        if(modelsLoaded) await jcAttachModels(allRows);
       }
     }catch(err){
       console.warn('首页赛果自动回读失败，继续使用当前数据',err);
@@ -1544,13 +1575,12 @@ async function loadJcFrontend(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
     const reviewRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
     await jcAttachLiveScores([...dateRows,...reviewRows]);
-    render();
+    if(token===loadToken) render();
   }
+
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
-  // 首屏已经完成一次完整读取，不再立刻重复请求；2分钟后再进入自动刷新。
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
 }
-
 
 const JC_FIXED_ODDS_TEMPLATE = Object.freeze({
   had: Object.freeze([
