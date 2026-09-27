@@ -462,7 +462,7 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
 
   const primaryHref=loggedIn
     ? (isAi?'profile.html':'profile.html')
-    : 'login.html?v=20260927desktoplogin1&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20260927desktoplogin2&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn
     ? (isAi?'订阅查看完整报告':'进入个人中心')
     : '立即登录';
@@ -2365,7 +2365,7 @@ function jcRenderAiLockedPanel(m,pools,access){
   const loggedIn=Boolean(access?.loggedIn);
   const actionHref=loggedIn
     ? 'profile.html'
-    : 'login.html?v=20260927desktoplogin1&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20260927desktoplogin2&next='+encodeURIComponent(location.pathname+location.search);
   const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
   const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
   const lockDesc=loggedIn
@@ -3215,6 +3215,16 @@ async function setupDemoAuth(){
 
     // 首次仍由用户主动确认；确认过一次后记住选择，后续登录自动勾选。
     // 如果未来协议有重大更新，只需升级这个 key（例如 v2）即可重新要求确认。
+    login.addEventListener('invalid',e=>{
+      if(!loginHint) return;
+      const t=e.target;
+      if(t?.id==='loginEmail') loginHint.textContent='请输入正确的邮箱地址。';
+      else if(t?.id==='loginPassword') loginHint.textContent='密码至少需要8个字符。';
+      else if(t?.id==='loginAgreement') loginHint.textContent='请先勾选并同意《用户服务协议》和《隐私政策》。';
+      else return;
+      loginHint.className='code-hint error';
+    },true);
+
     if(loginAgreement){
       const agreementKey='qc-login-agreement-v1';
       try{
@@ -3254,9 +3264,9 @@ async function setupDemoAuth(){
         emailInput?.focus();
         return;
       }
-      if(!password){
+      if(password.length<8){
         if(loginHint){
-          loginHint.textContent='请输入登录密码。';
+          loginHint.textContent=password ? '密码至少需要8个字符。' : '请输入登录密码。';
           loginHint.className='code-hint error';
         }
         passwordInput?.focus();
@@ -3578,7 +3588,7 @@ async function setupDemoAuth(){
       }
 
       await window.qcSupabase.auth.signOut();
-      location.replace('login.html?v=20260927desktoplogin1&reset=success');
+      location.replace('login.html?v=20260927desktoplogin2&reset=success');
     };
   }
 
@@ -3671,7 +3681,7 @@ async function setupProfile(){
   const user = userData && userData.user;
 
   if(userError || !user){
-    location.href = 'login.html?v=20260927desktoplogin1';
+    location.href = 'login.html?v=20260927desktoplogin2';
     return;
   }
 
@@ -3891,7 +3901,7 @@ async function setupProfile(){
     logoutBtn.onclick = async e => {
       e.preventDefault();
       await window.qcSupabase.auth.signOut();
-      location.href = 'login.html?v=20260927desktoplogin1';
+      location.href = 'login.html?v=20260927desktoplogin2';
     };
   }
 }
@@ -3937,7 +3947,7 @@ async function qcAdminSession(root,nextPage){
   const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
   const user=userData&&userData.user;
   if(userError||!user){
-    location.href='login.html?v=20260927desktoplogin1&next='+encodeURIComponent(nextPage||'admin.html');
+    location.href='login.html?v=20260927desktoplogin2&next='+encodeURIComponent(nextPage||'admin.html');
     return null;
   }
 
