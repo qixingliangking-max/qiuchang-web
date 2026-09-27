@@ -3663,3 +3663,29 @@ body.qc-modal-open{overflow:hidden}
 @media (max-width:1023px){
   .qc-redeem-dialog{border-radius:18px;padding:22px 18px}
 }
+
+
+/* 2026-09-27 desktop account visibility fix */
+@media (min-width:1024px){
+  #desktopLogin[hidden],
+  #desktopRedeem[hidden],
+  #desktopAccount[hidden],
+  #desktopLogout[hidden],
+  #desktopAccountDivider[hidden]{
+    display:none!important;
+  }
+
+  .qc-desktop-nav .qc-desktop-redeem-btn{
+    background:var(--blue)!important;
+    color:#fff!important;
+    border:1px solid var(--blue)!important;
+    padding-left:18px!important;
+    padding-right:18px!important;
+    box-shadow:0 6px 16px rgba(55,100,237,.18);
+  }
+
+  .qc-desktop-nav .qc-desktop-redeem-btn:hover{
+    background:#2f5fe0!important;
+    color:#fff!important;
+  }
+}
