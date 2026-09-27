@@ -3775,20 +3775,18 @@ function qcEnsureDesktopRedeemModal(){
 
 
 async function setupFootballLoginBar(){
-  const bar=$('#qcFootballLoginBar');
-  if(!bar || !window.qcSupabase) return;
+  const bars=$('.qc-public-login-bar');
+  if(!bars.length || !window.qcSupabase) return;
+
+  const apply=session=>{
+    bars.forEach(bar=>{ bar.style.display=session?'none':'flex'; });
+  };
 
   const {data,error}=await window.qcSupabase.auth.getSession();
-  const session=!error && data ? data.session : null;
-
-  if(session){
-    bar.style.display='none';
-  }else{
-    bar.style.display='flex';
-  }
+  apply(!error && data ? data.session : null);
 
   window.qcSupabase.auth.onAuthStateChange((_event,nextSession)=>{
-    bar.style.display=nextSession?'none':'flex';
+    apply(nextSession);
   });
 }
 

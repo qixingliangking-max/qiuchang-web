@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>球场档案｜今日速览</title>
   <style>body.qc-overview-booting .content{visibility:hidden}body.qc-overview-booting .footer-note{visibility:hidden}</style>
-  <link rel="stylesheet" href="styles.css?v=20260928desktopfullwidth1">
+  <link rel="stylesheet" href="styles.css?v=20260928overviewloginbar1">
 </head>
 <body class="qc-home qc-overview-page qc-overview-booting">
 <div class="shell">
@@ -60,6 +60,12 @@
   <div class="footer-note">本页面用于体育数据研究、赛前模型推演与赛后复盘，不承诺任何结果。请理性使用数据并遵守所在地适用规则。</div>
 </div>
 
+<div class="qc-football-login-bar qc-public-login-bar" id="qcOverviewLoginBar" style="display:none" aria-live="polite">
+  <div class="qc-football-login-copy">🔒 登录后查看今日预测</div>
+  <div class="qc-overview-login-subcopy">今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。</div>
+  <a class="qc-football-login-cta" href="login.html?v=20260926login3">立即登录</a>
+</div>
+
 <div class="drawer-backdrop" id="drawerBackdrop">
   <nav class="drawer">
     <a class="active" href="index.html">今日速览</a>
@@ -76,6 +82,6 @@
 <script src="supabase-config.js"></script>
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
-<script src="app.js?v=20260927authticker1"></script>
+<script src="app.js?v=20260928overviewloginbar1"></script>
 </body>
 </html>

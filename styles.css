@@ -5028,3 +5028,40 @@ body.qc-ticker-authenticated .ticker{
     border-color:#edf0f4!important;
   }
 }
+
+
+/* 2026-09-28 desktop overview fixed guest login bar */
+@media (min-width:1024px){
+  .qc-overview-page{
+    padding-bottom:112px!important;
+  }
+
+  #qcOverviewLoginBar{
+    min-height:112px!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:5px!important;
+    padding:12px 24px 14px!important;
+    text-align:center!important;
+  }
+
+  #qcOverviewLoginBar .qc-football-login-copy{
+    width:100%!important;
+    font-size:15px!important;
+    font-weight:900!important;
+    line-height:1.25!important;
+  }
+
+  .qc-overview-login-subcopy{
+    color:rgba(255,255,255,.72);
+    font-size:12px;
+    line-height:1.35;
+    font-weight:650;
+    text-align:center;
+  }
+
+  #qcOverviewLoginBar .qc-football-login-cta{
+    margin-top:3px!important;
+  }
+}
