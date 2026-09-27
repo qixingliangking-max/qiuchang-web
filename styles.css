@@ -3970,3 +3970,19 @@ body.qc-ticker-authenticated .ticker{
     overflow-y:hidden!important;
   }
 }
+
+
+/* 2026-09-27 compact desktop "回到今日" button */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-today{
+    width:auto!important;
+    min-width:64px!important;
+    max-width:72px!important;
+    height:34px!important;
+    min-height:34px!important;
+    padding:0 8px!important;
+    font-size:12px!important;
+    border-radius:10px!important;
+    white-space:nowrap!important;
+  }
+}
