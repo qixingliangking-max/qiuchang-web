@@ -645,9 +645,9 @@ function jcFootballHitOddsHtml(m,model,score){
     }
   }
 
-  if(!hits.length) return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
-  return '<div class="jc-card-hit-band jc-card-hit-play">'+
-    '<span class="jc-card-hit-title">赛前预测命中</span>'+
+  if(!hits.length) return '';
+  return '<div class="jc-card-hit-play">'+
+    '<div class="jc-card-hit-title">赛前预测命中</div>'+
     '<div class="jc-card-hit-items">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="赛前预测命中｜'+qcEscape(x.kind)+'">'+
         '<small>'+qcEscape(x.kind)+'</small><b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
@@ -923,18 +923,18 @@ function jcRenderYesterdayReview(rows,today){
 
 function jcFootballHitBlock(m,access){
   const score=jcScoreInfo(m);
-  // 完赛后的“赛前预测命中”属于公开赛果核验信息：
-  // 未登录、普通用户与 Pro 都可查看；赛前完整预测权限仍保持不变。
+  const guestLock=!access?.loggedIn
+    ? '<div class="jc-card-prematch-lock"><span>🔒 登录查看 AI 推荐玩法</span></div>'
+    : '';
+
+  // 完赛后的“赛前预测命中”公开展示；游客卡片最后仍保留统一登录入口。
   if(score.finished){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
-    if(hit) return hit;
-    return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
+    return '<div class="jc-card-after-odds">'+hit+guestLock+'</div>';
   }
-  if(!access?.loggedIn){
-    return '<div class="jc-card-hit-band jc-card-prematch-lock"><span>🔒 登录查看 AI 推荐玩法</span></div>';
-  }
-  return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
+
+  return '<div class="jc-card-after-odds">'+guestLock+'</div>';
 }
 
 function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
@@ -983,7 +983,7 @@ function jcPatchFootballExtras(root,rows,access){
     if(!m) return;
     const odds=$('.jc-mini-odds',card);
     if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
-    const hit=$('.jc-card-hit-band',card);
+    const hit=$('.jc-card-after-odds',card);
     if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
   });
 }

@@ -4504,3 +4504,171 @@ body.qc-ticker-authenticated .ticker{
     margin-top:9px!important;
   }
 }
+
+
+/* 2026-09-28 desktop odds + post-match result polish */
+@media (min-width:1024px){
+  /* Strict four-column odds table: all headers and values share the same axes. */
+  .qc-football-page .jc-football-card .jc-mini-odds{
+    width:100%!important;
+    box-sizing:border-box!important;
+    border-radius:13px!important;
+    overflow:hidden!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head,
+  .qc-football-page .jc-football-card .jc-mini-row{
+    display:grid!important;
+    grid-template-columns:minmax(108px,1.55fr) repeat(3,minmax(46px,.75fr))!important;
+    column-gap:0!important;
+    padding:0 8px!important;
+    box-sizing:border-box!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head{
+    min-height:38px!important;
+    font-size:12px!important;
+    font-weight:850!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row{
+    min-height:43px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head>span,
+  .qc-football-page .jc-football-card .jc-mini-row>strong,
+  .qc-football-page .jc-football-card .jc-mini-row>.jc-play-tag{
+    min-width:0!important;
+    height:100%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    margin:0!important;
+    padding:0 2px!important;
+    line-height:1!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head>span:first-child,
+  .qc-football-page .jc-football-card .jc-mini-row>.jc-play-tag{
+    justify-content:flex-start!important;
+    padding-left:3px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row>strong{
+    font-size:14px!important;
+    font-weight:900!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag{
+    font-size:11px!important;
+    font-weight:900!important;
+    white-space:nowrap!important;
+    letter-spacing:-.15px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row .muted-dash{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    font-size:14px!important;
+  }
+
+  /* Everything below odds now flows naturally without artificial blank space. */
+  .qc-football-page .jc-football-card .jc-card-after-odds{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:9px!important;
+    margin-top:10px!important;
+    padding:0!important;
+  }
+
+  /* Finished public verification block. */
+  .qc-football-page .jc-football-card .jc-card-hit-play{
+    display:block!important;
+    margin:0!important;
+    padding:10px 11px!important;
+    border:1px solid rgba(219,70,83,.14)!important;
+    border-radius:13px!important;
+    background:#fffafb!important;
+    box-sizing:border-box!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-title{
+    display:block!important;
+    margin:0 0 8px!important;
+    padding:0!important;
+    color:#c84d59!important;
+    font-size:11px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    text-align:left!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-items{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:6px!important;
+    margin:0!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-chip{
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:4px!important;
+    min-height:30px!important;
+    margin:0!important;
+    padding:5px 8px!important;
+    border:1px solid rgba(205,76,88,.28)!important;
+    border-radius:999px!important;
+    background:#fff!important;
+    color:#b94b56!important;
+    box-sizing:border-box!important;
+    white-space:nowrap!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-chip small{
+    font-size:9px!important;
+    font-weight:800!important;
+    color:#9a6470!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-chip b{
+    font-size:11px!important;
+    font-weight:900!important;
+    color:#b84b56!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-chip em{
+    font-size:11px!important;
+    font-style:normal!important;
+    font-weight:850!important;
+    color:#b84b56!important;
+  }
+
+  /* Unified guest CTA: directly beneath odds or beneath the hit block. */
+  .qc-football-page .jc-football-card .jc-card-prematch-lock{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    min-height:45px!important;
+    margin:0!important;
+    padding:9px 10px!important;
+    border:1px solid rgba(55,71,105,.06)!important;
+    border-radius:13px!important;
+    background:#f3f5f8!important;
+    color:#3f495c!important;
+    font-size:12px!important;
+    font-weight:900!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+  }
+
+  /* Guest cards stay clean: no detail/all-markets shortcut. */
+  .qc-football-page .jc-football-card.jc-card-guest .jc-card-detail-btn{
+    display:none!important;
+  }
+}
