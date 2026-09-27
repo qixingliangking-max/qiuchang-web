@@ -5065,3 +5065,29 @@ body.qc-ticker-authenticated .ticker{
     margin-top:3px!important;
   }
 }
+
+
+/* 2026-09-28 desktop odds text-label contrast v18 */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-card .jc-play-tag{
+    width:max-content!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:4px 8px!important;
+    border-radius:6px!important;
+    line-height:1.05!important;
+    box-shadow:none!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag.blue{
+    background:#e6eeff!important;
+    border:1px solid #cfddff!important;
+    color:#3f66c7!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag.orange{
+    background:#ffecdc!important;
+    border:1px solid #f2d2b7!important;
+    color:#a96842!important;
+  }
+}

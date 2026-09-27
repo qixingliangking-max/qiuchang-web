@@ -1073,7 +1073,10 @@ function qcPrepareProOverviewRows(rows){
     m._jcModelsLoaded=true;
     m._jcModelsLoading=false;
     m._jcModelLoadFailed=false;
-    m._jcLatestSnapshotsLoaded=true;
+    // A lock snapshot may intentionally omit market rows. In that case the
+    // overview still needs to hydrate the pre-kick HAD/HHAD snapshot so the
+    // completed-result hit ring is evaluated from the correct play type.
+    m._jcLatestSnapshotsLoaded=m.jc_market_snapshots.length>0;
     m._jcProtectedPredictionSnapshot=true;
     return m;
   });
