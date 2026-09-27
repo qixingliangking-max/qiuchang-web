@@ -3719,11 +3719,11 @@ async function setupDesktopAccountNav(){
   if(!login && !redeem && !account && !logout) return;
 
   const setLoggedOut=()=>{
-    if(login) login.hidden=false;
-    if(redeem) redeem.hidden=true;
-    if(account) account.hidden=true;
-    if(logout) logout.hidden=true;
-    if(divider) divider.hidden=false;
+    if(login){ login.hidden=false; login.style.display='inline-flex'; }
+    if(redeem){ redeem.hidden=true; redeem.style.display='none'; }
+    if(account){ account.hidden=true; account.style.display='none'; }
+    if(logout){ logout.hidden=true; logout.style.display='none'; }
+    if(divider){ divider.hidden=false; divider.style.display='block'; }
   };
 
   const {data,error}=await window.qcSupabase.auth.getSession();
@@ -3733,11 +3733,11 @@ async function setupDesktopAccountNav(){
     return;
   }
 
-  if(login) login.hidden=true;
-  if(redeem) redeem.hidden=false;
-  if(account) account.hidden=false;
-  if(logout) logout.hidden=false;
-  if(divider) divider.hidden=false;
+  if(login){ login.hidden=true; login.style.display='none'; }
+  if(redeem){ redeem.hidden=false; redeem.style.display='inline-flex'; }
+  if(account){ account.hidden=false; account.style.display='inline-flex'; }
+  if(logout){ logout.hidden=false; logout.style.display='inline-flex'; }
+  if(divider){ divider.hidden=false; divider.style.display='block'; }
 
   const email=session.user?.email||'';
   let name=email ? email.split('@')[0] : '个人中心';
