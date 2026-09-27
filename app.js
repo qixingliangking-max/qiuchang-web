@@ -1263,6 +1263,7 @@ async function loadJcFootball(){
   const leagueToggle=$('#jcFootballLeagueToggle');
   const leaguePop=$('#jcFootballLeaguePopover');
   const leagueMenu=$('#jcFootballLeagueMenu');
+  const inlineLeagueTabs=$('#jcFootballInlineLeagues');
 
   if(dateLocked){
     [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
@@ -1308,6 +1309,37 @@ async function loadJcFootball(){
       '</button>'
     ).join('');
     $$('button',leagueMenu).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        activeLeague=btn.dataset.league||'全部';
+        closeLeague();
+        render();
+      };
+    });
+  }
+
+
+  function renderInlineLeagueTabs(rows){
+    if(!inlineLeagueTabs) return;
+    const seen=[];
+    rows.forEach(m=>{
+      const k=leagueKey(m);
+      if(!seen.includes(k)) seen.push(k);
+    });
+
+    const preferred=['国际赛','欧国联','美职','荷乙','韩职'];
+    const ordered=[
+      ...preferred.filter(k=>seen.includes(k)),
+      ...seen.filter(k=>!preferred.includes(k)).sort((a,b)=>a.localeCompare(b,'zh-CN'))
+    ];
+
+    const items=[{key:'全部',label:'全部'},...ordered.map(k=>({key:k,label:k}))];
+    inlineLeagueTabs.innerHTML=items.map(item=>
+      '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+qcEscape(item.label)+'</button>'
+    ).join('');
+
+    $('button',inlineLeagueTabs).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
@@ -1367,6 +1399,7 @@ async function loadJcFootball(){
     }
 
     renderLeagueMenu(dateRows);
+    renderInlineLeagueTabs(dateRows);
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){

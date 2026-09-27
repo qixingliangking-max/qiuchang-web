@@ -3899,3 +3899,55 @@ body.qc-ticker-authenticated .ticker{
     padding-top:28px!important;
   }
 }
+
+
+/* 2026-09-27 desktop football inline league filters */
+.jc-football-inline-leagues{
+  display:none;
+}
+
+@media (min-width:1024px){
+  .qc-football-page .jc-football-inline-leagues{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    margin-left:6px;
+    overflow-x:auto;
+    white-space:nowrap;
+    scrollbar-width:none;
+  }
+
+  .qc-football-page .jc-football-inline-leagues::-webkit-scrollbar{
+    display:none;
+  }
+
+  .qc-football-page .jc-football-inline-leagues button{
+    flex:0 0 auto;
+    height:34px;
+    border:0;
+    border-radius:9px;
+    padding:0 10px;
+    background:transparent;
+    color:#687286;
+    font:inherit;
+    font-size:12px;
+    font-weight:850;
+    cursor:pointer;
+  }
+
+  .qc-football-page .jc-football-inline-leagues button:hover{
+    background:#f4f6fa;
+    color:var(--text);
+  }
+
+  .qc-football-page .jc-football-inline-leagues button.active{
+    background:var(--blue-soft);
+    color:var(--blue);
+  }
+}
+
+@media (max-width:1023px){
+  .qc-football-page .jc-football-inline-leagues{
+    display:none!important;
+  }
+}
