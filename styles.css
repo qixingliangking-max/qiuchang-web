@@ -5168,3 +5168,54 @@ body.qc-ticker-authenticated .ticker{
     flex-basis:28px;
   }
 }
+
+
+/* 2026-09-28 match detail team logos */
+.jc-odds-page .jc-odds-matchup .jc-detail-team{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  text-align:center!important;
+}
+
+.jc-odds-page .jc-odds-matchup .jc-detail-team.right{
+  justify-content:center!important;
+}
+
+.jc-odds-page .jc-detail-team-logo{
+  display:block;
+  width:46px;
+  height:46px;
+  object-fit:contain;
+  object-position:center;
+  flex:0 0 46px;
+}
+
+.jc-odds-page .jc-detail-team-name{
+  display:block;
+  max-width:100%;
+  color:var(--text);
+  font-size:18px;
+  line-height:1.2;
+  font-weight:900;
+  text-align:center;
+}
+
+@media (max-width:640px){
+  .jc-odds-page .jc-odds-matchup .jc-detail-team{
+    gap:5px!important;
+  }
+
+  .jc-odds-page .jc-detail-team-logo{
+    width:34px;
+    height:34px;
+    flex-basis:34px;
+  }
+
+  .jc-odds-page .jc-detail-team-name{
+    font-size:14px;
+  }
+}

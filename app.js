@@ -972,6 +972,16 @@ function jcTeamInnerHtml(m,side){
     '<span class="jc-team-name">'+qcEscape(name||'—')+'</span>';
 }
 
+function jcDetailTeamBadgeHtml(m,side){
+  const isHome=side==='home';
+  const name=isHome?m?.home_team_name:m?.away_team_name;
+  const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
+  return (logo
+    ? '<img class="jc-detail-team-logo" src="'+qcEscape(logo)+'" alt="" loading="eager" decoding="async" onerror="this.style.display=\'none\'">'
+    : '<span class="badge-circle">'+(isHome?'主':'客')+'</span>')+
+    '<span class="jc-detail-team-name">'+qcEscape(name||'—')+'</span>';
+}
+
 function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
@@ -2953,7 +2963,10 @@ async function setupJcMatchDetail(options={}){
   const detailSnapshotPromise=canViewPremium
     ? jcFetchDetailPredictionSnapshot(id,access)
     : Promise.resolve(null);
-  const sameDay=await dayPromise;
+  const [sameDay]=await Promise.all([
+    dayPromise,
+    jcAttachTeamLogos([m])
+  ]);
   if(loadSeq!==jcDetailLoadSeq) return;
 
   const detailNav='<aside class="jc-detail-sidebar">'+
@@ -2980,9 +2993,9 @@ async function setupJcMatchDetail(options={}){
     '<div class="detail-head jc-odds-headcard">'+
       '<div class="match-top"><span>'+qcEscape(m.match_num||'')+' · '+qcEscape(m.league_name||m.league_short_name||'—')+'</span><span>'+qcEscape(jcDateTime(m)||'')+'</span></div>'+
       '<div class="detail-title jc-odds-matchup" style="margin-top:18px">'+
-        '<div class="team-badge"><span class="badge-circle">主</span>'+qcEscape(m.home_team_name||'—')+'</div>'+
+        '<div class="team-badge jc-detail-team jc-detail-team-home">'+jcDetailTeamBadgeHtml(m,'home')+'</div>'+
         '<div class="center-score"><strong class="'+(scoreNow.finished?'jc-detail-score-finished':'')+'">'+qcEscape(scoreNow.current||'VS')+'</strong><small>'+qcEscape(jcMatchStatusLabel(m,qcBeijingToday()))+'</small></div>'+
-        '<div class="team-badge right">'+qcEscape(m.away_team_name||'—')+'<span class="badge-circle">客</span></div>'+
+        '<div class="team-badge right jc-detail-team jc-detail-team-away">'+jcDetailTeamBadgeHtml(m,'away')+'</div>'+
       '</div>'+
       '<div class="jc-main-tabs">'+
         '<button type="button" data-main-tab="facts">赛况数据</button>'+
