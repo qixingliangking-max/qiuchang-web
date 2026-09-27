@@ -3689,3 +3689,37 @@ body.qc-modal-open{overflow:hidden}
     color:#fff!important;
   }
 }
+
+
+/* 2026-09-27 desktop nav text baseline alignment */
+@media (min-width:1024px){
+  .qc-site-header .qc-desktop-nav > a,
+  .qc-site-header .qc-desktop-nav > button{
+    font-family:inherit!important;
+    font-size:14px!important;
+    font-weight:850!important;
+    line-height:1!important;
+    letter-spacing:0!important;
+    vertical-align:middle!important;
+  }
+
+  .qc-site-header .qc-desktop-nav > button{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    appearance:none!important;
+    -webkit-appearance:none!important;
+  }
+
+  .qc-site-header .qc-desktop-nav > a{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .qc-site-header .qc-desktop-nav .qc-desktop-redeem-btn,
+  .qc-site-header .qc-desktop-nav .qc-desktop-logout-btn{
+    padding-top:0!important;
+    padding-bottom:0!important;
+  }
+}
