@@ -929,6 +929,10 @@ function jcFootballHitBlock(m,access){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
     if(hit) return hit;
+    return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
+  }
+  if(!access?.loggedIn){
+    return '<div class="jc-card-hit-band jc-card-prematch-lock"><span>🔒 登录查看 AI 推荐玩法</span></div>';
   }
   return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
 }
@@ -1264,6 +1268,7 @@ async function loadJcFootball(){
   const leaguePop=$('#jcFootballLeaguePopover');
   const leagueMenu=$('#jcFootballLeagueMenu');
   const inlineLeagueTabs=$('#jcFootballInlineLeagues');
+  const fixtureCount=$('#jcFootballFixtureCount');
 
   if(dateLocked){
     [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
@@ -1403,6 +1408,7 @@ async function loadJcFootball(){
 
     renderLeagueMenu(dateRows);
     renderInlineLeagueTabs(dateRows);
+    if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){
