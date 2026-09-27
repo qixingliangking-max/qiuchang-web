@@ -3899,3 +3899,134 @@ body.qc-ticker-authenticated .ticker{
     padding-top:28px!important;
   }
 }
+
+
+/* 2026-09-27 desktop football compact filters + date controls */
+.jc-football-desktop-leagues{
+  display:none;
+}
+
+@media (min-width:1024px){
+  .qc-football-page .jc-football-toolbar{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:18px!important;
+    padding:10px 14px!important;
+    margin-bottom:18px!important;
+  }
+
+  .qc-football-page .jc-football-desktop-leagues{
+    display:flex!important;
+    flex:1 1 auto;
+    min-width:0;
+    align-items:center;
+    gap:5px;
+    overflow-x:auto;
+    white-space:nowrap;
+    scrollbar-width:none;
+  }
+
+  .qc-football-page .jc-football-desktop-leagues::-webkit-scrollbar{
+    display:none;
+  }
+
+  .qc-football-page .jc-football-desktop-leagues button{
+    flex:0 0 auto;
+    min-height:34px;
+    border:0;
+    border-radius:10px;
+    padding:0 13px;
+    background:transparent;
+    color:#687286;
+    font:inherit;
+    font-size:13px;
+    font-weight:850;
+    cursor:pointer;
+  }
+
+  .qc-football-page .jc-football-desktop-leagues button:hover{
+    background:#f4f6fa;
+    color:var(--text);
+  }
+
+  .qc-football-page .jc-football-desktop-leagues button.active{
+    background:var(--blue-soft);
+    color:var(--blue);
+  }
+
+  .qc-football-page .jc-football-date-zone{
+    flex:0 0 auto;
+    width:auto!important;
+    display:grid!important;
+    grid-template-columns:34px 132px 34px auto auto!important;
+    gap:6px!important;
+    align-items:center!important;
+  }
+
+  .qc-football-page .jc-football-date-zone>button{
+    height:34px!important;
+    min-height:34px!important;
+    border-radius:10px!important;
+    font-size:12px!important;
+    padding:0 9px!important;
+  }
+
+  .qc-football-page .jc-football-arrow{
+    width:34px!important;
+    padding:0!important;
+    font-size:19px!important;
+  }
+
+  .qc-football-page .jc-football-date-label{
+    min-width:132px!important;
+    width:132px!important;
+    font-size:13px!important;
+  }
+
+  .qc-football-page .jc-football-today{
+    width:auto!important;
+    min-width:72px!important;
+    padding:0 10px!important;
+  }
+
+  .qc-football-page #jcFootballLeagueToggle{
+    display:none!important;
+  }
+
+  .qc-football-page .jc-fixture-count{
+    height:34px!important;
+    padding:0 10px!important;
+    border:0!important;
+    background:#f7f8fb!important;
+    border-radius:10px!important;
+    font-size:12px!important;
+    color:#6f798d!important;
+  }
+
+  .qc-football-page .jc-date-popover{
+    top:42px!important;
+    left:40px!important;
+  }
+
+  .qc-football-page .jc-card-prelock{
+    min-height:42px;
+    display:flex!important;
+    align-items:center;
+    justify-content:center;
+    margin-top:10px;
+    padding:8px 10px;
+    border-radius:12px;
+    background:#f8f9fb;
+    color:#667084;
+    font-size:12px;
+    font-weight:850;
+    text-align:center;
+  }
+}
+
+@media (max-width:1023px){
+  .qc-football-page .jc-card-prelock{
+    display:none!important;
+  }
+}

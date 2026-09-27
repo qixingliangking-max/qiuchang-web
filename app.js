@@ -929,6 +929,10 @@ function jcFootballHitBlock(m,access){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
     if(hit) return hit;
+    return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
+  }
+  if(!access?.loggedIn){
+    return '<div class="jc-card-hit-band jc-card-prelock"><span>🔒 登录查看 AI 推荐玩法</span></div>';
   }
   return '<div class="jc-card-hit-band jc-card-hit-play jc-card-hit-placeholder"></div>';
 }
@@ -1263,6 +1267,8 @@ async function loadJcFootball(){
   const leagueToggle=$('#jcFootballLeagueToggle');
   const leaguePop=$('#jcFootballLeaguePopover');
   const leagueMenu=$('#jcFootballLeagueMenu');
+  const desktopLeagueTabs=$('#jcFootballDesktopLeagues');
+  const fixtureCount=$('#jcFootballFixtureCount');
 
   if(dateLocked){
     [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
@@ -1308,6 +1314,32 @@ async function loadJcFootball(){
       '</button>'
     ).join('');
     $$('button',leagueMenu).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        activeLeague=btn.dataset.league||'全部';
+        closeLeague();
+        render();
+      };
+    });
+  }
+
+
+  function renderDesktopLeagueTabs(rows){
+    if(!desktopLeagueTabs) return;
+    const counts=new Map();
+    rows.forEach(m=>{
+      const k=leagueKey(m);
+      counts.set(k,(counts.get(k)||0)+1);
+    });
+    const items=[
+      {key:'全部',label:'全部'},
+      ...Array.from(counts.keys()).map(k=>({key:k,label:k}))
+    ];
+    desktopLeagueTabs.innerHTML=items.map(item=>
+      '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+qcEscape(item.label)+'</button>'
+    ).join('');
+    $('button',desktopLeagueTabs).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
@@ -1367,6 +1399,8 @@ async function loadJcFootball(){
     }
 
     renderLeagueMenu(dateRows);
+    renderDesktopLeagueTabs(dateRows);
+    if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){
