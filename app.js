@@ -462,7 +462,7 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
 
   const primaryHref=loggedIn
     ? (isAi?'profile.html':'profile.html')
-    : 'login.html?v=20260927desktoplogin2&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn
     ? (isAi?'订阅查看完整报告':'进入个人中心')
     : '立即登录';
@@ -2365,7 +2365,7 @@ function jcRenderAiLockedPanel(m,pools,access){
   const loggedIn=Boolean(access?.loggedIn);
   const actionHref=loggedIn
     ? 'profile.html'
-    : 'login.html?v=20260927desktoplogin2&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
   const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
   const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
   const lockDesc=loggedIn
@@ -3178,13 +3178,6 @@ async function qcAuthSignUpResilient(email,password){
   return directSignup;
 }
 
-function qcLoginSafeNext(){
-  const next=new URLSearchParams(location.search).get('next');
-  if(!next) return 'index.html';
-  if(/^(?:https?:)?\/\//i.test(next) || /^javascript:/i.test(next)) return 'index.html';
-  return /^(?:\/)?[a-zA-Z0-9._/?=&%#-]+$/.test(next) ? next : 'index.html';
-}
-
 async function setupDemoAuth(){
   const login = $('#loginForm');
 
@@ -3205,7 +3198,9 @@ async function setupDemoAuth(){
       try{
         const {data:autoSessionData}=await window.qcSupabase.auth.getSession();
         if(autoSessionData?.session){
-          location.replace(qcLoginSafeNext());
+          const next = new URLSearchParams(location.search).get('next');
+          const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
+          location.replace(safeNext);
           return;
         }
       }catch(err){
@@ -3215,16 +3210,6 @@ async function setupDemoAuth(){
 
     // 首次仍由用户主动确认；确认过一次后记住选择，后续登录自动勾选。
     // 如果未来协议有重大更新，只需升级这个 key（例如 v2）即可重新要求确认。
-    login.addEventListener('invalid',e=>{
-      if(!loginHint) return;
-      const t=e.target;
-      if(t?.id==='loginEmail') loginHint.textContent='请输入正确的邮箱地址。';
-      else if(t?.id==='loginPassword') loginHint.textContent='密码至少需要8个字符。';
-      else if(t?.id==='loginAgreement') loginHint.textContent='请先勾选并同意《用户服务协议》和《隐私政策》。';
-      else return;
-      loginHint.className='code-hint error';
-    },true);
-
     if(loginAgreement){
       const agreementKey='qc-login-agreement-v1';
       try{
@@ -3247,40 +3232,6 @@ async function setupDemoAuth(){
     login.onsubmit = async e => {
       e.preventDefault();
 
-      const emailInput=login.querySelector('input[type="email"]');
-      const passwordInput=login.querySelector('input[type="password"]');
-      const email=(emailInput?.value||'').trim();
-      const password=passwordInput?.value||'';
-      const button=login.querySelector('button[type="submit"]');
-
-      // Desktop browsers can block submit before onsubmit when native minlength/
-      // required validation fails, which looks like the login button does nothing.
-      // Validate explicitly so every click gives a visible reason.
-      if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
-        if(loginHint){
-          loginHint.textContent='请输入正确的邮箱地址。';
-          loginHint.className='code-hint error';
-        }
-        emailInput?.focus();
-        return;
-      }
-      if(password.length<8){
-        if(loginHint){
-          loginHint.textContent=password ? '密码至少需要8个字符。' : '请输入登录密码。';
-          loginHint.className='code-hint error';
-        }
-        passwordInput?.focus();
-        return;
-      }
-      if(loginAgreement && !loginAgreement.checked){
-        if(loginHint){
-          loginHint.textContent='请先勾选并同意《用户服务协议》和《隐私政策》。';
-          loginHint.className='code-hint error';
-        }
-        loginAgreement.focus();
-        return;
-      }
-
       if(!window.qcSupabase){
         if(loginHint){
           loginHint.textContent=qcAuthNetworkMessage();
@@ -3289,12 +3240,12 @@ async function setupDemoAuth(){
         return;
       }
 
+      const email = login.querySelector('input[type="email"]').value.trim();
+      const password = login.querySelector('input[type="password"]').value;
+      const button = login.querySelector('button');
+
       button.disabled = true;
       button.textContent = '登录中...';
-      if(loginHint){
-        loginHint.textContent='正在验证账号…';
-        loginHint.className='code-hint';
-      }
 
       // 必须在登录请求前写入偏好，确保 Supabase 把本次会话存到正确的存储层。
       window.qcSetAutoLoginPreference?.(Boolean(loginAutoLogin?.checked));
@@ -3331,25 +3282,20 @@ async function setupDemoAuth(){
         return;
       }
 
-      if(data?.user || data?.session){
+      if(data.user){
+        const next = new URLSearchParams(location.search).get('next');
+        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
+
         // 确认 Supabase 会话已经写入浏览器存储，再进入数据页，避免登录后首屏仍按旧状态渲染。
         qcAccessStatePromise=null;
         qcLastAccessState=null;
         try{ sessionStorage.setItem('qc-auth-handoff',String(Date.now())); }catch(_){}
-        let sessionReady=false;
-        for(let attempt=0;attempt<4;attempt++){
+        for(let attempt=0;attempt<3;attempt++){
           const {data:sessionData}=await window.qcSupabase.auth.getSession();
-          if(sessionData?.session){sessionReady=true;break;}
+          if(sessionData?.session) break;
           await new Promise(resolve=>setTimeout(resolve,120+(attempt*120)));
         }
-        if(!sessionReady){
-          if(loginHint){
-            loginHint.textContent='账号验证成功，但登录状态写入失败，请刷新后重试。';
-            loginHint.className='code-hint error';
-          }
-          return;
-        }
-        location.replace(qcLoginSafeNext());
+        location.replace(safeNext);
       }
     };
   }
@@ -3588,7 +3534,7 @@ async function setupDemoAuth(){
       }
 
       await window.qcSupabase.auth.signOut();
-      location.replace('login.html?v=20260927desktoplogin2&reset=success');
+      location.replace('login.html?v=20260926login3&reset=success');
     };
   }
 
@@ -3681,7 +3627,7 @@ async function setupProfile(){
   const user = userData && userData.user;
 
   if(userError || !user){
-    location.href = 'login.html?v=20260927desktoplogin2';
+    location.href = 'login.html?v=20260926login3';
     return;
   }
 
@@ -3901,7 +3847,7 @@ async function setupProfile(){
     logoutBtn.onclick = async e => {
       e.preventDefault();
       await window.qcSupabase.auth.signOut();
-      location.href = 'login.html?v=20260927desktoplogin2';
+      location.href = 'login.html?v=20260926login3';
     };
   }
 }
@@ -3947,7 +3893,7 @@ async function qcAdminSession(root,nextPage){
   const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
   const user=userData&&userData.user;
   if(userError||!user){
-    location.href='login.html?v=20260927desktoplogin2&next='+encodeURIComponent(nextPage||'admin.html');
+    location.href='login.html?v=20260926login3&next='+encodeURIComponent(nextPage||'admin.html');
     return null;
   }
 
