@@ -8,7 +8,7 @@
 </head>
 <body class="auth-login-page">
   <main class="auth-wrap">
-    <form class="auth-card" id="loginForm">
+    <form class="auth-card" id="loginForm" novalidate>
       <h1>球场档案</h1>
       <div class="subtitle">赛事数据管家 · 登录你的账户</div>
 
@@ -19,7 +19,7 @@
 
       <div class="field">
         <label for="loginPassword">密码</label>
-        <input id="loginPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="请输入密码">
+        <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="请输入密码">
       </div>
 
       <label class="check auth-auto-login">
@@ -27,7 +27,7 @@
       </label>
 
       <label class="check auth-agreement">
-        <input id="loginAgreement" type="checkbox" required>
+        <input id="loginAgreement" type="checkbox">
         <span>我已阅读并同意 <a class="legal-link" href="terms.html" target="_blank" rel="noopener">《用户服务协议》</a> 和 <a class="legal-link" href="privacy.html" target="_blank" rel="noopener">《隐私政策》</a></span>
       </label>
 
@@ -41,7 +41,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-  <script src="supabase-client.js?v=20260927autologin1"></script>
-  <script src="app.js?v=20260927autologin1"></script>
+  <script src="supabase-client.js?v=20260927desktoplogin1"></script>
+  <script src="app.js?v=20260927desktoplogin1"></script>
 </body>
 </html>
