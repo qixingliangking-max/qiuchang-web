@@ -4966,3 +4966,65 @@ body.qc-ticker-authenticated .ticker{
     right:0!important;
   }
 }
+
+
+/* 2026-09-28 desktop odds label refinement v17 */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-card .jc-mini-row{
+    min-height:42px!important;
+    align-items:center!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag{
+    display:inline-flex!important;
+    width:max-content!important;
+    max-width:100%!important;
+    min-height:0!important;
+    height:auto!important;
+    padding:4px 8px!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:6px!important;
+    line-height:1.1!important;
+    font-size:10.5px!important;
+    font-weight:850!important;
+    letter-spacing:0!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-shadow:none!important;
+    white-space:nowrap!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag.blue{
+    background:#f0f4ff!important;
+    color:#496dcc!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag.orange{
+    background:#fff5eb!important;
+    color:#ad744e!important;
+  }
+
+  /* Softer data colors for a cleaner table. */
+  .qc-football-page .jc-football-card .jc-mini-row>strong:nth-child(2){
+    color:#4668c8!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row>strong:nth-child(3){
+    color:#333b49!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row>strong:nth-child(4){
+    color:#b87955!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head{
+    color:#667184!important;
+    background:#f5f6f8!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-odds{
+    background:#fafbfc!important;
+    border-color:#edf0f4!important;
+  }
+}
