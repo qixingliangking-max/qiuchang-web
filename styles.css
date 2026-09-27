@@ -5219,3 +5219,103 @@ body.qc-ticker-authenticated .ticker{
     font-size:14px;
   }
 }
+
+
+/* 2026-09-28 detail facts: Sporttery-first unified data panels */
+.jc-player-team-card{
+  min-width:0;
+}
+.jc-player-section-label{
+  margin:12px 0 8px;
+  color:#687286;
+  font-size:12px;
+  font-weight:900;
+}
+.jc-player-section-label.jc-injury-label{
+  margin-top:16px;
+}
+.jc-player-detail-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.jc-player-detail-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  padding:9px 10px;
+  border:1px solid #edf0f5;
+  border-radius:11px;
+  background:#fafbfd;
+}
+.jc-player-main{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.jc-player-main strong{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#202735;
+  font-size:13px;
+}
+.jc-player-main span{
+  flex:0 0 auto;
+  color:#8a94a6;
+  font-size:11px;
+}
+.jc-player-meta{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#687286;
+  font-size:10px;
+  font-weight:750;
+  white-space:nowrap;
+}
+.jc-h2h-summary{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0 0 10px;
+  padding:11px 13px;
+  border:1px solid #e7ebf2;
+  border-radius:12px;
+  background:#f8f9fb;
+  color:#687286;
+  font-size:12px;
+}
+.jc-h2h-summary strong{
+  margin-right:auto;
+  color:#202735;
+  font-size:13px;
+}
+@media(max-width:640px){
+  .jc-facts-subtabs{
+    gap:0!important;
+  }
+  .jc-facts-subtabs button{
+    min-width:max-content;
+    padding-left:12px!important;
+    padding-right:12px!important;
+  }
+  .jc-player-detail-row{
+    grid-template-columns:1fr;
+    gap:5px;
+  }
+  .jc-player-meta{
+    flex-wrap:wrap;
+    gap:5px 9px;
+  }
+  .jc-h2h-summary{
+    flex-wrap:wrap;
+    gap:6px 10px;
+  }
+  .jc-h2h-summary strong{
+    width:100%;
+    margin-right:0;
+  }
+}
