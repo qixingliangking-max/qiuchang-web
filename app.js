@@ -3080,7 +3080,9 @@ async function setupJcMatchDetail(options={}){
     return snapshotRowsFast;
   }
 
-  let detailRows=snapshotDetails.length?snapshotDetails:null;
+  // Facts panels always read the current Sporttery detail cache.
+  // Locked snapshots remain authoritative only for model/AI conclusions.
+  let detailRows=null;
   let sportteryDetails=null;
 
   async function ensureDetailRows(){
