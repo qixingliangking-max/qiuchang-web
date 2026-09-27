@@ -3876,3 +3876,26 @@ body.qc-ticker-authenticated .ticker{
     padding-top:104px!important;
   }
 }
+
+
+/* 2026-09-27 football toolbar: normal document position, never overlay match cards */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-toolbar{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
+    width:100%!important;
+    margin:0 0 24px!important;
+    z-index:13!important;
+  }
+
+  body.qc-football-page.qc-ticker-authenticated .jc-football-toolbar{
+    top:auto!important;
+  }
+
+  .qc-football-page .content{
+    padding-top:28px!important;
+  }
+}
