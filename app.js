@@ -3775,7 +3775,7 @@ function qcEnsureDesktopRedeemModal(){
 
 
 async function setupFootballLoginBar(){
-  const bars=$('.qc-public-login-bar');
+  const bars=[...document.querySelectorAll('.qc-public-login-bar')];
   if(!bars.length || !window.qcSupabase) return;
 
   const apply=session=>{
