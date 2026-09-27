@@ -551,7 +551,10 @@ function jcDisplaySinglePick(model,m){
 }
 
 function jcDisplaySingleSuffix(model,m){
-  return jcHasOrdinaryResult(m) && model?.raw_input?.single_prob!=null
+  // Website language rule: single pick always carries its locked probability.
+  // For matches without ordinary HAD, the stored single_pick is already the
+  // handicap single selected at lock time, so the probability still applies.
+  return model?.raw_input?.single_prob!=null
     ? '｜'+model.raw_input.single_prob+'%'
     : '';
 }
