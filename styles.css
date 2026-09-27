@@ -3689,3 +3689,125 @@ body.qc-modal-open{overflow:hidden}
     color:#fff!important;
   }
 }
+
+
+/* 2026-09-27 desktop header alignment v4
+   Keep nav and account actions in fixed columns so page changes do not shift labels. */
+@media (min-width:1024px){
+  body.qc-home .qc-site-header,
+  body.jc-odds-page .qc-site-header{
+    grid-template-columns:minmax(290px,auto) 250px minmax(430px,1fr)!important;
+    column-gap:24px!important;
+  }
+
+  .qc-site-header>.qc-brand-line{
+    grid-column:1;
+    justify-self:start;
+  }
+
+  .qc-site-header>.qc-desktop-nav{
+    grid-column:2;
+    display:grid!important;
+    grid-template-columns:120px 120px;
+    gap:10px!important;
+    justify-content:start!important;
+    align-items:center;
+    width:250px;
+    min-width:250px;
+    overflow:visible!important;
+  }
+
+  .qc-site-header>.qc-desktop-nav a{
+    width:120px;
+    min-width:120px!important;
+    box-sizing:border-box;
+    padding:0 10px!important;
+    text-align:center;
+  }
+
+  .qc-site-header>.qc-desktop-account-actions{
+    grid-column:3;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:12px;
+    min-width:430px;
+    white-space:nowrap;
+  }
+
+  .qc-desktop-account-actions .qc-desktop-auth-login{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:84px;
+    min-height:42px;
+    box-sizing:border-box;
+    border-radius:12px;
+    background:var(--blue)!important;
+    color:#fff!important;
+    font-size:14px;
+    font-weight:850;
+    box-shadow:0 6px 16px rgba(55,100,237,.18);
+  }
+
+  .qc-desktop-account-actions .qc-desktop-redeem-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:128px;
+    min-width:128px;
+    min-height:42px;
+    box-sizing:border-box;
+    padding:0 12px!important;
+    border:1px solid var(--blue)!important;
+    border-radius:12px;
+    background:var(--blue)!important;
+    color:#fff!important;
+    font-size:14px;
+    font-weight:850;
+    white-space:nowrap;
+  }
+
+  .qc-desktop-account-actions .qc-desktop-auth-account{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:118px;
+    min-width:118px;
+    max-width:118px!important;
+    min-height:42px;
+    box-sizing:border-box;
+    padding:0 10px!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color:#263752;
+    font-size:14px;
+    font-weight:850;
+  }
+
+  .qc-desktop-account-actions .qc-desktop-logout-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:64px;
+    min-width:64px;
+    min-height:42px;
+    box-sizing:border-box;
+    padding:0!important;
+    color:#7c8596;
+    font-size:14px;
+    font-weight:850;
+  }
+
+  .qc-desktop-account-actions #desktopLogin[hidden],
+  .qc-desktop-account-actions #desktopRedeem[hidden],
+  .qc-desktop-account-actions #desktopAccount[hidden],
+  .qc-desktop-account-actions #desktopLogout[hidden]{
+    display:none!important;
+  }
+
+  .qc-site-header>.menu-btn{
+    display:none!important;
+  }
+}
