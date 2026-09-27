@@ -3708,6 +3708,25 @@ function qcEnsureDesktopRedeemModal(){
   return modal;
 }
 
+
+async function setupFootballLoginBar(){
+  const bar=$('#qcFootballLoginBar');
+  if(!bar || !window.qcSupabase) return;
+
+  const {data,error}=await window.qcSupabase.auth.getSession();
+  const session=!error && data ? data.session : null;
+
+  if(session){
+    bar.style.display='none';
+  }else{
+    bar.style.display='flex';
+  }
+
+  window.qcSupabase.auth.onAuthStateChange((_event,nextSession)=>{
+    bar.style.display=nextSession?'none':'flex';
+  });
+}
+
 async function setupDesktopAccountNav(){
   if(!window.qcSupabase) return;
 
@@ -4463,6 +4482,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
   safe('desktop-account-nav',()=>setupDesktopAccountNav());
+  safe('football-login-bar',()=>setupFootballLoginBar());
   safe('profile',()=>setupProfile());
   safe('admin',()=>setupAdmin());
   safe('admin-users',()=>setupAdminUsers());

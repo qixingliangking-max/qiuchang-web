@@ -3723,3 +3723,64 @@ body.qc-modal-open{overflow:hidden}
     padding-bottom:0!important;
   }
 }
+
+
+/* 2026-09-27 desktop football persistent login CTA */
+@media (min-width:1024px){
+  .qc-football-page{
+    padding-bottom:92px;
+  }
+
+  .qc-football-login-bar{
+    position:fixed;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    z-index:45;
+    width:min(1600px,100%);
+    min-height:78px;
+    box-sizing:border-box;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    padding:12px 24px;
+    background:rgba(29,34,49,.96);
+    border-top:1px solid rgba(255,255,255,.08);
+    box-shadow:0 -8px 28px rgba(19,25,39,.16);
+    backdrop-filter:blur(10px);
+  }
+
+  .qc-football-login-copy{
+    color:#fff;
+    font-size:14px;
+    font-weight:800;
+    line-height:1.4;
+    white-space:nowrap;
+  }
+
+  .qc-football-login-cta{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:118px;
+    height:42px;
+    box-sizing:border-box;
+    border-radius:11px;
+    background:var(--blue);
+    color:#fff!important;
+    font-size:14px;
+    font-weight:900;
+    text-decoration:none;
+    box-shadow:0 6px 16px rgba(55,100,237,.22);
+  }
+
+  .qc-football-login-cta:hover{
+    filter:brightness(.97);
+  }
+}
+
+@media (max-width:1023px){
+  .qc-football-login-bar{
+    display:none!important;
+  }
+}
