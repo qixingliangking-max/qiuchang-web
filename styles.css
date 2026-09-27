@@ -3691,123 +3691,78 @@ body.qc-modal-open{overflow:hidden}
 }
 
 
-/* 2026-09-27 desktop header alignment v4
-   Keep nav and account actions in fixed columns so page changes do not shift labels. */
+/* 2026-09-27 desktop compact header lock.
+   Target: the previously approved compact one-line arrangement. */
 @media (min-width:1024px){
   body.qc-home .qc-site-header,
   body.jc-odds-page .qc-site-header{
-    grid-template-columns:minmax(290px,auto) 250px minmax(430px,1fr)!important;
-    column-gap:24px!important;
-  }
-
-  .qc-site-header>.qc-brand-line{
-    grid-column:1;
-    justify-self:start;
+    grid-template-columns:auto 1fr auto!important;
+    gap:34px!important;
   }
 
   .qc-site-header>.qc-desktop-nav{
-    grid-column:2;
-    display:grid!important;
-    grid-template-columns:120px 120px;
-    gap:10px!important;
-    justify-content:start!important;
-    align-items:center;
-    width:250px;
-    min-width:250px;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    width:auto!important;
+    min-width:0!important;
+    white-space:nowrap!important;
     overflow:visible!important;
   }
 
-  .qc-site-header>.qc-desktop-nav a{
-    width:120px;
-    min-width:120px!important;
-    box-sizing:border-box;
-    padding:0 10px!important;
-    text-align:center;
-  }
-
-  .qc-site-header>.qc-desktop-account-actions{
-    grid-column:3;
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-    gap:12px;
-    min-width:430px;
-    white-space:nowrap;
-  }
-
-  .qc-desktop-account-actions .qc-desktop-auth-login{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:84px;
-    min-height:42px;
-    box-sizing:border-box;
-    border-radius:12px;
-    background:var(--blue)!important;
-    color:#fff!important;
-    font-size:14px;
-    font-weight:850;
-    box-shadow:0 6px 16px rgba(55,100,237,.18);
-  }
-
-  .qc-desktop-account-actions .qc-desktop-redeem-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:128px;
-    min-width:128px;
-    min-height:42px;
-    box-sizing:border-box;
+  .qc-site-header>.qc-desktop-nav>a[href="index.html"],
+  .qc-site-header>.qc-desktop-nav>a[href="football.html"]{
+    width:112px!important;
+    min-width:112px!important;
+    box-sizing:border-box!important;
     padding:0 12px!important;
-    border:1px solid var(--blue)!important;
-    border-radius:12px;
-    background:var(--blue)!important;
-    color:#fff!important;
-    font-size:14px;
-    font-weight:850;
-    white-space:nowrap;
+    text-align:center!important;
   }
 
-  .qc-desktop-account-actions .qc-desktop-auth-account{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:118px;
-    min-width:118px;
-    max-width:118px!important;
-    min-height:42px;
-    box-sizing:border-box;
+  .qc-site-header>.qc-desktop-nav .qc-desktop-account-divider{
+    width:1px!important;
+    height:24px!important;
+    margin:0 6px!important;
+    flex:0 0 1px!important;
+  }
+
+  .qc-site-header>.qc-desktop-nav .qc-desktop-auth-login{
+    width:82px!important;
+    min-width:82px!important;
+    box-sizing:border-box!important;
+    padding:0 12px!important;
+    justify-content:center!important;
+  }
+
+  .qc-site-header>.qc-desktop-nav .qc-desktop-redeem-btn{
+    width:126px!important;
+    min-width:126px!important;
+    box-sizing:border-box!important;
+    padding:0 12px!important;
+    justify-content:center!important;
+  }
+
+  .qc-site-header>.qc-desktop-nav .qc-desktop-auth-account{
+    width:104px!important;
+    min-width:104px!important;
+    max-width:104px!important;
+    box-sizing:border-box!important;
     padding:0 10px!important;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    color:#263752;
-    font-size:14px;
-    font-weight:850;
+    text-align:center!important;
+    justify-content:center!important;
   }
 
-  .qc-desktop-account-actions .qc-desktop-logout-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:64px;
-    min-width:64px;
-    min-height:42px;
-    box-sizing:border-box;
+  .qc-site-header>.qc-desktop-nav .qc-desktop-logout-btn{
+    width:64px!important;
+    min-width:64px!important;
+    box-sizing:border-box!important;
     padding:0!important;
-    color:#7c8596;
-    font-size:14px;
-    font-weight:850;
-  }
-
-  .qc-desktop-account-actions #desktopLogin[hidden],
-  .qc-desktop-account-actions #desktopRedeem[hidden],
-  .qc-desktop-account-actions #desktopAccount[hidden],
-  .qc-desktop-account-actions #desktopLogout[hidden]{
-    display:none!important;
+    justify-content:center!important;
   }
 
   .qc-site-header>.menu-btn{
-    display:none!important;
+    width:44px!important;
+    height:44px!important;
   }
 }
