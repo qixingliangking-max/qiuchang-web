@@ -924,7 +924,7 @@ function jcRenderYesterdayReview(rows,today){
 function jcFootballHitBlock(m,access){
   const score=jcScoreInfo(m);
   const guestLock=!access?.loggedIn
-    ? '<div class="jc-card-prematch-lock"><span>🔒 登录查看 AI 推荐玩法</span></div>'
+    ? '<div class="jc-card-prematch-lock" role="link" tabindex="0" data-qc-login-cta="1"><span>🔒 登录查看 AI 推荐玩法</span></div>'
     : '';
 
   // 完赛后的“赛前预测命中”公开展示；游客卡片最后仍保留统一登录入口。
@@ -1228,7 +1228,30 @@ async function jcFetchAvailableDates(){
   return dates;
 }
 
+function qcBindFootballGuestLoginCta(){
+  if(document.documentElement.dataset.qcFootballLoginCtaBound==='1') return;
+  document.documentElement.dataset.qcFootballLoginCtaBound='1';
+
+  document.addEventListener('click',e=>{
+    const cta=e.target.closest?.('[data-qc-login-cta="1"]');
+    if(!cta) return;
+    e.preventDefault();
+    e.stopPropagation();
+    location.href='login.html';
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const cta=e.target.closest?.('[data-qc-login-cta="1"]');
+    if(!cta) return;
+    e.preventDefault();
+    e.stopPropagation();
+    location.href='login.html';
+  });
+}
+
 async function loadJcFootball(){
+  qcBindFootballGuestLoginCta();
   const cards=$('#jcFootballCards');
   if(!cards || !window.qcSupabase) return;
 
