@@ -1332,9 +1332,19 @@ async function loadJcFootball(){
       const k=leagueKey(m);
       counts.set(k,(counts.get(k)||0)+1);
     });
+    const preferred=['国际赛','欧国联','美职','荷乙','韩职'];
+    const leagueKeys=Array.from(counts.keys()).sort((a,b)=>{
+      const ai=preferred.indexOf(a), bi=preferred.indexOf(b);
+      if(ai!==-1 || bi!==-1){
+        if(ai===-1) return 1;
+        if(bi===-1) return -1;
+        return ai-bi;
+      }
+      return a.localeCompare(b,'zh-CN');
+    });
     const items=[
       {key:'全部',label:'全部'},
-      ...Array.from(counts.keys()).map(k=>({key:k,label:k}))
+      ...leagueKeys.map(k=>({key:k,label:k}))
     ];
     desktopLeagueTabs.innerHTML=items.map(item=>
       '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+qcEscape(item.label)+'</button>'
