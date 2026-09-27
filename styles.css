@@ -3840,3 +3840,39 @@ body.qc-modal-open{overflow:hidden}
 body.qc-ticker-authenticated .ticker{
   display:flex!important;
 }
+
+
+/* 2026-09-27 desktop football viewport locks:
+   full-width login bar + fixed date toolbar */
+@media (min-width:1024px){
+  .qc-football-login-bar{
+    left:0!important;
+    right:0!important;
+    bottom:0!important;
+    transform:none!important;
+    width:100vw!important;
+    max-width:none!important;
+    margin:0!important;
+    border-radius:0!important;
+  }
+
+  .qc-football-page .jc-football-toolbar{
+    position:fixed!important;
+    top:82px!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    width:min(1528px,calc(100vw - 72px))!important;
+    box-sizing:border-box!important;
+    z-index:19!important;
+    margin:0!important;
+  }
+
+  body.qc-football-page.qc-ticker-authenticated .jc-football-toolbar{
+    top:120px!important;
+  }
+
+  .qc-football-page .content{
+    padding-top:104px!important;
+  }
+}
