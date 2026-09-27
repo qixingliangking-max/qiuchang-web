@@ -3951,3 +3951,22 @@ body.qc-ticker-authenticated .ticker{
     display:none!important;
   }
 }
+
+
+/* 2026-09-27 desktop football inline leagues: reserve real width after 赛事 */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-date-zone{
+    grid-template-columns:42px minmax(120px,190px) 42px auto auto minmax(0,1fr)!important;
+    overflow:visible!important;
+  }
+
+  .qc-football-page .jc-football-inline-leagues{
+    grid-column:6!important;
+    min-width:0!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-left:0!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+  }
+}
