@@ -4900,3 +4900,69 @@ body.qc-ticker-authenticated .ticker{
     font-size:10px!important;
   }
 }
+
+
+/* 2026-09-28 desktop public pages: full-viewport layout */
+@media (min-width:1024px){
+  body.qc-home,
+  body.jc-odds-page{
+    background:#f6f8fb!important;
+  }
+
+  /* Remove the desktop "framed website" effect. */
+  body.qc-home .shell,
+  body.jc-odds-page .shell{
+    width:100%!important;
+    max-width:none!important;
+    min-height:100vh!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+    background:#f6f8fb!important;
+  }
+
+  /* Header now spans the full viewport as well. */
+  body.qc-home .qc-site-header,
+  body.jc-odds-page .qc-site-header{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    border-radius:0!important;
+  }
+
+  /* Overview and football keep only a small safe gutter. */
+  body.qc-home .content{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding-left:28px!important;
+    padding-right:28px!important;
+  }
+
+  /* Match detail used to be capped at 1180px; let it use the screen. */
+  body.jc-odds-page .content{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:24px 28px 76px!important;
+  }
+
+  body.qc-home .footer-note,
+  body.jc-odds-page .footer-note{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding-left:28px!important;
+    padding-right:28px!important;
+  }
+
+  body.qc-home .drawer,
+  body.jc-odds-page .drawer{
+    width:100%!important;
+    max-width:none!important;
+    left:0!important;
+    right:0!important;
+  }
+}
