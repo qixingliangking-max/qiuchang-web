@@ -3784,3 +3784,31 @@ body.qc-modal-open{overflow:hidden}
     display:none!important;
   }
 }
+
+
+/* 2026-09-27 desktop football login bar centered two-row layout */
+@media (min-width:1024px){
+  .qc-football-login-bar{
+    min-height:104px!important;
+    width:min(1600px,calc(100% - 32px))!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:9px!important;
+    padding:14px 24px 16px!important;
+    text-align:center!important;
+  }
+
+  .qc-football-login-copy{
+    width:100%!important;
+    text-align:center!important;
+    font-size:14px!important;
+    line-height:1.4!important;
+  }
+
+  .qc-football-login-cta{
+    min-width:124px!important;
+    height:42px!important;
+    margin:0 auto!important;
+  }
+}
