@@ -4253,3 +4253,226 @@ body.qc-ticker-authenticated .ticker{
     display:none!important;
   }
 }
+
+
+/* 2026-09-27 desktop football card polish v1 */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:14px!important;
+    align-items:stretch!important;
+  }
+
+  .qc-football-page .jc-football-card{
+    min-height:398px!important;
+    border:1px solid rgba(28,42,70,.075)!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    box-shadow:0 8px 24px rgba(35,51,82,.055)!important;
+    overflow:hidden!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-link{
+    display:flex!important;
+    flex-direction:column!important;
+    height:100%!important;
+    box-sizing:border-box!important;
+    padding:15px 16px 14px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top{
+    min-height:30px!important;
+    margin:0 0 10px!important;
+    padding:0 1px!important;
+    align-items:center!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top-meta{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top-meta em{
+    font-size:11px!important;
+    font-weight:750!important;
+    font-style:normal!important;
+    color:#8a93a3!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top-meta b{
+    font-size:15px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    color:#202838!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top time{
+    font-size:10px!important;
+    line-height:1!important;
+    color:#9aa2b1!important;
+    white-space:nowrap!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-score-axis{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:8px!important;
+    min-height:120px!important;
+    margin:0 0 10px!important;
+    padding:10px 6px!important;
+    border-radius:15px!important;
+    background:linear-gradient(180deg,#fbfcfe 0%,#f7f9fc 100%)!important;
+    border:1px solid rgba(46,71,113,.055)!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-team{
+    min-width:0!important;
+    margin:0!important;
+    font-size:16px!important;
+    line-height:1.28!important;
+    font-weight:900!important;
+    color:#202735!important;
+    text-align:center!important;
+    overflow-wrap:anywhere!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-score-center{
+    min-width:0!important;
+    min-height:78px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    border-radius:14px!important;
+    background:#f1f4f9!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-score-main{
+    margin:0!important;
+    font-size:30px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    letter-spacing:.02em!important;
+    color:#596476!important;
+    white-space:nowrap!important;
+  }
+
+  /* Finished FT score: red focal point. */
+  .qc-football-page .jc-football-card .jc-score-main.is-finished{
+    color:#df4653!important;
+  }
+
+  /* Halftime score: black/dark as requested. */
+  .qc-football-page .jc-football-card .jc-score-meta,
+  .qc-football-page .jc-football-card .jc-score-meta.is-finished{
+    margin:0!important;
+    font-size:11px!important;
+    line-height:1.15!important;
+    font-weight:750!important;
+    color:#303846!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-odds{
+    margin:0!important;
+    border:1px solid rgba(40,57,88,.055)!important;
+    border-radius:13px!important;
+    background:#f8f9fb!important;
+    overflow:hidden!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head,
+  .qc-football-page .jc-football-card .jc-mini-row{
+    display:grid!important;
+    grid-template-columns:1.42fr .68fr .68fr .68fr!important;
+    align-items:center!important;
+    column-gap:3px!important;
+    padding:0 9px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-head{
+    min-height:31px!important;
+    font-size:10px!important;
+    font-weight:800!important;
+    color:#707b8f!important;
+    background:#f2f4f7!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row{
+    min-height:36px!important;
+    font-size:11px!important;
+    border-top:1px solid rgba(54,68,96,.045)!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-mini-row strong{
+    font-size:12px!important;
+    font-weight:850!important;
+    text-align:center!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-play-tag{
+    min-width:0!important;
+    font-size:10px!important;
+    line-height:1.15!important;
+    font-weight:850!important;
+    white-space:normal!important;
+  }
+
+  /* Guest overview is intentionally clean: no detail/all-markets CTA. */
+  .qc-football-page .jc-football-card.jc-card-guest .jc-card-detail-btn{
+    display:none!important;
+  }
+
+  .qc-football-page .jc-football-card.jc-card-auth .jc-card-detail-btn{
+    margin:8px 0 0!important;
+    min-height:30px!important;
+    font-size:11px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-prematch-lock{
+    margin-top:auto!important;
+    min-height:46px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    padding:10px 12px!important;
+    border:1px solid rgba(55,71,105,.055)!important;
+    border-radius:13px!important;
+    background:#f3f5f8!important;
+    color:#465064!important;
+    font-size:12px!important;
+    font-weight:850!important;
+    text-align:center!important;
+  }
+
+  /* Keep current post-match "赛前预测命中", but visually attach it to the card bottom. */
+  .qc-football-page .jc-football-card .jc-card-hit-play{
+    margin-top:auto!important;
+    padding-top:9px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-title{
+    font-size:10px!important;
+    font-weight:900!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-items{
+    gap:5px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-chip{
+    min-height:27px!important;
+    padding:4px 7px!important;
+    border-radius:999px!important;
+  }
+}
+
+/* Mobile/tablet visuals stay on their existing card system. */
+@media (max-width:1023px){
+  .qc-football-page .jc-football-card.jc-card-guest .jc-card-detail-btn{
+    display:flex;
+  }
+}

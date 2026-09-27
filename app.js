@@ -951,7 +951,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
     const centerScore=score.current?qcEscape(score.current):'VS';
     const centerStateClass=score.finished?' is-finished':(score.started?' is-live':'');
 
-    return '<article class="jc-football-card jc-football-card-lite jc-football-card-final" data-match-id="'+qcEscape(m.id)+'">'+
+    return '<article class="jc-football-card jc-football-card-lite jc-football-card-final '+(access?.loggedIn?'jc-card-auth':'jc-card-guest')+'" data-match-id="'+qcEscape(m.id)+'">'+
       '<a class="jc-card-link" href="'+href+'">'+
         '<div class="jc-card-top">'+
           '<span class="jc-card-top-left">'+
