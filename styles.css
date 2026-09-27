@@ -5123,3 +5123,48 @@ body.qc-ticker-authenticated .ticker{
     color:#ad7149!important;
   }
 }
+
+
+/* 2026-09-28 football team logos: desktop + mobile */
+.qc-football-page .jc-football-card .jc-team{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+}
+
+.qc-football-page .jc-football-card .jc-team-logo{
+  display:block;
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
+  object-fit:contain;
+  object-position:center;
+}
+
+.qc-football-page .jc-football-card .jc-team-name{
+  display:block;
+  max-width:100%;
+  line-height:1.22;
+  text-align:center;
+}
+
+@media (min-width:1024px){
+  .qc-football-page .jc-football-card .jc-team-logo{
+    width:34px;
+    height:34px;
+    flex-basis:34px;
+  }
+}
+
+@media (max-width:1023px){
+  .qc-football-page .jc-football-card .jc-team{
+    gap:4px!important;
+  }
+  .qc-football-page .jc-football-card .jc-team-logo{
+    width:28px;
+    height:28px;
+    flex-basis:28px;
+  }
+}

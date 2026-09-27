@@ -937,6 +937,41 @@ function jcFootballHitBlock(m,access){
   return '<div class="jc-card-after-odds">'+guestLock+'</div>';
 }
 
+const qcTeamLogoCache=new Map();
+
+async function jcAttachTeamLogos(rows){
+  if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
+  const names=[...new Set(rows.flatMap(m=>[m?.home_team_name,m?.away_team_name]).filter(Boolean))];
+  const missing=names.filter(name=>!qcTeamLogoCache.has(String(name)));
+  if(missing.length){
+    const {data,error}=await window.qcSupabase
+      .from('teams')
+      .select('name_zh,logo_url')
+      .in('name_zh',missing);
+    if(error){
+      console.warn('读取球队队徽缓存失败',error);
+    }else{
+      const found=new Map((data||[]).map(x=>[String(x.name_zh),String(x.logo_url||'')]));
+      missing.forEach(name=>qcTeamLogoCache.set(String(name),found.get(String(name))||''));
+    }
+  }
+  rows.forEach(m=>{
+    m._homeLogoUrl=qcTeamLogoCache.get(String(m.home_team_name||''))||'';
+    m._awayLogoUrl=qcTeamLogoCache.get(String(m.away_team_name||''))||'';
+  });
+  return rows;
+}
+
+function jcTeamInnerHtml(m,side){
+  const isHome=side==='home';
+  const name=isHome?m?.home_team_name:m?.away_team_name;
+  const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
+  return (logo
+    ? '<img class="jc-team-logo" src="'+qcEscape(logo)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">'
+    : '')+
+    '<span class="jc-team-name">'+qcEscape(name||'—')+'</span>';
+}
+
 function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
@@ -960,12 +995,12 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<time>'+qcEscape(String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5))+'</time>'+
         '</div>'+
         '<div class="jc-card-score-axis">'+
-          '<strong class="jc-team jc-team-home">'+qcEscape(m.home_team_name||'—')+'</strong>'+
+          '<strong class="jc-team jc-team-home">'+jcTeamInnerHtml(m,'home')+'</strong>'+
           '<span class="jc-score-center">'+
             '<b class="jc-score-main'+centerStateClass+'">'+centerScore+'</b>'+
             '<small class="jc-score-meta'+centerStateClass+'">'+qcEscape(centerMeta)+'</small>'+
           '</span>'+
-          '<strong class="jc-team away-team jc-team-away">'+qcEscape(m.away_team_name||'—')+'</strong>'+
+          '<strong class="jc-team away-team jc-team-away">'+jcTeamInnerHtml(m,'away')+'</strong>'+
         '</div>'+
         oddsMini+
         cardCta+
@@ -981,6 +1016,10 @@ function jcPatchFootballExtras(root,rows,access){
   $$('.jc-football-card[data-match-id]',root).forEach(card=>{
     const m=byId.get(String(card.dataset.matchId||''));
     if(!m) return;
+    const home=$('.jc-team-home',card);
+    const away=$('.jc-team-away',card);
+    if(home) home.innerHTML=jcTeamInnerHtml(m,'home');
+    if(away) away.innerHTML=jcTeamInnerHtml(m,'away');
     const odds=$('.jc-mini-odds',card);
     if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
     const hit=$('.jc-card-after-odds',card);
@@ -1393,7 +1432,8 @@ async function loadJcFootball(){
     const snapshotRows=rows;
     await Promise.all([
       snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows),
-      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows)
+      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows),
+      jcAttachTeamLogos(rows)
     ]);
     if(token!==loadToken || selectedDate!==ds) return;
     jcPatchFootballExtras(cards,rows,access);
