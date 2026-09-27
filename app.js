@@ -3727,6 +3727,25 @@ async function setupFootballLoginBar(){
   });
 }
 
+
+async function setupAuthTickerVisibility(){
+  const ticker=$('.ticker');
+  if(!ticker || !window.qcSupabase) return;
+
+  const apply=session=>{
+    document.body.classList.toggle('qc-ticker-authenticated',Boolean(session));
+  };
+
+  document.body.classList.remove('qc-ticker-authenticated');
+
+  const {data,error}=await window.qcSupabase.auth.getSession();
+  apply(!error && data ? data.session : null);
+
+  window.qcSupabase.auth.onAuthStateChange((_event,session)=>{
+    apply(session);
+  });
+}
+
 async function setupDesktopAccountNav(){
   if(!window.qcSupabase) return;
 
@@ -4481,6 +4500,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('auth',()=>setupDemoAuth());
   safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
+  safe('auth-ticker',()=>setupAuthTickerVisibility());
   safe('desktop-account-nav',()=>setupDesktopAccountNav());
   safe('football-login-bar',()=>setupFootballLoginBar());
   safe('profile',()=>setupProfile());

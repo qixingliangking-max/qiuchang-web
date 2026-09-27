@@ -3831,3 +3831,12 @@ body.qc-modal-open{overflow:hidden}
     pointer-events:none!important;
   }
 }
+
+
+/* 2026-09-27 ticker visibility follows login state on desktop and mobile */
+.ticker{
+  display:none!important;
+}
+body.qc-ticker-authenticated .ticker{
+  display:flex!important;
+}
