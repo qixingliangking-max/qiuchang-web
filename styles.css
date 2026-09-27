@@ -4476,3 +4476,31 @@ body.qc-ticker-authenticated .ticker{
     display:flex;
   }
 }
+
+
+/* 2026-09-27 desktop football card polish v2 */
+@media (min-width:1024px){
+  .qc-football-page .jc-football-card{
+    min-height:350px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top-meta em{
+    color:#5f6b7d!important;
+    font-size:12px!important;
+    font-weight:800!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-top time{
+    color:#727d90!important;
+    font-size:12px!important;
+    font-weight:750!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-prematch-lock{
+    margin-top:9px!important;
+  }
+
+  .qc-football-page .jc-football-card .jc-card-hit-play{
+    margin-top:9px!important;
+  }
+}
