@@ -1339,15 +1339,18 @@ async function loadJcFootball(){
       '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+qcEscape(item.label)+'</button>'
     ).join('');
 
-    $('button',inlineLeagueTabs).forEach(btn=>{
-      btn.onclick=e=>{
+    if(!inlineLeagueTabs.dataset.bound){
+      inlineLeagueTabs.dataset.bound='1';
+      inlineLeagueTabs.addEventListener('click',e=>{
+        const btn=e.target.closest('button[data-league]');
+        if(!btn || !inlineLeagueTabs.contains(btn)) return;
         e.preventDefault();
         e.stopPropagation();
         activeLeague=btn.dataset.league||'全部';
         closeLeague();
         render();
-      };
-    });
+      });
+    }
   }
 
   async function hydrateFootballRows(rows,ds,token){
