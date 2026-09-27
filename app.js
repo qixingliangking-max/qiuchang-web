@@ -3614,6 +3614,167 @@ async function setupAuthNav(){
   }
 }
 
+
+function qcEnsureDesktopRedeemModal(){
+  let modal=$('#qcDesktopRedeemModal');
+  if(modal) return modal;
+
+  modal=document.createElement('div');
+  modal.id='qcDesktopRedeemModal';
+  modal.className='qc-redeem-modal';
+  modal.hidden=true;
+  modal.innerHTML=
+    '<div class="qc-redeem-dialog" role="dialog" aria-modal="true" aria-labelledby="qcRedeemTitle">'+
+      '<button class="qc-redeem-close" type="button" id="qcRedeemClose" aria-label="关闭">×</button>'+
+      '<div class="qc-redeem-title" id="qcRedeemTitle"><span>🎟</span><div><strong>激活兑换码</strong><small>输入兑换码，立即开通或延长会员权益</small></div></div>'+
+      '<form id="qcDesktopRedeemForm">'+
+        '<label for="qcDesktopRedeemCode">兑换码</label>'+
+        '<input id="qcDesktopRedeemCode" autocomplete="off" placeholder="请输入兑换码">'+
+        '<button class="qc-redeem-submit" type="submit">立即激活</button>'+
+        '<div id="qcDesktopRedeemHint" class="code-hint"></div>'+
+      '</form>'+
+    '</div>';
+  document.body.appendChild(modal);
+
+  const close=()=>{
+    modal.hidden=true;
+    document.body.classList.remove('qc-modal-open');
+  };
+  const open=()=>{
+    modal.hidden=false;
+    document.body.classList.add('qc-modal-open');
+    setTimeout(()=>$('#qcDesktopRedeemCode')?.focus(),30);
+  };
+  modal._qcOpen=open;
+  modal._qcClose=close;
+
+  $('#qcRedeemClose',modal).onclick=close;
+  modal.onclick=e=>{if(e.target===modal) close();};
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape' && !modal.hidden) close();
+  });
+
+  const form=$('#qcDesktopRedeemForm',modal);
+  form.onsubmit=async e=>{
+    e.preventDefault();
+    const input=$('#qcDesktopRedeemCode',modal);
+    const hint=$('#qcDesktopRedeemHint',modal);
+    const button=form.querySelector('button[type="submit"]');
+    const code=(input?.value||'').trim();
+    if(!code){
+      hint.textContent='请输入兑换码。';
+      hint.className='code-hint error';
+      input?.focus();
+      return;
+    }
+
+    button.disabled=true;
+    button.textContent='激活中…';
+    hint.textContent='正在验证兑换码…';
+    hint.className='code-hint';
+
+    const {data,error}=await window.qcSupabase.rpc('redeem_membership',{p_code:code});
+
+    button.disabled=false;
+    button.textContent='立即激活';
+
+    if(error){
+      const raw=String(error.message||'');
+      let message='兑换失败，请检查兑换码';
+      if(raw.includes('INVALID_CODE')) message='兑换码不存在';
+      if(raw.includes('CODE_ALREADY_USED')) message='这个兑换码已经使用过';
+      if(raw.includes('NOT_AUTHENTICATED')) message='登录状态已失效，请重新登录';
+      hint.textContent=message;
+      hint.className='code-hint error';
+      return;
+    }
+
+    input.value='';
+    const expiry=data?.expires_at
+      ? new Date(data.expires_at).toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})
+      : '';
+    hint.textContent=expiry?'激活成功，有效期至 '+expiry+'。':'激活成功，会员权益已更新。';
+    hint.className='code-hint success';
+
+    if(typeof qcAccessStatePromise!=='undefined') qcAccessStatePromise=null;
+    setTimeout(()=>{
+      close();
+      if($('#jcLiveCards')) loadJcFrontend();
+      else if($('#jcFootballCards')) loadJcFootball();
+      else if($('#jcMatchDetailRoot')) setupJcMatchDetail();
+    },900);
+  };
+
+  return modal;
+}
+
+async function setupDesktopAccountNav(){
+  if(!window.qcSupabase) return;
+
+  const login=$('#desktopLogin');
+  const redeem=$('#desktopRedeem');
+  const account=$('#desktopAccount');
+  const logout=$('#desktopLogout');
+  const divider=$('#desktopAccountDivider');
+  if(!login && !redeem && !account && !logout) return;
+
+  const setLoggedOut=()=>{
+    if(login) login.hidden=false;
+    if(redeem) redeem.hidden=true;
+    if(account) account.hidden=true;
+    if(logout) logout.hidden=true;
+    if(divider) divider.hidden=false;
+  };
+
+  const {data,error}=await window.qcSupabase.auth.getSession();
+  const session=!error && data ? data.session : null;
+  if(!session){
+    setLoggedOut();
+    return;
+  }
+
+  if(login) login.hidden=true;
+  if(redeem) redeem.hidden=false;
+  if(account) account.hidden=false;
+  if(logout) logout.hidden=false;
+  if(divider) divider.hidden=false;
+
+  const email=session.user?.email||'';
+  let name=email ? email.split('@')[0] : '个人中心';
+  try{
+    const {data:profile}=await window.qcSupabase
+      .from('profiles')
+      .select('nickname')
+      .eq('id',session.user.id)
+      .maybeSingle();
+    const nickname=String(profile?.nickname||'').trim();
+    if(nickname) name=nickname;
+  }catch(err){
+    console.warn('顶部昵称读取失败',err);
+  }
+
+  if(account){
+    account.textContent=name;
+    account.title='进入个人中心';
+  }
+
+  if(redeem){
+    redeem.onclick=()=>{
+      const modal=qcEnsureDesktopRedeemModal();
+      modal._qcOpen?.();
+    };
+  }
+
+  if(logout){
+    logout.onclick=async()=>{
+      logout.disabled=true;
+      logout.textContent='退出中…';
+      await window.qcSupabase.auth.signOut();
+      location.href='index.html';
+    };
+  }
+}
+
 async function setupProfile(){
   const root = $('#profileRoot');
   if(!root) return;
@@ -4301,6 +4462,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('auth',()=>setupDemoAuth());
   safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
+  safe('desktop-account-nav',()=>setupDesktopAccountNav());
   safe('profile',()=>setupProfile());
   safe('admin',()=>setupAdmin());
   safe('admin-users',()=>setupAdminUsers());
