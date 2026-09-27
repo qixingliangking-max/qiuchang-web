@@ -931,7 +931,7 @@ function jcFootballHitBlock(m,access){
   if(score.finished){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
-    return '<div class="jc-card-after-odds">'+hit+guestLock+'</div>';
+    return '<div class="jc-card-after-odds">'+guestLock+hit+'</div>';
   }
 
   return '<div class="jc-card-after-odds">'+guestLock+'</div>';
