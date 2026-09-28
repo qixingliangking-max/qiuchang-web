@@ -2588,8 +2588,8 @@ function jcRenderAiPanel(m,pools,model,analysis){
 
   let analysisHtml='';
   if(analysis?.status==='ready'){
-    const logicText=model
-      ? '当前锁定数据为：模型方向「'+directionText+'」，单选倾向「'+singleText+'」，让球保护「'+handicapText+'」，半全场「'+htftText+'」，总进球「'+goalsText+'」，TOP「'+topText+'」。这些结果放在同一条比赛路径中理解，不再拆成多个独立说明卡片。'
+    const fallbackLogic=model
+      ? '模型方向、单选倾向、让球保护、半全场、总进球与TOP需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
       : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
 
     const sections=[
@@ -2606,7 +2606,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
       },
       {
         title:'二、方向为什么选择「'+directionText+'」',
-        body:aiParagraphs([analysis.summary,analysis.market_movement])
+        body:aiParagraphs([analysis.summary])
       },
       {
         title:'三、单选为什么选择「'+singlePickText+'」',
@@ -2614,7 +2614,10 @@ function jcRenderAiPanel(m,pools,model,analysis){
       },
       {
         title:'四、六项数据的逻辑关系',
-        body:'<p>'+qcEscape(logicText)+'</p>'
+        body:aiParagraphs([
+          analysis.market_movement,
+          analysis.logic_relation||fallbackLogic
+        ])
       },
       {
         title:'五、比赛路径与风险',
@@ -2798,7 +2801,7 @@ async function jcFetchDetailFastData(id,access,force=false){
 
   const aiPromise=canViewPremium
     ? window.qcSupabase.from('jc_match_ai_analysis')
-      .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+      .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,logic_relation,match_path,comprehensive_observation,risk_factors,generator,generated_at')
       .eq('jc_match_id',id)
       .order('generated_at',{ascending:false})
       .limit(1)
