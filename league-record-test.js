@@ -214,7 +214,7 @@
       box.hidden=true;
     };
 
-    $('.qc-league-team-row',box).forEach(btn=>{
+    $$('.qc-league-team-row',box).forEach(btn=>{
       btn.onclick=()=>{
         const teamName=String(btn.dataset.teamName||'');
         const item=btn.closest('.qc-league-team-item');
@@ -222,7 +222,7 @@
         if(!item||!detail) return;
         const wasOpen=!detail.hidden;
 
-        $('.qc-league-team-item.is-open',box).forEach(other=>{
+        $$('.qc-league-team-item.is-open',box).forEach(other=>{
           if(other!==item){
             other.classList.remove('is-open');
             const otherDetail=other.querySelector('.qc-team-detail');
