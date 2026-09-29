@@ -24,18 +24,14 @@
     return v==null?'—':Number(v).toFixed(d);
   }
 
-  function outcomePctTriplet(stat){
-    const counts=[
-      Number(stat?.home_wins||0),
-      Number(stat?.draws||0),
-      Number(stat?.away_wins||0)
-    ];
-    const total=counts.reduce((a,b)=>a+b,0);
-    if(!total) return ['—','—','—'];
+  function pctPartition(counts){
+    const nums=(counts||[]).map(v=>Math.max(0,Number(v||0)));
+    const total=nums.reduce((a,b)=>a+b,0);
+    if(!total) return nums.map(()=> '—');
 
-    // Allocate tenths with the largest-remainder method so the three
-    // displayed percentages always add up to exactly 100.0%.
-    const exact=counts.map(n=>n/total*1000);
+    // Allocate tenths with the largest-remainder method so a complete
+    // probability partition always displays as exactly 100.0%.
+    const exact=nums.map(n=>n/total*1000);
     const units=exact.map(Math.floor);
     let left=1000-units.reduce((a,b)=>a+b,0);
     const order=exact.map((v,i)=>({i,rem:v-units[i]}))
@@ -43,6 +39,14 @@
     for(let k=0;k<left;k++) units[order[k%order.length].i]++;
 
     return units.map(u=>(u/10).toFixed(1)+'%');
+  }
+
+  function outcomePctTriplet(stat){
+    return pctPartition([
+      stat?.home_wins,
+      stat?.draws,
+      stat?.away_wins
+    ]);
   }
 
   function latestStatsByCompetition(stats){
@@ -77,17 +81,16 @@
 
   function goalDistributionHtml(stat){
     if(!stat) return '';
-    const total=Number(stat.matches_played||0);
     const items=[
       ['0球',stat.goals_0],['1球',stat.goals_1],['2球',stat.goals_2],['3球',stat.goals_3],
       ['4球',stat.goals_4],['5球',stat.goals_5],['6球',stat.goals_6],['7+球',stat.goals_7_plus]
     ];
+    const pcts=pctPartition(items.map(([,count])=>count));
     return '<div class="qc-league-goals">'+
       '<div class="qc-league-goals-title"><strong>总进球分布</strong><span>场次 / 占比</span></div>'+
-      '<div class="qc-league-goals-grid">'+items.map(([label,count])=>{
+      '<div class="qc-league-goals-grid">'+items.map(([label,count],i)=>{
         const n=Number(count||0);
-        const pct=total?((n/total)*100).toFixed(1)+'%':'—';
-        return '<div class="qc-league-goal-cell"><small>'+esc(label)+'</small><b>'+n+'场</b><em>'+pct+'</em></div>';
+        return '<div class="qc-league-goal-cell"><small>'+esc(label)+'</small><b>'+n+'场</b><em>'+pcts[i]+'</em></div>';
       }).join('')+'</div>'+
     '</div>';
   }
@@ -113,19 +116,14 @@
   function teamGoalDistributionHtml(dist){
     if(!dist) return '';
     const items=[
-      ['0球',dist.goals_0_count,dist.goals_0_pct],
-      ['1球',dist.goals_1_count,dist.goals_1_pct],
-      ['2球',dist.goals_2_count,dist.goals_2_pct],
-      ['3球',dist.goals_3_count,dist.goals_3_pct],
-      ['4球',dist.goals_4_count,dist.goals_4_pct],
-      ['5球',dist.goals_5_count,dist.goals_5_pct],
-      ['6球',dist.goals_6_count,dist.goals_6_pct],
-      ['7+球',dist.goals_7_plus_count,dist.goals_7_plus_pct]
+      ['0球',dist.goals_0_count],['1球',dist.goals_1_count],['2球',dist.goals_2_count],['3球',dist.goals_3_count],
+      ['4球',dist.goals_4_count],['5球',dist.goals_5_count],['6球',dist.goals_6_count],['7+球',dist.goals_7_plus_count]
     ];
+    const pcts=pctPartition(items.map(([,count])=>count));
     return '<div class="qc-team-feature">'+
       '<div class="qc-team-feature-title"><strong>球队总进球分布</strong><span>球队参与比赛的全场总进球｜N='+Number(dist.sample_size||0)+'</span></div>'+
-      '<div class="qc-team-goal-grid">'+items.map(([label,count,pct])=>
-        '<div class="qc-team-goal-item"><small>'+label+'</small><b>'+Number(count||0)+'场</b><em>'+(pct==null?'—':Number(pct).toFixed(1)+'%')+'</em></div>'
+      '<div class="qc-team-goal-grid">'+items.map(([label,count],i)=>
+        '<div class="qc-team-goal-item"><small>'+label+'</small><b>'+Number(count||0)+'场</b><em>'+pcts[i]+'</em></div>'
       ).join('')+'</div>'+
     '</div>';
   }
