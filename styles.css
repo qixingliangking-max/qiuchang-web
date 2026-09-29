@@ -776,13 +776,13 @@ body{min-height:100vh}
 .jc-card-login-btn span{font-size:12px}
 
 @media(max-width:760px){
-  .qc-site-header{height:68px!important;padding:0 14px!important}
+  .qc-site-header{height:66px!important;padding:0 14px!important}
   .qc-brand-line{gap:6px!important}
   .qc-brand-line .qc-brand-main{font-size:19px!important}
   .qc-brand-line .qc-brand-sep{font-size:15px!important}
   .qc-brand-line .qc-brand-sub{font-size:13px!important;display:inline!important;margin:0!important}
   .qc-site-header .menu-btn{width:42px!important;height:42px!important}
-  .drawer{top:68px!important}
+  .drawer{top:66px!important}
   .jc-football-card-lite .jc-card-link{padding:15px 14px 12px}
   .jc-card-model-lite{gap:4px}
   .jc-card-model-lite span{font-size:10px}
