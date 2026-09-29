@@ -1795,7 +1795,7 @@ async function loadJcFrontend(){
     }
   }
 
-  async function hydrateOverviewRows(rows,ds,token){
+  async function hydrateOverviewRows(rows,ds,token,patchDom=true){
     const modelRows=modelRowsForBundle(rows,ds);
     const pendingModels=modelRows.filter(m=>!m._jcModelsLoaded);
 
@@ -1811,8 +1811,10 @@ async function loadJcFrontend(){
 
     if(token!==loadToken || selectedDate!==ds) return;
     modelsLoaded=true;
-    jcPatchOverviewPredictionCells(cards,rows);
-    jcPatchOverviewPredictionCells(reviewCards,rows);
+    if(patchDom){
+      jcPatchOverviewPredictionCells(cards,rows);
+      jcPatchOverviewPredictionCells(reviewCards,rows);
+    }
 
     const previousDate=qcAddDays(ds,-1);
     const previousRows=rows.filter(m=>jcBusinessDate(m)===previousDate);
@@ -1890,19 +1892,13 @@ async function loadJcFrontend(){
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
 
-    const modelRows=modelRowsForBundle(allRows,ds);
-    modelRows.filter(m=>!m._jcModelsLoaded).forEach(m=>{
-      m._jcModelsLoading=true;
-      m._jcModelLoadFailed=false;
-    });
-
+    // Prepare locked model + market data before painting the new date.
+    // This restores the one-pass first paint: no visible "加载中" cells.
+    await hydrateOverviewRows(allRows,ds,token,false);
+    if(token!==loadToken || selectedDate!==ds) return;
     render();
-    // Finish prediction hydration before the dynamic score overlay. Running
-    // both concurrently can replace hydrated rows with match-only rows and
-    // make the prediction columns fall back to "加载中".
-    hydrateOverviewRows(allRows,ds,token)
-      .then(()=>refreshOverviewDynamicState(ds,token))
-      .catch(err=>console.warn('速览补充数据失败',err));
+    refreshOverviewDynamicState(ds,token)
+      .catch(err=>console.warn('速览动态比分补充失败',err));
     primeOverviewNeighbors(ds);
   }
 
@@ -2011,17 +2007,13 @@ async function loadJcFrontend(){
   });
 
   const initialToken=++loadToken;
-  const initialModels=modelRowsForBundle(allRows,selectedDate);
-  initialModels.filter(m=>!m._jcModelsLoaded).forEach(m=>{
-    m._jcModelsLoading=true;
-    m._jcModelLoadFailed=false;
-  });
+  // First entry waits for the locked model bundle, then paints once.
+  // Keep the existing booting shell until everything needed by the table is ready.
+  await hydrateOverviewRows(allRows,selectedDate,initialToken,false);
+  if(initialToken!==loadToken) return;
   render();
-  // Initial entry uses the same serialized hydration -> score overlay order as
-  // date switching, for both guests and Pro users.
-  hydrateOverviewRows(allRows,selectedDate,initialToken)
-    .then(()=>refreshOverviewDynamicState(selectedDate,initialToken))
-    .catch(err=>console.warn('速览补充数据失败',err));
+  refreshOverviewDynamicState(selectedDate,initialToken)
+    .catch(err=>console.warn('速览动态比分补充失败',err));
   if(access.isPro){
     qcPrimeProOverviewSnapshots().then(()=>{
       // If the initial day was loaded conventionally, the protected snapshot is now warm for the next visit.
