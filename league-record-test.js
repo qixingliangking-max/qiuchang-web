@@ -92,7 +92,7 @@
   }
 
   async function showDetail(comp,stat){
-    const card=$('.qc-league-card[data-comp-id="'+CSS.escape(String(comp.id))+'"]');
+    const card=$('.qc-league-card').find(x=>String(x.dataset.compId||'')===String(comp.id));
     const box=card?.querySelector('[data-inline-detail]');
     if(!card||!box) return;
 
