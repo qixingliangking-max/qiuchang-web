@@ -58,10 +58,25 @@
     .qc-league-goal-cell b{display:block;margin-top:3px;color:#27344d;font-size:13px}
     .qc-league-goal-cell em{display:block;margin-top:2px;color:#96a0b0;font-size:9px;font-style:normal}
     .qc-league-team-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
-    .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(6,48px);align-items:center;border:1px solid #edf1f5;border-radius:10px;overflow:hidden}
+    .qc-league-team-item{border:1px solid #edf1f5;border-radius:10px;overflow:hidden;background:#fff}
+    .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(6,48px);align-items:center;width:100%;border:0;background:#fff;color:inherit;padding:0;text-align:inherit;cursor:pointer}
     .qc-league-team-row>div{padding:9px 7px;text-align:center;border-left:1px solid #f0f3f6;font-size:11px}
     .qc-league-team-row>div:first-child{border-left:0;text-align:left;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .qc-league-team-row small{display:block;color:#95a0b1;font-size:8px;margin-bottom:2px}
+    .qc-league-team-item.is-open{border-color:#cbd8eb;box-shadow:0 3px 10px rgba(31,42,68,.05)}
+    .qc-league-team-item.is-open .qc-league-team-row{background:#f9fbfe}
+    .qc-team-detail{border-top:1px solid #edf1f5;background:#fbfcfe;padding:10px}
+    .qc-team-detail[hidden]{display:none}
+    .qc-team-detail-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .qc-team-detail-title strong{font-size:12px;color:#35435b}
+    .qc-team-detail-title span{font-size:9px;color:#98a2b2}
+    .qc-team-detail-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+    .qc-team-split{border:1px solid #e9edf3;border-radius:9px;background:#fff;padding:8px;min-width:0}
+    .qc-team-split>strong{display:block;font-size:10px;color:#55647b;margin-bottom:6px}
+    .qc-team-split-line{display:flex;justify-content:space-between;gap:6px;font-size:9px;color:#8a95a7;line-height:1.55}
+    .qc-team-split-line b{color:#2d3a52;font-size:10px;font-weight:850}
+    .qc-team-detail-foot{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+    .qc-team-detail-foot span{font-size:9px;color:#6f7d92;background:#eef2f7;border-radius:6px;padding:4px 6px;font-weight:800}
     .qc-league-gate,.qc-league-loading{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:38px 20px;text-align:center;color:#66748b;margin-top:18px}
     .qc-league-gate h2{margin:0 0 8px;color:#26344d}
     .qc-league-gate a{display:inline-flex;margin-top:14px;background:#263d66;color:#fff;text-decoration:none;border-radius:10px;padding:10px 16px;font-weight:850}
@@ -80,6 +95,10 @@
       .qc-league-team-list{grid-template-columns:1fr;padding:9px}
       .qc-league-team-row{grid-template-columns:minmax(0,1fr) repeat(6,42px)}
       .qc-league-team-row>div{padding:8px 5px;font-size:10px}
+      .qc-team-detail{padding:8px}
+      .qc-team-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+      .qc-team-split{padding:7px}
+      .qc-team-split:first-child{grid-column:1/-1}
       .qc-site-header{height:54px!important;padding:0 14px!important}
       .qc-brand-line{gap:5px!important}
       .qc-brand-line .qc-brand-main{font-size:19px!important;line-height:1!important}
@@ -138,6 +157,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20260930overviewfirstpaint26"></script>
-<script src="league-record-test.js?v=20260930league5"></script>
+<script src="league-record-test.js?v=20260930teamdetail1"></script>
 </body>
 </html>
