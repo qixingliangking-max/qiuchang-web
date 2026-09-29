@@ -88,7 +88,42 @@
     '</div>';
   }
 
-  function teamDetailHtml(t,recentMap){
+  function buildTeamScoreMap(matches){
+    const out=new Map();
+    const add=(team,gf,ga)=>{
+      const name=String(team||'').trim();
+      if(!name || gf==null || ga==null) return;
+      const score=Number(gf)+'-'+Number(ga);
+      if(!out.has(name)) out.set(name,new Map());
+      const scores=out.get(name);
+      scores.set(score,(scores.get(score)||0)+1);
+    };
+    (matches||[]).forEach(m=>{
+      if(m.ft_home==null || m.ft_away==null) return;
+      add(m.home_team_name,m.ft_home,m.ft_away);
+      add(m.away_team_name,m.ft_away,m.ft_home);
+    });
+    return out;
+  }
+
+  function highFreqScoreHtml(team,played,scoreMap){
+    const total=Number(played||0);
+    const scores=scoreMap||new Map();
+    const top=[...scores.entries()]
+      .sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0],'zh-CN',{numeric:true}))
+      .slice(0,3);
+    if(!top.length) return '';
+    const title=total<10?'当前样本高频比分':'高频比分 TOP3';
+    return '<div class="qc-team-score-frequency">'+
+      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜'+total+'场样本</span></div>'+
+      '<div class="qc-team-score-grid">'+top.map(([score,count],idx)=>{
+        const pct=total?((Number(count)/total)*100).toFixed(1)+'%':'—';
+        return '<div class="qc-team-score-item"><small>TOP'+(idx+1)+'</small><b>'+esc(score)+'</b><em>'+count+'次｜'+pct+'</em></div>';
+      }).join('')+'</div>'+
+    '</div>';
+  }
+
+  function teamDetailHtml(t,recentMap,scoreMap){
     const r5=recentMap.get('5')||null;
     const r10=recentMap.get('10')||null;
     const overallExtra=
@@ -110,7 +145,8 @@
         recentBox('近5场',r5)+
         recentBox('近10场',r10)+
       '</div>'+
-      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近期5/10场</span></div>';
+      highFreqScoreHtml(t.team_name,t.played,scoreMap)+
+      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近期5/10场</span><span>高频比分</span></div>';
   }
 
   function teamHtml(t){
@@ -176,7 +212,7 @@
       return;
     }
 
-    const [teamRes,recentRes]=await Promise.all([
+    const [teamRes,recentRes,matchRes]=await Promise.all([
       window.qcSupabase.from('league_team_stats')
         .select('team_name,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,home_played,home_wins,home_draws,home_losses,home_goals_for,home_goals_against,away_played,away_wins,away_draws,away_losses,away_goals_for,away_goals_against')
         .eq('competition_id',comp.id).eq('season',stat.season)
@@ -184,12 +220,16 @@
       window.qcSupabase.from('league_recent_stats')
         .select('team_name,window_size,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,over_25_matches')
         .eq('competition_id',comp.id).eq('season',stat.season)
-        .in('window_size',[5,10])
+        .in('window_size',[5,10]),
+      window.qcSupabase.from('league_matches')
+        .select('home_team_name,away_team_name,ft_home,ft_away')
+        .eq('competition_id',comp.id).eq('season',stat.season)
+        .eq('status','finished')
     ]);
 
     if(box.hidden || !card.classList.contains('is-open')) return;
 
-    if(teamRes.error || recentRes.error){
+    if(teamRes.error || recentRes.error || matchRes.error){
       box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">球队数据读取失败。</div>';
       $('.qc-league-detail-close',box).onclick=()=>{
         card.classList.remove('is-open');
@@ -205,6 +245,7 @@
       if(!recentByTeam.has(key)) recentByTeam.set(key,new Map());
       recentByTeam.get(key).set(String(r.window_size),r);
     });
+    const scoresByTeam=buildTeamScoreMap(matchRes.data||[]);
 
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜'+esc(stat.season)+'球队数据</strong><button class="qc-league-detail-close" type="button">收起</button></div>'+
       goalDistributionHtml(stat)+
@@ -240,7 +281,7 @@
         if(!team) return;
         item.classList.add('is-open');
         detail.hidden=false;
-        detail.innerHTML=teamDetailHtml(team,recentByTeam.get(teamName)||new Map());
+        detail.innerHTML=teamDetailHtml(team,recentByTeam.get(teamName)||new Map(),scoresByTeam.get(teamName)||new Map());
       };
     });
   }
