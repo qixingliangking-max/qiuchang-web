@@ -48,6 +48,15 @@
     .qc-league-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;background:#f9fbfe;border-bottom:1px solid #edf1f5}
     .qc-league-detail-head strong{font-size:17px}
     .qc-league-detail-close{border:0;background:#eef2f7;color:#5f6d83;border-radius:8px;height:30px;padding:0 10px;font-size:11px;font-weight:850}
+    .qc-league-goals{padding:12px;border-bottom:1px solid #edf1f5;background:#fff}
+    .qc-league-goals-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .qc-league-goals-title strong{font-size:13px;color:#35435b}
+    .qc-league-goals-title span{font-size:10px;color:#98a2b2}
+    .qc-league-goals-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+    .qc-league-goal-cell{background:#f7f9fc;border:1px solid #edf1f5;border-radius:9px;padding:8px 5px;text-align:center}
+    .qc-league-goal-cell small{display:block;color:#8d98aa;font-size:9px;font-weight:800}
+    .qc-league-goal-cell b{display:block;margin-top:3px;color:#27344d;font-size:13px}
+    .qc-league-goal-cell em{display:block;margin-top:2px;color:#96a0b0;font-size:9px;font-style:normal}
     .qc-league-team-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
     .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(5,52px);align-items:center;border:1px solid #edf1f5;border-radius:10px;overflow:hidden}
     .qc-league-team-row>div{padding:9px 7px;text-align:center;border-left:1px solid #f0f3f6;font-size:11px}
@@ -66,6 +75,8 @@
       .qc-league-card-head{padding:12px}
       .qc-league-core div{padding:10px 6px}
       .qc-league-core b{font-size:13px}
+      .qc-league-goals-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+      .qc-league-goal-cell{padding:7px 4px}
       .qc-league-team-list{grid-template-columns:1fr;padding:9px}
       .qc-league-team-row{grid-template-columns:minmax(0,1fr) repeat(5,46px)}
       .qc-league-team-row>div{padding:8px 5px;font-size:10px}
@@ -127,6 +138,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20260930overviewfirstpaint26"></script>
-<script src="league-record-test.js?v=20260930league2"></script>
+<script src="league-record-test.js?v=20260930league3"></script>
 </body>
 </html>
