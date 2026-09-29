@@ -36,7 +36,7 @@
 
   function cardHtml(c,stat){
     const ready=Boolean(stat&&Number(stat.matches_played)>0);
-    return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'">'+
+    return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'" data-comp-id="'+esc(c.id)+'">'+
       '<div class="qc-league-card-head">'+
         '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+(c.tier===1?'一级联赛':'二级联赛')+' · '+esc(cycleText(c))+'</small></div>'+
         '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+(ready?'已有数据':'待采集')+'</span>'+
@@ -48,6 +48,7 @@
         '<div><small>场均进球</small><b>'+(ready?esc(fmtNum(stat.avg_total_goals)):'—')+'</b></div>'+
       '</div>'+
       '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):'等待补齐本赛季全部比赛')+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
+      '<section class="qc-league-detail" data-inline-detail="'+esc(c.id)+'" hidden></section>'+
     '</article>';
   }
 
@@ -74,16 +75,39 @@
   }
 
   async function showDetail(comp,stat){
-    const box=$('#leagueDetail');
-    if(!box) return;
+    const card=$('.qc-league-card[data-comp-id="'+CSS.escape(String(comp.id))+'"]');
+    const box=card?.querySelector('[data-inline-detail]');
+    if(!card||!box) return;
+
+    const alreadyOpen=!box.hidden;
+    $('.qc-league-card.is-open').forEach(other=>{
+      if(other!==card){
+        other.classList.remove('is-open');
+        const otherBox=other.querySelector('[data-inline-detail]');
+        if(otherBox) otherBox.hidden=true;
+      }
+    });
+
+    if(alreadyOpen){
+      card.classList.remove('is-open');
+      box.hidden=true;
+      return;
+    }
+
+    card.classList.add('is-open');
     box.hidden=false;
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">正在读取球队数据…</div>';
-    $('.qc-league-detail-close',box).onclick=()=>{box.hidden=true;};
+    $('.qc-league-detail-close',box).onclick=()=>{
+      card.classList.remove('is-open');
+      box.hidden=true;
+    };
 
     if(!stat){
       box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">这个联赛还没有补入赛季比赛数据。</div>';
-      $('.qc-league-detail-close',box).onclick=()=>{box.hidden=true;};
-      box.scrollIntoView({behavior:'smooth',block:'start'});
+      $('.qc-league-detail-close',box).onclick=()=>{
+        card.classList.remove('is-open');
+        box.hidden=true;
+      };
       return;
     }
 
@@ -91,15 +115,24 @@
       .select('team_name,played,wins,draws,losses,goals_for,goals_against,home_played,home_wins,home_draws,home_losses,away_played,away_wins,away_draws,away_losses')
       .eq('competition_id',comp.id).eq('season',stat.season)
       .order('wins',{ascending:false});
+
+    if(box.hidden || !card.classList.contains('is-open')) return;
+
     if(error){
       box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">球队数据读取失败。</div>';
-      $('.qc-league-detail-close',box).onclick=()=>{box.hidden=true;};
+      $('.qc-league-detail-close',box).onclick=()=>{
+        card.classList.remove('is-open');
+        box.hidden=true;
+      };
       return;
     }
+
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜'+esc(stat.season)+'球队数据</strong><button class="qc-league-detail-close" type="button">收起</button></div>'+
       ((data||[]).length?'<div class="qc-league-team-list">'+data.map(teamHtml).join('')+'</div>':'<div class="qc-league-empty">暂时还没有球队统计。</div>');
-    $('.qc-league-detail-close',box).onclick=()=>{box.hidden=true;};
-    box.scrollIntoView({behavior:'smooth',block:'start'});
+    $('.qc-league-detail-close',box).onclick=()=>{
+      card.classList.remove('is-open');
+      box.hidden=true;
+    };
   }
 
   async function setup(){
