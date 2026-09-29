@@ -398,11 +398,8 @@
       }]));
       const readyCount=rows.filter(r=>Number(r.matches_played||0)>0).length;
 
-      $('#leagueSummary').innerHTML=
-        '<span>联赛 '+comps.length+' 个</span>'+
-        '<span>快照就绪 '+readyCount+' 个</span>'+
-        '<span>单联赛按需读取</span>'+
-        '<span>球队详情本地展开 · 0额外请求</span>';
+      const summary=$('#leagueSummary');
+      if(summary) summary.hidden=true;
 
       const regions=['全部','欧洲','北欧','亚洲','美洲'];
       root.innerHTML=
