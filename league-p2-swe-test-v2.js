@@ -199,6 +199,12 @@
     return v==null?'—':Number(v).toFixed(d);
   }
 
+  function p2Signed(v,d=2){
+    if(v==null) return '—';
+    const n=Number(v);
+    return (n>0?'+':'')+n.toFixed(d);
+  }
+
   function p2Wdl(w,d,l){
     return Number(w||0)+'/'+Number(d||0)+'/'+Number(l||0);
   }
@@ -208,6 +214,8 @@
     return '<div class="qc-p2-card">'+
       '<div class="qc-p2-card-title"><strong>'+esc(p2ScopeLabel(scope))+'</strong><span>N='+Number(row.sample_size||0)+'</span></div>'+
       '<div class="qc-p2-row"><span>xG / xGA</span><b>'+p2Num(row.xg_for_avg)+' / '+p2Num(row.xg_against_avg)+'</b></div>'+
+      '<div class="qc-p2-row"><span>G-xG 总 / 场均</span><b>'+p2Signed(row.g_minus_xg_total)+' / '+p2Signed(row.g_minus_xg_per_match)+'</b></div>'+
+      '<div class="qc-p2-row"><span>GA-xGA 总 / 场均</span><b>'+p2Signed(row.ga_minus_xga_total)+' / '+p2Signed(row.ga_minus_xga_per_match)+'</b></div>'+
       '<div class="qc-p2-row"><span>射门 / 射正</span><b>'+p2Num(row.shots_avg,1)+' / '+p2Num(row.shots_on_target_avg,1)+'</b></div>'+
       '<div class="qc-p2-row"><span>射正率 / 转化率</span><b>'+p2Num(row.shot_on_target_rate_pct,1)+'% / '+p2Num(row.goal_conversion_rate_pct,1)+'%</b></div>'+
       '<div class="qc-p2-row"><span>上半场 进/失</span><b>'+Number(row.first_half_goals_for||0)+' / '+Number(row.first_half_goals_against||0)+'</b></div>'+
@@ -226,7 +234,7 @@
     const scopes=data.scopes||{};
     const order=['season','home','away','last5','last10'];
     return '<section class="qc-p2-wrap">'+
-      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>瑞典超试点</span></div><em>真实xG / 射门 / 比赛事件</em></div>'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>瑞典超试点</span><span>P2_VALID</span></div><em>真实xG / 射门 / 比赛事件</em></div>'+
       '<div class="qc-p2-grid">'+order.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
     '</section>';
   }
