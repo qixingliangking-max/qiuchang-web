@@ -215,14 +215,19 @@
     const num=String(m.match_num||'—').replace(/^周[一二三四五六日天]/,'');
     const score=r.finished?r.ft:'VS';
     const sub=r.finished?(r.ht?'半 '+r.ht:'已完赛'):'待结算';
-    return '<div class="qc-record-match">'+
-      '<div class="qc-record-cell qc-record-num">'+esc(num)+'</div>'+
-      '<div class="qc-record-cell"><div class="qc-record-score"><strong>'+esc(score)+'</strong><small>'+esc(sub)+'</small></div></div>'+
-      '<div class="qc-record-cell qc-record-teams"><b>'+esc(m.home_team_name)+' vs '+esc(m.away_team_name)+'</b><span>'+esc(m.league_short_name||m.league_name||'')+'</span></div>'+
-      METRICS.map(([key,label])=>
-        '<div class="qc-record-cell"><div class="qc-record-pick"><small>'+esc(label)+'</small><b title="'+esc(displayPick(row,key))+'">'+esc(displayPick(row,key))+'</b>'+stateHtml(r.grade?.[key])+'</div></div>'
-      ).join('')+
-    '</div>';
+    const meta=[m.league_short_name||m.league_name||'',String(m.match_time||'').slice(0,5)].filter(Boolean).join(' · ');
+    return '<article class="qc-record-match-card">'+
+      '<div class="qc-record-match-head">'+
+        '<span class="qc-record-num-badge">'+esc(num)+'</span>'+
+        '<div class="qc-record-team-block"><b>'+esc(m.home_team_name)+' vs '+esc(m.away_team_name)+'</b><small>'+esc(meta)+'</small></div>'+
+        '<div class="qc-record-score-box"><strong>'+esc(score)+'</strong><small>'+esc(sub)+'</small></div>'+
+      '</div>'+
+      '<div class="qc-record-match-metrics">'+
+        METRICS.map(([key,label])=>
+          '<div class="qc-record-metric-item"><small>'+esc(label)+'</small><b>'+esc(displayPick(row,key))+'</b>'+stateHtml(r.grade?.[key])+'</div>'
+        ).join('')+
+      '</div>'+
+    '</article>';
   }
 
   function renderDays(rows){
@@ -240,7 +245,7 @@
       return '<section class="qc-record-day">'+
         '<div class="qc-record-day-head"><div class="qc-record-day-title"><strong>'+esc(ds.slice(5).replace('-','/'))+'</strong><span>锁板 '+dayRows.length+' 场 · 已结算 '+finished+' 场</span></div>'+
         '<div class="qc-record-day-stats">'+dayStatsHtml(dayRows)+'</div></div>'+
-        '<div>'+dayRows.map(matchRowHtml).join('')+'</div>'+
+        '<div class="qc-record-match-list">'+dayRows.map(matchRowHtml).join('')+'</div>'+
       '</section>';
     }).join('');
   }
