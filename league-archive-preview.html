@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=20260928logo1">
+  <title>球场档案｜联赛档案</title>
+  <link rel="stylesheet" href="styles.css?v=20260930leagueprod2">
+  <style>
+    body.qc-league-record-test{background:#f5f7fb;color:#1f2a44}
+    .qc-league-main{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
+    .qc-league-hero{background:linear-gradient(135deg,#fff,#f7f9fd);border:1px solid #e4e9f1;border-radius:18px;padding:22px 24px;box-shadow:0 5px 20px rgba(31,42,68,.04)}
+    .qc-league-hero h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-.02em}
+    .qc-league-hero p{margin:9px 0 0;color:#738097;font-size:14px;line-height:1.65}
+    .qc-league-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 10px}
+    .qc-league-region-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .qc-league-region-tabs::-webkit-scrollbar{display:none}
+    .qc-league-region-tabs button{flex:0 0 auto;border:1px solid #e1e7ef;background:#fff;color:#657289;height:34px;padding:0 12px;border-radius:9px;font-size:12px;font-weight:850;cursor:pointer}
+    .qc-league-region-tabs button.active{background:#edf3ff;color:#315fab;border-color:#bdd0f4}
+    .qc-league-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .qc-league-card{background:#fff;border:1px solid #e3e8ef;border-radius:15px;overflow:hidden;min-width:0}
+    .qc-league-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:14px 14px 11px;border-bottom:1px solid #eef1f5}
+    .qc-league-title{min-width:0}
+    .qc-league-title strong{display:block;font-size:16px;color:#27344d}
+    .qc-league-title small{display:block;margin-top:3px;color:#98a2b2;font-size:10px}
+    .qc-league-status{display:inline-flex;align-items:center;height:21px;padding:0 7px;border-radius:999px;font-size:9px;font-weight:900;white-space:nowrap}
+    .qc-league-status.ready{background:#e9f7ee;color:#238552}
+    .qc-league-status.wait{background:#f1f3f6;color:#8490a3}
+    .qc-league-core{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+    .qc-league-core div{padding:11px 8px;text-align:center;border-right:1px solid #f0f3f6}
+    .qc-league-core div:last-child{border-right:0}
+    .qc-league-core small{display:block;color:#8d98aa;font-size:9px;font-weight:800}
+    .qc-league-core b{display:block;margin-top:4px;font-size:14px;color:#26344d}
+    .qc-league-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#fbfcfe;border-top:1px solid #f0f3f6}
+    .qc-league-foot span{font-size:10px;color:#8d98aa}
+    .qc-league-foot button{border:0;background:transparent;color:#426aa8;font-size:11px;font-weight:850;cursor:pointer;padding:0}
+    .qc-league-empty{background:#fff;border:1px solid #e3e8ef;border-radius:15px;padding:34px 20px;text-align:center;color:#7f8a9d}
+    .qc-league-detail{background:#fff;border-top:1px solid #e7ecf3;overflow:hidden}
+    .qc-league-detail[hidden]{display:none}
+    .qc-league-card.is-open{border-color:#cbd8eb;box-shadow:0 6px 18px rgba(31,42,68,.06)}
+    .qc-league-card.is-open .qc-league-foot{background:#f7f9fd}
+    .qc-league-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;background:#f9fbfe;border-bottom:1px solid #edf1f5}
+    .qc-league-detail-head strong{font-size:17px}
+    .qc-league-detail-close{border:0;background:#eef2f7;color:#5f6d83;border-radius:8px;height:30px;padding:0 10px;font-size:11px;font-weight:850}
+    .qc-league-goals{padding:12px;border-bottom:1px solid #edf1f5;background:#fff}
+    .qc-league-goals-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .qc-league-goals-title strong{font-size:13px;color:#35435b}
+    .qc-league-goals-title span{font-size:10px;color:#98a2b2}
+    .qc-league-goals-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+    .qc-league-goal-cell{background:#f7f9fc;border:1px solid #edf1f5;border-radius:9px;padding:8px 5px;text-align:center}
+    .qc-league-goal-cell small{display:block;color:#8d98aa;font-size:9px;font-weight:800}
+    .qc-league-goal-cell b{display:block;margin-top:3px;color:#27344d;font-size:13px}
+    .qc-league-goal-cell em{display:block;margin-top:2px;color:#96a0b0;font-size:9px;font-style:normal}
+    .qc-league-team-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
+    .qc-league-team-item{border:1px solid #edf1f5;border-radius:10px;overflow:hidden;background:#fff}
+    .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(6,48px);align-items:center;width:100%;border:0;background:#fff;color:inherit;padding:0;text-align:inherit;cursor:pointer}
+    .qc-league-team-row>div{padding:9px 7px;text-align:center;border-left:1px solid #f0f3f6;font-size:11px}
+    .qc-league-team-row>div:first-child{border-left:0;text-align:left;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-league-team-row small{display:block;color:#95a0b1;font-size:8px;margin-bottom:2px}
+    .qc-league-team-item.is-open{border-color:#cbd8eb;box-shadow:0 3px 10px rgba(31,42,68,.05)}
+    .qc-league-team-item.is-open .qc-league-team-row{background:#f9fbfe}
+    .qc-team-detail{border-top:1px solid #edf1f5;background:#fbfcfe;padding:10px}
+    .qc-team-detail[hidden]{display:none}
+    .qc-team-detail-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .qc-team-detail-title strong{font-size:12px;color:#35435b}
+    .qc-team-detail-title span{font-size:9px;color:#98a2b2}
+    .qc-team-detail-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+    .qc-team-split{border:1px solid #e9edf3;border-radius:9px;background:#fff;padding:8px;min-width:0}
+    .qc-team-split>strong{display:block;font-size:10px;color:#55647b;margin-bottom:6px}
+    .qc-team-split-line{display:flex;justify-content:space-between;gap:6px;font-size:9px;color:#8a95a7;line-height:1.55}
+    .qc-team-split-line b{color:#2d3a52;font-size:10px;font-weight:850}
+    .qc-team-feature{margin-top:8px;border:1px solid #e9edf3;border-radius:10px;background:#fff;padding:9px}
+    .qc-team-feature-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+    .qc-team-feature-title strong{font-size:10px;color:#55647b}
+    .qc-team-feature-title span{font-size:9px;color:#98a2b2}
+    .qc-team-goal-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}
+    .qc-team-goal-item{background:#f7f9fc;border:1px solid #edf1f5;border-radius:8px;padding:6px 3px;text-align:center}
+    .qc-team-goal-item small{display:block;color:#929dad;font-size:8px;font-weight:800}
+    .qc-team-goal-item b{display:block;margin-top:2px;color:#27344d;font-size:11px}
+    .qc-team-goal-item em{display:block;margin-top:2px;color:#8792a4;font-size:8px;font-style:normal}
+    .qc-team-score-frequency{margin-top:8px;border:1px solid #e9edf3;border-radius:10px;background:#fff;padding:9px}
+    .qc-team-score-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+    .qc-team-score-title strong{font-size:10px;color:#55647b}
+    .qc-team-score-title span{font-size:9px;color:#98a2b2}
+    .qc-team-score-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+    .qc-team-score-item{background:#f7f9fc;border:1px solid #edf1f5;border-radius:8px;padding:7px;text-align:center}
+    .qc-team-score-item small{display:block;color:#9aa4b4;font-size:8px;font-weight:800}
+    .qc-team-score-item b{display:block;margin-top:2px;color:#27344d;font-size:15px}
+    .qc-team-score-item em{display:block;margin-top:2px;color:#8792a4;font-size:9px;font-style:normal}
+    .qc-team-recent-list{display:flex;flex-direction:column;gap:5px}
+    .qc-team-recent-row{display:grid;grid-template-columns:58px 48px 74px 34px minmax(0,1fr);align-items:center;gap:6px;padding:7px 8px;border:1px solid #edf1f5;border-radius:8px;background:#f9fbfd;font-size:9px;color:#6f7b8f}
+    .qc-team-recent-row b{font-size:10px;color:#2d3a52;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-team-recent-league{font-size:8px;color:#6f7d92;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-team-recent-row span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-team-detail-foot{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+    .qc-team-detail-foot span{font-size:9px;color:#6f7d92;background:#eef2f7;border-radius:6px;padding:4px 6px;font-weight:800}
+    .qc-league-gate,.qc-league-loading{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:38px 20px;text-align:center;color:#66748b;margin-top:18px}
+    .qc-league-gate h2{margin:0 0 8px;color:#26344d}
+    .qc-league-gate a{display:inline-flex;margin-top:14px;background:#263d66;color:#fff;text-decoration:none;border-radius:10px;padding:10px 16px;font-weight:850}
+    @media(max-width:900px){
+      .qc-league-main{padding:12px 10px 42px}
+      .qc-league-hero{padding:15px 14px;border-radius:14px}
+      .qc-league-hero h1{font-size:22px}
+      .qc-league-hero p{font-size:12px}
+      .qc-league-toolbar{align-items:flex-start;flex-direction:column}
+      .qc-league-grid{grid-template-columns:1fr}
+      .qc-league-card-head{padding:12px}
+      .qc-league-core div{padding:10px 6px}
+      .qc-league-core b{font-size:13px}
+      .qc-league-goals-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+      .qc-league-goal-cell{padding:7px 4px}
+      .qc-league-team-list{grid-template-columns:1fr;padding:9px}
+      .qc-league-team-row{grid-template-columns:minmax(0,1fr) repeat(6,42px)}
+      .qc-league-team-row>div{padding:8px 5px;font-size:10px}
+      .qc-team-detail{padding:8px}
+      .qc-team-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+      .qc-team-split{padding:7px}
+      .qc-team-split:first-child{grid-column:1/-1}
+      .qc-team-feature-title{align-items:flex-start;flex-direction:column;gap:2px}
+      .qc-team-goal-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .qc-team-score-title{align-items:flex-start;flex-direction:column;gap:2px}
+      .qc-team-recent-row{grid-template-columns:50px 42px 68px 28px minmax(0,1fr);gap:4px;padding:6px;font-size:8px}
+      .qc-team-score-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-team-score-item{padding:7px 4px}
+      .qc-site-header{height:54px!important;padding:0 14px!important}
+      .qc-brand-line{gap:5px!important}
+      .qc-brand-line .qc-brand-main{font-size:19px!important;line-height:1!important}
+      .qc-brand-line .qc-brand-sep{font-size:14px!important;line-height:1!important}
+      .qc-brand-line .qc-brand-sub{font-size:12.5px!important;line-height:1!important}
+      .qc-site-header .menu-btn{width:68px!important;height:40px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;background:transparent!important;box-shadow:none!important;position:relative;gap:4px!important;color:#34415a!important}
+      .qc-site-header .menu-btn:before{content:"";position:absolute;width:64px;height:30px;border:1px solid #e1e6ee;border-radius:8px;background:#fff;z-index:-1}
+      .qc-site-header .menu-btn .qc-menu-label{font-size:12px!important;font-weight:700!important;line-height:1!important}
+      .qc-site-header .menu-btn .qc-menu-icon{font-size:15px!important;font-weight:700!important;line-height:1!important}
+      .drawer{top:54px!important}
+    }
+  </style>
+</head>
+<body class="qc-home qc-league-record-test">
+<div class="shell">
+  <header class="header qc-site-header">
+    <a class="brand qc-brand-line" href="index.html" aria-label="返回今日速览"><span class="qc-brand-main">球场档案</span><span class="qc-brand-sep">|</span><span class="qc-brand-sub">赛事数据管家</span></a>
+    <nav class="qc-desktop-nav" aria-label="主导航">
+      <a href="index.html">今日速览</a>
+      <a href="football.html">竞彩足球</a>
+      <span class="qc-desktop-account-divider" id="desktopAccountDivider" aria-hidden="true"></span>
+      <a class="qc-desktop-auth-login" href="login.html?v=20260926login3" id="desktopLogin">登录</a>
+      <a class="qc-desktop-auth-account" href="profile.html" id="desktopAccount" hidden style="display:none">个人中心</a>
+      <button class="qc-desktop-auth-btn qc-desktop-logout-btn" type="button" id="desktopLogout" hidden style="display:none">退出</button>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="打开导航"><span class="qc-menu-label">导航</span><span class="qc-menu-icon">☰</span></button>
+  </header>
+
+  <main class="qc-league-main">
+    <section class="qc-league-hero">
+      <h1>联赛档案</h1>
+      <p>统计整个赛季的全部比赛，不只统计本站预测场次。联赛整体、球队赛季、主客场和近期状态分层保存。</p>
+    </section>
+
+    <div id="leagueRecordRoot"></div>
+  </main>
+</div>
+
+<div class="drawer-backdrop" id="drawerBackdrop">
+  <nav class="drawer">
+    <a href="index.html">今日速览</a>
+    <a href="football.html">竞彩足球</a>
+    <hr>
+    <a href="profile.html" id="navProfile">个人中心</a>
+    <a href="login.html?v=20260926login3" id="navLogin">登录</a>
+    <a href="#" class="logout" id="navLogout" style="display:none">退出登录</a>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js?v=20260927autologin1"></script>
+<script src="data.js"></script>
+<script src="app.js?v=20260930perf1"></script>
+<script src="league-archive-stable.js"></script>
+</body>
+</html>
