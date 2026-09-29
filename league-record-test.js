@@ -129,12 +129,12 @@
   }
 
   function highFreqScoreHtml(played,rows){
-    const top=(rows||[]).slice().sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,5);
+    const top=(rows||[]).slice().sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,6);
     if(!top.length) return '';
     const total=Number(played||0);
-    const title=total<10?'当前样本高频比分':'高频比分 TOP5';
+    const title=total<10?'当前样本高频比分':'高频比分 TOP6';
     return '<div class="qc-team-score-frequency">'+
-      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜后台TOP5｜N='+total+'</span></div>'+
+      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜后台TOP6｜N='+total+'</span></div>'+
       '<div class="qc-team-score-grid">'+top.map(row=>
         '<div class="qc-team-score-item"><small>TOP'+Number(row.rank)+'</small><b>'+esc(row.score_text)+'</b><em>'+Number(row.occurrences||0)+'次｜'+(row.share_pct==null?'—':Number(row.share_pct).toFixed(1)+'%')+'</em></div>'
       ).join('')+'</div>'+
@@ -186,7 +186,7 @@
       teamGoalDistributionHtml(goalDist)+
       highFreqScoreHtml(t.played,scoreRows)+
       teamRecentMatchesHtml(t.team_name,matchRows,leagueName)+
-      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>比分TOP5</span><span>最近比赛</span></div>';
+      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>比分TOP6</span><span>最近比赛</span></div>';
   }
 
   function teamHtml(t){
