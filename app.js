@@ -235,17 +235,9 @@ function jcShouldFetchLive(m){
 }
 
 async function jcAttachLiveScores(rows){
-  const list=(rows||[]).filter(m=>m?.id && jcShouldFetchLive(m));
-  if(!list.length || !window.QC_SUPABASE_URL) return rows||[];
-  await Promise.all(list.map(async m=>{
-    try{
-      const res=await fetch(window.QC_SUPABASE_URL+'/functions/v1/api-football-match?jc_match_id='+encodeURIComponent(m.id),{cache:'no-store'});
-      const payload=await res.json();
-      if(res.ok && payload?.ok && payload?.data) m._apiFootballLive=payload.data;
-    }catch(err){
-      console.warn('实时比分读取失败',m?.match_num||m?.id,err);
-    }
-  }));
+  // Browsers never call the score-recovery Edge Function directly.
+  // The backend ESPN/API-Football recovery chain writes confirmed status/scores to jc_matches;
+  // frontend pages only read those persisted rows, preventing user traffic from amplifying quota usage.
   return rows||[];
 }
 
@@ -1518,11 +1510,30 @@ async function loadJcFootball(){
   hydrateFootballRows(allRows,selectedDate,initialToken);
 
   async function refreshFootballLive(){
-    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
-    await jcAttachLiveScores(dateRows);
-    // 页面停留期间若比赛刚刚完赛，立即补取该场已锁定模型并展示命中项。
+    const result=await jcFetchDateRows(selectedDate,false,true);
+    if(result?.error || !Array.isArray(result?.data)) return;
+
+    const oldById=new Map(allRows.map(m=>[String(m.id),m]));
+    allRows=result.data.filter(m=>m.match_date).map(fresh=>{
+      const old=oldById.get(String(fresh.id));
+      if(!old) return fresh;
+      return {
+        ...old,
+        ...fresh,
+        jc_model_outputs:old.jc_model_outputs,
+        jc_market_snapshots:old.jc_market_snapshots,
+        _jcModelsLoaded:old._jcModelsLoaded,
+        _jcModelsLoading:old._jcModelsLoading,
+        _jcModelLoadFailed:old._jcModelLoadFailed,
+        _jcLatestSnapshotsLoaded:old._jcLatestSnapshotsLoaded,
+        _homeLogoUrl:old._homeLogoUrl,
+        _awayLogoUrl:old._awayLogoUrl
+      };
+    });
+
+    // 页面停留期间若后台刚回收到完赛结果，只补取该场已锁定模型并展示命中项。
     if(!access.isPro){
-      const newlyFinished=dateRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
+      const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
       if(newlyFinished.length) await jcAttachModels(newlyFinished);
     }
     render();
