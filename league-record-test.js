@@ -45,6 +45,7 @@
         '<div><small>已赛</small><b>'+(ready?esc(stat.matches_played):'—')+'</b></div>'+
         '<div><small>主胜</small><b>'+(ready?esc(fmtPct(stat.home_win_rate)):'—')+'</b></div>'+
         '<div><small>平局</small><b>'+(ready?esc(fmtPct(stat.draw_rate)):'—')+'</b></div>'+
+        '<div><small>客胜</small><b>'+(ready?esc(fmtPct(stat.away_win_rate)):'—')+'</b></div>'+
         '<div><small>场均进球</small><b>'+(ready?esc(fmtNum(stat.avg_total_goals)):'—')+'</b></div>'+
       '</div>'+
       '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):'等待补齐本赛季全部比赛')+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
@@ -77,6 +78,7 @@
       '<div><small>场次</small>'+esc(t.played)+'</div>'+
       '<div><small>胜</small>'+esc(t.wins)+'</div>'+
       '<div><small>平</small>'+esc(t.draws)+'</div>'+
+      '<div><small>负</small>'+esc(t.losses)+'</div>'+
       '<div><small>进球</small>'+esc(avgFor==null?'—':avgFor.toFixed(2))+'</div>'+
       '<div><small>失球</small>'+esc(avgAgainst==null?'—':avgAgainst.toFixed(2))+'</div>'+
     '</div>';
