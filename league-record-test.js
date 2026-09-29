@@ -134,7 +134,7 @@
         const opponent=isHome?m.away_team_name:m.home_team_name;
         const venue=isHome?'主':'客';
         const score=esc(m.home_team_name)+' '+Number(m.ft_home)+'-'+Number(m.ft_away)+' '+esc(m.away_team_name);
-        return '<div class="qc-team-recent-row"><span>'+esc(String(m.match_date||'').slice(5).replace('-','/'))+'</span><span class="qc-team-recent-league">'+esc(leagueName||'—')+'</span><span>'+venue+'</span><b>'+esc(opponent)+'</b><span>'+score+'</span></div>';
+        return '<div class="qc-team-recent-row"><span>'+esc(String(m.match_date||'').slice(5).replace('-','/'))+'</span><span class="qc-team-recent-league">'+esc(leagueName||'—')+'</span><b>'+esc(opponent)+'</b><span>'+venue+'</span><span>'+score+'</span></div>';
       }).join('')+'</div>'+
     '</div>';
   }
