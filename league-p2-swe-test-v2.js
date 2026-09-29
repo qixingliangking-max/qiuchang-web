@@ -234,7 +234,7 @@
     const scopes=data.scopes||{};
     const order=['season','home','away','last5','last10'];
     return '<section class="qc-p2-wrap">'+
-      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>瑞典超试点</span><span>P2_VALID</span></div><em>真实xG / 射门 / 比赛事件</em></div>'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(data?.identity?.league_name||'北欧')+'试点</span><span>P2_VALID</span></div><em>真实数据 / 缺失保持NULL</em></div>'+
       '<div class="qc-p2-grid">'+order.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
     '</section>';
   }
@@ -417,7 +417,7 @@
           comp.name_cn
         );
 
-        if(comp.code==='SWE_AS'){
+        if(['SWE_AS','FIN_VL','NOR_ES'].includes(comp.code)){
           detail.innerHTML=p1Html+'<div class="qc-p2-loading">正在读取P2｜比赛质量＋状态路径…</div>';
           fetchTeamP2(teamName,comp,stat)
             .then(p2=>{
