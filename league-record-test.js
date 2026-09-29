@@ -24,6 +24,27 @@
     return v==null?'—':Number(v).toFixed(d);
   }
 
+  function outcomePctTriplet(stat){
+    const counts=[
+      Number(stat?.home_wins||0),
+      Number(stat?.draws||0),
+      Number(stat?.away_wins||0)
+    ];
+    const total=counts.reduce((a,b)=>a+b,0);
+    if(!total) return ['—','—','—'];
+
+    // Allocate tenths with the largest-remainder method so the three
+    // displayed percentages always add up to exactly 100.0%.
+    const exact=counts.map(n=>n/total*1000);
+    const units=exact.map(Math.floor);
+    let left=1000-units.reduce((a,b)=>a+b,0);
+    const order=exact.map((v,i)=>({i,rem:v-units[i]}))
+      .sort((a,b)=>b.rem-a.rem || a.i-b.i);
+    for(let k=0;k<left;k++) units[order[k%order.length].i]++;
+
+    return units.map(u=>(u/10).toFixed(1)+'%');
+  }
+
   function latestStatsByCompetition(stats){
     const map=new Map();
     (stats||[]).forEach(s=>{
@@ -36,6 +57,7 @@
 
   function cardHtml(c,stat){
     const ready=Boolean(stat&&Number(stat.matches_played)>0);
+    const outcomePct=ready?outcomePctTriplet(stat):['—','—','—'];
     return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'" data-comp-id="'+esc(c.id)+'">'+
       '<div class="qc-league-card-head">'+
         '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+(c.tier===1?'一级联赛':'二级联赛')+' · '+esc(cycleText(c))+'</small></div>'+
@@ -43,9 +65,9 @@
       '</div>'+
       '<div class="qc-league-core">'+
         '<div><small>已赛</small><b>'+(ready?esc(stat.matches_played):'—')+'</b></div>'+
-        '<div><small>主胜</small><b>'+(ready?esc(fmtPct(stat.home_win_rate)):'—')+'</b></div>'+
-        '<div><small>平局</small><b>'+(ready?esc(fmtPct(stat.draw_rate)):'—')+'</b></div>'+
-        '<div><small>客胜</small><b>'+(ready?esc(fmtPct(stat.away_win_rate)):'—')+'</b></div>'+
+        '<div><small>主胜</small><b>'+esc(outcomePct[0])+'</b></div>'+
+        '<div><small>平局</small><b>'+esc(outcomePct[1])+'</b></div>'+
+        '<div><small>客胜</small><b>'+esc(outcomePct[2])+'</b></div>'+
         '<div><small>场均进球</small><b>'+(ready?esc(fmtNum(stat.avg_total_goals)):'—')+'</b></div>'+
       '</div>'+
       '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):'等待补齐本赛季全部比赛')+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
