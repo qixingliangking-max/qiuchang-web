@@ -776,13 +776,13 @@ body{min-height:100vh}
 .jc-card-login-btn span{font-size:12px}
 
 @media(max-width:760px){
-  .qc-site-header{height:66px!important;padding:0 14px!important}
-  .qc-brand-line{gap:6px!important}
-  .qc-brand-line .qc-brand-main{font-size:19px!important}
-  .qc-brand-line .qc-brand-sep{font-size:15px!important}
-  .qc-brand-line .qc-brand-sub{font-size:13px!important;display:inline!important;margin:0!important}
+  .qc-site-header{height:60px!important;padding:0 14px!important}
+  .qc-brand-line{gap:5px!important}
+  .qc-brand-line .qc-brand-main{font-size:19px!important;line-height:1!important}
+  .qc-brand-line .qc-brand-sep{font-size:14px!important;line-height:1!important}
+  .qc-brand-line .qc-brand-sub{font-size:12.5px!important;line-height:1!important;display:inline!important;margin:0!important}
   .qc-site-header .menu-btn{width:42px!important;height:42px!important}
-  .drawer{top:66px!important}
+  .drawer{top:60px!important}
   .jc-football-card-lite .jc-card-link{padding:15px 14px 12px}
   .jc-card-model-lite{gap:4px}
   .jc-card-model-lite span{font-size:10px}
@@ -5325,30 +5325,32 @@ body.qc-ticker-authenticated .ticker{
   body.qc-overview-page .qc-site-header .menu-btn,
   body.qc-football-page .qc-site-header .menu-btn,
   body.jc-odds-page .qc-site-header .menu-btn{
-    width:72px!important;
-    height:40px!important;
-    padding:0 8px!important;
+    width:68px!important;
+    height:36px!important;
+    padding:0 7px!important;
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
-    gap:5px!important;
-    border-radius:11px!important;
-    font-size:13px!important;
-    font-weight:900!important;
-    color:#24324a!important;
+    gap:4px!important;
+    border-radius:10px!important;
+    font-size:12px!important;
+    font-weight:700!important;
+    color:#34415a!important;
     background:#fff!important;
-    border:1px solid #dce3ed!important;
-    box-shadow:0 1px 4px rgba(31,42,68,.025)!important;
+    border:1px solid #dde4ed!important;
+    box-shadow:none!important;
     white-space:nowrap!important;
   }
   .qc-site-header .menu-btn .qc-menu-label{
     display:inline!important;
-    font-size:13px!important;
+    font-size:12px!important;
+    font-weight:700!important;
     line-height:1!important;
   }
   .qc-site-header .menu-btn .qc-menu-icon{
     display:inline!important;
-    font-size:17px!important;
+    font-size:16px!important;
+    font-weight:700!important;
     line-height:1!important;
     transform:translateY(-1px);
   }
