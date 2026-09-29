@@ -88,42 +88,58 @@
     '</div>';
   }
 
-  function buildTeamScoreMap(matches){
-    const out=new Map();
-    const add=(team,gf,ga)=>{
-      const name=String(team||'').trim();
-      if(!name || gf==null || ga==null) return;
-      const score=Number(gf)+'-'+Number(ga);
-      if(!out.has(name)) out.set(name,new Map());
-      const scores=out.get(name);
-      scores.set(score,(scores.get(score)||0)+1);
-    };
-    (matches||[]).forEach(m=>{
-      if(m.ft_home==null || m.ft_away==null) return;
-      add(m.home_team_name,m.ft_home,m.ft_away);
-      add(m.away_team_name,m.ft_away,m.ft_home);
-    });
-    return out;
+  function teamGoalDistributionHtml(dist){
+    if(!dist) return '';
+    const items=[
+      ['0球',dist.goals_0_count,dist.goals_0_pct],
+      ['1球',dist.goals_1_count,dist.goals_1_pct],
+      ['2球',dist.goals_2_count,dist.goals_2_pct],
+      ['3球',dist.goals_3_count,dist.goals_3_pct],
+      ['4球',dist.goals_4_count,dist.goals_4_pct],
+      ['5球',dist.goals_5_count,dist.goals_5_pct],
+      ['6球',dist.goals_6_count,dist.goals_6_pct],
+      ['7+球',dist.goals_7_plus_count,dist.goals_7_plus_pct]
+    ];
+    return '<div class="qc-team-feature">'+
+      '<div class="qc-team-feature-title"><strong>球队总进球分布</strong><span>球队参与比赛的全场总进球｜N='+Number(dist.sample_size||0)+'</span></div>'+
+      '<div class="qc-team-goal-grid">'+items.map(([label,count,pct])=>
+        '<div class="qc-team-goal-item"><small>'+label+'</small><b>'+Number(count||0)+'场</b><em>'+(pct==null?'—':Number(pct).toFixed(1)+'%')+'</em></div>'
+      ).join('')+'</div>'+
+    '</div>';
   }
 
-  function highFreqScoreHtml(team,played,scoreMap){
-    const total=Number(played||0);
-    const scores=scoreMap||new Map();
-    const top=[...scores.entries()]
-      .sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0],'zh-CN',{numeric:true}))
-      .slice(0,3);
+  function highFreqScoreHtml(played,rows){
+    const top=(rows||[]).slice().sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,5);
     if(!top.length) return '';
-    const title=total<10?'当前样本高频比分':'高频比分 TOP3';
+    const total=Number(played||0);
+    const title=total<10?'当前样本高频比分':'高频比分 TOP5';
     return '<div class="qc-team-score-frequency">'+
-      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜'+total+'场样本</span></div>'+
-      '<div class="qc-team-score-grid">'+top.map(([score,count],idx)=>{
-        const pct=total?((Number(count)/total)*100).toFixed(1)+'%':'—';
-        return '<div class="qc-team-score-item"><small>TOP'+(idx+1)+'</small><b>'+esc(score)+'</b><em>'+count+'次｜'+pct+'</em></div>';
+      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜后台TOP5｜N='+total+'</span></div>'+
+      '<div class="qc-team-score-grid">'+top.map(row=>
+        '<div class="qc-team-score-item"><small>TOP'+Number(row.rank)+'</small><b>'+esc(row.score_text)+'</b><em>'+Number(row.occurrences||0)+'次｜'+(row.share_pct==null?'—':Number(row.share_pct).toFixed(1)+'%')+'</em></div>'
+      ).join('')+'</div>'+
+    '</div>';
+  }
+
+  function teamRecentMatchesHtml(teamName,matches,leagueName){
+    const rows=(matches||[])
+      .filter(m=>m.home_team_name===teamName || m.away_team_name===teamName)
+      .sort((a,b)=>String(b.match_date||'').localeCompare(String(a.match_date||'')))
+      .slice(0,5);
+    if(!rows.length) return '';
+    return '<div class="qc-team-feature">'+
+      '<div class="qc-team-feature-title"><strong>最近比赛</strong><span>最近5场｜保留真实主客比分顺序</span></div>'+
+      '<div class="qc-team-recent-list">'+rows.map(m=>{
+        const isHome=m.home_team_name===teamName;
+        const opponent=isHome?m.away_team_name:m.home_team_name;
+        const venue=isHome?'主':'客';
+        const score=esc(m.home_team_name)+' '+Number(m.ft_home)+'-'+Number(m.ft_away)+' '+esc(m.away_team_name);
+        return '<div class="qc-team-recent-row"><span>'+esc(String(m.match_date||'').slice(5).replace('-','/'))+'</span><span>'+venue+'</span><b>'+esc(opponent)+'</b><span>'+score+'</span></div>';
       }).join('')+'</div>'+
     '</div>';
   }
 
-  function teamDetailHtml(t,recentMap,scoreMap){
+  function teamDetailHtml(t,recentMap,goalDist,scoreRows,matchRows,leagueName){
     const r5=recentMap.get('5')||null;
     const r10=recentMap.get('10')||null;
     const overallExtra=
@@ -137,16 +153,20 @@
         '<div class="qc-team-split-line"><span>3+球</span><b>'+pctCount(r.over_25_matches,r.played)+'</b></div>';
       return splitBox(label+(Number(r.played)<Number(r.window_size)?'（'+r.played+'场）':''),r.played,r.wins,r.draws,r.losses,r.goals_for,r.goals_against,extra);
     };
+    const recentCards=
+      recentBox('近5场',r5)+
+      (Number(t.played)>10?recentBox('近10场',r10):'');
     return '<div class="qc-team-detail-title"><strong>'+esc(t.team_name)+'｜详细档案</strong><span>点击球队再次收起</span></div>'+
       '<div class="qc-team-detail-grid">'+
         splitBox('赛季总体',t.played,t.wins,t.draws,t.losses,t.goals_for,t.goals_against,overallExtra)+
         splitBox('主场',t.home_played,t.home_wins,t.home_draws,t.home_losses,t.home_goals_for,t.home_goals_against)+
         splitBox('客场',t.away_played,t.away_wins,t.away_draws,t.away_losses,t.away_goals_for,t.away_goals_against)+
-        recentBox('近5场',r5)+
-        recentBox('近10场',r10)+
+        recentCards+
       '</div>'+
-      highFreqScoreHtml(t.team_name,t.played,scoreMap)+
-      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近期5/10场</span><span>高频比分</span></div>';
+      teamGoalDistributionHtml(goalDist)+
+      highFreqScoreHtml(t.played,scoreRows)+
+      teamRecentMatchesHtml(t.team_name,matchRows,leagueName)+
+      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>比分TOP5</span><span>最近比赛</span></div>';
   }
 
   function teamHtml(t){
@@ -212,7 +232,7 @@
       return;
     }
 
-    const [teamRes,recentRes,matchRes]=await Promise.all([
+    const [teamRes,recentRes,goalDistRes,scoreFreqRes,matchRes]=await Promise.all([
       window.qcSupabase.from('league_team_stats')
         .select('team_name,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,home_played,home_wins,home_draws,home_losses,home_goals_for,home_goals_against,away_played,away_wins,away_draws,away_losses,away_goals_for,away_goals_against')
         .eq('competition_id',comp.id).eq('season',stat.season)
@@ -221,15 +241,22 @@
         .select('team_name,window_size,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,over_25_matches')
         .eq('competition_id',comp.id).eq('season',stat.season)
         .in('window_size',[5,10]),
+      window.qcSupabase.from('league_team_goal_distribution')
+        .select('team_name,scope,sample_size,goals_0_count,goals_1_count,goals_2_count,goals_3_count,goals_4_count,goals_5_count,goals_6_count,goals_7_plus_count,goals_0_pct,goals_1_pct,goals_2_pct,goals_3_pct,goals_4_pct,goals_5_pct,goals_6_pct,goals_7_plus_pct')
+        .eq('competition_id',comp.id).eq('season',stat.season).eq('scope','season'),
+      window.qcSupabase.from('league_team_score_frequency')
+        .select('team_name,scope,rank,score_text,occurrences,sample_size,share_pct,last_seen_date')
+        .eq('competition_id',comp.id).eq('season',stat.season).eq('scope','season')
+        .order('rank',{ascending:true}),
       window.qcSupabase.from('league_matches')
-        .select('home_team_name,away_team_name,ft_home,ft_away')
+        .select('match_date,round_name,home_team_name,away_team_name,ft_home,ft_away')
         .eq('competition_id',comp.id).eq('season',stat.season)
         .eq('status','finished')
     ]);
 
     if(box.hidden || !card.classList.contains('is-open')) return;
 
-    if(teamRes.error || recentRes.error || matchRes.error){
+    if(teamRes.error || recentRes.error || goalDistRes.error || scoreFreqRes.error || matchRes.error){
       box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">球队数据读取失败。</div>';
       $('.qc-league-detail-close',box).onclick=()=>{
         card.classList.remove('is-open');
@@ -245,7 +272,14 @@
       if(!recentByTeam.has(key)) recentByTeam.set(key,new Map());
       recentByTeam.get(key).set(String(r.window_size),r);
     });
-    const scoresByTeam=buildTeamScoreMap(matchRes.data||[]);
+    const goalDistByTeam=new Map((goalDistRes.data||[]).map(r=>[String(r.team_name),r]));
+    const scoreFreqByTeam=new Map();
+    (scoreFreqRes.data||[]).forEach(r=>{
+      const key=String(r.team_name);
+      if(!scoreFreqByTeam.has(key)) scoreFreqByTeam.set(key,[]);
+      scoreFreqByTeam.get(key).push(r);
+    });
+    const leagueMatchRows=matchRes.data||[];
 
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜'+esc(stat.season)+'球队数据</strong><button class="qc-league-detail-close" type="button">收起</button></div>'+
       goalDistributionHtml(stat)+
@@ -281,7 +315,14 @@
         if(!team) return;
         item.classList.add('is-open');
         detail.hidden=false;
-        detail.innerHTML=teamDetailHtml(team,recentByTeam.get(teamName)||new Map(),scoresByTeam.get(teamName)||new Map());
+        detail.innerHTML=teamDetailHtml(
+          team,
+          recentByTeam.get(teamName)||new Map(),
+          goalDistByTeam.get(teamName)||null,
+          scoreFreqByTeam.get(teamName)||[],
+          leagueMatchRows,
+          comp.name_cn
+        );
       };
     });
   }
