@@ -94,12 +94,12 @@
   }
 
   async function showDetail(comp,stat){
-    const card=$('.qc-league-card').find(x=>String(x.dataset.compId||'')===String(comp.id));
+    const card=$$('.qc-league-card').find(x=>String(x.dataset.compId||'')===String(comp.id));
     const box=card?.querySelector('[data-inline-detail]');
     if(!card||!box) return;
 
     const alreadyOpen=!box.hidden;
-    $('.qc-league-card.is-open').forEach(other=>{
+    $$('.qc-league-card.is-open').forEach(other=>{
       if(other!==card){
         other.classList.remove('is-open');
         const otherBox=other.querySelector('[data-inline-detail]');
