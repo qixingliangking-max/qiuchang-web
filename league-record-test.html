@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=20260928logo1">
   <title>球场档案｜联赛档案</title>
-  <link rel="stylesheet" href="styles.css?v=20260930headertest5">
+  <link rel="stylesheet" href="styles.css?v=20260930leagueprod1">
   <style>
     body.qc-league-record-test{background:#f5f7fb;color:#1f2a44}
     .qc-league-main{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
@@ -18,6 +18,15 @@
     .qc-league-region-tabs::-webkit-scrollbar{display:none}
     .qc-league-region-tabs button{flex:0 0 auto;border:1px solid #e1e7ef;background:#fff;color:#657289;height:34px;padding:0 12px;border-radius:9px;font-size:12px;font-weight:850;cursor:pointer}
     .qc-league-region-tabs button.active{background:#edf3ff;color:#315fab;border-color:#bdd0f4}
+    .qc-league-tools{display:flex;align-items:center;gap:8px;min-width:0}
+    .qc-league-finder{position:relative;flex:0 0 auto}
+    .qc-league-finder-btn{height:34px;border:1px solid #d9e1ec;background:#fff;color:#536178;border-radius:9px;padding:0 12px;font-size:12px;font-weight:850;white-space:nowrap;cursor:pointer}
+    .qc-league-finder-btn.active{background:#edf3ff;color:#315fab;border-color:#bdd0f4}
+    .qc-league-finder-pop{position:absolute;right:0;top:40px;z-index:30;width:260px;max-height:360px;overflow:auto;background:#fff;border:1px solid #dfe6ef;border-radius:12px;padding:8px;box-shadow:0 14px 35px rgba(31,42,68,.14)}
+    .qc-league-finder-pop[hidden]{display:none}
+    .qc-league-finder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    .qc-league-finder-grid button{border:1px solid #edf1f5;background:#f8fafc;color:#536178;border-radius:8px;min-height:34px;padding:6px 8px;font-size:11px;font-weight:800;text-align:left;cursor:pointer}
+    .qc-league-finder-grid button.active{background:#edf3ff;color:#315fab;border-color:#bdd0f4}
     .qc-league-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
     .qc-league-card{background:#fff;border:1px solid #e3e8ef;border-radius:15px;overflow:hidden;min-width:0}
     .qc-league-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:14px 14px 11px;border-bottom:1px solid #eef1f5}
@@ -103,7 +112,11 @@
       .qc-league-hero{padding:15px 14px;border-radius:14px}
       .qc-league-hero h1{font-size:22px}
       .qc-league-hero p{font-size:12px}
-      .qc-league-toolbar{align-items:flex-start;flex-direction:column}
+      .qc-league-toolbar{align-items:stretch;flex-direction:column}
+      .qc-league-tools{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto}
+      .qc-league-region-tabs{min-width:0}
+      .qc-league-finder{justify-self:end}
+      .qc-league-finder-pop{right:0;width:min(290px,calc(100vw - 28px));max-height:420px}
       .qc-league-grid{grid-template-columns:1fr}
       .qc-league-card-head{padding:12px}
       .qc-league-core div{padding:10px 6px}
@@ -177,6 +190,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20260930perf1"></script>
-<script src="league-record-test.js?v=20260930snapshot5"></script>
+<script src="league-record-test.js?v=20260930finder1"></script>
 </body>
 </html>
