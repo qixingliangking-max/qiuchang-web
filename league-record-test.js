@@ -52,6 +52,23 @@
     '</article>';
   }
 
+  function goalDistributionHtml(stat){
+    if(!stat) return '';
+    const total=Number(stat.matches_played||0);
+    const items=[
+      ['0球',stat.goals_0],['1球',stat.goals_1],['2球',stat.goals_2],['3球',stat.goals_3],
+      ['4球',stat.goals_4],['5球',stat.goals_5],['6球',stat.goals_6],['7+球',stat.goals_7_plus]
+    ];
+    return '<div class="qc-league-goals">'+
+      '<div class="qc-league-goals-title"><strong>总进球分布</strong><span>场次 / 占比</span></div>'+
+      '<div class="qc-league-goals-grid">'+items.map(([label,count])=>{
+        const n=Number(count||0);
+        const pct=total?((n/total)*100).toFixed(1)+'%':'—';
+        return '<div class="qc-league-goal-cell"><small>'+esc(label)+'</small><b>'+n+'场</b><em>'+pct+'</em></div>';
+      }).join('')+'</div>'+
+    '</div>';
+  }
+
   function teamHtml(t){
     const avgFor=t.played?Number(t.goals_for)/Number(t.played):null;
     const avgAgainst=t.played?Number(t.goals_against)/Number(t.played):null;
@@ -128,6 +145,7 @@
     }
 
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜'+esc(stat.season)+'球队数据</strong><button class="qc-league-detail-close" type="button">收起</button></div>'+
+      goalDistributionHtml(stat)+
       ((data||[]).length?'<div class="qc-league-team-list">'+data.map(teamHtml).join('')+'</div>':'<div class="qc-league-empty">暂时还没有球队统计。</div>');
     $('.qc-league-detail-close',box).onclick=()=>{
       card.classList.remove('is-open');
@@ -151,7 +169,7 @@
 
       const [compRes,statRes]=await Promise.all([
         window.qcSupabase.from('league_competitions').select('id,code,name_cn,name_en,country_cn,tier,season_cycle,priority,is_active').eq('is_active',true).order('priority',{ascending:true}).order('name_cn',{ascending:true}),
-        window.qcSupabase.from('league_season_stats').select('competition_id,season,matches_played,home_wins,draws,away_wins,total_goals,avg_total_goals,home_win_rate,draw_rate,away_win_rate,goals_0_1,goals_2,goals_3,goals_4_plus,btts_matches,clean_sheet_matches,computed_at')
+        window.qcSupabase.from('league_season_stats').select('competition_id,season,matches_played,home_wins,draws,away_wins,total_goals,avg_total_goals,home_win_rate,draw_rate,away_win_rate,goals_0,goals_1,goals_2,goals_3,goals_4,goals_5,goals_6,goals_7_plus,btts_matches,clean_sheet_matches,computed_at')
       ]);
       if(compRes.error) throw compRes.error;
       if(statRes.error) throw statRes.error;
