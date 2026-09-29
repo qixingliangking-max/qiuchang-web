@@ -361,7 +361,7 @@
         return;
       }
       if(!access.isPro){
-        root.innerHTML='<div class="qc-league-gate"><h2>测试页暂未开放</h2><p>当前账号没有联赛档案测试权限。</p></div>';
+        root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂未开放</h2><p>当前账号没有联赛档案访问权限。</p></div>';
         return;
       }
 
@@ -398,14 +398,11 @@
       }]));
       const readyCount=rows.filter(r=>Number(r.matches_played||0)>0).length;
 
-      const summary=$('#leagueSummary');
-      if(summary) summary.hidden=true;
 
       const regions=['全部','欧洲','北欧','亚洲','美洲'];
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
-          '<div class="qc-league-note">页面只读已生成快照；统计计算与展示读取完全分离。</div>'+
         '</div>'+
         '<div class="qc-league-grid">'+comps.map(c=>cardHtml(c,latest.get(String(c.id)))).join('')+'</div>';
 
