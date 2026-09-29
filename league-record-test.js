@@ -400,91 +400,23 @@
 
 
       const regions=['全部','欧洲','北欧','亚洲','美洲'];
-      let selectedRegion='全部';
-      let selectedCompetitionId='';
-
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
-          '<div class="qc-league-tools">'+
-            '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
-            '<div class="qc-league-finder">'+
-              '<button type="button" class="qc-league-finder-btn" id="qcLeagueFinderBtn" aria-expanded="false">快速查找 ▾</button>'+
-              '<div class="qc-league-finder-pop" id="qcLeagueFinderPop" hidden>'+
-                '<div class="qc-league-finder-grid">'+
-                  '<button type="button" data-find-comp="" class="active">全部联赛</button>'+
-                  comps.map(c=>'<button type="button" data-find-comp="'+esc(c.id)+'">'+esc(c.name_cn)+'</button>').join('')+
-                '</div>'+
-              '</div>'+
-            '</div>'+
-          '</div>'+
+          '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
         '</div>'+
         '<div class="qc-league-grid">'+comps.map(c=>cardHtml(c,latest.get(String(c.id)))).join('')+'</div>';
 
-      const finderBtn=$('#qcLeagueFinderBtn',root);
-      const finderPop=$('#qcLeagueFinderPop',root);
-
-      function applyLeagueFilter(){
-        $('.qc-league-card',root).forEach(card=>{
-          const regionOk=selectedRegion==='全部'||card.dataset.region===selectedRegion;
-          const compOk=!selectedCompetitionId||String(card.dataset.compId||'')===String(selectedCompetitionId);
-          card.hidden=!(regionOk&&compOk);
-        });
-      }
-
-      function resetFinderLabel(){
-        finderBtn.textContent='快速查找 ▾';
-        finderBtn.classList.remove('active');
-        $('[data-find-comp]',finderPop).forEach(x=>x.classList.toggle('active',!x.dataset.findComp));
-      }
-
-      $('.qc-league-region-tabs button',root).forEach(btn=>{
+      $$('.qc-league-region-tabs button',root).forEach(btn=>{
         btn.onclick=()=>{
-          selectedRegion=btn.dataset.region||'全部';
-          selectedCompetitionId='';
-          $('.qc-league-region-tabs button',root).forEach(x=>x.classList.toggle('active',x===btn));
-          resetFinderLabel();
-          finderPop.hidden=true;
-          finderBtn.setAttribute('aria-expanded','false');
-          applyLeagueFilter();
+          $$('.qc-league-region-tabs button',root).forEach(x=>x.classList.toggle('active',x===btn));
+          const region=btn.dataset.region;
+          $$('.qc-league-card',root).forEach(card=>{
+            card.hidden=region!=='全部'&&card.dataset.region!==region;
+          });
         };
       });
 
-      finderBtn.onclick=e=>{
-        e.preventDefault();
-        e.stopPropagation();
-        finderPop.hidden=!finderPop.hidden;
-        finderBtn.setAttribute('aria-expanded',String(!finderPop.hidden));
-      };
-
-      $('[data-find-comp]',finderPop).forEach(btn=>{
-        btn.onclick=e=>{
-          e.preventDefault();
-          e.stopPropagation();
-          selectedCompetitionId=btn.dataset.findComp||'';
-          selectedRegion='全部';
-          $('.qc-league-region-tabs button',root).forEach(x=>x.classList.toggle('active',x.dataset.region==='全部'));
-          $('[data-find-comp]',finderPop).forEach(x=>x.classList.toggle('active',x===btn));
-          const comp=selectedCompetitionId?comps.find(c=>String(c.id)===String(selectedCompetitionId)):null;
-          finderBtn.textContent=comp?comp.name_cn+' ▾':'快速查找 ▾';
-          finderBtn.classList.toggle('active',Boolean(comp));
-          finderPop.hidden=true;
-          finderBtn.setAttribute('aria-expanded','false');
-          applyLeagueFilter();
-          if(comp){
-            const card=$('.qc-league-card',root).find(x=>String(x.dataset.compId||'')===String(comp.id));
-            card?.scrollIntoView({behavior:'smooth',block:'start'});
-          }
-        };
-      });
-
-      document.addEventListener('click',e=>{
-        if(finderPop && !finderPop.hidden && !finderPop.contains(e.target) && e.target!==finderBtn){
-          finderPop.hidden=true;
-          finderBtn.setAttribute('aria-expanded','false');
-        }
-      });
-
-      $('[data-league-id]',root).forEach(btn=>{
+      $$('[data-league-id]',root).forEach(btn=>{
         btn.onclick=()=>{
           const comp=comps.find(c=>String(c.id)===String(btn.dataset.leagueId));
           if(comp) showDetail(comp,latest.get(String(comp.id))||null);
