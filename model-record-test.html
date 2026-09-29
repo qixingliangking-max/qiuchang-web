@@ -29,28 +29,30 @@
     .qc-record-metric em{display:block;margin-top:7px;color:#8994a6;font-size:11px;font-style:normal}
     .qc-record-section-title{display:flex;align-items:center;gap:8px;margin:22px 0 10px;font-size:18px;font-weight:950}
     .qc-record-section-title:before{content:"";width:4px;height:22px;border-radius:999px;background:#59b77a}
-    .qc-record-day{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:12px}
+    .qc-record-day{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:14px}
     .qc-record-day-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;background:#fbfcfe;border-bottom:1px solid #edf1f5}
     .qc-record-day-title{display:flex;align-items:baseline;gap:8px}
     .qc-record-day-title strong{font-size:16px}
     .qc-record-day-title span{font-size:12px;color:#8994a6}
     .qc-record-day-stats{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}
     .qc-record-day-stats span{font-size:10px;color:#6e7a90;background:#f0f3f7;border-radius:6px;padding:4px 6px;font-weight:800}
-    .qc-record-match{display:grid;grid-template-columns:58px 92px minmax(230px,1.3fr) repeat(6,minmax(92px,.8fr));align-items:stretch;border-top:1px solid #edf1f5}
-    .qc-record-match:first-child{border-top:0}
-    .qc-record-cell{padding:11px 8px;border-left:1px solid #f0f3f6;display:flex;align-items:center;justify-content:center;text-align:center;min-width:0}
-    .qc-record-cell:first-child{border-left:0}
-    .qc-record-num{font-weight:950;color:#34425a}
-    .qc-record-score{display:flex;flex-direction:column;gap:3px}
-    .qc-record-score strong{font-size:18px}
-    .qc-record-score small{font-size:10px;color:#909aad}
-    .qc-record-teams{justify-content:flex-start;text-align:left;gap:7px}
-    .qc-record-teams b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .qc-record-teams span{font-size:11px;color:#9aa4b5;white-space:nowrap}
-    .qc-record-pick{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%}
-    .qc-record-pick small{font-size:10px;color:#8a95a8;font-weight:800}
-    .qc-record-pick b{font-size:12px;line-height:1.2;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .qc-record-state{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:20px;border-radius:999px;padding:0 6px;font-size:10px;font-weight:950}
+    .qc-record-match-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
+    .qc-record-match-card{border:1px solid #e8edf4;border-radius:14px;background:#fff;overflow:hidden}
+    .qc-record-match-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 13px;background:#fbfcfe;border-bottom:1px solid #edf1f5}
+    .qc-record-num-badge{font-size:13px;font-weight:950;color:#34425a;background:#eef2f7;border-radius:8px;padding:6px 7px}
+    .qc-record-team-block{min-width:0}
+    .qc-record-team-block b{display:block;font-size:14px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-record-team-block small{display:block;margin-top:4px;color:#929caf;font-size:10px}
+    .qc-record-score-box{text-align:right;min-width:48px}
+    .qc-record-score-box strong{display:block;font-size:22px;line-height:1;color:#1f2a44}
+    .qc-record-score-box small{display:block;margin-top:4px;color:#98a2b4;font-size:10px}
+    .qc-record-match-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+    .qc-record-metric-item{position:relative;min-width:0;padding:11px 12px;border-top:1px solid #f0f3f6;border-right:1px solid #f0f3f6}
+    .qc-record-metric-item:nth-child(3n){border-right:0}
+    .qc-record-metric-item small{display:block;color:#8a95a8;font-size:10px;font-weight:850;margin-bottom:5px}
+    .qc-record-metric-item b{display:block;color:#27344d;font-size:12px;line-height:1.35;padding-right:36px;white-space:normal;word-break:keep-all}
+    .qc-record-metric-item .qc-record-state{position:absolute;right:8px;top:9px}
+    .qc-record-state{display:inline-flex;align-items:center;justify-content:center;height:19px;border-radius:999px;padding:0 6px;font-size:9px;font-weight:950}
     .qc-record-state.hit{background:#e9f7ee;color:#238552}
     .qc-record-state.miss{background:#fff0ef;color:#c04c43}
     .qc-record-state.pending{background:#f0f2f5;color:#8b95a7}
@@ -62,38 +64,44 @@
     .qc-record-legend span{display:inline-flex;align-items:center;gap:4px}
     @media(max-width:900px){
       .qc-record-test-main{padding:12px 10px 42px}
-      .qc-record-hero{padding:16px 15px;border-radius:14px}
+      .qc-record-hero{padding:15px 14px;border-radius:14px}
       .qc-record-hero h1{font-size:22px}
+      .qc-record-hero p{font-size:12px}
       .qc-record-controls{align-items:flex-start;flex-direction:column}
       .qc-record-note{text-align:left}
-      .qc-record-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-      .qc-record-metric{padding:12px 10px;border-radius:12px}
-      .qc-record-metric strong{font-size:21px}
-      .qc-record-day-head{align-items:flex-start;flex-direction:column}
+      .qc-record-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+      .qc-record-metric{padding:11px 10px;border-radius:12px}
+      .qc-record-metric strong{font-size:20px}
+      .qc-record-day-head{align-items:flex-start;flex-direction:column;padding:12px}
       .qc-record-day-stats{justify-content:flex-start}
-      .qc-record-match{grid-template-columns:42px 62px minmax(150px,1fr);grid-template-areas:
-        "num score teams"
-        "direction single handicap"
-        "htft goals top"}
-      .qc-record-match>.qc-record-cell:nth-child(1){grid-area:num}
-      .qc-record-match>.qc-record-cell:nth-child(2){grid-area:score}
-      .qc-record-match>.qc-record-cell:nth-child(3){grid-area:teams}
-      .qc-record-match>.qc-record-cell:nth-child(4){grid-area:direction}
-      .qc-record-match>.qc-record-cell:nth-child(5){grid-area:single}
-      .qc-record-match>.qc-record-cell:nth-child(6){grid-area:handicap}
-      .qc-record-match>.qc-record-cell:nth-child(7){grid-area:htft}
-      .qc-record-match>.qc-record-cell:nth-child(8){grid-area:goals}
-      .qc-record-match>.qc-record-cell:nth-child(9){grid-area:top}
-      .qc-record-cell{padding:9px 6px}
-      .qc-record-match>.qc-record-cell:nth-child(n+4){border-top:1px solid #f0f3f6}
-      .qc-record-teams b{font-size:12px}
-      .qc-record-pick b{font-size:11px}
+      .qc-record-match-list{grid-template-columns:1fr;gap:9px;padding:9px}
+      .qc-record-match-head{padding:11px}
+      .qc-record-match-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .qc-record-metric-item:nth-child(3n){border-right:1px solid #f0f3f6}
+      .qc-record-metric-item:nth-child(2n){border-right:0}
+      .qc-record-metric-item{padding:10px 10px}
+      .qc-record-metric-item b{font-size:11px;padding-right:32px}
+      .qc-record-team-block b{font-size:13px}
+      .qc-record-score-box strong{font-size:20px}
+
+      /* Match the locked mobile header/navigation proportions used on the main site. */
+      .qc-site-header{height:54px!important;padding:0 14px!important}
+      .qc-brand-line{gap:5px!important}
+      .qc-brand-line .qc-brand-main{font-size:19px!important;line-height:1!important}
+      .qc-brand-line .qc-brand-sep{font-size:14px!important;line-height:1!important}
+      .qc-brand-line .qc-brand-sub{font-size:12.5px!important;line-height:1!important}
+      .qc-site-header .menu-btn{width:68px!important;height:40px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;background:transparent!important;box-shadow:none!important}
+      .qc-site-header .menu-btn:before{content:"";position:absolute;width:64px;height:30px;border:1px solid #e1e6ee;border-radius:8px;background:#fff;z-index:-1}
+      .qc-site-header .menu-btn{position:relative;gap:4px!important;color:#34415a!important}
+      .qc-site-header .menu-btn .qc-menu-label{font-size:12px!important;font-weight:700!important;line-height:1!important}
+      .qc-site-header .menu-btn .qc-menu-icon{font-size:15px!important;font-weight:700!important;line-height:1!important}
+      .drawer{top:54px!important}
     }
     @media(max-width:420px){
-      .qc-record-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
       .qc-record-range-tabs{width:100%}
       .qc-record-range-tabs button{flex:1;padding:0 8px}
-      .qc-record-match{grid-template-columns:38px 56px minmax(0,1fr)}
+      .qc-record-summary-line{gap:6px}
+      .qc-record-summary-line span{font-size:11px}
     }
   </style>
 </head>
