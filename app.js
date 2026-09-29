@@ -197,48 +197,32 @@ function jcApiLiveInfo(m){
 
 function jcMatchStatusLabel(m,today){
   const api=jcApiLiveInfo(m);
-  const minute=api.elapsed!=null ? String(api.elapsed)+"'" : '';
-  const map={
-    'HT':'半场',
-    'BT':'加时中场',
-    'P':'点球',
-    'INT':'中断',
-    'SUSP':'暂停',
-    'PST':'延期',
-    'CANC':'取消',
-    'ABD':'中止',
-    'FT':'完场',
-    'AET':'加时完场',
-    'PEN':'点球完场',
-    'AWD':'判定结束',
-    'WO':'判定结束'
-  };
-  if(api.short==='1H') return '上半'+(minute?' '+minute:'');
-  if(api.short==='2H') return '下半'+(minute?' '+minute:'');
-  if(api.short==='ET') return '加时'+(minute?' '+minute:'');
-  if(map[api.short]) return map[api.short];
-  if(api.started) return minute ? minute+' 进行中' : '进行中';
-
   const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
-  const ft=String(m?.raw?.sectionsNo999 || '').trim();
-  if(ft) return '完场';
-  if(/完成|结束|finished/i.test(rawStatus)) return '完场';
-  if(/进行|live/i.test(rawStatus)) return '进行中';
-  if(m.match_date>today) return '未开赛';
-  if(/Selling|销售|开售|暂停销售|未开赛|2|3/.test(rawStatus)) return '未开赛';
-  return rawStatus || '未开赛';
+  const officialFt=String(m?.raw?.sectionsNo999 || '').trim();
+
+  // Public UI intentionally has no live-score state. Backend may keep polling,
+  // but scores/minutes are only exposed after the match is confirmed finished.
+  if(api.finished || officialFt || /完成|结束|finished/i.test(rawStatus)) return '完赛';
+
+  if(api.short==='PST' || /延期/.test(rawStatus)) return '延期';
+  if(api.short==='CANC' || /取消/.test(rawStatus)) return '取消';
+  if(api.short==='ABD' || /中止/.test(rawStatus)) return '中止';
+
+  return '未开赛';
 }
 
 function jcScoreInfo(m){
   const officialFt=String(m?.raw?.sectionsNo999 || '').trim().replace(':','-');
   const officialHt=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
   const api=jcApiLiveInfo(m);
-  const ft=officialFt || (api.finished?api.current:'');
-  const htReady=['HT','2H','ET','BT','P','FT','AET','PEN'].includes(api.short);
-  const ht=officialHt || (htReady?api.ht:'') || '';
-  const current=api.current || officialFt || '';
+  const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
+  const finished=api.finished || Boolean(officialFt) || /完成|结束|finished/i.test(rawStatus);
+  const ft=finished ? (officialFt || api.current || '') : '';
+  const ht=finished ? (officialHt || api.ht || '') : '';
+  // Keep actual started state internally for access/automation logic, but never
+  // surface an in-progress score through the public render helpers.
   const started=api.started || Boolean(officialFt);
-  const finished=api.finished || Boolean(officialFt);
+  const current=finished ? ft : '';
   return {ft,ht,current,started,finished,elapsed:api.elapsed,statusShort:api.short};
 }
 
@@ -879,18 +863,13 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       const away=jcOverviewTeamLabel(m.away_team_name);
       const prediction=jcOverviewPredictionParts(m);
 
-      const displayScore=mode==='yesterday'?score.ft:score.current;
+      const displayScore=score.finished?score.ft:'';
       let scoreMeta='';
-      let scoreMetaClass='jc-score-half';
-      if(mode==='yesterday'){
-        scoreMeta=score.ht?'半 '+score.ht:'半 —';
-      }else if(score.started && !score.finished){
-        scoreMeta=jcMatchStatusLabel(m,today);
-        scoreMetaClass='jc-score-live';
-      }else if(score.finished){
-        scoreMeta=score.ht?'半 '+score.ht:'完场';
+      const scoreMetaClass='jc-score-half';
+      if(score.finished){
+        scoreMeta=score.ht?'半 '+score.ht:'完赛';
       }else{
-        scoreMeta='未开赛';
+        scoreMeta=jcMatchStatusLabel(m,today);
       }
       const scoreStack=displayScore
         ? '<strong class="jc-score-full">'+qcEscape(displayScore)+'</strong><span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span>'
