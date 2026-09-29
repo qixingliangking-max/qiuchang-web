@@ -5325,30 +5325,30 @@ body.qc-ticker-authenticated .ticker{
   body.qc-overview-page .qc-site-header .menu-btn,
   body.qc-football-page .qc-site-header .menu-btn,
   body.jc-odds-page .qc-site-header .menu-btn{
-    width:82px!important;
-    height:44px!important;
-    padding:0 11px!important;
+    width:72px!important;
+    height:40px!important;
+    padding:0 8px!important;
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
-    gap:7px!important;
-    border-radius:13px!important;
-    font-size:14px!important;
+    gap:5px!important;
+    border-radius:11px!important;
+    font-size:13px!important;
     font-weight:900!important;
     color:#24324a!important;
     background:#fff!important;
     border:1px solid #dce3ed!important;
-    box-shadow:0 2px 8px rgba(31,42,68,.03)!important;
+    box-shadow:0 1px 4px rgba(31,42,68,.025)!important;
     white-space:nowrap!important;
   }
   .qc-site-header .menu-btn .qc-menu-label{
     display:inline!important;
-    font-size:14px!important;
+    font-size:13px!important;
     line-height:1!important;
   }
   .qc-site-header .menu-btn .qc-menu-icon{
     display:inline!important;
-    font-size:18px!important;
+    font-size:17px!important;
     line-height:1!important;
     transform:translateY(-1px);
   }
