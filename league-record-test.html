@@ -41,9 +41,11 @@
     .qc-league-foot span{font-size:10px;color:#8d98aa}
     .qc-league-foot button{border:0;background:transparent;color:#426aa8;font-size:11px;font-weight:850;cursor:pointer;padding:0}
     .qc-league-empty{background:#fff;border:1px solid #e3e8ef;border-radius:15px;padding:34px 20px;text-align:center;color:#7f8a9d}
-    .qc-league-detail{margin-top:16px;background:#fff;border:1px solid #e3e8ef;border-radius:16px;overflow:hidden}
+    .qc-league-detail{background:#fff;border-top:1px solid #e7ecf3;overflow:hidden}
     .qc-league-detail[hidden]{display:none}
-    .qc-league-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;background:#fbfcfe;border-bottom:1px solid #edf1f5}
+    .qc-league-card.is-open{border-color:#cbd8eb;box-shadow:0 6px 18px rgba(31,42,68,.06)}
+    .qc-league-card.is-open .qc-league-foot{background:#f7f9fd}
+    .qc-league-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;background:#f9fbfe;border-bottom:1px solid #edf1f5}
     .qc-league-detail-head strong{font-size:17px}
     .qc-league-detail-close{border:0;background:#eef2f7;color:#5f6d83;border-radius:8px;height:30px;padding:0 10px;font-size:11px;font-weight:850}
     .qc-league-team-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
@@ -104,7 +106,6 @@
     </section>
 
     <div id="leagueRecordRoot"><div class="qc-league-loading">正在生成联赛档案…</div></div>
-    <section class="qc-league-detail" id="leagueDetail" hidden></section>
   </main>
 
   <div class="footer-note">测试页仅用于联赛数据库建设与统计口径核对；正式上线前不会加入网站导航。</div>
@@ -126,6 +127,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20260930overviewfirstpaint26"></script>
-<script src="league-record-test.js?v=20260930league1"></script>
+<script src="league-record-test.js?v=20260930league2"></script>
 </body>
 </html>
