@@ -308,8 +308,8 @@
   function bindDrawer(){
     const btn=$('#menuBtn'),backdrop=$('#drawerBackdrop');
     if(!btn||!backdrop) return;
-    btn.onclick=()=>backdrop.classList.add('show');
-    backdrop.onclick=e=>{if(e.target===backdrop)backdrop.classList.remove('show');};
+    btn.onclick=()=>backdrop.classList.add('open');
+    backdrop.onclick=e=>{if(e.target===backdrop)backdrop.classList.remove('open');};
   }
 
   function renderPage(allRows,range){
