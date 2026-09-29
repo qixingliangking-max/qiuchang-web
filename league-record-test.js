@@ -215,6 +215,34 @@
     return {loggedIn:true,isPro:pro.data===true};
   }
 
+  const leagueSnapshotCache=new Map();
+
+  async function fetchLeagueSnapshot(comp,stat){
+    const key=String(comp.id)+'|'+String(stat?.season||'');
+    if(leagueSnapshotCache.has(key)) return leagueSnapshotCache.get(key);
+
+    const promise=window.qcSupabase
+      .from('league_archive_snapshots')
+      .select('payload,generated_at')
+      .eq('competition_id',comp.id)
+      .eq('season',stat.season)
+      .eq('is_current',true)
+      .limit(1)
+      .then(result=>{
+        if(result.error) throw result.error;
+        const row=(result.data||[])[0];
+        if(!row?.payload) throw new Error('联赛快照不存在');
+        return {payload:row.payload,generated_at:row.generated_at};
+      })
+      .catch(error=>{
+        leagueSnapshotCache.delete(key);
+        throw error;
+      });
+
+    leagueSnapshotCache.set(key,promise);
+    return promise;
+  }
+
   async function showDetail(comp,stat){
     const card=$$('.qc-league-card').find(x=>String(x.dataset.compId||'')===String(comp.id));
     const box=card?.querySelector('[data-inline-detail]');
@@ -237,14 +265,14 @@
 
     card.classList.add('is-open');
     box.hidden=false;
-    box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">正在读取球队数据…</div>';
+    box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">正在读取联赛快照…</div>';
     $('.qc-league-detail-close',box).onclick=()=>{
       card.classList.remove('is-open');
       box.hidden=true;
     };
 
     if(!stat){
-      box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">这个联赛还没有补入赛季比赛数据。</div>';
+      box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">这个联赛还没有生成赛季快照。</div>';
       $('.qc-league-detail-close',box).onclick=()=>{
         card.classList.remove('is-open');
         box.hidden=true;
@@ -252,57 +280,28 @@
       return;
     }
 
-    const [teamRes,recentRes,goalDistRes,scoreFreqRes,matchRes]=await Promise.all([
-      window.qcSupabase.from('league_team_stats')
-        .select('team_name,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,home_played,home_wins,home_draws,home_losses,home_goals_for,home_goals_against,away_played,away_wins,away_draws,away_losses,away_goals_for,away_goals_against')
-        .eq('competition_id',comp.id).eq('season',stat.season)
-        .order('wins',{ascending:false}),
-      window.qcSupabase.from('league_recent_stats')
-        .select('team_name,window_size,played,wins,draws,losses,goals_for,goals_against,clean_sheets,btts_matches,over_25_matches')
-        .eq('competition_id',comp.id).eq('season',stat.season)
-        .in('window_size',[5,10]),
-      window.qcSupabase.from('league_team_goal_distribution')
-        .select('team_name,scope,sample_size,goals_0_count,goals_1_count,goals_2_count,goals_3_count,goals_4_count,goals_5_count,goals_6_count,goals_7_plus_count,goals_0_pct,goals_1_pct,goals_2_pct,goals_3_pct,goals_4_pct,goals_5_pct,goals_6_pct,goals_7_plus_pct')
-        .eq('competition_id',comp.id).eq('season',stat.season).eq('scope','season'),
-      window.qcSupabase.from('league_team_score_frequency')
-        .select('team_name,scope,rank,score_text,occurrences,sample_size,share_pct,last_seen_date')
-        .eq('competition_id',comp.id).eq('season',stat.season).eq('scope','season')
-        .order('rank',{ascending:true}),
-      window.qcSupabase.from('league_matches')
-        .select('match_date,round_name,home_team_name,away_team_name,ft_home,ft_away')
-        .eq('competition_id',comp.id).eq('season',stat.season)
-        .eq('status','finished')
-    ]);
+    let snapshot;
+    try{
+      snapshot=await fetchLeagueSnapshot(comp,stat);
+    }catch(error){
+      console.error('联赛快照读取失败',comp.code,error);
+      if(box.hidden || !card.classList.contains('is-open')) return;
+      box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">联赛快照读取失败，请稍后刷新。</div>';
+      $('.qc-league-detail-close',box).onclick=()=>{
+        card.classList.remove('is-open');
+        box.hidden=true;
+      };
+      return;
+    }
 
     if(box.hidden || !card.classList.contains('is-open')) return;
 
-    if(teamRes.error || recentRes.error || goalDistRes.error || scoreFreqRes.error || matchRes.error){
-      box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">球队数据读取失败。</div>';
-      $('.qc-league-detail-close',box).onclick=()=>{
-        card.classList.remove('is-open');
-        box.hidden=true;
-      };
-      return;
-    }
-
-    const data=teamRes.data||[];
-    const recentByTeam=new Map();
-    (recentRes.data||[]).forEach(r=>{
-      const key=String(r.team_name);
-      if(!recentByTeam.has(key)) recentByTeam.set(key,new Map());
-      recentByTeam.get(key).set(String(r.window_size),r);
-    });
-    const goalDistByTeam=new Map((goalDistRes.data||[]).map(r=>[String(r.team_name),r]));
-    const scoreFreqByTeam=new Map();
-    (scoreFreqRes.data||[]).forEach(r=>{
-      const key=String(r.team_name);
-      if(!scoreFreqByTeam.has(key)) scoreFreqByTeam.set(key,[]);
-      scoreFreqByTeam.get(key).push(r);
-    });
-    const leagueMatchRows=matchRes.data||[];
+    const payload=snapshot.payload||{};
+    const leagueStat=payload.stat||stat;
+    const data=Array.isArray(payload.teams)?payload.teams:[];
 
     box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜'+esc(stat.season)+'球队数据</strong><button class="qc-league-detail-close" type="button">收起</button></div>'+
-      goalDistributionHtml(stat)+
+      goalDistributionHtml(leagueStat)+
       (data.length?'<div class="qc-league-team-list">'+data.map(teamHtml).join('')+'</div>':'<div class="qc-league-empty">暂时还没有球队统计。</div>');
     $('.qc-league-detail-close',box).onclick=()=>{
       card.classList.remove('is-open');
@@ -333,14 +332,19 @@
 
         const team=data.find(x=>String(x.team_name)===teamName);
         if(!team) return;
+
+        const recentMap=new Map();
+        if(team.recent?.['5']) recentMap.set('5',team.recent['5']);
+        if(team.recent?.['10']) recentMap.set('10',team.recent['10']);
+
         item.classList.add('is-open');
         detail.hidden=false;
         detail.innerHTML=teamDetailHtml(
           team,
-          recentByTeam.get(teamName)||new Map(),
-          goalDistByTeam.get(teamName)||null,
-          scoreFreqByTeam.get(teamName)||[],
-          leagueMatchRows,
+          recentMap,
+          team.goal_distribution||null,
+          Array.isArray(team.score_frequency)?team.score_frequency:[],
+          Array.isArray(team.recent_matches)?team.recent_matches:[],
           comp.name_cn
         );
       };
@@ -361,27 +365,50 @@
         return;
       }
 
-      const [compRes,statRes]=await Promise.all([
-        window.qcSupabase.from('league_competitions').select('id,code,name_cn,name_en,country_cn,tier,season_cycle,priority,is_active').eq('is_active',true).order('priority',{ascending:true}).order('name_cn',{ascending:true}),
-        window.qcSupabase.from('league_season_stats').select('competition_id,season,matches_played,home_wins,draws,away_wins,total_goals,avg_total_goals,home_win_rate,draw_rate,away_win_rate,goals_0,goals_1,goals_2,goals_3,goals_4,goals_5,goals_6,goals_7_plus,btts_matches,clean_sheet_matches,computed_at')
-      ]);
-      if(compRes.error) throw compRes.error;
-      if(statRes.error) throw statRes.error;
+      const snapRes=await window.qcSupabase
+        .from('league_archive_snapshots')
+        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+        .eq('is_current',true)
+        .order('priority',{ascending:true})
+        .order('name_cn',{ascending:true});
 
-      const comps=compRes.data||[];
-      const latest=latestStatsByCompetition(statRes.data||[]);
-      const readyCount=comps.filter(c=>Number(latest.get(String(c.id))?.matches_played||0)>0).length;
+      if(snapRes.error) throw snapRes.error;
+
+      const rows=snapRes.data||[];
+      const comps=rows.map(r=>({
+        id:r.competition_id,
+        code:r.code,
+        name_cn:r.name_cn,
+        name_en:r.name_en,
+        country_cn:r.country_cn,
+        tier:r.tier,
+        season_cycle:r.season_cycle,
+        priority:r.priority
+      }));
+      const latest=new Map(rows.map(r=>[String(r.competition_id),{
+        competition_id:r.competition_id,
+        season:r.season,
+        matches_played:r.matches_played,
+        total_goals:r.total_goals,
+        avg_total_goals:r.avg_total_goals,
+        home_wins:r.home_wins,
+        draws:r.draws,
+        away_wins:r.away_wins,
+        generated_at:r.generated_at
+      }]));
+      const readyCount=rows.filter(r=>Number(r.matches_played||0)>0).length;
+
       $('#leagueSummary').innerHTML=
-        '<span>首批 '+comps.length+' 个联赛</span>'+
-        '<span>已有数据 '+readyCount+' 个</span>'+
-        '<span>待采集 '+(comps.length-readyCount)+' 个</span>'+
-        '<span>联赛 + 球队 + 主客场 + 近期5/10场</span>';
+        '<span>联赛 '+comps.length+' 个</span>'+
+        '<span>快照就绪 '+readyCount+' 个</span>'+
+        '<span>单联赛按需读取</span>'+
+        '<span>球队详情本地展开 · 0额外请求</span>';
 
       const regions=['全部','欧洲','北欧','亚洲','美洲'];
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
-          '<div class="qc-league-note">只显示已入库真实比赛；无数据时不生成统计结论。</div>'+
+          '<div class="qc-league-note">页面只读已生成快照；统计计算与展示读取完全分离。</div>'+
         '</div>'+
         '<div class="qc-league-grid">'+comps.map(c=>cardHtml(c,latest.get(String(c.id)))).join('')+'</div>';
 
