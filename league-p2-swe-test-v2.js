@@ -410,16 +410,16 @@
         );
 
         if(comp.code==='SWE_AS'){
-          detail.innerHTML='<div class="qc-p2-loading">正在读取P2｜比赛质量＋状态路径…</div>'+p1Html;
+          detail.innerHTML=p1Html+'<div class="qc-p2-loading">正在读取P2｜比赛质量＋状态路径…</div>';
           fetchTeamP2(teamName,comp,stat)
             .then(p2=>{
               if(detail.hidden) return;
-              detail.innerHTML=p2Html(p2)+p1Html;
+              detail.innerHTML=p1Html+p2Html(p2);
             })
             .catch(error=>{
               console.error('P2读取失败',teamName,error);
               if(detail.hidden) return;
-              detail.innerHTML='<div class="qc-p2-empty">P2读取失败，请稍后刷新。</div>'+p1Html;
+              detail.innerHTML=p1Html+'<div class="qc-p2-empty">P2读取失败，请稍后刷新。</div>';
             });
         }else{
           detail.innerHTML=p1Html;
