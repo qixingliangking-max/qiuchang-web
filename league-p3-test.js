@@ -51,14 +51,25 @@
         '</tbody></table></div>'+
       '</section>'+
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-D｜Squad Depth</strong><span>第一选择 / 第二选择 / Replacement Gap</span></div>'+
-        '<div class="p3-depth">'+depth.map(d=>
-          '<div class="p3-depth-card"><h4>'+esc(posLabel[d.position_group]||d.position_group)+'</h4>'+
-            '<div class="p3-depth-line"><span>第一选择</span><b>'+esc(d.first_choice?.player_name||'—')+' · '+n(d.first_choice?.importance,1)+'</b></div>'+
-            '<div class="p3-depth-line"><span>第二选择</span><b>'+esc(d.second_choice?.player_name||'—')+' · '+n(d.second_choice?.importance,1)+'</b></div>'+
-            '<div class="p3-depth-line"><span>替代差</span><b>'+n(d.replacement_gap,1)+'</b></div>'+
-            '<div class="p3-depth-line"><span>Depth Score</span><b>'+n(d.depth_score,1)+'</b></div>'+
-          '</div>').join('')+'</div>'+
+        '<div class="p3-head"><strong>P3-D｜Squad Depth</strong><span>首发槽位 / 主力组 / 替补池</span></div>'+
+        '<div class="p3-depth">'+depth.map(d=>{
+          const primary=(d.primary_unit||[]).map(x=>x.player_name+' · '+n(x.importance,1)).join('｜')||'—';
+          const backups=(d.replacement_pool||[]).slice(0,3).map(x=>
+            x.player_name+' · '+(x.importance==null?'未验证':n(x.importance,1))+
+            (x.evidence==='UNTESTED'?'（0分钟）':'')
+          ).join('｜')||'—';
+          const gap=d.replacement_gap==null?'未验证':n(d.replacement_gap,1);
+          const score=d.depth_score==null?'未验证':n(d.depth_score,1);
+          return '<div class="p3-depth-card"><h4>'+esc(posLabel[d.position_group]||d.position_group)+'｜首发槽位 '+esc(d.starter_slots??'—')+'</h4>'+
+            '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
+            '<div class="p3-depth-line"><span>替补池</span><b>'+esc(backups)+'</b></div>'+
+            '<div class="p3-depth-line"><span>主力组强度</span><b>'+n(d.primary_unit_strength,1)+'</b></div>'+
+            '<div class="p3-depth-line"><span>替补层强度</span><b>'+(d.replacement_pool_strength==null?'未验证':n(d.replacement_pool_strength,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>Replacement Gap</span><b>'+gap+'</b></div>'+
+            '<div class="p3-depth-line"><span>Depth Score</span><b>'+score+'</b></div>'+
+            '<div class="p3-depth-line"><span>替补证据</span><b>'+esc(d.replacement_confidence||'—')+'</b></div>'+
+          '</div>';
+        }).join('')+'</div>'+
       '</section>'+
       '<section class="p3-section">'+
         '<div class="p3-head"><strong>P3-E｜Availability Impact Engine</strong><span>当天伤停由赛前模型输入</span></div>'+
