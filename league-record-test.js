@@ -4,7 +4,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
   const regionOf=c=>{
-    if(String(c.archive_group||'')==='洲际赛事') return '洲际赛事';
+    if(['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(String(c.code||''))) return '洲际赛事';
     const country=String(c.country_cn||'');
     if(['英格兰','西班牙','意大利','德国','法国','荷兰','葡萄牙'].includes(country)) return '欧洲';
     if(['芬兰','瑞典','挪威'].includes(country)) return '北欧';
@@ -64,11 +64,10 @@
     const ready=Boolean(stat&&Number(stat.matches_played)>0);
     const outcomePct=ready?outcomePctTriplet(stat):['—','—','—'];
     const kind=c.competition_label||(c.tier===1?'一级联赛':'二级联赛');
-    const statusText=ready?'已有数据':(c.preview_only?'准备接入':'待采集');
     return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'" data-comp-id="'+esc(c.id)+'">'+
       '<div class="qc-league-card-head">'+
         '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+esc(kind)+' · '+esc(cycleText(c))+'</small></div>'+
-        '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+statusText+'</span>'+
+        '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+(ready?'已有数据':'待采集')+'</span>'+
       '</div>'+
       '<div class="qc-league-core">'+
         '<div><small>已赛</small><b>'+(ready?esc(stat.matches_played):'—')+'</b></div>'+
@@ -77,7 +76,7 @@
         '<div><small>客胜</small><b>'+esc(outcomePct[2])+'</b></div>'+
         '<div><small>场均进球</small><b>'+(ready?esc(fmtNum(stat.avg_total_goals)):'—')+'</b></div>'+
       '</div>'+
-      '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):(c.preview_only?'测试页布局占位｜暂未建库':'等待补齐本赛季全部比赛'))+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
+      '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):'等待补齐本赛季全部比赛')+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
       '<section class="qc-league-detail" data-inline-detail="'+esc(c.id)+'" hidden></section>'+
     '</article>';
   }
@@ -190,6 +189,66 @@
       highFreqScoreHtml(t.played,scoreRows)+
       teamRecentMatchesHtml(t.team_name,matchRows,leagueName)+
       '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>比分TOP6</span><span>最近比赛</span></div>';
+  }
+
+  const p2Cache=new Map();
+
+  function p2ScopeLabel(scope){
+    return ({season:'赛季',home:'主场',away:'客场',last5:'近5',last10:'近10'})[scope]||scope;
+  }
+
+  function p2Num(v,d=2){
+    return v==null?'—':Number(v).toFixed(d);
+  }
+
+  function p2Wdl(w,d,l){
+    return Number(w||0)+'/'+Number(d||0)+'/'+Number(l||0);
+  }
+
+  function p2ScopeHtml(scope,row){
+    if(!row) return '';
+    return '<div class="qc-p2-card">'+
+      '<div class="qc-p2-card-title"><strong>'+esc(p2ScopeLabel(scope))+'</strong><span>N='+Number(row.sample_size||0)+'</span></div>'+
+      '<div class="qc-p2-row"><span>xG / xGA</span><b>'+p2Num(row.xg_for_avg)+' / '+p2Num(row.xg_against_avg)+'</b></div>'+
+      '<div class="qc-p2-row"><span>射门 / 射正</span><b>'+p2Num(row.shots_avg,1)+' / '+p2Num(row.shots_on_target_avg,1)+'</b></div>'+
+      '<div class="qc-p2-row"><span>射正率 / 转化率</span><b>'+p2Num(row.shot_on_target_rate_pct,1)+'% / '+p2Num(row.goal_conversion_rate_pct,1)+'%</b></div>'+
+      '<div class="qc-p2-row"><span>上半场 进/失</span><b>'+Number(row.first_half_goals_for||0)+' / '+Number(row.first_half_goals_against||0)+'</b></div>'+
+      '<div class="qc-p2-row"><span>下半场 进/失</span><b>'+Number(row.second_half_goals_for||0)+' / '+Number(row.second_half_goals_against||0)+'</b></div>'+
+      '<div class="qc-p2-row"><span>HT 领先/平/落后</span><b>'+Number(row.ht_lead_count||0)+'/'+Number(row.ht_draw_count||0)+'/'+Number(row.ht_trail_count||0)+'</b></div>'+
+      '<div class="qc-p2-row"><span>先得分 / 先失球</span><b>'+Number(row.first_goal_count||0)+' / '+Number(row.first_concede_count||0)+'</b></div>'+
+      '<div class="qc-p2-row"><span>先得分后 胜/平/负</span><b>'+p2Wdl(row.first_goal_final_win,row.first_goal_final_draw,row.first_goal_final_loss)+'</b></div>'+
+      '<div class="qc-p2-row"><span>领先过后 胜/平/负</span><b>'+p2Wdl(row.led_any_final_win,row.led_any_final_draw,row.led_any_final_loss)+'</b></div>'+
+      '<div class="qc-p2-row"><span>落后过后 胜/平/负</span><b>'+p2Wdl(row.trailed_any_final_win,row.trailed_any_final_draw,row.trailed_any_final_loss)+'</b></div>'+
+      '<div class="qc-p2-coverage">覆盖率 xG '+p2Num(row.xg_coverage_pct,0)+'% · 射门 '+p2Num(row.shots_coverage_pct,0)+'% · 路径 '+p2Num(row.events_coverage_pct,0)+'%</div>'+
+    '</div>';
+  }
+
+  function p2Html(data){
+    if(!data?.ok) return '<div class="qc-p2-empty">P2暂未生成。</div>';
+    const scopes=data.scopes||{};
+    const order=['season','home','away','last5','last10'];
+    return '<section class="qc-p2-wrap">'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>P2_VALID</span></div><em>真实xG / 射门 / 比赛事件</em></div>'+
+      '<div class="qc-p2-grid">'+order.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
+    '</section>';
+  }
+
+  async function fetchTeamP2(teamName,comp,stat){
+    const key=String(comp.code)+'|'+String(stat?.season||'')+'|'+String(teamName);
+    if(p2Cache.has(key)) return p2Cache.get(key);
+    const promise=window.qcSupabase.rpc('get_league_team_p2',{
+      p_team_query:teamName,
+      p_league_code:comp.code,
+      p_season:String(stat.season)
+    }).then(({data,error})=>{
+      if(error) throw error;
+      return data;
+    }).catch(err=>{
+      p2Cache.delete(key);
+      throw err;
+    });
+    p2Cache.set(key,promise);
+    return promise;
   }
 
   function teamHtml(t){
@@ -352,6 +411,29 @@
           Array.isArray(team.recent_matches)?team.recent_matches:[],
           comp.name_cn
         );
+
+        const hasSnapshotP2=team?.p2_meta?.status==='P2_VALID' && team?.p2 && Object.keys(team.p2).length>0;
+        if(hasSnapshotP2){
+          const host=document.createElement('div');
+          host.className='qc-p2-host';
+          host.innerHTML=p2Html({ok:true,scopes:team.p2,status:'P2_VALID'});
+          detail.appendChild(host);
+        }else{
+          const host=document.createElement('div');
+          host.className='qc-p2-host';
+          host.innerHTML='<div class="qc-p2-loading">正在读取P2…</div>';
+          detail.appendChild(host);
+          fetchTeamP2(teamName,comp,stat)
+            .then(p2=>{
+              if(detail.hidden) return;
+              host.innerHTML=p2Html(p2);
+            })
+            .catch(error=>{
+              console.error('P2读取失败',teamName,error);
+              if(detail.hidden) return;
+              host.innerHTML='<div class="qc-p2-empty">P2暂未生成。</div>';
+            });
+        }
       };
     });
   }
@@ -362,7 +444,7 @@
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
       const access=await getAccess();
       if(!access.loggedIn){
-        root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>联赛档案测试页暂时只用于内部核对。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
+        root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
         return;
       }
       if(!access.isPro){
@@ -398,9 +480,8 @@
         tier:r.tier,
         season_cycle:r.season_cycle,
         priority:r.priority,
-        archive_group:['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(r.code)?'洲际赛事':null,
-        competition_label:r.code==='UEFA_UNL'?'国家队赛事':(['UEFA_UCL','UEFA_UEL'].includes(r.code)?'俱乐部赛事':null),
-        preview_only:['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(r.code)
+        preview_only:['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(r.code),
+        competition_label:r.code==='UEFA_UNL'?'国家队赛事':(['UEFA_UCL','UEFA_UEL'].includes(r.code)?'俱乐部赛事':null)
       }));
       const latest=new Map(rows.map(r=>[String(r.competition_id),{
         competition_id:r.competition_id,
