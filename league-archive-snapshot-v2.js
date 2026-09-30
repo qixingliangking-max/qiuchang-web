@@ -4,6 +4,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
   const regionOf=c=>{
+    if(['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(String(c.code||''))) return '洲际赛事';
     const country=String(c.country_cn||'');
     if(['英格兰','西班牙','意大利','德国','法国','荷兰','葡萄牙'].includes(country)) return '欧洲';
     if(['芬兰','瑞典','挪威'].includes(country)) return '北欧';
@@ -62,9 +63,10 @@
   function cardHtml(c,stat){
     const ready=Boolean(stat&&Number(stat.matches_played)>0);
     const outcomePct=ready?outcomePctTriplet(stat):['—','—','—'];
+    const kind=c.competition_label||(c.tier===1?'一级联赛':'二级联赛');
     return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'" data-comp-id="'+esc(c.id)+'">'+
       '<div class="qc-league-card-head">'+
-        '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+(c.tier===1?'一级联赛':'二级联赛')+' · '+esc(cycleText(c))+'</small></div>'+
+        '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+esc(kind)+' · '+esc(cycleText(c))+'</small></div>'+
         '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+(ready?'已有数据':'待采集')+'</span>'+
       '</div>'+
       '<div class="qc-league-core">'+
@@ -231,13 +233,13 @@
     const scopes=team?.p2||{};
     const meta=team?.p2_meta||{};
     const order=['season','home','away','last5','last10'];
-    const complete=order.every(k=>scopes[k]);
-    if(!complete || meta.status!=='P2_VALID'){
+    const available=order.filter(k=>scopes[k]);
+    if(!available.length || meta.status!=='P2_VALID'){
       return '<div class="qc-p2-empty">P2快照暂未生成。</div>';
     }
     return '<section class="qc-p2-wrap">'+
-      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(comp?.name_cn||'联赛档案')+'</span><span>P2_VALID</span></div><em>与P1同轮快照</em></div>'+
-      '<div class="qc-p2-grid">'+order.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(comp?.name_cn||'联赛档案')+'</span><span>P2_VALID</span></div><em>与P1同批快照</em></div>'+
+      '<div class="qc-p2-grid">'+available.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
     '</section>';
   }
 
@@ -429,7 +431,11 @@
 
       if(snapRes.error) throw snapRes.error;
 
-      const rows=snapRes.data||[];
+      const rows=(snapRes.data||[]).slice().sort((a,b)=>{
+        const au=['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(a.code)?0:1;
+        const bu=['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(b.code)?0:1;
+        return au-bu || Number(a.priority||999)-Number(b.priority||999) || String(a.name_cn||'').localeCompare(String(b.name_cn||''));
+      });
       const comps=rows.map(r=>({
         id:r.competition_id,
         code:r.code,
@@ -438,7 +444,8 @@
         country_cn:r.country_cn,
         tier:r.tier,
         season_cycle:r.season_cycle,
-        priority:r.priority
+        priority:r.priority,
+        competition_label:r.code==='UEFA_UNL'?'国家队赛事':(['UEFA_UCL','UEFA_UEL'].includes(r.code)?'俱乐部赛事':null)
       }));
       const latest=new Map(rows.map(r=>[String(r.competition_id),{
         competition_id:r.competition_id,
@@ -454,7 +461,7 @@
       const readyCount=rows.filter(r=>Number(r.matches_played||0)>0).length;
 
 
-      const regions=['全部','欧洲','北欧','亚洲','美洲'];
+      const regions=['全部','洲际赛事','欧洲','北欧','亚洲','美洲'];
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
