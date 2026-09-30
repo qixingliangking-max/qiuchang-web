@@ -234,7 +234,7 @@
     const scopes=data.scopes||{};
     const order=['season','home','away','last5','last10'];
     return '<section class="qc-p2-wrap">'+
-      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(data?.identity?.league_name||'北欧')+'</span><span>P2_VALID</span></div><em>比赛质量＋状态路径</em></div>'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(data?.identity?.league_name||'联赛档案')+'</span><span>P2_VALID</span></div><em>比赛质量＋状态路径</em></div>'+
       '<div class="qc-p2-grid">'+order.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
     '</section>';
   }
