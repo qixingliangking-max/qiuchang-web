@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>球场档案｜P3 韩职测试</title>
+  <link rel="stylesheet" href="styles.css?v=20260930leagueprod2">
+  <style>
+    body{background:#f5f7fb;color:#22304a}
+    .p3-shell{max-width:1180px;margin:0 auto;padding:16px 14px 52px}
+    .p3-hero{background:#fff;border:1px solid #e3e8ef;border-radius:16px;padding:18px;box-shadow:0 5px 18px rgba(31,42,68,.04)}
+    .p3-hero h1{margin:0;font-size:24px}.p3-hero p{margin:7px 0 0;color:#77849a;font-size:12px;line-height:1.65}
+    .p3-top{display:flex;gap:8px;align-items:center;margin:12px 0}
+    .p3-select{height:38px;border:1px solid #dce3ec;border-radius:9px;background:#fff;padding:0 10px;font-weight:800;color:#2d3a52}
+    .p3-badge{font-size:10px;font-weight:900;color:#2f6a50;background:#eaf7ef;border-radius:999px;padding:6px 9px}
+    .p3-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+    .p3-kpi,.p3-card{background:#fff;border:1px solid #e3e8ef;border-radius:12px;padding:11px}
+    .p3-kpi small{display:block;color:#8a96a8;font-size:9px;font-weight:800}.p3-kpi b{display:block;margin-top:3px;font-size:17px}
+    .p3-section{margin-top:12px;background:#fff;border:1px solid #e3e8ef;border-radius:14px;overflow:hidden}
+    .p3-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 13px;background:#f8fafd;border-bottom:1px solid #edf1f5}
+    .p3-head strong{font-size:14px}.p3-head span{font-size:9px;color:#8793a5}
+    .p3-summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:10px}
+    .p3-small{border:1px solid #edf1f5;border-radius:9px;padding:8px;background:#fbfcfe}
+    .p3-small small{display:block;color:#8b97aa;font-size:8px}.p3-small b{display:block;margin-top:3px;font-size:12px}
+    .p3-table-wrap{overflow-x:auto}.p3-table{width:100%;border-collapse:collapse;font-size:10px;min-width:840px}
+    .p3-table th,.p3-table td{padding:8px 7px;border-bottom:1px solid #eef2f6;text-align:center;white-space:nowrap}
+    .p3-table th{background:#fafbfd;color:#8390a3;font-size:9px}.p3-table td:first-child{text-align:left;font-weight:850}
+    .p3-depth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px}
+    .p3-depth-card{border:1px solid #e7ecf3;border-radius:10px;padding:9px;background:#fbfcfe}
+    .p3-depth-card h4{margin:0 0 6px;font-size:11px}.p3-depth-line{display:flex;justify-content:space-between;gap:7px;font-size:9px;line-height:1.65;color:#7e8a9c}
+    .p3-depth-line b{color:#2d3a52;font-size:10px}
+    .p3-factor{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:10px}
+    .p3-factor .p3-small b{font-size:15px}
+    .p3-impact-controls{display:flex;gap:7px;align-items:center;padding:10px;border-bottom:1px solid #edf1f5}
+    .p3-impact-controls select{height:34px;border:1px solid #dce3ec;border-radius:8px;background:#fff;padding:0 8px}
+    .p3-impact-controls button{height:34px;border:0;border-radius:8px;background:#2f4d78;color:#fff;padding:0 12px;font-weight:850}
+    .p3-impact-result{padding:10px}
+    .p3-impact-box{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+    .p3-note{font-size:9px;color:#8c98aa;padding:10px 12px;border-top:1px solid #edf1f5;background:#fbfcfe}
+    .p3-loading{padding:34px;text-align:center;color:#7f8b9e}
+    @media(max-width:760px){
+      .p3-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .p3-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .p3-depth{grid-template-columns:1fr}
+      .p3-factor{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .p3-impact-box{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .p3-hero h1{font-size:20px}
+      .p3-top{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="p3-shell">
+    <section class="p3-hero">
+      <h1>P3｜球员与阵容贡献模块</h1>
+      <p>KOR_K1｜2026 试点。历史阵容与球员贡献来自 FotMob / Opta；当天伤停、停赛、伤疑不在P3长期档案内，由赛前模型提供。</p>
+    </section>
+    <div class="p3-top">
+      <select id="teamSelect" class="p3-select"></select>
+      <span class="p3-badge">P3_V1_KOR_TEST</span>
+    </div>
+    <div id="p3Root" class="p3-loading">正在读取P3…</div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js?v=20260927autologin1"></script>
+<script src="league-p3-test.js?v=20261001p3kor1"></script>
+</body>
+</html>
