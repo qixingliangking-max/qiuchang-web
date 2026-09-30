@@ -452,25 +452,16 @@
         return;
       }
 
-      const [snapRes,previewRes]=await Promise.all([
-        window.qcSupabase
-          .from('league_archive_snapshots')
-          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-          .eq('is_current',true)
-          .order('priority',{ascending:true})
-          .order('name_cn',{ascending:true}),
-        window.qcSupabase
-          .from('league_archive_snapshots')
-          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-          .eq('season','2026/27')
-          .in('code',['UEFA_UCL','UEFA_UEL','UEFA_UNL'])
-          .order('priority',{ascending:true})
-      ]);
+      const snapRes=await window.qcSupabase
+        .from('league_archive_snapshots')
+        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+        .eq('is_current',true)
+        .order('priority',{ascending:true})
+        .order('name_cn',{ascending:true});
 
       if(snapRes.error) throw snapRes.error;
-      if(previewRes.error) throw previewRes.error;
 
-      const rows=[...(previewRes.data||[]),...(snapRes.data||[])];
+      const rows=snapRes.data||[];
       const comps=rows.map(r=>({
         id:r.competition_id,
         code:r.code,
