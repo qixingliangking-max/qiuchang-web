@@ -94,6 +94,23 @@
     .qc-team-recent-row span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .qc-team-detail-foot{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
     .qc-team-detail-foot span{font-size:9px;color:#6f7d92;background:#eef2f7;border-radius:6px;padding:4px 6px;font-weight:800}
+    .qc-p2-host{margin-top:10px}
+    .qc-p2-loading,.qc-p2-empty{border:1px solid #e4eaf2;border-radius:10px;background:#fff;padding:14px;text-align:center;color:#8290a5;font-size:10px}
+    .qc-p2-wrap{border:1px solid #dfe7f2;border-radius:12px;background:#fff;overflow:hidden}
+    .qc-p2-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;background:#f4f7fc;border-bottom:1px solid #e8edf4}
+    .qc-p2-head>div{display:flex;align-items:center;gap:7px;min-width:0}
+    .qc-p2-head strong{font-size:11px;color:#32415a}
+    .qc-p2-head span{font-size:8px;color:#5277af;background:#eaf1fc;border-radius:999px;padding:3px 6px;font-weight:850;white-space:nowrap}
+    .qc-p2-head em{font-size:8px;color:#8d99aa;font-style:normal;white-space:nowrap}
+    .qc-p2-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:8px}
+    .qc-p2-card{border:1px solid #e8edf3;border-radius:9px;background:#fbfcfe;padding:8px;min-width:0}
+    .qc-p2-card-title{display:flex;align-items:center;justify-content:space-between;gap:6px;padding-bottom:6px;margin-bottom:4px;border-bottom:1px solid #edf1f5}
+    .qc-p2-card-title strong{font-size:10px;color:#35435a}
+    .qc-p2-card-title span{font-size:8px;color:#8a96a8}
+    .qc-p2-row{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:8px;line-height:1.65}
+    .qc-p2-row span{color:#8390a3}
+    .qc-p2-row b{color:#2c3950;font-size:9px;white-space:nowrap}
+    .qc-p2-coverage{margin-top:5px;padding-top:5px;border-top:1px dashed #e5eaf0;color:#7f8da1;font-size:7.5px;line-height:1.45}
     .qc-league-gate,.qc-league-loading{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:38px 20px;text-align:center;color:#66748b;margin-top:18px}
     .qc-league-gate h2{margin:0 0 8px;color:#26344d}
     .qc-league-gate a{display:inline-flex;margin-top:14px;background:#263d66;color:#fff;text-decoration:none;border-radius:10px;padding:10px 16px;font-weight:850}
@@ -121,6 +138,11 @@
       .qc-team-score-title{align-items:flex-start;flex-direction:column;gap:2px}
       .qc-team-recent-row{grid-template-columns:50px 42px 68px 28px minmax(0,1fr);gap:4px;padding:6px;font-size:8px}
       .qc-team-score-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-p2-head{align-items:flex-start;flex-direction:column;gap:3px}
+      .qc-p2-grid{grid-template-columns:1fr;gap:6px}
+      .qc-p2-card{padding:9px}
+      .qc-p2-row{font-size:9px}
+      .qc-p2-row b{font-size:10px}
       .qc-team-score-item{padding:7px 4px}
       .qc-site-header{height:54px!important;padding:0 14px!important}
       .qc-brand-line{gap:5px!important}
@@ -178,6 +200,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20260930perf1"></script>
-<script src="league-archive-stable.js?v=20260930nav1"></script>
+<script src="league-archive-p2.js?v=20260930p2prod1"></script>
 </body>
 </html>
