@@ -4,6 +4,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
   const regionOf=c=>{
+    if(String(c.archive_group||'')==='洲际赛事') return '洲际赛事';
     const country=String(c.country_cn||'');
     if(['英格兰','西班牙','意大利','德国','法国','荷兰','葡萄牙'].includes(country)) return '欧洲';
     if(['芬兰','瑞典','挪威'].includes(country)) return '北欧';
@@ -11,6 +12,45 @@
     if(country==='美国') return '美洲';
     return '其他';
   };
+
+  const TEST_CONTINENTAL=[
+    {
+      id:'preview-uefa-ucl',
+      code:'UEFA_UCL',
+      name_cn:'欧冠',
+      name_en:'UEFA Champions League',
+      country_cn:'欧洲',
+      tier:0,
+      season_cycle:'cross_year',
+      archive_group:'洲际赛事',
+      competition_label:'俱乐部赛事',
+      preview_only:true
+    },
+    {
+      id:'preview-uefa-uel',
+      code:'UEFA_UEL',
+      name_cn:'欧联',
+      name_en:'UEFA Europa League',
+      country_cn:'欧洲',
+      tier:0,
+      season_cycle:'cross_year',
+      archive_group:'洲际赛事',
+      competition_label:'俱乐部赛事',
+      preview_only:true
+    },
+    {
+      id:'preview-uefa-unl',
+      code:'UEFA_UNL',
+      name_cn:'欧国联',
+      name_en:'UEFA Nations League',
+      country_cn:'欧洲',
+      tier:0,
+      season_cycle:'cross_year',
+      archive_group:'洲际赛事',
+      competition_label:'国家队赛事',
+      preview_only:true
+    }
+  ];
 
   function cycleText(c){
     return c.season_cycle==='calendar_year'?'自然年赛季':'跨年赛季';
@@ -62,10 +102,12 @@
   function cardHtml(c,stat){
     const ready=Boolean(stat&&Number(stat.matches_played)>0);
     const outcomePct=ready?outcomePctTriplet(stat):['—','—','—'];
+    const kind=c.competition_label||(c.tier===1?'一级联赛':'二级联赛');
+    const statusText=ready?'已有数据':(c.preview_only?'准备接入':'待采集');
     return '<article class="qc-league-card" data-region="'+esc(regionOf(c))+'" data-comp-id="'+esc(c.id)+'">'+
       '<div class="qc-league-card-head">'+
-        '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+(c.tier===1?'一级联赛':'二级联赛')+' · '+esc(cycleText(c))+'</small></div>'+
-        '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+(ready?'已有数据':'待采集')+'</span>'+
+        '<div class="qc-league-title"><strong>'+esc(c.name_cn)+'</strong><small>'+esc(c.country_cn)+' · '+esc(kind)+' · '+esc(cycleText(c))+'</small></div>'+
+        '<span class="qc-league-status '+(ready?'ready':'wait')+'">'+statusText+'</span>'+
       '</div>'+
       '<div class="qc-league-core">'+
         '<div><small>已赛</small><b>'+(ready?esc(stat.matches_played):'—')+'</b></div>'+
@@ -74,7 +116,7 @@
         '<div><small>客胜</small><b>'+esc(outcomePct[2])+'</b></div>'+
         '<div><small>场均进球</small><b>'+(ready?esc(fmtNum(stat.avg_total_goals)):'—')+'</b></div>'+
       '</div>'+
-      '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):'等待补齐本赛季全部比赛')+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
+      '<div class="qc-league-foot"><span>'+(ready?'赛季 '+esc(stat.season):(c.preview_only?'测试页布局占位｜暂未建库':'等待补齐本赛季全部比赛'))+'</span><button type="button" data-league-id="'+esc(c.id)+'">'+(ready?'查看球队':'查看档案')+'</button></div>'+
       '<section class="qc-league-detail" data-inline-detail="'+esc(c.id)+'" hidden></section>'+
     '</article>';
   }
@@ -375,7 +417,7 @@
       if(snapRes.error) throw snapRes.error;
 
       const rows=snapRes.data||[];
-      const comps=rows.map(r=>({
+      const leagueComps=rows.map(r=>({
         id:r.competition_id,
         code:r.code,
         name_cn:r.name_cn,
@@ -385,6 +427,7 @@
         season_cycle:r.season_cycle,
         priority:r.priority
       }));
+      const comps=[...TEST_CONTINENTAL,...leagueComps];
       const latest=new Map(rows.map(r=>[String(r.competition_id),{
         competition_id:r.competition_id,
         season:r.season,
@@ -399,7 +442,7 @@
       const readyCount=rows.filter(r=>Number(r.matches_played||0)>0).length;
 
 
-      const regions=['全部','欧洲','北欧','亚洲','美洲'];
+      const regions=['全部','洲际赛事','欧洲','北欧','亚洲','美洲'];
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
