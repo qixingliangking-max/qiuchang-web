@@ -13,45 +13,6 @@
     return '其他';
   };
 
-  const TEST_CONTINENTAL=[
-    {
-      id:'preview-uefa-ucl',
-      code:'UEFA_UCL',
-      name_cn:'欧冠',
-      name_en:'UEFA Champions League',
-      country_cn:'欧洲',
-      tier:0,
-      season_cycle:'cross_year',
-      archive_group:'洲际赛事',
-      competition_label:'俱乐部赛事',
-      preview_only:true
-    },
-    {
-      id:'preview-uefa-uel',
-      code:'UEFA_UEL',
-      name_cn:'欧联',
-      name_en:'UEFA Europa League',
-      country_cn:'欧洲',
-      tier:0,
-      season_cycle:'cross_year',
-      archive_group:'洲际赛事',
-      competition_label:'俱乐部赛事',
-      preview_only:true
-    },
-    {
-      id:'preview-uefa-unl',
-      code:'UEFA_UNL',
-      name_cn:'欧国联',
-      name_en:'UEFA Nations League',
-      country_cn:'欧洲',
-      tier:0,
-      season_cycle:'cross_year',
-      archive_group:'洲际赛事',
-      competition_label:'国家队赛事',
-      preview_only:true
-    }
-  ];
-
   function cycleText(c){
     return c.season_cycle==='calendar_year'?'自然年赛季':'跨年赛季';
   }
@@ -263,12 +224,14 @@
     const key=String(comp.id)+'|'+String(stat?.season||'');
     if(leagueSnapshotCache.has(key)) return leagueSnapshotCache.get(key);
 
-    const promise=window.qcSupabase
+    let query=window.qcSupabase
       .from('league_archive_snapshots')
       .select('payload,generated_at')
       .eq('competition_id',comp.id)
-      .eq('season',stat.season)
-      .eq('is_current',true)
+      .eq('season',stat.season);
+    if(!comp.preview_only) query=query.eq('is_current',true);
+    const promise=query
+      .order('generated_at',{ascending:false})
       .limit(1)
       .then(result=>{
         if(result.error) throw result.error;
@@ -407,17 +370,26 @@
         return;
       }
 
-      const snapRes=await window.qcSupabase
-        .from('league_archive_snapshots')
-        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-        .eq('is_current',true)
-        .order('priority',{ascending:true})
-        .order('name_cn',{ascending:true});
+      const [snapRes,previewRes]=await Promise.all([
+        window.qcSupabase
+          .from('league_archive_snapshots')
+          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+          .eq('is_current',true)
+          .order('priority',{ascending:true})
+          .order('name_cn',{ascending:true}),
+        window.qcSupabase
+          .from('league_archive_snapshots')
+          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+          .eq('season','2026/27')
+          .in('code',['UEFA_UCL','UEFA_UEL','UEFA_UNL'])
+          .order('priority',{ascending:true})
+      ]);
 
       if(snapRes.error) throw snapRes.error;
+      if(previewRes.error) throw previewRes.error;
 
-      const rows=snapRes.data||[];
-      const leagueComps=rows.map(r=>({
+      const rows=[...(previewRes.data||[]),...(snapRes.data||[])];
+      const comps=rows.map(r=>({
         id:r.competition_id,
         code:r.code,
         name_cn:r.name_cn,
@@ -425,9 +397,11 @@
         country_cn:r.country_cn,
         tier:r.tier,
         season_cycle:r.season_cycle,
-        priority:r.priority
+        priority:r.priority,
+        archive_group:['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(r.code)?'洲际赛事':null,
+        competition_label:r.code==='UEFA_UNL'?'国家队赛事':(['UEFA_UCL','UEFA_UEL'].includes(r.code)?'俱乐部赛事':null),
+        preview_only:['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(r.code)
       }));
-      const comps=[...TEST_CONTINENTAL,...leagueComps];
       const latest=new Map(rows.map(r=>[String(r.competition_id),{
         competition_id:r.competition_id,
         season:r.season,
