@@ -27,6 +27,38 @@
     .qc-p3-preview-card{border:1px solid #e8edf3;border-radius:9px;background:#fbfcfe;padding:9px;min-width:0}
     .qc-p3-preview-card strong{display:block;font-size:10px;color:#35435a}
     .qc-p3-preview-card span{display:block;margin-top:4px;color:#8491a4;font-size:8px;line-height:1.5}
+    .qc-p3-loading,.qc-p3-empty{border:1px solid #e4eaf2;border-radius:10px;background:#fff;padding:16px;text-align:center;color:#8290a5;font-size:10px;line-height:1.65}
+    .qc-p3-real-wrap{border:1px solid #dfe7f2;border-radius:12px;background:#fff;overflow:hidden}
+    .qc-p3-real-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:11px 12px;background:#f4f7fc;border-bottom:1px solid #e8edf4}
+    .qc-p3-real-head strong{display:block;font-size:12px;color:#2e3d56}.qc-p3-real-head span{font-size:8px;color:#7d8a9e}
+    .qc-p3-real-head>div:last-child{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+    .qc-p3-version,.qc-p3-valid{display:inline-flex!important;align-items:center;padding:4px 6px;border-radius:999px;font-weight:850}
+    .qc-p3-version{background:#eef2f8;color:#68778d!important}.qc-p3-valid{background:#e9f7ee;color:#238552!important}
+    .qc-p3-section{padding:10px;border-top:1px solid #edf1f5}.qc-p3-section:first-of-type{border-top:0}
+    .qc-p3-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .qc-p3-section-head strong{display:block;font-size:11px;color:#35435b}.qc-p3-section-head span{display:block;margin-top:2px;font-size:8px;color:#8d99aa;line-height:1.45}
+    .qc-p3-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+    .qc-p3-metric{background:#f8fafc;border:1px solid #edf1f5;border-radius:8px;padding:7px;min-width:0}
+    .qc-p3-metric span{display:block;color:#909bad;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.qc-p3-metric b{display:block;margin-top:2px;color:#2d3a52;font-size:10px}
+    .qc-p3-note{margin-top:7px;padding:8px;border-radius:8px;background:#f8fafc;color:#748196;font-size:8px;line-height:1.55}
+    .qc-p3-player-list,.qc-p3-performance-list,.qc-p3-depth-list{display:flex;flex-direction:column;gap:6px}
+    .qc-p3-player-card,.qc-p3-performance-card,.qc-p3-depth-card{border:1px solid #e8edf3;border-radius:9px;background:#fbfcfe;padding:8px}
+    .qc-p3-player-top,.qc-p3-performance-head,.qc-p3-depth-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .qc-p3-player-top>div,.qc-p3-performance-head>div,.qc-p3-depth-head>div{min-width:0;display:flex;align-items:center;gap:5px}
+    .qc-p3-player-top em{font-style:normal;font-size:7px;color:#6c7f9d;background:#eef2f8;border-radius:5px;padding:2px 4px}
+    .qc-p3-player-top strong,.qc-p3-performance-head strong,.qc-p3-depth-head strong{font-size:10px;color:#2f3d54;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qc-p3-player-top span,.qc-p3-performance-head span,.qc-p3-depth-head span{font-size:7.5px;color:#8c98a9}
+    .qc-p3-player-top>b{font-size:14px;color:#315fab}
+    .qc-p3-player-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.qc-p3-player-meta span{font-size:7.5px;color:#748196;background:#f0f3f7;border-radius:5px;padding:3px 5px}
+    .qc-p3-performance-grid,.qc-p3-depth-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:7px}
+    .qc-p3-conf{font-size:7px!important;font-weight:900;border-radius:999px;padding:3px 6px;background:#eef2f8;color:#66758b!important}
+    .qc-p3-conf.high{background:#e9f7ee;color:#238552!important}.qc-p3-conf.medium{background:#fff4df;color:#9b6813!important}.qc-p3-conf.low,.qc-p3-conf.untested{background:#f1f3f6;color:#7e899a!important}
+    .qc-p3-depth-line{display:grid;grid-template-columns:70px minmax(0,1fr);gap:6px;margin-top:6px;font-size:8px;line-height:1.5}.qc-p3-depth-line span{color:#8995a7}.qc-p3-depth-line b{color:#35435a;font-weight:750}
+    @media(max-width:640px){
+      .qc-p3-summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-p3-performance-grid,.qc-p3-depth-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-p3-depth-line{grid-template-columns:62px minmax(0,1fr)}
+    }
     @media(max-width:640px){.qc-p3-preview-grid{grid-template-columns:1fr}}
     .qc-league-main{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
     .qc-league-hero{background:linear-gradient(135deg,#fff,#f7f9fd);border:1px solid #e4e9f1;border-radius:18px;padding:22px 24px;box-shadow:0 5px 20px rgba(31,42,68,.04)}
@@ -217,6 +249,6 @@
 </div>
 
 <script src="league-p3-static-data.js?v=20261001static2"></script>
-<script src="league-p3-real.js?v=20261001real5"></script>
+<script src="league-p3-module.js?v=20261001p3v5a"></script>\n<script src="league-p3-real.js?v=20261001real6"></script>
 </body>
 </html>
