@@ -1,5 +1,11 @@
 (()=>{
-  const teams=['江原FC','仁川联','光州FC','全北现代','大田韩亚市民','安养FC','富川FC','济州SK','浦项制铁','蔚山HD','金泉尚武','首尔FC'];
+  const leagues=[
+    {code:'KOR_K1',name:'韩职K1',season:'2026',badge:'韩职 P3 V5稳定版'},
+    {code:'UEFA_UNL',name:'欧国联',season:'2026/27',badge:'欧国联 P3 V5试点｜LOW_SAMPLE'},
+    {code:'USA_MLS',name:'美职',season:'2026',badge:'美职 P3 V5试点'},
+    {code:'NOR_ES',name:'挪超',season:'2026',badge:'挪超 P3 V5试点'},
+    {code:'JPN_J1',name:'日职',season:'2026/27',badge:'日职 P3｜待最终验收',disabled:true}
+  ];
   const $=s=>document.querySelector(s);
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const n=(v,d=1)=>v==null?'—':Number(v).toFixed(d);
@@ -18,8 +24,14 @@
   const textStatus=v=>statusMap[v]||v||'—';
   const textFit=v=>fitMap[v]||v||'—';
   const textAbsence=v=>absenceMap[v]||v||'—';
-  const root=$('#p3Root'),select=$('#teamSelect');
+  const root=$('#p3Root'),select=$('#teamSelect'),leagueSelect=$('#leagueSelect');
+  const heroDesc=$('#p3HeroDesc'),badge=$('#p3Badge');
   let currentData=null;
+  let currentTeams=[];
+
+  function currentLeague(){
+    return leagues.find(x=>x.code===leagueSelect.value)||leagues[0];
+  }
 
   function kpi(label,value){return '<div class="p3-kpi"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
   function small(label,value){return '<div class="p3-small"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
@@ -190,11 +202,53 @@
     $('#impactBtn').onclick=loadImpact;
   }
 
+  async function loadTeams(){
+    const league=currentLeague();
+    currentData=null;
+    if(heroDesc) heroDesc.textContent=league.name+'｜'+league.season+'。历史阵容与球员贡献来自FotMob / Opta；当天伤停、停赛、伤疑不写入P3长期档案，由赛前模型提供。';
+    if(badge) badge.textContent=league.badge;
+    if(league.disabled){
+      select.innerHTML='<option>待验收</option>';
+      select.disabled=true;
+      root.className='p3-loading';
+      root.textContent=league.name+' P3尚未完成最终聚合验收，当前不开放读取。';
+      return;
+    }
+    select.disabled=true;
+    root.className='p3-loading';
+    root.textContent='正在读取 '+league.name+' 球队列表…';
+    const {data,error}=await window.qcSupabase
+      .from('league_archive_snapshots')
+      .select('payload,generated_at')
+      .eq('code',league.code)
+      .eq('season',league.season)
+      .order('generated_at',{ascending:false})
+      .limit(1);
+    if(error){
+      root.textContent='球队列表读取失败：'+error.message;
+      return;
+    }
+    const payload=(data||[])[0]?.payload||{};
+    currentTeams=(Array.isArray(payload.teams)?payload.teams:[])
+      .map(x=>x?.team_name)
+      .filter(Boolean)
+      .sort((a,b)=>String(a).localeCompare(String(b),'zh-CN'));
+    if(!currentTeams.length){
+      root.textContent='没有找到 '+league.name+' 的球队快照。';
+      return;
+    }
+    select.innerHTML=currentTeams.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');
+    select.disabled=false;
+    await loadTeam();
+  }
+
   async function loadTeam(){
+    const league=currentLeague();
     const team=select.value;
-    root.className='p3-loading';root.textContent='正在读取 '+team+' P3 V5…';
+    if(!team||league.disabled) return;
+    root.className='p3-loading';root.textContent='正在读取 '+league.name+'｜'+team+' P3 V5…';
     const {data,error}=await window.qcSupabase.rpc('get_league_team_p3',{
-      p_team_query:team,p_league_code:'KOR_K1',p_season:'2026'
+      p_team_query:team,p_league_code:league.code,p_season:league.season
     });
     if(error||!data?.ok){
       root.textContent='P3读取失败：'+(error?.message||data?.status||'unknown');
@@ -208,7 +262,7 @@
     if(!player) return;
     const box=$('#impactResult');box.textContent='正在计算缺阵影响…';
     const {data,error}=await window.qcSupabase.rpc('get_league_team_p3_absence_impact',{
-      p_team_query:select.value,p_league_code:'KOR_K1',p_season:'2026',p_player_query:player
+      p_team_query:select.value,p_league_code:currentLeague().code,p_season:currentLeague().season,p_player_query:player
     });
     if(error||!data?.ok){
       box.textContent='计算失败：'+(error?.message||data?.status||'unknown');
@@ -251,10 +305,13 @@
     if(!data?.session){root.textContent='请先登录后查看P3测试页。';return}
     const pro=await window.qcSupabase.rpc('has_active_pro_access');
     if(pro.data!==true){root.textContent='当前账号没有P3测试权限。';return}
-    select.innerHTML=teams.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
-    select.value='江原FC';
+    leagueSelect.innerHTML=leagues.map(x=>
+      '<option value="'+esc(x.code)+'" '+(x.disabled?'disabled':'')+'>'+esc(x.name+'｜'+x.season+(x.disabled?'｜待验收':''))+'</option>'
+    ).join('');
+    leagueSelect.value='USA_MLS';
+    leagueSelect.onchange=loadTeams;
     select.onchange=loadTeam;
-    await loadTeam();
+    await loadTeams();
   }
 
   document.addEventListener('DOMContentLoaded',init);
