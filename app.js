@@ -345,6 +345,17 @@ function jcHandicapResult(score,goalLine){
 let qcAccessStatePromise=null;
 let qcLastAccessState=null;
 
+function qcPromiseTimeout(promise,ms=1800){
+  return Promise.race([
+    promise,
+    new Promise(resolve=>setTimeout(()=>resolve({__qcTimeout:true}),ms))
+  ]);
+}
+
+function qcPublicDb(){
+  return window.qcPublicSupabase || window.qcSupabase;
+}
+
 async function qcGetAccessState(force=false){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
@@ -364,7 +375,12 @@ async function qcGetAccessState(force=false){
       }catch(_){}
       const sessionAttempts=recentAuthHandoff?4:1;
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
-        const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+        const sessionResult=await qcPromiseTimeout(window.qcSupabase.auth.getSession(),1800);
+        if(sessionResult?.__qcTimeout){
+          qcLastAccessState={loggedIn:false,isPro:false,degraded:true};
+          return qcLastAccessState;
+        }
+        const {data:sessionData,error:sessionError}=sessionResult||{};
         if(sessionError) console.warn('读取登录状态失败',sessionError);
         session=sessionData?.session||null;
         if(!session && attempt+1<sessionAttempts){
@@ -385,7 +401,11 @@ async function qcGetAccessState(force=false){
       let isPro=false;
       let proError=null;
       for(let attempt=0;attempt<2;attempt++){
-        const result=await window.qcSupabase.rpc('has_active_pro_access');
+        const result=await qcPromiseTimeout(window.qcSupabase.rpc('has_active_pro_access'),1800);
+        if(result?.__qcTimeout){
+          qcLastAccessState={loggedIn:true,isPro:false,userId:session.user?.id||null,degraded:true};
+          return qcLastAccessState;
+        }
         proError=result.error||null;
         if(!proError){
           isPro=result.data===true;
@@ -751,7 +771,8 @@ async function jcAttachModels(rows){
   });
 
   try{
-    const {data,error}=await window.qcSupabase
+    const modelDb=(qcLastAccessState?.isPro ? window.qcSupabase : qcPublicDb());
+    const {data,error}=await modelDb
       .from('jc_model_outputs')
       .select('id,jc_match_id,model_version,stage,direction,single_pick,handicap_direction,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
       .in('jc_match_id',ids)
@@ -1159,9 +1180,9 @@ async function qcFetchProOverviewDate(dateStr){
 }
 
 async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
-  if(!dateStr || !window.qcSupabase) return {data:[],error:null};
+  if(!dateStr || !qcPublicDb()) return {data:[],error:null};
   if(withSnapshots){
-    return window.qcSupabase.from('jc_matches')
+    return qcPublicDb().from('jc_matches')
       .select(JC_MATCH_WITH_SNAPSHOTS_SELECT)
       .eq('business_date',dateStr)
       .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100);
@@ -1174,7 +1195,7 @@ async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
   }
   if(!force && cached?.promise) return cached.promise;
 
-  const promise=window.qcSupabase.from('jc_matches')
+  const promise=qcPublicDb().from('jc_matches')
     .select(JC_MATCH_BASE_SELECT)
     .eq('business_date',dateStr)
     .order('match_date',{ascending:true}).order('match_time',{ascending:true}).limit(100)
@@ -1209,11 +1230,11 @@ async function jcFetchOverviewDateRows(dateStr,force=false){
 }
 
 async function jcAttachLatestSnapshots(rows){
-  if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
+  if(!qcPublicDb() || !Array.isArray(rows) || !rows.length) return rows||[];
   const targets=rows.filter(m=>m?.id && !m._jcLatestSnapshotsLoaded);
   if(!targets.length) return rows;
   const ids=targets.map(m=>m.id);
-  const {data,error}=await window.qcSupabase
+  const {data,error}=await qcPublicDb()
     .from('jc_prekick_latest_market_snapshots')
     .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
     .in('jc_match_id',ids);
@@ -1235,13 +1256,13 @@ async function jcAttachLatestSnapshots(rows){
 }
 
 async function jcFetchAvailableDates(){
-  if(!window.qcSupabase) return [];
+  if(!qcPublicDb()) return [];
   const cacheKey='qc-jc-available-dates-v2';
   try{
     const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
     if(Array.isArray(cached?.dates) && cached.savedAt && Date.now()-cached.savedAt<600000) return cached.dates;
   }catch(e){ /* ignore stale browser cache */ }
-  const {data,error}=await window.qcSupabase
+  const {data,error}=await qcPublicDb()
     .from('jc_available_business_dates')
     .select('business_date')
     .order('business_date',{ascending:true});
@@ -3944,7 +3965,18 @@ async function setupProfile(){
     return;
   }
 
-  const { data: userData, error: userError } = await window.qcSupabase.auth.getUser();
+  const userResult=await qcPromiseTimeout(window.qcSupabase.auth.getUser(),2200);
+  if(userResult?.__qcTimeout){
+    root.querySelectorAll('[id^="profile"],[id^="membership"]').forEach(el=>{
+      if(el.tagName!=='FORM') el.textContent='服务恢复中';
+    });
+    const hint=document.createElement('div');
+    hint.className='profile-card';
+    hint.innerHTML='<b>账号服务正在恢复</b><p style="color:var(--muted)">数据没有被删除，请稍后刷新。当前不会执行任何账号修改。</p>';
+    root.prepend(hint);
+    return;
+  }
+  const { data: userData, error: userError } = userResult||{};
   const user = userData && userData.user;
 
   if(userError || !user){
