@@ -1,0 +1,48 @@
+name: P3 FIN Offline Build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-fin-offline-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Syntax check
+        run: |
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/build-fin-p3-offline.js
+
+      - name: Build candidate and gate
+        id: build
+        continue-on-error: true
+        run: node scripts/build-fin-p3-offline.js
+
+      - name: Commit generated candidate and gate
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-candidates/FIN_VL-2026.json
+          git add internal-test/p3-candidates/FIN_VL-2026-gate.json
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build FIN VL P3 candidate and gate"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Enforce gate
+        run: |
+          node -e 'const r=require("./internal-test/p3-candidates/FIN_VL-2026-gate.json"); console.log(r); if(r.gate_status!=="PASS") process.exit(1)'
