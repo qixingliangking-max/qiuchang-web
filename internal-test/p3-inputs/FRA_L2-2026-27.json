@@ -1,0 +1,511 @@
+{
+  "league_code": "FRA_L2",
+  "competition_id": "504224f5-ff4a-45bb-98c1-a314d6f3f17b",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5803214",
+      "match_id": "54bd39a1-02d4-4d0d-b1b7-e14cef16c684",
+      "home_team": "南特",
+      "away_team": "红星",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803210",
+      "match_id": "77dfc640-20db-46c0-a9ab-edfb4e765afd",
+      "home_team": "克莱蒙",
+      "away_team": "兰斯",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803212",
+      "match_id": "a00d2503-8549-46f4-9f33-2d27b869f745",
+      "home_team": "梅斯",
+      "away_team": "甘冈",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803216",
+      "match_id": "a3d9fe02-7673-47be-9999-f62401131f71",
+      "home_team": "罗德兹",
+      "away_team": "拉瓦勒",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803211",
+      "match_id": "b1f4553b-ef4b-46b7-9f45-d1dbb18ca5cd",
+      "home_team": "敦刻尔克",
+      "away_team": "格勒诺布尔",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803217",
+      "match_id": "cb298172-38e5-4d21-8512-9a656579c485",
+      "home_team": "索肖",
+      "away_team": "圣埃蒂安",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803209",
+      "match_id": "df84a61e-0c27-44a4-aad1-ff6ee1d33320",
+      "home_team": "布洛涅",
+      "away_team": "南锡",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803213",
+      "match_id": "e818a399-4b67-4a96-ad63-15d34b8f4465",
+      "home_team": "蒙彼利埃",
+      "away_team": "第戎",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803215",
+      "match_id": "fccad577-bb4c-46cb-9616-da8411dd7f6b",
+      "home_team": "波城",
+      "away_team": "阿讷西",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803224",
+      "match_id": "546515ec-6f13-4a1d-8429-289da17b29fb",
+      "home_team": "红星",
+      "away_team": "索肖",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803226",
+      "match_id": "69761659-dc5e-4ffb-9f7c-23b42d75a4fe",
+      "home_team": "圣埃蒂安",
+      "away_team": "克莱蒙",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803225",
+      "match_id": "90574f27-9112-49b4-a953-3508ded40243",
+      "home_team": "兰斯",
+      "away_team": "敦刻尔克",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803218",
+      "match_id": "9269fffc-1db1-4ccb-b74f-ba5938518e7c",
+      "home_team": "阿讷西",
+      "away_team": "罗德兹",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803222",
+      "match_id": "a37b102e-8322-4b65-abe6-ecdcac168efc",
+      "home_team": "拉瓦勒",
+      "away_team": "南特",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803219",
+      "match_id": "a723b165-66d1-4f51-9736-614041546047",
+      "home_team": "第戎",
+      "away_team": "波城",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803223",
+      "match_id": "ba7f30be-aafb-4a56-ab28-3af7623d33e2",
+      "home_team": "南锡",
+      "away_team": "蒙彼利埃",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803221",
+      "match_id": "d6d4450b-f3ea-48a5-9e48-586c2e105b22",
+      "home_team": "甘冈",
+      "away_team": "布洛涅",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803220",
+      "match_id": "ec33e16a-71ff-424b-b871-5c359136c65d",
+      "home_team": "格勒诺布尔",
+      "away_team": "梅斯",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803229",
+      "match_id": "47067b10-d311-4206-9d7d-e378a24fd083",
+      "home_team": "敦刻尔克",
+      "away_team": "蒙彼利埃",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803234",
+      "match_id": "5795cfe0-b8c5-4748-bab8-e60a486407c0",
+      "home_team": "索肖",
+      "away_team": "甘冈",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803227",
+      "match_id": "9f01d6dd-2bb7-4c16-96fe-c57c6b7af5ba",
+      "home_team": "布洛涅",
+      "away_team": "红星",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803228",
+      "match_id": "cb458fdc-3af0-47ca-b023-94b4b9c8a920",
+      "home_team": "克莱蒙",
+      "away_team": "第戎",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803232",
+      "match_id": "ef804316-0ea5-4f8e-99e9-398b1fdaa795",
+      "home_team": "波城",
+      "away_team": "南锡",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803231",
+      "match_id": "1a9a5a23-16d8-4c2e-9a9c-19c254302f4f",
+      "home_team": "南特",
+      "away_team": "罗德兹",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803230",
+      "match_id": "47753012-3ebc-410f-a8fd-cd051594b57a",
+      "home_team": "梅斯",
+      "away_team": "拉瓦勒",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803235",
+      "match_id": "01c7d9bb-6824-4dba-94cb-214c36500115",
+      "home_team": "圣埃蒂安",
+      "away_team": "格勒诺布尔",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803233",
+      "match_id": "b241c91e-a720-4a84-9b18-f75314c47785",
+      "home_team": "兰斯",
+      "away_team": "阿讷西",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803240",
+      "match_id": "14967c3d-5fc5-4208-aeb8-5f2e6500aad5",
+      "home_team": "拉瓦勒",
+      "away_team": "格勒诺布尔",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803242",
+      "match_id": "28812399-5ea8-4439-99dd-895187b91781",
+      "home_team": "南锡",
+      "away_team": "敦刻尔克",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803244",
+      "match_id": "3d9c9a09-9219-4cf6-b3f2-5dddb19232eb",
+      "home_team": "罗德兹",
+      "away_team": "波城",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803237",
+      "match_id": "8c911edb-4b39-4c19-bfd1-1496d44f873a",
+      "home_team": "克莱蒙",
+      "away_team": "索肖",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803241",
+      "match_id": "b59078bc-18e9-47b1-9060-41234cda6e5d",
+      "home_team": "蒙彼利埃",
+      "away_team": "布洛涅",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803236",
+      "match_id": "89e3cea0-3b96-4bcc-94f1-10996adf1e2f",
+      "home_team": "阿讷西",
+      "away_team": "梅斯",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803243",
+      "match_id": "b44e418d-116e-481c-a490-776e59a26e3d",
+      "home_team": "红星",
+      "away_team": "兰斯",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803239",
+      "match_id": "f7408f95-3cb1-4d78-8972-253b4a7e7f26",
+      "home_team": "甘冈",
+      "away_team": "南特",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803238",
+      "match_id": "4ff53373-aa10-4d8c-92a5-f16d5711f672",
+      "home_team": "第戎",
+      "away_team": "圣埃蒂安",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803248",
+      "match_id": "4f7c4364-2992-4a75-8c46-8ce925883e99",
+      "home_team": "拉瓦勒",
+      "away_team": "红星",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803246",
+      "match_id": "79873bad-8e18-480e-8491-e8ef1dc6731d",
+      "home_team": "敦刻尔克",
+      "away_team": "克莱蒙",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803251",
+      "match_id": "8cf84a57-fe6c-4882-a098-aa3594fa9a24",
+      "home_team": "波城",
+      "away_team": "索肖",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803247",
+      "match_id": "a96c1853-86ec-4cda-bb70-1188c7846e7e",
+      "home_team": "格勒诺布尔",
+      "away_team": "阿讷西",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803245",
+      "match_id": "be5278dd-05df-4b04-8d9a-a4deede25719",
+      "home_team": "布洛涅",
+      "away_team": "第戎",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803249",
+      "match_id": "1b25e287-cbf2-4459-8b10-dfce146173ad",
+      "home_team": "梅斯",
+      "away_team": "罗德兹",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803252",
+      "match_id": "c418bfdb-cc48-4efc-9439-667eaceab084",
+      "home_team": "兰斯",
+      "away_team": "甘冈",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803253",
+      "match_id": "afc0c6bf-1dd5-422e-9fe8-f171be74de25",
+      "home_team": "圣埃蒂安",
+      "away_team": "蒙彼利埃",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803250",
+      "match_id": "944f6c72-7c64-4bd7-90d2-7dbd492d7a6e",
+      "home_team": "南特",
+      "away_team": "南锡",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803258",
+      "match_id": "2b336148-3ffd-4180-9aed-d1f106b1f0c7",
+      "home_team": "蒙彼利埃",
+      "away_team": "波城",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803261",
+      "match_id": "65f590b9-c03c-47d4-8824-57d8aecfe249",
+      "home_team": "罗德兹",
+      "away_team": "格勒诺布尔",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803259",
+      "match_id": "8d99f4aa-73c2-4247-a51a-7aef528d5be1",
+      "home_team": "南锡",
+      "away_team": "兰斯",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803255",
+      "match_id": "bd3f2eab-6601-4c00-b646-ce08bb306637",
+      "home_team": "第戎",
+      "away_team": "拉瓦勒",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803254",
+      "match_id": "ccef63d5-e0b0-40ab-9bd7-698742cae45c",
+      "home_team": "克莱蒙",
+      "away_team": "布洛涅",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803257",
+      "match_id": "11383697-1d69-4aff-b369-2dc27b716bf3",
+      "home_team": "甘冈",
+      "away_team": "阿讷西",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803262",
+      "match_id": "621afc92-0d53-40b7-a6cf-3c9a349d15b0",
+      "home_team": "索肖",
+      "away_team": "南特",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803256",
+      "match_id": "fc720bbe-84ec-4d53-918c-dcc158437514",
+      "home_team": "敦刻尔克",
+      "away_team": "圣埃蒂安",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803260",
+      "match_id": "7999b82a-777e-405e-8521-f5af02ad1a2e",
+      "home_team": "红星",
+      "away_team": "梅斯",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 18:45:00+00"
+    },
+    {
+      "source_match_id": "5803265",
+      "match_id": "089edcec-21b3-441d-9905-4c3e1ba2fec6",
+      "home_team": "格勒诺布尔",
+      "away_team": "克莱蒙",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803267",
+      "match_id": "18fce317-f298-4673-99a3-95d6f8dde893",
+      "home_team": "拉瓦勒",
+      "away_team": "索肖",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803270",
+      "match_id": "4822467e-498e-4246-80cd-d1b1277b8b52",
+      "home_team": "兰斯",
+      "away_team": "蒙彼利埃",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803269",
+      "match_id": "8b73e566-5ece-4cbb-a01f-acebd9dfc7ec",
+      "home_team": "波城",
+      "away_team": "敦刻尔克",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803271",
+      "match_id": "a4aa8b5c-ad88-4747-9137-48f9baf2d4d5",
+      "home_team": "罗德兹",
+      "away_team": "南锡",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803263",
+      "match_id": "b23b8864-7e49-4cc8-83d3-a81477d34f7a",
+      "home_team": "阿讷西",
+      "away_team": "第戎",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5803266",
+      "match_id": "132a3923-4949-488e-b838-4d70b5b86d42",
+      "home_team": "甘冈",
+      "away_team": "红星",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803264",
+      "match_id": "f43f9dcd-1d8e-4ea3-90cf-4147fc5d9eff",
+      "home_team": "布洛涅",
+      "away_team": "南特",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 12:00:00+00"
+    },
+    {
+      "source_match_id": "5803268",
+      "match_id": "8012db27-c51e-4ccd-b1f5-73556cf64529",
+      "home_team": "梅斯",
+      "away_team": "圣埃蒂安",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 18:00:00+00"
+    }
+  ]
+}
