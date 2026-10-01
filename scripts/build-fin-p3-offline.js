@@ -11,7 +11,7 @@ const outDir=path.join(root,"internal-test","p3-candidates");
 const contractPath=path.join(root,"internal-test","p3-data","P3_SCHEMA_CONTRACT_V5.json");
 
 const raw={};
-for(let i=1;i<=4;i++){
+for(let i=1;i<=6;i++){
   const p=path.join(rawDir,`FIN_VL-2026-batch${i}.json`);
   Object.assign(raw,JSON.parse(fs.readFileSync(p,"utf8")));
 }
