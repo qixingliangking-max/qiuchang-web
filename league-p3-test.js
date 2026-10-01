@@ -4,9 +4,20 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const n=(v,d=1)=>v==null?'—':Number(v).toFixed(d);
   const posLabel={
-    GK:'GK',LB_LWB:'LB/LWB',CB:'CB',RB_RWB:'RB/RWB',
-    DM:'DM',CM:'CM',AM:'AM',W:'W',ST:'ST'
+    GK:'门将',LB_LWB:'左后卫/左翼卫',CB:'中后卫',RB_RWB:'右后卫/右翼卫',
+    DM:'后腰',CM:'中前卫',AM:'前腰',W:'边锋',ST:'中锋'
   };
+  const levelText={HIGH:'高',MEDIUM:'中',LOW:'低',UNTESTED:'未验证'};
+  const statusMap={
+    VALID:'有效',PARTIAL:'部分有效',DATA_INCOMPLETE:'数据不足',
+    NO_BACKUP:'无可验证替补',P3_VALID:'P3有效'
+  };
+  const fitMap={PRIMARY:'主位置',SECONDARY:'副位置',EMERGENCY:'应急客串'};
+  const absenceMap={STARTER:'首发缺阵',ROTATION_BENCH:'轮换替补缺阵',NON_ROTATION:'非轮换球员'};
+  const textLevel=v=>levelText[v]||v||'—';
+  const textStatus=v=>statusMap[v]||v||'—';
+  const textFit=v=>fitMap[v]||v||'—';
+  const textAbsence=v=>absenceMap[v]||v||'—';
   const root=$('#p3Root'),select=$('#teamSelect');
   let currentData=null;
 
@@ -37,7 +48,7 @@
       '</div>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-C｜Lineup Structure</strong><span>阵容结构与阵型样本</span></div>'+
+        '<div class="p3-head"><strong>P3-C｜阵容结构</strong><span>首发连续性与阵型样本</span></div>'+
         '<div class="p3-summary">'+
           small('不同首发球员',s.unique_starters)+
           small('核心首发',s.core_starters)+
@@ -62,9 +73,9 @@
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-A｜Player Base / Importance</strong><span>重要度＝使用与体系依赖，不代表能力</span></div>'+
+        '<div class="p3-head"><strong>P3-A｜球员基础 / 重要度</strong><span>重要度＝使用与体系依赖，不代表能力</span></div>'+
         '<div class="p3-table-wrap"><table class="p3-table"><thead><tr>'+
-          '<th>球员</th><th>主位置</th><th>副位置</th><th>首发</th><th>分钟</th><th>近5使用</th><th>近10使用</th><th>位置稳定</th><th>Importance</th>'+
+          '<th>球员</th><th>主位置</th><th>副位置</th><th>首发</th><th>分钟</th><th>近5使用</th><th>近10使用</th><th>位置稳定</th><th>重要度</th>'+
         '</tr></thead><tbody>'+
         topBase.map(p=>'<tr>'+
           '<td>'+esc(p.player_name)+'</td>'+
@@ -80,9 +91,9 @@
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-B｜Player Performance</strong><span>按位置模型计算真实表现，与Importance分离</span></div>'+
+        '<div class="p3-head"><strong>P3-B｜球员表现</strong><span>按位置模型计算真实表现，与重要度分离</span></div>'+
         '<div class="p3-table-wrap"><table class="p3-table"><thead><tr>'+
-          '<th>球员</th><th>位置</th><th>G</th><th>A</th><th>xG</th><th>xA</th><th>射门</th><th>防守动作</th><th>评分</th><th>Performance</th><th>Role Q</th><th>置信度</th>'+
+          '<th>球员</th><th>位置</th><th>进球</th><th>助攻</th><th>xG</th><th>xA</th><th>射门</th><th>防守动作</th><th>平均评分</th><th>表现分</th><th>角色质量</th><th>置信度</th>'+
         '</tr></thead><tbody>'+
         topPerf.map(p=>'<tr>'+
           '<td>'+esc(p.player_name)+'</td>'+
@@ -93,59 +104,64 @@
           '<td>'+n(p.avg_rating,2)+'</td>'+
           '<td><b>'+n(p.performance_score,1)+'</b></td>'+
           '<td><b>'+n(p.role_quality,1)+'</b></td>'+
-          '<td>'+esc(p.performance_confidence||'—')+'</td>'+
+          '<td>'+esc(textLevel(p.performance_confidence))+'</td>'+
         '</tr>').join('')+
         '</tbody></table></div>'+
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-D｜Squad Depth</strong><span>required_slots / 主力组 / 替代链 / 多位置折扣</span></div>'+
+        '<div class="p3-head"><strong>P3-D｜阵容深度</strong><span>首发槽位 / 普通替补链 / 应急换位方案</span></div>'+
         '<div class="p3-depth">'+depth.map(d=>{
           const primary=(d.primary_unit||[]).map(x=>
-            x.player_name+'｜I '+n(x.importance_score,1)+' / P '+n(x.performance_score,1)
+            x.player_name+'｜重要度 '+n(x.importance_score,1)+' / 表现 '+n(x.performance_score,1)
           ).join('；')||'—';
           const backups=(d.replacement_chain||[]).slice(0,4).map(x=>
             x.player_name+'｜'+
-            (x.adjusted_quality==null?'N/A':n(x.adjusted_quality,1))+
-            '｜'+(x.fit_type||'—')+' '+n(x.fit_weight,2)
+            (x.adjusted_quality==null?'暂无可靠质量分':n(x.adjusted_quality,1))+
+            '｜'+textFit(x.fit_type)+' '+n(x.fit_weight,2)
+          ).join('；')||'—';
+          const shifts=(d.emergency_shift_options||[]).slice(0,4).map(x=>
+            x.player_name+'｜'+posName(x.origin_position)+' → '+posName(d.position_code)+
+            '｜'+textFit(x.fit_type)+' '+n(x.fit_weight,2)
           ).join('；')||'—';
           const scenarios=(d.absence_scenarios||[]).map(x=>{
             const r=x.expected_replacement;
-            return x.absent_player_name+' → '+(r?.player_name||'N/A')+
-              '｜Raw '+(x.raw_replacement_gap==null?'N/A':n(x.raw_replacement_gap,1))+
-              '｜Loss '+(x.replacement_loss==null?'N/A':n(x.replacement_loss,1));
+            return x.absent_player_name+' → '+(r?.player_name||'暂无可靠替代')+
+              '｜原始替代差 '+(x.raw_replacement_gap==null?'暂无':n(x.raw_replacement_gap,1))+
+              '｜模型损失 '+(x.replacement_loss==null?'暂无':n(x.replacement_loss,1));
           }).join('；')||'—';
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
             '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
-            '<div class="p3-depth-line"><span>替代链</span><b>'+esc(backups)+'</b></div>'+
+            '<div class="p3-depth-line"><span>普通替补链</span><b>'+esc(backups)+'</b></div>'+
+            '<div class="p3-depth-line"><span>应急换位方案</span><b>'+esc(shifts)+'</b></div>'+
             '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
-            '<div class="p3-depth-line"><span>Starter Quality</span><b>'+n(d.starter_quality,1)+'</b></div>'+
-            '<div class="p3-depth-line"><span>Replacement Quality</span><b>'+statusText(d.replacement_quality==null?'N/A':n(d.replacement_quality,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>Raw Gap</span><b>'+(d.raw_replacement_gap==null?'N/A':n(d.raw_replacement_gap,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>Model Loss</span><b>'+(d.replacement_loss==null?'N/A':n(d.replacement_loss,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>Position Coverage</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
-            '<div class="p3-depth-line"><span>Multi-position</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
-            '<div class="p3-depth-line"><span>Depth Score</span><b>'+(d.position_depth_score==null?'DATA_INCOMPLETE':n(d.position_depth_score,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>状态 / 置信度</span><b>'+esc((d.data_status||'—')+' / '+(d.confidence||'—'))+'</b></div>'+
+            '<div class="p3-depth-line"><span>主力组质量</span><b>'+n(d.starter_quality,1)+'</b></div>'+
+            '<div class="p3-depth-line"><span>普通替补质量</span><b>'+statusText(d.replacement_quality==null?'暂无':n(d.replacement_quality,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>原始替代差</span><b>'+(d.raw_replacement_gap==null?'暂无':n(d.raw_replacement_gap,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>模型损失</span><b>'+(d.replacement_loss==null?'暂无':n(d.replacement_loss,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>位置覆盖率</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
+            '<div class="p3-depth-line"><span>多位置覆盖率</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
+            '<div class="p3-depth-line"><span>位置深度评分</span><b>'+(d.position_depth_score==null?'数据不足':n(d.position_depth_score,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>数据状态 / 置信度</span><b>'+esc(textStatus(d.data_status)+' / '+textLevel(d.confidence))+'</b></div>'+
           '</div>';
         }).join('')+'</div>'+
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>Bench Strength｜分线</strong><span>只统计有真实替代意义的已验证球员</span></div>'+
+        '<div class="p3-head"><strong>替补强度｜分线</strong><span>只统计普通替补池中有真实替代意义的已验证球员</span></div>'+
         '<div class="p3-summary">'+
-          small('Bench Overall',n(s.bench_strength,1))+
-          small('Defensive Bench',n(s.defensive_bench_strength,1))+
-          small('Midfield Bench',n(s.midfield_bench_strength,1))+
-          small('Attacking Bench',n(s.attacking_bench_strength,1))+
-          small('Defense Core',n(s.defense_core_strength,1))+
-          small('Midfield Core',n(s.midfield_core_strength,1))+
-          small('Attack Core',n(s.attack_core_strength,1))+
+          small('整体替补强度',n(s.bench_strength,1))+
+          small('防线替补强度',n(s.defensive_bench_strength,1))+
+          small('中场替补强度',n(s.midfield_bench_strength,1))+
+          small('攻击线替补强度',n(s.attacking_bench_strength,1))+
+          small('防线核心强度',n(s.defense_core_strength,1))+
+          small('中场核心强度',n(s.midfield_core_strength,1))+
+          small('攻击线核心强度',n(s.attack_core_strength,1))+
         '</div>'+
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>P3-E｜Availability Impact Engine</strong><span>P3算损失，T0负责今天谁OUT/DOUBTFUL/SUSPENDED</span></div>'+
+        '<div class="p3-head"><strong>P3-E｜缺阵影响模拟</strong><span>P3负责计算损失，T0负责当天缺阵 / 伤疑 / 停赛信息</span></div>'+
         '<div class="p3-impact-controls"><select id="impactPlayer">'+topBase.map(p=>
           '<option value="'+esc(p.player_name)+'">'+esc(p.player_name)+'｜I '+n(p.importance_score,1)+'</option>'
         ).join('')+'</select><button id="impactBtn">模拟缺阵</button></div>'+
@@ -156,18 +172,18 @@
       '<section class="p3-section">'+
         '<div class="p3-head"><strong>模型压缩因子</strong><span>供T0/T1直接读取</span></div>'+
         '<div class="p3-factor">'+
-          small('LINEUP_CONTINUITY',n(f.LINEUP_CONTINUITY,3))+
-          small('RECENT5_CONTINUITY',n(f.RECENT5_LINEUP_CONTINUITY,3))+
-          small('RECENT10_CONTINUITY',n(f.RECENT10_LINEUP_CONTINUITY,3))+
-          small('FORMATION_STABILITY',n(f.FORMATION_STABILITY,3))+
-          small('STARTING_XI_STRENGTH',n(f.STARTING_XI_STRENGTH,1))+
-          small('BENCH_STRENGTH',n(f.BENCH_STRENGTH,1))+
-          small('SQUAD_DEPTH',n(f.SQUAD_DEPTH,1))+
-          small('ATTACK_CORE_STRENGTH',n(f.ATTACK_CORE_STRENGTH,1))+
-          small('MIDFIELD_CORE_STRENGTH',n(f.MIDFIELD_CORE_STRENGTH,1))+
-          small('DEFENSE_CORE_STRENGTH',n(f.DEFENSE_CORE_STRENGTH,1))+
-          small('REPLACEMENT_GAP',f.REPLACEMENT_GAP==null?'动态':n(f.REPLACEMENT_GAP,3))+
-          small('AVAILABILITY_IMPACT',f.AVAILABILITY_IMPACT==null?'动态':n(f.AVAILABILITY_IMPACT,3))+
+          small('首发连续性',n(f.LINEUP_CONTINUITY,3))+
+          small('近5场首发连续性',n(f.RECENT5_LINEUP_CONTINUITY,3))+
+          small('近10场首发连续性',n(f.RECENT10_LINEUP_CONTINUITY,3))+
+          small('阵型稳定度',n(f.FORMATION_STABILITY,3))+
+          small('首发阵容强度',n(f.STARTING_XI_STRENGTH,1))+
+          small('替补席强度',n(f.BENCH_STRENGTH,1))+
+          small('阵容深度',n(f.SQUAD_DEPTH,1))+
+          small('攻击线核心强度',n(f.ATTACK_CORE_STRENGTH,1))+
+          small('中场核心强度',n(f.MIDFIELD_CORE_STRENGTH,1))+
+          small('防线核心强度',n(f.DEFENSE_CORE_STRENGTH,1))+
+          small('替代差',f.REPLACEMENT_GAP==null?'赛前动态计算':n(f.REPLACEMENT_GAP,3))+
+          small('可用性影响',f.AVAILABILITY_IMPACT==null?'赛前动态计算':n(f.AVAILABILITY_IMPACT,3))+
         '</div>'+
       '</section>';
 
@@ -176,7 +192,7 @@
 
   async function loadTeam(){
     const team=select.value;
-    root.className='p3-loading';root.textContent='正在读取 '+team+' P3 V4…';
+    root.className='p3-loading';root.textContent='正在读取 '+team+' P3 V5…';
     const {data,error}=await window.qcSupabase.rpc('get_league_team_p3',{
       p_team_query:team,p_league_code:'KOR_K1',p_season:'2026'
     });
@@ -202,30 +218,30 @@
     const adj=data.model_factors_adjusted||{};
     box.innerHTML='<div class="p3-impact-box">'+
       small('缺阵球员',data.player?.player_name||'—')+
-      small('缺阵类型',data.absence_type||'—')+
-      small('Importance',n(data.player?.importance_score,1))+
-      small('Performance',n(data.player?.performance_score,1))+
-      small('Role Quality',n(data.player?.role_quality,1))+
+      small('缺阵类型',textAbsence(data.absence_type))+
+      small('重要度',n(data.player?.importance_score,1))+
+      small('表现分',n(data.player?.performance_score,1))+
+      small('角色质量',n(data.player?.role_quality,1))+
       small('位置 / 槽位',posName(data.position_code)+' / '+(data.required_slots??'—'))+
       small('替补顺位',data.replacement_rank==null?'首发':('#'+data.replacement_rank))+
-      small('Expected Replacement',repl?.player_name||'N/A')+
-      small('Replacement Quality',repl?.adjusted_quality==null?'N/A':n(repl.adjusted_quality,1))+
-      small('Raw Gap',data.raw_replacement_gap==null?'N/A':n(data.raw_replacement_gap,1))+
-      small('Model Loss',data.replacement_loss==null?'N/A':n(data.replacement_loss,1))+
-      small('Potential Impact',String(data.potential_impact||data.impact_level||'—'))+
-      small('Confidence',String(data.confidence||data.impact_confidence||'—'))+
+      small('预计替代者',repl?.player_name||'暂无可靠替代')+
+      small('替代者质量',repl?.adjusted_quality==null?'暂无':n(repl.adjusted_quality,1))+
+      small('原始替代差',data.raw_replacement_gap==null?'暂无':n(data.raw_replacement_gap,1))+
+      small('模型损失',data.replacement_loss==null?'暂无':n(data.replacement_loss,1))+
+      small('潜在影响',textLevel(data.potential_impact||data.impact_level))+
+      small('置信度',textLevel(data.confidence||data.impact_confidence))+
       small('首发XI',n(data.starting_xi_strength_before,1)+' → '+n(data.starting_xi_strength_after,1))+
-      small('Bench Strength',n(data.bench_strength_before,1)+' → '+n(data.bench_strength_after,1))+
-      small('Position Depth',n(data.position_depth_before,1)+' → '+n(data.position_depth_after,1))+
-      small('Squad Depth',n(data.squad_depth_before,1)+' → '+n(data.squad_depth_after,1))+
-      small('Attack Δ',n(data.attack_delta,1))+
-      small('Midfield Δ',n(data.midfield_delta,1))+
-      small('Defense Δ',n(data.defense_delta,1))+
-      small('Overall Impact',n(data.overall_absence_impact,1))+
-      small('XI Adjusted',n(adj.STARTING_XI_STRENGTH_ADJUSTED,1))+
-      small('Attack Availability',n(adj.ATTACK_CORE_AVAILABILITY,3))+
-      small('Mid Availability',n(adj.MIDFIELD_CORE_AVAILABILITY,3))+
-      small('Defense Availability',n(adj.DEFENSE_CORE_AVAILABILITY,3))+
+      small('替补席强度',n(data.bench_strength_before,1)+' → '+n(data.bench_strength_after,1))+
+      small('位置深度',n(data.position_depth_before,1)+' → '+n(data.position_depth_after,1))+
+      small('阵容深度',n(data.squad_depth_before,1)+' → '+n(data.squad_depth_after,1))+
+      small('攻击线变化',n(data.attack_delta,1))+
+      small('中场变化',n(data.midfield_delta,1))+
+      small('防线变化',n(data.defense_delta,1))+
+      small('综合缺阵影响',n(data.overall_absence_impact,1))+
+      small('调整后首发强度',n(adj.STARTING_XI_STRENGTH_ADJUSTED,1))+
+      small('攻击线可用度',n(adj.ATTACK_CORE_AVAILABILITY,3))+
+      small('中场可用度',n(adj.MIDFIELD_CORE_AVAILABILITY,3))+
+      small('防线可用度',n(adj.DEFENSE_CORE_AVAILABILITY,3))+
       '</div>';
   }
 
