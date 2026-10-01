@@ -53,6 +53,19 @@
       "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
       "sample_policy": "LOW_SAMPLE/LIMITED",
       "model_read_rule": "P3_VALID is structural only; depth/bench factors are limited-weight until FULL sample quality is reached."
+    },
+    {
+      "league_code": "SWE_AS",
+      "season": "2026",
+      "quality_tier": "PILOT_FULL",
+      "teams": 16,
+      "published_path": "internal-test/p3-data/SWE_AS-2026.json",
+      "blob_sha": "a6233c875819c909c02363ff9f21173190cd9448",
+      "gate_status": "PASS",
+      "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
+      "avg_team_depth_coverage_pct": 75.5,
+      "gate_report": "internal-test/p3-candidates/SWE_AS-2026-gate.json",
+      "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
     }
   ],
   "raw_only": [],
