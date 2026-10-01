@@ -34,13 +34,11 @@
   }
   function status(code,season){
     if(meta(code,season)) return 'P3_VALID';
-    if(String(code)==='JPN_J1'&&String(season)==='2026/27') return 'RAW_ONLY';
     return '待建设';
   }
   function subtitle(code,season){
     const m=meta(code,season);
     if(m) return m.label+'｜点击展开';
-    if(String(code)==='JPN_J1') return '80场原始P3已回填｜待V5聚合验收';
     return '当前联赛尚未完成P3';
   }
   function hostHtml(comp,teamName,season){
@@ -265,9 +263,7 @@
     const m=meta(code,season);
     if(!m){
       host.dataset.loaded='1';
-      host.innerHTML=String(code)==='JPN_J1'
-        ?'<div class="p3-raw-panel"><div class="p3-quality-bar"><div class="p3-quality-item"><small>结构状态</small><b>RAW_ONLY</b></div><div class="p3-quality-item is-tier raw_only"><small>质量层级</small><b>RAW_ONLY</b><span>仅原始回填</span></div><div class="p3-quality-item"><small>原始比赛</small><b>80场</b></div><div class="p3-quality-item"><small>V5聚合</small><b>待验收</b></div></div><div class="p3-quality-warning">JPN_J1｜80场原始P3已回填，但V5聚合与阻断项验收尚未完成，因此不标P3_VALID。</div></div>'
-        :'<div class="p3-loading">该联赛当前尚未完成P3 V5。</div>';
+      host.innerHTML='<div class="p3-loading">该联赛当前尚未完成P3 V5。</div>';
       return;
     }
     host.dataset.loading='1';
