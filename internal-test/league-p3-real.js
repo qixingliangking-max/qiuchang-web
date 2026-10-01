@@ -286,15 +286,15 @@
   }
 
   function wireStagingLayers(detail){
-    $('[data-qc-layer-toggle]',detail).forEach(btn=>{
-      btn.onclick=()=>{
+    Array.from(detail.querySelectorAll('[data-qc-layer-toggle]')).forEach(btn=>{
+      btn.addEventListener('click',()=>{
         const key=String(btn.dataset.qcLayerToggle||'');
         const body=detail.querySelector('[data-qc-layer-body="'+key+'"]');
         if(!body) return;
         const open=btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded',open?'false':'true');
         body.hidden=open;
-      };
+      });
     });
   }
 
