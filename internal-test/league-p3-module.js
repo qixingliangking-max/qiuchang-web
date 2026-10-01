@@ -121,10 +121,7 @@
           small('替补强度',n(s.bench_strength,1))+
           small('阵容深度',n(s.squad_depth,1))+
           small('深度数据覆盖',n(s.depth_data_coverage_pct,1)+'%')+
-          small('阵型来源',s.formation_source||'—')+
           small('阵型覆盖率',n(s.formation_coverage_pct,1)+'%')+
-          small('Performance模型',s.performance_model_version||'—')+
-          small('版本',s.p3_version||data.version||'—')+
         '</div>'+
         '<div class="p3-depth">'+formations.map(x=>
           '<div class="p3-depth-card"><h4>'+esc(x.formation)+'</h4>'+
