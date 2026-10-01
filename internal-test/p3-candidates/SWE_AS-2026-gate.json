@@ -1,0 +1,21 @@
+{
+  "league_code": "SWE_AS",
+  "season": "2026",
+  "generated_at": "2026-10-01T19:17:39.835Z",
+  "teams": 16,
+  "aggregate_players": 526,
+  "gate_status": "PASS",
+  "errors_count": 0,
+  "warnings_count": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 75.5,
+  "depth_rows": 120,
+  "status_distribution": {
+    "VALID": 63,
+    "DATA_INCOMPLETE": 34,
+    "PARTIAL": 19,
+    "NO_BACKUP": 4
+  },
+  "errors": [],
+  "warnings": []
+}
