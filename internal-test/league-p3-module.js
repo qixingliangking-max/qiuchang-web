@@ -23,7 +23,8 @@
     USA_MLS:{season:'2026',url:'p3-data/USA_MLS-2026.json',version:'P3_V5_USA_MLS_PILOT',label:'美职P3 V5试点',quality:'PILOT_FULL'},
     NOR_ES:{season:'2026',url:'p3-data/NOR_ES-2026.json',version:'P3_V5_NOR_ES_PILOT',label:'挪超P3 V5试点',quality:'PILOT_FULL'},
     JPN_J1:{season:'2026/27',url:'p3-data/JPN_J1-2026-27.json?v=20261002offline1',version:'P3_V5_JPN_J1_PILOT',label:'日职P3 V5试点',quality:'LIMITED'},
-    SWE_AS:{season:'2026',url:'p3-data/SWE_AS-2026.json?v=20261002swe1',version:'P3_V5_SWE_AS_PILOT',label:'瑞典超P3 V5试点',quality:'PILOT_FULL'}
+    SWE_AS:{season:'2026',url:'p3-data/SWE_AS-2026.json?v=20261002swe1',version:'P3_V5_SWE_AS_PILOT',label:'瑞典超P3 V5试点',quality:'PILOT_FULL'},
+    FIN_VL:{season:'2026',url:'p3-data/FIN_VL-2026.json?v=20261002fin1',version:'P3_V5_FIN_VL_PILOT',label:'芬超P3 V5试点',quality:'PILOT_FULL'}
   };
   const cache=new Map();
 
