@@ -1,0 +1,21 @@
+{
+  "league_code": "FIN_VL",
+  "season": "2026",
+  "generated_at": "2026-10-01T20:17:19.508Z",
+  "teams": 12,
+  "aggregate_players": 390,
+  "gate_status": "PASS",
+  "errors_count": 0,
+  "warnings_count": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 87.1,
+  "depth_rows": 86,
+  "status_distribution": {
+    "VALID": 59,
+    "PARTIAL": 10,
+    "NO_BACKUP": 1,
+    "DATA_INCOMPLETE": 16
+  },
+  "errors": [],
+  "warnings": []
+}
