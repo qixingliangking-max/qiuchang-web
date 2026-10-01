@@ -68,7 +68,7 @@
     const m=meta(code,season); if(!m) return null;
     const key=code+'|'+season;
     if(cache.has(key)) return cache.get(key);
-    const p=fetch(m.url,{cache:'force-cache'}).then(r=>{
+    const p=fetch(m.url,{cache:'no-cache'}).then(r=>{
       if(!r.ok) throw new Error('P3 snapshot HTTP '+r.status);
       return r.json();
     }).catch(err=>{cache.delete(key);throw err});
