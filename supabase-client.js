@@ -69,20 +69,4 @@ if (!window.QC_SUPABASE_URL || !window.QC_SUPABASE_PUBLISHABLE_KEY) {
       }
     }
   );
-
-  // Incident isolation: public read traffic must never wait on a stale/failed
-  // authenticated refresh-token flow. This client carries no persisted session
-  // and therefore remains anonymous/read-only under the database RLS policies.
-  window.qcPublicSupabase = window.supabase.createClient(
-    window.QC_SUPABASE_URL,
-    window.QC_SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth:{
-        storageKey:'qc-public-anon',
-        persistSession:false,
-        autoRefreshToken:false,
-        detectSessionInUrl:false
-      }
-    }
-  );
 }
