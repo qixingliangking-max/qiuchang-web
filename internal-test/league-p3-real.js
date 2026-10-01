@@ -238,7 +238,7 @@
       return '<div class="qc-p2-empty">P2快照暂未生成。</div>';
     }
     return '<section class="qc-p2-wrap">'+
-      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong><span>'+esc(comp?.name_cn||'联赛档案')+'</span><span>P2_VALID</span></div><em>与P1同批快照</em></div>'+
+      '<div class="qc-p2-head"><div><strong>P2｜比赛质量＋状态路径</strong></div><em>与P1同批快照</em></div>'+
       '<div class="qc-p2-grid">'+available.map(k=>p2ScopeHtml(k,scopes[k])).join('')+'</div>'+
     '</section>';
   }
