@@ -1,0 +1,663 @@
+{
+  "league_code": "NED_EE",
+  "competition_id": "ace04dd3-b685-4438-8a89-5657e46b4491",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5832801",
+      "match_id": "09ebc9fa-31d5-475a-8cc3-cee636121f31",
+      "home_team": "奥斯",
+      "away_team": "布雷达",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832799",
+      "match_id": "3035a49f-4057-4f9a-9888-1eb9775fd439",
+      "home_team": "多德勒支",
+      "away_team": "阿贾克斯青年队",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832803",
+      "match_id": "d755f95e-d2e0-4f57-b118-22e83b3bcdb2",
+      "home_team": "维特斯",
+      "away_team": "瓦尔韦克",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832802",
+      "match_id": "e006dab8-0f2d-4481-829f-e58af5e2bc8d",
+      "home_team": "芬洛",
+      "away_team": "赫拉克勒斯",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832800",
+      "match_id": "f531ebbf-a0cc-4fde-b09e-03dc6d17977d",
+      "home_team": "埃门",
+      "away_team": "罗达JC",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832810",
+      "match_id": "ed4c9a62-a82d-4ffd-9222-c137a87ef324",
+      "home_team": "邓伯什",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832811",
+      "match_id": "68e0b18c-dbc3-42e8-810c-cf64f0587e50",
+      "home_team": "赫尔蒙德",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 10:15:00+00"
+    },
+    {
+      "source_match_id": "5832812",
+      "match_id": "7f3579b1-1594-4eb7-89f9-98b9d2b222bb",
+      "home_team": "马斯特里赫特",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832814",
+      "match_id": "d07ef759-0231-4076-8f48-d8aadf63f98f",
+      "home_team": "埃因霍温青年队",
+      "away_team": "福伦丹",
+      "match_date": "2026-08-10",
+      "kickoff_at": "2026-08-10 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832813",
+      "match_id": "efcd8b60-6d26-45c9-8399-febea79f51d8",
+      "home_team": "阿尔克马尔青年队",
+      "away_team": "FC埃因霍温",
+      "match_date": "2026-08-10",
+      "kickoff_at": "2026-08-10 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832820",
+      "match_id": "0b9d2a23-2857-412b-8fe4-f4567eab3d62",
+      "home_team": "瓦尔韦克",
+      "away_team": "多德勒支",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832816",
+      "match_id": "715e2121-a8a4-4574-b930-7a799ebaf076",
+      "home_team": "FC埃因霍温",
+      "away_team": "马斯特里赫特",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832818",
+      "match_id": "908dda11-b68b-4fe9-a1f7-38c49bbfb81c",
+      "home_team": "布雷达",
+      "away_team": "芬洛",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832815",
+      "match_id": "bc2b0218-e886-4765-9c09-b906bdbeb523",
+      "home_team": "阿尔梅勒城",
+      "away_team": "埃因霍温青年队",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832819",
+      "match_id": "d7997f53-ca02-4774-9728-395211b03f9f",
+      "home_team": "罗达JC",
+      "away_team": "赫尔蒙德",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832817",
+      "match_id": "f0d2f6f2-80a6-4b74-ab8f-9c40ac024aa4",
+      "home_team": "赫拉克勒斯",
+      "away_team": "邓伯什",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832821",
+      "match_id": "02fe4009-64fe-4e71-972d-3c0c3531c9fc",
+      "home_team": "福伦丹",
+      "away_team": "奥斯",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832824",
+      "match_id": "285ad15f-8917-405d-8d80-64f439ffc234",
+      "home_team": "乌德勒支青年队",
+      "away_team": "维特斯",
+      "match_date": "2026-08-17",
+      "kickoff_at": "2026-08-17 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832822",
+      "match_id": "4b42686c-4318-4c6b-bb97-3fa0c225dbd2",
+      "home_team": "格拉夫夏普",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-08-17",
+      "kickoff_at": "2026-08-17 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832823",
+      "match_id": "bd666ba0-fdd3-4cc1-9cce-1b089e8ed107",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "埃门",
+      "match_date": "2026-08-17",
+      "kickoff_at": "2026-08-17 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832830",
+      "match_id": "00bfd80e-90bd-4012-a597-5daf4a3d8e4e",
+      "home_team": "维特斯",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832827",
+      "match_id": "6a3fc2c8-f40d-42fe-ba81-8b7217d1f1f6",
+      "home_team": "埃门",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832829",
+      "match_id": "9db49ef9-91f4-4e02-b09c-0aa76eb1e3c2",
+      "home_team": "马斯特里赫特",
+      "away_team": "福伦丹",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832825",
+      "match_id": "bc66d897-7998-4edc-ada6-c8f4443be688",
+      "home_team": "邓伯什",
+      "away_team": "FC埃因霍温",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832828",
+      "match_id": "c16694c0-94ca-4cbb-906e-c8667c14898d",
+      "home_team": "赫尔蒙德",
+      "away_team": "瓦尔韦克",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832826",
+      "match_id": "c458e1e8-e605-48f1-b020-2e623474c2fc",
+      "home_team": "多德勒支",
+      "away_team": "罗达JC",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832831",
+      "match_id": "00d8d8ad-26ba-4d04-a83d-9fdbe0e85104",
+      "home_team": "布雷达",
+      "away_team": "阿贾克斯青年队",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832832",
+      "match_id": "067c68d4-9d25-44c3-8405-67e46d1d3b12",
+      "home_team": "芬洛",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832833",
+      "match_id": "89b74d9a-b479-403c-be2e-ead0d664ecd3",
+      "home_team": "埃因霍温青年队",
+      "away_team": "奥斯",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832834",
+      "match_id": "befa070d-27d3-4814-b389-136d36bc063a",
+      "home_team": "乌德勒支青年队",
+      "away_team": "赫拉克勒斯",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832838",
+      "match_id": "333a0d21-f937-4e1d-9949-ecdb08e922f1",
+      "home_team": "阿尔克马尔青年队",
+      "away_team": "马斯特里赫特",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832840",
+      "match_id": "3bf18d78-a930-456e-ad71-4e48dd452ee1",
+      "home_team": "罗达JC",
+      "away_team": "布雷达",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832837",
+      "match_id": "44492f7c-5774-43a7-b89e-b094491f36f6",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "赫尔蒙德",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832839",
+      "match_id": "acd473d4-eeaa-415f-b437-b9b43d63f0a6",
+      "home_team": "奥斯",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832836",
+      "match_id": "baac2ff7-d804-4164-9735-4fd6f611a403",
+      "home_team": "福伦丹",
+      "away_team": "多德勒支",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832835",
+      "match_id": "cbdec317-3272-4e81-8e3a-50a42a1380fe",
+      "home_team": "邓伯什",
+      "away_team": "维特斯",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832841",
+      "match_id": "d31f8884-3cbb-454c-ac7b-03d95478ef35",
+      "home_team": "瓦尔韦克",
+      "away_team": "埃因霍温青年队",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832842",
+      "match_id": "20754d76-e80e-471f-8157-dd6b11247b4a",
+      "home_team": "格拉夫夏普",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832843",
+      "match_id": "ee022884-f04f-4d81-9511-73f2bb72189b",
+      "home_team": "FC埃因霍温",
+      "away_team": "赫拉克勒斯",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 10:15:00+00"
+    },
+    {
+      "source_match_id": "5832844",
+      "match_id": "533bc951-eea8-407a-a524-f1a0eb484f70",
+      "home_team": "芬洛",
+      "away_team": "埃门",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832845",
+      "match_id": "45586606-4705-45d2-a24f-5bd4c8a1f286",
+      "home_team": "阿尔克马尔青年队",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832846",
+      "match_id": "5fc01a96-7dec-4a1f-b501-9649e80d2cde",
+      "home_team": "埃因霍温青年队",
+      "away_team": "阿贾克斯青年队",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832849",
+      "match_id": "4eb99645-84c0-4b1e-ad65-115405c5e392",
+      "home_team": "赫尔蒙德",
+      "away_team": "芬洛",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832850",
+      "match_id": "6bfd8029-1aee-4d4b-ba3c-ff319d17576e",
+      "home_team": "赫拉克勒斯",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832852",
+      "match_id": "704184ec-4869-409f-ac42-2016e1ffacec",
+      "home_team": "瓦尔韦克",
+      "away_team": "布雷达",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832848",
+      "match_id": "94c1106f-730a-49c4-92cb-cb9bf9720206",
+      "home_team": "埃门",
+      "away_team": "福伦丹",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832847",
+      "match_id": "ca22dbdc-c547-4fc5-95d3-394b71bb01a4",
+      "home_team": "阿尔梅勒城",
+      "away_team": "阿贾克斯青年队",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832851",
+      "match_id": "d2b63c7a-0658-4c7f-8272-65fc8b488e39",
+      "home_team": "维特斯",
+      "away_team": "奥斯",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832853",
+      "match_id": "7d610e4d-33dc-4ec1-baeb-234fc714c8a1",
+      "home_team": "多德勒支",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832854",
+      "match_id": "8136d131-87cd-44fc-a8b0-b878b95220e0",
+      "home_team": "马斯特里赫特",
+      "away_team": "罗达JC",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832855",
+      "match_id": "104f7a78-c5eb-491b-83d8-e87c0c92bf15",
+      "home_team": "埃因霍温青年队",
+      "away_team": "邓伯什",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832856",
+      "match_id": "6b8d5efc-16e9-4efd-b63f-e528e8101568",
+      "home_team": "乌德勒支青年队",
+      "away_team": "FC埃因霍温",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832861",
+      "match_id": "14b87eea-f0d9-438a-a4f4-cb571c15067d",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "瓦尔韦克",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832864",
+      "match_id": "392441d9-2be7-4ebc-8025-7795f7e93b09",
+      "home_team": "芬洛",
+      "away_team": "奥斯",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832863",
+      "match_id": "6cbb6483-88e6-455b-9c4b-0df27120e708",
+      "home_team": "布雷达",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832857",
+      "match_id": "6d4933d6-c207-47b2-86dd-5066a698d17e",
+      "home_team": "FC埃因霍温",
+      "away_team": "多德勒支",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832859",
+      "match_id": "72264e3b-2bb1-4582-8449-f8ec4298859b",
+      "home_team": "赫尔蒙德",
+      "away_team": "埃因霍温青年队",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832862",
+      "match_id": "850884fc-aba7-4741-9e26-1667c7acf8e7",
+      "home_team": "马斯特里赫特",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832858",
+      "match_id": "9f9e28ac-a5e2-4b87-ab59-70bf7f1f15ac",
+      "home_team": "埃门",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832860",
+      "match_id": "f1af0ac2-813d-4366-ad2c-fa3e6ecd9f70",
+      "home_team": "赫拉克勒斯",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832865",
+      "match_id": "c4b496f7-1028-4785-9eb5-42d5338a99ed",
+      "home_team": "罗达JC",
+      "away_team": "维特斯",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832866",
+      "match_id": "0a0422a5-0923-449e-8e5b-ffccffac44fb",
+      "home_team": "福伦丹",
+      "away_team": "邓伯什",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832867",
+      "match_id": "449156a6-9807-4861-9c18-81703b868312",
+      "home_team": "埃因霍温青年队",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832868",
+      "match_id": "4a4b6b72-1c6b-4167-a629-369c678ad1ae",
+      "home_team": "乌德勒支青年队",
+      "away_team": "阿贾克斯青年队",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832869",
+      "match_id": "3c3e4b68-9017-4e33-8862-0677ae7f290d",
+      "home_team": "阿尔梅勒城",
+      "away_team": "赫拉克勒斯",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832876",
+      "match_id": "84a5c4eb-9ae8-4458-8ebe-227df9037763",
+      "home_team": "瓦尔韦克",
+      "away_team": "马斯特里赫特",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832873",
+      "match_id": "a2d93269-ac3e-46dc-948a-e71684bcbd83",
+      "home_team": "阿尔克马尔青年队",
+      "away_team": "福伦丹",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832872",
+      "match_id": "a3858e2f-79a2-49d7-9435-0ba74a96fde5",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "罗达JC",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832871",
+      "match_id": "b8cb796f-b507-4f91-9e37-40fa85c24283",
+      "home_team": "FC埃因霍温",
+      "away_team": "埃门",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832870",
+      "match_id": "dce4bfe6-ae95-454d-829c-8d3bf98501f1",
+      "home_team": "邓伯什",
+      "away_team": "赫尔蒙德",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832874",
+      "match_id": "f38c2b2c-32b9-4dd9-aadb-2bb61ad52236",
+      "home_team": "乌德勒支青年队",
+      "away_team": "芬洛",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832875",
+      "match_id": "fa93d2b6-669c-4ae5-99de-ab8b0b9a1719",
+      "home_team": "奥斯",
+      "away_team": "多德勒支",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832877",
+      "match_id": "6cec8009-c5cd-4b4d-a378-a72b0c922913",
+      "home_team": "维特斯",
+      "away_team": "埃因霍温青年队",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832878",
+      "match_id": "af62b15e-9430-40bd-924e-9454f832192e",
+      "home_team": "格拉夫夏普",
+      "away_team": "布雷达",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 14:45:00+00"
+    },
+    {
+      "source_match_id": "5832879",
+      "match_id": "eea2072d-fdb2-4f1d-8265-6aed2099d871",
+      "home_team": "多德勒支",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-09-25",
+      "kickoff_at": "2026-09-25 19:00:00+00"
+    },
+    {
+      "source_match_id": "5832880",
+      "match_id": "c752178b-6353-4d34-903e-5879860cf8e8",
+      "home_team": "赫拉克勒斯",
+      "away_team": "维特斯",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 14:30:00+00"
+    },
+    {
+      "source_match_id": "5832882",
+      "match_id": "789a75a1-43f2-4c56-ac75-714f8f3a8b90",
+      "home_team": "福伦丹",
+      "away_team": "芬洛",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832885",
+      "match_id": "78cff0d5-aa6e-4607-b341-3067fd166518",
+      "home_team": "罗达JC",
+      "away_team": "瓦尔韦克",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832883",
+      "match_id": "7b665de9-96f3-4eff-a641-256899d5cf6f",
+      "home_team": "马斯特里赫特",
+      "away_team": "赫尔蒙德",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832884",
+      "match_id": "9a161155-38a1-4dd7-afd1-1df4b795ce65",
+      "home_team": "布雷达",
+      "away_team": "FC埃因霍温",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832881",
+      "match_id": "deb222c7-f642-45fe-8f47-d4881f91a9b8",
+      "home_team": "埃门",
+      "away_team": "奥斯",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26 18:00:00+00"
+    },
+    {
+      "source_match_id": "5832886",
+      "match_id": "eaca9f60-65cf-4362-872c-3ba261b1c39d",
+      "home_team": "格拉夫夏普",
+      "away_team": "邓伯什",
+      "match_date": "2026-09-27",
+      "kickoff_at": "2026-09-27 12:30:00+00"
+    }
+  ]
+}
