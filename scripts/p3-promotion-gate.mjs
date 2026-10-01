@@ -81,7 +81,7 @@ function validate(s){
     if(slots!==11) errors.push({type:'REQUIRED_SLOTS_NOT_11',team:name,value:slots});
 
     for(const d of t.D_squad_depth||[]){
-      if((d.replacement_chain||[]).some(x=>String(x.pool_type||'')==='OTHER_STARTER')){
+      if((d.replacement_chain||[]).some(x=>String(x.availability_role||x.pool_type||'')==='OTHER_STARTER')){
         errors.push({type:'OTHER_STARTER_IN_NORMAL_REPLACEMENT',team:name,position:d.position_code});
       }
       if(['VALID','PARTIAL'].includes(String(d.data_status)) &&
@@ -90,15 +90,19 @@ function validate(s){
       }
     }
 
+    const aById=new Map((t.A_player_base||[]).map(a=>[String(a.player_id),a]));
     for(const p of t.B_player_performance||[]){
-      if(p.performance_score==null && (Number(p.minutes||0)>0 || String(p.performance_confidence)!=='UNTESTED')){
-        errors.push({type:'BAD_PERFORMANCE_NULL',team:name,player:p.player_name});
+      const a=aById.get(String(p.player_id))||{};
+      const minutes=Number(a.minutes||0);
+      const starts=Number(a.starts||0);
+      if(p.performance_score==null && (minutes>0 || String(p.performance_confidence)!=='UNTESTED')){
+        errors.push({type:'BAD_PERFORMANCE_NULL',team:name,player:p.player_name,minutes});
       }
       if(p.performance_score!=null && String(p.performance_confidence)==='UNTESTED'){
         errors.push({type:'UNTESTED_WITH_SCORE',team:name,player:p.player_name});
       }
-      if(p.primary_position==null && Number(p.minutes||0)>0){
-        errors.push({type:'ACTIVE_PLAYER_POSITION_NULL',team:name,player:p.player_name});
+      if(p.primary_position==null && starts>0){
+        errors.push({type:'STARTER_POSITION_NULL',team:name,player:p.player_name,starts});
       }
     }
 
