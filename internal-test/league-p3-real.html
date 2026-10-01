@@ -241,6 +241,27 @@
       .p3-factor{grid-template-columns:repeat(2,minmax(0,1fr))}
       .p3-legacy-titlebar{align-items:flex-start;flex-direction:column}
     }
+  
+    .p3-quality-bar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:0 0 10px}
+    .p3-quality-item{border:1px solid #e4eaf2;border-radius:10px;background:#fbfcfe;padding:8px;min-width:0}
+    .p3-quality-item small{display:block;color:#8b97a9;font-size:8px;white-space:nowrap}
+    .p3-quality-item b{display:block;margin-top:3px;color:#30405a;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .p3-quality-item span{display:block;margin-top:2px;color:#8995a6;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .p3-quality-item.is-tier.stable{background:#edf8f1;border-color:#d6eddc}.p3-quality-item.is-tier.stable b{color:#24764a}
+    .p3-quality-item.is-tier.pilot_full{background:#eef4ff;border-color:#d9e5fa}.p3-quality-item.is-tier.pilot_full b{color:#406fae}
+    .p3-quality-item.is-tier.limited,.p3-quality-item.is-tier.raw_only{background:#fff7e8;border-color:#f0dfb8}.p3-quality-item.is-tier.limited b,.p3-quality-item.is-tier.raw_only b{color:#9a6a17}
+    .p3-quality-warning{margin:-3px 0 10px;border:1px solid #f0dfb8;border-radius:9px;background:#fff9ed;padding:8px 10px;color:#8b681f;font-size:8.5px;line-height:1.55}
+    .p3-depth-summary{display:flex;flex-direction:column;gap:1px}
+    .p3-depth-more{margin-top:8px;border-top:1px solid #e8edf3;padding-top:7px}
+    .p3-depth-more summary{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;color:#3568aa;font-size:9px;font-weight:850;-webkit-tap-highlight-color:transparent}
+    .p3-depth-more summary::-webkit-details-marker{display:none}
+    .p3-depth-more summary i{font-style:normal;font-size:14px;transition:transform .18s ease}
+    .p3-depth-more[open] summary i{transform:rotate(90deg)}
+    .p3-depth-more-body{margin-top:7px;padding-top:7px;border-top:1px dashed #e6ebf1}
+    .p3-raw-panel{padding:2px 0}
+    @media(max-width:760px){
+      .p3-quality-bar{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
   </style>
 </head>
 <body class="qc-home qc-league-record-test">
@@ -283,7 +304,7 @@
 </div>
 
 <script src="league-p3-static-data.js?v=20261001static2"></script>
-<script src="league-p3-module.js?v=20261001korv5orig1"></script>
+<script src="league-p3-module.js?v=20261001qualityd1"></script>
 <script src="league-p3-real.js?v=20261001action1"></script>
 </body>
 </html>
