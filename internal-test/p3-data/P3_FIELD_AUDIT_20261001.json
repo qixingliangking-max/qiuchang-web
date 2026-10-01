@@ -1,0 +1,1760 @@
+{
+  "report": "P3_V5_FIELD_AUDIT",
+  "date": "2026-10-01",
+  "baseline": "KOR_K1 P3_V5_KOR_STABLE",
+  "scope": [
+    "KOR_K1",
+    "UEFA_UNL",
+    "USA_MLS",
+    "NOR_ES"
+  ],
+  "result": {
+    "schema_all_exact": true,
+    "hard_gate_all_pass": true
+  },
+  "leagues": {
+    "KOR_K1": {
+      "teams": 12,
+      "versions": [
+        "P3_V5_KOR_STABLE"
+      ],
+      "statuses": [
+        "P3_VALID"
+      ],
+      "sample_level": [
+        "NORMAL"
+      ],
+      "usage_mode": [
+        "FULL"
+      ],
+      "sample_matches": {
+        "min": 30,
+        "avg": 30,
+        "max": 30
+      },
+      "quality_tier": "STABLE",
+      "schema_exact_match": true,
+      "schema_diff": {
+        "top_level": {
+          "missing": [],
+          "extra": []
+        },
+        "identity": {
+          "missing": [],
+          "extra": []
+        },
+        "sample_context": {
+          "missing": [],
+          "extra": []
+        },
+        "A_player_base": {
+          "missing": [],
+          "extra": []
+        },
+        "B_player_performance": {
+          "missing": [],
+          "extra": []
+        },
+        "C_lineup_structure": {
+          "missing": [],
+          "extra": []
+        },
+        "D_squad_depth": {
+          "missing": [],
+          "extra": []
+        },
+        "D_primary_unit_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_replacement_chain_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_emergency_shift_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_absence_scenario_item": {
+          "missing": [],
+          "extra": []
+        },
+        "E_availability_impact": {
+          "missing": [],
+          "extra": []
+        },
+        "model_factors": {
+          "missing": [],
+          "extra": []
+        }
+      },
+      "hard_gate": {
+        "required_blocks_broken": [],
+        "required_slots_anomalies": [],
+        "other_starter_in_normal_replacement": 0,
+        "performance_null_rule_violations": 0,
+        "untested_with_score_violations": 0,
+        "active_player_primary_position_null": 0,
+        "valid_partial_depth_metric_missing": 0
+      },
+      "quality_notes": {
+        "c_critical_null_count": 1,
+        "c_critical_nulls": [
+          {
+            "team": "仁川联",
+            "field": "midfield_bench_strength"
+          }
+        ],
+        "D_data_status": {
+          "VALID": 68,
+          "DATA_INCOMPLETE": 14,
+          "PARTIAL": 5
+        },
+        "D_confidence": {
+          "HIGH": 68,
+          "LOW": 14,
+          "MEDIUM": 5
+        },
+        "absence_scenarios_without_expected_replacement": 0,
+        "performance_nonnull_pct": 86.9,
+        "primary_position_nonnull_pct": 91.7,
+        "depth_score_nonnull_pct": 83.9
+      }
+    },
+    "UEFA_UNL": {
+      "teams": 54,
+      "versions": [
+        "P3_V5_UNL_PILOT"
+      ],
+      "statuses": [
+        "P3_VALID"
+      ],
+      "sample_level": [
+        "LOW_SAMPLE"
+      ],
+      "usage_mode": [
+        "LIMITED"
+      ],
+      "sample_matches": {
+        "min": 1,
+        "avg": 1.9,
+        "max": 2
+      },
+      "quality_tier": "LIMITED",
+      "schema_exact_match": true,
+      "schema_diff": {
+        "top_level": {
+          "missing": [],
+          "extra": []
+        },
+        "identity": {
+          "missing": [],
+          "extra": []
+        },
+        "sample_context": {
+          "missing": [],
+          "extra": []
+        },
+        "A_player_base": {
+          "missing": [],
+          "extra": []
+        },
+        "B_player_performance": {
+          "missing": [],
+          "extra": []
+        },
+        "C_lineup_structure": {
+          "missing": [],
+          "extra": []
+        },
+        "D_squad_depth": {
+          "missing": [],
+          "extra": []
+        },
+        "D_primary_unit_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_replacement_chain_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_emergency_shift_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_absence_scenario_item": {
+          "missing": [],
+          "extra": []
+        },
+        "E_availability_impact": {
+          "missing": [],
+          "extra": []
+        },
+        "model_factors": {
+          "missing": [],
+          "extra": []
+        }
+      },
+      "hard_gate": {
+        "required_blocks_broken": [],
+        "required_slots_anomalies": [],
+        "other_starter_in_normal_replacement": 0,
+        "performance_null_rule_violations": 0,
+        "untested_with_score_violations": 0,
+        "active_player_primary_position_null": 0,
+        "valid_partial_depth_metric_missing": 0
+      },
+      "quality_notes": {
+        "c_critical_null_count": 324,
+        "c_critical_nulls": [
+          {
+            "team": "丹麦",
+            "field": "bench_strength"
+          },
+          {
+            "team": "丹麦",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "丹麦",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "丹麦",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "丹麦",
+            "field": "squad_depth"
+          },
+          {
+            "team": "丹麦",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "冰岛",
+            "field": "bench_strength"
+          },
+          {
+            "team": "冰岛",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "冰岛",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "冰岛",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "冰岛",
+            "field": "squad_depth"
+          },
+          {
+            "team": "冰岛",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "希腊",
+            "field": "bench_strength"
+          },
+          {
+            "team": "希腊",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "希腊",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "希腊",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "希腊",
+            "field": "squad_depth"
+          },
+          {
+            "team": "希腊",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "德国",
+            "field": "bench_strength"
+          },
+          {
+            "team": "德国",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "德国",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "德国",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "德国",
+            "field": "squad_depth"
+          },
+          {
+            "team": "德国",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "挪威",
+            "field": "bench_strength"
+          },
+          {
+            "team": "挪威",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "挪威",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "挪威",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "挪威",
+            "field": "squad_depth"
+          },
+          {
+            "team": "挪威",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "捷克",
+            "field": "bench_strength"
+          },
+          {
+            "team": "捷克",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "捷克",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "捷克",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "捷克",
+            "field": "squad_depth"
+          },
+          {
+            "team": "捷克",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "法国",
+            "field": "bench_strength"
+          },
+          {
+            "team": "法国",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "法国",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "法国",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "法国",
+            "field": "squad_depth"
+          },
+          {
+            "team": "法国",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "波兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "波兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "波兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "波兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "波兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "波兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "波黑",
+            "field": "bench_strength"
+          },
+          {
+            "team": "波黑",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "波黑",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "波黑",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "波黑",
+            "field": "squad_depth"
+          },
+          {
+            "team": "波黑",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "瑞典",
+            "field": "bench_strength"
+          },
+          {
+            "team": "瑞典",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "瑞典",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "瑞典",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "瑞典",
+            "field": "squad_depth"
+          },
+          {
+            "team": "瑞典",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "瑞士",
+            "field": "bench_strength"
+          },
+          {
+            "team": "瑞士",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "瑞士",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "瑞士",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "瑞士",
+            "field": "squad_depth"
+          },
+          {
+            "team": "瑞士",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "芬兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "芬兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "芬兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "芬兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "芬兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "芬兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "荷兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "荷兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "荷兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "荷兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "荷兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "荷兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "黑山",
+            "field": "bench_strength"
+          },
+          {
+            "team": "黑山",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "黑山",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "黑山",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "黑山",
+            "field": "squad_depth"
+          },
+          {
+            "team": "黑山",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "乌克兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "乌克兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "乌克兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "乌克兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "乌克兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "乌克兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "以色列",
+            "field": "bench_strength"
+          },
+          {
+            "team": "以色列",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "以色列",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "以色列",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "以色列",
+            "field": "squad_depth"
+          },
+          {
+            "team": "以色列",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "匈牙利",
+            "field": "bench_strength"
+          },
+          {
+            "team": "匈牙利",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "匈牙利",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "匈牙利",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "匈牙利",
+            "field": "squad_depth"
+          },
+          {
+            "team": "匈牙利",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "卢森堡",
+            "field": "bench_strength"
+          },
+          {
+            "team": "卢森堡",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "卢森堡",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "卢森堡",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "卢森堡",
+            "field": "squad_depth"
+          },
+          {
+            "team": "卢森堡",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "土耳其",
+            "field": "bench_strength"
+          },
+          {
+            "team": "土耳其",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "土耳其",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "土耳其",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "土耳其",
+            "field": "squad_depth"
+          },
+          {
+            "team": "土耳其",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "奥地利",
+            "field": "bench_strength"
+          },
+          {
+            "team": "奥地利",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "奥地利",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "奥地利",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "奥地利",
+            "field": "squad_depth"
+          },
+          {
+            "team": "奥地利",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "威尔士",
+            "field": "bench_strength"
+          },
+          {
+            "team": "威尔士",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "威尔士",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "威尔士",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "威尔士",
+            "field": "squad_depth"
+          },
+          {
+            "team": "威尔士",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "安道尔",
+            "field": "bench_strength"
+          },
+          {
+            "team": "安道尔",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "安道尔",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "安道尔",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "安道尔",
+            "field": "squad_depth"
+          },
+          {
+            "team": "安道尔",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "意大利",
+            "field": "bench_strength"
+          },
+          {
+            "team": "意大利",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "意大利",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "意大利",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "意大利",
+            "field": "squad_depth"
+          },
+          {
+            "team": "意大利",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "比利时",
+            "field": "bench_strength"
+          },
+          {
+            "team": "比利时",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "比利时",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "比利时",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "比利时",
+            "field": "squad_depth"
+          },
+          {
+            "team": "比利时",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "爱尔兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "科索沃",
+            "field": "bench_strength"
+          },
+          {
+            "team": "科索沃",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "科索沃",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "科索沃",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "科索沃",
+            "field": "squad_depth"
+          },
+          {
+            "team": "科索沃",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "立陶宛",
+            "field": "bench_strength"
+          },
+          {
+            "team": "立陶宛",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "立陶宛",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "立陶宛",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "立陶宛",
+            "field": "squad_depth"
+          },
+          {
+            "team": "立陶宛",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "苏格兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "苏格兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "苏格兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "苏格兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "苏格兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "苏格兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "英格兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "英格兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "英格兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "英格兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "英格兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "英格兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "bench_strength"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "squad_depth"
+          },
+          {
+            "team": "葡萄牙",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "西班牙",
+            "field": "bench_strength"
+          },
+          {
+            "team": "西班牙",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "西班牙",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "西班牙",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "西班牙",
+            "field": "squad_depth"
+          },
+          {
+            "team": "西班牙",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "马耳他",
+            "field": "bench_strength"
+          },
+          {
+            "team": "马耳他",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "马耳他",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "马耳他",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "马耳他",
+            "field": "squad_depth"
+          },
+          {
+            "team": "马耳他",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "亚美尼亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "保加利亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "保加利亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "保加利亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "保加利亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "保加利亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "保加利亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "克罗地亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "bench_strength"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "squad_depth"
+          },
+          {
+            "team": "北爱尔兰",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "北马其顿",
+            "field": "bench_strength"
+          },
+          {
+            "team": "北马其顿",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "北马其顿",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "北马其顿",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "北马其顿",
+            "field": "squad_depth"
+          },
+          {
+            "team": "北马其顿",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "bench_strength"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "squad_depth"
+          },
+          {
+            "team": "圣马力诺",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "塞尔维亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "bench_strength"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "squad_depth"
+          },
+          {
+            "team": "塞浦路斯",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "拉脱维亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "bench_strength"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "squad_depth"
+          },
+          {
+            "team": "摩尔多瓦",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "bench_strength"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "squad_depth"
+          },
+          {
+            "team": "斯洛伐克",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "格鲁吉亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "bench_strength"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "squad_depth"
+          },
+          {
+            "team": "法罗群岛",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "爱沙尼亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "bench_strength"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "squad_depth"
+          },
+          {
+            "team": "白俄罗斯",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "bench_strength"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "squad_depth"
+          },
+          {
+            "team": "直布罗陀",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "罗马尼亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "bench_strength"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "squad_depth"
+          },
+          {
+            "team": "阿塞拜疆",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "bench_strength"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "squad_depth"
+          },
+          {
+            "team": "列支敦士登",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "bench_strength"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "squad_depth"
+          },
+          {
+            "team": "哈萨克斯坦",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "斯洛文尼亚",
+            "field": "depth_data_coverage_pct"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "bench_strength"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "defensive_bench_strength"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "squad_depth"
+          },
+          {
+            "team": "阿尔巴尼亚",
+            "field": "depth_data_coverage_pct"
+          }
+        ],
+        "D_data_status": {
+          "DATA_INCOMPLETE": 269,
+          "NO_BACKUP": 123
+        },
+        "D_confidence": {
+          "LOW": 392
+        },
+        "absence_scenarios_without_expected_replacement": 177,
+        "performance_nonnull_pct": 77.6,
+        "primary_position_nonnull_pct": 87.5,
+        "depth_score_nonnull_pct": 0
+      }
+    },
+    "USA_MLS": {
+      "teams": 30,
+      "versions": [
+        "P3_V5_USA_MLS_PILOT"
+      ],
+      "statuses": [
+        "P3_VALID"
+      ],
+      "sample_level": [
+        "NORMAL"
+      ],
+      "usage_mode": [
+        "FULL"
+      ],
+      "sample_matches": {
+        "min": 26,
+        "avg": 26.9,
+        "max": 28
+      },
+      "quality_tier": "PILOT_FULL",
+      "schema_exact_match": true,
+      "schema_diff": {
+        "top_level": {
+          "missing": [],
+          "extra": []
+        },
+        "identity": {
+          "missing": [],
+          "extra": []
+        },
+        "sample_context": {
+          "missing": [],
+          "extra": []
+        },
+        "A_player_base": {
+          "missing": [],
+          "extra": []
+        },
+        "B_player_performance": {
+          "missing": [],
+          "extra": []
+        },
+        "C_lineup_structure": {
+          "missing": [],
+          "extra": []
+        },
+        "D_squad_depth": {
+          "missing": [],
+          "extra": []
+        },
+        "D_primary_unit_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_replacement_chain_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_emergency_shift_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_absence_scenario_item": {
+          "missing": [],
+          "extra": []
+        },
+        "E_availability_impact": {
+          "missing": [],
+          "extra": []
+        },
+        "model_factors": {
+          "missing": [],
+          "extra": []
+        }
+      },
+      "hard_gate": {
+        "required_blocks_broken": [],
+        "required_slots_anomalies": [],
+        "other_starter_in_normal_replacement": 0,
+        "performance_null_rule_violations": 0,
+        "untested_with_score_violations": 0,
+        "active_player_primary_position_null": 0,
+        "valid_partial_depth_metric_missing": 0
+      },
+      "quality_notes": {
+        "c_critical_null_count": 2,
+        "c_critical_nulls": [
+          {
+            "team": "皇家盐湖城",
+            "field": "midfield_bench_strength"
+          },
+          {
+            "team": "休斯敦迪纳摩",
+            "field": "attacking_bench_strength"
+          }
+        ],
+        "D_data_status": {
+          "DATA_INCOMPLETE": 48,
+          "VALID": 137,
+          "PARTIAL": 27,
+          "NO_BACKUP": 5
+        },
+        "D_confidence": {
+          "LOW": 53,
+          "HIGH": 137,
+          "MEDIUM": 27
+        },
+        "absence_scenarios_without_expected_replacement": 5,
+        "performance_nonnull_pct": 85.9,
+        "primary_position_nonnull_pct": 92.4,
+        "depth_score_nonnull_pct": 75.6
+      }
+    },
+    "NOR_ES": {
+      "teams": 16,
+      "versions": [
+        "P3_V5_NOR_ES_PILOT"
+      ],
+      "statuses": [
+        "P3_VALID"
+      ],
+      "sample_level": [
+        "NORMAL"
+      ],
+      "usage_mode": [
+        "FULL"
+      ],
+      "sample_matches": {
+        "min": 21,
+        "avg": 21,
+        "max": 21
+      },
+      "quality_tier": "PILOT_FULL",
+      "schema_exact_match": true,
+      "schema_diff": {
+        "top_level": {
+          "missing": [],
+          "extra": []
+        },
+        "identity": {
+          "missing": [],
+          "extra": []
+        },
+        "sample_context": {
+          "missing": [],
+          "extra": []
+        },
+        "A_player_base": {
+          "missing": [],
+          "extra": []
+        },
+        "B_player_performance": {
+          "missing": [],
+          "extra": []
+        },
+        "C_lineup_structure": {
+          "missing": [],
+          "extra": []
+        },
+        "D_squad_depth": {
+          "missing": [],
+          "extra": []
+        },
+        "D_primary_unit_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_replacement_chain_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_emergency_shift_item": {
+          "missing": [],
+          "extra": []
+        },
+        "D_absence_scenario_item": {
+          "missing": [],
+          "extra": []
+        },
+        "E_availability_impact": {
+          "missing": [],
+          "extra": []
+        },
+        "model_factors": {
+          "missing": [],
+          "extra": []
+        }
+      },
+      "hard_gate": {
+        "required_blocks_broken": [],
+        "required_slots_anomalies": [],
+        "other_starter_in_normal_replacement": 0,
+        "performance_null_rule_violations": 0,
+        "untested_with_score_violations": 0,
+        "active_player_primary_position_null": 0,
+        "valid_partial_depth_metric_missing": 0
+      },
+      "quality_notes": {
+        "c_critical_null_count": 2,
+        "c_critical_nulls": [
+          {
+            "team": "汉坎",
+            "field": "attacking_bench_strength"
+          },
+          {
+            "team": "特罗姆瑟",
+            "field": "midfield_bench_strength"
+          }
+        ],
+        "D_data_status": {
+          "VALID": 63,
+          "PARTIAL": 19,
+          "DATA_INCOMPLETE": 25,
+          "NO_BACKUP": 4
+        },
+        "D_confidence": {
+          "HIGH": 63,
+          "MEDIUM": 19,
+          "LOW": 29
+        },
+        "absence_scenarios_without_expected_replacement": 4,
+        "performance_nonnull_pct": 86.3,
+        "primary_position_nonnull_pct": 91.8,
+        "depth_score_nonnull_pct": 73.9
+      }
+    }
+  },
+  "interpretation": {
+    "KOR_K1": "STABLE baseline; one NORMAL/FULL team has midfield_bench_strength null, treated as data-availability warning rather than schema failure.",
+    "USA_MLS": "PILOT_FULL; schema/hard rules pass; two team-level bench-line strength nulls remain as quality warnings.",
+    "NOR_ES": "PILOT_FULL; schema/hard rules pass; two team-level bench-line strength nulls remain as quality warnings.",
+    "UEFA_UNL": "LIMITED only. All teams LOW_SAMPLE/LIMITED with 1-2 matches. Schema and safety rules pass, but bench/depth quality is intentionally immature; do not present as FULL-quality P3."
+  },
+  "next_rules": [
+    "Every new P3 snapshot must pass exact Korean V5 schema and all hard gates before being labeled structurally valid.",
+    "LOW_SAMPLE/LIMITED must carry visible LIMITED quality labeling even if schema passes.",
+    "Dynamic model factors REPLACEMENT_GAP and AVAILABILITY_IMPACT are allowed null before matchday availability input.",
+    "P3-E real-time absence simulation remains single-player, one RPC per explicit click, cached/rate-limited, never bulk."
+  ]
+}
