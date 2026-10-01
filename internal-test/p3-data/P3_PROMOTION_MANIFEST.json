@@ -3,7 +3,7 @@
   "ui_baseline": "semantic1",
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2",
   "rule": "Only snapshots that pass the upstream promotion gate may be placed in internal-test/p3-data and referenced by the semantic1 renderer. Frontend rendering is not a validation gate.",
-  "contract_blob_sha": "562bb1c2257d8b041ae91dbde5ddea75add6cdde",
+  "contract_blob_sha": "a784287058d8a9b498a3709a1039abf18cbfeb3c",
   "validator_blob_sha": "69f31b9df24304e4c30c6a79c3e41033ae950e45",
   "promoted": [
     {
@@ -41,16 +41,16 @@
       "published_path": "internal-test/p3-data/UEFA_UNL-2026-27.json",
       "blob_sha": "ae77127569f62cbf8dc4d2372693a11a3a1d2a67",
       "gate_status": "PASS_WITH_LIMITED_SAMPLE"
-    }
-  ],
-  "raw_only": [
+    },
     {
       "league_code": "JPN_J1",
       "season": "2026/27",
-      "quality_tier": "RAW_ONLY",
-      "published_path": null,
-      "gate_status": "NOT_PROMOTED",
-      "reason": "raw P3 backfill exists; V5 aggregate + upstream gate not completed"
+      "quality_tier": "LIMITED",
+      "teams": 20,
+      "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
+      "blob_sha": "e5b7138dc68a9f99f57de666dbf4e9d22a1e1ef7",
+      "gate_status": "PASS_WITH_LIMITED_SAMPLE"
     }
-  ]
+  ],
+  "raw_only": []
 }
