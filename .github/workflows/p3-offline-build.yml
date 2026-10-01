@@ -46,5 +46,6 @@ jobs:
             echo "No candidate changes"
           else
             git commit -m "Build SWE and FIN P3 candidates offline"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
