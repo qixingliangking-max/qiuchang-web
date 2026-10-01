@@ -1,0 +1,59 @@
+(()=>{
+  const REQUIRED_BLOCKS=["identity","sample_context","A_player_base","B_player_performance","C_lineup_structure","D_squad_depth","E_availability_impact","model_factors"];
+  const BASE={"top_level":["A_player_base","B_player_performance","C_lineup_structure","D_squad_depth","E_availability_impact","identity","model_factors","ok","sample_context","status","version"],"identity":["competition_id","league_code","season","team_name"],"sample_context":["recommended_use","sample_level","team_matches","usage_mode"],"A_player_base":["actual_position_counts","appearances","bench_listings","importance_score","minute_share_pct","minutes","player_id","player_name","primary_position","recent10_usage_pct","recent5_usage_pct","secondary_positions","squad_listings","start_rate_pct","starts","tactical_usage_stability_pct"],"B_player_performance":["aerials_won","assists","avg_rating","chances_created","clearances","defensive_actions","duels_lost","duels_won","goals","goals_conceded","interceptions","passes_into_final_third","per90","performance_confidence","performance_score","performance_score_legacy","player_id","player_name","primary_position","recoveries","role_quality","save_pct","saves","shots","shots_on_target","tackles","touches_opp_box","xa","xg"],"C_lineup_structure":["attack_core_strength","attacking_bench_strength","avg_changes_per_match","avg_starter_continuity","bench_strength","core_starters","defense_core_strength","defensive_bench_strength","depth_data_coverage_pct","formation_coverage_pct","formation_samples","formation_source","formation_stability_pct","last10_lineup_continuity","last5_lineup_continuity","midfield_bench_strength","midfield_core_strength","most_used_formation","p3_version","performance_model_version","season","second_formation","squad_depth","squad_matches","starting_xi_strength","team_name","unique_players","unique_starters"],"D_squad_depth":["absence_scenarios","avg_slots","confidence","data_status","emergency_shift_options","multi_position_coverage","position_code","position_coverage","position_depth_score","primary_unit","raw_replacement_gap","replacement_chain","replacement_gap","replacement_loss","replacement_quality","replacement_role_quality","required_slots","starter_quality","starter_role_quality"],"D_primary_unit_item":["fit_weight","importance_score","performance_confidence","performance_score","player_id","player_name","position_starts","role_quality"],"D_replacement_chain_item":["adjusted_quality","adjusted_role_quality","availability_role","fit_type","fit_weight","importance_score","performance_confidence","performance_score","player_id","player_name","position_starts","replacement_rank","role_quality"],"D_emergency_shift_item":["adjusted_quality","adjusted_role_quality","availability_role","emergency_shift_rank","fit_type","fit_weight","importance_score","origin_position","performance_confidence","performance_score","player_id","player_name","position_starts","replacement_rank","role_quality"],"D_absence_scenario_item":["absent_player_id","absent_player_name","expected_replacement","player_importance","player_performance","player_role_quality","raw_replacement_gap","replacement_gap","replacement_loss"],"E_availability_impact":["availability_source","day_status_fields","mode","note"],"model_factors":["ATTACK_CORE_STRENGTH","AVAILABILITY_IMPACT","BENCH_STRENGTH","DEFENSE_CORE_STRENGTH","FORMATION_STABILITY","LINEUP_CONTINUITY","MIDFIELD_CORE_STRENGTH","RECENT10_LINEUP_CONTINUITY","RECENT5_LINEUP_CONTINUITY","REPLACEMENT_GAP","SQUAD_DEPTH","STARTING_XI_STRENGTH"]};
+  const obj=v=>v&&typeof v==='object'&&!Array.isArray(v);
+  const keys=arr=>[...new Set(arr.flatMap(x=>obj(x)?Object.keys(x):[]))].sort();
+  const same=(a,b)=>a.length===b.length&&a.every((x,i)=>x===b[i]);
+  function schemaOf(snapshot){
+    const teams=Object.values(snapshot?.teams||{});
+    return {
+      top_level:keys(teams),
+      identity:keys(teams.map(t=>t.identity)),
+      sample_context:keys(teams.map(t=>t.sample_context)),
+      A_player_base:keys(teams.flatMap(t=>t.A_player_base||[])),
+      B_player_performance:keys(teams.flatMap(t=>t.B_player_performance||[])),
+      C_lineup_structure:keys(teams.map(t=>t.C_lineup_structure)),
+      D_squad_depth:keys(teams.flatMap(t=>t.D_squad_depth||[])),
+      D_primary_unit_item:keys(teams.flatMap(t=>(t.D_squad_depth||[]).flatMap(d=>d.primary_unit||[]))),
+      D_replacement_chain_item:keys(teams.flatMap(t=>(t.D_squad_depth||[]).flatMap(d=>d.replacement_chain||[]))),
+      D_emergency_shift_item:keys(teams.flatMap(t=>(t.D_squad_depth||[]).flatMap(d=>d.emergency_shift_options||[]))),
+      D_absence_scenario_item:keys(teams.flatMap(t=>(t.D_squad_depth||[]).flatMap(d=>d.absence_scenarios||[]))),
+      E_availability_impact:keys(teams.map(t=>t.E_availability_impact)),
+      model_factors:keys(teams.map(t=>t.model_factors))
+    };
+  }
+  function validate(snapshot){
+    const teams=Object.values(snapshot?.teams||{});
+    const schema=schemaOf(snapshot);
+    const errors=[],warnings=[];
+    for(const k of Object.keys(BASE)){
+      if(!same(schema[k],BASE[k])) errors.push({type:'SCHEMA_DRIFT',bucket:k,expected:BASE[k],actual:schema[k]});
+    }
+    for(const t of teams){
+      const name=t?.identity?.team_name||'?';
+      const miss=REQUIRED_BLOCKS.filter(k=>Array.isArray(t[k])?t[k].length===0:!t[k]);
+      if(miss.length) errors.push({type:'REQUIRED_BLOCK_MISSING',team:name,missing:miss});
+      const slot=(t.D_squad_depth||[]).reduce((s,d)=>s+Number(d.required_slots||0),0);
+      if(slot!==11) errors.push({type:'REQUIRED_SLOTS_NOT_11',team:name,value:slot});
+      for(const d of t.D_squad_depth||[]){
+        if((d.replacement_chain||[]).some(x=>String(x.pool_type||'')==='OTHER_STARTER'))
+          errors.push({type:'OTHER_STARTER_IN_NORMAL_REPLACEMENT',team:name,position:d.position_code});
+        if(['VALID','PARTIAL'].includes(String(d.data_status)) &&
+          ['position_depth_score','raw_replacement_gap','replacement_loss','replacement_quality','replacement_role_quality'].some(f=>d[f]==null))
+          errors.push({type:'DEPTH_METRIC_MISSING',team:name,position:d.position_code,status:d.data_status});
+      }
+      for(const p of t.B_player_performance||[]){
+        if(p.performance_score==null && (Number(p.minutes||0)>0 || String(p.performance_confidence)!=='UNTESTED'))
+          errors.push({type:'BAD_PERFORMANCE_NULL',team:name,player:p.player_name});
+        if(p.performance_score!=null && String(p.performance_confidence)==='UNTESTED')
+          errors.push({type:'UNTESTED_WITH_SCORE',team:name,player:p.player_name});
+        if(p.primary_position==null && Number(p.minutes||0)>0)
+          errors.push({type:'ACTIVE_PLAYER_POSITION_NULL',team:name,player:p.player_name});
+      }
+      if(t?.sample_context?.sample_level==='LOW_SAMPLE'||t?.sample_context?.usage_mode==='LIMITED')
+        warnings.push({type:'LIMITED_SAMPLE',team:name,matches:t?.C_lineup_structure?.squad_matches||t?.sample_context?.team_matches});
+    }
+    return {ok:errors.length===0,errors,warnings,schema};
+  }
+  window.QCP3Schema={validate,schemaOf,contract:{"contract":"P3_V5_KOR_STABLE_SCHEMA_CONTRACT","baseline":"KOR_K1 / P3_V5_KOR_STABLE","required_team_blocks":["identity","sample_context","A_player_base","B_player_performance","C_lineup_structure","D_squad_depth","E_availability_impact","model_factors"],"schemas":{"top_level":["A_player_base","B_player_performance","C_lineup_structure","D_squad_depth","E_availability_impact","identity","model_factors","ok","sample_context","status","version"],"identity":["competition_id","league_code","season","team_name"],"sample_context":["recommended_use","sample_level","team_matches","usage_mode"],"A_player_base":["actual_position_counts","appearances","bench_listings","importance_score","minute_share_pct","minutes","player_id","player_name","primary_position","recent10_usage_pct","recent5_usage_pct","secondary_positions","squad_listings","start_rate_pct","starts","tactical_usage_stability_pct"],"B_player_performance":["aerials_won","assists","avg_rating","chances_created","clearances","defensive_actions","duels_lost","duels_won","goals","goals_conceded","interceptions","passes_into_final_third","per90","performance_confidence","performance_score","performance_score_legacy","player_id","player_name","primary_position","recoveries","role_quality","save_pct","saves","shots","shots_on_target","tackles","touches_opp_box","xa","xg"],"C_lineup_structure":["attack_core_strength","attacking_bench_strength","avg_changes_per_match","avg_starter_continuity","bench_strength","core_starters","defense_core_strength","defensive_bench_strength","depth_data_coverage_pct","formation_coverage_pct","formation_samples","formation_source","formation_stability_pct","last10_lineup_continuity","last5_lineup_continuity","midfield_bench_strength","midfield_core_strength","most_used_formation","p3_version","performance_model_version","season","second_formation","squad_depth","squad_matches","starting_xi_strength","team_name","unique_players","unique_starters"],"D_squad_depth":["absence_scenarios","avg_slots","confidence","data_status","emergency_shift_options","multi_position_coverage","position_code","position_coverage","position_depth_score","primary_unit","raw_replacement_gap","replacement_chain","replacement_gap","replacement_loss","replacement_quality","replacement_role_quality","required_slots","starter_quality","starter_role_quality"],"D_primary_unit_item":["fit_weight","importance_score","performance_confidence","performance_score","player_id","player_name","position_starts","role_quality"],"D_replacement_chain_item":["adjusted_quality","adjusted_role_quality","availability_role","fit_type","fit_weight","importance_score","performance_confidence","performance_score","player_id","player_name","position_starts","replacement_rank","role_quality"],"D_emergency_shift_item":["adjusted_quality","adjusted_role_quality","availability_role","emergency_shift_rank","fit_type","fit_weight","importance_score","origin_position","performance_confidence","performance_score","player_id","player_name","position_starts","replacement_rank","role_quality"],"D_absence_scenario_item":["absent_player_id","absent_player_name","expected_replacement","player_importance","player_performance","player_role_quality","raw_replacement_gap","replacement_gap","replacement_loss"],"E_availability_impact":["availability_source","day_status_fields","mode","note"],"model_factors":["ATTACK_CORE_STRENGTH","AVAILABILITY_IMPACT","BENCH_STRENGTH","DEFENSE_CORE_STRENGTH","FORMATION_STABILITY","LINEUP_CONTINUITY","MIDFIELD_CORE_STRENGTH","RECENT10_LINEUP_CONTINUITY","RECENT5_LINEUP_CONTINUITY","REPLACEMENT_GAP","SQUAD_DEPTH","STARTING_XI_STRENGTH"]},"hard_rules":{"required_slots_sum_per_team":11,"normal_replacement_pool_forbids":["OTHER_STARTER"],"performance_null_rule":"performance_score may be null only when minutes=0 and performance_confidence=UNTESTED","primary_position_null_rule":"primary_position may be null only for 0-minute players","depth_metric_rule":"VALID/PARTIAL D rows must have position_depth_score, raw_replacement_gap, replacement_loss, replacement_quality, replacement_role_quality","dynamic_nullable_model_factors":["REPLACEMENT_GAP","AVAILABILITY_IMPACT"],"position_specific_nullable_fields":["B_player_performance.save_pct"],"optional_fields":["C_lineup_structure.second_formation"],"limited_sample_rule":"LOW_SAMPLE/LIMITED may retain schema while bench/depth quality metrics remain null; must be visibly labeled LIMITED and must not be treated as FULL-quality P3"},"quality_tiers":{"STABLE":"Schema pass + NORMAL/FULL + stable production-validated league","PILOT_FULL":"Schema pass + NORMAL/FULL + pilot league","LIMITED":"Schema pass + LOW_SAMPLE/LIMITED; structure usable, depth/bench quality not considered mature","RAW_ONLY":"Raw P3 backfill only; no V5 aggregate validation"}}};
+})();
