@@ -191,7 +191,7 @@
           const scenarios=(d.absence_scenarios||[]).map(x=>{
             const r=x.expected_replacement;
             return x.absent_player_name+' → '+(r?.player_name||'暂无可靠替代')+
-              '｜原始替代差 '+(x.raw_replacement_gap==null?'暂无':n(x.raw_replacement_gap,1))+
+              '｜替代质量差 '+(x.raw_replacement_gap==null?'暂无':n(x.raw_replacement_gap,1))+
               '｜模型损失 '+(x.replacement_loss==null?'暂无':n(x.replacement_loss,1));
           }).join('；')||'—';
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
