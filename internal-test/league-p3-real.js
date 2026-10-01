@@ -294,6 +294,10 @@
         const open=btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded',open?'false':'true');
         body.hidden=open;
+        if(!open && key==='p3'){
+          const host=body.querySelector('[data-p3-host]');
+          if(host && window.QCP3) window.QCP3.load(host);
+        }
       });
     });
   }
@@ -429,9 +433,9 @@
           stagingLayerHtml(
             'p3',
             'P3｜阵容结构＋球员影响',
-            '内部开发位｜下一步接只读P3',
-            'TEST',
-            p3PreviewHtml()
+            window.QCP3?window.QCP3.subtitle(comp.code,stat.season):'P3测试',
+            window.QCP3?window.QCP3.status(comp.code,stat.season):'TEST',
+            window.QCP3?window.QCP3.hostHtml(comp,teamName,stat.season):p3PreviewHtml()
           );
         wireStagingLayers(detail);
       };
