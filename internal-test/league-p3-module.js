@@ -55,13 +55,13 @@
   }
   function subtitle(code,season){
     const m=meta(code,season);
-    if(m) return m.label+'｜点击展开';
+    if(m) return '阵容结构与球员影响｜点击展开';
     return '当前联赛尚未完成P3';
   }
   function hostHtml(comp,teamName,season){
     return '<div class="p3-legacy-host" data-p3-host data-league-code="'+esc(comp?.code||'')+
       '" data-season="'+esc(season||'')+'" data-team-name="'+esc(teamName||'')+'">'+
-      '<div class="p3-loading">展开后读取P3测试快照。</div>'+
+      '<div class="p3-loading">展开后读取阵容数据。</div>'+
     '</div>';
   }
   async function fetchLeague(code,season){
@@ -116,8 +116,6 @@
 
     return '<div class="p3-legacy-wrap">'+
       '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+'</span></div></div>'+
-      qualityBar(data,ctx)+
-
       '<div class="p3-grid">'+
         kpi('比赛样本',(s.squad_matches??0)+'场')+
         kpi('首发连续性',n(s.avg_starter_continuity,1)+'%')+
@@ -136,8 +134,6 @@
           small('首发XI强度',n(s.starting_xi_strength,1))+
           small('替补强度',n(s.bench_strength,1))+
           small('阵容深度',n(s.squad_depth,1))+
-          small('深度数据覆盖',n(s.depth_data_coverage_pct,1)+'%')+
-          small('阵型覆盖率',n(s.formation_coverage_pct,1)+'%')+
         '</div>'+
         '<div class="p3-depth">'+formations.map(x=>
           '<div class="p3-depth-card"><h4>'+esc(x.formation)+'</h4>'+
@@ -278,7 +274,7 @@
       return;
     }
     host.dataset.loading='1';
-    host.innerHTML='<div class="p3-loading">正在读取 '+esc(m.label)+'…</div>';
+    host.innerHTML='<div class="p3-loading">正在读取阵容数据…</div>';
     try{
       const league=await fetchLeague(code,season);
       const p3=league?.teams?.[team]||null;
@@ -286,7 +282,7 @@
       host.dataset.loaded='1';
     }catch(err){
       console.error('P3 snapshot load failed',code,team,err);
-      host.innerHTML='<div class="p3-loading">P3测试快照加载失败，请刷新重试。</div>';
+      host.innerHTML='<div class="p3-loading">阵容数据加载失败，请刷新重试。</div>';
     }finally{
       delete host.dataset.loading;
     }
