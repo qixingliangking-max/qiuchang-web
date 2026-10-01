@@ -48,6 +48,9 @@
           small('替补强度',n(s.bench_strength,1))+
           small('阵容深度',n(s.squad_depth,1))+
           small('深度数据覆盖',n(s.depth_data_coverage_pct,1)+'%')+
+          small('阵型来源',s.formation_source||'—')+
+          small('阵型覆盖率',n(s.formation_coverage_pct,1)+'%')+
+          small('Performance模型',s.performance_model_version||'—')+
           small('版本',s.p3_version||data.version||'—')+
         '</div>'+
         '<div class="p3-depth">'+formations.map(x=>
@@ -79,7 +82,7 @@
       '<section class="p3-section">'+
         '<div class="p3-head"><strong>P3-B｜Player Performance</strong><span>按位置模型计算真实表现，与Importance分离</span></div>'+
         '<div class="p3-table-wrap"><table class="p3-table"><thead><tr>'+
-          '<th>球员</th><th>位置</th><th>G</th><th>A</th><th>xG</th><th>xA</th><th>射门</th><th>防守动作</th><th>评分</th><th>Performance</th><th>置信度</th>'+
+          '<th>球员</th><th>位置</th><th>G</th><th>A</th><th>xG</th><th>xA</th><th>射门</th><th>防守动作</th><th>评分</th><th>Performance</th><th>Role Q</th><th>置信度</th>'+
         '</tr></thead><tbody>'+
         topPerf.map(p=>'<tr>'+
           '<td>'+esc(p.player_name)+'</td>'+
@@ -89,6 +92,7 @@
           '<td>'+esc(p.shots)+'</td><td>'+esc(p.defensive_actions)+'</td>'+
           '<td>'+n(p.avg_rating,2)+'</td>'+
           '<td><b>'+n(p.performance_score,1)+'</b></td>'+
+          '<td><b>'+n(p.role_quality,1)+'</b></td>'+
           '<td>'+esc(p.performance_confidence||'—')+'</td>'+
         '</tr>').join('')+
         '</tbody></table></div>'+
@@ -108,7 +112,8 @@
           const scenarios=(d.absence_scenarios||[]).map(x=>{
             const r=x.expected_replacement;
             return x.absent_player_name+' → '+(r?.player_name||'N/A')+
-              '｜Gap '+(x.replacement_gap==null?'N/A':n(x.replacement_gap,1));
+              '｜Raw '+(x.raw_replacement_gap==null?'N/A':n(x.raw_replacement_gap,1))+
+              '｜Loss '+(x.replacement_loss==null?'N/A':n(x.replacement_loss,1));
           }).join('；')||'—';
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
             '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
@@ -116,6 +121,8 @@
             '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
             '<div class="p3-depth-line"><span>Starter Quality</span><b>'+n(d.starter_quality,1)+'</b></div>'+
             '<div class="p3-depth-line"><span>Replacement Quality</span><b>'+statusText(d.replacement_quality==null?'N/A':n(d.replacement_quality,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>Raw Gap</span><b>'+(d.raw_replacement_gap==null?'N/A':n(d.raw_replacement_gap,1))+'</b></div>'+
+            '<div class="p3-depth-line"><span>Model Loss</span><b>'+(d.replacement_loss==null?'N/A':n(d.replacement_loss,1))+'</b></div>'+
             '<div class="p3-depth-line"><span>Position Coverage</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
             '<div class="p3-depth-line"><span>Multi-position</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
             '<div class="p3-depth-line"><span>Depth Score</span><b>'+(d.position_depth_score==null?'DATA_INCOMPLETE':n(d.position_depth_score,1))+'</b></div>'+
@@ -169,7 +176,7 @@
 
   async function loadTeam(){
     const team=select.value;
-    root.className='p3-loading';root.textContent='正在读取 '+team+' P3 V3…';
+    root.className='p3-loading';root.textContent='正在读取 '+team+' P3 V4…';
     const {data,error}=await window.qcSupabase.rpc('get_league_team_p3',{
       p_team_query:team,p_league_code:'KOR_K1',p_season:'2026'
     });
@@ -195,14 +202,20 @@
     const adj=data.model_factors_adjusted||{};
     box.innerHTML='<div class="p3-impact-box">'+
       small('缺阵球员',data.player?.player_name||'—')+
+      small('缺阵类型',data.absence_type||'—')+
       small('Importance',n(data.player?.importance_score,1))+
       small('Performance',n(data.player?.performance_score,1))+
+      small('Role Quality',n(data.player?.role_quality,1))+
       small('位置 / 槽位',posName(data.position_code)+' / '+(data.required_slots??'—'))+
+      small('替补顺位',data.replacement_rank==null?'首发':('#'+data.replacement_rank))+
       small('Expected Replacement',repl?.player_name||'N/A')+
       small('Replacement Quality',repl?.adjusted_quality==null?'N/A':n(repl.adjusted_quality,1))+
-      small('Replacement Gap',data.replacement_gap==null?'N/A':n(data.replacement_gap,1))+
-      small('影响级别',String(data.impact_level||'—')+' / '+String(data.impact_confidence||'—'))+
+      small('Raw Gap',data.raw_replacement_gap==null?'N/A':n(data.raw_replacement_gap,1))+
+      small('Model Loss',data.replacement_loss==null?'N/A':n(data.replacement_loss,1))+
+      small('Potential Impact',String(data.potential_impact||data.impact_level||'—'))+
+      small('Confidence',String(data.confidence||data.impact_confidence||'—'))+
       small('首发XI',n(data.starting_xi_strength_before,1)+' → '+n(data.starting_xi_strength_after,1))+
+      small('Bench Strength',n(data.bench_strength_before,1)+' → '+n(data.bench_strength_after,1))+
       small('Position Depth',n(data.position_depth_before,1)+' → '+n(data.position_depth_after,1))+
       small('Squad Depth',n(data.squad_depth_before,1)+' → '+n(data.squad_depth_after,1))+
       small('Attack Δ',n(data.attack_delta,1))+
