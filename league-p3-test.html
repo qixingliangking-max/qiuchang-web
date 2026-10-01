@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="noindex,nofollow">
-  <title>球场档案｜P3 韩职测试</title>
+  <title>球场档案｜P3 联赛测试</title>
   <link rel="stylesheet" href="styles.css?v=20260930leagueprod2">
   <style>
     body{background:#f5f7fb;color:#22304a}
@@ -54,17 +54,18 @@
   <div class="p3-shell">
     <section class="p3-hero">
       <h1>P3｜球员与阵容贡献模块</h1>
-      <p>韩职K1｜2026试点。历史阵容与球员贡献来自FotMob / Opta；当天伤停、停赛、伤疑不写入P3长期档案，由赛前模型提供。</p>
+      <p id="p3HeroDesc">P3联赛内部测试页。历史阵容与球员贡献来自FotMob / Opta；当天伤停、停赛、伤疑不写入P3长期档案，由赛前模型提供。</p>
     </section>
     <div class="p3-top">
-      <select id="teamSelect" class="p3-select"></select>
-      <span class="p3-badge">韩职P3 V5候选版</span>
+      <select id="leagueSelect" class="p3-select" aria-label="选择联赛"></select>
+      <select id="teamSelect" class="p3-select" aria-label="选择球队"></select>
+      <span id="p3Badge" class="p3-badge">正在读取P3状态</span>
     </div>
     <div id="p3Root" class="p3-loading">正在读取P3…</div>
   </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script src="supabase-client.js?v=20260927autologin1"></script>
-<script src="league-p3-test.js?v=20261001p3kor5"></script>
+<script src="league-p3-test.js?v=20261001p3multi1"></script>
 </body>
 </html>
