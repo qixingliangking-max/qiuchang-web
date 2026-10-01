@@ -1,0 +1,151 @@
+{
+  "league_code": "UEFA_UCL",
+  "competition_id": "5d44840e-3057-421e-9234-45ee92134b47",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "6106404",
+      "match_id": "644c5d2b-cf8e-4942-a73d-3f161db4895d",
+      "home_team": "雅典AEK",
+      "away_team": "LASK林茨",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106295",
+      "match_id": "b4927cce-8c9a-432d-9ea6-976bb190653e",
+      "home_team": "布鲁日",
+      "away_team": "阿斯顿维拉",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106286",
+      "match_id": "0788feaf-b161-478a-897f-272b44ff7d27",
+      "home_team": "波尔图",
+      "away_team": "曼城",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106242",
+      "match_id": "0827fd8d-7e4d-452b-8231-0264412bc28f",
+      "home_team": "皇家马德里",
+      "away_team": "国际米兰",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106272",
+      "match_id": "e926f83f-029f-40ad-af1f-321434daa388",
+      "home_team": "多特蒙德",
+      "away_team": "比利亚雷亚尔",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106311",
+      "match_id": "fe4e321f-8f28-4cb8-b9f7-bcb06aaafe2f",
+      "home_team": "里尔",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106400",
+      "match_id": "a0d9733a-4b82-4e55-83ef-4d26c1a96051",
+      "home_team": "斯图加特",
+      "away_team": "维京",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106264",
+      "match_id": "a454fdc8-d111-40a6-9767-ff8589ab8396",
+      "home_team": "巴塞罗那",
+      "away_team": "费耶诺德",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106237",
+      "match_id": "18a9843d-465e-454b-801d-b2cf90542569",
+      "home_team": "巴黎圣日耳曼",
+      "away_team": "布拉迪斯拉发",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106318",
+      "match_id": "82002006-8b22-4a46-9b0f-75b8d8a7bb5b",
+      "home_team": "那不勒斯",
+      "away_team": "阿森纳",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106246",
+      "match_id": "dad293fc-120e-4932-8991-11221e5c3d8d",
+      "home_team": "利物浦",
+      "away_team": "马德里竞技",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106280",
+      "match_id": "f0c671be-5515-45f3-8abb-ecde0300eaf6",
+      "home_team": "葡萄牙体育",
+      "away_team": "加拉塔萨雷",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106304",
+      "match_id": "30343bfc-d1fa-4e28-9167-5b6432db9b00",
+      "home_team": "埃因霍温",
+      "away_team": "顿涅茨克矿工",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106331",
+      "match_id": "a3233640-499f-4894-9686-55a66b1f222c",
+      "home_team": "费内巴切",
+      "away_team": "罗马",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 16:45:00+00"
+    },
+    {
+      "source_match_id": "6106240",
+      "match_id": "20358bf9-bdc3-4f63-8b9c-3aab72e2a0f4",
+      "home_team": "拜仁慕尼黑",
+      "away_team": "博德闪耀",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106411",
+      "match_id": "4451ef72-1e99-495d-8b74-5b5c2c23070f",
+      "home_team": "科莫",
+      "away_team": "莱比锡",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106392",
+      "match_id": "c85b4791-5504-4014-a1fa-b9f920188715",
+      "home_team": "布拉格斯拉维亚",
+      "away_team": "朗斯",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 19:00:00+00"
+    },
+    {
+      "source_match_id": "6106293",
+      "match_id": "d54fa8de-6e30-454e-9ec1-a0b5b64c4fb4",
+      "home_team": "曼联",
+      "away_team": "萨巴赫",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 19:00:00+00"
+    }
+  ]
+}
