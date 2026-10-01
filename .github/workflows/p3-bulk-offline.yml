@@ -54,7 +54,8 @@ jobs:
             internal-test/p3-inputs/ITA_SB-2026-27.json \
             internal-test/p3-inputs/FRA_L2-2026-27.json \
             internal-test/p3-inputs/ENG_CH-2026-27.json \
-            internal-test/p3-inputs/ESP_L2-2026-27.json
+            internal-test/p3-inputs/ESP_L2-2026-27.json \
+            internal-test/p3-inputs/NED_EE-2026-27.json
 
       - name: Commit generated candidates and gates
         run: |
@@ -74,7 +75,7 @@ jobs:
         run: |
           node - <<'NODE'
           const fs=require('fs');
-          const leagues=['UEFA_UCL','UEFA_UEL','GER_BL','ITA_SA','FRA_L1','ENG_PL','NED_ED','POR_PL','ESP_LL','GER_B2','ITA_SB','FRA_L2','ENG_CH','ESP_L2'];
+          const leagues=['UEFA_UCL','UEFA_UEL','GER_BL','ITA_SA','FRA_L1','ENG_PL','NED_ED','POR_PL','ESP_LL','GER_B2','ITA_SB','FRA_L2','ENG_CH','ESP_L2','NED_EE'];
           let bad=[];
           for(const code of leagues){
             const p='internal-test/p3-candidates/'+code+'-2026-27-gate.json';
