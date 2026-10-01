@@ -2,6 +2,10 @@ name: P3 FIN Offline Build
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/p3-fin-trigger.txt"
 
 permissions:
   contents: write
