@@ -66,6 +66,19 @@
       "avg_team_depth_coverage_pct": 75.5,
       "gate_report": "internal-test/p3-candidates/SWE_AS-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
+    },
+    {
+      "league_code": "FIN_VL",
+      "season": "2026",
+      "quality_tier": "PILOT_FULL",
+      "teams": 12,
+      "published_path": "internal-test/p3-data/FIN_VL-2026.json",
+      "blob_sha": "0776fe199d53df1034ef353ff5fe737e7c11b053",
+      "gate_status": "PASS",
+      "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
+      "avg_team_depth_coverage_pct": 87.1,
+      "gate_report": "internal-test/p3-candidates/FIN_VL-2026-gate.json",
+      "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
     }
   ],
   "raw_only": [],
