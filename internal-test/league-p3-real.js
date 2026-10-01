@@ -265,7 +265,7 @@
     return '<button type="button" class="qc-layer-toggle" data-qc-layer-toggle="'+esc(kind)+'" aria-expanded="false">'+
       '<span class="qc-layer-toggle-inner">'+
         '<span class="qc-layer-toggle-copy"><strong>'+esc(title)+'</strong><span>'+esc(subtitle)+'</span></span>'+
-        '<span class="qc-layer-toggle-action"><span class="qc-layer-status">'+esc(status)+'</span><span class="qc-layer-chevron">›</span></span>'+
+        '<span class="qc-layer-toggle-action"><span class="qc-layer-status" data-qc-layer-action-text>点击查看</span><span class="qc-layer-chevron">›</span></span>'+
       '</span>'+
     '</button>'+
     '<div class="qc-layer-body" data-qc-layer-body="'+esc(kind)+'" hidden>'+bodyHtml+'</div>';
@@ -294,6 +294,8 @@
         const open=btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded',open?'false':'true');
         body.hidden=open;
+        const actionText=btn.querySelector('[data-qc-layer-action-text]');
+        if(actionText) actionText.textContent=open?'点击查看':'收起';
         if(!open && key==='p3'){
           const host=body.querySelector('[data-p3-host]');
           if(host && window.QCP3) window.QCP3.load(host);
