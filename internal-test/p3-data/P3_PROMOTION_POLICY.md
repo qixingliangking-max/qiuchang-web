@@ -46,5 +46,6 @@ The page may **not**:
 - UEFA_UNL 2026/27 — LIMITED
 - JPN_J1 2026/27 — LIMITED
 - SWE_AS 2026 — PILOT_FULL
+- FIN_VL 2026 — PILOT_FULL
 
-JPN_J1 and SWE_AS were built through SAFE BUILD R2 offline promotion; production Supabase remains RAW-only for these expansion runs.
+JPN_J1, SWE_AS and FIN_VL were built through SAFE BUILD R2 offline promotion; production Supabase remains RAW-only for these expansion runs.
