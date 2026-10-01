@@ -1,0 +1,43 @@
+{
+  "league_code": "USA_MLS",
+  "season": "2026",
+  "competition_id": "d460c08a-3354-4902-8828-4666cdd39899",
+  "fotmob_league_ids": [
+    "130"
+  ],
+  "fotmob_ccode3": "USA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Austin FC": "奥斯汀FC",
+    "DC United": "华盛顿联",
+    "FC Dallas": "达拉斯FC",
+    "LA Galaxy": "洛杉矶银河",
+    "Toronto FC": "多伦多FC",
+    "CF Montreal": "蒙特利尔CF",
+    "CF Montréal": "蒙特利尔CF",
+    "Charlotte FC": "夏洛特FC",
+    "Nashville SC": "纳什维尔",
+    "Orlando City": "奥兰多城",
+    "San Diego FC": "圣迭戈FC",
+    "Columbus Crew": "哥伦布机员",
+    "FC Cincinnati": "辛辛那提FC",
+    "Atlanta United": "亚特兰大联",
+    "Inter Miami CF": "迈阿密国际",
+    "Los Angeles FC": "洛杉矶FC",
+    "Real Salt Lake": "皇家盐湖城",
+    "St. Louis City": "圣路易斯城",
+    "Chicago Fire FC": "芝加哥火焰",
+    "Colorado Rapids": "科罗拉多急流",
+    "Minnesota United": "明尼苏达联",
+    "New York City FC": "纽约城",
+    "Portland Timbers": "波特兰伐木工",
+    "Houston Dynamo FC": "休斯敦迪纳摩",
+    "Red Bull New York": "纽约红牛",
+    "Philadelphia Union": "费城联合",
+    "Seattle Sounders FC": "西雅图海湾人",
+    "Vancouver Whitecaps": "温哥华白帽",
+    "San Jose Earthquakes": "圣何塞地震",
+    "Sporting Kansas City": "堪萨斯城竞技",
+    "New England Revolution": "新英格兰革命"
+  }
+}

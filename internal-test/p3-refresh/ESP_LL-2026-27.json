@@ -1,0 +1,35 @@
+{
+  "league_code": "ESP_LL",
+  "season": "2026/27",
+  "competition_id": "af4b24c2-7282-48b5-be5d-33f62e6aa3e0",
+  "fotmob_league_ids": [
+    "87"
+  ],
+  "fotmob_ccode3": "ESP",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Elche": "埃尔切",
+    "Getafe": "赫塔费",
+    "Malaga": "马拉加",
+    "Levante": "莱万特",
+    "Málaga": "马拉加",
+    "Osasuna": "奥萨苏纳",
+    "Sevilla": "塞维利亚",
+    "Espanyol": "西班牙人",
+    "Valencia": "瓦伦西亚",
+    "Barcelona": "巴塞罗那",
+    "Celta Vigo": "塞尔塔",
+    "Real Betis": "皇家贝蒂斯",
+    "Villarreal": "比利亚雷亚尔",
+    "Real Madrid": "皇家马德里",
+    "Athletic Club": "毕尔巴鄂竞技",
+    "Real Sociedad": "皇家社会",
+    "Rayo Vallecano": "巴列卡诺",
+    "Atletico Madrid": "马德里竞技",
+    "Atlético Madrid": "马德里竞技",
+    "Deportivo Alaves": "阿拉维斯",
+    "Racing Santander": "桑坦德竞技",
+    "Deportivo Alavés": "阿拉维斯",
+    "Deportivo A Coruña": "拉科鲁尼亚"
+  }
+}

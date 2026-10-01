@@ -1,0 +1,24 @@
+{
+  "league_code": "KOR_K1",
+  "season": "2026",
+  "competition_id": "7cb90852-9e9f-4439-8838-089cf2e4e735",
+  "fotmob_league_ids": [
+    "9080"
+  ],
+  "fotmob_ccode3": "KOR",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Jeju SK": "济州SK",
+    "FC Seoul": "首尔FC",
+    "FC Anyang": "安养FC",
+    "Gangwon FC": "江原FC",
+    "Gwangju FC": "光州FC",
+    "Ulsan HD FC": "蔚山HD",
+    "Incheon United": "仁川联",
+    "Bucheon FC 1995": "富川FC",
+    "Gimcheon Sangmu": "金泉尚武",
+    "Pohang Steelers": "浦项制铁",
+    "Daejeon Hana Citizen": "大田韩亚市民",
+    "Jeonbuk Hyundai Motors FC": "全北现代"
+  }
+}

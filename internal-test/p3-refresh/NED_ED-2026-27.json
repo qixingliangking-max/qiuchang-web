@@ -1,0 +1,30 @@
+{
+  "league_code": "NED_ED",
+  "season": "2026/27",
+  "competition_id": "02517852-2217-4e95-b70d-11e5bda18271",
+  "fotmob_league_ids": [
+    "57"
+  ],
+  "fotmob_ccode3": "NED",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Ajax": "阿贾克斯",
+    "Cambuur": "坎布尔",
+    "Telstar": "特尔斯达",
+    "Excelsior": "SBV精英",
+    "FC Twente": "特温特",
+    "Feyenoord": "费耶诺德",
+    "Willem II": "威廉二世",
+    "AZ Alkmaar": "阿尔克马尔",
+    "FC Utrecht": "乌德勒支",
+    "PEC Zwolle": "兹沃勒",
+    "ADO Den Haag": "海牙",
+    "FC Groningen": "格罗宁根",
+    "NEC Nijmegen": "奈梅亨",
+    "PSV Eindhoven": "埃因霍温",
+    "SC Heerenveen": "海伦芬",
+    "Fortuna Sittard": "锡塔德幸运",
+    "Go Ahead Eagles": "前进之鹰",
+    "Sparta Rotterdam": "鹿特丹斯巴达"
+  }
+}

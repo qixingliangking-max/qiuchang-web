@@ -1,0 +1,32 @@
+{
+  "league_code": "NED_EE",
+  "season": "2026/27",
+  "competition_id": "ace04dd3-b685-4438-8a89-5657e46b4491",
+  "fotmob_league_ids": [
+    "111"
+  ],
+  "fotmob_ccode3": "NED",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "TOP Oss": "奥斯",
+    "Vitesse": "维特斯",
+    "FC Emmen": "埃门",
+    "Heracles": "赫拉克勒斯",
+    "Jong PSV": "埃因霍温青年队",
+    "Jong Ajax": "阿贾克斯青年队",
+    "NAC Breda": "布雷达",
+    "VVV-Venlo": "芬洛",
+    "FC Volendam": "福伦丹",
+    "FC Den Bosch": "邓伯什",
+    "FC Dordrecht": "多德勒支",
+    "FC Eindhoven": "FC埃因霍温",
+    "RKC Waalwijk": "瓦尔韦克",
+    "De Graafschap": "格拉夫夏普",
+    "Helmond Sport": "赫尔蒙德",
+    "Almere City FC": "阿尔梅勒城",
+    "MVV Maastricht": "马斯特里赫特",
+    "Jong AZ Alkmaar": "阿尔克马尔青年队",
+    "Jong FC Utrecht": "乌德勒支青年队",
+    "Roda JC Kerkrade": "罗达JC"
+  }
+}

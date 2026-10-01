@@ -1,0 +1,32 @@
+{
+  "league_code": "ITA_SA",
+  "season": "2026/27",
+  "competition_id": "7e78103f-ccdd-4d75-b4c5-f3d70f0f8576",
+  "fotmob_league_ids": [
+    "55"
+  ],
+  "fotmob_ccode3": "ITA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Como": "科莫",
+    "Roma": "罗马",
+    "Genoa": "热那亚",
+    "Inter": "国际米兰",
+    "Lazio": "拉齐奥",
+    "Lecce": "莱切",
+    "Milan": "AC米兰",
+    "Monza": "蒙扎",
+    "Parma": "帕尔马",
+    "Napoli": "那不勒斯",
+    "Torino": "都灵",
+    "Bologna": "博洛尼亚",
+    "Udinese": "乌迪内斯",
+    "Venezia": "威尼斯",
+    "Atalanta": "亚特兰大",
+    "Cagliari": "卡利亚里",
+    "Juventus": "尤文图斯",
+    "Sassuolo": "萨索洛",
+    "Frosinone": "弗罗西诺内",
+    "Fiorentina": "佛罗伦萨"
+  }
+}

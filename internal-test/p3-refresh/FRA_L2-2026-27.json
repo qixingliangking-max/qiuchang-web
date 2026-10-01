@@ -1,0 +1,31 @@
+{
+  "league_code": "FRA_L2",
+  "season": "2026/27",
+  "competition_id": "504224f5-ff4a-45bb-98c1-a314d6f3f17b",
+  "fotmob_league_ids": [
+    "110"
+  ],
+  "fotmob_ccode3": "FRA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Pau": "波城",
+    "Metz": "梅斯",
+    "Dijon": "第戎",
+    "Laval": "拉瓦勒",
+    "Nancy": "南锡",
+    "Reims": "兰斯",
+    "Rodez": "罗德兹",
+    "Nantes": "南特",
+    "Sochaux": "索肖",
+    "Boulogne": "布洛涅",
+    "Grenoble": "格勒诺布尔",
+    "Guingamp": "甘冈",
+    "Red Star": "红星",
+    "Annecy FC": "阿讷西",
+    "Dunkerque": "敦刻尔克",
+    "Montpellier": "蒙彼利埃",
+    "Clermont Foot": "克莱蒙",
+    "Saint-Etienne": "圣埃蒂安",
+    "Saint-Étienne": "圣埃蒂安"
+  }
+}

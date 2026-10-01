@@ -1,0 +1,24 @@
+{
+  "league_code": "FIN_VL",
+  "season": "2026",
+  "competition_id": "21b8e0f9-3499-46bf-a894-52c2e8295d9d",
+  "fotmob_league_ids": [
+    "51"
+  ],
+  "fotmob_ccode3": "FIN",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "HJK": "HJK赫尔辛基",
+    "SJK": "塞伊奈约基",
+    "TPS": "TPS图尔库",
+    "VPS": "VPS瓦萨",
+    "KuPS": "古比斯",
+    "Ilves": "埃尔维斯",
+    "AC Oulu": "奥卢",
+    "FF Jaro": "雅罗",
+    "FC Lahti": "拉赫蒂",
+    "IF Gnistan": "格尼斯坦",
+    "IFK Mariehamn": "玛丽港",
+    "FC Inter Turku": "图尔库国际"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "league_code": "ESP_L2",
+  "season": "2026/27",
+  "competition_id": "2068e8e5-2890-4c4b-baa7-f33fc0d2eef0",
+  "fotmob_league_ids": [
+    "140"
+  ],
+  "fotmob_ccode3": "ESP",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Cadiz": "加的斯",
+    "Eibar": "埃瓦尔",
+    "Cádiz": "加的斯",
+    "Girona": "赫罗纳",
+    "Almeria": "阿尔梅里亚",
+    "Cordoba": "科尔多瓦",
+    "Eldense": "埃登斯",
+    "Granada": "格拉纳达",
+    "Leganes": "莱加内斯",
+    "Albacete": "阿尔瓦塞特",
+    "Almería": "阿尔梅里亚",
+    "Córdoba": "科尔多瓦",
+    "Leganés": "莱加内斯",
+    "Mallorca": "马略卡",
+    "Sabadell": "萨瓦德尔",
+    "Tenerife": "特内里费",
+    "Burgos CF": "布尔戈斯",
+    "Castellón": "卡斯特利翁",
+    "FC Andorra": "安道尔FC",
+    "Las Palmas": "拉斯帕尔马斯",
+    "AD Ceuta FC": "休达",
+    "Real Oviedo": "奥维耶多",
+    "Celta Fortuna": "塞尔塔B",
+    "Sporting Gijon": "希洪竞技",
+    "Real Sociedad B": "皇家社会B",
+    "Real Valladolid": "巴拉多利德",
+    "Sporting Gijón": "希洪竞技"
+  }
+}

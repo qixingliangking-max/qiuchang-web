@@ -1,0 +1,32 @@
+{
+  "league_code": "JPN_J1",
+  "season": "2026/27",
+  "competition_id": "d6711104-90d0-458a-b9b2-5c1b5a9a37f3",
+  "fotmob_league_ids": [
+    "223"
+  ],
+  "fotmob_ccode3": "JPN",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "FC Tokyo": "FC东京",
+    "Gamba Osaka": "大阪钢巴",
+    "Tokyo Verdy": "东京绿茵",
+    "Vissel Kobe": "神户胜利船",
+    "Cerezo Osaka": "大阪樱花",
+    "Avispa Fukuoka": "福冈黄蜂",
+    "Kashiwa Reysol": "柏太阳神",
+    "Kyoto Sanga FC": "京都不死鸟",
+    "Machida Zelvia": "町田泽维亚",
+    "Mito Hollyhock": "水户蜀葵",
+    "Nagoya Grampus": "名古屋鲸八",
+    "Kashima Antlers": "鹿岛鹿角",
+    "Shimizu S-Pulse": "清水心跳",
+    "JEF United Chiba": "千叶市原",
+    "V-Varen Nagasaki": "长崎成功丸",
+    "Kawasaki Frontale": "川崎前锋",
+    "Fagiano Okayama FC": "冈山绿雉",
+    "Urawa Red Diamonds": "浦和红钻",
+    "Yokohama F.Marinos": "横滨水手",
+    "Sanfrecce Hiroshima": "广岛三箭"
+  }
+}

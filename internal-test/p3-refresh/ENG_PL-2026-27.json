@@ -1,0 +1,32 @@
+{
+  "league_code": "ENG_PL",
+  "season": "2026/27",
+  "competition_id": "4dc48a5f-17fb-4c31-bb10-bcbcd71a9063",
+  "fotmob_league_ids": [
+    "47"
+  ],
+  "fotmob_ccode3": "ENG",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Fulham": "富勒姆",
+    "Arsenal": "阿森纳",
+    "Chelsea": "切尔西",
+    "Everton": "埃弗顿",
+    "Brentford": "布伦特福德",
+    "Hull City": "赫尔城",
+    "Liverpool": "利物浦",
+    "Sunderland": "桑德兰",
+    "Aston Villa": "阿斯顿维拉",
+    "Ipswich Town": "伊普斯维奇",
+    "Leeds United": "利兹联",
+    "Coventry City": "考文垂",
+    "Crystal Palace": "水晶宫",
+    "AFC Bournemouth": "伯恩茅斯",
+    "Manchester City": "曼城",
+    "Newcastle United": "纽卡斯尔联",
+    "Manchester United": "曼联",
+    "Nottingham Forest": "诺丁汉森林",
+    "Tottenham Hotspur": "热刺",
+    "Brighton & Hove Albion": "布莱顿"
+  }
+}

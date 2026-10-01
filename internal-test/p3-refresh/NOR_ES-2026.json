@@ -1,0 +1,28 @@
+{
+  "league_code": "NOR_ES",
+  "season": "2026",
+  "competition_id": "61483dbe-a4e6-4ad3-87db-7f9aa8bd2cbe",
+  "fotmob_league_ids": [
+    "59"
+  ],
+  "fotmob_ccode3": "NOR",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "KFUM": "奥斯陆KFUM",
+    "Brann": "布兰",
+    "Molde": "莫尔德",
+    "Start": "斯达",
+    "Viking": "维京",
+    "Tromsø": "特罗姆瑟",
+    "Aalesund": "奥勒松",
+    "Rosenborg": "罗森博格",
+    "Sandefjord": "桑德菲杰",
+    "Vålerenga": "瓦勒伦加",
+    "Bodø/Glimt": "博德闪耀",
+    "Fredrikstad": "腓特烈斯塔",
+    "Lillestrøm": "利勒斯特罗姆",
+    "Kristiansund": "克里斯蒂安松",
+    "Sarpsborg 08": "萨普斯堡",
+    "Hamarkameratene": "汉坎"
+  }
+}

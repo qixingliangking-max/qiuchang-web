@@ -1,0 +1,36 @@
+{
+  "league_code": "ENG_CH",
+  "season": "2026/27",
+  "competition_id": "cc57cea9-b061-4734-98b4-3673a54b2502",
+  "fotmob_league_ids": [
+    "48"
+  ],
+  "fotmob_ccode3": "ENG",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Burnley": "伯恩利",
+    "Watford": "沃特福德",
+    "Wrexham": "雷克瑟姆",
+    "Millwall": "米尔沃尔",
+    "Portsmouth": "朴茨茅斯",
+    "Stoke City": "斯托克城",
+    "Southampton": "南安普敦",
+    "Bristol City": "布里斯托尔城",
+    "Cardiff City": "卡迪夫城",
+    "Derby County": "德比郡",
+    "Lincoln City": "林肯城",
+    "Norwich City": "诺维奇",
+    "Swansea City": "斯旺西",
+    "Middlesbrough": "米德尔斯堡",
+    "Birmingham City": "伯明翰",
+    "West Ham United": "西汉姆联",
+    "Blackburn Rovers": "布莱克本",
+    "Bolton Wanderers": "博尔顿",
+    "Sheffield United": "谢菲尔德联",
+    "Charlton Athletic": "查尔顿",
+    "Preston North End": "普雷斯顿",
+    "Queens Park Rangers": "女王公园巡游者",
+    "West Bromwich Albion": "西布罗姆维奇",
+    "Wolverhampton Wanderers": "狼队"
+  }
+}

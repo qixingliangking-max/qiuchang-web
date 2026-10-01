@@ -1,0 +1,28 @@
+{
+  "league_code": "SWE_AS",
+  "season": "2026",
+  "competition_id": "eb052220-f6d3-4908-866d-b855ee8e23d4",
+  "fotmob_league_ids": [
+    "67"
+  ],
+  "fotmob_ccode3": "SWE",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "AIK": "AIK索尔纳",
+    "GAIS": "哥德堡盖斯",
+    "Sirius": "天狼星",
+    "Häcken": "赫根",
+    "Elfsborg": "埃尔夫斯堡",
+    "Hammarby": "哈马比",
+    "Mjällby": "米亚尔比",
+    "Örgryte": "奥尔格里特",
+    "Degerfors": "代格福什",
+    "Kalmar FF": "卡尔马",
+    "Malmö FF": "马尔默",
+    "Djurgården": "佐加顿斯",
+    "Halmstads BK": "哈尔姆斯塔德",
+    "IFK Göteborg": "哥德堡",
+    "Västerås SK": "瓦斯特拉斯",
+    "Brommapojkarna": "布洛马波卡纳"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "league_code": "FRA_L1",
+  "season": "2026/27",
+  "competition_id": "36b71906-97c5-49aa-9c13-6ff0967ab0e8",
+  "fotmob_league_ids": [
+    "53"
+  ],
+  "fotmob_ccode3": "FRA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Lens": "朗斯",
+    "Lyon": "里昂",
+    "Nice": "尼斯",
+    "Brest": "布雷斯特",
+    "Lille": "里尔",
+    "Angers": "昂热",
+    "Monaco": "摩纳哥",
+    "Rennes": "雷恩",
+    "Troyes": "特鲁瓦",
+    "Auxerre": "欧塞尔",
+    "Le Mans": "勒芒",
+    "Lorient": "洛里昂",
+    "Le Havre": "勒阿弗尔",
+    "Paris FC": "巴黎FC",
+    "Toulouse": "图卢兹",
+    "Marseille": "马赛",
+    "Strasbourg": "斯特拉斯堡",
+    "Paris Saint-Germain": "巴黎圣日耳曼"
+  }
+}

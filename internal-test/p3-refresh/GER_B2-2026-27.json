@@ -1,0 +1,30 @@
+{
+  "league_code": "GER_B2",
+  "season": "2026/27",
+  "competition_id": "5ad7a46b-82aa-43d6-b35b-e35bbe8c2900",
+  "fotmob_league_ids": [
+    "146"
+  ],
+  "fotmob_ccode3": "GER",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Bochum": "波鸿",
+    "Darmstadt": "达姆施塔特",
+    "Magdeburg": "马格德堡",
+    "St. Pauli": "圣保利",
+    "Wolfsburg": "沃尔夫斯堡",
+    "Hertha BSC": "柏林赫塔",
+    "Hannover 96": "汉诺威96",
+    "FC Heidenheim": "海登海姆",
+    "Holstein Kiel": "荷尔斯泰因基尔",
+    "Karlsruher SC": "卡尔斯鲁厄",
+    "Dynamo Dresden": "德累斯顿迪纳摩",
+    "Kaiserslautern": "凯泽斯劳滕",
+    "VfL Osnabrück": "奥斯纳布吕克",
+    "1. FC Nürnberg": "纽伦堡",
+    "Energie Cottbus": "科特布斯",
+    "Greuther Fürth": "菲尔特",
+    "Arminia Bielefeld": "比勒费尔德",
+    "Eintracht Braunschweig": "布伦瑞克"
+  }
+}
