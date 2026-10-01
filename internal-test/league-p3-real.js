@@ -468,7 +468,7 @@
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
       const access=await getAccess();
       if(!access.loggedIn){
-        root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
+        root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="../login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
         return;
       }
       if(!access.isPro){
