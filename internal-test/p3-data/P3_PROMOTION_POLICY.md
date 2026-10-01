@@ -44,5 +44,7 @@ The page may **not**:
 - USA_MLS 2026 — PILOT_FULL
 - NOR_ES 2026 — PILOT_FULL
 - UEFA_UNL 2026/27 — LIMITED
+- JPN_J1 2026/27 — LIMITED
+- SWE_AS 2026 — PILOT_FULL
 
-JPN_J1 remains RAW_ONLY until V5 aggregation + gate PASS.
+JPN_J1 and SWE_AS were built through SAFE BUILD R2 offline promotion; production Supabase remains RAW-only for these expansion runs.
