@@ -1,0 +1,503 @@
+{
+  "league_code": "POR_PL",
+  "competition_id": "d021dc1c-bca1-4226-9a94-80778fdca9d1",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5887559",
+      "match_id": "984d2277-9fed-400a-9500-115b687aae79",
+      "home_team": "埃斯托里尔",
+      "away_team": "法马利康",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887561",
+      "match_id": "b7ba4215-f557-49df-8981-f638dd2f1bcd",
+      "home_team": "马里迪莫",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887566",
+      "match_id": "e6611e78-da9b-43ce-b359-a275ea844ee1",
+      "home_team": "吉马良斯",
+      "away_team": "阿罗卡",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887558",
+      "match_id": "bb4f2f4b-f053-4856-8d1b-5440ff3fc189",
+      "home_team": "阿马多拉之星",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887563",
+      "match_id": "60b5d882-9b67-4ad6-8ebc-250771cb8457",
+      "home_team": "波尔图",
+      "away_team": "阿尔维卡",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887560",
+      "match_id": "389b7543-b679-4b69-9cd4-d6c75e7e1386",
+      "home_team": "吉维森特",
+      "away_team": "里奥阿维",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887562",
+      "match_id": "8b12e91e-8d10-4d58-9f7c-0be7bd181cda",
+      "home_team": "莫雷拉人",
+      "away_team": "布拉加",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887565",
+      "match_id": "f708c55c-c30d-424a-a773-7d911cf356f0",
+      "home_team": "本菲卡",
+      "away_team": "维塞乌学院",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887564",
+      "match_id": "7dd7a719-f617-425e-a222-fc33d859242d",
+      "home_team": "圣克拉拉",
+      "away_team": "葡萄牙国民",
+      "match_date": "2026-08-10",
+      "kickoff_at": "2026-08-10 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887599",
+      "match_id": "c24ca725-9e42-4252-8ac3-66a51bb2469d",
+      "home_team": "葡萄牙体育",
+      "away_team": "吉马良斯",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887592",
+      "match_id": "f10b4df6-39b9-4c9b-9666-de6aad96feaa",
+      "home_team": "阿尔维卡",
+      "away_team": "阿马多拉之星",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887591",
+      "match_id": "fa85bedf-97fe-4d8a-89dc-9a96dbdd894d",
+      "home_team": "维塞乌学院",
+      "away_team": "圣克拉拉",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887598",
+      "match_id": "a9096e05-f210-4949-84f3-e3ebaa93d766",
+      "home_team": "里奥阿维",
+      "away_team": "波尔图",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887597",
+      "match_id": "d81afe60-f8ce-449c-a959-a20bf53cf8f9",
+      "home_team": "葡萄牙国民",
+      "away_team": "埃斯托里尔",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887593",
+      "match_id": "983af9a4-fefa-4727-b52f-451900a745d6",
+      "home_team": "阿罗卡",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887596",
+      "match_id": "9e882575-62f4-48c7-b1b4-488fcdd33dd7",
+      "home_team": "法马利康",
+      "away_team": "马里迪莫",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887595",
+      "match_id": "99634ff8-eefa-46e5-a72a-1956c5d0dfef",
+      "home_team": "卡萨皮亚",
+      "away_team": "本菲卡",
+      "match_date": "2026-08-17",
+      "kickoff_at": "2026-08-17 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887603",
+      "match_id": "3b356270-68c9-4c91-8dc2-235ea66d1a86",
+      "home_team": "马里迪莫",
+      "away_team": "维塞乌学院",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887601",
+      "match_id": "18b26b6b-1bb7-4da2-9cea-fca82e076d5b",
+      "home_team": "埃斯托里尔",
+      "away_team": "里奥阿维",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887607",
+      "match_id": "81caeec8-6de6-4705-b5a1-4eec231bb15d",
+      "home_team": "葡萄牙体育",
+      "away_team": "阿尔维卡",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887608",
+      "match_id": "c2bed2d4-f475-4d2f-b5e4-c5e0e6a7eede",
+      "home_team": "吉马良斯",
+      "away_team": "葡萄牙国民",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887606",
+      "match_id": "0b8aa419-275c-4fbc-8f9a-931267bc55f3",
+      "home_team": "圣克拉拉",
+      "away_team": "法马利康",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887605",
+      "match_id": "cdf7c560-0571-422a-b775-db0d6c25e69c",
+      "home_team": "波尔图",
+      "away_team": "阿罗卡",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887602",
+      "match_id": "6df4cc86-036d-43a4-96c8-d37b938e11e8",
+      "home_team": "吉维森特",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887616",
+      "match_id": "85a7bb6f-a344-4cc1-a37f-85500a849565",
+      "home_team": "里奥阿维",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887610",
+      "match_id": "8e34421a-70ce-4c81-a9b8-bb2e325c041f",
+      "home_team": "阿尔维卡",
+      "away_team": "圣克拉拉",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887611",
+      "match_id": "be571170-7678-4547-ba3b-f54ec7e4dd27",
+      "home_team": "阿罗卡",
+      "away_team": "马里迪莫",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887609",
+      "match_id": "994ccaf4-3d51-47d6-82f3-f8e7433f98ea",
+      "home_team": "维塞乌学院",
+      "away_team": "波尔图",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887615",
+      "match_id": "9eb5b941-2993-41bd-9e4d-7eb84cea4a94",
+      "home_team": "葡萄牙国民",
+      "away_team": "阿马多拉之星",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887613",
+      "match_id": "1dcd01ec-aa4a-4e65-8709-1c5dd7903d1d",
+      "home_team": "卡萨皮亚",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887614",
+      "match_id": "6c1a839d-8623-4401-b764-699fa78bd0d0",
+      "home_team": "法马利康",
+      "away_team": "吉维森特",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887612",
+      "match_id": "80e501f4-49ab-48e1-aca8-82f669752878",
+      "home_team": "布拉加",
+      "away_team": "吉马良斯",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887617",
+      "match_id": "ed11b379-e2b5-4131-880a-811f8588df88",
+      "home_team": "本菲卡",
+      "away_team": "埃斯托里尔",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887623",
+      "match_id": "34aac2f3-c565-457f-a020-dccaa333d6e0",
+      "home_team": "波尔图",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887619",
+      "match_id": "a99a2622-278c-4889-9208-012a0997be2d",
+      "home_team": "阿马多拉之星",
+      "away_team": "法马利康",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887622",
+      "match_id": "2f24f406-bd1c-433e-a169-28cbf9d06617",
+      "home_team": "马里迪莫",
+      "away_team": "本菲卡",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887618",
+      "match_id": "9f798595-c93c-4fbf-acab-fa526b899dba",
+      "home_team": "阿尔维卡",
+      "away_team": "布拉加",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887625",
+      "match_id": "40c95928-bec3-448b-8605-75d79700c9fd",
+      "home_team": "葡萄牙体育",
+      "away_team": "葡萄牙国民",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887624",
+      "match_id": "4b68f95b-020b-4e92-82c2-35c3278b9510",
+      "home_team": "圣克拉拉",
+      "away_team": "里奥阿维",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887626",
+      "match_id": "1f0a8d80-6b86-459d-9869-37cc65e7ad2c",
+      "home_team": "吉马良斯",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887621",
+      "match_id": "37b479cd-9884-4d22-aa83-1c1609f1ee3f",
+      "home_team": "吉维森特",
+      "away_team": "维塞乌学院",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887620",
+      "match_id": "2c08ca8c-1b61-4061-9fd6-2f6d4cfeca53",
+      "home_team": "埃斯托里尔",
+      "away_team": "阿罗卡",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887604",
+      "match_id": "9430510f-4b10-40a1-b679-ff1b5e2c0c0e",
+      "home_team": "莫雷拉人",
+      "away_team": "本菲卡",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09 19:45:00+00"
+    },
+    {
+      "source_match_id": "5887600",
+      "match_id": "67a84601-b3f5-49a5-8681-78be8c15ad04",
+      "home_team": "阿马多拉之星",
+      "away_team": "布拉加",
+      "match_date": "2026-09-10",
+      "kickoff_at": "2026-09-10 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887633",
+      "match_id": "b51dc008-1de9-4c15-b3e5-39fb7ec0b115",
+      "home_team": "葡萄牙国民",
+      "away_team": "阿尔维卡",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887630",
+      "match_id": "40460c38-f173-4a79-824f-7bb0d8d9f4c8",
+      "home_team": "卡萨皮亚",
+      "away_team": "波尔图",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887627",
+      "match_id": "ed3c8026-4209-405a-b0d7-87d8ac6523d6",
+      "home_team": "维塞乌学院",
+      "away_team": "吉马良斯",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887635",
+      "match_id": "afded91f-756b-4c8b-aa6a-e4323224842d",
+      "home_team": "本菲卡",
+      "away_team": "吉维森特",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887628",
+      "match_id": "f4ffc775-149c-4e46-b0dc-249f0919f271",
+      "home_team": "阿罗卡",
+      "away_team": "圣克拉拉",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887631",
+      "match_id": "1a688b8f-c220-46b1-8205-21c97c484908",
+      "home_team": "法马利康",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887634",
+      "match_id": "332982d3-5595-474d-b61b-c295f8b671bd",
+      "home_team": "里奥阿维",
+      "away_team": "阿马多拉之星",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 17:45:00+00"
+    },
+    {
+      "source_match_id": "5887632",
+      "match_id": "63b28e07-17c9-4b14-9139-c75107526a88",
+      "home_team": "莫雷拉人",
+      "away_team": "马里迪莫",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 19:15:00+00"
+    },
+    {
+      "source_match_id": "5887629",
+      "match_id": "4fb9c1b8-4d66-4406-b3b1-1bd6c1093596",
+      "home_team": "布拉加",
+      "away_team": "埃斯托里尔",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 19:45:00+00"
+    },
+    {
+      "source_match_id": "5887639",
+      "match_id": "7951690c-1ad0-49ed-96a1-22588acfacf0",
+      "home_team": "吉维森特",
+      "away_team": "马里迪莫",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887640",
+      "match_id": "ce740468-481e-4fc6-a4de-bf90f9b25901",
+      "home_team": "葡萄牙国民",
+      "away_team": "法马利康",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887636",
+      "match_id": "3bab6b31-ca3c-4c92-bd9e-719e8c6fea56",
+      "home_team": "阿尔维卡",
+      "away_team": "里奥阿维",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887643",
+      "match_id": "9c0c5bf2-da74-46d8-b0f1-cf874d446ecd",
+      "home_team": "葡萄牙体育",
+      "away_team": "阿罗卡",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 19:30:00+00"
+    },
+    {
+      "source_match_id": "5887644",
+      "match_id": "7ac4f994-df46-47b8-9bda-13c4176c64b0",
+      "home_team": "吉马良斯",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887637",
+      "match_id": "7d664554-c7d3-4d41-9bbe-9647243c4a02",
+      "home_team": "阿马多拉之星",
+      "away_team": "维塞乌学院",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 14:30:00+00"
+    },
+    {
+      "source_match_id": "5887638",
+      "match_id": "b2313d00-f15d-4521-bc90-1af2d8b1b9a3",
+      "home_team": "埃斯托里尔",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887642",
+      "match_id": "f947e0e5-3b71-4799-9870-a62ac0d0aaa2",
+      "home_team": "圣克拉拉",
+      "away_team": "布拉加",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 17:00:00+00"
+    },
+    {
+      "source_match_id": "5887641",
+      "match_id": "0751fb1b-f343-4d67-9e96-8dcb0c01e0cb",
+      "home_team": "波尔图",
+      "away_team": "本菲卡",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 19:30:00+00"
+    }
+  ]
+}
