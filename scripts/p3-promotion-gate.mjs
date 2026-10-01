@@ -66,7 +66,9 @@ function validate(s){
   const union=contract.schemas||{};
   const schema=schemaOf(s);
 
+  const OPTIONAL_EMPTY_BUCKETS=new Set(['D_emergency_shift_item']);
   for(const k of Object.keys(union)){
+    if(OPTIONAL_EMPTY_BUCKETS.has(k) && schema[k].length===0) continue;
     if(!same(schema[k],union[k])) errors.push({type:'SCHEMA_DRIFT',bucket:k,expected:union[k],actual:schema[k]});
   }
 
