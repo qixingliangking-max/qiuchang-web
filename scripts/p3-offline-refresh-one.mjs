@@ -82,7 +82,19 @@ for(const m of finished){
 }
 matches.sort((a,b)=>String(a.kickoff_at||a.match_date||'').localeCompare(String(b.kickoff_at||b.match_date||''))||a.source_match_id.localeCompare(b.source_match_id));
 
-const baseline=Number(cfg.baseline_finished_matches||0);
+let previousIds=[];
+if(fs.existsSync(inputPath)){
+  try{
+    const prev=JSON.parse(fs.readFileSync(inputPath,'utf8'));
+    previousIds=(prev.matches||[]).map(x=>String(x.source_match_id)).sort();
+  }catch{}
+}
+const currentIds=matches.map(x=>String(x.source_match_id)).sort();
+const previousSet=new Set(previousIds);
+const currentSet=new Set(currentIds);
+const addedIds=currentIds.filter(x=>!previousSet.has(x));
+const removedIds=previousIds.filter(x=>!currentSet.has(x));
+const baseline=previousIds.length || Number(cfg.baseline_finished_matches||0);
 const report={
   league_code:league,
   season,
@@ -90,7 +102,9 @@ const report={
   discovered_fixtures:all.size,
   discovered_finished:finished.length,
   baseline_finished_matches:baseline,
-  new_finished_matches:finished.length-baseline,
+  new_finished_matches:addedIds.length,
+  added_source_match_ids:addedIds,
+  removed_source_match_ids:removedIds,
   mapped_finished:matches.length,
   unmapped_count:unmapped.length,
   unmapped,
@@ -104,13 +118,13 @@ if(unmapped.length){
   console.error(JSON.stringify(report,null,2));
   process.exit(3);
 }
-if(finished.length<baseline){
-  report.status='BLOCKED_FINISHED_COUNT_REGRESSION';
+if(removedIds.length){
+  report.status='BLOCKED_FINISHED_SET_REGRESSION';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
   console.error(JSON.stringify(report,null,2));
   process.exit(4);
 }
-if(finished.length===baseline){
+if(previousIds.length && addedIds.length===0){
   report.status='NO_NEW_FINISHED';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
