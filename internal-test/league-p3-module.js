@@ -18,10 +18,10 @@
   const statusText=v=>v==null?'N/A':String(v);
 
   const manifest={
-    KOR_K1:{season:'2026',url:'p3-data/KOR_K1-2026.json',version:'P3_V5_KOR_STABLE',label:'韩职P3 V5稳定版'},
-    UEFA_UNL:{season:'2026/27',url:'p3-data/UEFA_UNL-2026-27.json',version:'P3_V5_UNL_PILOT',label:'欧国联P3 V5试点'},
-    USA_MLS:{season:'2026',url:'p3-data/USA_MLS-2026.json',version:'P3_V5_USA_MLS_PILOT',label:'美职P3 V5试点'},
-    NOR_ES:{season:'2026',url:'p3-data/NOR_ES-2026.json',version:'P3_V5_NOR_ES_PILOT',label:'挪超P3 V5试点'}
+    KOR_K1:{season:'2026',url:'p3-data/KOR_K1-2026.json',version:'P3_V5_KOR_STABLE',label:'韩职P3 V5稳定版',quality:'STABLE'},
+    UEFA_UNL:{season:'2026/27',url:'p3-data/UEFA_UNL-2026-27.json',version:'P3_V5_UNL_PILOT',label:'欧国联P3 V5试点',quality:'LIMITED'},
+    USA_MLS:{season:'2026',url:'p3-data/USA_MLS-2026.json',version:'P3_V5_USA_MLS_PILOT',label:'美职P3 V5试点',quality:'PILOT_FULL'},
+    NOR_ES:{season:'2026',url:'p3-data/NOR_ES-2026.json',version:'P3_V5_NOR_ES_PILOT',label:'挪超P3 V5试点',quality:'PILOT_FULL'}
   };
   const cache=new Map();
 
@@ -61,8 +61,37 @@
 
   function kpi(label,value){return '<div class="p3-kpi"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
   function small(label,value){return '<div class="p3-small"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
+  function dateLabel(v){
+    const m=String(v||'').match(/(\d{4})-(\d{2})-(\d{2})/);
+    return m?(m[2]+'/'+m[3]):'—';
+  }
+  function qualityCopy(q){
+    return q==='STABLE'?'稳定版':
+      q==='PILOT_FULL'?'完整样本试点':
+      q==='LIMITED'?'低样本限制使用':
+      q==='RAW_ONLY'?'仅原始回填':'待验收';
+  }
+  function qualityBar(data,ctx){
+    const s=data.C_lineup_structure||{};
+    const sc=data.sample_context||{};
+    const q=ctx?.quality||'PILOT_FULL';
+    const sample=s.squad_matches??sc.team_matches??'—';
+    const formation=s.formation_coverage_pct==null?'—':n(s.formation_coverage_pct,1)+'%';
+    const depth=s.depth_data_coverage_pct==null?'未成熟':n(s.depth_data_coverage_pct,1)+'%';
+    const warning=(q==='LIMITED'||sc.usage_mode==='LIMITED')
+      ?'<div class="p3-quality-warning">LOW_SAMPLE / LIMITED｜当前仅用于结构观察，Depth与替代强度不按FULL样本解读。</div>'
+      :'';
+    return '<div class="p3-quality-bar">'+
+      '<div class="p3-quality-item"><small>结构状态</small><b>P3_VALID</b></div>'+
+      '<div class="p3-quality-item is-tier '+esc(q.toLowerCase())+'"><small>质量层级</small><b>'+esc(q)+'</b><span>'+esc(qualityCopy(q))+'</span></div>'+
+      '<div class="p3-quality-item"><small>比赛样本</small><b>'+esc(sample)+'场</b></div>'+
+      '<div class="p3-quality-item"><small>阵型覆盖</small><b>'+esc(formation)+'</b></div>'+
+      '<div class="p3-quality-item"><small>深度覆盖</small><b>'+esc(depth)+'</b></div>'+
+      '<div class="p3-quality-item"><small>数据截至</small><b>'+esc(dateLabel(ctx?.generated_at))+'</b></div>'+
+    '</div>'+warning;
+  }
 
-  function render(data){
+  function render(data,ctx){
     const s=data.C_lineup_structure||{};
     const base=Array.isArray(data.A_player_base)?data.A_player_base:[];
     const perf=Array.isArray(data.B_player_performance)?data.B_player_performance:[];
@@ -75,6 +104,7 @@
     return '<div class="p3-legacy-wrap">'+
       '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+'</span></div>'+
       '<div><span class="p3-badge">'+esc(data.version||'P3_V5')+'</span></div></div>'+
+      qualityBar(data,ctx)+
 
       '<div class="p3-grid">'+
         kpi('比赛样本',(s.squad_matches??0)+'场')+
@@ -166,18 +196,25 @@
               '｜模型损失 '+(x.replacement_loss==null?'暂无':n(x.replacement_loss,1));
           }).join('；')||'—';
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
-            '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
-            '<div class="p3-depth-line"><span>普通替补链</span><b>'+esc(backups)+'</b></div>'+
-            '<div class="p3-depth-line"><span>应急换位方案</span><b>'+esc(shifts)+'</b></div>'+
-            '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
-            '<div class="p3-depth-line"><span>主力组质量</span><b>'+n(d.starter_quality,1)+'</b></div>'+
-            '<div class="p3-depth-line"><span>普通替补质量</span><b>'+statusText(d.replacement_quality==null?'暂无':n(d.replacement_quality,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>原始替代差</span><b>'+(d.raw_replacement_gap==null?'暂无':n(d.raw_replacement_gap,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>模型损失</span><b>'+(d.replacement_loss==null?'暂无':n(d.replacement_loss,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>位置覆盖率</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
-            '<div class="p3-depth-line"><span>多位置覆盖率</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
-            '<div class="p3-depth-line"><span>位置深度评分</span><b>'+(d.position_depth_score==null?'数据不足':n(d.position_depth_score,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>数据状态 / 置信度</span><b>'+esc(textStatus(d.data_status)+' / '+textLevel(d.confidence))+'</b></div>'+
+            '<div class="p3-depth-summary">'+
+              '<div class="p3-depth-line"><span>主力组质量</span><b>'+n(d.starter_quality,1)+'</b></div>'+
+              '<div class="p3-depth-line"><span>普通替补质量</span><b>'+statusText(d.replacement_quality==null?'暂无':n(d.replacement_quality,1))+'</b></div>'+
+              '<div class="p3-depth-line"><span>原始替代差</span><b>'+(d.raw_replacement_gap==null?'暂无':n(d.raw_replacement_gap,1))+'</b></div>'+
+              '<div class="p3-depth-line"><span>模型损失</span><b>'+(d.replacement_loss==null?'暂无':n(d.replacement_loss,1))+'</b></div>'+
+              '<div class="p3-depth-line"><span>位置覆盖率</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
+              '<div class="p3-depth-line"><span>置信度</span><b>'+esc(textStatus(d.data_status)+' / '+textLevel(d.confidence))+'</b></div>'+
+            '</div>'+
+            '<details class="p3-depth-more">'+
+              '<summary><span>查看替补链 / 缺阵场景</span><i>›</i></summary>'+
+              '<div class="p3-depth-more-body">'+
+                '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
+                '<div class="p3-depth-line"><span>普通替补链</span><b>'+esc(backups)+'</b></div>'+
+                '<div class="p3-depth-line"><span>应急换位方案</span><b>'+esc(shifts)+'</b></div>'+
+                '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
+                '<div class="p3-depth-line"><span>多位置覆盖率</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
+                '<div class="p3-depth-line"><span>位置深度评分</span><b>'+(d.position_depth_score==null?'数据不足':n(d.position_depth_score,1))+'</b></div>'+
+              '</div>'+
+            '</details>'+
           '</div>';
         }).join('')+'</div>'+
       '</section>'+
@@ -229,7 +266,7 @@
     if(!m){
       host.dataset.loaded='1';
       host.innerHTML=String(code)==='JPN_J1'
-        ?'<div class="p3-loading"><b>JPN_J1｜RAW_ONLY</b><br>80场原始P3已回填，但V5聚合与阻断项验收尚未完成。</div>'
+        ?'<div class="p3-raw-panel"><div class="p3-quality-bar"><div class="p3-quality-item"><small>结构状态</small><b>RAW_ONLY</b></div><div class="p3-quality-item is-tier raw_only"><small>质量层级</small><b>RAW_ONLY</b><span>仅原始回填</span></div><div class="p3-quality-item"><small>原始比赛</small><b>80场</b></div><div class="p3-quality-item"><small>V5聚合</small><b>待验收</b></div></div><div class="p3-quality-warning">JPN_J1｜80场原始P3已回填，但V5聚合与阻断项验收尚未完成，因此不标P3_VALID。</div></div>'
         :'<div class="p3-loading">该联赛当前尚未完成P3 V5。</div>';
       return;
     }
@@ -238,7 +275,7 @@
     try{
       const league=await fetchLeague(code,season);
       const p3=league?.teams?.[team]||null;
-      host.innerHTML=p3?.ok?render(p3):'<div class="p3-loading">P3暂不可用：'+esc(p3?.status||'not_ready')+'</div>';
+      host.innerHTML=p3?.ok?render(p3,{quality:m.quality,generated_at:league?.generated_at}):'<div class="p3-loading">P3暂不可用：'+esc(p3?.status||'not_ready')+'</div>';
       host.dataset.loaded='1';
     }catch(err){
       console.error('P3 snapshot load failed',code,team,err);
