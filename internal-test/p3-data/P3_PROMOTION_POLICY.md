@@ -47,5 +47,20 @@ The page may **not**:
 - JPN_J1 2026/27 — LIMITED
 - SWE_AS 2026 — PILOT_FULL
 - FIN_VL 2026 — PILOT_FULL
+- UEFA_UCL 2026/27 — LIMITED
+- UEFA_UEL 2026/27 — LIMITED
+- GER_BL 2026/27 — LIMITED
+- ITA_SA 2026/27 — LIMITED
+- FRA_L1 2026/27 — LIMITED
+- ENG_PL 2026/27 — LIMITED
+- NED_ED 2026/27 — LIMITED
+- POR_PL 2026/27 — LIMITED
+- ESP_LL 2026/27 — LIMITED
+- GER_B2 2026/27 — LIMITED
+- ITA_SB 2026/27 — LIMITED
+- FRA_L2 2026/27 — LIMITED
+- ENG_CH 2026/27 — LIMITED
+- ESP_L2 2026/27 — LIMITED
+- NED_EE 2026/27 — LIMITED
 
-JPN_J1, SWE_AS and FIN_VL were built through SAFE BUILD R2 offline promotion; production Supabase remains RAW-only for these expansion runs.
+All expansion snapshots after JPN_J1 use SAFE BUILD R2 offline promotion. The 2026/27 European batch was collected and built in GitHub Actions from locked match inputs and FotMob matchDetails; production Supabase was not used for P3 aggregation.
