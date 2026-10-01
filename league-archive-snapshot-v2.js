@@ -261,16 +261,11 @@
   }
 
   async function getAccess(){
-    if(typeof qcGetAccessState==='function') return await qcGetAccessState();
-    const timeout=p=>Promise.race([p,new Promise(resolve=>setTimeout(()=>resolve({__qcTimeout:true}),2000))]);
-    const sessionResult=await timeout(window.qcSupabase.auth.getSession());
-    if(sessionResult?.__qcTimeout) return {loggedIn:false,isPro:false,degraded:true};
-    const {data,error}=sessionResult||{};
+    const {data,error}=await window.qcSupabase.auth.getSession();
     if(error) throw error;
     const session=data?.session||null;
     if(!session) return {loggedIn:false,isPro:false};
-    const pro=await timeout(window.qcSupabase.rpc('has_active_pro_access'));
-    if(pro?.__qcTimeout) return {loggedIn:true,isPro:false,degraded:true};
+    const pro=await window.qcSupabase.rpc('has_active_pro_access');
     return {loggedIn:true,isPro:pro.data===true};
   }
 
@@ -418,10 +413,6 @@
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
       const access=await getAccess();
-      if(access.degraded){
-        root.innerHTML='<div class="qc-league-gate"><h2>会员服务正在恢复</h2><p>联赛档案数据没有被删除。当前认证服务响应超时，请稍后刷新。</p></div>';
-        return;
-      }
       if(!access.loggedIn){
         root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
         return;
