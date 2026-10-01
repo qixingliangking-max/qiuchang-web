@@ -1,0 +1,439 @@
+{
+  "league_code": "GER_B2",
+  "competition_id": "5ad7a46b-82aa-43d6-b35b-e35bbe8c2900",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5881627",
+      "match_id": "6ba070af-25f9-465e-97ce-428d670882c9",
+      "home_team": "波鸿",
+      "away_team": "柏林赫塔",
+      "match_date": "2026-08-07",
+      "kickoff_at": "2026-08-07 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881631",
+      "match_id": "3c0745cd-99a0-45e0-9460-6ae6fb868375",
+      "home_team": "卡尔斯鲁厄",
+      "away_team": "比勒费尔德",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881632",
+      "match_id": "3dae3606-8cc9-48e3-9f21-8298050d440b",
+      "home_team": "马格德堡",
+      "away_team": "布伦瑞克",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881630",
+      "match_id": "a5804045-d8ec-4f99-9826-827a939244e2",
+      "home_team": "海登海姆",
+      "away_team": "奥斯纳布吕克",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881629",
+      "match_id": "c99c0347-c4f1-43fc-8e19-57bea92819b0",
+      "home_team": "达姆施塔特",
+      "away_team": "荷尔斯泰因基尔",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881635",
+      "match_id": "09a76b2c-073f-4389-817a-b771ad110b51",
+      "home_team": "沃尔夫斯堡",
+      "away_team": "凯泽斯劳滕",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881628",
+      "match_id": "8c5cb9c4-5ab0-4949-812d-639ea4a5794f",
+      "home_team": "科特布斯",
+      "away_team": "汉诺威96",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881633",
+      "match_id": "9d81ddaa-8645-418f-90c2-3e5d31efa382",
+      "home_team": "纽伦堡",
+      "away_team": "德累斯顿迪纳摩",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881634",
+      "match_id": "dface4ac-56e2-4dbc-85dc-dde95470453a",
+      "home_team": "圣保利",
+      "away_team": "菲尔特",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881637",
+      "match_id": "6ce1bbee-123f-40db-b5af-0299af18e845",
+      "home_team": "布伦瑞克",
+      "away_team": "波鸿",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881641",
+      "match_id": "d3dc19bc-cb0d-436f-bd6e-360618f39900",
+      "home_team": "荷尔斯泰因基尔",
+      "away_team": "圣保利",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881640",
+      "match_id": "5177db9e-44f4-4da0-b4b9-c0caa5456c26",
+      "home_team": "柏林赫塔",
+      "away_team": "海登海姆",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881638",
+      "match_id": "d8c5f19d-02e6-40a1-a2c1-893cdcd55f6d",
+      "home_team": "菲尔特",
+      "away_team": "纽伦堡",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881644",
+      "match_id": "f041d9ce-d8ed-4592-99cb-0f8b0ca52dcc",
+      "home_team": "奥斯纳布吕克",
+      "away_team": "马格德堡",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881642",
+      "match_id": "7c572567-f43e-4de9-a560-2ce337722fdd",
+      "home_team": "凯泽斯劳滕",
+      "away_team": "卡尔斯鲁厄",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881636",
+      "match_id": "13b41db6-b43b-4a2c-9fef-a295923e4dc8",
+      "home_team": "比勒费尔德",
+      "away_team": "科特布斯",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881639",
+      "match_id": "7990704b-d01f-4e14-bd18-426633238a41",
+      "home_team": "汉诺威96",
+      "away_team": "沃尔夫斯堡",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881643",
+      "match_id": "c6963271-f83b-453c-9744-f1c3d50f362f",
+      "home_team": "德累斯顿迪纳摩",
+      "away_team": "达姆施塔特",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881645",
+      "match_id": "d71efeeb-3256-4dcb-8f21-ebe859c66b92",
+      "home_team": "波鸿",
+      "away_team": "奥斯纳布吕克",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881646",
+      "match_id": "d960be3e-2659-4948-b70d-5c6dec912343",
+      "home_team": "布伦瑞克",
+      "away_team": "柏林赫塔",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881649",
+      "match_id": "07e64c9d-f294-4d58-9def-ce0b7f2689e6",
+      "home_team": "海登海姆",
+      "away_team": "德累斯顿迪纳摩",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881650",
+      "match_id": "5072f32c-5b0d-4d15-b65c-5452e5e20ce1",
+      "home_team": "卡尔斯鲁厄",
+      "away_team": "沃尔夫斯堡",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881647",
+      "match_id": "6f7069b5-6d60-4cf7-a058-c2aaab596180",
+      "home_team": "科特布斯",
+      "away_team": "菲尔特",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881652",
+      "match_id": "a34e1ea8-415b-421d-aceb-02745e489183",
+      "home_team": "纽伦堡",
+      "away_team": "比勒费尔德",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881651",
+      "match_id": "04a06abd-1214-45d6-934e-9b66cc0b31b4",
+      "home_team": "马格德堡",
+      "away_team": "荷尔斯泰因基尔",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881653",
+      "match_id": "10ad0f64-8efa-42ac-93f5-cd5ac4190ad9",
+      "home_team": "圣保利",
+      "away_team": "凯泽斯劳滕",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881648",
+      "match_id": "5ca7fc32-7c6e-4a0a-ae99-14c3a30c5dd9",
+      "home_team": "达姆施塔特",
+      "away_team": "汉诺威96",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881654",
+      "match_id": "354c1de0-265a-4bf1-b0bd-ecc02d9c09e1",
+      "home_team": "比勒费尔德",
+      "away_team": "圣保利",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881656",
+      "match_id": "ff76abcd-a76b-4eab-91f8-84f4a02cc837",
+      "home_team": "汉诺威96",
+      "away_team": "卡尔斯鲁厄",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881658",
+      "match_id": "c9766951-a1db-44e3-b001-d5a9f51d8cb5",
+      "home_team": "荷尔斯泰因基尔",
+      "away_team": "纽伦堡",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881659",
+      "match_id": "d3a0489b-bede-4527-9dcf-04125642e85c",
+      "home_team": "凯泽斯劳滕",
+      "away_team": "达姆施塔特",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881662",
+      "match_id": "df0bc2f5-4d42-4c2a-96bf-db28987dd30a",
+      "home_team": "沃尔夫斯堡",
+      "away_team": "科特布斯",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881660",
+      "match_id": "ed2f103f-fa66-4d7c-abbd-a65def8e42c6",
+      "home_team": "德累斯顿迪纳摩",
+      "away_team": "波鸿",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881661",
+      "match_id": "38cee78d-7e77-448d-a703-71d90689cad0",
+      "home_team": "奥斯纳布吕克",
+      "away_team": "布伦瑞克",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881657",
+      "match_id": "60bf0b04-8769-4c8e-a36c-aac75a122594",
+      "home_team": "柏林赫塔",
+      "away_team": "马格德堡",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881655",
+      "match_id": "bc7fe622-be45-4d27-95b4-343659cfcfc3",
+      "home_team": "菲尔特",
+      "away_team": "海登海姆",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881669",
+      "match_id": "7f569ed2-8abf-4450-9076-c6b3f62c86a4",
+      "home_team": "纽伦堡",
+      "away_team": "汉诺威96",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881665",
+      "match_id": "b691b9e7-6634-4090-ae0a-b3f272f9c259",
+      "home_team": "达姆施塔特",
+      "away_team": "比勒费尔德",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881664",
+      "match_id": "53c9884a-7e1a-4cea-acb4-32e514d89591",
+      "home_team": "布伦瑞克",
+      "away_team": "德累斯顿迪纳摩",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881668",
+      "match_id": "99e33b2b-2afc-486c-893b-749c642672a3",
+      "home_team": "马格德堡",
+      "away_team": "凯泽斯劳滕",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881663",
+      "match_id": "a950b50b-c384-4c46-a85e-32bea40c2ea4",
+      "home_team": "波鸿",
+      "away_team": "菲尔特",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881670",
+      "match_id": "4a8adf60-8f0e-40bd-8b12-f420bf41e1b3",
+      "home_team": "圣保利",
+      "away_team": "沃尔夫斯堡",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881671",
+      "match_id": "2afbbaa7-d60d-4b07-a703-a3ab8eb55f59",
+      "home_team": "奥斯纳布吕克",
+      "away_team": "柏林赫塔",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881666",
+      "match_id": "3a27b342-6156-4b15-a0be-2d04d86922eb",
+      "home_team": "海登海姆",
+      "away_team": "荷尔斯泰因基尔",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881667",
+      "match_id": "78a4209f-c54f-4a87-8ddb-28c975740845",
+      "home_team": "卡尔斯鲁厄",
+      "away_team": "科特布斯",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881680",
+      "match_id": "aaded8d4-1711-4bf3-8c73-80edb2f70b2c",
+      "home_team": "沃尔夫斯堡",
+      "away_team": "达姆施塔特",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881674",
+      "match_id": "be95f801-f53a-4997-8acb-0fa51fcee22d",
+      "home_team": "菲尔特",
+      "away_team": "马格德堡",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 16:30:00+00"
+    },
+    {
+      "source_match_id": "5881677",
+      "match_id": "57bd7871-91a9-4cc9-8a31-708aee5adb31",
+      "home_team": "凯泽斯劳滕",
+      "away_team": "布伦瑞克",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881678",
+      "match_id": "614b3f05-fc35-4ff9-b6b1-d21f41451f8e",
+      "home_team": "卡尔斯鲁厄",
+      "away_team": "纽伦堡",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881676",
+      "match_id": "ab4b7245-8075-442e-af5b-e01b019afbae",
+      "home_team": "荷尔斯泰因基尔",
+      "away_team": "奥斯纳布吕克",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 11:00:00+00"
+    },
+    {
+      "source_match_id": "5881679",
+      "match_id": "45b9d471-d24b-47cc-ad23-25b1c944c035",
+      "home_team": "德累斯顿迪纳摩",
+      "away_team": "柏林赫塔",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 18:30:00+00"
+    },
+    {
+      "source_match_id": "5881673",
+      "match_id": "2a2a9b88-88c3-41c2-9088-2b6b09c65081",
+      "home_team": "科特布斯",
+      "away_team": "圣保利",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881675",
+      "match_id": "47f7e41a-b77d-43e0-a44b-2e0972992165",
+      "home_team": "汉诺威96",
+      "away_team": "波鸿",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 11:30:00+00"
+    },
+    {
+      "source_match_id": "5881672",
+      "match_id": "a91b43f9-f14a-4498-9ee8-1b69ebba3d19",
+      "home_team": "比勒费尔德",
+      "away_team": "海登海姆",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 11:30:00+00"
+    }
+  ]
+}
