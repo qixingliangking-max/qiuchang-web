@@ -194,7 +194,7 @@
   </header>
 
   <main class="qc-league-main">
-    <div class="qc-real-test-banner">P3内部真实数据测试｜P1/P2读取当前正式快照｜不触发refresh / ingest / 写入</div>
+    <div class="qc-real-test-banner">P3内部真实数据测试｜真实P1/P2快照副本｜无需登录｜不连接生产Supabase｜不触发refresh / ingest / 写入</div>
     <section class="qc-league-hero">
       <h1>联赛档案</h1>
       <p>统计整个赛季的全部比赛，不只统计本站预测场次。联赛整体、球队赛季、主客场和近期状态分层保存。</p>
@@ -216,11 +216,7 @@
   </nav>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../supabase-config.js"></script>
-<script src="../supabase-client.js?v=20260927autologin1"></script>
-<script src="../data.js"></script>
-<script src="../app.js?v=20260930perf1"></script>
-<script src="league-p3-real.js?v=20261001real1"></script>
+<script src="league-p3-static-data.js?v=20261001static2"></script>
+<script src="league-p3-real.js?v=20261001real3"></script>
 </body>
 </html>
