@@ -1,0 +1,110 @@
+{
+  "league_code": "GER_B2",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 54,
+  "collected_matches": 54,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 18,
+  "aggregate_players": 456,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "凯泽斯劳滕",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "卡尔斯鲁厄",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "圣保利",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥斯纳布吕克",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布伦瑞克",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "德累斯顿迪纳摩",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "柏林赫塔",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "比勒费尔德",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "汉诺威96",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "沃尔夫斯堡",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "波鸿",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "海登海姆",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "科特布斯",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "纽伦堡",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "荷尔斯泰因基尔",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "菲尔特",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "达姆施塔特",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马格德堡",
+      "matches": 6
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 2.5
+}

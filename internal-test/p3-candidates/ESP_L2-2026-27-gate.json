@@ -1,0 +1,130 @@
+{
+  "league_code": "ESP_L2",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 77,
+  "collected_matches": 77,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 22,
+  "aggregate_players": 659,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "休达",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "加的斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "卡斯特利翁",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃瓦尔",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃登斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "塞尔塔B",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥维耶多",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "安道尔FC",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "巴拉多利德",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布尔戈斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "希洪竞技",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "拉斯帕尔马斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "格拉纳达",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "特内里费",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家社会B",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "科尔多瓦",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "莱加内斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "萨瓦德尔",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "赫罗纳",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿尔梅里亚",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿尔瓦塞特",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马略卡",
+      "matches": 7
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 7.4
+}

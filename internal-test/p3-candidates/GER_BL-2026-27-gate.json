@@ -1,0 +1,110 @@
+{
+  "league_code": "GER_BL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 36,
+  "collected_matches": 36,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 18,
+  "aggregate_players": 425,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "云达不莱梅",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "勒沃库森",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃尔弗斯堡",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "多特蒙德",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥格斯堡",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "帕德博恩",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "弗赖堡",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "拜仁慕尼黑",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "斯图加特",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "柏林联合",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "汉堡",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "沙尔克04",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "法兰克福",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "科隆",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "美因茨",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "莱比锡",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "门兴格拉德巴赫",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "霍芬海姆",
+      "matches": 4
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0
+}

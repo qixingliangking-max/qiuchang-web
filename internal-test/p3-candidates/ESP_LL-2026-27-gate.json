@@ -1,0 +1,120 @@
+{
+  "league_code": "ESP_LL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 69,
+  "collected_matches": 69,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 20,
+  "aggregate_players": 571,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃尔切",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "塞尔塔",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "塞维利亚",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥萨苏纳",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "巴列卡诺",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "巴塞罗那",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "拉科鲁尼亚",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "桑坦德竞技",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "比利亚雷亚尔",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "毕尔巴鄂竞技",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "瓦伦西亚",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家社会",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家贝蒂斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家马德里",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "莱万特",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "西班牙人",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "赫塔费",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿拉维斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马德里竞技",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马拉加",
+      "matches": 7
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 9.1
+}

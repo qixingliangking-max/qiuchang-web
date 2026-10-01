@@ -1,0 +1,223 @@
+{
+  "league_code": "UEFA_UCL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 18,
+  "collected_matches": 18,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 36,
+  "aggregate_players": 798,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": false,
+  "strict_errors": [
+    {
+      "type": "SCHEMA_DRIFT",
+      "bucket": "D_emergency_shift_item",
+      "expected": [
+        "adjusted_quality",
+        "adjusted_role_quality",
+        "availability_role",
+        "emergency_shift_rank",
+        "fit_type",
+        "fit_weight",
+        "importance_score",
+        "origin_position",
+        "performance_confidence",
+        "performance_score",
+        "player_id",
+        "player_name",
+        "position_starts",
+        "replacement_rank",
+        "role_quality"
+      ],
+      "actual": []
+    }
+  ],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "LASK林茨",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "利物浦",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "加拉塔萨雷",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "博德闪耀",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "国际米兰",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃因霍温",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "多特蒙德",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "巴塞罗那",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "巴黎圣日耳曼",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布拉格斯拉维亚",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布拉迪斯拉发",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布鲁日",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "拜仁慕尼黑",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "斯图加特",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "曼城",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "曼联",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "朗斯",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "比利亚雷亚尔",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "波尔图",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家贝蒂斯",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "皇家马德里",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "科莫",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "维京",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "罗马",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "莱比锡",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "萨巴赫",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "葡萄牙体育",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "费内巴切",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "费耶诺德",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "那不勒斯",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "里尔",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿斯顿维拉",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿森纳",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "雅典AEK",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "顿涅茨克矿工",
+      "matches": 1
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马德里竞技",
+      "matches": 1
+    }
+  ],
+  "gate_status": "FAIL",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0
+}

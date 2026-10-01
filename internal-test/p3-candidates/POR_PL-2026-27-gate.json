@@ -1,0 +1,110 @@
+{
+  "league_code": "POR_PL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 62,
+  "collected_matches": 62,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 18,
+  "aggregate_players": 532,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "卡萨皮亚",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "吉维森特",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "吉马良斯",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "圣克拉拉",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "埃斯托里尔",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布拉加",
+      "matches": 6
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "本菲卡",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "法马利康",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "波尔图",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "维塞乌学院",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "莫雷拉人",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "葡萄牙体育",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "葡萄牙国民",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "里奥阿维",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿尔维卡",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿罗卡",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿马多拉之星",
+      "matches": 7
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马里迪莫",
+      "matches": 7
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0
+}
