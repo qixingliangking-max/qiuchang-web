@@ -8,6 +8,25 @@
 
 Project: qiuchang-web
 Project ID: oqtloldkfjxildoribkf
+Read-only role: qc_main_model_reader
+
+主库使用现有 Supabase 连接时，所有查询必须在同一 SQL 调用内使用：
+
+```sql
+begin read only;
+set local role qc_main_model_reader;
+-- 这里只允许 SELECT / 只读 RPC
+commit;
+```
+
+该角色已经：
+- 20张联赛数据表全部授予 SELECT
+- 20张表全部配置 qc_main_model_reader 专用 SELECT RLS policy
+- INSERT / UPDATE / DELETE = 0权限
+- public schema CREATE = false
+- CREATEDB / CREATEROLE / REPLICATION / BYPASSRLS = false
+- default_transaction_read_only = on
+- statement_timeout = 30s
 
 允许：
 - SELECT
@@ -117,5 +136,16 @@ Promotion Manifest + promoted static JSON 为当前权威；生产RPC可作为�
 ## 6. 强制只读
 
 主模型只能读取中央库，不拥有维护权限。
+
+已验收：
+- P1 RPC：可读
+- P2 RPC：可读
+- P3 RPC：可读
+- league_team_score_frequency：season / home / away / last5 均可读
+- 主场TOP：scope='home'
+- 客场TOP：scope='away'
+- 角色写权限：INSERT=false / UPDATE=false / DELETE=false
+
+主模型每次访问必须先进入 `begin read only` 并 `set local role qc_main_model_reader`。
 任何发现的数据问题只记录并回传给“球场档案网站日常维护”项目处理。
 主模型不得自行修库、补数、refresh、ingest、改RPC、改schema或重新Promotion。
