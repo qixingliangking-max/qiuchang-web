@@ -1,0 +1,407 @@
+{
+  "league_code": "ITA_SB",
+  "competition_id": "6c002484-4a6a-41c8-9e99-25f72aad84ac",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5967044",
+      "match_id": "c48ce7db-f802-4c23-bbed-7e769162aec0",
+      "home_team": "维琴察",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 18:30:00+00"
+    },
+    {
+      "source_match_id": "5967041",
+      "match_id": "1852d556-b519-47aa-98ad-d03e91a97292",
+      "home_team": "凯勒雷斯",
+      "away_team": "曼托瓦",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967047",
+      "match_id": "5b950fa9-7a89-4f28-8265-c6e072e178b8",
+      "home_team": "南蒂罗尔",
+      "away_team": "恩特拉",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967039",
+      "match_id": "51069e76-9ffa-4947-8494-f9bc07eca91f",
+      "home_team": "阿维利诺",
+      "away_team": "阿雷佐",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967043",
+      "match_id": "6a35218d-eb29-44b0-a752-e5ec115730eb",
+      "home_team": "恩波利",
+      "away_team": "克雷莫纳",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967040",
+      "match_id": "fbf8747e-ec12-450f-ad0c-67b39da1f459",
+      "home_team": "贝内文托",
+      "away_team": "摩德纳",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967048",
+      "match_id": "860ea63f-9780-4c20-bc37-cc944ba7b0fc",
+      "home_team": "维罗纳",
+      "away_team": "阿斯科利",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967046",
+      "match_id": "fb04f7fb-87a4-4f22-8c0f-e49769a6bbda",
+      "home_team": "比萨",
+      "away_team": "帕多瓦",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967045",
+      "match_id": "097e7418-c177-4866-a93d-502f999e6a0a",
+      "home_team": "巴勒莫",
+      "away_team": "史泰比亚",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967042",
+      "match_id": "ba0daca2-7bab-4fb9-8b05-e9f67c7687c6",
+      "home_team": "切塞纳",
+      "away_team": "桑普多利亚",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967053",
+      "match_id": "726f65b7-de87-4a09-b52f-2b7240709748",
+      "home_team": "克雷莫纳",
+      "away_team": "摩德纳",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 18:30:00+00"
+    },
+    {
+      "source_match_id": "5967058",
+      "match_id": "6687cd63-bdf1-4118-943e-dbffbeb875c9",
+      "home_team": "桑普多利亚",
+      "away_team": "史泰比亚",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967054",
+      "match_id": "cfdc812b-5f99-4864-aeb2-ed23a4daf9a4",
+      "home_team": "恩特拉",
+      "away_team": "切塞纳",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967050",
+      "match_id": "1a71bfe8-5b1f-4fef-8664-7563175a8cab",
+      "home_team": "阿斯科利",
+      "away_team": "凯勒雷斯",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967056",
+      "match_id": "9c19eed1-d97a-4c5a-9cc6-232806e8ba95",
+      "home_team": "帕多瓦",
+      "away_team": "维罗纳",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967051",
+      "match_id": "bef71145-f2c9-49d1-870c-32fb8c72e0c1",
+      "home_team": "阿维利诺",
+      "away_team": "维琴察",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967055",
+      "match_id": "17cde2cf-a419-4445-bfce-9bb404fa614e",
+      "home_team": "曼托瓦",
+      "away_team": "恩波利",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967049",
+      "match_id": "aa11edb3-4c7e-4746-a5f2-0eb663638959",
+      "home_team": "阿雷佐",
+      "away_team": "巴勒莫",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967057",
+      "match_id": "03b4dda7-72d7-4b05-b0a9-915618927afe",
+      "home_team": "比萨",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967052",
+      "match_id": "eedc8a88-188a-4edf-aefd-07b6c1d06354",
+      "home_team": "贝内文托",
+      "away_team": "南蒂罗尔",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967067",
+      "match_id": "a36de77f-b3f1-4849-9de6-545266f31bbc",
+      "home_team": "南蒂罗尔",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967059",
+      "match_id": "40b1552e-8582-470c-9b3d-7adf3a9e7295",
+      "home_team": "阿斯科利",
+      "away_team": "贝内文托",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967060",
+      "match_id": "9a5f6e8b-974a-463c-84f3-8090e13c3ce2",
+      "home_team": "凯勒雷斯",
+      "away_team": "恩波利",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 17:30:00+00"
+    },
+    {
+      "source_match_id": "5967063",
+      "match_id": "208ceeb0-0a3a-4d3c-9da3-323468e54c23",
+      "home_team": "恩特拉",
+      "away_team": "维琴察",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967064",
+      "match_id": "803dd36a-8f25-4226-a3a1-8ab7c92b3f1e",
+      "home_team": "史泰比亚",
+      "away_team": "比萨",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967065",
+      "match_id": "89c5b434-5b83-447f-b024-4095fb61ed56",
+      "home_team": "摩德纳",
+      "away_team": "阿维利诺",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967061",
+      "match_id": "ef5c50ee-eae6-458f-a903-31e0b57a851e",
+      "home_team": "切塞纳",
+      "away_team": "曼托瓦",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967068",
+      "match_id": "bcb86513-6767-4e82-9556-42c8edb61137",
+      "home_team": "维罗纳",
+      "away_team": "阿雷佐",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967062",
+      "match_id": "075b31cb-1ce9-47e5-8507-5723a50df0da",
+      "home_team": "克雷莫纳",
+      "away_team": "帕多瓦",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 17:30:00+00"
+    },
+    {
+      "source_match_id": "5967066",
+      "match_id": "503a901f-c1ce-40fc-9e1c-d3328775fa29",
+      "home_team": "巴勒莫",
+      "away_team": "桑普多利亚",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 18:30:00+00"
+    },
+    {
+      "source_match_id": "5967073",
+      "match_id": "23d4ca79-10ee-4665-9580-f26ad43358a9",
+      "home_team": "恩波利",
+      "away_team": "阿雷佐",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 17:00:00+00"
+    },
+    {
+      "source_match_id": "5967077",
+      "match_id": "8986b0df-0ebf-46ef-be3a-30c167881568",
+      "home_team": "比萨",
+      "away_team": "恩特拉",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967070",
+      "match_id": "9eac7849-577d-4beb-bc67-41c447a8fccd",
+      "home_team": "贝内文托",
+      "away_team": "维罗纳",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 19:00:00+00"
+    },
+    {
+      "source_match_id": "5967078",
+      "match_id": "4611079f-02ae-4531-9b3a-05a9e5a7c790",
+      "home_team": "南蒂罗尔",
+      "away_team": "摩德纳",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967074",
+      "match_id": "6b27dba5-3516-474d-b029-55f97b084649",
+      "home_team": "维琴察",
+      "away_team": "史泰比亚",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967076",
+      "match_id": "c3b5e943-f335-4d65-9c13-e4d24d3aeab1",
+      "home_team": "帕多瓦",
+      "away_team": "阿斯科利",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967071",
+      "match_id": "ce98fd29-1a99-4ced-a3b1-f4638b42a9a7",
+      "home_team": "卡坦扎罗",
+      "away_team": "凯勒雷斯",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967072",
+      "match_id": "74cf4978-f80f-4c43-abbc-622e8762cb46",
+      "home_team": "切塞纳",
+      "away_team": "克雷莫纳",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 17:30:00+00"
+    },
+    {
+      "source_match_id": "5967075",
+      "match_id": "c8c0d49a-7862-4da1-829a-d6a9fbcfc396",
+      "home_team": "曼托瓦",
+      "away_team": "桑普多利亚",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967069",
+      "match_id": "d53ea827-66e9-4cf9-89d4-a8802edd4abf",
+      "home_team": "阿维利诺",
+      "away_team": "巴勒莫",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967083",
+      "match_id": "9d151fb6-ff6a-4348-9dc3-3e162c463186",
+      "home_team": "史泰比亚",
+      "away_team": "切塞纳",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 18:30:00+00"
+    },
+    {
+      "source_match_id": "5967082",
+      "match_id": "016bbfcc-5896-4b68-b81c-ba0b91fe1ca5",
+      "home_team": "克雷莫纳",
+      "away_team": "恩特拉",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967086",
+      "match_id": "daa79796-6532-4791-9b45-c4c3a1fc9445",
+      "home_team": "巴勒莫",
+      "away_team": "帕多瓦",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967081",
+      "match_id": "f98443af-c351-4de7-9e72-6441b1e125f0",
+      "home_team": "凯勒雷斯",
+      "away_team": "贝内文托",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967087",
+      "match_id": "d19feb69-713e-4bed-a665-aaa38bb2a315",
+      "home_team": "桑普多利亚",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967080",
+      "match_id": "df970e33-1b69-437a-944a-ea0a6f512458",
+      "home_team": "阿斯科利",
+      "away_team": "阿维利诺",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 17:30:00+00"
+    },
+    {
+      "source_match_id": "5967088",
+      "match_id": "297381a6-d45a-4df0-a6bb-e5c6bb28b7be",
+      "home_team": "维罗纳",
+      "away_team": "维琴察",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967079",
+      "match_id": "318e3f5c-b200-4f38-8461-9ae367bfb304",
+      "home_team": "阿雷佐",
+      "away_team": "南蒂罗尔",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 13:00:00+00"
+    },
+    {
+      "source_match_id": "5967084",
+      "match_id": "d0046280-79ab-4d21-a797-ac6be1fae159",
+      "home_team": "曼托瓦",
+      "away_team": "比萨",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 15:15:00+00"
+    },
+    {
+      "source_match_id": "5967085",
+      "match_id": "97c7a8e8-be4f-4ae2-be35-1eaa58bf8732",
+      "home_team": "摩德纳",
+      "away_team": "恩波利",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 17:30:00+00"
+    }
+  ]
+}
