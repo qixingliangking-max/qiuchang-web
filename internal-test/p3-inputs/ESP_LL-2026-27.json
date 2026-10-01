@@ -1,0 +1,559 @@
+{
+  "league_code": "ESP_LL",
+  "competition_id": "af4b24c2-7282-48b5-be5d-33f62e6aa3e0",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5868011",
+      "match_id": "a02dc3db-1f61-4ac4-b81c-19e317af4e12",
+      "home_team": "阿拉维斯",
+      "away_team": "赫塔费",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868019",
+      "match_id": "bced07b8-c520-45c8-9379-64caa627455b",
+      "home_team": "塞维利亚",
+      "away_team": "巴列卡诺",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868017",
+      "match_id": "5fadd2f4-9413-4f16-8c01-23f051f7dc30",
+      "home_team": "桑坦德竞技",
+      "away_team": "比利亚雷亚尔",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 15:00:00+00"
+    },
+    {
+      "source_match_id": "5868015",
+      "match_id": "a981d5ec-410c-4882-8c6b-18520e8d8fbe",
+      "home_team": "西班牙人",
+      "away_team": "莱万特",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868014",
+      "match_id": "2c426d96-98a2-40c7-a1e0-e42232fae93b",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "埃尔切",
+      "match_date": "2026-08-17",
+      "kickoff_at": "2026-08-17 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868012",
+      "match_id": "07033591-4b19-4888-9f57-11729706b092",
+      "home_team": "马德里竞技",
+      "away_team": "马拉加",
+      "match_date": "2026-08-19",
+      "kickoff_at": "2026-08-19 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868029",
+      "match_id": "72e1e7f5-df8f-4927-9643-0b76945a2dab",
+      "home_team": "巴列卡诺",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-08-20",
+      "kickoff_at": "2026-08-20 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868023",
+      "match_id": "ee0af551-d845-45cd-8095-fc712180a699",
+      "home_team": "皇家贝蒂斯",
+      "away_team": "皇家社会",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868021",
+      "match_id": "d3fd9a4a-af9c-4760-99c1-0682af811800",
+      "home_team": "毕尔巴鄂竞技",
+      "away_team": "塞维利亚",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 15:00:00+00"
+    },
+    {
+      "source_match_id": "5868030",
+      "match_id": "4b98e62b-9706-4666-9d9b-1a09fa0490eb",
+      "home_team": "瓦伦西亚",
+      "away_team": "塞尔塔",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868025",
+      "match_id": "09ba3d46-7048-4368-90b2-9993fe6dd0a9",
+      "home_team": "西班牙人",
+      "away_team": "皇家马德里",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868022",
+      "match_id": "876bf2ea-989d-4b71-ba92-6f5dc91b096a",
+      "home_team": "马德里竞技",
+      "away_team": "比利亚雷亚尔",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 15:00:00+00"
+    },
+    {
+      "source_match_id": "5868026",
+      "match_id": "127f02d3-a85c-4b1c-b6b4-699d987cfc0d",
+      "home_team": "赫塔费",
+      "away_team": "桑坦德竞技",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868024",
+      "match_id": "9d530290-fddb-4b0e-be68-d0695a1611f2",
+      "home_team": "埃尔切",
+      "away_team": "巴塞罗那",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868028",
+      "match_id": "13d8b2eb-76ae-4ca3-ba1d-ea8796a0ad2a",
+      "home_team": "奥萨苏纳",
+      "away_team": "莱万特",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868027",
+      "match_id": "76e47b16-b8da-4ca0-b4c3-951b8b2a1f50",
+      "home_team": "马拉加",
+      "away_team": "拉科鲁尼亚",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868020",
+      "match_id": "36f9445d-9798-48a6-a033-255b2367a352",
+      "home_team": "瓦伦西亚",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868018",
+      "match_id": "be84f377-bccb-474b-8dfb-955beca26087",
+      "home_team": "皇家马德里",
+      "away_team": "皇家社会",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868013",
+      "match_id": "5c8abf9c-fef0-417b-90e0-a42b4aacc401",
+      "home_team": "塞尔塔",
+      "away_team": "奥萨苏纳",
+      "match_date": "2026-08-27",
+      "kickoff_at": "2026-08-27 18:30:00+00"
+    },
+    {
+      "source_match_id": "5868016",
+      "match_id": "74b3056e-a413-409e-810e-1e94b691bfe6",
+      "home_team": "巴塞罗那",
+      "away_team": "毕尔巴鄂竞技",
+      "match_date": "2026-08-27",
+      "kickoff_at": "2026-08-27 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868037",
+      "match_id": "642e9498-c4e1-49ce-a237-8cc437efaa76",
+      "home_team": "桑坦德竞技",
+      "away_team": "埃尔切",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868031",
+      "match_id": "7d69f6d5-f146-4333-be41-0ab6514adfa4",
+      "home_team": "阿拉维斯",
+      "away_team": "比利亚雷亚尔",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868035",
+      "match_id": "d304c051-c6b2-4af1-a729-2b3eb9545168",
+      "home_team": "莱万特",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 15:00:00+00"
+    },
+    {
+      "source_match_id": "5868039",
+      "match_id": "7f93eb23-0346-4cb7-99e8-e6ff7c0dbc69",
+      "home_team": "皇家社会",
+      "away_team": "西班牙人",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868040",
+      "match_id": "cf45f853-f8d7-4da6-b422-870ff6f9d355",
+      "home_team": "塞维利亚",
+      "away_team": "马德里竞技",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868038",
+      "match_id": "eae7e406-1edf-4384-bb20-a3da31056e6d",
+      "home_team": "皇家马德里",
+      "away_team": "马拉加",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 15:00:00+00"
+    },
+    {
+      "source_match_id": "5868033",
+      "match_id": "e1a2bfd9-46ee-419c-81cf-fa7d3218eced",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "瓦伦西亚",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868032",
+      "match_id": "bd3f4c72-c2a7-4fe2-a22e-2d9211eea769",
+      "home_team": "塞尔塔",
+      "away_team": "毕尔巴鄂竞技",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868036",
+      "match_id": "d455158d-51b7-4d0b-acc6-3373d70be895",
+      "home_team": "奥萨苏纳",
+      "away_team": "赫塔费",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 17:30:00+00"
+    },
+    {
+      "source_match_id": "5868034",
+      "match_id": "63fbcd83-fb37-4862-ada8-39c72f5503cb",
+      "home_team": "巴塞罗那",
+      "away_team": "巴列卡诺",
+      "match_date": "2026-08-31",
+      "kickoff_at": "2026-08-31 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868070",
+      "match_id": "df451160-4587-435d-b719-d275da988315",
+      "home_team": "皇家社会",
+      "away_team": "塞尔塔",
+      "match_date": "2026-09-03",
+      "kickoff_at": "2026-09-03 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868043",
+      "match_id": "0aaac52d-1e8e-466e-a9a4-f53b39524724",
+      "home_team": "皇家贝蒂斯",
+      "away_team": "皇家马德里",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868042",
+      "match_id": "240e7651-fb5f-4a16-99a1-f3e39625715a",
+      "home_team": "毕尔巴鄂竞技",
+      "away_team": "马德里竞技",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868048",
+      "match_id": "a4f70904-2d8b-4d9a-8783-0742f84e915c",
+      "home_team": "巴列卡诺",
+      "away_team": "桑坦德竞技",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868050",
+      "match_id": "4fa95b3c-ba05-4b7f-9bac-1f39177bb04a",
+      "home_team": "比利亚雷亚尔",
+      "away_team": "拉科鲁尼亚",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868049",
+      "match_id": "bf353a68-d141-40f0-af83-c7523b317909",
+      "home_team": "瓦伦西亚",
+      "away_team": "巴塞罗那",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868047",
+      "match_id": "2304be52-6dde-407a-98f0-ee68cd813938",
+      "home_team": "马拉加",
+      "away_team": "莱万特",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868041",
+      "match_id": "706b0262-4b31-4bdb-87ba-31c2d48a3ad8",
+      "home_team": "阿拉维斯",
+      "away_team": "奥萨苏纳",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868045",
+      "match_id": "c8a228d1-de94-41ef-a595-abe3d38b2b30",
+      "home_team": "西班牙人",
+      "away_team": "塞维利亚",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868046",
+      "match_id": "58d6797a-8f20-4ce2-8fda-e6aa841822ab",
+      "home_team": "赫塔费",
+      "away_team": "塞尔塔",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868044",
+      "match_id": "0dee12a1-e987-4786-9220-43d1fbb0259a",
+      "home_team": "埃尔切",
+      "away_team": "皇家社会",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868059",
+      "match_id": "93fdc032-9e6a-41c6-ac0a-3a71753cb6c0",
+      "home_team": "塞维利亚",
+      "away_team": "瓦伦西亚",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868056",
+      "match_id": "f4be3ab8-d0f0-4e4e-beb7-613cdf70c0b2",
+      "home_team": "桑坦德竞技",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 12:00:00+00"
+    },
+    {
+      "source_match_id": "5868055",
+      "match_id": "f3292d7d-6d88-4a7a-9db9-8054f08d7e9b",
+      "home_team": "奥萨苏纳",
+      "away_team": "西班牙人",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868051",
+      "match_id": "6a9ebd5b-f834-4f0f-9cac-311310145965",
+      "home_team": "毕尔巴鄂竞技",
+      "away_team": "埃尔切",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868057",
+      "match_id": "9c16cd87-e87c-468d-8d5b-17523c9af3b7",
+      "home_team": "皇家马德里",
+      "away_team": "巴列卡诺",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868052",
+      "match_id": "5b94ae9b-fb35-42af-adbe-055def03bc4d",
+      "home_team": "塞尔塔",
+      "away_team": "马拉加",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 12:00:00+00"
+    },
+    {
+      "source_match_id": "5868054",
+      "match_id": "fb93cc8f-6fd7-418d-9bc9-6c5d772a5abb",
+      "home_team": "莱万特",
+      "away_team": "巴塞罗那",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868053",
+      "match_id": "0193249c-cdfd-4759-bf01-d35197ff5dea",
+      "home_team": "赫塔费",
+      "away_team": "拉科鲁尼亚",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868058",
+      "match_id": "6d36b64e-c2f3-4aad-a5e0-53105c36a7ca",
+      "home_team": "皇家社会",
+      "away_team": "马德里竞技",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868060",
+      "match_id": "7c25eceb-f31a-46e1-a8a8-d4a7d1b74b65",
+      "home_team": "比利亚雷亚尔",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868069",
+      "match_id": "51029649-348f-4b30-b2f2-3f4f1df81a92",
+      "home_team": "巴列卡诺",
+      "away_team": "西班牙人",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868061",
+      "match_id": "da5af684-160a-4aa4-bda1-7fde76d98475",
+      "home_team": "阿拉维斯",
+      "away_team": "瓦伦西亚",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15 18:00:00+00"
+    },
+    {
+      "source_match_id": "5868065",
+      "match_id": "9da1d567-195f-4060-ab3d-e489e27e7c3a",
+      "home_team": "埃尔切",
+      "away_team": "皇家马德里",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868064",
+      "match_id": "a54d3bb4-3773-49dc-85c3-82f3bfa549ec",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "塞维利亚",
+      "match_date": "2026-09-16",
+      "kickoff_at": "2026-09-16 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868062",
+      "match_id": "d96f4d2c-cf0d-4eed-b91b-84e0d4fb1c59",
+      "home_team": "马德里竞技",
+      "away_team": "奥萨苏纳",
+      "match_date": "2026-09-16",
+      "kickoff_at": "2026-09-16 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868066",
+      "match_id": "6486d47c-c6ac-4524-bd48-8ba0cdd13237",
+      "home_team": "巴塞罗那",
+      "away_team": "桑坦德竞技",
+      "match_date": "2026-09-16",
+      "kickoff_at": "2026-09-16 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868063",
+      "match_id": "c54af463-8f97-4216-bfc4-e47a1db39aaf",
+      "home_team": "皇家贝蒂斯",
+      "away_team": "赫塔费",
+      "match_date": "2026-09-17",
+      "kickoff_at": "2026-09-17 17:00:00+00"
+    },
+    {
+      "source_match_id": "5868068",
+      "match_id": "32c130ea-81cf-47bb-b496-82daddf2da99",
+      "home_team": "马拉加",
+      "away_team": "比利亚雷亚尔",
+      "match_date": "2026-09-17",
+      "kickoff_at": "2026-09-17 19:30:00+00"
+    },
+    {
+      "source_match_id": "5868075",
+      "match_id": "e1395ebe-f633-40db-9b6d-5166039bed63",
+      "home_team": "西班牙人",
+      "away_team": "埃尔切",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868077",
+      "match_id": "d40c8878-7aae-489f-a000-587a5132f2ba",
+      "home_team": "奥萨苏纳",
+      "away_team": "巴列卡诺",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 12:00:00+00"
+    },
+    {
+      "source_match_id": "5868071",
+      "match_id": "15a192b1-35fd-4fa2-8f1f-9deda135b46a",
+      "home_team": "毕尔巴鄂竞技",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868073",
+      "match_id": "f5860535-f785-4ec2-ad31-4dbf2bf8b699",
+      "home_team": "塞尔塔",
+      "away_team": "桑坦德竞技",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868078",
+      "match_id": "bd35de64-3867-4cec-a882-098f2cc11a2f",
+      "home_team": "塞维利亚",
+      "away_team": "巴塞罗那",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19 19:00:00+00"
+    },
+    {
+      "source_match_id": "5868076",
+      "match_id": "72ef80a7-61f4-427f-b84f-2b8ee2ff1ada",
+      "home_team": "赫塔费",
+      "away_team": "马拉加",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 12:00:00+00"
+    },
+    {
+      "source_match_id": "5868072",
+      "match_id": "015a0d16-8a7f-4fbb-a861-40375b7ec8b0",
+      "home_team": "马德里竞技",
+      "away_team": "皇家马德里",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 14:15:00+00"
+    },
+    {
+      "source_match_id": "5868074",
+      "match_id": "00fa1adf-a9a0-445e-a697-adccd7ba8cea",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868080",
+      "match_id": "89c04668-34d2-4e9c-909b-5530160095cc",
+      "home_team": "比利亚雷亚尔",
+      "away_team": "莱万特",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 16:30:00+00"
+    },
+    {
+      "source_match_id": "5868079",
+      "match_id": "c70b27ce-673b-4182-ba85-77b054284f73",
+      "home_team": "瓦伦西亚",
+      "away_team": "皇家社会",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20 19:00:00+00"
+    }
+  ]
+}
