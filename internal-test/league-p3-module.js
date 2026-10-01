@@ -102,8 +102,7 @@
     const formations=Array.isArray(s.formation_samples)?s.formation_samples:[];
 
     return '<div class="p3-legacy-wrap">'+
-      '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+'</span></div>'+
-      '<div><span class="p3-badge">'+esc(data.version||'P3_V5')+'</span></div></div>'+
+      '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+'</span></div></div>'+
       qualityBar(data,ctx)+
 
       '<div class="p3-grid">'+
