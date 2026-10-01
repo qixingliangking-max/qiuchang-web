@@ -122,8 +122,62 @@
       var formByMatch=new Map(lineups.map(function(l){ return [String(l.match_id),l.formation]; }));
       var rows=raw.players.map(function(r){
         var copy=Object.assign({},r);
-        copy.actual_position=r.is_starter ? actualPosition(r.usual_position_id,r.lineup_x,r.lineup_y,formByMatch.get(String(r.match_id))) : null;
+        copy.actual_position=null;
         return copy;
+      });
+
+      // Match the production refresh_league_match_p3_actual_positions_v3 exactly:
+      // classify starter slots by formation line, not by registered player position.
+      var starterByMatch=new Map();
+      rows.filter(function(r){ return r.is_starter; }).forEach(function(r){
+        var k=String(r.match_id);
+        if(!starterByMatch.has(k)) starterByMatch.set(k,[]);
+        starterByMatch.get(k).push(r);
+      });
+      starterByMatch.forEach(function(starters,matchId){
+        var formation=formByMatch.get(matchId)||"";
+        var backCount=parseInt(String(formation).split("-")[0],10);
+        var outfield=starters.filter(function(r){ return Number(r.usual_position_id)!==0; });
+        starters.filter(function(r){ return Number(r.usual_position_id)===0; })
+          .forEach(function(r){ r.actual_position="GK"; });
+
+        var ys=Array.from(new Set(outfield.map(function(r){ return Number(r.lineup_y); })))
+          .sort(function(a,b){ return a-b; });
+        var lineNo=new Map(ys.map(function(y,i){ return [y,i+1]; }));
+        var totalLines=ys.length;
+
+        ys.forEach(function(y){
+          var line=outfield.filter(function(r){ return Number(r.lineup_y)===y; })
+            .sort(function(a,b){ return Number(a.lineup_x)-Number(b.lineup_x); });
+          var lineSize=line.length, ln=lineNo.get(y);
+          line.forEach(function(r,idx0){
+            var slotIdx=idx0+1, pos=null;
+            if(ln===1 && lineSize===3) pos="CB";
+            else if(ln===1 && lineSize===4) pos=slotIdx===1?"RB_RWB":slotIdx===4?"LB_LWB":"CB";
+            else if(ln===1 && lineSize===5) pos=slotIdx===1?"RB_RWB":slotIdx===5?"LB_LWB":"CB";
+            else if(ln===totalLines && lineSize===1) pos="ST";
+            else if(ln===totalLines && lineSize===2) pos="ST";
+            else if(ln===totalLines && lineSize===3) pos=slotIdx===2?"ST":"W";
+            else if(ln>1 && ln<totalLines && lineSize===1) pos="DM";
+            else if(ln>1 && ln<totalLines && lineSize===2){
+              if(totalLines>=4 && ln===totalLines-1) pos="AM";
+              else if(totalLines>=4 && ln===2) pos="DM";
+              else pos="CM";
+            }else if(ln>1 && ln<totalLines && lineSize===3){
+              if(totalLines>=4 && ln===totalLines-1) pos=slotIdx===2?"AM":"W";
+              else pos="CM";
+            }else if(ln>1 && ln<totalLines && lineSize===4){
+              if(backCount===3 && ln===2) pos=slotIdx===1?"RB_RWB":slotIdx===4?"LB_LWB":"CM";
+              else pos=(slotIdx===1||slotIdx===4)?"W":"CM";
+            }else if(ln>1 && ln<totalLines && lineSize===5){
+              if(backCount===3 && ln===2) pos=slotIdx===1?"RB_RWB":slotIdx===5?"LB_LWB":"CM";
+              else pos=(slotIdx===1||slotIdx===5)?"W":"CM";
+            }else{
+              pos=actualPosition(2,r.lineup_x,r.lineup_y,formation);
+            }
+            r.actual_position=pos;
+          });
+        });
       });
       var byPlayer=new Map();
       rows.forEach(function(r){
