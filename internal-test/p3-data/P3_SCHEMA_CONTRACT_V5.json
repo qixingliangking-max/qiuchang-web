@@ -1,5 +1,5 @@
 {
-  "contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2",
+  "contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "baseline": "KOR_K1 / P3_V5_KOR_STABLE",
   "required_team_blocks": [
     "identity",
@@ -217,7 +217,7 @@
       "availability_role=OTHER_STARTER"
     ],
     "performance_null_rule": "performance_score may be null only when the corresponding A_player_base minutes=0 and performance_confidence=UNTESTED",
-    "primary_position_null_rule": "primary_position may be null only for bench-only players with starts=0; any player with starts>0 must have primary_position",
+    "primary_position_null_rule": "primary_position may be null only for players with starts=0; any player with starts>0 must have primary_position",
     "depth_metric_rule": "VALID/PARTIAL D rows must have position_depth_score, raw_replacement_gap, replacement_loss, replacement_quality, replacement_role_quality",
     "dynamic_nullable_model_factors": [
       "REPLACEMENT_GAP",
