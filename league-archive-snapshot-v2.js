@@ -260,6 +260,35 @@
     '</div>';
   }
 
+  function stagingLayerHtml(kind,title,subtitle,bodyHtml){
+    return '<button type="button" class="qc-layer-toggle" data-qc-layer-toggle="'+esc(kind)+'" aria-expanded="false">'+
+      '<span class="qc-layer-toggle-inner">'+
+        '<span class="qc-layer-toggle-copy"><strong>'+esc(title)+'</strong><span>'+esc(subtitle)+'</span></span>'+
+        '<span class="qc-layer-toggle-action"><span class="qc-layer-status" data-qc-layer-action-text>点击查看</span><span class="qc-layer-chevron">›</span></span>'+
+      '</span>'+
+    '</button>'+
+    '<div class="qc-layer-body" data-qc-layer-body="'+esc(kind)+'" hidden>'+bodyHtml+'</div>';
+  }
+
+  function wireStagingLayers(detail){
+    Array.from(detail.querySelectorAll('[data-qc-layer-toggle]')).forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const key=String(btn.dataset.qcLayerToggle||'');
+        const body=detail.querySelector('[data-qc-layer-body="'+key+'"]');
+        if(!body) return;
+        const open=btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded',open?'false':'true');
+        body.hidden=open;
+        const actionText=btn.querySelector('[data-qc-layer-action-text]');
+        if(actionText) actionText.textContent=open?'点击查看':'收起';
+        if(!open && key==='p3'){
+          const host=body.querySelector('[data-p3-host]');
+          if(host && window.QCP3) window.QCP3.load(host);
+        }
+      });
+    });
+  }
+
   async function getAccess(){
     const {data,error}=await window.qcSupabase.auth.getSession();
     if(error) throw error;
@@ -403,7 +432,22 @@
           comp.name_cn
         );
 
-        detail.innerHTML=p1Html+p2HtmlFromSnapshot(team,comp);
+        const p2Markup=p2HtmlFromSnapshot(team,comp);
+        const p3Available=Boolean(window.QCP3 && window.QCP3.status(comp.code,stat.season)==='P3_VALID');
+        detail.innerHTML=p1Html+
+          stagingLayerHtml(
+            'p2',
+            'P2｜比赛质量＋状态路径',
+            '比赛质量与状态路径｜点击展开',
+            p2Markup||'<div class="qc-p2-empty">当前没有可展示的P2数据。</div>'
+          )+
+          (p3Available?stagingLayerHtml(
+            'p3',
+            'P3｜阵容结构＋球员影响',
+            window.QCP3.subtitle(comp.code,stat.season),
+            window.QCP3.hostHtml(comp,teamName,stat.season)
+          ):'');
+        wireStagingLayers(detail);
       };
     });
   }
