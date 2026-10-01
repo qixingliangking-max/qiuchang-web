@@ -1,0 +1,74 @@
+name: P3 UEFA UNL Incremental Refresh Test
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/p3-unl-refresh-test.yml"
+      - "scripts/p3-offline-refresh-one.mjs"
+      - "scripts/p3-offline-collect-and-build.mjs"
+      - "scripts/p3-offline-builder-core.js"
+      - "scripts/p3-promotion-gate.mjs"
+      - "internal-test/p3-refresh/UEFA_UNL-2026-27.json"
+      - "internal-test/p3-data/P3_SCHEMA_CONTRACT_V5.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-unl-incremental-refresh-test
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Syntax check
+        run: |
+          node --check scripts/p3-offline-refresh-one.mjs
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/p3-promotion-gate.mjs
+
+      - name: Discover new finished matches and refresh UEFA_UNL
+        run: |
+          node scripts/p3-offline-refresh-one.mjs \
+            internal-test/p3-refresh/UEFA_UNL-2026-27.json
+
+      - name: Show refresh report
+        run: |
+          cat internal-test/p3-refresh/UEFA_UNL-2026-27-last-run.json
+
+      - name: Commit guarded refresh result
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-refresh/UEFA_UNL-2026-27.json
+          git add internal-test/p3-refresh/UEFA_UNL-2026-27-last-run.json
+          git add internal-test/p3-inputs/UEFA_UNL-2026-27.json || true
+          git add internal-test/p3-candidates/UEFA_UNL-2026-27.json || true
+          git add internal-test/p3-candidates/UEFA_UNL-2026-27-gate.json || true
+          git add internal-test/p3-data/UEFA_UNL-2026-27.json
+          git add internal-test/p3-data/P3_PROMOTION_MANIFEST.json
+          if git diff --cached --quiet; then
+            echo "No refresh changes"
+          else
+            git commit -m "Refresh UEFA UNL P3 incrementally"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
