@@ -1256,8 +1256,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -3661,8 +3661,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -6345,8 +6345,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -8893,8 +8893,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -11411,8 +11411,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -13943,8 +13943,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -16346,8 +16346,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -18926,8 +18926,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -21432,8 +21432,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -23832,8 +23832,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -26115,8 +26115,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -28443,8 +28443,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -30793,8 +30793,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -33287,8 +33287,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -35796,8 +35796,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -38260,8 +38260,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -40640,8 +40640,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -43288,8 +43288,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -46028,8 +46028,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
@@ -48517,8 +48517,8 @@
       },
       "sample_context": {
         "team_matches": 8,
-        "sample_level": "CAUTIOUS",
-        "usage_mode": "REDUCED_WEIGHT",
+        "sample_level": "LOW_SAMPLE",
+        "usage_mode": "LIMITED",
         "recommended_use": "阵容与球员因子降权使用"
       },
       "C_lineup_structure": {
