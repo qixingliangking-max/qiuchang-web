@@ -24,7 +24,22 @@
     NOR_ES:{season:'2026',url:'p3-data/NOR_ES-2026.json',version:'P3_V5_NOR_ES_PILOT',label:'挪超P3 V5试点',quality:'PILOT_FULL'},
     JPN_J1:{season:'2026/27',url:'p3-data/JPN_J1-2026-27.json?v=20261002offline1',version:'P3_V5_JPN_J1_PILOT',label:'日职P3 V5试点',quality:'LIMITED'},
     SWE_AS:{season:'2026',url:'p3-data/SWE_AS-2026.json?v=20261002swe1',version:'P3_V5_SWE_AS_PILOT',label:'瑞典超P3 V5试点',quality:'PILOT_FULL'},
-    FIN_VL:{season:'2026',url:'p3-data/FIN_VL-2026.json?v=20261002fin1',version:'P3_V5_FIN_VL_PILOT',label:'芬超P3 V5试点',quality:'PILOT_FULL'}
+    FIN_VL:{season:'2026',url:'p3-data/FIN_VL-2026.json?v=20261002fin1',version:'P3_V5_FIN_VL_PILOT',label:'芬超P3 V5试点',quality:'PILOT_FULL'},
+    UEFA_UCL:{season:'2026/27',url:'p3-data/UEFA_UCL-2026-27.json?v=20261002bulk1',version:'P3_V5_UEFA_UCL_PILOT',label:'欧冠P3 V5试点',quality:'LIMITED'},
+    UEFA_UEL:{season:'2026/27',url:'p3-data/UEFA_UEL-2026-27.json?v=20261002bulk1',version:'P3_V5_UEFA_UEL_PILOT',label:'欧联P3 V5试点',quality:'LIMITED'},
+    GER_BL:{season:'2026/27',url:'p3-data/GER_BL-2026-27.json?v=20261002bulk1',version:'P3_V5_GER_BL_PILOT',label:'德甲P3 V5试点',quality:'LIMITED'},
+    ITA_SA:{season:'2026/27',url:'p3-data/ITA_SA-2026-27.json?v=20261002bulk1',version:'P3_V5_ITA_SA_PILOT',label:'意甲P3 V5试点',quality:'LIMITED'},
+    FRA_L1:{season:'2026/27',url:'p3-data/FRA_L1-2026-27.json?v=20261002bulk1',version:'P3_V5_FRA_L1_PILOT',label:'法甲P3 V5试点',quality:'LIMITED'},
+    ENG_PL:{season:'2026/27',url:'p3-data/ENG_PL-2026-27.json?v=20261002bulk1',version:'P3_V5_ENG_PL_PILOT',label:'英超P3 V5试点',quality:'LIMITED'},
+    NED_ED:{season:'2026/27',url:'p3-data/NED_ED-2026-27.json?v=20261002bulk1',version:'P3_V5_NED_ED_PILOT',label:'荷甲P3 V5试点',quality:'LIMITED'},
+    POR_PL:{season:'2026/27',url:'p3-data/POR_PL-2026-27.json?v=20261002bulk1',version:'P3_V5_POR_PL_PILOT',label:'葡超P3 V5试点',quality:'LIMITED'},
+    ESP_LL:{season:'2026/27',url:'p3-data/ESP_LL-2026-27.json?v=20261002bulk1',version:'P3_V5_ESP_LL_PILOT',label:'西甲P3 V5试点',quality:'LIMITED'},
+    GER_B2:{season:'2026/27',url:'p3-data/GER_B2-2026-27.json?v=20261002bulk1',version:'P3_V5_GER_B2_PILOT',label:'德乙P3 V5试点',quality:'LIMITED'},
+    ITA_SB:{season:'2026/27',url:'p3-data/ITA_SB-2026-27.json?v=20261002bulk1',version:'P3_V5_ITA_SB_PILOT',label:'意乙P3 V5试点',quality:'LIMITED'},
+    FRA_L2:{season:'2026/27',url:'p3-data/FRA_L2-2026-27.json?v=20261002bulk1',version:'P3_V5_FRA_L2_PILOT',label:'法乙P3 V5试点',quality:'LIMITED'},
+    ENG_CH:{season:'2026/27',url:'p3-data/ENG_CH-2026-27.json?v=20261002bulk1',version:'P3_V5_ENG_CH_PILOT',label:'英冠P3 V5试点',quality:'LIMITED'},
+    ESP_L2:{season:'2026/27',url:'p3-data/ESP_L2-2026-27.json?v=20261002bulk1',version:'P3_V5_ESP_L2_PILOT',label:'西乙P3 V5试点',quality:'LIMITED'},
+    NED_EE:{season:'2026/27',url:'p3-data/NED_EE-2026-27.json?v=20261002bulk1',version:'P3_V5_NED_EE_PILOT',label:'荷乙P3 V5试点',quality:'LIMITED'}
   };
   const cache=new Map();
 
