@@ -593,8 +593,8 @@
     });
     var D=td.depth.slice().sort(function(a,b){ return (ord[a.position_code]||99)-(ord[b.position_code]||99); });
     var sm=td.summary;
-    var sampleLevel=sm.squad_matches>=10?"NORMAL":sm.squad_matches>=5?"CAUTIOUS":"LOW_SAMPLE";
-    var usageMode=sm.squad_matches>=10?"FULL":sm.squad_matches>=5?"REDUCED_WEIGHT":"LIMITED";
+    var sampleLevel=sm.squad_matches>=10?"NORMAL":"LOW_SAMPLE";
+    var usageMode=sm.squad_matches>=10?"FULL":"LIMITED";
     return {
       ok:true,status:"P3_VALID",version:sm.p3_version,
       identity:{team_name:team,league_code:cfg.league_code,season:cfg.season,competition_id:cfg.competition_id},
