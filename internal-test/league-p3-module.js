@@ -77,9 +77,6 @@
     const sample=s.squad_matches??sc.team_matches??'—';
     const formation=s.formation_coverage_pct==null?'—':n(s.formation_coverage_pct,1)+'%';
     const depth=s.depth_data_coverage_pct==null?'未成熟':n(s.depth_data_coverage_pct,1)+'%';
-    const warning=(q==='LIMITED'||sc.usage_mode==='LIMITED')
-      ?'<div class="p3-quality-warning">LOW_SAMPLE / LIMITED｜当前仅用于结构观察，Depth与替代强度不按FULL样本解读。</div>'
-      :'';
     return '<div class="p3-quality-bar">'+
       '<div class="p3-quality-item"><small>结构状态</small><b>P3_VALID</b></div>'+
       '<div class="p3-quality-item is-tier '+esc(q.toLowerCase())+'"><small>质量层级</small><b>'+esc(q)+'</b><span>'+esc(qualityCopy(q))+'</span></div>'+
@@ -87,7 +84,7 @@
       '<div class="p3-quality-item"><small>阵型覆盖</small><b>'+esc(formation)+'</b></div>'+
       '<div class="p3-quality-item"><small>深度覆盖</small><b>'+esc(depth)+'</b></div>'+
       '<div class="p3-quality-item"><small>快照生成</small><b>'+esc(dateLabel(ctx?.generated_at))+'</b></div>'+
-    '</div>'+warning;
+    '</div>';
   }
 
   function render(data,ctx){
