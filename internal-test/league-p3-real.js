@@ -289,7 +289,7 @@
     $('[data-qc-layer-toggle]',detail).forEach(btn=>{
       btn.onclick=()=>{
         const key=String(btn.dataset.qcLayerToggle||'');
-        const body=detail.querySelector('[data-qc-layer-body="'+CSS.escape(key)+'"]');
+        const body=detail.querySelector('[data-qc-layer-body="'+key+'"]');
         if(!body) return;
         const open=btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded',open?'false':'true');
