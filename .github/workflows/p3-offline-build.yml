@@ -1,0 +1,50 @@
+name: P3 Offline Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/p3-offline-trigger.txt"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-offline-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build SWE and FIN P3 candidates
+        run: |
+          node scripts/p3-offline-collect-and-build.mjs \
+            internal-test/p3-inputs/SWE_AS-2026.json \
+            internal-test/p3-inputs/FIN_VL-2026.json
+
+      - name: Commit candidate outputs
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-candidates/SWE_AS-2026.json \
+                  internal-test/p3-candidates/SWE_AS-2026-gate.json \
+                  internal-test/p3-candidates/FIN_VL-2026.json \
+                  internal-test/p3-candidates/FIN_VL-2026-gate.json
+          if git diff --cached --quiet; then
+            echo "No candidate changes"
+          else
+            git commit -m "Build SWE and FIN P3 candidates offline"
+            git push
+          fi
