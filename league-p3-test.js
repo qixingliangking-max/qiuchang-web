@@ -105,12 +105,17 @@
             (x.adjusted_quality==null?'N/A':n(x.adjusted_quality,1))+
             '｜'+(x.fit_type||'—')+' '+n(x.fit_weight,2)
           ).join('；')||'—';
+          const scenarios=(d.absence_scenarios||[]).map(x=>{
+            const r=x.expected_replacement;
+            return x.absent_player_name+' → '+(r?.player_name||'N/A')+
+              '｜Gap '+(x.replacement_gap==null?'N/A':n(x.replacement_gap,1));
+          }).join('；')||'—';
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
             '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
             '<div class="p3-depth-line"><span>替代链</span><b>'+esc(backups)+'</b></div>'+
+            '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
             '<div class="p3-depth-line"><span>Starter Quality</span><b>'+n(d.starter_quality,1)+'</b></div>'+
             '<div class="p3-depth-line"><span>Replacement Quality</span><b>'+statusText(d.replacement_quality==null?'N/A':n(d.replacement_quality,1))+'</b></div>'+
-            '<div class="p3-depth-line"><span>Replacement Gap</span><b>'+statusText(d.replacement_gap==null?'N/A':n(d.replacement_gap,1))+'</b></div>'+
             '<div class="p3-depth-line"><span>Position Coverage</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
             '<div class="p3-depth-line"><span>Multi-position</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
             '<div class="p3-depth-line"><span>Depth Score</span><b>'+(d.position_depth_score==null?'DATA_INCOMPLETE':n(d.position_depth_score,1))+'</b></div>'+
