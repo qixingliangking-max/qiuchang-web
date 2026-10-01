@@ -9,11 +9,16 @@
     {
       "league_code": "KOR_K1",
       "season": "2026",
-      "quality_tier": "STABLE",
+      "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/KOR_K1-2026.json",
-      "blob_sha": "656f773e0b3b02d204eab6818a4beebd1bad1359",
-      "gate_status": "PASS"
+      "blob_sha": "04db128a6ea52090d5d9061ca427f7e59720c2e1",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 88.6,
+      "gate_report": "internal-test/p3-candidates/KOR_K1-2026-gate.json",
+      "last_incremental_refresh_at": "2026-10-01T21:19:56.683Z",
+      "finished_matches": 180,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
       "league_code": "USA_MLS",
@@ -21,8 +26,13 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "4dfadbd735d81a73d2b6c8588a81e65b70b99591",
-      "gate_status": "PASS"
+      "blob_sha": "5b11eef82e3e577fc58aad8d6579e67e2cf5b730",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 83,
+      "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
+      "last_incremental_refresh_at": "2026-10-01T21:20:31.623Z",
+      "finished_matches": 403,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
       "league_code": "NOR_ES",
@@ -30,8 +40,13 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/NOR_ES-2026.json",
-      "blob_sha": "a7095da1bd7f6570bc2657961844d8e9d6db87eb",
-      "gate_status": "PASS"
+      "blob_sha": "8be049f45e6e12ab636c5ac56420ef531987348d",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 80.7,
+      "gate_report": "internal-test/p3-candidates/NOR_ES-2026-gate.json",
+      "last_incremental_refresh_at": "2026-10-01T21:20:11.960Z",
+      "finished_matches": 168,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
       "league_code": "UEFA_UNL",
@@ -53,11 +68,15 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-      "blob_sha": "e77201c91c3eccc290cdf525c3fb520b358137ad",
-      "gate_status": "PASS_WITH_LIMITED_SAMPLE",
-      "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
+      "blob_sha": "2682feb2bc44ef7439c3414941c31434b6751345",
+      "gate_status": "PASS",
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "sample_policy": "LOW_SAMPLE/LIMITED",
-      "model_read_rule": "P3_VALID is structural only; depth/bench factors are limited-weight until FULL sample quality is reached."
+      "model_read_rule": "P3_VALID is structural only; depth/bench factors are limited-weight until FULL sample quality is reached.",
+      "avg_team_depth_coverage_pct": 1.4,
+      "gate_report": "internal-test/p3-candidates/JPN_J1-2026-27-gate.json",
+      "last_incremental_refresh_at": "2026-10-01T21:19:50.762Z",
+      "finished_matches": 80
     },
     {
       "league_code": "SWE_AS",

@@ -1,0 +1,1447 @@
+{
+  "league_code": "KOR_K1",
+  "competition_id": "7cb90852-9e9f-4439-8838-089cf2e4e735",
+  "season": "2026",
+  "matches": [
+    {
+      "source_match_id": "5139862",
+      "match_id": "fotmob:5139862",
+      "home_team": "仁川联",
+      "away_team": "首尔FC",
+      "match_date": "2026-02-28",
+      "kickoff_at": "2026-02-28T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139863",
+      "match_id": "fotmob:5139863",
+      "home_team": "蔚山HD",
+      "away_team": "江原FC",
+      "match_date": "2026-02-28",
+      "kickoff_at": "2026-02-28T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139864",
+      "match_id": "fotmob:5139864",
+      "home_team": "金泉尚武",
+      "away_team": "浦项制铁",
+      "match_date": "2026-02-28",
+      "kickoff_at": "2026-02-28T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139865",
+      "match_id": "fotmob:5139865",
+      "home_team": "全北现代",
+      "away_team": "富川FC",
+      "match_date": "2026-03-01",
+      "kickoff_at": "2026-03-01T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139866",
+      "match_id": "fotmob:5139866",
+      "home_team": "济州SK",
+      "away_team": "光州FC",
+      "match_date": "2026-03-01",
+      "kickoff_at": "2026-03-01T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139867",
+      "match_id": "fotmob:5139867",
+      "home_team": "大田韩亚市民",
+      "away_team": "安养FC",
+      "match_date": "2026-03-02",
+      "kickoff_at": "2026-03-02T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139870",
+      "match_id": "fotmob:5139870",
+      "home_team": "富川FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-03-07",
+      "kickoff_at": "2026-03-07T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139871",
+      "match_id": "fotmob:5139871",
+      "home_team": "光州FC",
+      "away_team": "仁川联",
+      "match_date": "2026-03-07",
+      "kickoff_at": "2026-03-07T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139872",
+      "match_id": "fotmob:5139872",
+      "home_team": "金泉尚武",
+      "away_team": "全北现代",
+      "match_date": "2026-03-08",
+      "kickoff_at": "2026-03-08T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139873",
+      "match_id": "fotmob:5139873",
+      "home_team": "安养FC",
+      "away_team": "济州SK",
+      "match_date": "2026-03-08",
+      "kickoff_at": "2026-03-08T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139874",
+      "match_id": "fotmob:5139874",
+      "home_team": "光州FC",
+      "away_team": "全北现代",
+      "match_date": "2026-03-14",
+      "kickoff_at": "2026-03-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139875",
+      "match_id": "fotmob:5139875",
+      "home_team": "大田韩亚市民",
+      "away_team": "金泉尚武",
+      "match_date": "2026-03-14",
+      "kickoff_at": "2026-03-14T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139876",
+      "match_id": "fotmob:5139876",
+      "home_team": "富川FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-03-15",
+      "kickoff_at": "2026-03-15T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139877",
+      "match_id": "fotmob:5139877",
+      "home_team": "济州SK",
+      "away_team": "首尔FC",
+      "match_date": "2026-03-15",
+      "kickoff_at": "2026-03-15T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139878",
+      "match_id": "fotmob:5139878",
+      "home_team": "江原FC",
+      "away_team": "安养FC",
+      "match_date": "2026-03-15",
+      "kickoff_at": "2026-03-15T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139879",
+      "match_id": "fotmob:5139879",
+      "home_team": "浦项制铁",
+      "away_team": "仁川联",
+      "match_date": "2026-03-15",
+      "kickoff_at": "2026-03-15T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139880",
+      "match_id": "fotmob:5139880",
+      "home_team": "金泉尚武",
+      "away_team": "光州FC",
+      "match_date": "2026-03-17",
+      "kickoff_at": "2026-03-17T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139881",
+      "match_id": "fotmob:5139881",
+      "home_team": "富川FC",
+      "away_team": "江原FC",
+      "match_date": "2026-03-18",
+      "kickoff_at": "2026-03-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139882",
+      "match_id": "fotmob:5139882",
+      "home_team": "仁川联",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-03-18",
+      "kickoff_at": "2026-03-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139883",
+      "match_id": "fotmob:5139883",
+      "home_team": "济州SK",
+      "away_team": "蔚山HD",
+      "match_date": "2026-03-18",
+      "kickoff_at": "2026-03-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139884",
+      "match_id": "fotmob:5139884",
+      "home_team": "全北现代",
+      "away_team": "安养FC",
+      "match_date": "2026-03-18",
+      "kickoff_at": "2026-03-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139885",
+      "match_id": "fotmob:5139885",
+      "home_team": "浦项制铁",
+      "away_team": "首尔FC",
+      "match_date": "2026-03-18",
+      "kickoff_at": "2026-03-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139886",
+      "match_id": "fotmob:5139886",
+      "home_team": "大田韩亚市民",
+      "away_team": "全北现代",
+      "match_date": "2026-03-21",
+      "kickoff_at": "2026-03-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139887",
+      "match_id": "fotmob:5139887",
+      "home_team": "首尔FC",
+      "away_team": "光州FC",
+      "match_date": "2026-03-22",
+      "kickoff_at": "2026-03-22T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139888",
+      "match_id": "fotmob:5139888",
+      "home_team": "蔚山HD",
+      "away_team": "金泉尚武",
+      "match_date": "2026-03-22",
+      "kickoff_at": "2026-03-22T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139889",
+      "match_id": "fotmob:5139889",
+      "home_team": "安养FC",
+      "away_team": "仁川联",
+      "match_date": "2026-03-22",
+      "kickoff_at": "2026-03-22T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139890",
+      "match_id": "fotmob:5139890",
+      "home_team": "江原FC",
+      "away_team": "济州SK",
+      "match_date": "2026-03-22",
+      "kickoff_at": "2026-03-22T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139891",
+      "match_id": "fotmob:5139891",
+      "home_team": "浦项制铁",
+      "away_team": "富川FC",
+      "match_date": "2026-03-22",
+      "kickoff_at": "2026-03-22T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139868",
+      "match_id": "fotmob:5139868",
+      "home_team": "浦项制铁",
+      "away_team": "江原FC",
+      "match_date": "2026-03-28",
+      "kickoff_at": "2026-03-28T06:00:00Z"
+    },
+    {
+      "source_match_id": "5139892",
+      "match_id": "fotmob:5139892",
+      "home_team": "济州SK",
+      "away_team": "富川FC",
+      "match_date": "2026-04-04",
+      "kickoff_at": "2026-04-04T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139893",
+      "match_id": "fotmob:5139893",
+      "home_team": "全北现代",
+      "away_team": "蔚山HD",
+      "match_date": "2026-04-04",
+      "kickoff_at": "2026-04-04T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139894",
+      "match_id": "fotmob:5139894",
+      "home_team": "江原FC",
+      "away_team": "光州FC",
+      "match_date": "2026-04-04",
+      "kickoff_at": "2026-04-04T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139895",
+      "match_id": "fotmob:5139895",
+      "home_team": "浦项制铁",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-04-04",
+      "kickoff_at": "2026-04-04T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139896",
+      "match_id": "fotmob:5139896",
+      "home_team": "安养FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-04-05",
+      "kickoff_at": "2026-04-05T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139897",
+      "match_id": "fotmob:5139897",
+      "home_team": "仁川联",
+      "away_team": "金泉尚武",
+      "match_date": "2026-04-05",
+      "kickoff_at": "2026-04-05T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139898",
+      "match_id": "fotmob:5139898",
+      "home_team": "浦项制铁",
+      "away_team": "济州SK",
+      "match_date": "2026-04-11",
+      "kickoff_at": "2026-04-11T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139899",
+      "match_id": "fotmob:5139899",
+      "home_team": "首尔FC",
+      "away_team": "全北现代",
+      "match_date": "2026-04-11",
+      "kickoff_at": "2026-04-11T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139900",
+      "match_id": "fotmob:5139900",
+      "home_team": "光州FC",
+      "away_team": "富川FC",
+      "match_date": "2026-04-11",
+      "kickoff_at": "2026-04-11T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139901",
+      "match_id": "fotmob:5139901",
+      "home_team": "仁川联",
+      "away_team": "蔚山HD",
+      "match_date": "2026-04-11",
+      "kickoff_at": "2026-04-11T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139902",
+      "match_id": "fotmob:5139902",
+      "home_team": "大田韩亚市民",
+      "away_team": "江原FC",
+      "match_date": "2026-04-12",
+      "kickoff_at": "2026-04-12T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139903",
+      "match_id": "fotmob:5139903",
+      "home_team": "金泉尚武",
+      "away_team": "安养FC",
+      "match_date": "2026-04-12",
+      "kickoff_at": "2026-04-12T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139869",
+      "match_id": "fotmob:5139869",
+      "home_team": "蔚山HD",
+      "away_team": "首尔FC",
+      "match_date": "2026-04-15",
+      "kickoff_at": "2026-04-15T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139904",
+      "match_id": "fotmob:5139904",
+      "home_team": "江原FC",
+      "away_team": "全北现代",
+      "match_date": "2026-04-18",
+      "kickoff_at": "2026-04-18T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139905",
+      "match_id": "fotmob:5139905",
+      "home_team": "首尔FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-04-18",
+      "kickoff_at": "2026-04-18T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139906",
+      "match_id": "fotmob:5139906",
+      "home_team": "富川FC",
+      "away_team": "仁川联",
+      "match_date": "2026-04-18",
+      "kickoff_at": "2026-04-18T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139907",
+      "match_id": "fotmob:5139907",
+      "home_team": "济州SK",
+      "away_team": "金泉尚武",
+      "match_date": "2026-04-18",
+      "kickoff_at": "2026-04-18T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139908",
+      "match_id": "fotmob:5139908",
+      "home_team": "蔚山HD",
+      "away_team": "光州FC",
+      "match_date": "2026-04-19",
+      "kickoff_at": "2026-04-19T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139909",
+      "match_id": "fotmob:5139909",
+      "home_team": "浦项制铁",
+      "away_team": "安养FC",
+      "match_date": "2026-04-19",
+      "kickoff_at": "2026-04-19T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139910",
+      "match_id": "fotmob:5139910",
+      "home_team": "金泉尚武",
+      "away_team": "江原FC",
+      "match_date": "2026-04-21",
+      "kickoff_at": "2026-04-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139911",
+      "match_id": "fotmob:5139911",
+      "home_team": "全北现代",
+      "away_team": "仁川联",
+      "match_date": "2026-04-21",
+      "kickoff_at": "2026-04-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139912",
+      "match_id": "fotmob:5139912",
+      "home_team": "首尔FC",
+      "away_team": "富川FC",
+      "match_date": "2026-04-21",
+      "kickoff_at": "2026-04-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139913",
+      "match_id": "fotmob:5139913",
+      "home_team": "安养FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-04-22",
+      "kickoff_at": "2026-04-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139914",
+      "match_id": "fotmob:5139914",
+      "home_team": "大田韩亚市民",
+      "away_team": "济州SK",
+      "match_date": "2026-04-22",
+      "kickoff_at": "2026-04-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139915",
+      "match_id": "fotmob:5139915",
+      "home_team": "浦项制铁",
+      "away_team": "光州FC",
+      "match_date": "2026-04-22",
+      "kickoff_at": "2026-04-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139916",
+      "match_id": "fotmob:5139916",
+      "home_team": "江原FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-04-25",
+      "kickoff_at": "2026-04-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139917",
+      "match_id": "fotmob:5139917",
+      "home_team": "富川FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-04-25",
+      "kickoff_at": "2026-04-25T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139918",
+      "match_id": "fotmob:5139918",
+      "home_team": "仁川联",
+      "away_team": "济州SK",
+      "match_date": "2026-04-25",
+      "kickoff_at": "2026-04-25T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139919",
+      "match_id": "fotmob:5139919",
+      "home_team": "全北现代",
+      "away_team": "浦项制铁",
+      "match_date": "2026-04-26",
+      "kickoff_at": "2026-04-26T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139920",
+      "match_id": "fotmob:5139920",
+      "home_team": "光州FC",
+      "away_team": "安养FC",
+      "match_date": "2026-04-26",
+      "kickoff_at": "2026-04-26T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139921",
+      "match_id": "fotmob:5139921",
+      "home_team": "蔚山HD",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-04-26",
+      "kickoff_at": "2026-04-26T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139922",
+      "match_id": "fotmob:5139922",
+      "home_team": "首尔FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139923",
+      "match_id": "fotmob:5139923",
+      "home_team": "蔚山HD",
+      "away_team": "浦项制铁",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139924",
+      "match_id": "fotmob:5139924",
+      "home_team": "仁川联",
+      "away_team": "江原FC",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139925",
+      "match_id": "fotmob:5139925",
+      "home_team": "济州SK",
+      "away_team": "全北现代",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139926",
+      "match_id": "fotmob:5139926",
+      "home_team": "安养FC",
+      "away_team": "富川FC",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139927",
+      "match_id": "fotmob:5139927",
+      "home_team": "光州FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-05-02",
+      "kickoff_at": "2026-05-02T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139928",
+      "match_id": "fotmob:5139928",
+      "home_team": "富川FC",
+      "away_team": "济州SK",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139929",
+      "match_id": "fotmob:5139929",
+      "home_team": "全北现代",
+      "away_team": "光州FC",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139930",
+      "match_id": "fotmob:5139930",
+      "home_team": "大田韩亚市民",
+      "away_team": "仁川联",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139931",
+      "match_id": "fotmob:5139931",
+      "home_team": "江原FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139932",
+      "match_id": "fotmob:5139932",
+      "home_team": "金泉尚武",
+      "away_team": "蔚山HD",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139933",
+      "match_id": "fotmob:5139933",
+      "home_team": "首尔FC",
+      "away_team": "安养FC",
+      "match_date": "2026-05-05",
+      "kickoff_at": "2026-05-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139934",
+      "match_id": "fotmob:5139934",
+      "home_team": "济州SK",
+      "away_team": "首尔FC",
+      "match_date": "2026-05-09",
+      "kickoff_at": "2026-05-09T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139935",
+      "match_id": "fotmob:5139935",
+      "home_team": "金泉尚武",
+      "away_team": "仁川联",
+      "match_date": "2026-05-09",
+      "kickoff_at": "2026-05-09T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139936",
+      "match_id": "fotmob:5139936",
+      "home_team": "光州FC",
+      "away_team": "江原FC",
+      "match_date": "2026-05-09",
+      "kickoff_at": "2026-05-09T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139937",
+      "match_id": "fotmob:5139937",
+      "home_team": "大田韩亚市民",
+      "away_team": "浦项制铁",
+      "match_date": "2026-05-09",
+      "kickoff_at": "2026-05-09T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139938",
+      "match_id": "fotmob:5139938",
+      "home_team": "蔚山HD",
+      "away_team": "富川FC",
+      "match_date": "2026-05-10",
+      "kickoff_at": "2026-05-10T05:00:00Z"
+    },
+    {
+      "source_match_id": "5139939",
+      "match_id": "fotmob:5139939",
+      "home_team": "安养FC",
+      "away_team": "全北现代",
+      "match_date": "2026-05-10",
+      "kickoff_at": "2026-05-10T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139940",
+      "match_id": "fotmob:5139940",
+      "home_team": "江原FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-05-12",
+      "kickoff_at": "2026-05-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139941",
+      "match_id": "fotmob:5139941",
+      "home_team": "光州FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-05-12",
+      "kickoff_at": "2026-05-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139942",
+      "match_id": "fotmob:5139942",
+      "home_team": "仁川联",
+      "away_team": "浦项制铁",
+      "match_date": "2026-05-12",
+      "kickoff_at": "2026-05-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139943",
+      "match_id": "fotmob:5139943",
+      "home_team": "安养FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-05-13",
+      "kickoff_at": "2026-05-13T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139944",
+      "match_id": "fotmob:5139944",
+      "home_team": "富川FC",
+      "away_team": "全北现代",
+      "match_date": "2026-05-13",
+      "kickoff_at": "2026-05-13T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139945",
+      "match_id": "fotmob:5139945",
+      "home_team": "蔚山HD",
+      "away_team": "济州SK",
+      "match_date": "2026-05-13",
+      "kickoff_at": "2026-05-13T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139946",
+      "match_id": "fotmob:5139946",
+      "home_team": "大田韩亚市民",
+      "away_team": "首尔FC",
+      "match_date": "2026-05-16",
+      "kickoff_at": "2026-05-16T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139947",
+      "match_id": "fotmob:5139947",
+      "home_team": "仁川联",
+      "away_team": "光州FC",
+      "match_date": "2026-05-16",
+      "kickoff_at": "2026-05-16T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139948",
+      "match_id": "fotmob:5139948",
+      "home_team": "济州SK",
+      "away_team": "安养FC",
+      "match_date": "2026-05-17",
+      "kickoff_at": "2026-05-17T07:30:00Z"
+    },
+    {
+      "source_match_id": "5139949",
+      "match_id": "fotmob:5139949",
+      "home_team": "全北现代",
+      "away_team": "金泉尚武",
+      "match_date": "2026-05-17",
+      "kickoff_at": "2026-05-17T07:40:00Z"
+    },
+    {
+      "source_match_id": "5139950",
+      "match_id": "fotmob:5139950",
+      "home_team": "富川FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-05-17",
+      "kickoff_at": "2026-05-17T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139951",
+      "match_id": "fotmob:5139951",
+      "home_team": "江原FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-05-17",
+      "kickoff_at": "2026-05-17T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139952",
+      "match_id": "fotmob:5139952",
+      "home_team": "安养FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-07-04",
+      "kickoff_at": "2026-07-04T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139953",
+      "match_id": "fotmob:5139953",
+      "home_team": "大田韩亚市民",
+      "away_team": "富川FC",
+      "match_date": "2026-07-04",
+      "kickoff_at": "2026-07-04T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139954",
+      "match_id": "fotmob:5139954",
+      "home_team": "全北现代",
+      "away_team": "江原FC",
+      "match_date": "2026-07-04",
+      "kickoff_at": "2026-07-04T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139955",
+      "match_id": "fotmob:5139955",
+      "home_team": "金泉尚武",
+      "away_team": "济州SK",
+      "match_date": "2026-07-05",
+      "kickoff_at": "2026-07-05T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139956",
+      "match_id": "fotmob:5139956",
+      "home_team": "光州FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-07-05",
+      "kickoff_at": "2026-07-05T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139957",
+      "match_id": "fotmob:5139957",
+      "home_team": "首尔FC",
+      "away_team": "仁川联",
+      "match_date": "2026-07-05",
+      "kickoff_at": "2026-07-05T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139958",
+      "match_id": "fotmob:5139958",
+      "home_team": "金泉尚武",
+      "away_team": "富川FC",
+      "match_date": "2026-07-11",
+      "kickoff_at": "2026-07-11T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139959",
+      "match_id": "fotmob:5139959",
+      "home_team": "光州FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-07-11",
+      "kickoff_at": "2026-07-11T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139960",
+      "match_id": "fotmob:5139960",
+      "home_team": "蔚山HD",
+      "away_team": "全北现代",
+      "match_date": "2026-07-11",
+      "kickoff_at": "2026-07-11T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139961",
+      "match_id": "fotmob:5139961",
+      "home_team": "仁川联",
+      "away_team": "安养FC",
+      "match_date": "2026-07-12",
+      "kickoff_at": "2026-07-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139962",
+      "match_id": "fotmob:5139962",
+      "home_team": "济州SK",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-07-12",
+      "kickoff_at": "2026-07-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139963",
+      "match_id": "fotmob:5139963",
+      "home_team": "首尔FC",
+      "away_team": "江原FC",
+      "match_date": "2026-07-12",
+      "kickoff_at": "2026-07-12T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139964",
+      "match_id": "fotmob:5139964",
+      "home_team": "大田韩亚市民",
+      "away_team": "蔚山HD",
+      "match_date": "2026-07-18",
+      "kickoff_at": "2026-07-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139965",
+      "match_id": "fotmob:5139965",
+      "home_team": "江原FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-07-18",
+      "kickoff_at": "2026-07-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139966",
+      "match_id": "fotmob:5139966",
+      "home_team": "仁川联",
+      "away_team": "全北现代",
+      "match_date": "2026-07-18",
+      "kickoff_at": "2026-07-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139967",
+      "match_id": "fotmob:5139967",
+      "home_team": "济州SK",
+      "away_team": "浦项制铁",
+      "match_date": "2026-07-18",
+      "kickoff_at": "2026-07-18T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139968",
+      "match_id": "fotmob:5139968",
+      "home_team": "安养FC",
+      "away_team": "光州FC",
+      "match_date": "2026-07-19",
+      "kickoff_at": "2026-07-19T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139969",
+      "match_id": "fotmob:5139969",
+      "home_team": "富川FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-07-19",
+      "kickoff_at": "2026-07-19T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139970",
+      "match_id": "fotmob:5139970",
+      "home_team": "济州SK",
+      "away_team": "江原FC",
+      "match_date": "2026-07-21",
+      "kickoff_at": "2026-07-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139971",
+      "match_id": "fotmob:5139971",
+      "home_team": "全北现代",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-07-21",
+      "kickoff_at": "2026-07-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139972",
+      "match_id": "fotmob:5139972",
+      "home_team": "蔚山HD",
+      "away_team": "仁川联",
+      "match_date": "2026-07-21",
+      "kickoff_at": "2026-07-21T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139973",
+      "match_id": "fotmob:5139973",
+      "home_team": "富川FC",
+      "away_team": "安养FC",
+      "match_date": "2026-07-22",
+      "kickoff_at": "2026-07-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139974",
+      "match_id": "fotmob:5139974",
+      "home_team": "光州FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-07-22",
+      "kickoff_at": "2026-07-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139975",
+      "match_id": "fotmob:5139975",
+      "home_team": "首尔FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-07-22",
+      "kickoff_at": "2026-07-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139976",
+      "match_id": "fotmob:5139976",
+      "home_team": "金泉尚武",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-07-25",
+      "kickoff_at": "2026-07-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139977",
+      "match_id": "fotmob:5139977",
+      "home_team": "浦项制铁",
+      "away_team": "全北现代",
+      "match_date": "2026-07-25",
+      "kickoff_at": "2026-07-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139978",
+      "match_id": "fotmob:5139978",
+      "home_team": "安养FC",
+      "away_team": "江原FC",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139979",
+      "match_id": "fotmob:5139979",
+      "home_team": "光州FC",
+      "away_team": "济州SK",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139980",
+      "match_id": "fotmob:5139980",
+      "home_team": "仁川联",
+      "away_team": "富川FC",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139981",
+      "match_id": "fotmob:5139981",
+      "home_team": "首尔FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139982",
+      "match_id": "fotmob:5139982",
+      "home_team": "江原FC",
+      "away_team": "富川FC",
+      "match_date": "2026-08-01",
+      "kickoff_at": "2026-08-01T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139983",
+      "match_id": "fotmob:5139983",
+      "home_team": "全北现代",
+      "away_team": "首尔FC",
+      "match_date": "2026-08-01",
+      "kickoff_at": "2026-08-01T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139984",
+      "match_id": "fotmob:5139984",
+      "home_team": "浦项制铁",
+      "away_team": "金泉尚武",
+      "match_date": "2026-08-01",
+      "kickoff_at": "2026-08-01T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139985",
+      "match_id": "fotmob:5139985",
+      "home_team": "大田韩亚市民",
+      "away_team": "光州FC",
+      "match_date": "2026-08-02",
+      "kickoff_at": "2026-08-02T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139986",
+      "match_id": "fotmob:5139986",
+      "home_team": "济州SK",
+      "away_team": "仁川联",
+      "match_date": "2026-08-02",
+      "kickoff_at": "2026-08-02T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139987",
+      "match_id": "fotmob:5139987",
+      "home_team": "蔚山HD",
+      "away_team": "安养FC",
+      "match_date": "2026-08-02",
+      "kickoff_at": "2026-08-02T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139988",
+      "match_id": "fotmob:5139988",
+      "home_team": "安养FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T11:00:00Z"
+    },
+    {
+      "source_match_id": "5139989",
+      "match_id": "fotmob:5139989",
+      "home_team": "富川FC",
+      "away_team": "光州FC",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T11:00:00Z"
+    },
+    {
+      "source_match_id": "5139991",
+      "match_id": "fotmob:5139991",
+      "home_team": "金泉尚武",
+      "away_team": "首尔FC",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T11:00:00Z"
+    },
+    {
+      "source_match_id": "5139992",
+      "match_id": "fotmob:5139992",
+      "home_team": "全北现代",
+      "away_team": "济州SK",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T11:00:00Z"
+    },
+    {
+      "source_match_id": "5139993",
+      "match_id": "fotmob:5139993",
+      "home_team": "浦项制铁",
+      "away_team": "蔚山HD",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T11:00:00Z"
+    },
+    {
+      "source_match_id": "5139994",
+      "match_id": "fotmob:5139994",
+      "home_team": "光州FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139995",
+      "match_id": "fotmob:5139995",
+      "home_team": "济州SK",
+      "away_team": "安养FC",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139996",
+      "match_id": "fotmob:5139996",
+      "home_team": "首尔FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139997",
+      "match_id": "fotmob:5139997",
+      "home_team": "富川FC",
+      "away_team": "全北现代",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139998",
+      "match_id": "fotmob:5139998",
+      "home_team": "仁川联",
+      "away_team": "金泉尚武",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T10:30:00Z"
+    },
+    {
+      "source_match_id": "5139999",
+      "match_id": "fotmob:5139999",
+      "home_team": "蔚山HD",
+      "away_team": "江原FC",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140000",
+      "match_id": "fotmob:5140000",
+      "home_team": "安养FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140001",
+      "match_id": "fotmob:5140001",
+      "home_team": "济州SK",
+      "away_team": "金泉尚武",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140002",
+      "match_id": "fotmob:5140002",
+      "home_team": "全北现代",
+      "away_team": "蔚山HD",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140003",
+      "match_id": "fotmob:5140003",
+      "home_team": "富川FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140004",
+      "match_id": "fotmob:5140004",
+      "home_team": "大田韩亚市民",
+      "away_team": "江原FC",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140005",
+      "match_id": "fotmob:5140005",
+      "home_team": "光州FC",
+      "away_team": "仁川联",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140006",
+      "match_id": "fotmob:5140006",
+      "home_team": "金泉尚武",
+      "away_team": "全北现代",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140007",
+      "match_id": "fotmob:5140007",
+      "home_team": "济州SK",
+      "away_team": "浦项制铁",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140008",
+      "match_id": "fotmob:5140008",
+      "home_team": "首尔FC",
+      "away_team": "富川FC",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140009",
+      "match_id": "fotmob:5140009",
+      "home_team": "安养FC",
+      "away_team": "仁川联",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140010",
+      "match_id": "fotmob:5140010",
+      "home_team": "大田韩亚市民",
+      "away_team": "蔚山HD",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140011",
+      "match_id": "fotmob:5140011",
+      "home_team": "江原FC",
+      "away_team": "光州FC",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140012",
+      "match_id": "fotmob:5140012",
+      "home_team": "富川FC",
+      "away_team": "安养FC",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140013",
+      "match_id": "fotmob:5140013",
+      "home_team": "蔚山HD",
+      "away_team": "金泉尚武",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140014",
+      "match_id": "fotmob:5140014",
+      "home_team": "光州FC",
+      "away_team": "首尔FC",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140015",
+      "match_id": "fotmob:5140015",
+      "home_team": "仁川联",
+      "away_team": "全北现代",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140016",
+      "match_id": "fotmob:5140016",
+      "home_team": "济州SK",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140017",
+      "match_id": "fotmob:5140017",
+      "home_team": "江原FC",
+      "away_team": "浦项制铁",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140018",
+      "match_id": "fotmob:5140018",
+      "home_team": "富川FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140019",
+      "match_id": "fotmob:5140019",
+      "home_team": "济州SK",
+      "away_team": "蔚山HD",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140020",
+      "match_id": "fotmob:5140020",
+      "home_team": "全北现代",
+      "away_team": "浦项制铁",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140021",
+      "match_id": "fotmob:5140021",
+      "home_team": "首尔FC",
+      "away_team": "仁川联",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140022",
+      "match_id": "fotmob:5140022",
+      "home_team": "安养FC",
+      "away_team": "江原FC",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140023",
+      "match_id": "fotmob:5140023",
+      "home_team": "金泉尚武",
+      "away_team": "光州FC",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140024",
+      "match_id": "fotmob:5140024",
+      "home_team": "仁川联",
+      "away_team": "富川FC",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140025",
+      "match_id": "fotmob:5140025",
+      "home_team": "蔚山HD",
+      "away_team": "首尔FC",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140026",
+      "match_id": "fotmob:5140026",
+      "home_team": "大田韩亚市民",
+      "away_team": "安养FC",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140027",
+      "match_id": "fotmob:5140027",
+      "home_team": "江原FC",
+      "away_team": "全北现代",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140028",
+      "match_id": "fotmob:5140028",
+      "home_team": "光州FC",
+      "away_team": "济州SK",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140029",
+      "match_id": "fotmob:5140029",
+      "home_team": "浦项制铁",
+      "away_team": "金泉尚武",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T10:30:00Z"
+    },
+    {
+      "source_match_id": "5140030",
+      "match_id": "fotmob:5140030",
+      "home_team": "富川FC",
+      "away_team": "济州SK",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140031",
+      "match_id": "fotmob:5140031",
+      "home_team": "全北现代",
+      "away_team": "首尔FC",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140032",
+      "match_id": "fotmob:5140032",
+      "home_team": "蔚山HD",
+      "away_team": "仁川联",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140033",
+      "match_id": "fotmob:5140033",
+      "home_team": "大田韩亚市民",
+      "away_team": "浦项制铁",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140034",
+      "match_id": "fotmob:5140034",
+      "home_team": "金泉尚武",
+      "away_team": "江原FC",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140035",
+      "match_id": "fotmob:5140035",
+      "home_team": "光州FC",
+      "away_team": "安养FC",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140036",
+      "match_id": "fotmob:5140036",
+      "home_team": "富川FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140037",
+      "match_id": "fotmob:5140037",
+      "home_team": "安养FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140038",
+      "match_id": "fotmob:5140038",
+      "home_team": "江原FC",
+      "away_team": "济州SK",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140039",
+      "match_id": "fotmob:5140039",
+      "home_team": "全北现代",
+      "away_team": "光州FC",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140040",
+      "match_id": "fotmob:5140040",
+      "home_team": "仁川联",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140041",
+      "match_id": "fotmob:5140041",
+      "home_team": "浦项制铁",
+      "away_team": "首尔FC",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T10:00:00Z"
+    },
+    {
+      "source_match_id": "5139990",
+      "match_id": "fotmob:5139990",
+      "home_team": "江原FC",
+      "away_team": "仁川联",
+      "match_date": "2026-09-27",
+      "kickoff_at": "2026-09-27T10:00:00Z"
+    }
+  ]
+}

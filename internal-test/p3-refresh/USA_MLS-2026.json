@@ -6,7 +6,7 @@
     "130"
   ],
   "fotmob_ccode3": "USA",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 403,
   "team_map": {
     "Austin FC": "奥斯汀FC",
     "DC United": "华盛顿联",
@@ -39,5 +39,7 @@
     "San Jose Earthquakes": "圣何塞地震",
     "Sporting Kansas City": "堪萨斯城竞技",
     "New England Revolution": "新英格兰革命"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-01T21:20:31.623Z",
+  "last_published_blob_sha": "5b11eef82e3e577fc58aad8d6579e67e2cf5b730"
 }

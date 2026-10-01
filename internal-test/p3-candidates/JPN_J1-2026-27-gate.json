@@ -1,23 +1,18 @@
 {
   "league_code": "JPN_J1",
   "season": "2026/27",
-  "generated_at": "2026-10-01T17:58:58.596Z",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 80,
+  "collected_matches": 80,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
   "teams": 20,
   "aggregate_players": 562,
-  "gate_status": "PASS_WITH_LIMITED_SAMPLE",
-  "errors_count": 0,
-  "warnings_count": 20,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 1.4,
-  "depth_rows": 146,
-  "status_distribution": {
-    "DATA_INCOMPLETE": 132,
-    "NO_BACKUP": 12,
-    "PARTIAL": 1,
-    "VALID": 1
-  },
-  "errors": [],
-  "warnings": [
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
       "team": "FC东京",
@@ -119,5 +114,7 @@
       "matches": 8
     }
   ],
-  "governance_note": "P3_VALID is structural validity only. JPN_J1 remains LIMITED; P3-D depth/bench factors must not be treated as FULL-quality."
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 1.4
 }
