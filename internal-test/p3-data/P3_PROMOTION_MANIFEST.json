@@ -48,8 +48,10 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-      "blob_sha": "e5b7138dc68a9f99f57de666dbf4e9d22a1e1ef7",
-      "gate_status": "PASS_WITH_LIMITED_SAMPLE"
+      "blob_sha": "0ed0d7fd73c543f5c162d9dfbf49ce445f91f382",
+      "gate_status": "PASS_WITH_LIMITED_SAMPLE",
+      "build_mode": "SAFE_BUILD_R2_OFFLINE",
+      "validation_note": "Schema R2 + strict shape + hard gates PASS; 20 teams x 8 matches; Depth maturity limited. 55 active DM_CM bench-only players use conservative CM fallback because no starter tactical coordinates exist."
     }
   ],
   "raw_only": []
