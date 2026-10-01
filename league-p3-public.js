@@ -77,33 +77,6 @@
 
   function kpi(label,value){return '<div class="p3-kpi"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
   function small(label,value){return '<div class="p3-small"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
-  function dateLabel(v){
-    const m=String(v||'').match(/(\d{4})-(\d{2})-(\d{2})/);
-    return m?(m[2]+'/'+m[3]):'—';
-  }
-  function qualityCopy(q){
-    return q==='STABLE'?'稳定版':
-      q==='PILOT_FULL'?'完整样本试点':
-      q==='LIMITED'?'低样本限制使用':
-      q==='RAW_ONLY'?'仅原始回填':'待验收';
-  }
-  function qualityBar(data,ctx){
-    const s=data.C_lineup_structure||{};
-    const sc=data.sample_context||{};
-    const q=ctx?.quality||'PILOT_FULL';
-    const sample=s.squad_matches??sc.team_matches??'—';
-    const formation=s.formation_coverage_pct==null?'—':n(s.formation_coverage_pct,1)+'%';
-    const depth=s.depth_data_coverage_pct==null?'未成熟':n(s.depth_data_coverage_pct,1)+'%';
-    return '<div class="p3-quality-bar">'+
-      '<div class="p3-quality-item"><small>结构状态</small><b>P3_VALID</b></div>'+
-      '<div class="p3-quality-item is-tier '+esc(q.toLowerCase())+'"><small>质量层级</small><b>'+esc(q)+'</b><span>'+esc(qualityCopy(q))+'</span></div>'+
-      '<div class="p3-quality-item"><small>比赛样本</small><b>'+esc(sample)+'场</b></div>'+
-      '<div class="p3-quality-item"><small>阵型覆盖</small><b>'+esc(formation)+'</b></div>'+
-      '<div class="p3-quality-item"><small>深度覆盖</small><b>'+esc(depth)+'</b></div>'+
-      '<div class="p3-quality-item"><small>快照生成</small><b>'+esc(dateLabel(ctx?.generated_at))+'</b></div>'+
-    '</div>';
-  }
-
   function render(data,ctx){
     const s=data.C_lineup_structure||{};
     const base=Array.isArray(data.A_player_base)?data.A_player_base:[];
