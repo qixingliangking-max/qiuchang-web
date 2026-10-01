@@ -48,7 +48,7 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-      "blob_sha": "5ee3b7cdd9f4ae7bd8a2ebac11ec7a8273d9d9e4",
+      "blob_sha": "a33596164eb55675b340704075ed7d149cb0e451",
       "gate_status": "PASS_WITH_LIMITED_SAMPLE",
       "build_mode": "P3_SAFE_BUILD_R2_OFFLINE"
     }
