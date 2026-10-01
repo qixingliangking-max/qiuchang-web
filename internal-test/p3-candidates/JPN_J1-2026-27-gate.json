@@ -5,21 +5,10 @@
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "teams": 20,
   "aggregate_players": 562,
-  "gate_status": "FAIL",
-  "errors_count": 2,
+  "gate_status": "PASS",
+  "errors_count": 0,
   "warnings_count": 20,
-  "errors": [
-    {
-      "type": "REQUIRED_SLOTS_NOT_11",
-      "team": "浦和红钻",
-      "value": 12
-    },
-    {
-      "type": "REQUIRED_SLOTS_NOT_11",
-      "team": "神户胜利船",
-      "value": 10
-    }
-  ],
+  "errors": [],
   "warnings": [
     {
       "type": "NON_FULL_SAMPLE",
@@ -143,12 +132,12 @@
     }
   ],
   "quality_tier": "LIMITED",
-  "depth_rows": 136,
+  "depth_rows": 146,
   "depth_status_distribution": {
-    "DATA_INCOMPLETE": 122,
+    "DATA_INCOMPLETE": 132,
     "NO_BACKUP": 12,
     "PARTIAL": 1,
     "VALID": 1
   },
-  "avg_team_depth_coverage_pct": 1.5
+  "avg_team_depth_coverage_pct": 1.4
 }
