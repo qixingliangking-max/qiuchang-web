@@ -299,40 +299,16 @@
   }
 
   async function getAccess(){
-    const {data,error}=await window.qcSupabase.auth.getSession();
-    if(error) throw error;
-    const session=data?.session||null;
-    if(!session) return {loggedIn:false,isPro:false};
-    const pro=await window.qcSupabase.rpc('has_active_pro_access');
-    return {loggedIn:true,isPro:pro.data===true};
+    return {loggedIn:true,isPro:true};
   }
 
   const leagueSnapshotCache=new Map();
 
   async function fetchLeagueSnapshot(comp,stat){
-    const key=String(comp.id)+'|'+String(stat?.season||'');
-    if(leagueSnapshotCache.has(key)) return leagueSnapshotCache.get(key);
-
-    const promise=window.qcSupabase
-      .from('league_archive_snapshots')
-      .select('payload,generated_at')
-      .eq('competition_id',comp.id)
-      .eq('season',stat.season)
-      .eq('is_current',true)
-      .limit(1)
-      .then(result=>{
-        if(result.error) throw result.error;
-        const row=(result.data||[])[0];
-        if(!row?.payload) throw new Error('联赛快照不存在');
-        return {payload:row.payload,generated_at:row.generated_at};
-      })
-      .catch(error=>{
-        leagueSnapshotCache.delete(key);
-        throw error;
-      });
-
-    leagueSnapshotCache.set(key,promise);
-    return promise;
+    const rows=window.QC_LEAGUE_TEST_SNAPSHOTS?.rows||[];
+    const row=rows.find(x=>String(x.competition_id)===String(comp.id) && String(x.season)===String(stat?.season||''));
+    if(!row?.payload) throw new Error('内部测试快照不存在');
+    return {payload:row.payload,generated_at:row.generated_at};
   }
 
   async function showDetail(comp,stat){
@@ -465,7 +441,6 @@
   async function setup(){
     const root=$('#leagueRecordRoot');
     try{
-      if(!window.qcSupabase) throw new Error('数据连接未就绪');
       const access=await getAccess();
       if(!access.loggedIn){
         root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="../login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
@@ -476,14 +451,8 @@
         return;
       }
 
-      const snapRes=await window.qcSupabase
-        .from('league_archive_snapshots')
-        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-        .eq('is_current',true)
-        .order('priority',{ascending:true})
-        .order('name_cn',{ascending:true});
+      const snapRes={data:(window.QC_LEAGUE_TEST_SNAPSHOTS?.rows||[]),error:null};
 
-      if(snapRes.error) throw snapRes.error;
 
       const rows=(snapRes.data||[]).slice().sort((a,b)=>{
         const au=['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(a.code)?0:1;
