@@ -1,0 +1,74 @@
+name: P3 Scheduled Offline Refresh
+
+on:
+  schedule:
+    # Beijing time 08:30 and 23:30 every day (UTC 00:30 / 15:30).
+    - cron: "30 0,15 * * *"
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/p3-refresh-scheduled.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-scheduled-offline-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Syntax check
+        run: |
+          node --check scripts/p3-offline-refresh-one.mjs
+          node --check scripts/p3-refresh-all.mjs
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/p3-promotion-gate.mjs
+
+      - name: Check 22 competitions and refresh only changed leagues
+        run: node scripts/p3-refresh-all.mjs
+
+      - name: Commit successful refreshes and reports
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-refresh/
+          git add internal-test/p3-inputs/
+          git add internal-test/p3-candidates/
+          git add internal-test/p3-data/
+          if git diff --cached --quiet; then
+            echo "No P3 refresh changes"
+          else
+            git commit -m "Run scheduled P3 offline refresh"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Enforce refresh isolation gates
+        run: |
+          node - <<'NODE'
+          const r=require('./internal-test/p3-refresh/P3_REFRESH_LAST_RUN.json');
+          console.log('P3 refresh:',{total:r.total_leagues,promoted:r.promoted_leagues,noop:r.noop_leagues,blocked:r.blocked_leagues});
+          if(r.blocked_leagues>0){
+            console.error('Blocked leagues:',r.results.filter(x=>!['PROMOTED','NO_NEW_FINISHED'].includes(x.status)));
+            process.exit(1);
+          }
+          NODE
