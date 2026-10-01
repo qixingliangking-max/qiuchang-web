@@ -39,8 +39,13 @@
       "quality_tier": "LIMITED",
       "teams": 54,
       "published_path": "internal-test/p3-data/UEFA_UNL-2026-27.json",
-      "blob_sha": "ae77127569f62cbf8dc4d2372693a11a3a1d2a67",
-      "gate_status": "PASS_WITH_LIMITED_SAMPLE"
+      "blob_sha": "10eff300db77c6a173069d7c5dc16a212082b554",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 0,
+      "gate_report": "internal-test/p3-candidates/UEFA_UNL-2026-27-gate.json",
+      "last_incremental_refresh_at": "2026-10-01T21:10:44.858Z",
+      "finished_matches": 60,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
       "league_code": "JPN_J1",

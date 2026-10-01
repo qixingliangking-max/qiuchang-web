@@ -1,0 +1,290 @@
+{
+  "league_code": "UEFA_UNL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 60,
+  "collected_matches": 60,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 54,
+  "aggregate_players": 1379,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "丹麦",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "乌克兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "亚美尼亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "以色列",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "保加利亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "克罗地亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "冰岛",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "列支敦士登",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "匈牙利",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "北爱尔兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "北马其顿",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "卢森堡",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "哈萨克斯坦",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "土耳其",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "圣马力诺",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "塞尔维亚",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "塞浦路斯",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥地利",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "威尔士",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "安道尔",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "希腊",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "德国",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "意大利",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "拉脱维亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "挪威",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "捷克",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "摩尔多瓦",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "斯洛伐克",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "斯洛文尼亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "格鲁吉亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "比利时",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "法国",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "法罗群岛",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "波兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "波黑",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "爱尔兰",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "爱沙尼亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "瑞典",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "瑞士",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "白俄罗斯",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "直布罗陀",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "科索沃",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "立陶宛",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "罗马尼亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "芬兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "苏格兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "英格兰",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "荷兰",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "葡萄牙",
+      "matches": 3
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "西班牙",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿塞拜疆",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿尔巴尼亚",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "马耳他",
+      "matches": 2
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "黑山",
+      "matches": 2
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0
+}

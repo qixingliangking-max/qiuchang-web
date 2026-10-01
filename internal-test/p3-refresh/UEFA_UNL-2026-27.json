@@ -9,7 +9,7 @@
     "9809"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 52,
+  "baseline_finished_matches": 60,
   "team_map": {
     "Albania": "阿尔巴尼亚",
     "Andorra": "安道尔",
@@ -65,5 +65,7 @@
     "Turkiye": "土耳其",
     "Ukraine": "乌克兰",
     "Wales": "威尔士"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-01T21:10:44.858Z",
+  "last_published_blob_sha": "10eff300db77c6a173069d7c5dc16a212082b554"
 }
