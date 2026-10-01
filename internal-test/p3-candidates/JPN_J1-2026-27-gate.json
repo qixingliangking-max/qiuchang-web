@@ -1,22 +1,154 @@
 {
   "league_code": "JPN_J1",
   "season": "2026/27",
-  "contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
-  "gate_status": "PASS_WITH_LIMITED_SAMPLE",
-  "quality_tier": "LIMITED",
+  "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "teams": 20,
-  "schema_errors": 0,
-  "starter_primary_position_null": 0,
-  "active_bench_only_primary_position_null": 0,
-  "depth_rows": 146,
-  "depth_nonnull_pct": 1.4,
-  "depth_status_counts": {
-    "DATA_INCOMPLETE": 132,
+  "aggregate_players": 562,
+  "gate_status": "FAIL",
+  "errors_count": 2,
+  "warnings_count": 20,
+  "errors": [
+    {
+      "type": "REQUIRED_SLOTS_NOT_11",
+      "team": "浦和红钻",
+      "value": 12
+    },
+    {
+      "type": "REQUIRED_SLOTS_NOT_11",
+      "team": "神户胜利船",
+      "value": 10
+    }
+  ],
+  "warnings": [
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "FC东京",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "东京绿茵",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "京都不死鸟",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "冈山绿雉",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "千叶市原",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "名古屋鲸八",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "大阪樱花",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "大阪钢巴",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "川崎前锋",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "广岛三箭",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "柏太阳神",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "横滨水手",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "水户蜀葵",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "浦和红钻",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "清水心跳",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "町田泽维亚",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "神户胜利船",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "福冈黄蜂",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "长崎成功丸",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    },
+    {
+      "type": "NON_FULL_SAMPLE",
+      "team": "鹿岛鹿角",
+      "mode": "REDUCED_WEIGHT",
+      "matches": 8
+    }
+  ],
+  "quality_tier": "LIMITED",
+  "depth_rows": 136,
+  "depth_status_distribution": {
+    "DATA_INCOMPLETE": 122,
     "NO_BACKUP": 12,
     "PARTIAL": 1,
     "VALID": 1
   },
-  "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-  "published_blob_sha": "0ed0d7fd73c543f5c162d9dfbf49ce445f91f382",
-  "note": "Schema R2.1 / strict shape / hard gates passed. 20 teams x 8 matches. Limited sample: depth and replacement metrics must not be interpreted as FULL-quality."
+  "avg_team_depth_coverage_pct": 1.5
 }
