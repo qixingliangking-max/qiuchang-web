@@ -10,31 +10,8 @@
   "teams": 36,
   "aggregate_players": 795,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
-  "strict_gate_ok": false,
-  "strict_errors": [
-    {
-      "type": "SCHEMA_DRIFT",
-      "bucket": "D_emergency_shift_item",
-      "expected": [
-        "adjusted_quality",
-        "adjusted_role_quality",
-        "availability_role",
-        "emergency_shift_rank",
-        "fit_type",
-        "fit_weight",
-        "importance_score",
-        "origin_position",
-        "performance_confidence",
-        "performance_score",
-        "player_id",
-        "player_name",
-        "position_starts",
-        "replacement_rank",
-        "role_quality"
-      ],
-      "actual": []
-    }
-  ],
+  "strict_gate_ok": true,
+  "strict_errors": [],
   "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
@@ -217,7 +194,7 @@
       "matches": 1
     }
   ],
-  "gate_status": "FAIL",
+  "gate_status": "PASS",
   "quality_tier": "LIMITED",
   "avg_team_depth_coverage_pct": 0
 }
