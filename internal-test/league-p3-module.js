@@ -87,7 +87,7 @@
       '<div class="p3-quality-item"><small>比赛样本</small><b>'+esc(sample)+'场</b></div>'+
       '<div class="p3-quality-item"><small>阵型覆盖</small><b>'+esc(formation)+'</b></div>'+
       '<div class="p3-quality-item"><small>深度覆盖</small><b>'+esc(depth)+'</b></div>'+
-      '<div class="p3-quality-item"><small>数据截至</small><b>'+esc(dateLabel(ctx?.generated_at))+'</b></div>'+
+      '<div class="p3-quality-item"><small>快照生成</small><b>'+esc(dateLabel(ctx?.generated_at))+'</b></div>'+
     '</div>'+warning;
   }
 
@@ -198,19 +198,19 @@
           return '<div class="p3-depth-card"><h4>'+esc(posName(d.position_code))+'｜首发槽位 '+esc(d.required_slots)+'</h4>'+
             '<div class="p3-depth-summary">'+
               '<div class="p3-depth-line"><span>主力组质量</span><b>'+n(d.starter_quality,1)+'</b></div>'+
-              '<div class="p3-depth-line"><span>普通替补质量</span><b>'+statusText(d.replacement_quality==null?'暂无':n(d.replacement_quality,1))+'</b></div>'+
-              '<div class="p3-depth-line"><span>原始替代差</span><b>'+(d.raw_replacement_gap==null?'暂无':n(d.raw_replacement_gap,1))+'</b></div>'+
+              '<div class="p3-depth-line"><span>首选替代质量</span><b>'+statusText(d.replacement_quality==null?'暂无':n(d.replacement_quality,1))+'</b></div>'+
+              '<div class="p3-depth-line"><span>替代质量差（替代−主力）</span><b>'+(d.raw_replacement_gap==null?'暂无':n(d.raw_replacement_gap,1))+'</b></div>'+
               '<div class="p3-depth-line"><span>模型损失</span><b>'+(d.replacement_loss==null?'暂无':n(d.replacement_loss,1))+'</b></div>'+
               '<div class="p3-depth-line"><span>位置覆盖率</span><b>'+n(d.position_coverage,1)+'%</b></div>'+
-              '<div class="p3-depth-line"><span>置信度</span><b>'+esc(textStatus(d.data_status)+' / '+textLevel(d.confidence))+'</b></div>'+
+              '<div class="p3-depth-line"><span>状态 / 置信度</span><b>'+esc(textStatus(d.data_status)+' / '+textLevel(d.confidence))+'</b></div>'+
             '</div>'+
             '<details class="p3-depth-more">'+
               '<summary><span>查看替补链 / 缺阵场景</span><i>›</i></summary>'+
               '<div class="p3-depth-more-body">'+
                 '<div class="p3-depth-line"><span>主力组</span><b>'+esc(primary)+'</b></div>'+
                 '<div class="p3-depth-line"><span>普通替补链</span><b>'+esc(backups)+'</b></div>'+
-                '<div class="p3-depth-line"><span>应急换位方案</span><b>'+esc(shifts)+'</b></div>'+
                 '<div class="p3-depth-line"><span>逐槽缺阵场景</span><b>'+esc(scenarios)+'</b></div>'+
+                '<div class="p3-depth-line"><span>应急换位方案</span><b>'+esc(shifts)+'</b></div>'+
                 '<div class="p3-depth-line"><span>多位置覆盖率</span><b>'+n(d.multi_position_coverage,1)+'%</b></div>'+
                 '<div class="p3-depth-line"><span>位置深度评分</span><b>'+(d.position_depth_score==null?'数据不足':n(d.position_depth_score,1))+'</b></div>'+
               '</div>'+
@@ -220,7 +220,7 @@
       '</section>'+
 
       '<section class="p3-section">'+
-        '<div class="p3-head"><strong>替补强度｜分线</strong><span>只统计普通替补池中有真实替代意义的已验证球员</span></div>'+
+        '<div class="p3-head"><strong>替补强度｜分线</strong><span>球队整体替补基线｜与P3-D单位置替代链分开计算</span></div>'+
         '<div class="p3-summary">'+
           small('整体替补强度',n(s.bench_strength,1))+
           small('防线替补强度',n(s.defensive_bench_strength,1))+
