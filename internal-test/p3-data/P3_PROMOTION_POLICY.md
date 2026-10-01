@@ -18,8 +18,8 @@ Promotion flow:
 - required P3 blocks present
 - exact Korean V5 schema / strict row shape, except declared dynamic maps
 - required_slots sum = 11
-- normal replacement chain contains no OTHER_STARTER
-- players with minutes must have Performance/Role Quality and primary position
+- normal replacement chain contains no availability_role=OTHER_STARTER; cross-position starters belong only in emergency_shift_options
+- players with minutes must have Performance/Role Quality; any player with starts > 0 must have primary position; bench-only players may keep primary position null when no starter-position evidence exists
 - UNTESTED cannot have a Performance score
 - VALID/PARTIAL depth rows must have replacement/depth metrics
 - NULL must never be silently converted to 0
