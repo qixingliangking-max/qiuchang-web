@@ -32,6 +32,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Sync latest main before build
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
       - name: Syntax check
         run: |
           node --check scripts/p3-offline-builder-core.js
