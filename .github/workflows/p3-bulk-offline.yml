@@ -1,0 +1,86 @@
+name: P3 Bulk Offline Build
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/p3-bulk-offline.yml"
+      - "scripts/p3-offline-builder-core.js"
+      - "scripts/p3-offline-collect-and-build.mjs"
+      - "scripts/p3-promotion-gate.mjs"
+      - "internal-test/p3-inputs/*-2026-27.json"
+      - "internal-test/p3-data/P3_SCHEMA_CONTRACT_V5.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-bulk-offline-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax check
+        run: |
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-promotion-gate.mjs
+
+      - name: Build all remaining P3 candidates offline
+        run: |
+          node scripts/p3-offline-collect-and-build.mjs \
+            internal-test/p3-inputs/UEFA_UCL-2026-27.json \
+            internal-test/p3-inputs/UEFA_UEL-2026-27.json \
+            internal-test/p3-inputs/GER_BL-2026-27.json \
+            internal-test/p3-inputs/ITA_SA-2026-27.json \
+            internal-test/p3-inputs/FRA_L1-2026-27.json \
+            internal-test/p3-inputs/ENG_PL-2026-27.json \
+            internal-test/p3-inputs/NED_ED-2026-27.json \
+            internal-test/p3-inputs/POR_PL-2026-27.json \
+            internal-test/p3-inputs/ESP_LL-2026-27.json \
+            internal-test/p3-inputs/GER_B2-2026-27.json \
+            internal-test/p3-inputs/ITA_SB-2026-27.json \
+            internal-test/p3-inputs/FRA_L2-2026-27.json \
+            internal-test/p3-inputs/ENG_CH-2026-27.json \
+            internal-test/p3-inputs/ESP_L2-2026-27.json
+
+      - name: Commit generated candidates and gates
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-candidates/*-2026-27.json
+          git add internal-test/p3-candidates/*-2026-27-gate.json
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build remaining P3 candidates offline"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Enforce bulk gates
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const leagues=['UEFA_UCL','UEFA_UEL','GER_BL','ITA_SA','FRA_L1','ENG_PL','NED_ED','POR_PL','ESP_LL','GER_B2','ITA_SB','FRA_L2','ENG_CH','ESP_L2'];
+          let bad=[];
+          for(const code of leagues){
+            const p='internal-test/p3-candidates/'+code+'-2026-27-gate.json';
+            const r=JSON.parse(fs.readFileSync(p,'utf8'));
+            console.log(code,r.gate_status,r.quality_tier,r.collection_coverage_pct,r.strict_errors?.length||0,r.collection_failures?.length||0);
+            if(r.gate_status!=='PASS') bad.push(code);
+          }
+          if(bad.length){ console.error('FAILED:',bad.join(',')); process.exit(1); }
+          NODE
