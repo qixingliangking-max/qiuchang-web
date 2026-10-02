@@ -425,7 +425,7 @@
       "home_team": "阿塞拜疆",
       "away_team": "列支敦士登",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T16:00:00.000Z"
+      "kickoff_at": "2026-10-01T16:00:00Z"
     },
     {
       "source_match_id": "5181816",
@@ -433,7 +433,7 @@
       "home_team": "以色列",
       "away_team": "科索沃",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181817",
@@ -441,7 +441,7 @@
       "home_team": "爱尔兰",
       "away_team": "奥地利",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181829",
@@ -449,7 +449,7 @@
       "home_team": "德国",
       "away_team": "塞尔维亚",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181830",
@@ -457,7 +457,7 @@
       "home_team": "希腊",
       "away_team": "荷兰",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181865",
@@ -465,7 +465,7 @@
       "home_team": "丹麦",
       "away_team": "葡萄牙",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181866",
@@ -473,7 +473,7 @@
       "home_team": "威尔士",
       "away_team": "挪威",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
     },
     {
       "source_match_id": "5181876",
@@ -481,7 +481,31 @@
       "home_team": "马耳他",
       "away_team": "直布罗陀",
       "match_date": "2026-10-01",
-      "kickoff_at": "2026-10-01T18:45:00.000Z"
+      "kickoff_at": "2026-10-01T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181937",
+      "match_id": "fotmob:5181937",
+      "home_team": "哈萨克斯坦",
+      "away_team": "摩尔多瓦",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181925",
+      "match_id": "fotmob:5181925",
+      "home_team": "塞浦路斯",
+      "away_team": "亚美尼亚",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181926",
+      "match_id": "fotmob:5181926",
+      "home_team": "拉脱维亚",
+      "away_team": "黑山",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T16:00:00.000Z"
     }
   ]
 }

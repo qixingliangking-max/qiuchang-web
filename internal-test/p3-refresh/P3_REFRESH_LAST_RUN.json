@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-02T06:00:34.363Z",
+  "run_at": "2026-10-02T20:05:53.623Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 22,
   "promoted_leagues": 1,
@@ -289,29 +289,29 @@
     {
       "league_code": "UEFA_UNL",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 60,
+      "status": "PROMOTED",
+      "discovered_finished": 63,
       "baseline_finished_matches": 60,
+      "new_finished_matches": 3,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
+      "exit_code": 0
+    },
+    {
+      "league_code": "USA_MLS",
+      "season": "2026",
+      "status": "NO_NEW_FINISHED",
+      "discovered_finished": 404,
+      "baseline_finished_matches": 404,
       "new_finished_matches": 0,
       "gate_status": null,
       "collection_coverage_pct": null,
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
-    },
-    {
-      "league_code": "USA_MLS",
-      "season": "2026",
-      "status": "PROMOTED",
-      "discovered_finished": 404,
-      "baseline_finished_matches": 403,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
-      "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
       "exit_code": 0
     }
   ]
