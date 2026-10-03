@@ -112,8 +112,31 @@ https://qixingliangking-max.github.io/qiuchang-web/internal-test/p3-data/UEFA_UN
 读取规则：
 1. 若 get_league_team_p3 返回 P3_VALID，可读其结构。
 2. 若返回 p3_not_ready，则必须读取 Promotion Manifest + 对应 promoted static JSON。
-3. P3 quality_tier 必须一起读取；P3_VALID 不等于 FULL。
-4. LIMITED / LOW_SAMPLE 只能限权使用，不得当作完整样本。
+3. p3_not_ready 只表示“生产Supabase P3聚合层未就绪”，不等于“该联赛没有P3数据”。
+4. 对 SAFE BUILD R2 / Promotion 联赛，禁止在看到 p3_not_ready 后停止；必须继续读取静态Promotion。
+5. P3 quality_tier 必须一起读取；P3_VALID 不等于 FULL。
+6. LIMITED / LOW_SAMPLE 只能限权使用，不得当作完整样本。
+
+### 荷兰联赛已验收案例｜2026-10-03
+
+NED_EE｜2026/27：
+- 主模型角色 qc_main_model_reader 对 get_league_team_p3 有 EXECUTE 权限。
+- 生产RPC对荷乙球队返回 ok=false / status=p3_not_ready。
+- 这不是权限错误，也不是球队无P3。
+- Promotion Manifest 显示 NED_EE 已发布，quality_tier=LIMITED，teams=20，gate_status=PASS。
+- 当前静态权威文件：
+  https://qixingliangking-max.github.io/qiuchang-web/internal-test/p3-data/NED_EE-2026-27.json
+- 2026-10-03 当天011—016共12支荷乙球队均存在于该静态快照：
+  奥斯、马斯特里赫特、维特斯、布雷达、瓦尔韦克、埃门、FC埃因霍温、格拉夫夏普、邓伯什、多德勒支、阿尔梅勒城、福伦丹。
+
+NED_ED｜2026/27 同理：
+- 生产RPC可能返回 p3_not_ready。
+- Promotion Manifest 中 NED_ED 已发布，teams=18，quality_tier=LIMITED，gate_status=PASS。
+- 静态权威文件：
+  https://qixingliangking-max.github.io/qiuchang-web/internal-test/p3-data/NED_ED-2026-27.json
+
+因此主模型遇到荷兰P3时的固定流程必须是：
+数据库RPC → 若P3_VALID则读取 → 若p3_not_ready则立即切Promotion JSON → 再按quality_tier限权使用。
 
 P3可读：
 - player base
