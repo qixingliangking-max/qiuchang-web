@@ -6,7 +6,7 @@
     "111"
   ],
   "fotmob_ccode3": "NED",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 83,
   "team_map": {
     "TOP Oss": "奥斯",
     "Vitesse": "维特斯",
@@ -28,5 +28,7 @@
     "Jong AZ Alkmaar": "阿尔克马尔青年队",
     "Jong FC Utrecht": "乌德勒支青年队",
     "Roda JC Kerkrade": "罗达JC"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-03T05:35:51.369Z",
+  "last_published_blob_sha": "59cec194ceba17e67912d9e6955f3d4253248264"
 }

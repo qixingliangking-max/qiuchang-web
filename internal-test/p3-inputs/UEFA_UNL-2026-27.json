@@ -489,7 +489,7 @@
       "home_team": "哈萨克斯坦",
       "away_team": "摩尔多瓦",
       "match_date": "2026-10-02",
-      "kickoff_at": "2026-10-02T14:00:00.000Z"
+      "kickoff_at": "2026-10-02T14:00:00Z"
     },
     {
       "source_match_id": "5181925",
@@ -497,7 +497,7 @@
       "home_team": "塞浦路斯",
       "away_team": "亚美尼亚",
       "match_date": "2026-10-02",
-      "kickoff_at": "2026-10-02T16:00:00.000Z"
+      "kickoff_at": "2026-10-02T16:00:00Z"
     },
     {
       "source_match_id": "5181926",
@@ -505,7 +505,63 @@
       "home_team": "拉脱维亚",
       "away_team": "黑山",
       "match_date": "2026-10-02",
-      "kickoff_at": "2026-10-02T16:00:00.000Z"
+      "kickoff_at": "2026-10-02T16:00:00Z"
+    },
+    {
+      "source_match_id": "5181792",
+      "match_id": "fotmob:5181792",
+      "home_team": "比利时",
+      "away_team": "土耳其",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181793",
+      "match_id": "fotmob:5181793",
+      "home_team": "法国",
+      "away_team": "意大利",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181804",
+      "match_id": "fotmob:5181804",
+      "home_team": "匈牙利",
+      "away_team": "格鲁吉亚",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181805",
+      "match_id": "fotmob:5181805",
+      "home_team": "乌克兰",
+      "away_team": "北爱尔兰",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181841",
+      "match_id": "fotmob:5181841",
+      "home_team": "波黑",
+      "away_team": "瑞典",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181842",
+      "match_id": "fotmob:5181842",
+      "home_team": "波兰",
+      "away_team": "罗马尼亚",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181938",
+      "match_id": "fotmob:5181938",
+      "home_team": "法罗群岛",
+      "away_team": "斯洛伐克",
+      "match_date": "2026-10-02",
+      "kickoff_at": "2026-10-02T18:45:00Z"
     }
   ]
 }
