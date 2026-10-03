@@ -562,6 +562,46 @@
       "away_team": "斯洛伐克",
       "match_date": "2026-10-02",
       "kickoff_at": "2026-10-02T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181898",
+      "match_id": "fotmob:5181898",
+      "home_team": "芬兰",
+      "away_team": "阿尔巴尼亚",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181853",
+      "match_id": "fotmob:5181853",
+      "home_team": "克罗地亚",
+      "away_team": "英格兰",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181899",
+      "match_id": "fotmob:5181899",
+      "home_team": "白俄罗斯",
+      "away_team": "圣马力诺",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181953",
+      "match_id": "fotmob:5181953",
+      "home_team": "爱沙尼亚",
+      "away_team": "卢森堡",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181954",
+      "match_id": "fotmob:5181954",
+      "home_team": "冰岛",
+      "away_team": "保加利亚",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T16:00:00.000Z"
     }
   ]
 }

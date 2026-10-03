@@ -626,6 +626,30 @@
       "away_team": "奥维耶多",
       "match_date": "2026-10-02",
       "kickoff_at": "2026-10-02T18:30:00Z"
+    },
+    {
+      "source_match_id": "5868470",
+      "match_id": "fotmob:5868470",
+      "home_team": "阿尔瓦塞特",
+      "away_team": "埃瓦尔",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868471",
+      "match_id": "fotmob:5868471",
+      "home_team": "阿尔梅里亚",
+      "away_team": "布尔戈斯",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T14:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868472",
+      "match_id": "fotmob:5868472",
+      "home_team": "加的斯",
+      "away_team": "莱加内斯",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T16:30:00.000Z"
     }
   ]
 }

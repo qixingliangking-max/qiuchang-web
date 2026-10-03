@@ -666,6 +666,22 @@
       "away_team": "赫拉克勒斯",
       "match_date": "2026-10-02",
       "kickoff_at": "2026-10-02T19:00:00Z"
+    },
+    {
+      "source_match_id": "5832888",
+      "match_id": "fotmob:5832888",
+      "home_team": "奥斯",
+      "away_team": "马斯特里赫特",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5832889",
+      "match_id": "fotmob:5832889",
+      "home_team": "维特斯",
+      "away_team": "布雷达",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T14:30:00.000Z"
     }
   ]
 }
