@@ -51,3 +51,15 @@
   .p3-depth{grid-template-columns:1fr}
   .p3-legacy-titlebar{align-items:flex-start;flex-direction:column}
 }
+
+
+/* Desktop-only readability refinements. Mobile rules are unchanged. */
+@media(min-width:901px){
+  .p3-table-wrap{overflow:auto;max-width:100%;scrollbar-gutter:stable}
+  .p3-table{min-width:1080px}
+  .p3-table th{position:sticky;top:0;z-index:2}
+  .p3-table th:first-child,.p3-table td:first-child{position:sticky;left:0;z-index:1;background:#fff;box-shadow:1px 0 0 #eef2f6}
+  .p3-table th:first-child{z-index:3;background:#fafbfd}
+  .p3-summary{grid-template-columns:repeat(5,minmax(140px,1fr))}
+  .p3-depth{grid-template-columns:repeat(3,minmax(260px,1fr))}
+}
