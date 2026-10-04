@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 78,
-  "collected_matches": 78,
+  "input_matches": 81,
+  "collected_matches": 81,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 54,
-  "aggregate_players": 1422,
+  "aggregate_players": 1430,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -101,7 +101,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "奥地利",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -111,7 +111,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "安道尔",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -221,12 +221,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科索沃",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "立陶宛",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -266,7 +266,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿塞拜疆",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -276,7 +276,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马耳他",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",

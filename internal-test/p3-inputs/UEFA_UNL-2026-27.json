@@ -626,6 +626,30 @@
       "away_team": "捷克",
       "match_date": "2026-10-03",
       "kickoff_at": "2026-10-03T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181883",
+      "match_id": "fotmob:5181883",
+      "home_team": "阿塞拜疆",
+      "away_team": "立陶宛",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181818",
+      "match_id": "fotmob:5181818",
+      "home_team": "科索沃",
+      "away_team": "奥地利",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181877",
+      "match_id": "fotmob:5181877",
+      "home_team": "马耳他",
+      "away_team": "安道尔",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T16:00:00.000Z"
     }
   ]
 }

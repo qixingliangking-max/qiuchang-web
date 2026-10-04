@@ -714,6 +714,14 @@
       "away_team": "埃门",
       "match_date": "2026-10-03",
       "kickoff_at": "2026-10-03T18:00:00Z"
+    },
+    {
+      "source_match_id": "5832894",
+      "match_id": "fotmob:5832894",
+      "home_team": "芬洛",
+      "away_team": "罗达JC",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T12:30:00.000Z"
     }
   ]
 }
