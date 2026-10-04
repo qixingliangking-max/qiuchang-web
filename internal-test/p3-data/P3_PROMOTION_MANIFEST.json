@@ -54,12 +54,12 @@
       "quality_tier": "LIMITED",
       "teams": 54,
       "published_path": "internal-test/p3-data/UEFA_UNL-2026-27.json",
-      "blob_sha": "fe3d25092045f37558d75434ccc58e8b25c746b4",
+      "blob_sha": "a3cc4aa75f011698e49595c2a2fbed94a187b3c1",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UNL-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-10-03T18:47:24.378Z",
-      "finished_matches": 75,
+      "last_incremental_refresh_at": "2026-10-04T06:11:40.501Z",
+      "finished_matches": 78,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -294,14 +294,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/NED_EE-2026-27.json",
-      "blob_sha": "a362a806ffbe45c6d2ebe44ea74ee9895c81c632",
+      "blob_sha": "bcb586bbeaa67164d86688bf30f1348584dc2655",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 12.3,
+      "avg_team_depth_coverage_pct": 10.9,
       "gate_report": "internal-test/p3-candidates/NED_EE-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-03T18:47:10.586Z",
-      "finished_matches": 85
+      "last_incremental_refresh_at": "2026-10-04T06:11:25.466Z",
+      "finished_matches": 89
     }
   ],
   "raw_only": [],

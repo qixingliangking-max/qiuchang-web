@@ -673,7 +673,7 @@
       "home_team": "奥斯",
       "away_team": "马斯特里赫特",
       "match_date": "2026-10-03",
-      "kickoff_at": "2026-10-03T14:30:00.000Z"
+      "kickoff_at": "2026-10-03T14:30:00Z"
     },
     {
       "source_match_id": "5832889",
@@ -681,7 +681,39 @@
       "home_team": "维特斯",
       "away_team": "布雷达",
       "match_date": "2026-10-03",
-      "kickoff_at": "2026-10-03T14:30:00.000Z"
+      "kickoff_at": "2026-10-03T14:30:00Z"
+    },
+    {
+      "source_match_id": "5832890",
+      "match_id": "fotmob:5832890",
+      "home_team": "阿尔梅勒城",
+      "away_team": "福伦丹",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T18:00:00Z"
+    },
+    {
+      "source_match_id": "5832891",
+      "match_id": "fotmob:5832891",
+      "home_team": "邓伯什",
+      "away_team": "多德勒支",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T18:00:00Z"
+    },
+    {
+      "source_match_id": "5832892",
+      "match_id": "fotmob:5832892",
+      "home_team": "FC埃因霍温",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T18:00:00Z"
+    },
+    {
+      "source_match_id": "5832893",
+      "match_id": "fotmob:5832893",
+      "home_team": "瓦尔韦克",
+      "away_team": "埃门",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T18:00:00Z"
     }
   ]
 }
