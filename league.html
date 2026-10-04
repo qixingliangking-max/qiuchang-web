@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=20260928logo1">
   <title>球场档案｜联赛档案</title>
   <link rel="stylesheet" href="styles.css?v=20260930leagueprod2">
-  <link rel="stylesheet" href="league-p3-public.css?v=20261002p3prod3">
+  <link rel="stylesheet" href="league-p3-public.css?v=20261004desktop1">
   <style>
     body.qc-league-record-test{background:#f5f7fb;color:#1f2a44}
     .qc-league-main{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
@@ -115,6 +115,50 @@
     .qc-league-gate,.qc-league-loading{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:38px 20px;text-align:center;color:#66748b;margin-top:18px}
     .qc-league-gate h2{margin:0 0 8px;color:#26344d}
     .qc-league-gate a{display:inline-flex;margin-top:14px;background:#263d66;color:#fff;text-decoration:none;border-radius:10px;padding:10px 16px;font-weight:850}
+
+    /* Desktop-only league archive layout. Mobile <=900px remains unchanged. */
+    @media(min-width:901px){
+      body.qc-league-record-test .shell{max-width:1480px}
+      .qc-league-main{max-width:1480px;padding:24px 28px 64px}
+      .qc-league-hero{padding:24px 28px}
+      .qc-league-toolbar{margin:20px 0 12px}
+      .qc-league-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+      .qc-league-card{align-self:start}
+      .qc-league-card.is-open{grid-column:1/-1}
+      .qc-league-card.is-open .qc-league-detail{overflow:visible}
+      .qc-league-detail-head{position:sticky;top:0;z-index:4}
+      .qc-league-team-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px}
+      .qc-league-team-item{min-width:0}
+      .qc-league-team-item.is-open{grid-column:1/-1}
+      .qc-league-team-item.is-open .qc-team-detail{padding:14px}
+      .qc-league-team-item.is-open .qc-league-team-row{grid-template-columns:minmax(180px,1fr) repeat(6,minmax(64px,80px))}
+      .qc-team-detail-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+      .qc-team-split{padding:10px}
+      .qc-team-score-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+      .qc-team-recent-row{grid-template-columns:72px 72px minmax(120px,1fr) 40px minmax(300px,2fr);gap:10px;padding:8px 10px;font-size:10px}
+      .qc-team-recent-row b{font-size:11px}
+      .qc-team-recent-row span:last-child{white-space:normal;overflow:visible;text-overflow:clip}
+      .qc-p2-grid{gap:8px;padding:10px}
+      .qc-p2-card{padding:10px}
+      .qc-p2-row{font-size:9px}
+      .qc-p2-row b{font-size:10px}
+      .qc-layer-body{min-width:0}
+    }
+    @media(min-width:901px) and (max-width:1099px){
+      .qc-league-main{padding-left:20px;padding-right:20px}
+      .qc-league-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .qc-league-team-list{grid-template-columns:1fr}
+      .qc-team-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-p2-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    @media(min-width:1100px) and (max-width:1279px){
+      .qc-team-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .qc-p2-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    @media(min-width:1380px){
+      .qc-league-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    }
+
     @media(max-width:900px){
       .qc-league-main{padding:12px 10px 42px}
       .qc-league-hero{padding:15px 14px;border-radius:14px}
