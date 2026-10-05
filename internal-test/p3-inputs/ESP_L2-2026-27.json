@@ -657,7 +657,7 @@
       "home_team": "皇家社会B",
       "away_team": "格拉纳达",
       "match_date": "2026-10-04",
-      "kickoff_at": "2026-10-04T12:00:00.000Z"
+      "kickoff_at": "2026-10-04T12:00:00Z"
     },
     {
       "source_match_id": "5868480",
@@ -665,7 +665,7 @@
       "home_team": "希洪竞技",
       "away_team": "塞尔塔B",
       "match_date": "2026-10-04",
-      "kickoff_at": "2026-10-04T14:15:00.000Z"
+      "kickoff_at": "2026-10-04T14:15:00Z"
     },
     {
       "source_match_id": "5868473",
@@ -673,7 +673,7 @@
       "home_team": "卡斯特利翁",
       "away_team": "休达",
       "match_date": "2026-10-04",
-      "kickoff_at": "2026-10-04T16:30:00.000Z"
+      "kickoff_at": "2026-10-04T16:30:00Z"
     },
     {
       "source_match_id": "5868477",
@@ -681,7 +681,23 @@
       "home_team": "拉斯帕尔马斯",
       "away_team": "巴拉多利德",
       "match_date": "2026-10-04",
-      "kickoff_at": "2026-10-04T16:30:00.000Z"
+      "kickoff_at": "2026-10-04T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868476",
+      "match_id": "fotmob:5868476",
+      "home_team": "赫罗纳",
+      "away_team": "马略卡",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868479",
+      "match_id": "fotmob:5868479",
+      "home_team": "萨瓦德尔",
+      "away_team": "安道尔FC",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T19:00:00Z"
     }
   ]
 }

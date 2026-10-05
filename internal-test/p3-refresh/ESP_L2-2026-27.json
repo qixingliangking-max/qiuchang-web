@@ -6,7 +6,7 @@
     "140"
   ],
   "fotmob_ccode3": "ESP",
-  "baseline_finished_matches": 85,
+  "baseline_finished_matches": 87,
   "team_map": {
     "Cadiz": "加的斯",
     "Eibar": "埃瓦尔",
@@ -36,6 +36,6 @@
     "Real Valladolid": "巴拉多利德",
     "Sporting Gijón": "希洪竞技"
   },
-  "last_successful_refresh_at": "2026-10-04T18:43:32.943Z",
-  "last_published_blob_sha": "5a6a225a0e83b7db2bcb02404523421a2149a53e"
+  "last_successful_refresh_at": "2026-10-05T06:02:47.612Z",
+  "last_published_blob_sha": "10f70dfc99396b863a8c0e2a002ffa1b3c882256"
 }
