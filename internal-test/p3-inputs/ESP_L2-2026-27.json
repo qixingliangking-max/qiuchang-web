@@ -698,6 +698,14 @@
       "away_team": "安道尔FC",
       "match_date": "2026-10-04",
       "kickoff_at": "2026-10-04T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868474",
+      "match_id": "fotmob:5868474",
+      "home_team": "科尔多瓦",
+      "away_team": "特内里费",
+      "match_date": "2026-10-05",
+      "kickoff_at": "2026-10-05T18:30:00.000Z"
     }
   ]
 }
