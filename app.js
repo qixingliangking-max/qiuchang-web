@@ -1808,7 +1808,24 @@ async function loadJcFrontend(){
     return merged;
   }
   async function fetchHistoryReviewDateReady(ds,historyHint=null){
-    const result=historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds);
+    const history=resultOrEmpty(historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds));
+    if(!access.isPro) return history;
+
+    // Pro 的“昨日回看”仍保留整日赛前锁板内容，但只从静态层组合：
+    // 未完赛行来自受保护的锁板日快照；已完赛行用公开历史快照覆盖 FT/HT。
+    // 这里不回查 jc_matches，也不重新读取/重算模型输出。
+    const protectedSnapshot=await qcFetchProOverviewDate(ds);
+    if(!protectedSnapshot?.data?.length) return history;
+
+    const finishedById=new Map((history.data||[]).map(row=>[String(row.id),row]));
+    const merged=(protectedSnapshot.data||[]).map(row=>{
+      const finished=finishedById.get(String(row.id));
+      return finished?preserveOverviewStaticData(finished,row):row;
+    });
+    return {...history,data:merged,fromHistorySnapshot:true};
+  }
+
+  function resultOrEmpty(result){
     return result || {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
   }
 
