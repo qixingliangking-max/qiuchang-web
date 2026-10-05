@@ -1014,6 +1014,7 @@ const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
 const qcJcDateRowsCache=new Map();
 const qcFrozenOverviewRowsCache=new Map();
 const qcProOverviewRowsCache=new Map();
+const qcHistoryOverviewRowsCache=new Map();
 let qcFrozenOverviewManifestPromise=null;
 let qcFrozenOverviewManifestCache=null;
 let qcProOverviewPrimePromise=null;
@@ -1156,6 +1157,68 @@ async function qcFetchProOverviewDate(dateStr){
   }
   const record=(data||[])[0];
   return record?qcCacheProOverviewSnapshot(record):null;
+}
+
+function qcPrepareHistoryOverviewRows(record){
+  const rows=qcPrepareFrozenOverviewRows(record?.payload?.rows||[]);
+  rows.forEach(m=>{
+    m._jcHistorySnapshot=true;
+    m._jcHistorySnapshotFinal=record?.is_final===true;
+  });
+  return rows;
+}
+
+async function qcFetchHistoryOverviewDate(dateStr,force=false){
+  const key=String(dateStr||'');
+  if(!key || !window.qcSupabase) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
+
+  const frozen=await qcFetchFrozenOverviewDate(key);
+  if(frozen){
+    return {...frozen,fromHistorySnapshot:true,historyFinal:true};
+  }
+
+  const now=Date.now();
+  const cached=qcHistoryOverviewRowsCache.get(key);
+  if(!force && cached?.data && (cached.isFinal || now-cached.savedAt<45000)){
+    return {
+      data:cached.data,error:null,fromHistorySnapshot:true,
+      historyFinal:Boolean(cached.isFinal),
+      finishedCount:cached.finishedCount||cached.data.length,
+      matchCount:cached.matchCount||cached.data.length
+    };
+  }
+  if(!force && cached?.promise) return cached.promise;
+
+  const promise=window.qcSupabase
+    .from('jc_history_overview_snapshots')
+    .select('business_date,payload,match_count,finished_count,is_final,source,generated_at')
+    .eq('business_date',key)
+    .limit(1)
+    .then(result=>{
+      if(result.error) throw result.error;
+      const record=(result.data||[])[0]||null;
+      const rows=record?qcPrepareHistoryOverviewRows(record):[];
+      const meta={
+        data:rows,error:null,fromHistorySnapshot:true,
+        historyFinal:Boolean(record?.is_final),
+        finishedCount:Number(record?.finished_count||0),
+        matchCount:Number(record?.match_count||0),
+        historySource:record?.source||null
+      };
+      qcHistoryOverviewRowsCache.set(key,{
+        data:rows,savedAt:Date.now(),isFinal:meta.historyFinal,
+        finishedCount:meta.finishedCount,matchCount:meta.matchCount
+      });
+      return meta;
+    })
+    .catch(error=>{
+      qcHistoryOverviewRowsCache.delete(key);
+      console.warn('读取昨日静态回看快照失败 '+key,error);
+      return {data:[],error,fromHistorySnapshot:true,historyFinal:false};
+    });
+
+  qcHistoryOverviewRowsCache.set(key,{promise,savedAt:now,isFinal:false});
+  return promise;
 }
 
 async function jcFetchDateRows(dateStr,withSnapshots=false,force=false){
@@ -1564,7 +1627,7 @@ async function loadJcFrontend(){
   const accessPromise=qcGetAccessState();
   const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
-  const candidatePreviousPromise=jcFetchOverviewDateRows(candidatePreviousDate);
+  const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
 
   // Browser cache gives repeat opens an immediate first frame.
   try{
@@ -1628,7 +1691,7 @@ async function loadJcFrontend(){
       initialDate,
       initialDate===candidateDate ? candidateCurrentPromise : null
     ),
-    fetchOverviewDateReady(
+    fetchHistoryReviewDateReady(
       initialPrevDate,
       initialDate===candidateDate ? candidatePreviousPromise : null
     )
@@ -1683,6 +1746,7 @@ async function loadJcFrontend(){
   }
 
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
+  let previousHistoryFinal=Boolean(previousResult?.historyFinal);
   const today=initialToday;
   let selectedDate=initialDate;
   let modelsLoaded=false;
@@ -1743,6 +1807,11 @@ async function loadJcFrontend(){
     if(old?._apiFootballLive) merged._apiFootballLive=old._apiFootballLive;
     return merged;
   }
+  async function fetchHistoryReviewDateReady(ds,historyHint=null){
+    const result=historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds);
+    return result || {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
+  }
+
   async function fetchOverviewDateReady(ds,freshHint=null){
     const preferredPromise=fetchOverviewDatePreferred(ds);
 
@@ -1775,8 +1844,9 @@ async function loadJcFrontend(){
   }
 
   async function refreshOverviewDynamicState(ds,token){
-    const prevDs=qcAddDays(ds,-1);
-    const dynamicDates=[ds,prevDs].filter((d,i,a)=>
+    // “昨日回看”只读后台生成的静态历史快照，不再由浏览器回查 jc_matches 动态拼比分。
+    // 当前选中日期仍可回读最新状态；前一日的 FT/HT 由后台快照链负责补入。
+    const dynamicDates=[ds].filter((d,i,a)=>
       a.indexOf(d)===i && !qcFrozenOverviewManifestCache?.dates?.[d]
     );
     if(!dynamicDates.length) return;
@@ -1804,6 +1874,21 @@ async function loadJcFrontend(){
     }catch(err){
       console.warn('动态比分回读失败，继续使用锁板快照',err);
     }
+  }
+
+  async function refreshYesterdayHistorySnapshot(ds,token){
+    if(previousHistoryFinal) return;
+    const prevDs=qcAddDays(ds,-1);
+    const result=await qcFetchHistoryOverviewDate(prevDs,true);
+    if(token!==loadToken || selectedDate!==ds || result?.error) return;
+
+    previousHistoryFinal=Boolean(result?.historyFinal);
+    const freshRows=(result?.data||[]).filter(m=>m.match_date);
+    allRows=[
+      ...allRows.filter(m=>jcBusinessDate(m)!==prevDs),
+      ...freshRows
+    ];
+    render();
   }
 
   async function hydrateOverviewRows(rows,ds,token,patchDom=true){
@@ -1858,7 +1943,7 @@ async function loadJcFrontend(){
       const prevDs=qcAddDays(ds,-1);
       const [cur,prevRowsResult]=await Promise.all([
         fetchOverviewDateReady(ds),
-        fetchOverviewDateReady(prevDs)
+        fetchHistoryReviewDateReady(prevDs)
       ]);
       if(cur.error||prevRowsResult.error) return;
 
@@ -1890,7 +1975,7 @@ async function loadJcFrontend(){
     const dsPrev=qcAddDays(ds,-1);
     const [nextCurrent,nextPrevious]=await Promise.all([
       fetchOverviewDateReady(ds),
-      fetchOverviewDateReady(dsPrev)
+      fetchHistoryReviewDateReady(dsPrev)
     ]);
     if(token!==loadToken) return;
     if(nextCurrent.error||nextPrevious.error){
@@ -1899,6 +1984,7 @@ async function loadJcFrontend(){
     }
 
     allRows=[...(nextCurrent.data||[]),...(nextPrevious.data||[])].filter(m=>m.match_date);
+    previousHistoryFinal=Boolean(nextPrevious?.historyFinal);
     selectedDate=ds;
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
@@ -2035,7 +2121,10 @@ async function loadJcFrontend(){
 
   async function refreshOverviewLive(){
     const token=loadToken;
-    await refreshOverviewDynamicState(selectedDate,token);
+    await Promise.all([
+      refreshOverviewDynamicState(selectedDate,token),
+      refreshYesterdayHistorySnapshot(selectedDate,token)
+    ]);
   }
 
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
