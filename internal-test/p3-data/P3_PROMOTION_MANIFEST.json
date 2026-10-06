@@ -317,6 +317,22 @@
       "finished_matches": 279,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
+    },
+    {
+      "league_code": "AFC_ACLE",
+      "season": "2026/27",
+      "quality_tier": "LIMITED",
+      "teams": 32,
+      "published_path": "internal-test/p3-data/AFC_ACLE-2026-27.json",
+      "blob_sha": "c198c0a767d6da8b05ba49e4f6915c036d2966c5",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 0,
+      "gate_report": "internal-test/p3-candidates/AFC_ACLE-2026-27-gate.json",
+      "last_incremental_refresh_at": "2026-10-06T16:00:01.091Z",
+      "finished_matches": 16,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
+      "sample_policy": "LOW_SAMPLE/LIMITED",
+      "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until sample quality improves."
     }
   ],
   "raw_only": [],
