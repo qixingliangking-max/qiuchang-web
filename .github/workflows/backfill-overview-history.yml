@@ -6,6 +6,7 @@ on:
     branches: [ main ]
     paths:
       - ".github/workflows/backfill-overview-history.yml"
+      - "scripts/backfill-overview-history.mjs"
 
 permissions:
   contents: write
