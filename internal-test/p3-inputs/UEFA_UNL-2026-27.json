@@ -697,7 +697,7 @@
       "home_team": "塞浦路斯",
       "away_team": "拉脱维亚",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T16:00:00.000Z"
+      "kickoff_at": "2026-10-05T16:00:00Z"
     },
     {
       "source_match_id": "5181794",
@@ -705,7 +705,7 @@
       "home_team": "法国",
       "away_team": "比利时",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181795",
@@ -713,7 +713,7 @@
       "home_team": "意大利",
       "away_team": "土耳其",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181806",
@@ -721,7 +721,7 @@
       "home_team": "北爱尔兰",
       "away_team": "格鲁吉亚",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181807",
@@ -729,7 +729,7 @@
       "home_team": "乌克兰",
       "away_team": "匈牙利",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181843",
@@ -737,7 +737,7 @@
       "home_team": "波黑",
       "away_team": "波兰",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181844",
@@ -745,7 +745,7 @@
       "home_team": "罗马尼亚",
       "away_team": "瑞典",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
     },
     {
       "source_match_id": "5181928",
@@ -753,7 +753,15 @@
       "home_team": "黑山",
       "away_team": "亚美尼亚",
       "match_date": "2026-10-05",
-      "kickoff_at": "2026-10-05T18:45:00.000Z"
+      "kickoff_at": "2026-10-05T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181939",
+      "match_id": "fotmob:5181939",
+      "home_team": "哈萨克斯坦",
+      "away_team": "法罗群岛",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T14:00:00.000Z"
     }
   ]
 }

@@ -1,0 +1,135 @@
+{
+  "league_code": "AFC_ACLE",
+  "competition_id": "e00a5958-e600-428e-b848-6638f2b7212e",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "6050064",
+      "match_id": "fotmob:6050064",
+      "home_team": "费尔干纳石油",
+      "away_team": "巴格达空军",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T13:45:00Z"
+    },
+    {
+      "source_match_id": "6050066",
+      "match_id": "fotmob:6050066",
+      "home_team": "迪拜青年国民",
+      "away_team": "大不里士拖拉机",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T16:00:00Z"
+    },
+    {
+      "source_match_id": "6050067",
+      "match_id": "fotmob:6050067",
+      "home_team": "舒马尔",
+      "away_team": "吉达联合",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T16:00:00Z"
+    },
+    {
+      "source_match_id": "6050065",
+      "match_id": "fotmob:6050065",
+      "home_team": "德黑兰独立",
+      "away_team": "萨德",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T18:15:00Z"
+    },
+    {
+      "source_match_id": "6050068",
+      "match_id": "fotmob:6050068",
+      "home_team": "吉达国民",
+      "away_team": "塔什干棉农",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T18:15:00Z"
+    },
+    {
+      "source_match_id": "6050069",
+      "match_id": "fotmob:6050069",
+      "home_team": "卡迪西亚",
+      "away_team": "迪拜祈祷",
+      "match_date": "2026-09-14",
+      "kickoff_at": "2026-09-14T18:15:00Z"
+    },
+    {
+      "source_match_id": "6049976",
+      "match_id": "fotmob:6049976",
+      "home_team": "大田韩亚市民",
+      "away_team": "京都不死鸟",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "6049977",
+      "match_id": "fotmob:6049977",
+      "home_team": "大阪钢巴",
+      "away_team": "河内公安",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "6049978",
+      "match_id": "fotmob:6049978",
+      "home_team": "鹿岛鹿角",
+      "away_team": "纽卡斯尔喷气机",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "6049979",
+      "match_id": "fotmob:6049979",
+      "home_team": "拉查布里",
+      "away_team": "上海海港",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "6049980",
+      "match_id": "fotmob:6049980",
+      "home_team": "北京国安",
+      "away_team": "浦项制铁",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T12:15:00Z"
+    },
+    {
+      "source_match_id": "6049981",
+      "match_id": "fotmob:6049981",
+      "home_team": "柔佛新山",
+      "away_team": "武里南联",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T12:15:00Z"
+    },
+    {
+      "source_match_id": "6050070",
+      "match_id": "fotmob:6050070",
+      "home_team": "艾因",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T16:00:00Z"
+    },
+    {
+      "source_match_id": "6050071",
+      "match_id": "fotmob:6050071",
+      "home_team": "利雅得新月",
+      "away_team": "加拉法",
+      "match_date": "2026-09-15",
+      "kickoff_at": "2026-09-15T18:15:00Z"
+    },
+    {
+      "source_match_id": "6049982",
+      "match_id": "fotmob:6049982",
+      "home_team": "全北现代",
+      "away_team": "柏太阳神",
+      "match_date": "2026-09-16",
+      "kickoff_at": "2026-09-16T10:00:00Z"
+    },
+    {
+      "source_match_id": "6049983",
+      "match_id": "fotmob:6049983",
+      "home_team": "泰港",
+      "away_team": "神户胜利船",
+      "match_date": "2026-09-16",
+      "kickoff_at": "2026-09-16T12:15:00Z"
+    }
+  ]
+}
