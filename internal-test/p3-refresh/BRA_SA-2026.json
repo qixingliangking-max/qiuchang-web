@@ -1,0 +1,32 @@
+{
+  "league_code": "BRA_SA",
+  "season": "2026",
+  "competition_id": "21368458-42b5-4ba4-b781-f1a1af9cf35a",
+  "fotmob_league_ids": [
+    "268"
+  ],
+  "fotmob_ccode3": "BRA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Athletico Paranaense": "巴拉纳竞技",
+    "Atlético-MG": "米内罗竞技",
+    "Bahia": "巴伊亚",
+    "Botafogo": "博塔弗戈",
+    "Chapecoense": "沙佩科恩斯",
+    "Corinthians": "科林蒂安",
+    "Coritiba": "科里蒂巴",
+    "Cruzeiro": "克鲁塞罗",
+    "Flamengo": "弗拉门戈",
+    "Fluminense": "弗鲁米嫩塞",
+    "Grêmio": "格雷米奥",
+    "Internacional": "巴西国际",
+    "Mirassol": "米拉索尔",
+    "Palmeiras": "帕尔梅拉斯",
+    "RB Bragantino": "布拉干蒂诺RB",
+    "Remo": "雷莫",
+    "Santos": "桑托斯",
+    "São Paulo": "圣保罗",
+    "Vasco da Gama": "瓦斯科达伽马",
+    "Vitória": "维多利亚"
+  }
+}
