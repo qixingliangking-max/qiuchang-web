@@ -302,6 +302,21 @@
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
       "last_incremental_refresh_at": "2026-10-04T18:43:55.715Z",
       "finished_matches": 90
+    },
+    {
+      "league_code": "BRA_SA",
+      "season": "2026",
+      "quality_tier": "PILOT_FULL",
+      "teams": 20,
+      "published_path": "internal-test/p3-data/BRA_SA-2026.json",
+      "blob_sha": "bbb00d134a044ab88c11ea255366c0ab27e46eb1",
+      "gate_status": "PASS",
+      "avg_team_depth_coverage_pct": 85,
+      "gate_report": "internal-test/p3-candidates/BRA_SA-2026-gate.json",
+      "last_incremental_refresh_at": "2026-10-06T15:22:45.275Z",
+      "finished_matches": 279,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
+      "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
     }
   ],
   "raw_only": [],
