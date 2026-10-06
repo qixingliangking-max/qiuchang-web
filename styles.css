@@ -90,6 +90,8 @@ body{min-height:100vh}
 .jc-cal-note{font-size:13px;color:var(--muted);font-weight:800;margin-bottom:14px}
 .jc-cal-head{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px;margin-bottom:12px}
 .jc-cal-title{text-align:center;font-size:18px;line-height:1.2}
+.jc-cal-month-select{width:100%;height:38px;border:0;background:transparent;color:var(--text);font-size:18px;font-weight:900;text-align:center;text-align-last:center;cursor:pointer;appearance:none;-webkit-appearance:none}
+.jc-cal-month-select:focus{outline:none}
 .jc-cal-month-btn{width:42px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);font-size:28px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .jc-cal-month-btn:hover:not(:disabled){background:#f0f4ff;border-color:#cdd8f6}
 .jc-cal-month-btn:disabled{opacity:.25;cursor:default}
