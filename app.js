@@ -145,29 +145,65 @@ function jcBusinessDate(m){
 function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选择有比赛数据的日期'){
   const box=$('#jcDatePopover');
   if(!box) return;
-  const base=new Date(selectedDate+'T12:00:00+08:00');
-  const year=Number(base.toLocaleString('en-US',{timeZone:'Asia/Shanghai',year:'numeric'}));
-  const month=Number(base.toLocaleString('en-US',{timeZone:'Asia/Shanghai',month:'numeric'}));
-  const first=new Date(Date.UTC(year,month-1,1,4));
-  const firstWeek=(first.getUTCDay()+6)%7;
-  const daysInMonth=new Date(Date.UTC(year,month,0,4)).getUTCDate();
-  const avail=new Set(availableDates);
-  let cells='';
-  for(let i=0;i<firstWeek;i++) cells+='<span class="jc-cal-cell empty"></span>';
-  for(let day=1;day<=daysInMonth;day++){
-    const ds=year+'-'+String(month).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-    const has=avail.has(ds);
-    const cls=['jc-cal-cell',has?'has-data':'no-data',ds===selectedDate?'selected':''].filter(Boolean).join(' ');
-    cells+='<button type="button" class="'+cls+'" data-date="'+ds+'" '+(has?'':'disabled')+'>'+day+'</button>';
+
+  const dates=(availableDates||[])
+    .map(x=>String(x||''))
+    .filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x))
+    .sort();
+  const avail=new Set(dates);
+  const selectedMonth=/^\d{4}-\d{2}/.test(selectedDate||'')
+    ? String(selectedDate).slice(0,7)
+    : qcBeijingToday().slice(0,7);
+  const minMonth=(dates[0]||selectedDate||qcBeijingToday()).slice(0,7);
+  const maxMonth=(dates[dates.length-1]||selectedDate||qcBeijingToday()).slice(0,7);
+
+  function monthShift(monthKey,delta){
+    const [y,m]=monthKey.split('-').map(Number);
+    const d=new Date(Date.UTC(y,m-1+delta,1,4));
+    return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0');
   }
-  box.innerHTML=
-    '<div class="jc-cal-note">'+qcEscape(noteText)+'</div>'+
-    '<div class="jc-cal-head"><b>'+year+'年'+month+'月</b></div>'+
-    '<div class="jc-cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>'+
-    '<div class="jc-cal-grid">'+cells+'</div>';
-  $$('.jc-cal-cell.has-data',box).forEach(btn=>{
-    btn.onclick=()=>{onSelect(btn.dataset.date);box.hidden=true;};
-  });
+
+  function renderMonth(viewMonth){
+    const [year,month]=viewMonth.split('-').map(Number);
+    const first=new Date(Date.UTC(year,month-1,1,4));
+    const firstWeek=(first.getUTCDay()+6)%7;
+    const daysInMonth=new Date(Date.UTC(year,month,0,4)).getUTCDate();
+    const canPrev=viewMonth>minMonth;
+    const canNext=viewMonth<maxMonth;
+
+    let cells='';
+    for(let i=0;i<firstWeek;i++) cells+='<span class="jc-cal-cell empty"></span>';
+    for(let day=1;day<=daysInMonth;day++){
+      const ds=year+'-'+String(month).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      const has=avail.has(ds);
+      const cls=['jc-cal-cell',has?'has-data':'no-data',ds===selectedDate?'selected':''].filter(Boolean).join(' ');
+      cells+='<button type="button" class="'+cls+'" data-date="'+ds+'" '+(has?'':'disabled')+'>'+day+'</button>';
+    }
+
+    box.innerHTML=
+      '<div class="jc-cal-note">'+qcEscape(noteText)+'</div>'+
+      '<div class="jc-cal-head">'+
+        '<button type="button" class="jc-cal-month-btn" data-cal-shift="-1" aria-label="上一个月" '+(canPrev?'':'disabled')+'>‹</button>'+
+        '<b class="jc-cal-title">'+year+'年'+month+'月</b>'+
+        '<button type="button" class="jc-cal-month-btn" data-cal-shift="1" aria-label="下一个月" '+(canNext?'':'disabled')+'>›</button>'+
+      '</div>'+
+      '<div class="jc-cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>'+
+      '<div class="jc-cal-grid">'+cells+'</div>';
+
+    $('.jc-cal-month-btn',box).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        if(btn.disabled) return;
+        renderMonth(monthShift(viewMonth,Number(btn.dataset.calShift||0)));
+      };
+    });
+    $('.jc-cal-cell.has-data',box).forEach(btn=>{
+      btn.onclick=()=>{onSelect(btn.dataset.date);box.hidden=true;};
+    });
+  }
+
+  renderMonth(selectedMonth);
 }
 
 
