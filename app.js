@@ -156,6 +156,9 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选
     : qcBeijingToday().slice(0,7);
   const minMonth=(dates[0]||selectedDate||qcBeijingToday()).slice(0,7);
   const maxMonth=(dates[dates.length-1]||selectedDate||qcBeijingToday()).slice(0,7);
+  const monthOptions=[...new Set(dates.map(x=>x.slice(0,7)))];
+  if(!monthOptions.includes(selectedMonth)) monthOptions.push(selectedMonth);
+  monthOptions.sort();
 
   function monthShift(monthKey,delta){
     const [y,m]=monthKey.split('-').map(Number);
@@ -180,16 +183,25 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选
       cells+='<button type="button" class="'+cls+'" data-date="'+ds+'" '+(has?'':'disabled')+'>'+day+'</button>';
     }
 
+    const monthSelectOptions=monthOptions.map(key=>{
+      const [oy,om]=key.split('-').map(Number);
+      return '<option value="'+key+'" '+(key===viewMonth?'selected':'')+'>'+oy+'年'+om+'月</option>';
+    }).join('');
+
     box.innerHTML=
       '<div class="jc-cal-note">'+qcEscape(noteText)+'</div>'+
       '<div class="jc-cal-head">'+
         '<button type="button" class="jc-cal-month-btn" data-cal-shift="-1" aria-label="上一个月" '+(canPrev?'':'disabled')+'>‹</button>'+
-        '<b class="jc-cal-title">'+year+'年'+month+'月</b>'+
+        '<select class="jc-cal-month-select" aria-label="选择月份">'+monthSelectOptions+'</select>'+
         '<button type="button" class="jc-cal-month-btn" data-cal-shift="1" aria-label="下一个月" '+(canNext?'':'disabled')+'>›</button>'+
       '</div>'+
       '<div class="jc-cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>'+
       '<div class="jc-cal-grid">'+cells+'</div>';
 
+    const monthSelect=$('.jc-cal-month-select',box);
+    if(monthSelect) monthSelect.onchange=()=>{
+      if(monthSelect.value) renderMonth(monthSelect.value);
+    };
     $('.jc-cal-month-btn',box).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
