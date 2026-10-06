@@ -1,0 +1,56 @@
+{
+  "start": "2026-09-26",
+  "end": "2026-10-04",
+  "generated_at": "2026-10-06T07:33:56.759Z",
+  "report": [
+    {
+      "date": "2026-09-26",
+      "status": "SKIPPED_INCOMPLETE",
+      "dayMatches": 25,
+      "expected": 24,
+      "rows": 24,
+      "missingScore": 1,
+      "missingModel": 0
+    },
+    {
+      "date": "2026-09-27",
+      "status": "FROZEN",
+      "rows": 9,
+      "file": "data/overview/2026-09-27.history.v1.json"
+    },
+    {
+      "date": "2026-09-28",
+      "status": "FROZEN",
+      "rows": 8,
+      "file": "data/overview/2026-09-28.history.v1.json"
+    },
+    {
+      "date": "2026-09-29",
+      "status": "FROZEN",
+      "rows": 15,
+      "file": "data/overview/2026-09-29.history.v1.json"
+    },
+    {
+      "date": "2026-09-30",
+      "status": "FROZEN",
+      "rows": 2,
+      "file": "data/overview/2026-09-30.history.v1.json"
+    },
+    {
+      "date": "2026-10-01",
+      "status": "NO_MATCHES"
+    },
+    {
+      "date": "2026-10-02",
+      "status": "NO_MATCHES"
+    },
+    {
+      "date": "2026-10-03",
+      "status": "NO_MATCHES"
+    },
+    {
+      "date": "2026-10-04",
+      "status": "NO_MATCHES"
+    }
+  ]
+}
