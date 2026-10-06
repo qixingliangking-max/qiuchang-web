@@ -27,6 +27,7 @@
     SWE_AS:{season:'2026',url:'internal-test/p3-data/SWE_AS-2026.json?v=20261002swe1',version:'P3_V5_SWE_AS_PILOT',label:'瑞典超P3 V5试点',quality:'PILOT_FULL'},
     FIN_VL:{season:'2026',url:'internal-test/p3-data/FIN_VL-2026.json?v=20261002fin1',version:'P3_V5_FIN_VL_PILOT',label:'芬超P3 V5试点',quality:'PILOT_FULL'},
     UEFA_UCL:{season:'2026/27',url:'internal-test/p3-data/UEFA_UCL-2026-27.json?v=20261002bulk1',version:'P3_V5_UEFA_UCL_PILOT',label:'欧冠P3 V5试点',quality:'LIMITED'},
+    AFC_ACLE:{season:'2026/27',url:'internal-test/p3-data/AFC_ACLE-2026-27.json?v=20261006afc1',version:'P3_V5_AFC_ACLE_PILOT',label:'亚冠精英P3 V5试点',quality:'LIMITED'},
     UEFA_UEL:{season:'2026/27',url:'internal-test/p3-data/UEFA_UEL-2026-27.json?v=20261002bulk1',version:'P3_V5_UEFA_UEL_PILOT',label:'欧联P3 V5试点',quality:'LIMITED'},
     GER_BL:{season:'2026/27',url:'internal-test/p3-data/GER_BL-2026-27.json?v=20261002bulk1',version:'P3_V5_GER_BL_PILOT',label:'德甲P3 V5试点',quality:'LIMITED'},
     ITA_SA:{season:'2026/27',url:'internal-test/p3-data/ITA_SA-2026-27.json?v=20261002bulk1',version:'P3_V5_ITA_SA_PILOT',label:'意甲P3 V5试点',quality:'LIMITED'},
