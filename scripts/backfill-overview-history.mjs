@@ -117,16 +117,19 @@ for(const ds of isoDates(START,END)){
   let missingModel=0,missingScore=0;
 
   for(const m of dayMatches){
+    let row=originalById.get(String(m.id));
+    const model=modelById.get(String(m.id));
+    // Legacy history freezes only the actual locked prediction set.
+    // Schedule rows without a locked model are not part of the historical prediction page.
+    if(!row && !model) continue;
+
     const ft=m.raw?.sectionsNo999;
     const ht=m.raw?.sectionsNo1;
     if(!scoreOk(ft)){missingScore++; continue;}
 
-    let row=originalById.get(String(m.id));
     if(row){
       row=structuredClone(row);
     }else{
-      const model=modelById.get(String(m.id));
-      if(!model){missingModel++; continue;}
       row={
         id:m.id,
         raw:{},
@@ -157,7 +160,7 @@ for(const ds of isoDates(START,END)){
   }
 
   const expected=original?.match_count || originalRows.length || dayMatches.filter(m=>modelById.has(String(m.id))).length;
-  const final=expected>0 && rows.length===expected && missingScore===0 && missingModel===0;
+  const final=expected>0 && rows.length===expected && missingScore===0;
   if(!final){
     report.push({date:ds,status:'SKIPPED_INCOMPLETE',dayMatches:dayMatches.length,expected,rows:rows.length,missingScore,missingModel});
     continue;
