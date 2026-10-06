@@ -4,7 +4,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
   const regionOf=c=>{
-    if(['UEFA_UCL','UEFA_UEL','UEFA_UNL'].includes(String(c.code||''))) return '洲际赛事';
+    if(['UEFA_UCL','UEFA_UEL','UEFA_UNL','AFC_ACLE'].includes(String(c.code||''))) return '洲际赛事';
     const country=String(c.country_cn||'');
     if(['英格兰','西班牙','意大利','德国','法国','荷兰','葡萄牙'].includes(country)) return '欧洲';
     if(['芬兰','瑞典','挪威'].includes(country)) return '北欧';
