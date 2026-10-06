@@ -43,7 +43,7 @@ jobs:
           node --check scripts/p3-offline-builder-core.js
           node --check scripts/p3-promotion-gate.mjs
 
-      - name: Check 22 competitions and refresh only changed leagues
+      - name: Check 23 competitions and refresh only changed leagues
         run: node scripts/p3-refresh-all.mjs
 
       - name: Commit successful refreshes and reports
