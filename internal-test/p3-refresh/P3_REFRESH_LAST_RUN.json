@@ -1,11 +1,25 @@
 {
-  "run_at": "2026-10-06T06:42:21.192Z",
+  "run_at": "2026-10-06T15:23:40.049Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
-  "total_leagues": 22,
-  "promoted_leagues": 0,
+  "total_leagues": 23,
+  "promoted_leagues": 1,
   "noop_leagues": 22,
   "blocked_leagues": 0,
   "results": [
+    {
+      "league_code": "BRA_SA",
+      "season": "2026",
+      "status": "PROMOTED",
+      "discovered_finished": 279,
+      "baseline_finished_matches": 0,
+      "new_finished_matches": 279,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
+      "exit_code": 0
+    },
     {
       "league_code": "ENG_CH",
       "season": "2026/27",
