@@ -1,16 +1,13 @@
 {
   "start": "2026-09-26",
   "end": "2026-10-04",
-  "generated_at": "2026-10-06T07:33:56.759Z",
+  "generated_at": "2026-10-06T07:35:08.688Z",
   "report": [
     {
       "date": "2026-09-26",
-      "status": "SKIPPED_INCOMPLETE",
-      "dayMatches": 25,
-      "expected": 24,
+      "status": "FROZEN",
       "rows": 24,
-      "missingScore": 1,
-      "missingModel": 0
+      "file": "data/overview/2026-09-26.history.v1.json"
     },
     {
       "date": "2026-09-27",
