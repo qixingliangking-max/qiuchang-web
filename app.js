@@ -202,7 +202,7 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选
     if(monthSelect) monthSelect.onchange=()=>{
       if(monthSelect.value) renderMonth(monthSelect.value);
     };
-    $('.jc-cal-month-btn',box).forEach(btn=>{
+    box.querySelectorAll('.jc-cal-month-btn').forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
@@ -210,7 +210,7 @@ function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选
         renderMonth(monthShift(viewMonth,Number(btn.dataset.calShift||0)));
       };
     });
-    $('.jc-cal-cell.has-data',box).forEach(btn=>{
+    box.querySelectorAll('.jc-cal-cell.has-data').forEach(btn=>{
       btn.onclick=()=>{onSelect(btn.dataset.date);box.hidden=true;};
     });
   }
