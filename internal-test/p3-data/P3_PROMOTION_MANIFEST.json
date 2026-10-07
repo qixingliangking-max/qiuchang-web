@@ -97,12 +97,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/FIN_VL-2026.json",
-      "blob_sha": "0776fe199d53df1034ef353ff5fe737e7c11b053",
+      "blob_sha": "8ef7e5fcd479bbbc06a9fc404c906a8205a25831",
       "gate_status": "PASS",
-      "build_mode": "P3_SAFE_BUILD_R2_OFFLINE",
-      "avg_team_depth_coverage_pct": 87.1,
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
+      "avg_team_depth_coverage_pct": 87.9,
       "gate_report": "internal-test/p3-candidates/FIN_VL-2026-gate.json",
-      "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot."
+      "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
+      "last_incremental_refresh_at": "2026-10-07T20:42:43.290Z",
+      "finished_matches": 151
     },
     {
       "league_code": "UEFA_UCL",

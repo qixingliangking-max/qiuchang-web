@@ -1,21 +1,19 @@
 {
   "league_code": "FIN_VL",
   "season": "2026",
-  "generated_at": "2026-10-01T20:17:19.508Z",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 151,
+  "collected_matches": 151,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
   "teams": 12,
   "aggregate_players": 390,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [],
   "gate_status": "PASS",
-  "errors_count": 0,
-  "warnings_count": 0,
   "quality_tier": "PILOT_FULL",
-  "avg_team_depth_coverage_pct": 87.1,
-  "depth_rows": 86,
-  "status_distribution": {
-    "VALID": 59,
-    "PARTIAL": 10,
-    "NO_BACKUP": 1,
-    "DATA_INCOMPLETE": 16
-  },
-  "errors": [],
-  "warnings": []
+  "avg_team_depth_coverage_pct": 87.9
 }
