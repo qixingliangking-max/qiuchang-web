@@ -3573,6 +3573,7 @@ async function setupDemoAuth(){
           if(sessionData?.session) break;
           await new Promise(resolve=>setTimeout(resolve,120+(attempt*120)));
         }
+        try{ await window.qcSupabase.rpc('record_user_login'); }catch(_){}
         location.replace(safeNext);
       }
     };
@@ -4504,6 +4505,10 @@ async function setupAdminUsers(){
     if($('#usersPro')) $('#usersPro').textContent=overview.pro_users??0;
     if($('#usersToday')) $('#usersToday').textContent=overview.today_new??0;
     if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview.active_24h??overview.login_24h??0;
+    if($('#dailyTodayActive')) $('#dailyTodayActive').textContent=overview.today_active??0;
+    if($('#dailyTodayLogin')) $('#dailyTodayLogin').textContent=overview.today_login??0;
+    if($('#dailyTodayRedeem')) $('#dailyTodayRedeem').textContent=overview.today_redeem??0;
+    if($('#daily7Active')) $('#daily7Active').textContent=overview.active_7d??0;
   };
 
   const render=(items)=>{
@@ -4581,8 +4586,87 @@ async function setupAdminUsers(){
     applyFilter();
   };
 
+  const dailyRows=$('#adminDailyRows');
+  const dailyDetailRows=$('#adminDailyDetailRows');
+  const dailyDetailTitle=$('#adminDailyDetailTitle');
+  const dailyTabs=$('.admin-daily-tabs button');
+  let selectedDailyDate=qcBeijingToday();
+
+  const dailyDateLabel=(dateStr)=>{
+    if(!dateStr) return '—';
+    const d=new Date(dateStr+'T12:00:00+08:00');
+    if(Number.isNaN(d.getTime())) return dateStr;
+    return (d.getMonth()+1)+'月'+d.getDate()+'日';
+  };
+
+  const loadDailyDetail=async(dateStr)=>{
+    selectedDailyDate=dateStr||qcBeijingToday();
+    if(dailyDetailTitle) dailyDetailTitle.textContent=dailyDateLabel(selectedDailyDate)+' 明细';
+    if(dailyDetailRows) dailyDetailRows.innerHTML='<tr><td colspan="7">正在读取…</td></tr>';
+
+    const {data,error}=await window.qcSupabase.rpc('admin_daily_activity_detail',{p_date:selectedDailyDate});
+    if(error){
+      if(dailyDetailRows) dailyDetailRows.innerHTML='<tr><td colspan="7">每日明细读取失败</td></tr>';
+      return;
+    }
+
+    const items=data||[];
+    if(dailyDetailRows){
+      dailyDetailRows.innerHTML=items.length?items.map(item=>
+        '<tr>'+
+          '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
+          '<td>'+qcEscape(item.membership||'—')+'</td>'+
+          '<td>'+qcEscape(qcAdminFmt(item.first_active_at))+'</td>'+
+          '<td>'+qcEscape(qcAdminFmt(item.last_active_at))+'</td>'+
+          '<td>'+qcEscape(item.active_count??0)+'</td>'+
+          '<td>'+qcEscape(item.login_count??0)+'</td>'+
+          '<td>'+qcEscape(item.redeem_count??0)+'</td>'+
+        '</tr>'
+      ).join(''):'<tr><td colspan="7">当天暂无记录</td></tr>';
+    }
+
+    if(dailyRows){
+      dailyRows.querySelectorAll('tr[data-date]').forEach(tr=>{
+        tr.classList.toggle('selected',tr.dataset.date===selectedDailyDate);
+      });
+    }
+  };
+
+  const loadDaily=async(days=7)=>{
+    if(dailyRows) dailyRows.innerHTML='<tr><td colspan="5">正在读取…</td></tr>';
+    const {data,error}=await window.qcSupabase.rpc('admin_daily_activity_summary',{p_days:days});
+    if(error){
+      if(dailyRows) dailyRows.innerHTML='<tr><td colspan="5">每日活跃读取失败</td></tr>';
+      return;
+    }
+
+    const items=data||[];
+    if(dailyRows){
+      dailyRows.innerHTML=items.map(item=>
+        '<tr data-date="'+qcEscape(item.activity_date||'')+'" class="'+(item.activity_date===selectedDailyDate?'selected':'')+'">'+
+          '<td><strong>'+qcEscape(dailyDateLabel(item.activity_date))+'</strong></td>'+
+          '<td>'+qcEscape(item.active_users??0)+'</td>'+
+          '<td>'+qcEscape(item.login_users??0)+'</td>'+
+          '<td>'+qcEscape(item.login_events??0)+'</td>'+
+          '<td>'+qcEscape(item.redeem_users??0)+'</td>'+
+        '</tr>'
+      ).join('');
+
+      dailyRows.querySelectorAll('tr[data-date]').forEach(tr=>{
+        tr.onclick=()=>loadDailyDetail(tr.dataset.date);
+      });
+    }
+  };
+
+  dailyTabs.forEach(btn=>{
+    btn.onclick=async()=>{
+      dailyTabs.forEach(x=>x.classList.toggle('active',x===btn));
+      await loadDaily(Number(btn.dataset.days||7));
+    };
+  });
+
   if(search) search.oninput=applyFilter;
-  await Promise.all([loadUsers(),updateOverview()]);
+  await Promise.all([loadUsers(),updateOverview(),loadDaily(7),loadDailyDetail(selectedDailyDate)]);
 }
 
 async function setupAdminCodes(){
