@@ -3819,6 +3819,56 @@ async function setupDemoAuth(){
 }
 
 
+let qcLastActiveBound=false;
+
+async function qcTouchLastActive(force=false){
+  if(!window.qcSupabase) return;
+
+  let session=null;
+  try{
+    const {data,error}=await window.qcSupabase.auth.getSession();
+    if(error) return;
+    session=data?.session||null;
+  }catch(_){
+    return;
+  }
+  if(!session?.user?.id) return;
+
+  const key='qc-last-active-touch:'+session.user.id;
+  const now=Date.now();
+  if(!force){
+    try{
+      const last=Number(localStorage.getItem(key)||0);
+      if(last && now-last<10*60*1000) return;
+    }catch(_){}
+  }
+
+  try{
+    const {error}=await window.qcSupabase.rpc('touch_last_active');
+    if(error) return;
+    try{localStorage.setItem(key,String(now));}catch(_){}
+  }catch(_){}
+}
+
+function setupLastActiveTracking(){
+  if(qcLastActiveBound || !window.qcSupabase) return;
+  qcLastActiveBound=true;
+
+  qcTouchLastActive(false);
+
+  window.qcSupabase.auth.onAuthStateChange((event,session)=>{
+    if(!session) return;
+    if(['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)){
+      qcTouchLastActive(event==='SIGNED_IN');
+    }
+  });
+
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible') qcTouchLastActive(false);
+  });
+  window.addEventListener('focus',()=>qcTouchLastActive(false));
+}
+
 let qcAuthRecoveryBound=false;
 
 function setupAuthStateRecovery(){
@@ -4453,13 +4503,13 @@ async function setupAdminUsers(){
     if($('#usersTotal')) $('#usersTotal').textContent=overview.total_users??0;
     if($('#usersPro')) $('#usersPro').textContent=overview.pro_users??0;
     if($('#usersToday')) $('#usersToday').textContent=overview.today_new??0;
-    if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview.login_24h??0;
+    if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview.active_24h??overview.login_24h??0;
   };
 
   const render=(items)=>{
     if(!rows) return;
     if(!items.length){
-      rows.innerHTML='<tr><td colspan="7">没有匹配用户</td></tr>';
+      rows.innerHTML='<tr><td colspan="8">没有匹配用户</td></tr>';
       return;
     }
     rows.innerHTML=items.map(item=>{
@@ -4479,6 +4529,7 @@ async function setupAdminUsers(){
       return '<tr>'+
         '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
         '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
+        '<td>'+qcEscape(qcAdminFmt(item.last_active_at))+'</td>'+
         '<td>'+qcEscape(qcAdminFmt(item.last_sign_in_at))+'</td>'+
         '<td>'+qcEscape(membership)+'</td>'+
         '<td>'+qcEscape(expiry)+'</td>'+
@@ -4523,7 +4574,7 @@ async function setupAdminUsers(){
   const loadUsers=async()=>{
     const {data:users,error}=await window.qcSupabase.rpc('admin_users_list');
     if(error){
-      if(rows) rows.innerHTML='<tr><td colspan="7">用户数据读取失败</td></tr>';
+      if(rows) rows.innerHTML='<tr><td colspan="8">用户数据读取失败</td></tr>';
       return;
     }
     all=users||[];
@@ -4774,6 +4825,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('jc-detail',()=>setupJcMatchDetail());
   safe('legacy-match',()=>renderMatch());
   safe('auth',()=>setupDemoAuth());
+  safe('last-active',()=>setupLastActiveTracking());
   safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
   safe('auth-ticker',()=>setupAuthTickerVisibility());
