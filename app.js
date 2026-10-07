@@ -4468,7 +4468,7 @@ async function setupAdmin(){
 
   if(overview){
     if($('#adminTodayNew')) $('#adminTodayNew').textContent=overview.today_new??0;
-    if($('#adminLogin24h')) $('#adminLogin24h').textContent=overview.login_24h??0;
+    if($('#adminLogin24h')) $('#adminLogin24h').textContent=overview.active_24h??overview.login_24h??0;
   }
 
   const run=latestRunResult.data&&latestRunResult.data[0];
