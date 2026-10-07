@@ -963,14 +963,11 @@ async function jcAttachTeamLogos(rows){
   const names=[...new Set(rows.flatMap(m=>[m?.home_team_name,m?.away_team_name]).filter(Boolean))];
   const missing=names.filter(name=>!qcTeamLogoCache.has(String(name)));
   if(missing.length){
-    const {data,error}=await window.qcSupabase
-      .from('teams')
-      .select('name_zh,logo_url')
-      .in('name_zh',missing);
+    const {data,error}=await window.qcSupabase.rpc('resolve_team_logos',{p_names:missing});
     if(error){
       console.warn('读取球队队徽缓存失败',error);
     }else{
-      const found=new Map((data||[]).map(x=>[String(x.name_zh),String(x.logo_url||'')]));
+      const found=new Map((data||[]).map(x=>[String(x.input_name),String(x.logo_url||'')]));
       missing.forEach(name=>qcTeamLogoCache.set(String(name),found.get(String(name))||''));
     }
   }
