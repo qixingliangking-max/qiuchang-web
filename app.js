@@ -4690,12 +4690,12 @@ async function setupAdminCodes(){
     const rows=$('#redeemCodeRows');
     if(!rows) return;
     if(codesResult.error){
-      rows.innerHTML='<tr><td colspan="5">兑换码读取失败</td></tr>';
+      rows.innerHTML='<tr><td colspan="6">兑换码读取失败</td></tr>';
       return;
     }
     const codes=codesResult.data||[];
     if(!codes.length){
-      rows.innerHTML='<tr><td colspan="5">暂无兑换码</td></tr>';
+      rows.innerHTML='<tr><td colspan="6">暂无兑换码</td></tr>';
       return;
     }
 
@@ -4707,6 +4707,7 @@ async function setupAdminCodes(){
         '<td>'+qcEscape(statusText)+'</td>'+
         '<td>'+qcEscape(item.used_by_email||'—')+'</td>'+
         '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
+        '<td>'+qcEscape(qcAdminFmt(item.used_at))+'</td>'+
       '</tr>';
     }).join('');
   };
