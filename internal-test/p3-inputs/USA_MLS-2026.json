@@ -3233,7 +3233,15 @@
       "home_team": "西雅图海湾人",
       "away_team": "堪萨斯城竞技",
       "match_date": "2026-10-02",
-      "kickoff_at": "2026-10-02T01:30:00.000Z"
+      "kickoff_at": "2026-10-02T01:30:00Z"
+    },
+    {
+      "source_match_id": "5071211",
+      "match_id": "fotmob:5071211",
+      "home_team": "芝加哥火焰",
+      "away_team": "温哥华白帽",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T00:30:00.000Z"
     }
   ]
 }

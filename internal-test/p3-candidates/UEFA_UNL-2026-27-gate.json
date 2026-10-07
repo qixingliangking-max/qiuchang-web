@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 95,
-  "collected_matches": 95,
+  "input_matches": 104,
+  "collected_matches": 104,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 54,
-  "aggregate_players": 1454,
+  "aggregate_players": 1466,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -36,17 +36,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "保加利亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "克罗地亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "冰岛",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,12 +66,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "北马其顿",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "卢森堡",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,7 +86,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "圣马力诺",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -141,22 +141,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "捷克",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "摩尔多瓦",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯洛伐克",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯洛文尼亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -196,7 +196,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "爱沙尼亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -206,12 +206,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "瑞士",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "白俄罗斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -236,17 +236,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "芬兰",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "苏格兰",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "英格兰",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -261,7 +261,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "西班牙",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -271,7 +271,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿尔巴尼亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",

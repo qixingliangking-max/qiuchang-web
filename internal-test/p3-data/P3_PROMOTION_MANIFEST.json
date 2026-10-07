@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "e416c34d5f051050e7d9b461ebcf873a5ee5841a",
+      "blob_sha": "f9c0eebbfcd52fa0acb51957f0ef4ade56d35456",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 83,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-02T06:00:11.118Z",
-      "finished_matches": 404,
+      "last_incremental_refresh_at": "2026-10-07T06:18:54.136Z",
+      "finished_matches": 405,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -54,12 +54,12 @@
       "quality_tier": "LIMITED",
       "teams": 54,
       "published_path": "internal-test/p3-data/UEFA_UNL-2026-27.json",
-      "blob_sha": "251fc16661de7d7a9aa9351087964ad136d57cdf",
+      "blob_sha": "4f03007f4102efbed47c8f396d1d5af1b97070e4",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UNL-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-10-06T16:00:39.996Z",
-      "finished_matches": 95,
+      "last_incremental_refresh_at": "2026-10-07T06:18:47.088Z",
+      "finished_matches": 104,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {

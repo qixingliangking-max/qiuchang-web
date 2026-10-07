@@ -761,7 +761,79 @@
       "home_team": "哈萨克斯坦",
       "away_team": "法罗群岛",
       "match_date": "2026-10-06",
-      "kickoff_at": "2026-10-06T14:00:00.000Z"
+      "kickoff_at": "2026-10-06T14:00:00Z"
+    },
+    {
+      "source_match_id": "5181782",
+      "match_id": "fotmob:5181782",
+      "home_team": "苏格兰",
+      "away_team": "斯洛文尼亚",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181783",
+      "match_id": "fotmob:5181783",
+      "home_team": "瑞士",
+      "away_team": "北马其顿",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181855",
+      "match_id": "fotmob:5181855",
+      "home_team": "克罗地亚",
+      "away_team": "西班牙",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181856",
+      "match_id": "fotmob:5181856",
+      "home_team": "英格兰",
+      "away_team": "捷克",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181900",
+      "match_id": "fotmob:5181900",
+      "home_team": "阿尔巴尼亚",
+      "away_team": "圣马力诺",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181901",
+      "match_id": "fotmob:5181901",
+      "home_team": "白俄罗斯",
+      "away_team": "芬兰",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181940",
+      "match_id": "fotmob:5181940",
+      "home_team": "摩尔多瓦",
+      "away_team": "斯洛伐克",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181955",
+      "match_id": "fotmob:5181955",
+      "home_team": "爱沙尼亚",
+      "away_team": "冰岛",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
+    },
+    {
+      "source_match_id": "5181956",
+      "match_id": "fotmob:5181956",
+      "home_team": "卢森堡",
+      "away_team": "保加利亚",
+      "match_date": "2026-10-06",
+      "kickoff_at": "2026-10-06T18:45:00Z"
     }
   ]
 }

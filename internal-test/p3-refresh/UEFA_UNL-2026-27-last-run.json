@@ -1,15 +1,32 @@
 {
   "league_code": "UEFA_UNL",
   "season": "2026/27",
-  "run_at": "2026-10-06T20:28:51.067Z",
+  "run_at": "2026-10-07T06:18:47.088Z",
   "discovered_fixtures": 156,
-  "discovered_finished": 95,
+  "discovered_finished": 104,
   "baseline_finished_matches": 95,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 9,
+  "added_source_match_ids": [
+    "5181782",
+    "5181783",
+    "5181855",
+    "5181856",
+    "5181900",
+    "5181901",
+    "5181940",
+    "5181955",
+    "5181956"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 95,
+  "mapped_finished": 104,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0,
+  "published_blob_sha": "4f03007f4102efbed47c8f396d1d5af1b97070e4"
 }
