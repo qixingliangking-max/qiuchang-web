@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜用户管理</title>
-  <link rel="stylesheet" href="styles.css?v=20260923adminops1">
+  <link rel="stylesheet" href="styles.css?v=20261007daily1">
 </head>
 <body>
   <div class="shell">
@@ -20,6 +20,63 @@
         <div class="metric"><b id="usersToday">—</b><span>今日新增</span></div>
         <div class="metric"><b id="usersLogin24h">—</b><span>24小时活跃</span></div>
       </div>
+      <section class="profile-card admin-daily-panel">
+        <div class="admin-daily-head">
+          <div>
+            <h2>每日活跃</h2>
+            <p class="admin-note">按北京时间统计。可查看每天活跃、重新登录和兑换情况。</p>
+          </div>
+          <div class="admin-daily-tabs">
+            <button type="button" class="active" data-days="7">近7天</button>
+            <button type="button" data-days="30">近30天</button>
+          </div>
+        </div>
+        <div class="admin-grid admin-daily-metrics">
+          <div class="metric"><b id="dailyTodayActive">—</b><span>今日活跃</span></div>
+          <div class="metric"><b id="dailyTodayLogin">—</b><span>今日重新登录</span></div>
+          <div class="metric"><b id="dailyTodayRedeem">—</b><span>今日兑换</span></div>
+          <div class="metric"><b id="daily7Active">—</b><span>近7日活跃用户</span></div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="brief-table admin-daily-table">
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>活跃用户</th>
+                <th>重新登录</th>
+                <th>登录次数</th>
+                <th>兑换用户</th>
+              </tr>
+            </thead>
+            <tbody id="adminDailyRows">
+              <tr><td colspan="5">正在读取…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="admin-daily-detail">
+          <h3 id="adminDailyDetailTitle">今日明细</h3>
+          <div class="admin-table-wrap">
+            <table class="brief-table">
+              <thead>
+                <tr>
+                  <th>邮箱</th>
+                  <th>会员</th>
+                  <th>首次活跃</th>
+                  <th>最后活跃</th>
+                  <th>活跃记录</th>
+                  <th>重新登录</th>
+                  <th>兑换</th>
+                </tr>
+              </thead>
+              <tbody id="adminDailyDetailRows">
+                <tr><td colspan="7">正在读取…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="admin-note admin-daily-history-note">说明：历史数据只能根据已有登录、兑换和最后活跃信息回填；从本功能上线后开始完整记录每日访问。</p>
+      </section>
+
       <section class="profile-card">
         <div class="admin-users-toolbar">
           <input id="adminUserSearch" type="search" placeholder="搜索邮箱">
@@ -50,6 +107,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260927autologin1"></script>
-  <script src="app.js?v=20261007activity1"></script>
+  <script src="app.js?v=20261007daily1"></script>
 </body>
 </html>
