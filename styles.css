@@ -5380,3 +5380,26 @@ body.qc-ticker-authenticated .ticker{
     transform:translateY(-1px);
   }
 }
+
+
+/* 2026-10-07 admin daily activity */
+.admin-daily-panel{margin-top:20px}
+.admin-daily-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
+.admin-daily-head h2{margin:0 0 6px}
+.admin-daily-tabs{display:flex;gap:8px;flex:0 0 auto}
+.admin-daily-tabs button{height:38px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-weight:800;cursor:pointer}
+.admin-daily-tabs button.active{background:var(--blue-soft);border-color:#cdd8ff;color:var(--blue)}
+.admin-daily-metrics{margin:14px 0 18px}
+.admin-daily-table tbody tr[data-date]{cursor:pointer}
+.admin-daily-table tbody tr[data-date]:hover{background:#f7f9fd}
+.admin-daily-table tbody tr.selected{background:#edf2ff}
+.admin-daily-detail{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.admin-daily-detail h3{margin:0 0 12px}
+.admin-daily-history-note{margin:14px 0 0}
+.admin-daily-panel .admin-table-wrap .brief-table{min-width:620px}
+@media(max-width:640px){
+  .admin-daily-head{flex-direction:column}
+  .admin-daily-tabs{width:100%}
+  .admin-daily-tabs button{flex:1}
+  .admin-daily-metrics{grid-template-columns:repeat(2,1fr)}
+}
