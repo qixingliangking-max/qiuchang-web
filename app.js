@@ -2725,7 +2725,38 @@ function jcRenderAiPanel(m,pools,model,analysis){
       ? '模型方向、单选倾向、让球保护、半全场、总进球与TOP需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
       : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
 
-    const sections=[
+    const isPriorityFive=String(analysis.analysis_version||'').startsWith('AI-REPORT-FIVE-PRIORITY-');
+    const sections=isPriorityFive ? [
+      {
+        title:'一、比赛背景与近期状态',
+        body:aiParagraphs([analysis.strength_baseline])
+      },
+      {
+        title:'二、方向为什么选择「'+directionText+'」',
+        body:aiParagraphs([
+          analysis.summary,
+          analysis.comprehensive_observation||analysis.summary
+        ])
+      },
+      {
+        title:'三、让球方向与半全场怎么看',
+        body:aiParagraphs([
+          analysis.market_movement,
+          analysis.logic_relation||fallbackLogic
+        ])
+      },
+      {
+        title:'四、总进球与比分参考',
+        body:aiParagraphs([
+          analysis.match_path,
+          analysis.recent_form
+        ])
+      },
+      {
+        title:'五、风险变量提示',
+        body:aiParagraphs([analysis.risk_factors])
+      }
+    ] : [
       {
         title:'一、比赛背景与近期状态',
         body:aiParagraphs([
@@ -2934,7 +2965,7 @@ async function jcFetchDetailFastData(id,access,force=false){
 
   const aiPromise=canViewPremium
     ? window.qcSupabase.from('jc_match_ai_analysis')
-      .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,logic_relation,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+      .select('jc_match_id,status,analysis_version,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,logic_relation,match_path,comprehensive_observation,risk_factors,generator,generated_at')
       .eq('jc_match_id',id)
       .order('generated_at',{ascending:false})
       .limit(1)
@@ -2980,7 +3011,7 @@ function jcPrefetchDetailFastNeighbors(rows,currentId,access){
     .eq('is_locked',true)
     .eq('is_current',true);
   const aiPromise=window.qcSupabase.from('jc_match_ai_analysis')
-    .select('jc_match_id,status,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,match_path,comprehensive_observation,risk_factors,generator,generated_at')
+    .select('jc_match_id,status,analysis_version,summary,strength_baseline,recent_form,attack_defense,home_away,squad_integrity,h2h_analysis,market_movement,logic_relation,match_path,comprehensive_observation,risk_factors,generator,generated_at')
     .in('jc_match_id',ids)
     .order('generated_at',{ascending:false});
 
