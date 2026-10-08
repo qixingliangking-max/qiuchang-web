@@ -2234,6 +2234,54 @@
       "away_team": "布拉干蒂诺RB",
       "match_date": "2026-10-03",
       "kickoff_at": "2026-10-03T21:30:00Z"
+    },
+    {
+      "source_match_id": "5103648",
+      "match_id": "fotmob:5103648",
+      "home_team": "布拉干蒂诺RB",
+      "away_team": "米拉索尔",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103650",
+      "match_id": "fotmob:5103650",
+      "home_team": "巴西国际",
+      "away_team": "科林蒂安",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103653",
+      "match_id": "fotmob:5103653",
+      "home_team": "雷莫",
+      "away_team": "格雷米奥",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103652",
+      "match_id": "fotmob:5103652",
+      "home_team": "维多利亚",
+      "away_team": "沙佩科恩斯",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103645",
+      "match_id": "fotmob:5103645",
+      "home_team": "博塔弗戈",
+      "away_team": "瓦斯科达伽马",
+      "match_date": "2026-10-07",
+      "kickoff_at": "2026-10-07T23:30:00Z"
+    },
+    {
+      "source_match_id": "5103649",
+      "match_id": "fotmob:5103649",
+      "home_team": "克鲁塞罗",
+      "away_team": "圣保罗",
+      "match_date": "2026-10-08",
+      "kickoff_at": "2026-10-08T00:30:00.000Z"
     }
   ]
 }

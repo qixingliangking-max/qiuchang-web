@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-07T20:43:19.313Z",
+  "run_at": "2026-10-08T06:28:40.339Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 1,
@@ -23,15 +23,15 @@
     {
       "league_code": "BRA_SA",
       "season": "2026",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 279,
+      "status": "PROMOTED",
+      "discovered_finished": 285,
       "baseline_finished_matches": 279,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 6,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -93,15 +93,15 @@
     {
       "league_code": "FIN_VL",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 151,
-      "baseline_finished_matches": 150,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 151,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
