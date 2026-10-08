@@ -5403,3 +5403,14 @@ body.qc-ticker-authenticated .ticker{
   .admin-daily-tabs button{flex:1}
   .admin-daily-metrics{grid-template-columns:repeat(2,1fr)}
 }
+
+
+/* 2026-10-08 mobile ticker/date spacing: keep football date toolbar flush under ticker */
+@media (max-width:1023px){
+  .qc-football-page .content{
+    padding-top:0!important;
+  }
+  .qc-football-page .jc-football-toolbar{
+    margin-top:0!important;
+  }
+}
