@@ -4168,6 +4168,45 @@ async function setupDesktopAccountNav(){
   }
 }
 
+
+function qcSetupProfileContactModal(){
+  const modal=$('#qcProfileContactModal');
+  if(!modal) return;
+
+  const title=$('#qcProfileContactTitle');
+  const sub=$('#qcProfileContactSub');
+  const openBtn=$('#membershipOpenContactBtn');
+  const renewBtn=$('#membershipRenewContactBtn');
+  const closeBtn=$('#qcProfileContactClose');
+  const cancelBtn=$('#qcProfileContactCancel');
+  const okBtn=$('#qcProfileContactOk');
+
+  const close=()=>{
+    modal.hidden=true;
+    document.body.classList.remove('qc-profile-contact-open');
+  };
+
+  const open=mode=>{
+    const renew=mode==='renew';
+    if(title) title.textContent=renew?'联系客服续费':'联系客服开通 Pro';
+    if(sub) sub.textContent=renew
+      ? '扫描客服二维码，了解 Pro 续费方式。'
+      : '扫描客服二维码，了解 Pro 开通与兑换码获取方式。';
+    modal.hidden=false;
+    document.body.classList.add('qc-profile-contact-open');
+  };
+
+  if(openBtn) openBtn.onclick=()=>open('open');
+  if(renewBtn) renewBtn.onclick=()=>open('renew');
+  if(closeBtn) closeBtn.onclick=close;
+  if(cancelBtn) cancelBtn.onclick=close;
+  if(okBtn) okBtn.onclick=close;
+  modal.onclick=e=>{if(e.target===modal) close();};
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape' && !modal.hidden) close();
+  });
+}
+
 async function setupProfile(){
   const root = $('#profileRoot');
   if(!root) return;
@@ -4190,6 +4229,8 @@ async function setupProfile(){
   const roleEl = $('#profileRole');
   const statusEl = $('#profileStatus');
   const nicknameInput = $('#nicknameInput');
+
+  qcSetupProfileContactModal();
 
   if(emailEl) emailEl.textContent = user.email || '—';
 
@@ -4410,13 +4451,21 @@ function renderMembership(subscription, role){
   const planEl = $('#membershipPlan');
   const daysEl = $('#membershipDays');
   const expiryEl = $('#membershipExpiry');
+  const openContact = $('#membershipOpenContact');
+  const renewContact = $('#membershipRenewContact');
 
   if(!planEl || !daysEl || !expiryEl) return;
+
+  const setContactState=(state)=>{
+    if(openContact) openContact.hidden = state!=='open';
+    if(renewContact) renewContact.hidden = state!=='renew';
+  };
 
   if(!subscription){
     planEl.textContent = role === 'admin' ? '管理员' : '基础用户';
     daysEl.textContent = role === 'admin' ? '拥有完整查看权限' : '未开通 Pro';
     expiryEl.textContent = role === 'admin' ? '有效期：管理员权限' : '有效期至：未开通';
+    setContactState(role === 'admin' ? 'none' : 'open');
     return;
   }
 
@@ -4434,8 +4483,9 @@ function renderMembership(subscription, role){
     hour: '2-digit',
     minute: '2-digit'
   });
-}
 
+  setContactState(remainingDays <= 7 ? 'renew' : 'none');
+}
 
 
 async function qcAdminSession(root,nextPage){

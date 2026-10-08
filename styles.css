@@ -5414,3 +5414,179 @@ body.qc-ticker-authenticated .ticker{
     margin-top:0!important;
   }
 }
+
+
+/* 2026-10-08 profile Pro contact / renewal */
+.qc-profile-contact-row,
+.qc-profile-renew-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:4px 0 14px;
+  padding:11px 13px;
+  border-radius:13px;
+}
+.qc-profile-contact-row{
+  border:1px solid #e3e9f5;
+  background:#f8faff;
+}
+.qc-profile-renew-row{
+  border:1px solid #f0dcc4;
+  background:#fffaf3;
+}
+.qc-profile-contact-row[hidden],
+.qc-profile-renew-row[hidden]{display:none!important}
+.qc-profile-contact-copy,
+.qc-profile-renew-copy{min-width:0}
+.qc-profile-contact-copy strong,
+.qc-profile-renew-copy strong{
+  display:block;
+  font-size:14px;
+  line-height:1.35;
+}
+.qc-profile-contact-copy strong{color:#24344f}
+.qc-profile-renew-copy strong{color:#9a651e}
+.qc-profile-contact-copy span,
+.qc-profile-renew-copy span{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+  line-height:1.4;
+}
+.qc-profile-contact-copy span{color:#8a94a8}
+.qc-profile-renew-copy span{color:#9a8669}
+.qc-profile-contact-btn,
+.qc-profile-renew-btn{
+  flex:0 0 auto;
+  border:0;
+  background:transparent;
+  padding:7px 2px;
+  font-weight:900;
+  font-size:13px;
+  cursor:pointer;
+}
+.qc-profile-contact-btn{color:#3764ed}
+.qc-profile-renew-btn{color:#d17b1f}
+
+.qc-profile-contact-modal{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgba(24,31,44,.42);
+  backdrop-filter:blur(5px);
+}
+.qc-profile-contact-modal[hidden]{display:none!important}
+body.qc-profile-contact-open{overflow:hidden}
+.qc-profile-contact-dialog{
+  position:relative;
+  width:min(430px,calc(100vw - 30px));
+  box-sizing:border-box;
+  background:#fff;
+  border:1px solid #e4e8f0;
+  border-radius:24px;
+  padding:28px 22px 22px;
+  box-shadow:0 30px 90px rgba(24,31,44,.28);
+  text-align:center;
+}
+.qc-profile-contact-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:34px;
+  height:34px;
+  border:1px solid #e4e8f0;
+  border-radius:10px;
+  background:#f7f9fc;
+  color:#737d90;
+  font-size:22px;
+  line-height:1;
+  cursor:pointer;
+}
+.qc-profile-contact-dialog h2{
+  margin:0;
+  padding:0 38px;
+  color:#24344f;
+  font-size:24px;
+}
+.qc-profile-contact-sub{
+  margin:10px 0 18px;
+  color:#7f899d;
+  font-size:14px;
+  line-height:1.7;
+}
+.qc-profile-contact-qr{
+  width:min(260px,72vw);
+  aspect-ratio:1;
+  margin:0 auto;
+  overflow:hidden;
+  border:1.5px solid #dce4f2;
+  border-radius:18px;
+  background:#fff;
+}
+.qc-profile-contact-qr img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.qc-profile-contact-name{
+  margin-top:15px;
+  color:#24344f;
+  font-size:16px;
+  font-weight:900;
+}
+.qc-profile-contact-tip{
+  margin-top:8px;
+  color:#98a2b3;
+  font-size:12px;
+}
+.qc-profile-contact-note{
+  margin-top:18px;
+  padding:12px 14px;
+  border:1px solid #f2d0d0;
+  border-radius:13px;
+  background:#fff8f8;
+  color:#596274;
+  font-size:13px;
+}
+.qc-profile-contact-note b{
+  color:#d83a34;
+  font-size:16px;
+}
+.qc-profile-contact-actions{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:12px;
+  margin-top:20px;
+}
+.qc-profile-contact-actions button{
+  height:48px;
+  border-radius:13px;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+}
+.qc-profile-contact-cancel{
+  background:#fff;
+  border:1px solid #dce3ee;
+  color:#707b8f;
+}
+.qc-profile-contact-ok{
+  background:#3764ed;
+  border:0;
+  color:#fff;
+}
+@media(max-width:560px){
+  .qc-profile-contact-dialog{
+    padding:24px 18px 18px;
+    border-radius:22px;
+  }
+  .qc-profile-contact-row,
+  .qc-profile-renew-row{
+    padding:10px 12px;
+  }
+}

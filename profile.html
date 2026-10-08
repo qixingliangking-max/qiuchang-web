@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜个人中心</title>
-  <link rel="stylesheet" href="styles.css?v=20260927hamburger-preserve1">
+  <link rel="stylesheet" href="styles.css?v=20261008procontact1">
 </head>
 <body>
   <div class="shell">
@@ -31,6 +31,23 @@
           <span id="membershipDays" style="color:var(--muted)">未开通 Pro</span>
         </p>
         <p id="membershipExpiry" style="color:var(--muted)">有效期至：未开通</p>
+
+        <div class="qc-profile-contact-row" id="membershipOpenContact" hidden>
+          <div class="qc-profile-contact-copy">
+            <strong>没有兑换码？</strong>
+            <span>可直接联系客服开通 Pro</span>
+          </div>
+          <button id="membershipOpenContactBtn" class="qc-profile-contact-btn" type="button">联系客服</button>
+        </div>
+
+        <div class="qc-profile-renew-row" id="membershipRenewContact" hidden>
+          <div class="qc-profile-renew-copy">
+            <strong>会员即将到期</strong>
+            <span>可提前续费，避免权益中断</span>
+          </div>
+          <button id="membershipRenewContactBtn" class="qc-profile-renew-btn" type="button">联系客服续费</button>
+        </div>
+
         <form class="inline-form" id="redeemForm">
           <input id="redeemCode" autocomplete="off" placeholder="输入兑换码">
           <button type="submit">兑换</button>
@@ -60,6 +77,22 @@
     </main>
   </div>
 
+  <div id="qcProfileContactModal" class="qc-profile-contact-modal" hidden>
+    <div class="qc-profile-contact-dialog" role="dialog" aria-modal="true" aria-labelledby="qcProfileContactTitle">
+      <button class="qc-profile-contact-close" type="button" id="qcProfileContactClose" aria-label="关闭">×</button>
+      <h2 id="qcProfileContactTitle">联系客服开通 Pro</h2>
+      <div class="qc-profile-contact-sub" id="qcProfileContactSub">扫描客服二维码，了解 Pro 开通与兑换码获取方式。</div>
+      <div class="qc-profile-contact-qr"><img src="assets/contact-pro-qr.png" alt="官方客服二维码"></div>
+      <div class="qc-profile-contact-name">官方客服</div>
+      <div class="qc-profile-contact-tip">长按二维码可保存到手机相册</div>
+      <div class="qc-profile-contact-note">添加好友时请备注：<b>球场档案</b></div>
+      <div class="qc-profile-contact-actions">
+        <button id="qcProfileContactCancel" class="qc-profile-contact-cancel" type="button">取消</button>
+        <button id="qcProfileContactOk" class="qc-profile-contact-ok" type="button">知道了</button>
+      </div>
+    </div>
+  </div>
+
   <div class="drawer-backdrop" id="drawerBackdrop">
     <nav class="drawer"><a href="index.html">今日速览</a><a href="football.html">竞彩足球</a><a href="league.html">联赛档案</a><hr><a class="active" href="profile.html">个人中心</a><a class="logout" href="#" id="logoutBtn">退出登录</a></nav>
   </div>
@@ -67,6 +100,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260927autologin1"></script>
-  <script src="app.js?v=20261007activity1"></script>
+  <script src="app.js?v=20261008procontact1"></script>
 </body>
 </html>
