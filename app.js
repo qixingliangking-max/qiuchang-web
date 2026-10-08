@@ -978,13 +978,28 @@ async function jcAttachTeamLogos(rows){
   return rows;
 }
 
+function jcLogoDisplayUrl(rawUrl){
+  const raw=String(rawUrl||'').trim();
+  const match=raw.match(/^https:\/\/images\.fotmob\.com\/image_resources\/logo\/teamlogo\/(\d+)\.png(?:\?.*)?$/i);
+  if(!match) return raw;
+  return 'https://oqtloldkfjxildoribkf.supabase.co/functions/v1/team-logo-proxy?id='+encodeURIComponent(match[1]);
+}
+
+function jcLogoImgHtml(rawUrl,className,loading='lazy'){
+  const raw=String(rawUrl||'').trim();
+  if(!raw) return '';
+  const display=jcLogoDisplayUrl(raw);
+  const fallbackAttr=display!==raw
+    ? ' data-qc-logo-raw="'+qcEscape(raw)+'" onerror="if(!this.dataset.qcLogoFallback){this.dataset.qcLogoFallback=\'1\';this.src=this.dataset.qcLogoRaw;}else{this.style.display=\'none\'}"'
+    : ' onerror="this.style.display=\'none\'"';
+  return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(loading)+'" decoding="async" referrerpolicy="no-referrer"'+fallbackAttr+'>';
+}
+
 function jcTeamInnerHtml(m,side){
   const isHome=side==='home';
   const name=isHome?m?.home_team_name:m?.away_team_name;
   const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
-  return (logo
-    ? '<img class="jc-team-logo" src="'+qcEscape(logo)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">'
-    : '')+
+  return jcLogoImgHtml(logo,'jc-team-logo','lazy')+
     '<span class="jc-team-name">'+qcEscape(name||'—')+'</span>';
 }
 
@@ -993,7 +1008,7 @@ function jcDetailTeamBadgeHtml(m,side){
   const name=isHome?m?.home_team_name:m?.away_team_name;
   const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
   return (logo
-    ? '<img class="jc-detail-team-logo" src="'+qcEscape(logo)+'" alt="" loading="eager" decoding="async" onerror="this.style.display=\'none\'">'
+    ? jcLogoImgHtml(logo,'jc-detail-team-logo','eager')
     : '<span class="badge-circle">'+(isHome?'主':'客')+'</span>')+
     '<span class="jc-detail-team-name">'+qcEscape(name||'—')+'</span>';
 }
