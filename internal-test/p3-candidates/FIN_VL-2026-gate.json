@@ -3,17 +3,17 @@
   "season": "2026",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 151,
-  "collected_matches": 151,
+  "input_matches": 153,
+  "collected_matches": 153,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 12,
-  "aggregate_players": 390,
+  "aggregate_players": 392,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [],
   "gate_status": "PASS",
   "quality_tier": "PILOT_FULL",
-  "avg_team_depth_coverage_pct": 87.9
+  "avg_team_depth_coverage_pct": 88.6
 }
