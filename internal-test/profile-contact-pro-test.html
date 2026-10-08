@@ -33,6 +33,33 @@
       .qc-contact-dialog{padding:24px 18px 18px;border-radius:22px}
       .qc-profile-contact-row{padding:10px 12px}
     }
+  
+    .qc-member-demo-switch{
+      display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px
+    }
+    .qc-member-demo-switch button{
+      border:1px solid #dbe2ee;background:#fff;color:#667084;
+      border-radius:10px;padding:8px 11px;font-size:12px;font-weight:850;cursor:pointer
+    }
+    .qc-member-demo-switch button.active{
+      background:#edf3ff;border-color:#b9c9f7;color:#3764ed
+    }
+    .qc-profile-renew-row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      margin:4px 0 14px;padding:12px 13px;border:1px solid #f0dcc4;border-radius:13px;
+      background:#fffaf3
+    }
+    .qc-profile-renew-copy strong{
+      display:block;color:#9a651e;font-size:14px;line-height:1.35
+    }
+    .qc-profile-renew-copy span{
+      display:block;margin-top:4px;color:#9a8669;font-size:12px;line-height:1.4
+    }
+    .qc-profile-renew-btn{
+      flex:0 0 auto;border:0;background:transparent;color:#d17b1f;
+      padding:7px 2px;font-weight:900;font-size:13px;cursor:pointer
+    }
+    .qc-hidden{display:none!important}
   </style>
 </head>
 <body>
@@ -56,16 +83,29 @@
       </section>
 
       <section class="profile-card">
+        <div class="qc-member-demo-switch" id="qcMemberDemoSwitch" aria-label="内部会员状态模拟">
+          <button type="button" data-state="inactive" class="active">未开通/已到期</button>
+          <button type="button" data-state="active">Pro正常</button>
+          <button type="button" data-state="renew">7天内到期</button>
+        </div>
         <h2>会员订阅</h2>
-        <p><span class="pill blue">基础用户</span> <span style="color:var(--muted)">未开通 Pro</span></p>
-        <p style="color:var(--muted)">有效期至：未开通</p>
+        <p><span class="pill blue" id="qcDemoPlan">基础用户</span> <span id="qcDemoDays" style="color:var(--muted)">未开通 Pro</span></p>
+        <p id="qcDemoExpiry" style="color:var(--muted)">有效期至：未开通</p>
 
-        <div class="qc-profile-contact-row">
+        <div class="qc-profile-contact-row" id="qcInactiveContactRow">
           <div class="qc-profile-contact-copy">
             <strong>没有兑换码？</strong>
             <span>可直接联系客服开通 Pro</span>
           </div>
           <button id="qcContactProBtn" class="qc-profile-contact-btn" type="button">联系客服</button>
+        </div>
+
+        <div class="qc-profile-renew-row qc-hidden" id="qcRenewContactRow">
+          <div class="qc-profile-renew-copy">
+            <strong>会员即将到期</strong>
+            <span>剩余 7 天内，可提前续费避免权益中断</span>
+          </div>
+          <button id="qcRenewContactBtn" class="qc-profile-renew-btn" type="button">联系客服续费</button>
         </div>
 
         <form class="inline-form" onsubmit="event.preventDefault()">
@@ -86,8 +126,8 @@
 
   <div id="qcContactModal" class="qc-contact-modal" hidden>
     <div class="qc-contact-dialog" role="dialog" aria-modal="true" aria-labelledby="qcContactTitle">
-      <h2 id="qcContactTitle">联系客服开通 Pro</h2>
-      <div class="sub">扫描客服二维码，了解会员开通与兑换码获取方式。</div>
+      <h2 id="qcContactTitle">联系客服</h2>
+      <div class="sub">扫描客服二维码，了解 Pro 开通、续费与兑换码获取方式。</div>
       <div class="qc-contact-qr-placeholder qc-contact-qr-real"><img src="qr-contact-pro.png" alt="官方客服二维码"></div>
       <div class="qc-contact-label">官方客服</div>
       <div class="qc-contact-tip">长按二维码可保存到手机相册</div>
@@ -101,13 +141,60 @@
 
   <script>
     const modal=document.getElementById('qcContactModal');
-    const open=()=>{modal.hidden=false;document.body.style.overflow='hidden'};
+    const title=document.getElementById('qcContactTitle');
+    const sub=modal.querySelector('.sub');
+    const open=(mode='open')=>{
+      title.textContent=mode==='renew'?'联系客服续费':'联系客服开通 Pro';
+      sub.textContent=mode==='renew'
+        ?'扫描客服二维码，了解 Pro 续费方式。'
+        :'扫描客服二维码，了解 Pro 开通与兑换码获取方式。';
+      modal.hidden=false;
+      document.body.style.overflow='hidden';
+    };
     const close=()=>{modal.hidden=true;document.body.style.overflow=''};
-    document.getElementById('qcContactProBtn').onclick=open;
+    document.getElementById('qcContactProBtn').onclick=()=>open('open');
+    document.getElementById('qcRenewContactBtn').onclick=()=>open('renew');
     document.getElementById('qcContactCancel').onclick=close;
     document.getElementById('qcContactOk').onclick=close;
     modal.onclick=e=>{if(e.target===modal) close()};
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden) close()});
+
+    const plan=document.getElementById('qcDemoPlan');
+    const days=document.getElementById('qcDemoDays');
+    const expiry=document.getElementById('qcDemoExpiry');
+    const inactiveRow=document.getElementById('qcInactiveContactRow');
+    const renewRow=document.getElementById('qcRenewContactRow');
+
+    function setState(state){
+      document.querySelectorAll('#qcMemberDemoSwitch button').forEach(btn=>{
+        btn.classList.toggle('active',btn.dataset.state===state);
+      });
+
+      if(state==='inactive'){
+        plan.textContent='基础用户';
+        days.textContent='未开通 Pro';
+        expiry.textContent='有效期至：未开通';
+        inactiveRow.classList.remove('qc-hidden');
+        renewRow.classList.add('qc-hidden');
+      }else if(state==='active'){
+        plan.textContent='Pro';
+        days.textContent='会员正常';
+        expiry.textContent='有效期至：2026-11-28';
+        inactiveRow.classList.add('qc-hidden');
+        renewRow.classList.add('qc-hidden');
+      }else{
+        plan.textContent='Pro';
+        days.textContent='剩余 6 天';
+        expiry.textContent='有效期至：2026-10-14';
+        inactiveRow.classList.add('qc-hidden');
+        renewRow.classList.remove('qc-hidden');
+      }
+    }
+
+    document.querySelectorAll('#qcMemberDemoSwitch button').forEach(btn=>{
+      btn.onclick=()=>setState(btn.dataset.state);
+    });
+    setState('inactive');
   </script>
 </body>
 </html>
