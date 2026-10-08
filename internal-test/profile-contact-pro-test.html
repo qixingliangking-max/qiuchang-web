@@ -194,7 +194,8 @@
     document.querySelectorAll('#qcMemberDemoSwitch button').forEach(btn=>{
       btn.onclick=()=>setState(btn.dataset.state);
     });
-    setState('inactive');
+    const initialState=new URLSearchParams(location.search).get('state');
+    setState(['inactive','active','renew'].includes(initialState)?initialState:'inactive');
   </script>
 </body>
 </html>
