@@ -14,7 +14,7 @@
   if(typeof originalFetchOverview==='function'){
     window.jcFetchOverviewDateRows=async function(dateStr,force=false){
       try{
-        if(!force && window.qcSupabase && typeof window.qcCacheProOverviewSnapshot==='function'){
+        if(!force && window.qcSupabase && typeof qcCacheProOverviewSnapshot==='function'){
           const {data:sessionData}=await window.qcSupabase.auth.getSession();
           if(sessionData?.session){
             const {data,error}=await window.qcSupabase
@@ -24,7 +24,7 @@
               .limit(1);
             const record=!error && Array.isArray(data) ? data[0] : null;
             if(record){
-              const snap=window.qcCacheProOverviewSnapshot(record);
+              const snap=qcCacheProOverviewSnapshot(record);
               if(snap) return snap;
             }
           }
@@ -38,8 +38,8 @@
   if(typeof originalFetchDate==='function'){
     window.jcFetchDateRows=async function(dateStr,withSnapshots=false,force=false){
       try{
-        if(!withSnapshots && window.qcProOverviewRowsCache){
-          const cached=window.qcProOverviewRowsCache.get(String(dateStr||''));
+        if(!withSnapshots && typeof qcProOverviewRowsCache!=='undefined'){
+          const cached=qcProOverviewRowsCache.get(String(dateStr||''));
           if(cached?.data?.length){
             return {data:cached.data,error:null,fromPredictionSnapshot:true,fromStaticFirst:true};
           }
@@ -57,7 +57,7 @@
         const path=location.pathname||'/';
         const onOverview=path==='/' || /\/index\.html$/.test(path);
         if(onOverview){
-          const needed=rows.filter(m=>m?._jcLatestSnapshotsLoaded || window.jcScoreInfo?.(m)?.finished);
+          const needed=rows.filter(m=>m?._jcLatestSnapshotsLoaded || (typeof jcScoreInfo==='function' && jcScoreInfo(m)?.finished));
           if(needed.length!==rows.length){
             if(needed.length) await originalAttachSnapshots(needed);
             return rows;
