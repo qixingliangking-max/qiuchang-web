@@ -1,0 +1,23 @@
+body.qc-home .footer-note,
+body.jc-odds-page .footer-note{
+  padding:16px 22px 18px!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:1.65!important;
+}
+body.qc-home .content,
+body.jc-odds-page .content{
+  padding-bottom:24px!important;
+}
+@media(max-width:640px){
+  body.qc-home .footer-note,
+  body.jc-odds-page .footer-note{
+    padding:14px 18px 16px!important;
+    font-size:12.5px!important;
+    line-height:1.6!important;
+  }
+  body.qc-home .content,
+  body.jc-odds-page .content{
+    padding-bottom:18px!important;
+  }
+}
