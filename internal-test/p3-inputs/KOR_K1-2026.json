@@ -1442,6 +1442,30 @@
       "away_team": "仁川联",
       "match_date": "2026-09-27",
       "kickoff_at": "2026-09-27T10:00:00Z"
+    },
+    {
+      "source_match_id": "5140042",
+      "match_id": "fotmob:5140042",
+      "home_team": "大田韩亚市民",
+      "away_team": "全北现代",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5140043",
+      "match_id": "fotmob:5140043",
+      "home_team": "江原FC",
+      "away_team": "富川FC",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T07:30:00.000Z"
+    },
+    {
+      "source_match_id": "5140044",
+      "match_id": "fotmob:5140044",
+      "home_team": "仁川联",
+      "away_team": "浦项制铁",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T07:30:00.000Z"
     }
   ]
 }

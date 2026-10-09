@@ -5,507 +5,515 @@
   "matches": [
     {
       "source_match_id": "5781701",
-      "match_id": "a96fcc09-8c98-4b18-a8eb-a1a526a517b8",
+      "match_id": "fotmob:5781701",
       "home_team": "坎布尔",
       "away_team": "SBV精英",
       "match_date": "2026-08-07",
-      "kickoff_at": "2026-08-07 18:00:00+00"
+      "kickoff_at": "2026-08-07T18:00:00Z"
     },
     {
       "source_match_id": "5781698",
-      "match_id": "17eed802-813c-4f8f-aa3b-903dfabb1718",
+      "match_id": "fotmob:5781698",
       "home_team": "奈梅亨",
       "away_team": "特尔斯达",
       "match_date": "2026-08-08",
-      "kickoff_at": "2026-08-08 14:30:00+00"
+      "kickoff_at": "2026-08-08T14:30:00Z"
     },
     {
       "source_match_id": "5781702",
-      "match_id": "842a86b9-46d0-41b1-b53c-c1b557962819",
+      "match_id": "fotmob:5781702",
       "home_team": "前进之鹰",
       "away_team": "威廉二世",
       "match_date": "2026-08-08",
-      "kickoff_at": "2026-08-08 16:45:00+00"
+      "kickoff_at": "2026-08-08T16:45:00Z"
     },
     {
       "source_match_id": "5781700",
-      "match_id": "937b7847-aad7-44f6-9366-46b6bd8ae220",
+      "match_id": "fotmob:5781700",
       "home_team": "埃因霍温",
       "away_team": "锡塔德幸运",
       "match_date": "2026-08-08",
-      "kickoff_at": "2026-08-08 18:00:00+00"
+      "kickoff_at": "2026-08-08T18:00:00Z"
     },
     {
       "source_match_id": "5781699",
-      "match_id": "03cf8c20-4821-40dc-a658-ec129d4cfb96",
+      "match_id": "fotmob:5781699",
       "home_team": "阿尔克马尔",
       "away_team": "海牙",
       "match_date": "2026-08-08",
-      "kickoff_at": "2026-08-08 19:00:00+00"
+      "kickoff_at": "2026-08-08T19:00:00Z"
     },
     {
       "source_match_id": "5781696",
-      "match_id": "8ccf8cbc-b414-4dc1-94b9-62d18a51926c",
+      "match_id": "fotmob:5781696",
       "home_team": "鹿特丹斯巴达",
       "away_team": "费耶诺德",
       "match_date": "2026-08-09",
-      "kickoff_at": "2026-08-09 10:15:00+00"
-    },
-    {
-      "source_match_id": "5781704",
-      "match_id": "d5dff829-a7ff-4264-93a7-f19a35dfb13d",
-      "home_team": "格罗宁根",
-      "away_team": "乌德勒支",
-      "match_date": "2026-08-09",
-      "kickoff_at": "2026-08-09 12:30:00+00"
+      "kickoff_at": "2026-08-09T10:15:00Z"
     },
     {
       "source_match_id": "5781697",
-      "match_id": "f3c8597c-3f75-4c24-95b2-9edb1cfbcab8",
+      "match_id": "fotmob:5781697",
       "home_team": "兹沃勒",
       "away_team": "阿贾克斯",
       "match_date": "2026-08-09",
-      "kickoff_at": "2026-08-09 12:30:00+00"
+      "kickoff_at": "2026-08-09T12:30:00Z"
+    },
+    {
+      "source_match_id": "5781704",
+      "match_id": "fotmob:5781704",
+      "home_team": "格罗宁根",
+      "away_team": "乌德勒支",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09T12:30:00Z"
     },
     {
       "source_match_id": "5781703",
-      "match_id": "b5e3f409-88f2-43bc-949b-f6857177ad9a",
+      "match_id": "fotmob:5781703",
       "home_team": "海伦芬",
       "away_team": "特温特",
       "match_date": "2026-08-09",
-      "kickoff_at": "2026-08-09 14:45:00+00"
+      "kickoff_at": "2026-08-09T14:45:00Z"
     },
     {
       "source_match_id": "5781710",
-      "match_id": "e4857fce-4892-47a4-b8a1-ade18460173c",
+      "match_id": "fotmob:5781710",
       "home_team": "特尔斯达",
       "away_team": "鹿特丹斯巴达",
       "match_date": "2026-08-14",
-      "kickoff_at": "2026-08-14 18:00:00+00"
+      "kickoff_at": "2026-08-14T18:00:00Z"
     },
     {
       "source_match_id": "5781706",
-      "match_id": "b7fa1282-5f8a-4245-bc23-42e19fe3e5b0",
+      "match_id": "fotmob:5781706",
       "home_team": "威廉二世",
       "away_team": "奈梅亨",
       "match_date": "2026-08-15",
-      "kickoff_at": "2026-08-15 14:30:00+00"
+      "kickoff_at": "2026-08-15T14:30:00Z"
     },
     {
       "source_match_id": "5781707",
-      "match_id": "89ad2a18-0c3c-46a1-9175-416d415a7c54",
+      "match_id": "fotmob:5781707",
       "home_team": "乌德勒支",
       "away_team": "阿尔克马尔",
       "match_date": "2026-08-15",
-      "kickoff_at": "2026-08-15 16:45:00+00"
+      "kickoff_at": "2026-08-15T16:45:00Z"
     },
     {
       "source_match_id": "5781711",
-      "match_id": "553e0102-8ab9-4bcf-a936-98e054a5f4be",
+      "match_id": "fotmob:5781711",
       "home_team": "SBV精英",
       "away_team": "埃因霍温",
       "match_date": "2026-08-15",
-      "kickoff_at": "2026-08-15 18:00:00+00"
+      "kickoff_at": "2026-08-15T18:00:00Z"
     },
     {
       "source_match_id": "5781713",
-      "match_id": "f899f7eb-58a9-4aa5-a3d9-e0faad26c674",
+      "match_id": "fotmob:5781713",
       "home_team": "锡塔德幸运",
       "away_team": "坎布尔",
       "match_date": "2026-08-15",
-      "kickoff_at": "2026-08-15 19:00:00+00"
+      "kickoff_at": "2026-08-15T19:00:00Z"
     },
     {
       "source_match_id": "5781712",
-      "match_id": "4245f04a-44e6-4ac7-bd13-512e3c0e6869",
+      "match_id": "fotmob:5781712",
       "home_team": "海牙",
       "away_team": "格罗宁根",
       "match_date": "2026-08-16",
-      "kickoff_at": "2026-08-16 10:15:00+00"
+      "kickoff_at": "2026-08-16T10:15:00Z"
     },
     {
       "source_match_id": "5781705",
-      "match_id": "064f8e83-b754-49c0-8ea2-2ef89743c807",
+      "match_id": "fotmob:5781705",
       "home_team": "特温特",
       "away_team": "兹沃勒",
       "match_date": "2026-08-16",
-      "kickoff_at": "2026-08-16 12:30:00+00"
+      "kickoff_at": "2026-08-16T12:30:00Z"
     },
     {
       "source_match_id": "5781708",
-      "match_id": "ddb54ee8-a35a-4bb4-b912-6a18c775c7bf",
+      "match_id": "fotmob:5781708",
       "home_team": "费耶诺德",
       "away_team": "前进之鹰",
       "match_date": "2026-08-16",
-      "kickoff_at": "2026-08-16 12:30:00+00"
+      "kickoff_at": "2026-08-16T12:30:00Z"
     },
     {
       "source_match_id": "5781709",
-      "match_id": "f75384e2-1c45-460a-bb50-0b5e0481ee89",
+      "match_id": "fotmob:5781709",
       "home_team": "阿贾克斯",
       "away_team": "海伦芬",
       "match_date": "2026-08-16",
-      "kickoff_at": "2026-08-16 14:45:00+00"
+      "kickoff_at": "2026-08-16T14:45:00Z"
     },
     {
       "source_match_id": "5781716",
-      "match_id": "5c25a16d-de2d-4c44-8de8-785be8cca69f",
+      "match_id": "fotmob:5781716",
       "home_team": "锡塔德幸运",
       "away_team": "阿尔克马尔",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 14:30:00+00"
+      "kickoff_at": "2026-08-22T14:30:00Z"
     },
     {
       "source_match_id": "5781715",
-      "match_id": "606a8196-59cb-4b8e-a2bf-292811461513",
+      "match_id": "fotmob:5781715",
       "home_team": "鹿特丹斯巴达",
       "away_team": "乌德勒支",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 16:45:00+00"
+      "kickoff_at": "2026-08-22T16:45:00Z"
     },
     {
       "source_match_id": "5781719",
-      "match_id": "95ca6b9c-4c89-4638-8d96-1e7416b71d48",
+      "match_id": "fotmob:5781719",
       "home_team": "海伦芬",
       "away_team": "兹沃勒",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 19:00:00+00"
+      "kickoff_at": "2026-08-22T19:00:00Z"
     },
     {
       "source_match_id": "5781717",
-      "match_id": "8e32126c-1f53-4d67-9e19-9c5333b2fe3c",
+      "match_id": "fotmob:5781717",
       "home_team": "前进之鹰",
       "away_team": "海牙",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 10:15:00+00"
+      "kickoff_at": "2026-08-23T10:15:00Z"
     },
     {
       "source_match_id": "5781714",
-      "match_id": "edefa232-5c82-4a53-a8d2-49fa92727225",
+      "match_id": "fotmob:5781714",
       "home_team": "埃因霍温",
       "away_team": "格罗宁根",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 12:30:00+00"
+      "kickoff_at": "2026-08-23T12:30:00Z"
     },
     {
       "source_match_id": "5781721",
-      "match_id": "1ad59c6e-f183-4ae5-a034-af5c8f6f3151",
+      "match_id": "fotmob:5781721",
       "home_team": "坎布尔",
       "away_team": "费耶诺德",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 14:45:00+00"
+      "kickoff_at": "2026-08-23T14:45:00Z"
     },
     {
       "source_match_id": "5781729",
-      "match_id": "3a9dbb36-296a-45e9-ae38-8ca95fd6a6e1",
+      "match_id": "fotmob:5781729",
       "home_team": "格罗宁根",
       "away_team": "锡塔德幸运",
       "match_date": "2026-08-28",
-      "kickoff_at": "2026-08-28 18:00:00+00"
+      "kickoff_at": "2026-08-28T18:00:00Z"
     },
     {
       "source_match_id": "5781723",
-      "match_id": "815e933a-f435-42b9-bdd2-e1f73a30266e",
+      "match_id": "fotmob:5781723",
       "home_team": "SBV精英",
       "away_team": "鹿特丹斯巴达",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 14:30:00+00"
+      "kickoff_at": "2026-08-29T14:30:00Z"
     },
     {
       "source_match_id": "5781724",
-      "match_id": "43869afa-103e-40ae-a255-aa30e95cf55b",
+      "match_id": "fotmob:5781724",
       "home_team": "阿尔克马尔",
       "away_team": "前进之鹰",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 16:45:00+00"
+      "kickoff_at": "2026-08-29T16:45:00Z"
     },
     {
       "source_match_id": "5781725",
-      "match_id": "aa72a5a5-bf75-4a58-af28-8c2ab9f7c616",
+      "match_id": "fotmob:5781725",
       "home_team": "兹沃勒",
       "away_team": "奈梅亨",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 19:00:00+00"
+      "kickoff_at": "2026-08-29T19:00:00Z"
     },
     {
       "source_match_id": "5781726",
-      "match_id": "7e367e89-16d1-4eb7-9fb7-19cf985ea9a8",
+      "match_id": "fotmob:5781726",
       "home_team": "乌德勒支",
       "away_team": "埃因霍温",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 10:15:00+00"
+      "kickoff_at": "2026-08-30T10:15:00Z"
     },
     {
       "source_match_id": "5781727",
-      "match_id": "44a345c3-3a25-4cf3-ab81-f544f38b2899",
+      "match_id": "fotmob:5781727",
       "home_team": "费耶诺德",
       "away_team": "海牙",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 12:30:00+00"
+      "kickoff_at": "2026-08-30T12:30:00Z"
     },
     {
       "source_match_id": "5781728",
-      "match_id": "f8e6e511-4397-4809-9b36-2ae4a6a5a9bb",
+      "match_id": "fotmob:5781728",
       "home_team": "威廉二世",
       "away_team": "海伦芬",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 12:30:00+00"
+      "kickoff_at": "2026-08-30T12:30:00Z"
     },
     {
       "source_match_id": "5781730",
-      "match_id": "8f631ed8-d1fa-47b8-8a5e-cd69041c3783",
+      "match_id": "fotmob:5781730",
       "home_team": "特尔斯达",
       "away_team": "阿贾克斯",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 14:45:00+00"
+      "kickoff_at": "2026-08-30T14:45:00Z"
     },
     {
       "source_match_id": "5781731",
-      "match_id": "df0fd7ca-4d49-497c-92a1-020fc5a72f20",
+      "match_id": "fotmob:5781731",
       "home_team": "坎布尔",
       "away_team": "特温特",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 18:00:00+00"
+      "kickoff_at": "2026-08-30T18:00:00Z"
     },
     {
       "source_match_id": "5781738",
-      "match_id": "8060dfc8-1934-470a-9e5c-7fd38d4e9a0e",
+      "match_id": "fotmob:5781738",
       "home_team": "鹿特丹斯巴达",
       "away_team": "兹沃勒",
       "match_date": "2026-09-04",
-      "kickoff_at": "2026-09-04 18:00:00+00"
+      "kickoff_at": "2026-09-04T18:00:00Z"
     },
     {
       "source_match_id": "5781737",
-      "match_id": "758d2f48-9d18-4468-9b9b-35fc1f6c9150",
+      "match_id": "fotmob:5781737",
       "home_team": "奈梅亨",
       "away_team": "费耶诺德",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 14:30:00+00"
+      "kickoff_at": "2026-09-05T14:30:00Z"
     },
     {
       "source_match_id": "5781735",
-      "match_id": "032b5f28-d110-4635-b895-52e7d9aaad1d",
+      "match_id": "fotmob:5781735",
       "home_team": "阿贾克斯",
       "away_team": "埃因霍温",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 18:00:00+00"
+      "kickoff_at": "2026-09-05T18:00:00Z"
     },
     {
       "source_match_id": "5781739",
-      "match_id": "674604ce-ec13-4660-abfe-c85906b77e39",
+      "match_id": "fotmob:5781739",
       "home_team": "威廉二世",
       "away_team": "SBV精英",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 19:00:00+00"
+      "kickoff_at": "2026-09-05T19:00:00Z"
     },
     {
       "source_match_id": "5781732",
-      "match_id": "d60e5db5-159e-4835-a533-6d10fb4ba3fa",
+      "match_id": "fotmob:5781732",
       "home_team": "格罗宁根",
       "away_team": "特温特",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 10:15:00+00"
+      "kickoff_at": "2026-09-06T10:15:00Z"
     },
     {
       "source_match_id": "5781734",
-      "match_id": "8d554086-8e52-4974-a801-a52993aa62c4",
+      "match_id": "fotmob:5781734",
       "home_team": "特尔斯达",
       "away_team": "坎布尔",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 12:30:00+00"
+      "kickoff_at": "2026-09-06T12:30:00Z"
     },
     {
       "source_match_id": "5781736",
-      "match_id": "d280d450-cafe-4591-89d1-ecaea60b09de",
+      "match_id": "fotmob:5781736",
       "home_team": "海伦芬",
       "away_team": "阿尔克马尔",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 12:30:00+00"
+      "kickoff_at": "2026-09-06T12:30:00Z"
     },
     {
       "source_match_id": "5781740",
-      "match_id": "df892829-5b3f-4a36-8755-c14bec9c52ec",
+      "match_id": "fotmob:5781740",
       "home_team": "海牙",
       "away_team": "锡塔德幸运",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 14:45:00+00"
+      "kickoff_at": "2026-09-06T14:45:00Z"
     },
     {
       "source_match_id": "5781733",
-      "match_id": "a167c87a-ae71-4521-90a9-6ee0cfd94455",
+      "match_id": "fotmob:5781733",
       "home_team": "乌德勒支",
       "away_team": "前进之鹰",
       "match_date": "2026-09-08",
-      "kickoff_at": "2026-09-08 12:00:00+00"
+      "kickoff_at": "2026-09-08T12:00:00Z"
     },
     {
       "source_match_id": "5781720",
-      "match_id": "44230528-c83b-4b8c-94bd-fcb3c6747ad3",
+      "match_id": "fotmob:5781720",
       "home_team": "奈梅亨",
       "away_team": "SBV精英",
       "match_date": "2026-09-08",
-      "kickoff_at": "2026-09-08 16:45:00+00"
+      "kickoff_at": "2026-09-08T16:45:00Z"
     },
     {
       "source_match_id": "5781722",
-      "match_id": "dc642534-e4fe-4456-bb22-4d81c7195879",
+      "match_id": "fotmob:5781722",
       "home_team": "特温特",
       "away_team": "特尔斯达",
       "match_date": "2026-09-09",
-      "kickoff_at": "2026-09-09 16:45:00+00"
+      "kickoff_at": "2026-09-09T16:45:00Z"
     },
     {
       "source_match_id": "5781742",
-      "match_id": "5adbc1f6-4ace-4713-9292-b9d60b4e37e6",
+      "match_id": "fotmob:5781742",
       "home_team": "阿尔克马尔",
       "away_team": "威廉二世",
       "match_date": "2026-09-11",
-      "kickoff_at": "2026-09-11 18:00:00+00"
+      "kickoff_at": "2026-09-11T18:00:00Z"
     },
     {
       "source_match_id": "5781746",
-      "match_id": "225af066-c425-4ef9-bf0f-69bcc9e2603a",
+      "match_id": "fotmob:5781746",
       "home_team": "特温特",
       "away_team": "海牙",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 14:30:00+00"
+      "kickoff_at": "2026-09-12T14:30:00Z"
     },
     {
       "source_match_id": "5781748",
-      "match_id": "7bc38367-c841-40fd-a48b-7ec8aa8680b9",
+      "match_id": "fotmob:5781748",
       "home_team": "前进之鹰",
       "away_team": "格罗宁根",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 16:45:00+00"
+      "kickoff_at": "2026-09-12T16:45:00Z"
     },
     {
       "source_match_id": "5781747",
-      "match_id": "145f8bd8-2f74-4dce-8658-120c27ec3400",
+      "match_id": "fotmob:5781747",
       "home_team": "锡塔德幸运",
       "away_team": "阿贾克斯",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:00:00+00"
+      "kickoff_at": "2026-09-12T18:00:00Z"
     },
     {
       "source_match_id": "5781741",
-      "match_id": "5afe6ed8-0b72-4266-9f2d-519cb1ccf7de",
+      "match_id": "fotmob:5781741",
       "home_team": "坎布尔",
       "away_team": "奈梅亨",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 19:00:00+00"
+      "kickoff_at": "2026-09-12T19:00:00Z"
     },
     {
       "source_match_id": "5781745",
-      "match_id": "1c925512-203b-445f-86dd-dce4ca8057dc",
+      "match_id": "fotmob:5781745",
       "home_team": "SBV精英",
       "away_team": "乌德勒支",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 10:15:00+00"
+      "kickoff_at": "2026-09-13T10:15:00Z"
     },
     {
       "source_match_id": "5781744",
-      "match_id": "48c8e0bf-57db-4379-a4ac-969c57630794",
+      "match_id": "fotmob:5781744",
       "home_team": "海伦芬",
       "away_team": "特尔斯达",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 12:30:00+00"
+      "kickoff_at": "2026-09-13T12:30:00Z"
     },
     {
       "source_match_id": "5781749",
-      "match_id": "d642522e-85db-4389-a248-d06954cbc62e",
+      "match_id": "fotmob:5781749",
       "home_team": "兹沃勒",
       "away_team": "费耶诺德",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 14:45:00+00"
+      "kickoff_at": "2026-09-13T14:45:00Z"
     },
     {
       "source_match_id": "5781743",
-      "match_id": "9e9dd1cc-3afa-48c5-8737-b821475a2134",
+      "match_id": "fotmob:5781743",
       "home_team": "埃因霍温",
       "away_team": "鹿特丹斯巴达",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 18:00:00+00"
+      "kickoff_at": "2026-09-13T18:00:00Z"
     },
     {
       "source_match_id": "5781718",
-      "match_id": "75aecf55-111d-42c6-8846-84acd118528d",
+      "match_id": "fotmob:5781718",
       "home_team": "阿贾克斯",
       "away_team": "威廉二世",
       "match_date": "2026-09-15",
-      "kickoff_at": "2026-09-15 18:00:00+00"
+      "kickoff_at": "2026-09-15T18:00:00Z"
     },
     {
       "source_match_id": "5781754",
-      "match_id": "7095c2d6-c8f7-4651-a36a-e6f9b4bca373",
+      "match_id": "fotmob:5781754",
       "home_team": "格罗宁根",
       "away_team": "兹沃勒",
       "match_date": "2026-09-18",
-      "kickoff_at": "2026-09-18 18:00:00+00"
+      "kickoff_at": "2026-09-18T18:00:00Z"
     },
     {
       "source_match_id": "5781755",
-      "match_id": "650f8a91-7b8b-4a8a-841b-b0fd406c6d6d",
+      "match_id": "fotmob:5781755",
       "home_team": "海牙",
       "away_team": "坎布尔",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 14:30:00+00"
+      "kickoff_at": "2026-09-19T14:30:00Z"
     },
     {
       "source_match_id": "5781756",
-      "match_id": "cda776c3-0469-41c3-acf6-b840cca7eca1",
+      "match_id": "fotmob:5781756",
       "home_team": "鹿特丹斯巴达",
       "away_team": "海伦芬",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 16:45:00+00"
+      "kickoff_at": "2026-09-19T16:45:00Z"
     },
     {
       "source_match_id": "5781757",
-      "match_id": "ada59085-ae45-4c3c-9955-b5eab9e7f16a",
+      "match_id": "fotmob:5781757",
       "home_team": "阿贾克斯",
       "away_team": "SBV精英",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:00:00+00"
+      "kickoff_at": "2026-09-19T18:00:00Z"
     },
     {
       "source_match_id": "5781758",
-      "match_id": "bb28f98e-2e9a-49df-b28c-65d3d539442a",
+      "match_id": "fotmob:5781758",
       "home_team": "威廉二世",
       "away_team": "锡塔德幸运",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 19:00:00+00"
+      "kickoff_at": "2026-09-19T19:00:00Z"
     },
     {
       "source_match_id": "5781750",
-      "match_id": "f593b2eb-8e5f-4c0e-8604-eefc44ca27cf",
+      "match_id": "fotmob:5781750",
       "home_team": "费耶诺德",
       "away_team": "乌德勒支",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 10:15:00+00"
+      "kickoff_at": "2026-09-20T10:15:00Z"
     },
     {
       "source_match_id": "5781752",
-      "match_id": "1eaf931f-dc1e-4b62-9a21-b50fcb0dcbd5",
+      "match_id": "fotmob:5781752",
       "home_team": "阿尔克马尔",
       "away_team": "特尔斯达",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 12:30:00+00"
+      "kickoff_at": "2026-09-20T12:30:00Z"
     },
     {
       "source_match_id": "5781753",
-      "match_id": "44c25f57-e19c-4742-ab24-ef1c9f757695",
+      "match_id": "fotmob:5781753",
       "home_team": "特温特",
       "away_team": "埃因霍温",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 12:30:00+00"
+      "kickoff_at": "2026-09-20T12:30:00Z"
     },
     {
       "source_match_id": "5781751",
-      "match_id": "376ae1f4-3046-4c3a-ae7d-26a9b90a8c6a",
+      "match_id": "fotmob:5781751",
       "home_team": "奈梅亨",
       "away_team": "前进之鹰",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 14:45:00+00"
+      "kickoff_at": "2026-09-20T14:45:00Z"
+    },
+    {
+      "source_match_id": "5781762",
+      "match_id": "fotmob:5781762",
+      "home_team": "埃因霍温",
+      "away_team": "海伦芬",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
     }
   ]
 }

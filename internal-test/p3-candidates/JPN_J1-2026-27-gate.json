@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 80,
-  "collected_matches": 80,
+  "input_matches": 82,
+  "collected_matches": 82,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 562,
+  "aggregate_players": 563,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "大阪钢巴",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "柏太阳神",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "神户胜利船",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -111,7 +111,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "鹿岛鹿角",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",

@@ -642,6 +642,22 @@
       "away_team": "柏太阳神",
       "match_date": "2026-09-20",
       "kickoff_at": "2026-09-20T08:00:00Z"
+    },
+    {
+      "source_match_id": "5803602",
+      "match_id": "fotmob:5803602",
+      "home_team": "鹿岛鹿角",
+      "away_team": "大阪钢巴",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803603",
+      "match_id": "fotmob:5803603",
+      "home_team": "柏太阳神",
+      "away_team": "神户胜利船",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T10:00:00.000Z"
     }
   ]
 }

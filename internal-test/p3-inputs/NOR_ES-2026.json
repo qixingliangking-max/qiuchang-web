@@ -1346,6 +1346,14 @@
       "away_team": "博德闪耀",
       "match_date": "2026-09-20",
       "kickoff_at": "2026-09-20T17:15:00Z"
+    },
+    {
+      "source_match_id": "5105018",
+      "match_id": "fotmob:5105018",
+      "home_team": "布兰",
+      "away_team": "维京",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T17:00:00.000Z"
     }
   ]
 }

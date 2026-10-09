@@ -5,1411 +5,1419 @@
   "matches": [
     {
       "source_match_id": "5107438",
-      "match_id": "4b2a21c5-a62b-4d1e-97ec-9be8c4e074ee",
+      "match_id": "fotmob:5107438",
       "home_team": "哈马比",
       "away_team": "米亚尔比",
       "match_date": "2026-04-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-04T13:00:00Z"
     },
     {
       "source_match_id": "5107443",
-      "match_id": "4f1191af-9ae0-4762-8d0f-b404c9e34ef3",
+      "match_id": "fotmob:5107443",
       "home_team": "代格福什",
       "away_team": "天狼星",
       "match_date": "2026-04-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-04T13:00:00Z"
     },
     {
       "source_match_id": "5107437",
-      "match_id": "ca3550b4-9b5e-4e17-a19a-2f9f3ce4cc96",
+      "match_id": "fotmob:5107437",
       "home_team": "AIK索尔纳",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-04-05",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107440",
-      "match_id": "f3605778-863f-4551-8889-f3ed7464f9ad",
-      "home_team": "奥尔格里特",
-      "away_team": "马尔默",
-      "match_date": "2026-04-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-05T12:00:00Z"
     },
     {
       "source_match_id": "5107444",
-      "match_id": "0b871924-3ae2-4f2d-98d0-e946a16f993a",
+      "match_id": "fotmob:5107444",
       "home_team": "卡尔马",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-04-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-05T12:00:00Z"
     },
     {
-      "source_match_id": "5107439",
-      "match_id": "855828c4-f867-44f1-a01b-a18810cab951",
-      "home_team": "哥德堡盖斯",
-      "away_team": "佐加顿斯",
-      "match_date": "2026-04-06",
-      "kickoff_at": null
+      "source_match_id": "5107440",
+      "match_id": "fotmob:5107440",
+      "home_team": "奥尔格里特",
+      "away_team": "马尔默",
+      "match_date": "2026-04-05",
+      "kickoff_at": "2026-04-05T14:30:00Z"
     },
     {
       "source_match_id": "5107441",
-      "match_id": "60ac462f-4559-49e6-be74-5b937c31045d",
+      "match_id": "fotmob:5107441",
       "home_team": "赫根",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-04-06",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-06T12:00:00Z"
     },
     {
       "source_match_id": "5107442",
-      "match_id": "44074305-fda9-4105-be81-6826ee42f7c2",
+      "match_id": "fotmob:5107442",
       "home_team": "埃尔夫斯堡",
       "away_team": "哥德堡",
       "match_date": "2026-04-06",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-06T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107439",
+      "match_id": "fotmob:5107439",
+      "home_team": "哥德堡盖斯",
+      "away_team": "佐加顿斯",
+      "match_date": "2026-04-06",
+      "kickoff_at": "2026-04-06T14:30:00Z"
     },
     {
       "source_match_id": "5107446",
-      "match_id": "c63b1a25-320e-461e-99f9-b8724ab4e385",
+      "match_id": "fotmob:5107446",
       "home_team": "哥德堡",
       "away_team": "赫根",
       "match_date": "2026-04-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-11T13:00:00Z"
     },
     {
       "source_match_id": "5107447",
-      "match_id": "7f71c463-4875-4f04-b3ec-543e12d4c08a",
+      "match_id": "fotmob:5107447",
       "home_team": "米亚尔比",
       "away_team": "奥尔格里特",
       "match_date": "2026-04-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-11T13:00:00Z"
     },
     {
       "source_match_id": "5107451",
-      "match_id": "8b779ac5-e420-42d0-afa9-97cf18b8fcae",
+      "match_id": "fotmob:5107451",
       "home_team": "瓦斯特拉斯",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-04-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-11T13:00:00Z"
     },
     {
       "source_match_id": "5107445",
-      "match_id": "37c1cdf5-1eb4-4eb4-8da0-34a2da906287",
+      "match_id": "fotmob:5107445",
       "home_team": "佐加顿斯",
       "away_team": "卡尔马",
       "match_date": "2026-04-12",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107448",
-      "match_id": "615c19a4-6eeb-4a3c-ae08-399c2a01d0e2",
-      "home_team": "马尔默",
-      "away_team": "哥德堡盖斯",
-      "match_date": "2026-04-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-12T12:00:00Z"
     },
     {
       "source_match_id": "5107452",
-      "match_id": "0e00ee1f-5fc8-4bb3-80ca-997f240d0af9",
+      "match_id": "fotmob:5107452",
       "home_team": "哈尔姆斯塔德",
       "away_team": "代格福什",
       "match_date": "2026-04-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-12T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107448",
+      "match_id": "fotmob:5107448",
+      "home_team": "马尔默",
+      "away_team": "哥德堡盖斯",
+      "match_date": "2026-04-12",
+      "kickoff_at": "2026-04-12T14:30:00Z"
     },
     {
       "source_match_id": "5107449",
-      "match_id": "907fd26b-b0ba-4127-bc2b-cbbaabaeffc3",
+      "match_id": "fotmob:5107449",
       "home_team": "布洛马波卡纳",
       "away_team": "AIK索尔纳",
       "match_date": "2026-04-13",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-13T17:00:00Z"
     },
     {
       "source_match_id": "5107450",
-      "match_id": "4383951f-193b-4ea6-af98-da31dc9042c4",
+      "match_id": "fotmob:5107450",
       "home_team": "天狼星",
       "away_team": "哈马比",
       "match_date": "2026-04-13",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-13T17:00:00Z"
     },
     {
       "source_match_id": "5107454",
-      "match_id": "845414f5-7a30-4d52-b492-08e7b95bd1c5",
+      "match_id": "fotmob:5107454",
       "home_team": "佐加顿斯",
       "away_team": "马尔默",
       "match_date": "2026-04-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-17T17:00:00Z"
     },
     {
       "source_match_id": "5107458",
-      "match_id": "c99f9612-bb02-4f76-9ecf-a3e11ca5ebdb",
+      "match_id": "fotmob:5107458",
       "home_team": "代格福什",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-04-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-17T17:00:00Z"
     },
     {
       "source_match_id": "5107455",
-      "match_id": "6444e96a-fbdd-4c3c-967d-ca79746d0e92",
+      "match_id": "fotmob:5107455",
       "home_team": "哈马比",
       "away_team": "奥尔格里特",
       "match_date": "2026-04-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-18T13:00:00Z"
     },
     {
       "source_match_id": "5107457",
-      "match_id": "124aa3ca-1a90-41a6-a358-532971c5a34e",
+      "match_id": "fotmob:5107457",
       "home_team": "米亚尔比",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-04-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-18T13:00:00Z"
     },
     {
       "source_match_id": "5107459",
-      "match_id": "693c2ba3-e8f8-43b5-8b59-c8f88c55156f",
+      "match_id": "fotmob:5107459",
       "home_team": "天狼星",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-04-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-18T13:00:00Z"
     },
     {
       "source_match_id": "5107460",
-      "match_id": "b9806bd3-f7c1-4a2c-bd75-c2b3273b32e3",
+      "match_id": "fotmob:5107460",
       "home_team": "哈尔姆斯塔德",
       "away_team": "哥德堡",
       "match_date": "2026-04-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-18T13:00:00Z"
     },
     {
       "source_match_id": "5107453",
-      "match_id": "e7bd1067-9a4e-4fdb-b576-07502a942f9b",
+      "match_id": "fotmob:5107453",
       "home_team": "AIK索尔纳",
       "away_team": "卡尔马",
       "match_date": "2026-04-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-19T12:00:00Z"
     },
     {
       "source_match_id": "5107456",
-      "match_id": "aa7451fa-e95f-4085-874b-594a7451bdf0",
+      "match_id": "fotmob:5107456",
       "home_team": "赫根",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-04-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-19T14:30:00Z"
     },
     {
       "source_match_id": "5107461",
-      "match_id": "5738bd1b-0eb8-45eb-904f-49f5faee3512",
+      "match_id": "fotmob:5107461",
       "home_team": "哈马比",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-04-22",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-22T17:00:00Z"
     },
     {
       "source_match_id": "5107463",
-      "match_id": "e0cce914-91a9-4bf3-b198-1644411689a7",
+      "match_id": "fotmob:5107463",
       "home_team": "奥尔格里特",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-04-22",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-22T17:00:00Z"
     },
     {
       "source_match_id": "5107465",
-      "match_id": "d2662177-6921-4798-ad9c-421d0dd352e4",
+      "match_id": "fotmob:5107465",
       "home_team": "埃尔夫斯堡",
       "away_team": "佐加顿斯",
       "match_date": "2026-04-22",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-22T17:00:00Z"
     },
     {
       "source_match_id": "5107467",
-      "match_id": "76ca5067-d66f-4650-a9f5-b18129aecb11",
+      "match_id": "fotmob:5107467",
       "home_team": "瓦斯特拉斯",
       "away_team": "赫根",
       "match_date": "2026-04-22",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-22T17:00:00Z"
     },
     {
       "source_match_id": "5107462",
-      "match_id": "24e32daf-3242-49da-ae30-0d454f79a148",
+      "match_id": "fotmob:5107462",
       "home_team": "哥德堡盖斯",
       "away_team": "米亚尔比",
       "match_date": "2026-04-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-23T17:00:00Z"
     },
     {
       "source_match_id": "5107464",
-      "match_id": "9f486611-a884-4006-9c64-bc771ba7f8e7",
+      "match_id": "fotmob:5107464",
       "home_team": "马尔默",
       "away_team": "天狼星",
       "match_date": "2026-04-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-23T17:00:00Z"
     },
     {
       "source_match_id": "5107466",
-      "match_id": "40fb379f-a5dd-480e-9308-40c999ca2b34",
+      "match_id": "fotmob:5107466",
       "home_team": "代格福什",
       "away_team": "AIK索尔纳",
       "match_date": "2026-04-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-23T17:00:00Z"
     },
     {
       "source_match_id": "5107468",
-      "match_id": "7e8f7366-b9ca-4e13-b488-0170fd4850fc",
+      "match_id": "fotmob:5107468",
       "home_team": "卡尔马",
       "away_team": "哥德堡",
       "match_date": "2026-04-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-23T17:00:00Z"
     },
     {
       "source_match_id": "5107470",
-      "match_id": "089be5c5-3a5c-4f2d-8b96-825ff50c897a",
+      "match_id": "fotmob:5107470",
       "home_team": "佐加顿斯",
       "away_team": "哈马比",
       "match_date": "2026-04-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-26T12:00:00Z"
     },
     {
       "source_match_id": "5107471",
-      "match_id": "7b3f6958-7800-4c3b-9969-95c738ec4b51",
+      "match_id": "fotmob:5107471",
       "home_team": "哥德堡",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-04-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-26T14:30:00Z"
     },
     {
       "source_match_id": "5107475",
-      "match_id": "7e61409b-4b35-4884-a50b-28d626d009ad",
+      "match_id": "fotmob:5107475",
       "home_team": "布洛马波卡纳",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-04-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-26T14:30:00Z"
     },
     {
       "source_match_id": "5107469",
-      "match_id": "2358581e-4546-4fe3-86f8-ea89a6c86f19",
+      "match_id": "fotmob:5107469",
       "home_team": "AIK索尔纳",
       "away_team": "马尔默",
       "match_date": "2026-04-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-27T17:00:00Z"
     },
     {
       "source_match_id": "5107472",
-      "match_id": "0bd9d3b4-4076-4067-af96-d56afffa35ec",
+      "match_id": "fotmob:5107472",
       "home_team": "奥尔格里特",
       "away_team": "代格福什",
       "match_date": "2026-04-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-27T17:00:00Z"
     },
     {
       "source_match_id": "5107473",
-      "match_id": "6659f430-f9fa-41f6-8c74-379cf5312606",
+      "match_id": "fotmob:5107473",
       "home_team": "赫根",
       "away_team": "天狼星",
       "match_date": "2026-04-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-27T17:00:00Z"
     },
     {
       "source_match_id": "5107474",
-      "match_id": "7a6fdd86-c07a-4f25-90a4-863931e33d03",
+      "match_id": "fotmob:5107474",
       "home_team": "米亚尔比",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-04-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-27T17:00:00Z"
     },
     {
       "source_match_id": "5107476",
-      "match_id": "e0c8409c-6015-4e03-8d6e-9752667ad8b2",
+      "match_id": "fotmob:5107476",
       "home_team": "卡尔马",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-04-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-04-27T17:00:00Z"
     },
     {
       "source_match_id": "5107482",
-      "match_id": "b0cd3ae4-f95d-43de-b589-bbb16411dd0f",
+      "match_id": "fotmob:5107482",
       "home_team": "代格福什",
       "away_team": "赫根",
       "match_date": "2026-05-02",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-02T13:00:00Z"
     },
     {
       "source_match_id": "5107483",
-      "match_id": "14c4614b-63f9-49f0-a769-0626007bd998",
+      "match_id": "fotmob:5107483",
       "home_team": "天狼星",
       "away_team": "卡尔马",
       "match_date": "2026-05-02",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-02T13:00:00Z"
     },
     {
       "source_match_id": "5107478",
-      "match_id": "eebe5ffc-fc40-410e-990c-9ae3e9ee3caf",
+      "match_id": "fotmob:5107478",
       "home_team": "哈马比",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-05-03",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107479",
-      "match_id": "13c1fa62-5336-47fa-b86d-7667b7497bbd",
-      "home_team": "哥德堡盖斯",
-      "away_team": "奥尔格里特",
-      "match_date": "2026-05-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-03T12:00:00Z"
     },
     {
       "source_match_id": "5107480",
-      "match_id": "26edfb07-f560-4b2f-aeed-adf19d9e626e",
+      "match_id": "fotmob:5107480",
       "home_team": "马尔默",
       "away_team": "米亚尔比",
       "match_date": "2026-05-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-03T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107479",
+      "match_id": "fotmob:5107479",
+      "home_team": "哥德堡盖斯",
+      "away_team": "奥尔格里特",
+      "match_date": "2026-05-03",
+      "kickoff_at": "2026-05-03T14:30:00Z"
     },
     {
       "source_match_id": "5107481",
-      "match_id": "a7f9f605-79eb-4e3a-92fd-fca2ea2c6d41",
+      "match_id": "fotmob:5107481",
       "home_team": "埃尔夫斯堡",
       "away_team": "AIK索尔纳",
       "match_date": "2026-05-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-03T14:30:00Z"
     },
     {
       "source_match_id": "5107477",
-      "match_id": "81b87420-b859-412d-b0c1-00b56654c51e",
+      "match_id": "fotmob:5107477",
       "home_team": "佐加顿斯",
       "away_team": "哥德堡",
       "match_date": "2026-05-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-04T17:00:00Z"
     },
     {
       "source_match_id": "5107484",
-      "match_id": "fa25f6f5-3b26-4243-83cb-ed5045c47bfd",
+      "match_id": "fotmob:5107484",
       "home_team": "哈尔姆斯塔德",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-05-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-04T17:00:00Z"
     },
     {
       "source_match_id": "5107488",
-      "match_id": "4fe9e02d-9ff4-40fb-a829-46c1c24e0aea",
+      "match_id": "fotmob:5107488",
       "home_team": "埃尔夫斯堡",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-05-08",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-08T17:00:00Z"
     },
     {
       "source_match_id": "5107486",
-      "match_id": "b3f8c964-f30c-4c2e-88b2-697855e17692",
+      "match_id": "fotmob:5107486",
       "home_team": "哥德堡",
       "away_team": "哈马比",
       "match_date": "2026-05-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-09T13:00:00Z"
     },
     {
       "source_match_id": "5107489",
-      "match_id": "17d260ad-a843-4679-8aa8-04342adae184",
+      "match_id": "fotmob:5107489",
       "home_team": "代格福什",
       "away_team": "米亚尔比",
       "match_date": "2026-05-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-09T13:00:00Z"
     },
     {
       "source_match_id": "5107491",
-      "match_id": "14d8882e-935d-4515-a682-bca19cec44b2",
+      "match_id": "fotmob:5107491",
       "home_team": "瓦斯特拉斯",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-05-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-09T13:00:00Z"
     },
     {
       "source_match_id": "5107485",
-      "match_id": "f645198d-bdff-4470-9212-a9559c57ed35",
+      "match_id": "fotmob:5107485",
       "home_team": "AIK索尔纳",
       "away_team": "佐加顿斯",
       "match_date": "2026-05-10",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107487",
-      "match_id": "dfe5db94-5357-435c-8286-e9e0520a36cc",
-      "home_team": "赫根",
-      "away_team": "马尔默",
-      "match_date": "2026-05-10",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-10T12:00:00Z"
     },
     {
       "source_match_id": "5107492",
-      "match_id": "849f8e02-19a8-4cfc-993a-6701eae4f7ba",
+      "match_id": "fotmob:5107492",
       "home_team": "卡尔马",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-05-10",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-10T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107487",
+      "match_id": "fotmob:5107487",
+      "home_team": "赫根",
+      "away_team": "马尔默",
+      "match_date": "2026-05-10",
+      "kickoff_at": "2026-05-10T14:30:00Z"
     },
     {
       "source_match_id": "5107490",
-      "match_id": "d2afa8cf-f37f-4beb-a4a6-59bb71cee452",
+      "match_id": "fotmob:5107490",
       "home_team": "天狼星",
       "away_team": "奥尔格里特",
       "match_date": "2026-05-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-11T17:00:00Z"
     },
     {
       "source_match_id": "5107495",
-      "match_id": "eeb53d97-c2f3-437a-8fe2-6c35d55fecd1",
+      "match_id": "fotmob:5107495",
       "home_team": "哥德堡盖斯",
       "away_team": "代格福什",
       "match_date": "2026-05-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-16T13:00:00Z"
     },
     {
       "source_match_id": "5107500",
-      "match_id": "cc4be012-3179-4c9a-9c42-37476b688b88",
+      "match_id": "fotmob:5107500",
       "home_team": "哈尔姆斯塔德",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-05-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-16T13:00:00Z"
     },
     {
       "source_match_id": "5107494",
-      "match_id": "a0ca6a40-6d2c-4644-8708-01b92300d136",
+      "match_id": "fotmob:5107494",
       "home_team": "哈马比",
       "away_team": "马尔默",
       "match_date": "2026-05-17",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107497",
-      "match_id": "1be435c5-7d06-4c68-b899-1c83b3aab781",
-      "home_team": "米亚尔比",
-      "away_team": "赫根",
-      "match_date": "2026-05-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-17T12:00:00Z"
     },
     {
       "source_match_id": "5107498",
-      "match_id": "57bb6c4a-7853-46ca-be2c-9cfb6d12309f",
+      "match_id": "fotmob:5107498",
       "home_team": "布洛马波卡纳",
       "away_team": "卡尔马",
       "match_date": "2026-05-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107497",
+      "match_id": "fotmob:5107497",
+      "home_team": "米亚尔比",
+      "away_team": "赫根",
+      "match_date": "2026-05-17",
+      "kickoff_at": "2026-05-17T14:30:00Z"
     },
     {
       "source_match_id": "5107499",
-      "match_id": "12480a81-49c1-4a72-abbc-3841e8d42fcc",
+      "match_id": "fotmob:5107499",
       "home_team": "瓦斯特拉斯",
       "away_team": "AIK索尔纳",
       "match_date": "2026-05-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-17T14:30:00Z"
     },
     {
       "source_match_id": "5107493",
-      "match_id": "96031bda-5993-4006-a54c-d8268aeaa1a1",
+      "match_id": "fotmob:5107493",
       "home_team": "佐加顿斯",
       "away_team": "天狼星",
       "match_date": "2026-05-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-18T17:00:00Z"
     },
     {
       "source_match_id": "5107496",
-      "match_id": "85cf6302-eab0-46db-8cf3-6cb17c511651",
+      "match_id": "fotmob:5107496",
       "home_team": "奥尔格里特",
       "away_team": "哥德堡",
       "match_date": "2026-05-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-19T13:00:00Z"
     },
     {
       "source_match_id": "5107552",
-      "match_id": "13148a50-881f-49f9-8999-40a996e771e7",
+      "match_id": "fotmob:5107552",
       "home_team": "哥德堡盖斯",
       "away_team": "哈马比",
       "match_date": "2026-05-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-20T17:00:00Z"
     },
     {
       "source_match_id": "5107554",
-      "match_id": "90e746ef-bc3c-48ae-ad2d-b5f616a12be5",
+      "match_id": "fotmob:5107554",
       "home_team": "埃尔夫斯堡",
       "away_team": "米亚尔比",
       "match_date": "2026-05-21",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-21T17:00:00Z"
     },
     {
       "source_match_id": "5107501",
-      "match_id": "26553fb8-d456-4f51-92ed-4319217a5490",
+      "match_id": "fotmob:5107501",
       "home_team": "佐加顿斯",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-05-22",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-22T17:00:00Z"
     },
     {
       "source_match_id": "5107507",
-      "match_id": "8432b1d8-6ecf-440b-90ae-a26161ed1f52",
+      "match_id": "fotmob:5107507",
       "home_team": "卡尔马",
       "away_team": "代格福什",
       "match_date": "2026-05-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-23T13:00:00Z"
     },
     {
       "source_match_id": "5107508",
-      "match_id": "792a4728-3f90-430f-a170-d296789854c9",
+      "match_id": "fotmob:5107508",
       "home_team": "哈尔姆斯塔德",
       "away_team": "奥尔格里特",
       "match_date": "2026-05-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-23T13:00:00Z"
     },
     {
       "source_match_id": "5107502",
-      "match_id": "f3674415-68c4-49b8-94c2-52a429c65933",
+      "match_id": "fotmob:5107502",
       "home_team": "哈马比",
       "away_team": "AIK索尔纳",
       "match_date": "2026-05-24",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107504",
-      "match_id": "58fc362f-a0ea-4d51-b47e-b004ccf01d9a",
-      "home_team": "马尔默",
-      "away_team": "瓦斯特拉斯",
-      "match_date": "2026-05-24",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-24T12:00:00Z"
     },
     {
       "source_match_id": "5107506",
-      "match_id": "ffaa9a8b-a9d2-4dad-99aa-70d271e5e2f6",
+      "match_id": "fotmob:5107506",
       "home_team": "天狼星",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-05-24",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-24T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107504",
+      "match_id": "fotmob:5107504",
+      "home_team": "马尔默",
+      "away_team": "瓦斯特拉斯",
+      "match_date": "2026-05-24",
+      "kickoff_at": "2026-05-24T14:30:00Z"
     },
     {
       "source_match_id": "5107503",
-      "match_id": "85c8f917-0234-496a-9062-0957de5f1fb9",
+      "match_id": "fotmob:5107503",
       "home_team": "哥德堡",
       "away_team": "米亚尔比",
       "match_date": "2026-05-25",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-25T17:00:00Z"
     },
     {
       "source_match_id": "5107505",
-      "match_id": "713a654f-7948-4637-b9bd-3f71c45c676c",
+      "match_id": "fotmob:5107505",
       "home_team": "埃尔夫斯堡",
       "away_team": "赫根",
       "match_date": "2026-05-25",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-25T17:00:00Z"
     },
     {
       "source_match_id": "5107511",
-      "match_id": "075c414b-7e71-4af0-8919-bb495966b86c",
+      "match_id": "fotmob:5107511",
       "home_team": "奥尔格里特",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-05-29",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-29T17:00:00Z"
     },
     {
       "source_match_id": "5107509",
-      "match_id": "9734a1c8-364c-4f1b-ac3c-0d38fa61c1cb",
+      "match_id": "fotmob:5107509",
       "home_team": "AIK索尔纳",
       "away_team": "天狼星",
       "match_date": "2026-05-30",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-30T13:00:00Z"
     },
     {
       "source_match_id": "5107510",
-      "match_id": "9d3393b5-bb81-4cbe-8c1e-e1da6b3ccbbf",
+      "match_id": "fotmob:5107510",
       "home_team": "哥德堡盖斯",
       "away_team": "卡尔马",
       "match_date": "2026-05-30",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-30T13:00:00Z"
     },
     {
       "source_match_id": "5107514",
-      "match_id": "43e168da-bdfe-481c-b05a-67904fa68b08",
+      "match_id": "fotmob:5107514",
       "home_team": "马尔默",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-05-30",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-30T13:00:00Z"
     },
     {
       "source_match_id": "5107512",
-      "match_id": "4fd4088a-c3f3-4700-a1ac-6c2b5ce1de16",
+      "match_id": "fotmob:5107512",
       "home_team": "赫根",
       "away_team": "哈马比",
       "match_date": "2026-05-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-31T12:00:00Z"
     },
     {
       "source_match_id": "5107515",
-      "match_id": "6b35415d-023b-4ca0-bbbc-10d7a2b5ba6f",
+      "match_id": "fotmob:5107515",
       "home_team": "代格福什",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-05-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-31T12:00:00Z"
     },
     {
       "source_match_id": "5107516",
-      "match_id": "f92beef5-b30e-4d8a-a929-cc6e0bdce938",
+      "match_id": "fotmob:5107516",
       "home_team": "瓦斯特拉斯",
       "away_team": "哥德堡",
       "match_date": "2026-05-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-05-31T12:00:00Z"
     },
     {
       "source_match_id": "5107522",
-      "match_id": "2acd0eb2-a80a-4948-9eb2-586bcbe63df0",
+      "match_id": "fotmob:5107522",
       "home_team": "天狼星",
       "away_team": "米亚尔比",
       "match_date": "2026-07-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-03T17:00:00Z"
     },
     {
       "source_match_id": "5107521",
-      "match_id": "0014005c-3884-404f-8794-ef139cdc7f9b",
+      "match_id": "fotmob:5107521",
       "home_team": "代格福什",
       "away_team": "马尔默",
       "match_date": "2026-07-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-04T13:00:00Z"
     },
     {
       "source_match_id": "5107524",
-      "match_id": "00a211bf-746f-454d-9260-089da92c19cc",
+      "match_id": "fotmob:5107524",
       "home_team": "哈尔姆斯塔德",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-07-04",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-04T13:00:00Z"
     },
     {
       "source_match_id": "5107517",
-      "match_id": "c0bae33b-caff-4623-852c-23351e296862",
+      "match_id": "fotmob:5107517",
       "home_team": "哥德堡",
       "away_team": "AIK索尔纳",
       "match_date": "2026-07-05",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107519",
-      "match_id": "e1b514b6-ea30-429d-b21b-8b8cfe666d18",
-      "home_team": "埃尔夫斯堡",
-      "away_team": "哈马比",
-      "match_date": "2026-07-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-05T12:00:00Z"
     },
     {
       "source_match_id": "5107523",
-      "match_id": "a50d0c2f-709b-4979-84e3-a49fef5bca17",
+      "match_id": "fotmob:5107523",
       "home_team": "卡尔马",
       "away_team": "奥尔格里特",
       "match_date": "2026-07-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-05T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107519",
+      "match_id": "fotmob:5107519",
+      "home_team": "埃尔夫斯堡",
+      "away_team": "哈马比",
+      "match_date": "2026-07-05",
+      "kickoff_at": "2026-07-05T14:30:00Z"
     },
     {
       "source_match_id": "5107518",
-      "match_id": "75875c8f-7441-4f94-a162-4ace9c3dbf07",
+      "match_id": "fotmob:5107518",
       "home_team": "赫根",
       "away_team": "佐加顿斯",
       "match_date": "2026-07-06",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-06T17:00:00Z"
     },
     {
       "source_match_id": "5107520",
-      "match_id": "4b2ddf81-3323-4bf9-9b81-0e98d2885ed6",
+      "match_id": "fotmob:5107520",
       "home_team": "布洛马波卡纳",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-07-06",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107528",
-      "match_id": "ab1856d1-6fe2-4532-a266-47e6fa79e376",
-      "home_team": "奥尔格里特",
-      "away_team": "赫根",
-      "match_date": "2026-07-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-06T17:00:00Z"
     },
     {
       "source_match_id": "5107529",
-      "match_id": "1cddc968-523d-4679-ac06-68663e90afd9",
+      "match_id": "fotmob:5107529",
       "home_team": "米亚尔比",
       "away_team": "AIK索尔纳",
       "match_date": "2026-07-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-11T13:00:00Z"
+    },
+    {
+      "source_match_id": "5107528",
+      "match_id": "fotmob:5107528",
+      "home_team": "奥尔格里特",
+      "away_team": "赫根",
+      "match_date": "2026-07-11",
+      "kickoff_at": "2026-07-11T15:30:00Z"
     },
     {
       "source_match_id": "5107526",
-      "match_id": "b7b89463-8153-4e82-bbcc-54084f6df740",
+      "match_id": "fotmob:5107526",
       "home_team": "哈马比",
       "away_team": "卡尔马",
       "match_date": "2026-07-12",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107527",
-      "match_id": "9138dc45-0acc-43e9-901e-176d0d3a60c4",
-      "home_team": "哥德堡盖斯",
-      "away_team": "埃尔夫斯堡",
-      "match_date": "2026-07-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-12T12:00:00Z"
     },
     {
       "source_match_id": "5107530",
-      "match_id": "69c85b43-aa54-414d-8ec8-dd9d0b6ac904",
+      "match_id": "fotmob:5107530",
       "home_team": "马尔默",
       "away_team": "哥德堡",
       "match_date": "2026-07-12",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107531",
-      "match_id": "8989e71d-1535-4181-a496-743ab9c3d2f8",
-      "home_team": "布洛马波卡纳",
-      "away_team": "天狼星",
-      "match_date": "2026-07-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-12T12:00:00Z"
     },
     {
       "source_match_id": "5107532",
-      "match_id": "1a7f8212-2e23-4c16-91e3-97d61bb50163",
+      "match_id": "fotmob:5107532",
       "home_team": "瓦斯特拉斯",
       "away_team": "代格福什",
       "match_date": "2026-07-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-12T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107527",
+      "match_id": "fotmob:5107527",
+      "home_team": "哥德堡盖斯",
+      "away_team": "埃尔夫斯堡",
+      "match_date": "2026-07-12",
+      "kickoff_at": "2026-07-12T14:30:00Z"
+    },
+    {
+      "source_match_id": "5107531",
+      "match_id": "fotmob:5107531",
+      "home_team": "布洛马波卡纳",
+      "away_team": "天狼星",
+      "match_date": "2026-07-12",
+      "kickoff_at": "2026-07-12T14:30:00Z"
     },
     {
       "source_match_id": "5107525",
-      "match_id": "d413108b-ee22-4db1-9011-d9dedaf98995",
+      "match_id": "fotmob:5107525",
       "home_team": "佐加顿斯",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-07-13",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-13T17:00:00Z"
     },
     {
       "source_match_id": "5107535",
-      "match_id": "92dca128-d9b9-4029-9a67-5ec167888226",
+      "match_id": "fotmob:5107535",
       "home_team": "哥德堡",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-07-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-17T17:00:00Z"
     },
     {
       "source_match_id": "5107537",
-      "match_id": "9b989b81-53ca-470c-91e8-70aa1a6ba83d",
+      "match_id": "fotmob:5107537",
       "home_team": "米亚尔比",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-07-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-17T17:00:00Z"
     },
     {
       "source_match_id": "5107533",
-      "match_id": "1a35373e-4585-4f4c-acb2-c87918767379",
+      "match_id": "fotmob:5107533",
       "home_team": "AIK索尔纳",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-07-18",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-18T13:00:00Z"
     },
     {
       "source_match_id": "5107534",
-      "match_id": "1f064dd2-448c-4a53-897b-310831745d22",
+      "match_id": "fotmob:5107534",
       "home_team": "哈马比",
       "away_team": "代格福什",
       "match_date": "2026-07-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-19T14:30:00Z"
     },
     {
       "source_match_id": "5107538",
-      "match_id": "fd9076d9-5662-4606-8c7c-ff4041271395",
+      "match_id": "fotmob:5107538",
       "home_team": "埃尔夫斯堡",
       "away_team": "天狼星",
       "match_date": "2026-07-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-19T14:30:00Z"
     },
     {
       "source_match_id": "5107540",
-      "match_id": "e7d7a025-81a9-4f36-905d-eca487950315",
+      "match_id": "fotmob:5107540",
       "home_team": "哈尔姆斯塔德",
       "away_team": "赫根",
       "match_date": "2026-07-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-19T14:30:00Z"
     },
     {
       "source_match_id": "5107536",
-      "match_id": "a3c1dc3e-052e-4c04-bf45-938b0f6cadb9",
+      "match_id": "fotmob:5107536",
       "home_team": "奥尔格里特",
       "away_team": "佐加顿斯",
       "match_date": "2026-07-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-20T17:00:00Z"
     },
     {
       "source_match_id": "5107539",
-      "match_id": "10ad8612-49ef-4fe2-aa46-dfd62ec91472",
+      "match_id": "fotmob:5107539",
       "home_team": "卡尔马",
       "away_team": "马尔默",
       "match_date": "2026-07-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-20T17:00:00Z"
     },
     {
       "source_match_id": "5107547",
-      "match_id": "162141a9-b5e6-4f16-9e1b-b7fdb8fd1881",
+      "match_id": "fotmob:5107547",
       "home_team": "瓦斯特拉斯",
       "away_team": "奥尔格里特",
       "match_date": "2026-07-24",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-24T17:00:00Z"
     },
     {
       "source_match_id": "5107545",
-      "match_id": "149b49fd-6c11-4a10-9d00-b347edbf1c19",
+      "match_id": "fotmob:5107545",
       "home_team": "代格福什",
       "away_team": "佐加顿斯",
       "match_date": "2026-07-25",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-25T13:00:00Z"
     },
     {
       "source_match_id": "5107548",
-      "match_id": "a261a3a2-69df-4c9c-bf0a-59bfd1b9a9a3",
+      "match_id": "fotmob:5107548",
       "home_team": "卡尔马",
       "away_team": "米亚尔比",
       "match_date": "2026-07-25",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107541",
-      "match_id": "723c4a71-24ca-43fe-be65-452973997fa5",
-      "home_team": "哥德堡盖斯",
-      "away_team": "哈尔姆斯塔德",
-      "match_date": "2026-07-26",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107543",
-      "match_id": "1af55c9f-0e4c-42ca-bbf6-117b5f4dba1b",
-      "home_team": "马尔默",
-      "away_team": "埃尔夫斯堡",
-      "match_date": "2026-07-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-25T15:30:00Z"
     },
     {
       "source_match_id": "5107544",
-      "match_id": "25e4b528-acd1-480c-ba9b-8fa86edbbffd",
+      "match_id": "fotmob:5107544",
       "home_team": "布洛马波卡纳",
       "away_team": "哈马比",
       "match_date": "2026-07-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-26T12:00:00Z"
     },
     {
       "source_match_id": "5107546",
-      "match_id": "66a5bfc6-b846-4aaf-a2c9-5a6932820727",
+      "match_id": "fotmob:5107546",
       "home_team": "天狼星",
       "away_team": "哥德堡",
       "match_date": "2026-07-26",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-26T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107541",
+      "match_id": "fotmob:5107541",
+      "home_team": "哥德堡盖斯",
+      "away_team": "哈尔姆斯塔德",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T14:30:00Z"
+    },
+    {
+      "source_match_id": "5107543",
+      "match_id": "fotmob:5107543",
+      "home_team": "马尔默",
+      "away_team": "埃尔夫斯堡",
+      "match_date": "2026-07-26",
+      "kickoff_at": "2026-07-26T14:30:00Z"
     },
     {
       "source_match_id": "5107542",
-      "match_id": "0d9b68db-7672-4081-bf06-da5cbfa5e95a",
+      "match_id": "fotmob:5107542",
       "home_team": "赫根",
       "away_team": "AIK索尔纳",
       "match_date": "2026-07-27",
-      "kickoff_at": null
+      "kickoff_at": "2026-07-27T17:00:00Z"
     },
     {
       "source_match_id": "5107553",
-      "match_id": "c67969ec-739d-4538-b7f5-79ba2c102420",
+      "match_id": "fotmob:5107553",
       "home_team": "赫根",
       "away_team": "卡尔马",
       "match_date": "2026-08-01",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107549",
-      "match_id": "964db571-9bdb-4db8-8298-83ff0f99526f",
-      "home_team": "AIK索尔纳",
-      "away_team": "奥尔格里特",
-      "match_date": "2026-08-02",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-01T13:00:00Z"
     },
     {
       "source_match_id": "5107551",
-      "match_id": "64832d9c-22db-4989-819b-b5f87401df73",
+      "match_id": "fotmob:5107551",
       "home_team": "哥德堡",
       "away_team": "代格福什",
       "match_date": "2026-08-02",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-02T12:00:00Z"
     },
     {
       "source_match_id": "5107555",
-      "match_id": "c4e45e7f-0cd9-4551-8b24-c33975728b29",
+      "match_id": "fotmob:5107555",
       "home_team": "布洛马波卡纳",
       "away_team": "马尔默",
       "match_date": "2026-08-02",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-02T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107549",
+      "match_id": "fotmob:5107549",
+      "home_team": "AIK索尔纳",
+      "away_team": "奥尔格里特",
+      "match_date": "2026-08-02",
+      "kickoff_at": "2026-08-02T14:30:00Z"
     },
     {
       "source_match_id": "5107550",
-      "match_id": "92b562b1-0e89-46f4-bbec-44f119748e3f",
+      "match_id": "fotmob:5107550",
       "home_team": "佐加顿斯",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-08-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-03T17:00:00Z"
     },
     {
       "source_match_id": "5107556",
-      "match_id": "ca5b6687-b1e5-44ec-9521-94687dd616c0",
+      "match_id": "fotmob:5107556",
       "home_team": "哈尔姆斯塔德",
       "away_team": "天狼星",
       "match_date": "2026-08-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-03T17:00:00Z"
     },
     {
       "source_match_id": "5107559",
-      "match_id": "ac5075dc-074c-49a2-976c-5a4a59bc93ef",
+      "match_id": "fotmob:5107559",
       "home_team": "奥尔格里特",
       "away_team": "AIK索尔纳",
       "match_date": "2026-08-08",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-08T13:00:00Z"
     },
     {
       "source_match_id": "5107560",
-      "match_id": "8d9fabad-1e90-4216-8318-646e4421f256",
+      "match_id": "fotmob:5107560",
       "home_team": "米亚尔比",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-08-08",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-08T15:30:00Z"
     },
     {
       "source_match_id": "5107557",
-      "match_id": "a0f9eb45-b652-44c9-b4d2-82c7b54c8839",
+      "match_id": "fotmob:5107557",
       "home_team": "哈马比",
       "away_team": "赫根",
       "match_date": "2026-08-09",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107558",
-      "match_id": "d7e72a36-949e-4c39-adb5-5b8892d22fde",
-      "home_team": "哥德堡",
-      "away_team": "卡尔马",
-      "match_date": "2026-08-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-09T12:00:00Z"
     },
     {
       "source_match_id": "5107561",
-      "match_id": "9414fcdd-75ee-413a-81c8-0a303ca7b4ef",
+      "match_id": "fotmob:5107561",
       "home_team": "马尔默",
       "away_team": "代格福什",
       "match_date": "2026-08-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-09T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107558",
+      "match_id": "fotmob:5107558",
+      "home_team": "哥德堡",
+      "away_team": "卡尔马",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09T14:30:00Z"
     },
     {
       "source_match_id": "5107564",
-      "match_id": "f7615db1-717d-40a4-9474-70be8bdf2f49",
+      "match_id": "fotmob:5107564",
       "home_team": "哈尔姆斯塔德",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-08-09",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-09T14:30:00Z"
     },
     {
       "source_match_id": "5107562",
-      "match_id": "3bceaa8a-40ee-498c-9838-21e5914a96ee",
+      "match_id": "fotmob:5107562",
       "home_team": "天狼星",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-08-10",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-10T17:00:00Z"
     },
     {
       "source_match_id": "5107563",
-      "match_id": "86c91f4a-92cf-4494-b700-92fdb59b2417",
+      "match_id": "fotmob:5107563",
       "home_team": "瓦斯特拉斯",
       "away_team": "佐加顿斯",
       "match_date": "2026-08-10",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-10T17:00:00Z"
     },
     {
       "source_match_id": "5107569",
-      "match_id": "0f62d775-f530-4cd9-a75c-c44fde812efc",
+      "match_id": "fotmob:5107569",
       "home_team": "埃尔夫斯堡",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-08-14",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-14T17:00:00Z"
     },
     {
       "source_match_id": "5107568",
-      "match_id": "aaa2861a-476b-4af9-b23a-1e734c2f248a",
+      "match_id": "fotmob:5107568",
       "home_team": "米亚尔比",
       "away_team": "天狼星",
       "match_date": "2026-08-15",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-15T13:00:00Z"
     },
     {
       "source_match_id": "5107565",
-      "match_id": "9ae805da-b285-46b8-bf54-de197c4e903d",
+      "match_id": "fotmob:5107565",
       "home_team": "佐加顿斯",
       "away_team": "AIK索尔纳",
       "match_date": "2026-08-16",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107566",
-      "match_id": "8cfba895-b7c2-4710-b008-995720d7b5f8",
-      "home_team": "哥德堡盖斯",
-      "away_team": "马尔默",
-      "match_date": "2026-08-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-16T12:00:00Z"
     },
     {
       "source_match_id": "5107570",
-      "match_id": "4e1b1561-558c-4bb3-b645-5f836adcd7a8",
+      "match_id": "fotmob:5107570",
       "home_team": "布洛马波卡纳",
       "away_team": "奥尔格里特",
       "match_date": "2026-08-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-16T12:00:00Z"
     },
     {
       "source_match_id": "5107571",
-      "match_id": "7c8e44ac-ccb7-4be1-be36-6372dbc4b1b5",
+      "match_id": "fotmob:5107571",
       "home_team": "代格福什",
       "away_team": "哥德堡",
       "match_date": "2026-08-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-16T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107566",
+      "match_id": "fotmob:5107566",
+      "home_team": "哥德堡盖斯",
+      "away_team": "马尔默",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T14:30:00Z"
     },
     {
       "source_match_id": "5107572",
-      "match_id": "2c9b73dc-73f4-402d-a1be-b99cabd70818",
+      "match_id": "fotmob:5107572",
       "home_team": "卡尔马",
       "away_team": "哈马比",
       "match_date": "2026-08-16",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-16T14:30:00Z"
     },
     {
       "source_match_id": "5107567",
-      "match_id": "abb000a3-7d3b-4e40-bcb6-58084cad064f",
+      "match_id": "fotmob:5107567",
       "home_team": "赫根",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-08-17",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-17T17:00:00Z"
     },
     {
       "source_match_id": "5107579",
-      "match_id": "d068ee21-c0cd-4bbf-86a1-ae4b2211035f",
+      "match_id": "fotmob:5107579",
       "home_team": "天狼星",
       "away_team": "赫根",
       "match_date": "2026-08-21",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-21T17:00:00Z"
     },
     {
       "source_match_id": "5107576",
-      "match_id": "7ceda242-d9d0-4b81-9891-ed0de37b39bd",
+      "match_id": "fotmob:5107576",
       "home_team": "奥尔格里特",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-08-22",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107574",
-      "match_id": "e748c325-da8b-4ccd-8889-1ece9a6d32a6",
-      "home_team": "哈马比",
-      "away_team": "哥德堡盖斯",
-      "match_date": "2026-08-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-22T13:00:00Z"
     },
     {
       "source_match_id": "5107575",
-      "match_id": "8f56ea9d-0cdf-4850-84cf-38c1992b422b",
+      "match_id": "fotmob:5107575",
       "home_team": "哥德堡",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-08-23",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107578",
-      "match_id": "4811199b-8a74-4c6d-a5ac-31753fb909db",
-      "home_team": "布洛马波卡纳",
-      "away_team": "代格福什",
-      "match_date": "2026-08-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-23T12:00:00Z"
     },
     {
       "source_match_id": "5107580",
-      "match_id": "a1b8b1c4-edb5-43cd-ba16-e553df8004ed",
+      "match_id": "fotmob:5107580",
       "home_team": "瓦斯特拉斯",
       "away_team": "卡尔马",
       "match_date": "2026-08-23",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-23T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107574",
+      "match_id": "fotmob:5107574",
+      "home_team": "哈马比",
+      "away_team": "哥德堡盖斯",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23T14:30:00Z"
+    },
+    {
+      "source_match_id": "5107578",
+      "match_id": "fotmob:5107578",
+      "home_team": "布洛马波卡纳",
+      "away_team": "代格福什",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23T14:30:00Z"
     },
     {
       "source_match_id": "5107577",
-      "match_id": "e7cde4de-05eb-4cc6-be88-1715f0d775ca",
+      "match_id": "fotmob:5107577",
       "home_team": "马尔默",
       "away_team": "佐加顿斯",
       "match_date": "2026-08-24",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-24T17:00:00Z"
     },
     {
       "source_match_id": "5107585",
-      "match_id": "6b52216c-3d65-4893-a0a8-efa39b024eb7",
+      "match_id": "fotmob:5107585",
       "home_team": "赫根",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-08-29",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-29T13:00:00Z"
     },
     {
       "source_match_id": "5107586",
-      "match_id": "7ba92e70-5c01-4aad-9da8-207d036fe186",
+      "match_id": "fotmob:5107586",
       "home_team": "埃尔夫斯堡",
       "away_team": "代格福什",
       "match_date": "2026-08-29",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-29T13:00:00Z"
     },
     {
       "source_match_id": "5107588",
-      "match_id": "5392579b-2c83-4bc5-ba4e-3454a360c9cc",
+      "match_id": "fotmob:5107588",
       "home_team": "哈尔姆斯塔德",
       "away_team": "卡尔马",
       "match_date": "2026-08-29",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-29T15:30:00Z"
     },
     {
       "source_match_id": "5107581",
-      "match_id": "fe4cd990-b1ff-4eda-b61e-7d7c12635761",
+      "match_id": "fotmob:5107581",
       "home_team": "AIK索尔纳",
       "away_team": "哈马比",
       "match_date": "2026-08-30",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-30T12:00:00Z"
     },
     {
       "source_match_id": "5107583",
-      "match_id": "e1e5dce4-2d83-41a4-b839-dfb5ca1195a2",
+      "match_id": "fotmob:5107583",
       "home_team": "哥德堡",
       "away_team": "奥尔格里特",
       "match_date": "2026-08-30",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-30T14:30:00Z"
     },
     {
       "source_match_id": "5107582",
-      "match_id": "324cc4e5-acf3-40b0-92d8-08de62009c56",
+      "match_id": "fotmob:5107582",
       "home_team": "佐加顿斯",
       "away_team": "米亚尔比",
       "match_date": "2026-08-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-31T17:00:00Z"
     },
     {
       "source_match_id": "5107584",
-      "match_id": "03640d80-30f3-4849-a43c-e4b1cebe486d",
+      "match_id": "fotmob:5107584",
       "home_team": "哥德堡盖斯",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-08-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-31T17:00:00Z"
     },
     {
       "source_match_id": "5107587",
-      "match_id": "cdfed87d-816b-4f52-a8aa-9115992c79ae",
+      "match_id": "fotmob:5107587",
       "home_team": "天狼星",
       "away_team": "马尔默",
       "match_date": "2026-08-31",
-      "kickoff_at": null
+      "kickoff_at": "2026-08-31T17:00:00Z"
     },
     {
       "source_match_id": "5107513",
-      "match_id": "ad4fd12e-b4b6-44cc-ae4c-49d5e5021965",
+      "match_id": "fotmob:5107513",
       "home_team": "米亚尔比",
       "away_team": "佐加顿斯",
       "match_date": "2026-09-03",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-03T17:00:00Z"
     },
     {
       "source_match_id": "5107589",
-      "match_id": "0368128e-fbb9-4608-8904-266b32846b01",
+      "match_id": "fotmob:5107589",
       "home_team": "哥德堡盖斯",
       "away_team": "赫根",
       "match_date": "2026-09-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-05T13:00:00Z"
     },
     {
       "source_match_id": "5107594",
-      "match_id": "a337e36f-647e-46fe-a478-c34f64b286be",
+      "match_id": "fotmob:5107594",
       "home_team": "代格福什",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-09-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-05T13:00:00Z"
     },
     {
       "source_match_id": "5107595",
-      "match_id": "d104f3ee-eb81-4c4a-96c2-eefa15a1745e",
+      "match_id": "fotmob:5107595",
       "home_team": "瓦斯特拉斯",
       "away_team": "天狼星",
       "match_date": "2026-09-05",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-05T15:30:00Z"
     },
     {
       "source_match_id": "5107590",
-      "match_id": "8ebd056f-7549-4726-b9b1-6f0a6764619c",
+      "match_id": "fotmob:5107590",
       "home_team": "奥尔格里特",
       "away_team": "哈马比",
       "match_date": "2026-09-06",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-06T12:00:00Z"
     },
     {
       "source_match_id": "5107593",
-      "match_id": "786041fd-b9a8-4d37-9958-caee8bf30187",
+      "match_id": "fotmob:5107593",
       "home_team": "布洛马波卡纳",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-09-06",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-06T14:30:00Z"
     },
     {
       "source_match_id": "5107591",
-      "match_id": "cdd010be-6251-4448-b508-17ca29078e13",
+      "match_id": "fotmob:5107591",
       "home_team": "米亚尔比",
       "away_team": "哥德堡",
       "match_date": "2026-09-07",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-07T17:00:00Z"
     },
     {
       "source_match_id": "5107592",
-      "match_id": "df9adbe0-cd43-4ba3-9cb8-89d9e1d1a808",
+      "match_id": "fotmob:5107592",
       "home_team": "马尔默",
       "away_team": "AIK索尔纳",
       "match_date": "2026-09-07",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-07T17:00:00Z"
     },
     {
       "source_match_id": "5107596",
-      "match_id": "594a671d-cc50-4d1a-a0d2-52e4f1edff68",
+      "match_id": "fotmob:5107596",
       "home_team": "卡尔马",
       "away_team": "佐加顿斯",
       "match_date": "2026-09-07",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-07T17:00:00Z"
     },
     {
       "source_match_id": "5107601",
-      "match_id": "53fdcbaa-9b31-48ff-80eb-3cbd623fe8f6",
+      "match_id": "fotmob:5107601",
       "home_team": "赫根",
       "away_team": "米亚尔比",
       "match_date": "2026-09-11",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-11T17:00:00Z"
     },
     {
       "source_match_id": "5107597",
-      "match_id": "4b99e3ae-9cc7-48b2-b51f-b4810268de32",
+      "match_id": "fotmob:5107597",
       "home_team": "AIK索尔纳",
       "away_team": "瓦斯特拉斯",
       "match_date": "2026-09-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-12T13:00:00Z"
     },
     {
       "source_match_id": "5107600",
-      "match_id": "399cd944-b6f4-4acd-9aa9-9defa81569c3",
+      "match_id": "fotmob:5107600",
       "home_team": "哥德堡",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-09-12",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-12T15:30:00Z"
     },
     {
       "source_match_id": "5107599",
-      "match_id": "9887e92f-2c58-4fcc-978b-a87312fe68f9",
+      "match_id": "fotmob:5107599",
       "home_team": "哈马比",
       "away_team": "布洛马波卡纳",
       "match_date": "2026-09-13",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107602",
-      "match_id": "1e921409-8311-483e-b823-9ab0f09f7637",
-      "home_team": "马尔默",
-      "away_team": "奥尔格里特",
-      "match_date": "2026-09-13",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-13T12:00:00Z"
     },
     {
       "source_match_id": "5107603",
-      "match_id": "a795a240-f5e4-4f44-af61-b18293347d7b",
+      "match_id": "fotmob:5107603",
       "home_team": "埃尔夫斯堡",
       "away_team": "卡尔马",
       "match_date": "2026-09-13",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-13T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107602",
+      "match_id": "fotmob:5107602",
+      "home_team": "马尔默",
+      "away_team": "奥尔格里特",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T14:30:00Z"
     },
     {
       "source_match_id": "5107598",
-      "match_id": "f51dfbec-d782-40b4-bf18-8cd8ff32f77c",
+      "match_id": "fotmob:5107598",
       "home_team": "佐加顿斯",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-09-14",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-14T17:00:00Z"
     },
     {
       "source_match_id": "5107604",
-      "match_id": "34903cf0-cc1f-467b-9c93-0a87f1be914b",
+      "match_id": "fotmob:5107604",
       "home_team": "天狼星",
       "away_team": "代格福什",
       "match_date": "2026-09-14",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-14T17:20:00Z"
     },
     {
       "source_match_id": "5107573",
-      "match_id": "68f486c0-7c7a-44ed-98a7-5b3ecbf3936f",
+      "match_id": "fotmob:5107573",
       "home_team": "AIK索尔纳",
       "away_team": "米亚尔比",
       "match_date": "2026-09-16",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107606",
-      "match_id": "77b555b2-a2f2-40a0-8368-20fe7b8518d1",
-      "home_team": "奥尔格里特",
-      "away_team": "天狼星",
-      "match_date": "2026-09-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-16T17:00:00Z"
     },
     {
       "source_match_id": "5107608",
-      "match_id": "2f4d45de-0b99-4eae-92f6-9b5dffcabc12",
+      "match_id": "fotmob:5107608",
       "home_team": "布洛马波卡纳",
       "away_team": "哥德堡",
       "match_date": "2026-09-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-19T13:00:00Z"
     },
     {
       "source_match_id": "5107610",
-      "match_id": "677a2193-e21e-443d-b50c-5698eb64a974",
+      "match_id": "fotmob:5107610",
       "home_team": "瓦斯特拉斯",
       "away_team": "马尔默",
       "match_date": "2026-09-19",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-19T13:00:00Z"
+    },
+    {
+      "source_match_id": "5107606",
+      "match_id": "fotmob:5107606",
+      "home_team": "奥尔格里特",
+      "away_team": "天狼星",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T15:30:00Z"
     },
     {
       "source_match_id": "5107605",
-      "match_id": "d59b588c-85e7-46b5-9d1c-65fb95481da5",
+      "match_id": "fotmob:5107605",
       "home_team": "佐加顿斯",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-09-20",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107607",
-      "match_id": "4e8a2857-a6f2-4908-8cfa-4eef4c724a0b",
-      "home_team": "米亚尔比",
-      "away_team": "哥德堡盖斯",
-      "match_date": "2026-09-20",
-      "kickoff_at": null
-    },
-    {
-      "source_match_id": "5107609",
-      "match_id": "8036b014-0590-4e5f-b675-386c232aaa89",
-      "home_team": "代格福什",
-      "away_team": "哈马比",
-      "match_date": "2026-09-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-20T12:00:00Z"
     },
     {
       "source_match_id": "5107611",
-      "match_id": "f5c0ee1d-7709-4cf2-b887-11e56e6a4fe1",
+      "match_id": "fotmob:5107611",
       "home_team": "卡尔马",
       "away_team": "赫根",
       "match_date": "2026-09-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-20T12:00:00Z"
     },
     {
       "source_match_id": "5107612",
-      "match_id": "3fafd781-a71f-4405-9dd7-fda0c309ba9d",
+      "match_id": "fotmob:5107612",
       "home_team": "哈尔姆斯塔德",
       "away_team": "AIK索尔纳",
       "match_date": "2026-09-20",
-      "kickoff_at": null
+      "kickoff_at": "2026-09-20T12:00:00Z"
+    },
+    {
+      "source_match_id": "5107607",
+      "match_id": "fotmob:5107607",
+      "home_team": "米亚尔比",
+      "away_team": "哥德堡盖斯",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T14:30:00Z"
+    },
+    {
+      "source_match_id": "5107609",
+      "match_id": "fotmob:5107609",
+      "home_team": "代格福什",
+      "away_team": "哈马比",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T14:30:00Z"
+    },
+    {
+      "source_match_id": "5107615",
+      "match_id": "fotmob:5107615",
+      "home_team": "哥德堡",
+      "away_team": "瓦斯特拉斯",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T17:00:00.000Z"
     }
   ]
 }

@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 54,
-  "collected_matches": 54,
+  "input_matches": 56,
+  "collected_matches": 56,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 456,
+  "aggregate_players": 460,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "凯泽斯劳滕",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -36,7 +36,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布伦瑞克",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "海登海姆",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,7 +86,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "荷尔斯泰因基尔",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",

@@ -3,8 +3,8 @@
   "season": "2026",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 153,
-  "collected_matches": 153,
+  "input_matches": 154,
+  "collected_matches": 154,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 12,
@@ -15,5 +15,5 @@
   "strict_warnings": [],
   "gate_status": "PASS",
   "quality_tier": "PILOT_FULL",
-  "avg_team_depth_coverage_pct": 88.6
+  "avg_team_depth_coverage_pct": 89.4
 }

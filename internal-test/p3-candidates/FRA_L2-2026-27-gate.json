@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 63,
-  "collected_matches": 63,
+  "input_matches": 68,
+  "collected_matches": 68,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 486,
+  "aggregate_players": 496,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "南锡",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -41,22 +41,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布洛涅",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "拉瓦勒",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "敦刻尔克",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "格勒诺布尔",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,12 +66,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "波城",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "甘冈",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,7 +86,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "索肖",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,15 +96,15 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "蒙彼利埃",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿讷西",
-      "matches": 7
+      "matches": 8
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 2
+  "avg_team_depth_coverage_pct": 6.1
 }

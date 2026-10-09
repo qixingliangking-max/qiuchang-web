@@ -6,7 +6,7 @@
     "61"
   ],
   "fotmob_ccode3": "POR",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 63,
   "team_map": {
     "Braga": "布拉加",
     "Arouca": "阿罗卡",
@@ -30,5 +30,7 @@
     "Estrela da Amadora": "阿马多拉之星",
     "Vitoria de Guimaraes": "吉马良斯",
     "Vitória de Guimarães": "吉马良斯"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-09T20:15:10.905Z",
+  "last_published_blob_sha": "3b10c7ea25f090736ffdc2f852f5d209a774c6f6"
 }

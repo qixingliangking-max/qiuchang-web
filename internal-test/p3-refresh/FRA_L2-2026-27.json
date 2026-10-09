@@ -6,7 +6,7 @@
     "110"
   ],
   "fotmob_ccode3": "FRA",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 68,
   "team_map": {
     "Pau": "波城",
     "Metz": "梅斯",
@@ -27,5 +27,7 @@
     "Clermont Foot": "克莱蒙",
     "Saint-Etienne": "圣埃蒂安",
     "Saint-Étienne": "圣埃蒂安"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-09T20:14:15.355Z",
+  "last_published_blob_sha": "62c157df18bab29ab69aeb8dd4609935d9bcb62c"
 }

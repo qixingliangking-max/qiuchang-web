@@ -1,21 +1,19 @@
 {
   "league_code": "SWE_AS",
   "season": "2026",
-  "generated_at": "2026-10-01T19:17:39.835Z",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 177,
+  "collected_matches": 177,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
   "teams": 16,
-  "aggregate_players": 526,
+  "aggregate_players": 527,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [],
   "gate_status": "PASS",
-  "errors_count": 0,
-  "warnings_count": 0,
   "quality_tier": "PILOT_FULL",
-  "avg_team_depth_coverage_pct": 75.5,
-  "depth_rows": 120,
-  "status_distribution": {
-    "VALID": 63,
-    "DATA_INCOMPLETE": 34,
-    "PARTIAL": 19,
-    "NO_BACKUP": 4
-  },
-  "errors": [],
-  "warnings": []
+  "avg_team_depth_coverage_pct": 76.1
 }

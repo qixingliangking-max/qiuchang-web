@@ -721,7 +721,87 @@
       "home_team": "芬洛",
       "away_team": "罗达JC",
       "match_date": "2026-10-04",
-      "kickoff_at": "2026-10-04T12:30:00.000Z"
+      "kickoff_at": "2026-10-04T12:30:00Z"
+    },
+    {
+      "source_match_id": "5832895",
+      "match_id": "fotmob:5832895",
+      "home_team": "阿尔梅勒城",
+      "away_team": "FC埃因霍温",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832896",
+      "match_id": "fotmob:5832896",
+      "home_team": "格拉夫夏普",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832897",
+      "match_id": "fotmob:5832897",
+      "home_team": "多德勒支",
+      "away_team": "埃门",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832898",
+      "match_id": "fotmob:5832898",
+      "home_team": "福伦丹",
+      "away_team": "维特斯",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832899",
+      "match_id": "fotmob:5832899",
+      "home_team": "赫拉克勒斯",
+      "away_team": "瓦尔韦克",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832900",
+      "match_id": "fotmob:5832900",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "芬洛",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832901",
+      "match_id": "fotmob:5832901",
+      "home_team": "阿尔克马尔青年队",
+      "away_team": "邓伯什",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832902",
+      "match_id": "fotmob:5832902",
+      "home_team": "布雷达",
+      "away_team": "马斯特里赫特",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832903",
+      "match_id": "fotmob:5832903",
+      "home_team": "奥斯",
+      "away_team": "赫尔蒙德",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832904",
+      "match_id": "fotmob:5832904",
+      "home_team": "罗达JC",
+      "away_team": "埃因霍温青年队",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00.000Z"
     }
   ]
 }

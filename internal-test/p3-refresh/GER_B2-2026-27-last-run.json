@@ -1,15 +1,25 @@
 {
   "league_code": "GER_B2",
   "season": "2026/27",
-  "run_at": "2026-10-09T06:29:48.455Z",
+  "run_at": "2026-10-09T20:14:20.480Z",
   "discovered_fixtures": 306,
-  "discovered_finished": 54,
+  "discovered_finished": 56,
   "baseline_finished_matches": 54,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 2,
+  "added_source_match_ids": [
+    "5881682",
+    "5881684"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 54,
+  "mapped_finished": 56,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 2.5,
+  "published_blob_sha": "751fe2e469fae5c08dbc21fafa9dee9834fb5c68"
 }
