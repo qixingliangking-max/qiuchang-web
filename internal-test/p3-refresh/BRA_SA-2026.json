@@ -6,7 +6,7 @@
     "268"
   ],
   "fotmob_ccode3": "BRA",
-  "baseline_finished_matches": 285,
+  "baseline_finished_matches": 289,
   "team_map": {
     "Athletico Paranaense": "巴拉纳竞技",
     "Atlético-MG": "米内罗竞技",
@@ -29,6 +29,6 @@
     "Vasco da Gama": "瓦斯科达伽马",
     "Vitória": "维多利亚"
   },
-  "last_successful_refresh_at": "2026-10-08T06:27:48.347Z",
-  "last_published_blob_sha": "4d0157e3870af810ff5901b13e2286df926b56f7"
+  "last_successful_refresh_at": "2026-10-09T06:29:21.171Z",
+  "last_published_blob_sha": "6498e884fcedd1d2fe41b6a4dda416f1271376f4"
 }

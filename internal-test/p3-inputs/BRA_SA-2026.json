@@ -2281,7 +2281,39 @@
       "home_team": "克鲁塞罗",
       "away_team": "圣保罗",
       "match_date": "2026-10-08",
-      "kickoff_at": "2026-10-08T00:30:00.000Z"
+      "kickoff_at": "2026-10-08T00:30:00Z"
+    },
+    {
+      "source_match_id": "5103646",
+      "match_id": "fotmob:5103646",
+      "home_team": "桑托斯",
+      "away_team": "弗拉门戈",
+      "match_date": "2026-10-08",
+      "kickoff_at": "2026-10-08T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103651",
+      "match_id": "fotmob:5103651",
+      "home_team": "巴拉纳竞技",
+      "away_team": "米内罗竞技",
+      "match_date": "2026-10-08",
+      "kickoff_at": "2026-10-08T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103644",
+      "match_id": "fotmob:5103644",
+      "home_team": "弗鲁米嫩塞",
+      "away_team": "科里蒂巴",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T00:30:00.000Z"
+    },
+    {
+      "source_match_id": "5103647",
+      "match_id": "fotmob:5103647",
+      "home_team": "帕尔梅拉斯",
+      "away_team": "巴伊亚",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T00:30:00.000Z"
     }
   ]
 }
