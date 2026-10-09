@@ -2335,13 +2335,16 @@ function jcRenderHhadDetail(pools,snapshots){
 function jcRenderCrsDetail(pool,snapshots){
   const hist=jcPoolHistory(snapshots,'crs');
   const tpl=JC_FIXED_ODDS_TEMPLATE.crs;
-  const group=(items,specialKey,specialLabel)=>items.map(([h,a])=>jcScoreItem(pool,jcCrsKey(h,a),h+'-'+a,hist)).join('')+
-    jcScoreItem(pool,specialKey,specialLabel,hist);
+  const group=(items,specialKey,specialLegacyKey,specialLabel)=>{
+    const resolvedKey=pool?.outcomes?.[specialKey]!=null ? specialKey : specialLegacyKey;
+    return items.map(([h,a])=>jcScoreItem(pool,jcCrsKey(h,a),h+'-'+a,hist)).join('')+
+      jcScoreItem(pool,resolvedKey,specialLabel,hist);
+  };
 
   return '<section class="jc-odds-section"><h2>比分</h2>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">主胜比分</div><div class="jc-score-group home-win">'+group(tpl.home,'s1sh','胜其它')+'</div></div>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">平局比分</div><div class="jc-score-group draw">'+group(tpl.draw,'s1sd','平其它')+'</div></div>'+
-    '<div class="jc-score-band"><div class="jc-score-band-label">客胜比分</div><div class="jc-score-group away-win">'+group(tpl.away,'s1sa','负其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">主胜比分</div><div class="jc-score-group home-win">'+group(tpl.home,'s-1sh','s1sh','胜其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">平局比分</div><div class="jc-score-group draw">'+group(tpl.draw,'s-1sd','s1sd','平其它')+'</div></div>'+
+    '<div class="jc-score-band"><div class="jc-score-band-label">客胜比分</div><div class="jc-score-group away-win">'+group(tpl.away,'s-1sa','s1sa','负其它')+'</div></div>'+
   '</section>';
 }
 
