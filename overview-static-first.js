@@ -123,7 +123,7 @@
     window.jcFetchDateRows=async function(dateStr,withSnapshots=false,force=false){
       const ds=String(dateStr||'');
       try{
-        if(!withSnapshots && typeof qcProOverviewRowsCache!=='undefined'){
+        if(!withSnapshots && !force && typeof qcProOverviewRowsCache!=='undefined'){
           const cached=qcProOverviewRowsCache.get(ds);
           if(cached?.data?.length){
             return {data:cached.data,error:null,fromPredictionSnapshot:true,fromStaticFirst:true};
