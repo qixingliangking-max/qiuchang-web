@@ -4245,10 +4245,13 @@ async function setupProfile(){
     return;
   }
 
-  const { data: userData, error: userError } = await window.qcSupabase.auth.getUser();
-  const user = userData && userData.user;
+  // The profile page already verifies access through RLS-protected queries.
+  // Avoid an extra auth.getUser() network round-trip and load profile/member
+  // records in parallel so mobile/WeChat does not feel serially blocked.
+  const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+  const user=sessionData?.session?.user||null;
 
-  if(userError || !user){
+  if(sessionError || !user){
     location.href = 'login.html?v=20260926login3';
     return;
   }
@@ -4263,15 +4266,26 @@ async function setupProfile(){
 
   if(emailEl) emailEl.textContent = user.email || '—';
 
-  const { data: profile, error: profileError } = await window.qcSupabase
-    .from('profiles')
-    .select('email,nickname,role,status')
-    .eq('id', user.id)
-    .single();
+  const [profileResult,subscriptionResult]=await Promise.all([
+    window.qcSupabase
+      .from('profiles')
+      .select('email,nickname,role,status')
+      .eq('id', user.id)
+      .single(),
+    window.qcSupabase
+      .from('subscriptions')
+      .select('plan,expires_at,status')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .gt('expires_at', new Date().toISOString())
+      .order('expires_at', { ascending: false })
+      .limit(1)
+  ]);
 
-  if(profileError){
-    console.error('读取用户资料失败', profileError);
-  }
+  const profile=profileResult.data||null;
+  const subscriptions=subscriptionResult.data||[];
+  if(profileResult.error) console.error('读取用户资料失败',profileResult.error);
+  if(subscriptionResult.error) console.error('读取会员信息失败',subscriptionResult.error);
 
   const nickname = (profile && profile.nickname ? profile.nickname.trim() : '') || (user.email ? user.email.split('@')[0] : '用户');
   const role = profile && profile.role ? profile.role : 'basic';
@@ -4283,19 +4297,6 @@ async function setupProfile(){
   if(statusEl){
     statusEl.textContent = status === 'active' ? '正常' : '已停用';
     statusEl.style.color = status === 'active' ? 'var(--green)' : 'var(--red)';
-  }
-
-  const { data: subscriptions, error: subscriptionError } = await window.qcSupabase
-    .from('subscriptions')
-    .select('plan,expires_at,status')
-    .eq('user_id', user.id)
-    .eq('status', 'active')
-    .gt('expires_at', new Date().toISOString())
-    .order('expires_at', { ascending: false })
-    .limit(1);
-
-  if(subscriptionError){
-    console.error('读取会员信息失败', subscriptionError);
   }
 
   const activeSubscription = subscriptions && subscriptions.length ? subscriptions[0] : null;
