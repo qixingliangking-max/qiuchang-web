@@ -563,14 +563,22 @@ function jcHasOrdinaryResult(m){
 }
 
 function jcDisplayModelDirection(model,m){
-  // Locked model direction is the source of truth for display.
-  // Do not substitute the handicap recommendation when HAD odds are absent.
+  // Locked direction stays the source of truth.
+  // When ordinary HAD is unavailable, the locked direction already uses
+  // the handicap-result vocabulary; add only the public-facing label.
+  if(!jcHasOrdinaryResult(m)){
+    const pick=jcCompactHandicapPick(model?.direction);
+    if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) return '让球双选｜'+pick;
+  }
   return jcCompactResultPick(model?.direction,m);
 }
 
 function jcDisplaySinglePick(model,m){
-  // Locked TEST single pick is the source of truth for display.
-  // Do not convert it into a handicap pick when HAD odds are absent.
+  // Same rule for the locked single selection when ordinary HAD is absent.
+  if(!jcHasOrdinaryResult(m)){
+    const pick=jcCompactHandicapPick(model?.single_pick);
+    if(/^让(?:胜|平|负)$/.test(pick)) return '让球单选｜'+pick;
+  }
   return jcCompactResultPick(model?.single_pick,m);
 }
 
@@ -594,10 +602,16 @@ function jcOverviewActualDirection(model,m,score){
 }
 
 function jcOverviewDirectionChoices(model,m){
-  const raw=jcDisplayModelDirection(model,m);
+  // Keep grading/hit logic on the locked raw choices; public labels such as
+  // “让球双选” and “让球单选” are display-only.
+  const raw=jcHasOrdinaryResult(m)
+    ? jcCompactResultPick(model?.direction,m)
+    : jcCompactHandicapPick(model?.direction);
   let choices=String(raw||'').split('/').map(x=>x.trim()).filter(Boolean);
   if(!choices.length) return [];
-  const single=jcDisplaySinglePick(model,m);
+  const single=jcHasOrdinaryResult(m)
+    ? jcCompactResultPick(model?.single_pick,m)
+    : jcCompactHandicapPick(model?.single_pick);
   if(single && !String(single).includes('/')){
     const idx=choices.indexOf(single);
     if(idx>0) choices=[choices[idx],...choices.filter((_,i)=>i!==idx)];
