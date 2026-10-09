@@ -86,6 +86,20 @@
     window.qcFetchProOverviewDate=async function(dateStr){
       const ds=String(dateStr||'');
       if(!allowOverviewDate(ds)) return null;
+
+      // When the user flips to a completed historical date, the main block must
+      // render from the finalized history snapshot too — exactly like “昨日回看”.
+      // Do not show the old pre-match locked snapshot with VS/未开赛 once the
+      // historical snapshot is final.
+      if(ds < today() && originalFetchHistory){
+        try{
+          const history=await originalFetchHistory(ds,false);
+          if(history?.historyFinal && Array.isArray(history?.data) && history.data.length){
+            return history;
+          }
+        }catch(_){}
+      }
+
       return originalFetchPro(dateStr);
     };
   }
