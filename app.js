@@ -4523,9 +4523,13 @@ async function qcAdminSession(root,nextPage){
     return null;
   }
 
-  const {data:userData,error:userError}=await window.qcSupabase.auth.getUser();
-  const user=userData&&userData.user;
-  if(userError||!user){
+  // Admin pages already make an authoritative SECURITY DEFINER RPC below.
+  // Use the locally cached auth session first instead of an extra getUser()
+  // network round-trip; this materially improves WeChat/mobile admin loading.
+  const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+  const session=sessionData?.session||null;
+  const user=session?.user||null;
+  if(sessionError||!user){
     location.href='login.html?v=20260926login3&next='+encodeURIComponent(nextPage||'admin.html');
     return null;
   }
@@ -4780,88 +4784,121 @@ async function setupAdminCodes(){
   const root=$('#adminCodesRoot');
   if(!root) return;
 
+  const form=$('#createCodeForm');
+  const submitBtn=form?.querySelector('button[type="submit"]')||null;
+  const hint=$('#adminHint');
+  const box=$('#createdCodeBox');
+  if(submitBtn){
+    submitBtn.disabled=true;
+    submitBtn.textContent='正在连接…';
+  }
+
   const session=await qcAdminSession(root,'admin-codes.html');
   if(!session) return;
 
-  const loadCodes=async()=>{
-    const [{data:stats},codesResult]=await Promise.all([
-      window.qcSupabase.rpc('admin_dashboard_stats'),
-      window.qcSupabase.rpc('admin_redeem_codes')
-    ]);
+  const applyStats=(stats)=>{
+    if(!stats) return;
+    if($('#codesUnused')) $('#codesUnused').textContent=stats.unused_codes??0;
+    if($('#codesUsed')) $('#codesUsed').textContent=stats.used_codes??0;
+  };
+  applyStats(session.stats);
 
-    if(stats){
-      if($('#codesUnused')) $('#codesUnused').textContent=stats.unused_codes??0;
-      if($('#codesUsed')) $('#codesUsed').textContent=stats.used_codes??0;
-    }
-
+  const loadCodes=async({refreshStats=false}={})=>{
     const rows=$('#redeemCodeRows');
-    if(!rows) return;
-    if(codesResult.error){
-      rows.innerHTML='<tr><td colspan="6">兑换码读取失败</td></tr>';
-      return;
-    }
-    const codes=codesResult.data||[];
-    if(!codes.length){
-      rows.innerHTML='<tr><td colspan="6">暂无兑换码</td></tr>';
-      return;
-    }
+    try{
+      const tasks=[window.qcSupabase.rpc('admin_redeem_codes')];
+      if(refreshStats) tasks.push(window.qcSupabase.rpc('admin_dashboard_stats'));
+      const results=await Promise.all(tasks);
+      const codesResult=results[0];
+      const statsResult=results[1];
+      if(statsResult?.data) applyStats(statsResult.data);
 
-    rows.innerHTML=codes.map(item=>{
-      const statusText=item.status==='unused'?'未使用':item.status==='used'?'已使用':'已停用';
-      return '<tr>'+
-        '<td><strong>'+qcEscape(item.code||'—')+'</strong></td>'+
-        '<td>'+qcEscape(item.duration_days)+'天</td>'+
-        '<td>'+qcEscape(statusText)+'</td>'+
-        '<td>'+qcEscape(item.used_by_email||'—')+'</td>'+
-        '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
-        '<td>'+qcEscape(qcAdminFmt(item.used_at))+'</td>'+
-      '</tr>';
-    }).join('');
+      if(!rows) return;
+      if(codesResult.error){
+        rows.innerHTML='<tr><td colspan="6">兑换码读取失败，可稍后刷新重试</td></tr>';
+        return;
+      }
+      const codes=codesResult.data||[];
+      if(!codes.length){
+        rows.innerHTML='<tr><td colspan="6">暂无兑换码</td></tr>';
+        return;
+      }
+
+      rows.innerHTML=codes.map(item=>{
+        const statusText=item.status==='unused'?'未使用':item.status==='used'?'已使用':'已停用';
+        return '<tr>'+
+          '<td><strong>'+qcEscape(item.code||'—')+'</strong></td>'+
+          '<td>'+qcEscape(item.duration_days)+'天</td>'+
+          '<td>'+qcEscape(statusText)+'</td>'+
+          '<td>'+qcEscape(item.used_by_email||'—')+'</td>'+
+          '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
+          '<td>'+qcEscape(qcAdminFmt(item.used_at))+'</td>'+
+        '</tr>';
+      }).join('');
+    }catch(err){
+      console.error('admin redeem codes load failed',err);
+      if(rows) rows.innerHTML='<tr><td colspan="6">网络较慢，兑换码列表稍后自动刷新</td></tr>';
+    }
   };
 
-  await loadCodes();
-
-  const form=$('#createCodeForm');
+  // Bind the form before the heavier list refresh. Previously the page waited
+  // for multiple RPCs before attaching onsubmit, so tapping early looked broken.
   if(form){
     form.onsubmit=async e=>{
       e.preventDefault();
+      if(form.dataset.submitting==='1') return;
+
       const days=Number($('#codeDays').value);
       const note=($('#codeNote').value||'').trim();
-      const button=form.querySelector('button[type="submit"]');
-      const hint=$('#adminHint');
-      const box=$('#createdCodeBox');
-
       if(!Number.isInteger(days)||days<1||days>3650){
         alert('会员天数请输入 1–3650 之间的整数');
         return;
       }
 
-      button.disabled=true;
-      button.textContent='生成中…';
+      form.dataset.submitting='1';
+      if(submitBtn){
+        submitBtn.disabled=true;
+        submitBtn.textContent='生成中…';
+      }
       if(hint){hint.textContent='正在生成兑换码…';hint.className='code-hint';}
 
-      const {data,error}=await window.qcSupabase.rpc('create_redeem_code',{
-        p_duration_days:days,p_note:note||null
-      });
+      try{
+        const {data,error}=await window.qcSupabase.rpc('create_redeem_code',{
+          p_duration_days:days,p_note:note||null
+        });
 
-      button.disabled=false;
-      button.textContent='生成兑换码';
+        if(error){
+          const raw=String(error.message||'');
+          let msg='兑换码生成失败';
+          if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
+          if(raw.includes('INVALID_DURATION')) msg='会员天数不正确';
+          if(raw.includes('NOT_AUTHENTICATED')) msg='登录状态已失效，请重新登录';
+          if(hint){hint.textContent=msg;hint.className='code-hint error';}
+          return;
+        }
 
-      if(error){
-        const raw=String(error.message||'');
-        let msg='兑换码生成失败';
-        if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
-        if(raw.includes('INVALID_DURATION')) msg='会员天数不正确';
-        if(hint){hint.textContent=msg;hint.className='code-hint error';}
-        alert(msg);
-        return;
+        if(!data?.code) throw new Error('EMPTY_REDEEM_CODE_RESPONSE');
+        if($('#createdCode')) $('#createdCode').textContent=data.code;
+        if(box) box.hidden=false;
+        if(hint){hint.textContent='已生成 '+data.duration_days+' 天 Pro 会员兑换码。';hint.className='code-hint success';}
+        if($('#codeNote')) $('#codeNote').value='';
+
+        // Do not make the successful action wait for the list/stat refresh.
+        loadCodes({refreshStats:true}).catch(()=>{});
+      }catch(err){
+        console.error('create redeem code failed',err);
+        if(hint){
+          hint.textContent='网络响应异常，请先看“最近兑换码”是否已生成，再决定是否重试。';
+          hint.className='code-hint error';
+        }
+        loadCodes({refreshStats:true}).catch(()=>{});
+      }finally{
+        form.dataset.submitting='0';
+        if(submitBtn){
+          submitBtn.disabled=false;
+          submitBtn.textContent='生成兑换码';
+        }
       }
-
-      if($('#createdCode')) $('#createdCode').textContent=data.code;
-      if(box) box.hidden=false;
-      if(hint){hint.textContent='已生成 '+data.duration_days+' 天 Pro 会员兑换码。';hint.className='code-hint success';}
-      $('#codeNote').value='';
-      await loadCodes();
     };
   }
 
@@ -4879,8 +4916,15 @@ async function setupAdminCodes(){
       }
     };
   }
-}
 
+  if(submitBtn){
+    submitBtn.disabled=false;
+    submitBtn.textContent='生成兑换码';
+  }
+
+  // Initial list load runs in the background and no longer blocks the button.
+  loadCodes().catch(()=>{});
+}
 async function setupAdminData(){
   const root=$('#adminDataRoot');
   if(!root) return;
