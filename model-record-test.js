@@ -45,7 +45,7 @@
     if(raw===away || raw===awayShort) return '负';
     if(/分胜负|主胜.*客胜|客胜.*主胜/.test(raw)) return '胜 / 负';
     if(/主队?不败/.test(raw)||(hh&&/不败/.test(raw))) return '胜 / 平';
-    if(/客队?不败/.test(raw)||(ah&&/不败/.test(raw))) return '平 / 负';
+    if(/客队?不败/.test(raw)||(ah&&/不败/.test(raw))) return '负 / 平';
     if(/^主胜$/.test(raw)||(hh&&/胜/.test(raw))) return '胜';
     if(/^客胜$/.test(raw)||(ah&&/胜/.test(raw))) return '负';
     if(/^平局?$/.test(raw)) return '平';
@@ -54,7 +54,7 @@
   }
 
   function resultChoices(value){
-    return String(value||'').split('/').map(x=>x.trim()).filter(Boolean);
+    return String(value||'').split(/[\/｜|]+/).map(x=>x.trim()).filter(Boolean);
   }
 
   function handicapChoices(value){
@@ -113,9 +113,10 @@
     const hhad=pools?.hhad||null;
     const hhadActual=hhad?.goal_line!=null?handicapResult(ft,hhad.goal_line):'';
     const reviewOverride=String(model.raw_input?.review_direction_result||'').trim();
-    const directionActual=reviewOverride || (pools?.had ? ordinary : (hhadActual||ordinary));
     const directionChoices=resultChoices(normalizePick(model.direction,m));
-    const direction=directionChoices.length?directionChoices.includes(directionActual):null;
+    const forceHandicap=Boolean(model.raw_input?.no_ordinary_had) || directionChoices.some(x=>/^让[胜平负]$/.test(x));
+    const directionActual=reviewOverride || (forceHandicap ? hhadActual : ordinary);
+    const direction=directionChoices.length && directionActual ? directionChoices.includes(directionActual) : null;
 
     const singlePick=normalizePick(model.single_pick,m);
     let singleActual=ordinary;
@@ -195,10 +196,17 @@
     return all.filter(x=>x.match.business_date>=min && x.match.business_date<=maxDate);
   }
 
-  function renderMetricCards(rows){
+  function renderMetricCards(rows,compareRows=null){
     return '<div class="qc-record-metrics">'+METRICS.map(([key,label])=>{
       const s=metricStat(rows,key);
-      return '<div class="qc-record-metric"><small>'+esc(label)+'</small><strong>'+esc(fmtRate(s))+'</strong><em>'+s.hit+'/'+s.total+' 场</em></div>';
+      const c=compareRows?metricStat(compareRows,key):null;
+      let delta='';
+      if(c?.rate!=null && s.rate!=null){
+        const pp=Math.round((s.rate-c.rate)*1000)/10;
+        const sign=pp>0?'+':'';
+        delta='<span class="qc-record-delta '+(pp>0?'up':pp<0?'down':'flat')+'">较近7日 '+sign+pp+'pp</span>';
+      }
+      return '<div class="qc-record-metric"><small>'+esc(label)+'</small><strong>'+esc(fmtRate(s))+'</strong><em>'+s.hit+'/'+s.total+' 场</em>'+delta+'</div>';
     }).join('')+'</div>';
   }
 
@@ -272,38 +280,45 @@
   }
 
   async function loadRows(){
-    const {data:models,error:modelError}=await window.qcSupabase
-      .from('jc_model_outputs')
-      .select('id,jc_match_id,model_version,stage,direction,handicap_direction,single_pick,htft_top1,htft_top2,goal_range,top_scores,raw_input,is_current,is_locked,locked_at')
-      .eq('is_locked',true)
-      .eq('is_current',true)
-      .order('locked_at',{ascending:true});
-    if(modelError) throw modelError;
+    const {data:days,error}=await window.qcSupabase
+      .from('jc_model_record_daily_snapshots')
+      .select('business_date,payload,generated_at')
+      .order('business_date',{ascending:true});
+    if(error) throw error;
 
-    const ids=[...new Set((models||[]).map(x=>x.jc_match_id).filter(Boolean))];
-    if(!ids.length) return [];
+    const out=[];
+    (days||[]).forEach(day=>{
+      const snapshots=Array.isArray(day?.payload?.rows)?day.payload.rows:[];
+      snapshots.forEach(snap=>{
+        const baseMatch=snap?.match||{};
+        const model=snap?.model||{};
+        const live=snap?.result||{};
+        const match={
+          ...baseMatch,
+          business_date:baseMatch.business_date||day.business_date,
+          match_status:live.match_status||'',
+          raw:{
+            sectionsNo999:live.ft||'',
+            sectionsNo1:live.ht||'',
+            matchStatusName:live.match_status||''
+          }
+        };
+        const pools={
+          had:snap?.locked_has_had?{}:null,
+          hhad:snap?.locked_hhad_line?{goal_line:snap.locked_hhad_line}:null
+        };
+        out.push({
+          match,
+          model,
+          pools,
+          sourceSnapshotVersion:snap?.snapshot_version||'',
+          sourceSnapshotGeneratedAt:snap?.snapshot_generated_at||null,
+          result:gradeRow(match,model,pools)
+        });
+      });
+    });
 
-    const matches=await chunkIn(
-      'jc_matches',
-      'id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw',
-      'id',ids
-    );
-
-    const markets=await chunkIn(
-      'jc_prekick_latest_market_snapshots',
-      'jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time',
-      'jc_match_id',ids,
-      q=>q.in('pool_code',['had','hhad'])
-    );
-
-    const matchMap=new Map(matches.map(x=>[String(x.id),x]));
-    const poolMap=latestPoolMap(markets);
-    return (models||[]).map(model=>{
-      const match=matchMap.get(String(model.jc_match_id));
-      if(!match) return null;
-      const pools=poolMap.get(String(match.id))||{};
-      return {match,model,pools,result:gradeRow(match,model,pools)};
-    }).filter(Boolean).sort((a,b)=>{
+    return out.sort((a,b)=>{
       const d=String(a.match.business_date).localeCompare(String(b.match.business_date));
       if(d!==0) return d;
       return String(a.match.match_num||'').localeCompare(String(b.match.match_num||''),'zh-CN',{numeric:true});
@@ -322,11 +337,16 @@
     if(!allRows.length){root.innerHTML='<div class="qc-record-empty">暂无锁板记录。</div>';return;}
     const minDate=allRows[0].match.business_date;
     const maxDate=allRows[allRows.length-1].match.business_date;
+    const availableDates=[...new Set(allRows.map(x=>x.match.business_date))].sort();
     const dayMode=Boolean(selectedDate);
     const rows=dayMode
       ? allRows.filter(x=>x.match.business_date===selectedDate)
       : currentRangeRows(allRows,range,maxDate);
+    const compareRows=dayMode?currentRangeRows(allRows,'7',selectedDate):null;
     const finished=rows.filter(x=>x.result.finished).length;
+    const dayIndex=dayMode?availableDates.indexOf(selectedDate):-1;
+    const prevDate=dayIndex>0?availableDates[dayIndex-1]:'';
+    const nextDate=dayIndex>=0&&dayIndex<availableDates.length-1?availableDates[dayIndex+1]:'';
 
     $('#recordSummaryLine').innerHTML=
       (dayMode
@@ -348,16 +368,27 @@
             '<span>单日统计</span>'+
             '<input id="recordDatePicker" type="date" min="'+esc(minDate)+'" max="'+esc(maxDate)+'" value="'+esc(selectedDate)+'" aria-label="选择统计日期">'+
           '</label>'+
+          '<div class="qc-record-day-nav">'+
+            '<button type="button" data-day="'+esc(prevDate)+'" '+(!prevDate?'disabled':'')+'>‹ 上一记录日</button>'+
+            '<button type="button" data-day="'+esc(maxDate)+'">最近一日</button>'+
+            '<button type="button" data-day="'+esc(nextDate)+'" '+(!nextDate?'disabled':'')+'>下一记录日 ›</button>'+
+          '</div>'+
         '</div>'+
-        '<div class="qc-record-note">选择日期可查看单日命中统计；未完赛不计分母，缺少核验条件的项目不计分母。</div>'+
+        '<div class="qc-record-note">单日按竞彩足球业务日统计：12:00—次日10:00；未完赛不计分母，缺少核验条件的项目不计分母。</div>'+
       '</div>'+
-      renderMetricCards(rows)+
+      renderMetricCards(rows,compareRows)+
       '<div class="qc-record-section-title">'+(dayMode?'当日逐场记录':'逐场记录')+'</div>'+
       '<div class="qc-record-legend"><span>'+stateHtml(true)+' 命中</span><span>'+stateHtml(false)+' 未中</span><span>'+stateHtml(null)+' 未完赛或无法核验</span></div>'+
       '<div style="margin-top:10px">'+renderDays(rows)+'</div>';
 
     Array.from(root.querySelectorAll('.qc-record-range-tabs button')).forEach(btn=>{
       btn.onclick=()=>renderPage(allRows,btn.dataset.range||'all','');
+    });
+    Array.from(root.querySelectorAll('.qc-record-day-nav button[data-day]')).forEach(btn=>{
+      btn.onclick=()=>{
+        const ds=String(btn.dataset.day||'');
+        if(ds) renderPage(allRows,range,ds);
+      };
     });
     const picker=$('#recordDatePicker',root);
     if(picker){
