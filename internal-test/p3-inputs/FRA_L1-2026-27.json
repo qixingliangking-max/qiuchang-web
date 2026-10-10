@@ -5,363 +5,371 @@
   "matches": [
     {
       "source_match_id": "5802905",
-      "match_id": "360975bc-10a0-495d-885f-51412410d495",
+      "match_id": "fotmob:5802905",
       "home_team": "马赛",
       "away_team": "斯特拉斯堡",
       "match_date": "2026-08-21",
-      "kickoff_at": "2026-08-21 18:45:00+00"
+      "kickoff_at": "2026-08-21T18:45:00Z"
     },
     {
       "source_match_id": "5802904",
-      "match_id": "80f260c8-d69f-40c1-9472-e12809e43598",
+      "match_id": "fotmob:5802904",
       "home_team": "朗斯",
       "away_team": "欧塞尔",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 15:15:00+00"
-    },
-    {
-      "source_match_id": "5802908",
-      "match_id": "31a72a79-e93e-4594-a89c-df6b03fcebd4",
-      "home_team": "图卢兹",
-      "away_team": "里昂",
-      "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T15:15:00Z"
     },
     {
       "source_match_id": "5802903",
-      "match_id": "428516c0-1542-46bf-adf3-5d232b5a01cc",
+      "match_id": "fotmob:5802903",
       "home_team": "勒芒",
       "away_team": "布雷斯特",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T18:45:00Z"
     },
     {
       "source_match_id": "5802906",
-      "match_id": "cc0e0498-d059-4e0f-98b3-748eaa511b73",
+      "match_id": "fotmob:5802906",
       "home_team": "尼斯",
       "away_team": "洛里昂",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802908",
+      "match_id": "fotmob:5802908",
+      "home_team": "图卢兹",
+      "away_team": "里昂",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T18:45:00Z"
     },
     {
       "source_match_id": "5802909",
-      "match_id": "e140d3ca-ce36-4352-b91f-dd5c48ccb2a3",
+      "match_id": "fotmob:5802909",
       "home_team": "特鲁瓦",
       "away_team": "巴黎FC",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T18:45:00Z"
     },
     {
       "source_match_id": "5802901",
-      "match_id": "7e06c957-3e66-40dc-853c-a657370e6f50",
+      "match_id": "fotmob:5802901",
       "home_team": "昂热",
       "away_team": "里尔",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 13:00:00+00"
+      "kickoff_at": "2026-08-23T13:00:00Z"
     },
     {
       "source_match_id": "5802902",
-      "match_id": "b7803816-c1d0-45b8-bc5a-38a91d9de749",
+      "match_id": "fotmob:5802902",
       "home_team": "勒阿弗尔",
       "away_team": "摩纳哥",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 15:15:00+00"
+      "kickoff_at": "2026-08-23T15:15:00Z"
     },
     {
       "source_match_id": "5803105",
-      "match_id": "4a05dfff-3d94-4535-8705-a9eaf3186d13",
+      "match_id": "fotmob:5803105",
       "home_team": "雷恩",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 18:45:00+00"
+      "kickoff_at": "2026-08-23T18:45:00Z"
     },
     {
       "source_match_id": "5802918",
-      "match_id": "14f34162-d285-4877-af9c-737a80110872",
+      "match_id": "fotmob:5802918",
       "home_team": "里尔",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-08-28",
-      "kickoff_at": "2026-08-28 19:00:00+00"
+      "kickoff_at": "2026-08-28T19:00:00Z"
     },
     {
       "source_match_id": "5802917",
-      "match_id": "06008694-2c2c-4a05-9f83-3f68202ae13a",
+      "match_id": "fotmob:5802917",
       "home_team": "斯特拉斯堡",
       "away_team": "朗斯",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 15:15:00+00"
-    },
-    {
-      "source_match_id": "5802912",
-      "match_id": "1cd30b00-aa2d-4f2b-b1fe-cff1e8a0482f",
-      "home_team": "洛里昂",
-      "away_team": "特鲁瓦",
-      "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 18:45:00+00"
-    },
-    {
-      "source_match_id": "5802911",
-      "match_id": "4dd0efaf-6a88-4822-8cac-eee7688b0b03",
-      "home_team": "布雷斯特",
-      "away_team": "图卢兹",
-      "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 18:45:00+00"
+      "kickoff_at": "2026-08-29T15:15:00Z"
     },
     {
       "source_match_id": "5802910",
-      "match_id": "c89e05cb-c049-47bd-afea-9a8d493e3efb",
+      "match_id": "fotmob:5802910",
       "home_team": "欧塞尔",
       "away_team": "昂热",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 18:45:00+00"
+      "kickoff_at": "2026-08-29T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802911",
+      "match_id": "fotmob:5802911",
+      "home_team": "布雷斯特",
+      "away_team": "图卢兹",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802912",
+      "match_id": "fotmob:5802912",
+      "home_team": "洛里昂",
+      "away_team": "特鲁瓦",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T18:45:00Z"
     },
     {
       "source_match_id": "5802913",
-      "match_id": "d43db02d-c23f-4a45-9226-d2216c1a4f84",
+      "match_id": "fotmob:5802913",
       "home_team": "里昂",
       "away_team": "勒阿弗尔",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 18:45:00+00"
+      "kickoff_at": "2026-08-29T18:45:00Z"
     },
     {
       "source_match_id": "5802915",
-      "match_id": "e984f459-08b8-4bbc-8a2d-8764d452e6e2",
+      "match_id": "fotmob:5802915",
       "home_team": "巴黎FC",
       "away_team": "尼斯",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 13:00:00+00"
+      "kickoff_at": "2026-08-30T13:00:00Z"
     },
     {
       "source_match_id": "5802916",
-      "match_id": "7ffbe97a-d8b0-4e36-9c1a-a18719381eb8",
+      "match_id": "fotmob:5802916",
       "home_team": "雷恩",
       "away_team": "勒芒",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 15:15:00+00"
+      "kickoff_at": "2026-08-30T15:15:00Z"
     },
     {
       "source_match_id": "5802914",
-      "match_id": "0b5fd33b-ac27-4976-8c67-68ff5a829e83",
+      "match_id": "fotmob:5802914",
       "home_team": "摩纳哥",
       "away_team": "马赛",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 18:45:00+00"
+      "kickoff_at": "2026-08-30T18:45:00Z"
     },
     {
       "source_match_id": "5802926",
-      "match_id": "b4dcdefc-b646-4447-b241-0f66832cd417",
+      "match_id": "fotmob:5802926",
       "home_team": "图卢兹",
       "away_team": "里尔",
       "match_date": "2026-09-03",
-      "kickoff_at": "2026-09-03 18:45:00+00"
+      "kickoff_at": "2026-09-03T18:45:00Z"
     },
     {
       "source_match_id": "5802922",
-      "match_id": "c0a86e79-9291-42e1-8d6d-69f2f6b09f48",
+      "match_id": "fotmob:5802922",
       "home_team": "里昂",
       "away_team": "欧塞尔",
       "match_date": "2026-09-04",
-      "kickoff_at": "2026-09-04 17:00:00+00"
+      "kickoff_at": "2026-09-04T17:00:00Z"
     },
     {
       "source_match_id": "5802925",
-      "match_id": "46bff29f-b47a-4bdd-a014-8623c4ab5b04",
+      "match_id": "fotmob:5802925",
       "home_team": "巴黎圣日耳曼",
       "away_team": "摩纳哥",
       "match_date": "2026-09-04",
-      "kickoff_at": "2026-09-04 19:05:00+00"
+      "kickoff_at": "2026-09-04T19:05:00Z"
     },
     {
       "source_match_id": "5802921",
-      "match_id": "7e55ba7e-3d06-4da4-88ac-44e8dfc8fccc",
+      "match_id": "fotmob:5802921",
       "home_team": "朗斯",
       "away_team": "洛里昂",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 15:15:00+00"
+      "kickoff_at": "2026-09-05T15:15:00Z"
     },
     {
       "source_match_id": "5802920",
-      "match_id": "10b21b6e-6e84-47c6-ab3f-553b26a98423",
+      "match_id": "fotmob:5802920",
       "home_team": "勒阿弗尔",
       "away_team": "布雷斯特",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 18:45:00+00"
+      "kickoff_at": "2026-09-05T18:45:00Z"
     },
     {
       "source_match_id": "5802924",
-      "match_id": "532d937b-35bb-44ab-9e6d-91f466bd45d5",
+      "match_id": "fotmob:5802924",
       "home_team": "尼斯",
       "away_team": "勒芒",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 18:45:00+00"
+      "kickoff_at": "2026-09-05T18:45:00Z"
     },
     {
       "source_match_id": "5802927",
-      "match_id": "dd8adda6-744a-454e-9bef-2bf0b18d4501",
+      "match_id": "fotmob:5802927",
       "home_team": "特鲁瓦",
       "away_team": "斯特拉斯堡",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 13:00:00+00"
+      "kickoff_at": "2026-09-06T13:00:00Z"
     },
     {
       "source_match_id": "5802919",
-      "match_id": "6fa1a9af-f9fc-4094-8e82-7d3b08c2492c",
+      "match_id": "fotmob:5802919",
       "home_team": "昂热",
       "away_team": "雷恩",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 15:15:00+00"
+      "kickoff_at": "2026-09-06T15:15:00Z"
     },
     {
       "source_match_id": "5802923",
-      "match_id": "42583cf5-d310-448c-9b9a-bbc04c9793c4",
+      "match_id": "fotmob:5802923",
       "home_team": "马赛",
       "away_team": "巴黎FC",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 18:45:00+00"
+      "kickoff_at": "2026-09-06T18:45:00Z"
     },
     {
       "source_match_id": "5802935",
-      "match_id": "a2d478dc-f634-46a6-a663-4c315785e5f3",
+      "match_id": "fotmob:5802935",
       "home_team": "雷恩",
       "away_team": "马赛",
       "match_date": "2026-09-11",
-      "kickoff_at": "2026-09-11 18:45:00+00"
+      "kickoff_at": "2026-09-11T18:45:00Z"
     },
     {
       "source_match_id": "5802936",
-      "match_id": "f223bf04-2b7d-4e90-a388-0f595aaf8d46",
+      "match_id": "fotmob:5802936",
       "home_team": "斯特拉斯堡",
       "away_team": "摩纳哥",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 15:15:00+00"
-    },
-    {
-      "source_match_id": "5802930",
-      "match_id": "76b27062-a974-4913-bd06-2a9ad3e53f7f",
-      "home_team": "勒阿弗尔",
-      "away_team": "昂热",
-      "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:45:00+00"
-    },
-    {
-      "source_match_id": "5802933",
-      "match_id": "c56c1ab9-d444-455a-a23a-dbec1e8f3bc8",
-      "home_team": "洛里昂",
-      "away_team": "图卢兹",
-      "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:45:00+00"
-    },
-    {
-      "source_match_id": "5802934",
-      "match_id": "cb743e66-24ea-4c09-a78a-a9193c43878f",
-      "home_team": "巴黎FC",
-      "away_team": "里昂",
-      "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:45:00+00"
+      "kickoff_at": "2026-09-12T15:15:00Z"
     },
     {
       "source_match_id": "5802928",
-      "match_id": "f6b5e6ee-e7bf-4384-bac1-1334526ed1d4",
+      "match_id": "fotmob:5802928",
       "home_team": "欧塞尔",
       "away_team": "尼斯",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:45:00+00"
+      "kickoff_at": "2026-09-12T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802930",
+      "match_id": "fotmob:5802930",
+      "home_team": "勒阿弗尔",
+      "away_team": "昂热",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802933",
+      "match_id": "fotmob:5802933",
+      "home_team": "洛里昂",
+      "away_team": "图卢兹",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802934",
+      "match_id": "fotmob:5802934",
+      "home_team": "巴黎FC",
+      "away_team": "里昂",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T18:45:00Z"
     },
     {
       "source_match_id": "5802932",
-      "match_id": "95d641c2-ae5a-4617-b3e6-3afc51553755",
+      "match_id": "fotmob:5802932",
       "home_team": "里尔",
       "away_team": "特鲁瓦",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 13:00:00+00"
+      "kickoff_at": "2026-09-13T13:00:00Z"
     },
     {
       "source_match_id": "5802931",
-      "match_id": "b5bab44e-42f2-4f51-b7b1-60221604b2ae",
+      "match_id": "fotmob:5802931",
       "home_team": "勒芒",
       "away_team": "朗斯",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 15:15:00+00"
+      "kickoff_at": "2026-09-13T15:15:00Z"
     },
     {
       "source_match_id": "5802929",
-      "match_id": "88e78b95-2e62-469c-bd20-13e949f48d8e",
+      "match_id": "fotmob:5802929",
       "home_team": "布雷斯特",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 18:45:00+00"
+      "kickoff_at": "2026-09-13T18:45:00Z"
     },
     {
       "source_match_id": "5802941",
-      "match_id": "6bc76777-dbb2-4ef4-aada-928cdf2769cc",
+      "match_id": "fotmob:5802941",
       "home_team": "摩纳哥",
       "away_team": "朗斯",
       "match_date": "2026-09-18",
-      "kickoff_at": "2026-09-18 18:45:00+00"
+      "kickoff_at": "2026-09-18T18:45:00Z"
     },
     {
       "source_match_id": "5802943",
-      "match_id": "b388f689-ea6f-4eb4-806d-0c33297b7dc3",
+      "match_id": "fotmob:5802943",
       "home_team": "巴黎FC",
       "away_team": "斯特拉斯堡",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 15:15:00+00"
+      "kickoff_at": "2026-09-19T15:15:00Z"
     },
     {
       "source_match_id": "5802937",
-      "match_id": "2c6cddeb-fa2f-4b6c-bb74-4705ba551571",
+      "match_id": "fotmob:5802937",
       "home_team": "昂热",
       "away_team": "特鲁瓦",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:45:00+00"
-    },
-    {
-      "source_match_id": "5802944",
-      "match_id": "377197ea-ecbf-4e19-92dd-c9426bb984f3",
-      "home_team": "图卢兹",
-      "away_team": "勒阿弗尔",
-      "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:45:00+00"
+      "kickoff_at": "2026-09-19T18:45:00Z"
     },
     {
       "source_match_id": "5802939",
-      "match_id": "6da30c76-e6ab-4ae1-992f-2b4ecaf06180",
+      "match_id": "fotmob:5802939",
       "home_team": "勒芒",
       "away_team": "洛里昂",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:45:00+00"
+      "kickoff_at": "2026-09-19T18:45:00Z"
     },
     {
       "source_match_id": "5802940",
-      "match_id": "fd890d72-01e3-4d4d-8b0c-81387ddcf042",
+      "match_id": "fotmob:5802940",
       "home_team": "里昂",
       "away_team": "雷恩",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:45:00+00"
+      "kickoff_at": "2026-09-19T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802944",
+      "match_id": "fotmob:5802944",
+      "home_team": "图卢兹",
+      "away_team": "勒阿弗尔",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T18:45:00Z"
     },
     {
       "source_match_id": "5802938",
-      "match_id": "44685cab-967e-4260-83db-db2686949fe7",
+      "match_id": "fotmob:5802938",
       "home_team": "欧塞尔",
       "away_team": "布雷斯特",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 13:00:00+00"
+      "kickoff_at": "2026-09-20T13:00:00Z"
     },
     {
       "source_match_id": "5802942",
-      "match_id": "be079f28-d8e9-4ef1-96e7-94d466c1966a",
+      "match_id": "fotmob:5802942",
       "home_team": "尼斯",
       "away_team": "里尔",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 15:15:00+00"
+      "kickoff_at": "2026-09-20T15:15:00Z"
     },
     {
       "source_match_id": "5802945",
-      "match_id": "a441c05f-0a42-4d7c-9f4b-ffc692d615d0",
+      "match_id": "fotmob:5802945",
       "home_team": "马赛",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 18:45:00+00"
+      "kickoff_at": "2026-09-20T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802947",
+      "match_id": "fotmob:5802947",
+      "home_team": "朗斯",
+      "away_team": "里昂",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:45:00Z"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "87"
   ],
   "fotmob_ccode3": "ESP",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 70,
   "team_map": {
     "Elche": "埃尔切",
     "Getafe": "赫塔费",
@@ -31,5 +31,7 @@
     "Racing Santander": "桑坦德竞技",
     "Deportivo Alavés": "阿拉维斯",
     "Deportivo A Coruña": "拉科鲁尼亚"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-10T06:12:52.186Z",
+  "last_published_blob_sha": "04d07853f75611fb92757e3ba81f525de3303db1"
 }

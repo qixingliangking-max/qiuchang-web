@@ -6,7 +6,7 @@
     "48"
   ],
   "fotmob_ccode3": "ENG",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 96,
   "team_map": {
     "Burnley": "伯恩利",
     "Watford": "沃特福德",
@@ -32,5 +32,7 @@
     "Queens Park Rangers": "女王公园巡游者",
     "West Bromwich Albion": "西布罗姆维奇",
     "Wolverhampton Wanderers": "狼队"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-10T06:12:39.605Z",
+  "last_published_blob_sha": "b8849af8086f1e481312695c9dcd9e61ae1a5eec"
 }

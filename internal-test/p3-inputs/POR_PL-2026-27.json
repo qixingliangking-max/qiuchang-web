@@ -505,7 +505,15 @@
       "home_team": "莫雷拉人",
       "away_team": "吉维森特",
       "match_date": "2026-10-09",
-      "kickoff_at": "2026-10-09T17:45:00.000Z"
+      "kickoff_at": "2026-10-09T17:45:00Z"
+    },
+    {
+      "source_match_id": "5887647",
+      "match_id": "fotmob:5887647",
+      "home_team": "布拉加",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T19:15:00Z"
     }
   ]
 }

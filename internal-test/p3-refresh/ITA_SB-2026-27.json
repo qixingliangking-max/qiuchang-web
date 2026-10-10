@@ -6,7 +6,7 @@
     "86"
   ],
   "fotmob_ccode3": "ITA",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 51,
   "team_map": {
     "Pisa": "比萨",
     "Arezzo": "阿雷佐",
@@ -28,5 +28,7 @@
     "Juve Stabia": "史泰比亚",
     "Hellas Verona": "维罗纳",
     "Virtus Entella": "恩特拉"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-10T06:13:14.804Z",
+  "last_published_blob_sha": "f652729acfbad29a08d9c19da068362738db667a"
 }

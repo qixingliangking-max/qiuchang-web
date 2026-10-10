@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 63,
-  "collected_matches": 63,
+  "input_matches": 64,
+  "collected_matches": 64,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉加",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "葡萄牙体育",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
