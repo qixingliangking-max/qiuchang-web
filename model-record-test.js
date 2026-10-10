@@ -317,37 +317,56 @@
     backdrop.onclick=e=>{if(e.target===backdrop)backdrop.classList.remove('open');};
   }
 
-  function renderPage(allRows,range){
+  function renderPage(allRows,range,selectedDate=''){
     const root=$('#modelRecordRoot');
     if(!allRows.length){root.innerHTML='<div class="qc-record-empty">暂无锁板记录。</div>';return;}
     const minDate=allRows[0].match.business_date;
     const maxDate=allRows[allRows.length-1].match.business_date;
-    const rows=currentRangeRows(allRows,range,maxDate);
+    const dayMode=Boolean(selectedDate);
+    const rows=dayMode
+      ? allRows.filter(x=>x.match.business_date===selectedDate)
+      : currentRangeRows(allRows,range,maxDate);
     const finished=rows.filter(x=>x.result.finished).length;
 
     $('#recordSummaryLine').innerHTML=
-      '<span>上线记录 '+esc(minDate.slice(5).replace('-','/'))+'–'+esc(maxDate.slice(5).replace('-','/'))+'</span>'+
-      '<span>当前范围锁板 '+rows.length+' 场</span>'+
+      (dayMode
+        ? '<span>单日统计 '+esc(selectedDate.slice(5).replace('-','/'))+'</span>'
+        : '<span>上线记录 '+esc(minDate.slice(5).replace('-','/'))+'–'+esc(maxDate.slice(5).replace('-','/'))+'</span>')+
+      '<span>'+(dayMode?'当日':'当前范围')+'锁板 '+rows.length+' 场</span>'+
       '<span>已结算 '+finished+' 场</span>'+
       '<span>未结算 '+(rows.length-finished)+' 场</span>';
 
     root.innerHTML=
       '<div class="qc-record-controls">'+
-        '<div class="qc-record-range-tabs">'+
-          '<button type="button" data-range="7" class="'+(range==='7'?'active':'')+'">近7天</button>'+
-          '<button type="button" data-range="30" class="'+(range==='30'?'active':'')+'">近30天</button>'+
-          '<button type="button" data-range="all" class="'+(range==='all'?'active':'')+'">上线以来</button>'+
+        '<div class="qc-record-filter-stack">'+
+          '<div class="qc-record-range-tabs">'+
+            '<button type="button" data-range="7" class="'+(!dayMode&&range==='7'?'active':'')+'">近7天</button>'+
+            '<button type="button" data-range="30" class="'+(!dayMode&&range==='30'?'active':'')+'">近30天</button>'+
+            '<button type="button" data-range="all" class="'+(!dayMode&&range==='all'?'active':'')+'">上线以来</button>'+
+          '</div>'+
+          '<label class="qc-record-day-picker'+(dayMode?' active':'')+'">'+
+            '<span>单日统计</span>'+
+            '<input id="recordDatePicker" type="date" min="'+esc(minDate)+'" max="'+esc(maxDate)+'" value="'+esc(selectedDate)+'" aria-label="选择统计日期">'+
+          '</label>'+
         '</div>'+
-        '<div class="qc-record-note">未完赛不计分母；缺少让球线或半场比分时，对应项目不计分母。</div>'+
+        '<div class="qc-record-note">选择日期可查看单日命中统计；未完赛不计分母，缺少核验条件的项目不计分母。</div>'+
       '</div>'+
       renderMetricCards(rows)+
-      '<div class="qc-record-section-title">逐场记录</div>'+
+      '<div class="qc-record-section-title">'+(dayMode?'当日逐场记录':'逐场记录')+'</div>'+
       '<div class="qc-record-legend"><span>'+stateHtml(true)+' 命中</span><span>'+stateHtml(false)+' 未中</span><span>'+stateHtml(null)+' 未完赛或无法核验</span></div>'+
       '<div style="margin-top:10px">'+renderDays(rows)+'</div>';
 
-    $$('.qc-record-range-tabs button',root).forEach(btn=>{
-      btn.onclick=()=>renderPage(allRows,btn.dataset.range||'all');
+    $('.qc-record-range-tabs button',root).forEach(btn=>{
+      btn.onclick=()=>renderPage(allRows,btn.dataset.range||'all','');
     });
+    const picker=$('#recordDatePicker',root);
+    if(picker){
+      picker.onchange=()=>{
+        const ds=String(picker.value||'');
+        if(ds) renderPage(allRows,range,ds);
+        else renderPage(allRows,range,'');
+      };
+    }
   }
 
   async function setup(){
