@@ -26,12 +26,20 @@
     .qc-record-day-picker.active{border-color:#aebed6;box-shadow:0 0 0 3px rgba(66,108,180,.08)}
     .qc-record-day-picker span{font-size:12px;font-weight:900;color:#657289;white-space:nowrap}
     .qc-record-day-picker input{height:32px;border:0;border-radius:8px;background:#f4f6f9;color:#2e3c55;padding:0 8px;font-size:12px;font-weight:800;outline:0;cursor:pointer}
+    .qc-record-day-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .qc-record-day-nav button{height:34px;border:1px solid #dfe5ee;border-radius:9px;background:#fff;color:#59677e;padding:0 10px;font-size:11px;font-weight:850;cursor:pointer}
+    .qc-record-day-nav button:hover{border-color:#b9c5d7;color:#2f4263}
+    .qc-record-day-nav button:disabled{opacity:.38;cursor:not-allowed}
     .qc-record-note{color:#8994a6;font-size:12px;text-align:right}
     .qc-record-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:20px}
     .qc-record-metric{background:#fff;border:1px solid #e4e9f1;border-radius:15px;padding:15px 14px;min-width:0}
     .qc-record-metric small{display:block;color:#7c889d;font-size:12px;font-weight:800;margin-bottom:7px}
     .qc-record-metric strong{display:block;font-size:24px;line-height:1;color:#1f2a44;letter-spacing:-.03em}
     .qc-record-metric em{display:block;margin-top:7px;color:#8994a6;font-size:11px;font-style:normal}
+    .qc-record-delta{display:inline-flex;margin-top:7px;font-size:10px;font-weight:850}
+    .qc-record-delta.up{color:#238552}
+    .qc-record-delta.down{color:#c04c43}
+    .qc-record-delta.flat{color:#8994a6}
     .qc-record-section-title{display:flex;align-items:center;gap:8px;margin:22px 0 10px;font-size:18px;font-weight:950}
     .qc-record-section-title:before{content:"";width:4px;height:22px;border-radius:999px;background:#59b77a}
     .qc-record-day{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:14px}
@@ -109,6 +117,8 @@
       .qc-record-range-tabs button{flex:1;padding:0 8px}
       .qc-record-day-picker{justify-content:space-between;width:100%;box-sizing:border-box}
       .qc-record-day-picker input{flex:1;min-width:0}
+      .qc-record-day-nav{display:grid;grid-template-columns:1fr 1fr 1fr;width:100%}
+      .qc-record-day-nav button{padding:0 6px}
       .qc-record-summary-line{gap:6px}
       .qc-record-summary-line span{font-size:11px}
     }
@@ -163,6 +173,6 @@
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
 <script src="app.js?v=20261007activity1"></script>
-<script src="model-record-test.js?v=20261011day3"></script>
+<script src="model-record-test.js?v=20261011day4"></script>
 </body>
 </html>
