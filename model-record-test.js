@@ -348,14 +348,6 @@
     const prevDate=dayIndex>0?availableDates[dayIndex-1]:'';
     const nextDate=dayIndex>=0&&dayIndex<availableDates.length-1?availableDates[dayIndex+1]:'';
 
-    $('#recordSummaryLine').innerHTML=
-      (dayMode
-        ? '<span>单日统计 '+esc(selectedDate.slice(5).replace('-','/'))+'</span>'
-        : '<span>上线记录 '+esc(minDate.slice(5).replace('-','/'))+'–'+esc(maxDate.slice(5).replace('-','/'))+'</span>')+
-      '<span>'+(dayMode?'当日':'当前范围')+'锁板 '+rows.length+' 场</span>'+
-      '<span>已结算 '+finished+' 场</span>'+
-      '<span>未结算 '+(rows.length-finished)+' 场</span>';
-
     root.innerHTML=
       '<div class="qc-record-controls">'+
         '<div class="qc-record-filter-stack">'+
