@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 64,
-  "collected_matches": 64,
+  "input_matches": 66,
+  "collected_matches": 66,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 523,
+  "aggregate_players": 528,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "前进之鹰",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费耶诺德",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿尔克马尔",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,10 +101,10 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "鹿特丹斯巴达",
-      "matches": 7
+      "matches": 8
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 9.6
+  "avg_team_depth_coverage_pct": 14.2
 }

@@ -5,403 +5,419 @@
   "matches": [
     {
       "source_match_id": "5749645",
-      "match_id": "2cbac98f-a5f7-4bf1-8b15-9c327d6a9b1a",
+      "match_id": "fotmob:5749645",
       "home_team": "国际米兰",
       "away_team": "蒙扎",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 16:30:00+00"
+      "kickoff_at": "2026-08-22T16:30:00Z"
     },
     {
       "source_match_id": "5749648",
-      "match_id": "5c59247e-69ed-418a-891e-a34ad1bda226",
+      "match_id": "fotmob:5749648",
       "home_team": "乌迪内斯",
       "away_team": "科莫",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 16:30:00+00"
-    },
-    {
-      "source_match_id": "5749646",
-      "match_id": "a5f70114-15af-4fb4-967a-cfb9a5148f33",
-      "home_team": "帕尔马",
-      "away_team": "卡利亚里",
-      "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T16:30:00Z"
     },
     {
       "source_match_id": "5749644",
-      "match_id": "edfb14e0-b04b-426d-8266-ac330705212c",
+      "match_id": "fotmob:5749644",
       "home_team": "热那亚",
       "away_team": "那不勒斯",
       "match_date": "2026-08-22",
-      "kickoff_at": "2026-08-22 18:45:00+00"
+      "kickoff_at": "2026-08-22T18:45:00Z"
     },
     {
-      "source_match_id": "5749649",
-      "match_id": "8356982d-dbce-492c-9c05-ff760d1e0f14",
-      "home_team": "威尼斯",
-      "away_team": "莱切",
-      "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 16:30:00+00"
+      "source_match_id": "5749646",
+      "match_id": "fotmob:5749646",
+      "home_team": "帕尔马",
+      "away_team": "卡利亚里",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T18:45:00Z"
     },
     {
       "source_match_id": "5749643",
-      "match_id": "b462e245-7690-45c7-9661-e1f0bb17afa6",
+      "match_id": "fotmob:5749643",
       "home_team": "弗罗西诺内",
       "away_team": "尤文图斯",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 16:30:00+00"
+      "kickoff_at": "2026-08-23T16:30:00Z"
     },
     {
-      "source_match_id": "5749647",
-      "match_id": "555fe5b5-398b-4643-904c-628113c322fb",
-      "home_team": "都灵",
-      "away_team": "AC米兰",
+      "source_match_id": "5749649",
+      "match_id": "fotmob:5749649",
+      "home_team": "威尼斯",
+      "away_team": "莱切",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 18:45:00+00"
+      "kickoff_at": "2026-08-23T16:30:00Z"
     },
     {
       "source_match_id": "5749641",
-      "match_id": "a89f820d-896c-4757-83cd-9813e5120f56",
+      "match_id": "fotmob:5749641",
       "home_team": "亚特兰大",
       "away_team": "萨索洛",
       "match_date": "2026-08-23",
-      "kickoff_at": "2026-08-23 18:45:00+00"
+      "kickoff_at": "2026-08-23T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749647",
+      "match_id": "fotmob:5749647",
+      "home_team": "都灵",
+      "away_team": "AC米兰",
+      "match_date": "2026-08-23",
+      "kickoff_at": "2026-08-23T18:45:00Z"
     },
     {
       "source_match_id": "5749642",
-      "match_id": "46478297-a0eb-4669-977b-b557100b77c4",
+      "match_id": "fotmob:5749642",
       "home_team": "博洛尼亚",
       "away_team": "拉齐奥",
       "match_date": "2026-08-24",
-      "kickoff_at": "2026-08-24 16:30:00+00"
+      "kickoff_at": "2026-08-24T16:30:00Z"
     },
     {
       "source_match_id": "5749640",
-      "match_id": "e3634ed5-bf26-4571-b04d-811247a4f9d8",
+      "match_id": "fotmob:5749640",
       "home_team": "罗马",
       "away_team": "佛罗伦萨",
       "match_date": "2026-08-24",
-      "kickoff_at": "2026-08-24 18:45:00+00"
+      "kickoff_at": "2026-08-24T18:45:00Z"
     },
     {
       "source_match_id": "5749650",
-      "match_id": "9f842c6c-c3c9-4a85-a6e4-80d2ac23d2d1",
+      "match_id": "fotmob:5749650",
       "home_team": "AC米兰",
       "away_team": "威尼斯",
       "match_date": "2026-08-28",
-      "kickoff_at": "2026-08-28 18:45:00+00"
+      "kickoff_at": "2026-08-28T18:45:00Z"
     },
     {
       "source_match_id": "5749653",
-      "match_id": "235905a2-dd48-41f3-9a62-ec55572df8a4",
+      "match_id": "fotmob:5749653",
       "home_team": "佛罗伦萨",
       "away_team": "弗罗西诺内",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 16:30:00+00"
+      "kickoff_at": "2026-08-29T16:30:00Z"
     },
     {
       "source_match_id": "5749657",
-      "match_id": "3a304934-3e36-4e77-a245-713f3f262713",
+      "match_id": "fotmob:5749657",
       "home_team": "蒙扎",
       "away_team": "乌迪内斯",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 16:30:00+00"
+      "kickoff_at": "2026-08-29T16:30:00Z"
     },
     {
       "source_match_id": "5749659",
-      "match_id": "a77b35ae-daf7-4776-8568-727ac1756e8e",
+      "match_id": "fotmob:5749659",
       "home_team": "萨索洛",
       "away_team": "都灵",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 16:30:00+00"
+      "kickoff_at": "2026-08-29T16:30:00Z"
     },
     {
       "source_match_id": "5749654",
-      "match_id": "190ac208-4819-4d29-8d39-015e816abbd0",
+      "match_id": "fotmob:5749654",
       "home_team": "尤文图斯",
       "away_team": "帕尔马",
       "match_date": "2026-08-29",
-      "kickoff_at": "2026-08-29 18:45:00+00"
+      "kickoff_at": "2026-08-29T18:45:00Z"
     },
     {
       "source_match_id": "5749658",
-      "match_id": "a2492932-d7f1-434e-bf40-cc7f0eaa5247",
+      "match_id": "fotmob:5749658",
       "home_team": "那不勒斯",
       "away_team": "科莫",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 16:30:00+00"
-    },
-    {
-      "source_match_id": "5749655",
-      "match_id": "62d00561-8212-4082-8b84-498145a1a508",
-      "home_team": "拉齐奥",
-      "away_team": "热那亚",
-      "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 18:45:00+00"
+      "kickoff_at": "2026-08-30T16:30:00Z"
     },
     {
       "source_match_id": "5749652",
-      "match_id": "82fa3243-5c55-43fe-8d5e-cc7b7461240e",
+      "match_id": "fotmob:5749652",
       "home_team": "卡利亚里",
       "away_team": "国际米兰",
       "match_date": "2026-08-30",
-      "kickoff_at": "2026-08-30 18:45:00+00"
+      "kickoff_at": "2026-08-30T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749655",
+      "match_id": "fotmob:5749655",
+      "home_team": "拉齐奥",
+      "away_team": "热那亚",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T18:45:00Z"
     },
     {
       "source_match_id": "5749656",
-      "match_id": "52ee565b-5f8e-4fc0-9f57-8ee699b5fcaa",
+      "match_id": "fotmob:5749656",
       "home_team": "莱切",
       "away_team": "罗马",
       "match_date": "2026-08-31",
-      "kickoff_at": "2026-08-31 16:30:00+00"
+      "kickoff_at": "2026-08-31T16:30:00Z"
     },
     {
       "source_match_id": "5749651",
-      "match_id": "1c99d81b-9836-41ea-90bf-0735f8f89dee",
+      "match_id": "fotmob:5749651",
       "home_team": "亚特兰大",
       "away_team": "博洛尼亚",
       "match_date": "2026-08-31",
-      "kickoff_at": "2026-08-31 18:45:00+00"
+      "kickoff_at": "2026-08-31T18:45:00Z"
     },
     {
       "source_match_id": "5749665",
-      "match_id": "5cc3b71a-3559-4298-ab30-6996e3d7515b",
+      "match_id": "fotmob:5749665",
       "home_team": "热那亚",
       "away_team": "科莫",
       "match_date": "2026-09-04",
-      "kickoff_at": "2026-09-04 18:45:00+00"
+      "kickoff_at": "2026-09-04T18:45:00Z"
     },
     {
       "source_match_id": "5749663",
-      "match_id": "3a911d19-9354-46ef-8f8b-97c32e347ab0",
+      "match_id": "fotmob:5749663",
       "home_team": "佛罗伦萨",
       "away_team": "都灵",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 13:00:00+00"
+      "kickoff_at": "2026-09-05T13:00:00Z"
     },
     {
       "source_match_id": "5749666",
-      "match_id": "70c59068-9845-45aa-9722-03f14c0c7171",
+      "match_id": "fotmob:5749666",
       "home_team": "国际米兰",
       "away_team": "那不勒斯",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 16:00:00+00"
+      "kickoff_at": "2026-09-05T16:00:00Z"
     },
     {
       "source_match_id": "5749660",
-      "match_id": "8427ca0c-9a5a-42b4-aacd-32452678e97b",
+      "match_id": "fotmob:5749660",
       "home_team": "罗马",
       "away_team": "亚特兰大",
       "match_date": "2026-09-05",
-      "kickoff_at": "2026-09-05 18:45:00+00"
+      "kickoff_at": "2026-09-05T18:45:00Z"
     },
     {
       "source_match_id": "5749664",
-      "match_id": "df14cb97-3c53-45a8-966c-a77774cfb37e",
+      "match_id": "fotmob:5749664",
       "home_team": "弗罗西诺内",
       "away_team": "威尼斯",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 13:00:00+00"
+      "kickoff_at": "2026-09-06T13:00:00Z"
     },
     {
       "source_match_id": "5749668",
-      "match_id": "e9412104-b930-4676-bdc5-cb923b1b2aef",
+      "match_id": "fotmob:5749668",
       "home_team": "帕尔马",
       "away_team": "蒙扎",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 13:00:00+00"
+      "kickoff_at": "2026-09-06T13:00:00Z"
     },
     {
       "source_match_id": "5749661",
-      "match_id": "58b7ea42-ad8d-49d3-8cd3-b2ef23f03f00",
+      "match_id": "fotmob:5749661",
       "home_team": "博洛尼亚",
       "away_team": "萨索洛",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 16:00:00+00"
+      "kickoff_at": "2026-09-06T16:00:00Z"
     },
     {
       "source_match_id": "5749667",
-      "match_id": "4cda47c7-c8a7-4e4b-a435-d6c247e4032d",
+      "match_id": "fotmob:5749667",
       "home_team": "尤文图斯",
       "away_team": "AC米兰",
       "match_date": "2026-09-06",
-      "kickoff_at": "2026-09-06 18:45:00+00"
+      "kickoff_at": "2026-09-06T18:45:00Z"
     },
     {
       "source_match_id": "5749662",
-      "match_id": "e9d6c515-6772-4ace-862a-7bd9e1efc185",
+      "match_id": "fotmob:5749662",
       "home_team": "卡利亚里",
       "away_team": "莱切",
       "match_date": "2026-09-07",
-      "kickoff_at": "2026-09-07 16:30:00+00"
+      "kickoff_at": "2026-09-07T16:30:00Z"
     },
     {
       "source_match_id": "5749669",
-      "match_id": "f5cc0d1c-8634-41fe-beff-bb667ad1b8d3",
+      "match_id": "fotmob:5749669",
       "home_team": "乌迪内斯",
       "away_team": "拉齐奥",
       "match_date": "2026-09-07",
-      "kickoff_at": "2026-09-07 18:45:00+00"
+      "kickoff_at": "2026-09-07T18:45:00Z"
     },
     {
       "source_match_id": "5749679",
-      "match_id": "cbef03bb-37aa-487b-ace7-2479b5650047",
+      "match_id": "fotmob:5749679",
       "home_team": "威尼斯",
       "away_team": "佛罗伦萨",
       "match_date": "2026-09-11",
-      "kickoff_at": "2026-09-11 18:45:00+00"
+      "kickoff_at": "2026-09-11T18:45:00Z"
     },
     {
       "source_match_id": "5749672",
-      "match_id": "dc2fbbb6-19f6-43bd-b38a-570ec2a1cf1d",
+      "match_id": "fotmob:5749672",
       "home_team": "热那亚",
       "away_team": "弗罗西诺内",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 13:00:00+00"
+      "kickoff_at": "2026-09-12T13:00:00Z"
     },
     {
       "source_match_id": "5749674",
-      "match_id": "3189db92-784d-435d-a560-c2f4749cdc6b",
+      "match_id": "fotmob:5749674",
       "home_team": "拉齐奥",
       "away_team": "AC米兰",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 16:00:00+00"
+      "kickoff_at": "2026-09-12T16:00:00Z"
     },
     {
       "source_match_id": "5749670",
-      "match_id": "b1d109ca-0b04-4fb0-acfc-375a6e91bd81",
+      "match_id": "fotmob:5749670",
       "home_team": "亚特兰大",
       "away_team": "卡利亚里",
       "match_date": "2026-09-12",
-      "kickoff_at": "2026-09-12 18:45:00+00"
+      "kickoff_at": "2026-09-12T18:45:00Z"
     },
     {
       "source_match_id": "5749675",
-      "match_id": "19d1ab75-bf33-4221-90c3-177a65b271c6",
+      "match_id": "fotmob:5749675",
       "home_team": "莱切",
       "away_team": "蒙扎",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 13:00:00+00"
+      "kickoff_at": "2026-09-13T13:00:00Z"
     },
     {
       "source_match_id": "5749676",
-      "match_id": "fa09ce3d-3f8b-4404-96c7-655a7a501243",
+      "match_id": "fotmob:5749676",
       "home_team": "那不勒斯",
       "away_team": "博洛尼亚",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 16:00:00+00"
+      "kickoff_at": "2026-09-13T16:00:00Z"
     },
     {
       "source_match_id": "5749677",
-      "match_id": "0391a5ef-a10b-44dc-bc7a-8b012c6426d6",
+      "match_id": "fotmob:5749677",
       "home_team": "萨索洛",
       "away_team": "尤文图斯",
       "match_date": "2026-09-13",
-      "kickoff_at": "2026-09-13 18:45:00+00"
+      "kickoff_at": "2026-09-13T18:45:00Z"
     },
     {
       "source_match_id": "5749671",
-      "match_id": "2c95314f-d454-45c8-a233-9d4fbbe77d9f",
+      "match_id": "fotmob:5749671",
       "home_team": "科莫",
       "away_team": "帕尔马",
       "match_date": "2026-09-14",
-      "kickoff_at": "2026-09-14 16:30:00+00"
+      "kickoff_at": "2026-09-14T16:30:00Z"
     },
     {
       "source_match_id": "5749678",
-      "match_id": "e863aff0-36a7-4095-aa0f-8d49b5fed3fa",
+      "match_id": "fotmob:5749678",
       "home_team": "都灵",
       "away_team": "罗马",
       "match_date": "2026-09-14",
-      "kickoff_at": "2026-09-14 16:30:00+00"
+      "kickoff_at": "2026-09-14T16:30:00Z"
     },
     {
       "source_match_id": "5749673",
-      "match_id": "1d34fcd2-92c2-439c-9186-0295a037f195",
+      "match_id": "fotmob:5749673",
       "home_team": "国际米兰",
       "away_team": "乌迪内斯",
       "match_date": "2026-09-14",
-      "kickoff_at": "2026-09-14 18:45:00+00"
+      "kickoff_at": "2026-09-14T18:45:00Z"
     },
     {
       "source_match_id": "5749686",
-      "match_id": "1759cbf0-c568-49e9-9e5a-ff8670016658",
+      "match_id": "fotmob:5749686",
       "home_team": "蒙扎",
       "away_team": "萨索洛",
       "match_date": "2026-09-18",
-      "kickoff_at": "2026-09-18 18:45:00+00"
+      "kickoff_at": "2026-09-18T18:45:00Z"
     },
     {
       "source_match_id": "5749682",
-      "match_id": "26db9305-5031-4098-9dec-54d0b65c4c2c",
+      "match_id": "fotmob:5749682",
       "home_team": "博洛尼亚",
       "away_team": "都灵",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 13:00:00+00"
+      "kickoff_at": "2026-09-19T13:00:00Z"
     },
     {
       "source_match_id": "5749688",
-      "match_id": "f9869d7b-4dba-46da-9f2e-acdea9aeabc8",
+      "match_id": "fotmob:5749688",
       "home_team": "乌迪内斯",
       "away_team": "卡利亚里",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 13:00:00+00"
+      "kickoff_at": "2026-09-19T13:00:00Z"
     },
     {
       "source_match_id": "5749681",
-      "match_id": "930c45d6-7d32-4898-83a9-9aad42777c44",
+      "match_id": "fotmob:5749681",
       "home_team": "罗马",
       "away_team": "国际米兰",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 16:00:00+00"
+      "kickoff_at": "2026-09-19T16:00:00Z"
     },
     {
       "source_match_id": "5749689",
-      "match_id": "f9d6860e-5422-47b4-a9dd-16c1486e2249",
+      "match_id": "fotmob:5749689",
       "home_team": "威尼斯",
       "away_team": "拉齐奥",
       "match_date": "2026-09-19",
-      "kickoff_at": "2026-09-19 18:45:00+00"
+      "kickoff_at": "2026-09-19T18:45:00Z"
     },
     {
       "source_match_id": "5749683",
-      "match_id": "9cb3fed3-bb7e-42d1-9e70-4281d5b22001",
+      "match_id": "fotmob:5749683",
       "home_team": "佛罗伦萨",
       "away_team": "那不勒斯",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 10:30:00+00"
-    },
-    {
-      "source_match_id": "5749687",
-      "match_id": "68d11566-6565-426b-a66a-01dde7fde7af",
-      "home_team": "帕尔马",
-      "away_team": "热那亚",
-      "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 13:00:00+00"
+      "kickoff_at": "2026-09-20T10:30:00Z"
     },
     {
       "source_match_id": "5749684",
-      "match_id": "6a2d6c40-fc03-46ba-95a0-bdc935a77c0c",
+      "match_id": "fotmob:5749684",
       "home_team": "弗罗西诺内",
       "away_team": "科莫",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 13:00:00+00"
+      "kickoff_at": "2026-09-20T13:00:00Z"
+    },
+    {
+      "source_match_id": "5749687",
+      "match_id": "fotmob:5749687",
+      "home_team": "帕尔马",
+      "away_team": "热那亚",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T13:00:00Z"
     },
     {
       "source_match_id": "5749685",
-      "match_id": "941d2ca9-aa88-478c-8c00-03e62eee5f3f",
+      "match_id": "fotmob:5749685",
       "home_team": "尤文图斯",
       "away_team": "亚特兰大",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 16:00:00+00"
+      "kickoff_at": "2026-09-20T16:00:00Z"
     },
     {
       "source_match_id": "5749680",
-      "match_id": "93361ad5-5758-4bba-a0a6-2e57c0a875ab",
+      "match_id": "fotmob:5749680",
       "home_team": "AC米兰",
       "away_team": "莱切",
       "match_date": "2026-09-20",
-      "kickoff_at": "2026-09-20 18:45:00+00"
+      "kickoff_at": "2026-09-20T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749693",
+      "match_id": "fotmob:5749693",
+      "home_team": "热那亚",
+      "away_team": "佛罗伦萨",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749694",
+      "match_id": "fotmob:5749694",
+      "home_team": "国际米兰",
+      "away_team": "帕尔马",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T16:00:00.000Z"
     }
   ]
 }

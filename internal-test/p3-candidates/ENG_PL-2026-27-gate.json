@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 50,
-  "collected_matches": 50,
+  "input_matches": 56,
+  "collected_matches": 56,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 511,
+  "aggregate_players": 516,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,22 +16,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "伊普斯维奇",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "伯恩茅斯",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "切尔西",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "利兹联",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,17 +46,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "富勒姆",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "布伦特福德",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "布莱顿",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,12 +66,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼联",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "桑德兰",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "热刺",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,12 +106,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿斯顿维拉",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿森纳",
-      "matches": 5
+      "matches": 6
     }
   ],
   "gate_status": "PASS",

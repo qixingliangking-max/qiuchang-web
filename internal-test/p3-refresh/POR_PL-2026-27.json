@@ -6,7 +6,7 @@
     "61"
   ],
   "fotmob_ccode3": "POR",
-  "baseline_finished_matches": 64,
+  "baseline_finished_matches": 65,
   "team_map": {
     "Braga": "布拉加",
     "Arouca": "阿罗卡",
@@ -31,6 +31,6 @@
     "Vitoria de Guimaraes": "吉马良斯",
     "Vitória de Guimarães": "吉马良斯"
   },
-  "last_successful_refresh_at": "2026-10-10T06:13:30.585Z",
-  "last_published_blob_sha": "f365f6cc6fd7b40df68cbcf66824221eb49f3470"
+  "last_successful_refresh_at": "2026-10-10T19:28:20.790Z",
+  "last_published_blob_sha": "8400cf5c99dea5245093d0ba5025d52461741485"
 }

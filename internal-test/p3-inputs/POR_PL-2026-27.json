@@ -514,6 +514,14 @@
       "away_team": "葡萄牙体育",
       "match_date": "2026-10-09",
       "kickoff_at": "2026-10-09T19:15:00Z"
+    },
+    {
+      "source_match_id": "5887650",
+      "match_id": "fotmob:5887650",
+      "home_team": "马里迪莫",
+      "away_team": "波尔图",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T17:00:00.000Z"
     }
   ]
 }

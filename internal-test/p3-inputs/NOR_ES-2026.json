@@ -1353,7 +1353,23 @@
       "home_team": "布兰",
       "away_team": "维京",
       "match_date": "2026-10-09",
-      "kickoff_at": "2026-10-09T17:00:00.000Z"
+      "kickoff_at": "2026-10-09T17:00:00Z"
+    },
+    {
+      "source_match_id": "5105017",
+      "match_id": "fotmob:5105017",
+      "home_team": "博德闪耀",
+      "away_team": "克里斯蒂安松",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105020",
+      "match_id": "fotmob:5105020",
+      "home_team": "罗森博格",
+      "away_team": "桑德菲杰",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T16:00:00.000Z"
     }
   ]
 }

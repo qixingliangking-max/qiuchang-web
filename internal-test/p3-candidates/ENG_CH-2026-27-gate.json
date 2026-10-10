@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 96,
-  "collected_matches": 96,
+  "input_matches": 106,
+  "collected_matches": 106,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 24,
-  "aggregate_players": 662,
+  "aggregate_players": 673,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,12 +16,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "伯恩利",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "伯明翰",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -31,12 +31,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "博尔顿",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡迪夫城",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,32 +46,32 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布莱克本",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "布里斯托尔城",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "德比郡",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯托克城",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯旺西",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "普雷斯顿",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,37 +81,37 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "林肯城",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "查尔顿",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "沃特福德",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "狼队",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "米尔沃尔",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "米德尔斯堡",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "西布罗姆维奇",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -121,20 +121,20 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "诺维奇",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "谢菲尔德联",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "雷克瑟姆",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 7.2
+  "avg_team_depth_coverage_pct": 15.2
 }

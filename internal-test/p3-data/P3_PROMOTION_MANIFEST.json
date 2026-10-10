@@ -12,12 +12,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/KOR_K1-2026.json",
-      "blob_sha": "0f00673e243ad6ce03723f52edaa2d5d95f22c4e",
+      "blob_sha": "9c6fb83e13b5c2ce363e719d7e8eda82bfb0cf6a",
       "gate_status": "PASS",
-      "avg_team_depth_coverage_pct": 87.9,
+      "avg_team_depth_coverage_pct": 88.6,
       "gate_report": "internal-test/p3-candidates/KOR_K1-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-09T20:14:36.383Z",
-      "finished_matches": 183,
+      "last_incremental_refresh_at": "2026-10-10T19:27:44.108Z",
+      "finished_matches": 185,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "f9c0eebbfcd52fa0acb51957f0ef4ade56d35456",
+      "blob_sha": "4c345da2df0c14bf613d2f25a7867ee1444ff4bc",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 83,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-07T06:18:54.136Z",
-      "finished_matches": 405,
+      "last_incremental_refresh_at": "2026-10-10T19:28:48.285Z",
+      "finished_matches": 406,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -40,12 +40,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/NOR_ES-2026.json",
-      "blob_sha": "789cf7ca12185e7182f2927a920fb500d6037e04",
+      "blob_sha": "214ad5f9d47b901fe21149412c63cb94c10f9205",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 80.7,
       "gate_report": "internal-test/p3-candidates/NOR_ES-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-09T20:15:00.385Z",
-      "finished_matches": 169,
+      "last_incremental_refresh_at": "2026-10-10T19:28:07.170Z",
+      "finished_matches": 171,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -68,15 +68,15 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-      "blob_sha": "3a24313f4b0aabec0d7a68034490742ec92dd41d",
+      "blob_sha": "e2a4fc34dcfcf6e42ec784addc9a63a646336093",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "sample_policy": "LOW_SAMPLE/LIMITED",
       "model_read_rule": "P3_VALID is structural only; depth/bench factors are limited-weight until FULL sample quality is reached.",
-      "avg_team_depth_coverage_pct": 1.4,
+      "avg_team_depth_coverage_pct": 3.2,
       "gate_report": "internal-test/p3-candidates/JPN_J1-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-10-09T20:14:29.951Z",
-      "finished_matches": 82
+      "last_incremental_refresh_at": "2026-10-10T19:27:36.190Z",
+      "finished_matches": 86
     },
     {
       "league_code": "SWE_AS",
@@ -84,14 +84,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/SWE_AS-2026.json",
-      "blob_sha": "97fd02e846060bf06906c648b64f9ee490e23423",
+      "blob_sha": "91e3186cd6fd0cf3f6a4787f2aa98a209fe6b174",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 76.1,
+      "avg_team_depth_coverage_pct": 75.5,
       "gate_report": "internal-test/p3-candidates/SWE_AS-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
-      "last_incremental_refresh_at": "2026-10-09T20:15:15.853Z",
-      "finished_matches": 177
+      "last_incremental_refresh_at": "2026-10-10T19:28:27.320Z",
+      "finished_matches": 180
     },
     {
       "league_code": "FIN_VL",
@@ -99,14 +99,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/FIN_VL-2026.json",
-      "blob_sha": "ba522b798fff13b75e3c188a1335ef745ace492f",
+      "blob_sha": "f5532b43b071e4c15d801ff3708e0af9d06b5da4",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 89.4,
       "gate_report": "internal-test/p3-candidates/FIN_VL-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
-      "last_incremental_refresh_at": "2026-10-09T20:14:03.770Z",
-      "finished_matches": 154
+      "last_incremental_refresh_at": "2026-10-10T19:26:46.719Z",
+      "finished_matches": 156
     },
     {
       "league_code": "UEFA_UCL",
@@ -140,14 +140,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/GER_BL-2026-27.json",
-      "blob_sha": "047fd0e9203a530a8335a721e7546136235c27a6",
+      "blob_sha": "a9e0de51c39b56f2d52aebf3a2473c57ff56dc1d",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/GER_BL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:13:09.449Z",
-      "finished_matches": 37
+      "last_incremental_refresh_at": "2026-10-10T19:27:18.812Z",
+      "finished_matches": 43
     },
     {
       "league_code": "ITA_SA",
@@ -155,12 +155,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ITA_SA-2026-27.json",
-      "blob_sha": "92698bd75c8cc3dee2bf939500bc6bf57e9cee23",
+      "blob_sha": "ae60ddd493b1c5d7b2f6587ed1334826347224c9",
       "gate_status": "PASS",
-      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/ITA_SA-2026-27-gate.json",
-      "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached."
+      "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
+      "last_incremental_refresh_at": "2026-10-10T19:27:23.600Z",
+      "finished_matches": 52
     },
     {
       "league_code": "FRA_L1",
@@ -168,14 +170,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/FRA_L1-2026-27.json",
-      "blob_sha": "1ac90ecf68a81dd299df414ffff64060927b0d4b",
+      "blob_sha": "b48605451334fff468ec9132183ae4dd358a0093",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/FRA_L1-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:13:00.063Z",
-      "finished_matches": 46
+      "last_incremental_refresh_at": "2026-10-10T19:27:00.003Z",
+      "finished_matches": 47
     },
     {
       "league_code": "ENG_PL",
@@ -183,12 +185,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ENG_PL-2026-27.json",
-      "blob_sha": "a12da68fe2caca29258712cee6a61bdbfc66362b",
+      "blob_sha": "0ed74c53089a5aaa08e4d610d0aeeb1a3dbea22c",
       "gate_status": "PASS",
-      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+      "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/ENG_PL-2026-27-gate.json",
-      "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached."
+      "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
+      "last_incremental_refresh_at": "2026-10-10T19:26:27.021Z",
+      "finished_matches": 56
     },
     {
       "league_code": "NED_ED",
@@ -196,14 +200,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/NED_ED-2026-27.json",
-      "blob_sha": "0559f3965f518b664f227b7a327437242f4a31c8",
+      "blob_sha": "09e4b1563fbdc2d5a1450bd6f419f5f64a787135",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 9.6,
+      "avg_team_depth_coverage_pct": 14.2,
       "gate_report": "internal-test/p3-candidates/NED_ED-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-09T20:14:48.232Z",
-      "finished_matches": 64
+      "last_incremental_refresh_at": "2026-10-10T19:27:58.667Z",
+      "finished_matches": 66
     },
     {
       "league_code": "POR_PL",
@@ -211,14 +215,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/POR_PL-2026-27.json",
-      "blob_sha": "f365f6cc6fd7b40df68cbcf66824221eb49f3470",
+      "blob_sha": "8400cf5c99dea5245093d0ba5025d52461741485",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/POR_PL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:13:30.585Z",
-      "finished_matches": 64
+      "last_incremental_refresh_at": "2026-10-10T19:28:20.790Z",
+      "finished_matches": 65
     },
     {
       "league_code": "ESP_LL",
@@ -226,14 +230,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ESP_LL-2026-27.json",
-      "blob_sha": "04d07853f75611fb92757e3ba81f525de3303db1",
+      "blob_sha": "41fef851e9a11150a20df28bbc5f09e784e79d99",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 8.2,
+      "avg_team_depth_coverage_pct": 9.1,
       "gate_report": "internal-test/p3-candidates/ESP_LL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:12:52.186Z",
-      "finished_matches": 70
+      "last_incremental_refresh_at": "2026-10-10T19:26:39.861Z",
+      "finished_matches": 73
     },
     {
       "league_code": "GER_B2",
@@ -241,14 +245,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/GER_B2-2026-27.json",
-      "blob_sha": "751fe2e469fae5c08dbc21fafa9dee9834fb5c68",
+      "blob_sha": "06704e5785dce31379118de133308ec52716baa2",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 2.5,
+      "avg_team_depth_coverage_pct": 4,
       "gate_report": "internal-test/p3-candidates/GER_B2-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-09T20:14:20.480Z",
-      "finished_matches": 56
+      "last_incremental_refresh_at": "2026-10-10T19:27:12.119Z",
+      "finished_matches": 59
     },
     {
       "league_code": "ITA_SB",
@@ -256,14 +260,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ITA_SB-2026-27.json",
-      "blob_sha": "f652729acfbad29a08d9c19da068362738db667a",
+      "blob_sha": "873253266dd8c32090d23a917c623cd8637d3fc9",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 1.4,
+      "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/ITA_SB-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:13:14.804Z",
-      "finished_matches": 51
+      "last_incremental_refresh_at": "2026-10-10T19:27:29.767Z",
+      "finished_matches": 57
     },
     {
       "league_code": "FRA_L2",
@@ -271,14 +275,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/FRA_L2-2026-27.json",
-      "blob_sha": "62c157df18bab29ab69aeb8dd4609935d9bcb62c",
+      "blob_sha": "5557c5466829481ed7f0486c1c67a6caaef9bc60",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 6.1,
       "gate_report": "internal-test/p3-candidates/FRA_L2-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-09T20:14:15.355Z",
-      "finished_matches": 68
+      "last_incremental_refresh_at": "2026-10-10T19:27:05.023Z",
+      "finished_matches": 70
     },
     {
       "league_code": "ENG_CH",
@@ -286,14 +290,14 @@
       "quality_tier": "LIMITED",
       "teams": 24,
       "published_path": "internal-test/p3-data/ENG_CH-2026-27.json",
-      "blob_sha": "b8849af8086f1e481312695c9dcd9e61ae1a5eec",
+      "blob_sha": "10c665455fa63fd764ab155d5d304628e6e0abc5",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 7.2,
+      "avg_team_depth_coverage_pct": 15.2,
       "gate_report": "internal-test/p3-candidates/ENG_CH-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-10T06:12:39.605Z",
-      "finished_matches": 96
+      "last_incremental_refresh_at": "2026-10-10T19:26:18.336Z",
+      "finished_matches": 106
     },
     {
       "league_code": "ESP_L2",
@@ -301,14 +305,14 @@
       "quality_tier": "LIMITED",
       "teams": 22,
       "published_path": "internal-test/p3-data/ESP_L2-2026-27.json",
-      "blob_sha": "2130417f3e297ae96ee297b51878f84a3ca17f1c",
+      "blob_sha": "b32f3836e0377b7290a474ebda79b694129901e1",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 6.6,
       "gate_report": "internal-test/p3-candidates/ESP_L2-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-05T22:07:04.471Z",
-      "finished_matches": 88
+      "last_incremental_refresh_at": "2026-10-10T19:26:32.076Z",
+      "finished_matches": 90
     },
     {
       "league_code": "NED_EE",

@@ -513,7 +513,23 @@
       "home_team": "埃因霍温",
       "away_team": "海伦芬",
       "match_date": "2026-10-09",
-      "kickoff_at": "2026-10-09T18:00:00.000Z"
+      "kickoff_at": "2026-10-09T18:00:00Z"
+    },
+    {
+      "source_match_id": "5781765",
+      "match_id": "fotmob:5781765",
+      "home_team": "前进之鹰",
+      "away_team": "鹿特丹斯巴达",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5781759",
+      "match_id": "fotmob:5781759",
+      "home_team": "费耶诺德",
+      "away_team": "阿尔克马尔",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T16:45:00.000Z"
     }
   ]
 }

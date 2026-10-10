@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 82,
-  "collected_matches": 82,
+  "input_matches": 86,
+  "collected_matches": 86,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 563,
+  "aggregate_players": 572,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "FC东京",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -26,12 +26,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "京都不死鸟",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "冈山绿雉",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "大阪樱花",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "横滨水手",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "浦和红钻",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "町田泽维亚",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,7 +101,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "福冈黄蜂",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,5 +116,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 1.4
+  "avg_team_depth_coverage_pct": 3.2
 }
