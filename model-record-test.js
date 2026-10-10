@@ -356,7 +356,7 @@
       '<div class="qc-record-legend"><span>'+stateHtml(true)+' 命中</span><span>'+stateHtml(false)+' 未中</span><span>'+stateHtml(null)+' 未完赛或无法核验</span></div>'+
       '<div style="margin-top:10px">'+renderDays(rows)+'</div>';
 
-    $('.qc-record-range-tabs button',root).forEach(btn=>{
+    Array.from(root.querySelectorAll('.qc-record-range-tabs button')).forEach(btn=>{
       btn.onclick=()=>renderPage(allRows,btn.dataset.range||'all','');
     });
     const picker=$('#recordDatePicker',root);
