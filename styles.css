@@ -3502,12 +3502,8 @@ button.qc-date-locked-control:disabled{
 }
 
 
-/* Overview first-paint guard: never show transitional loading states. */
-.qc-overview-page.qc-overview-booting .qc-overview-controls,
-.qc-overview-page.qc-overview-booting .jc-review-shell,
-.qc-overview-page.qc-overview-booting .jc-prediction-shell{
-  visibility:hidden;
-}
+/* Initial overview loading placeholders stay visible while static/Pro data loads.
+   Never conceal the whole homepage body or its three content sections. */
 
 
 /* 2026-09-27 desktop account shortcuts.
