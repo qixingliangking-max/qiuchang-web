@@ -3202,6 +3202,7 @@ async function setupJcMatchDetail(options={}){
   }
 
   jcBindDetailPopstate();
+  let usedRecentFootballHandoff=false;
 
   // Reuse public fixture information passed by the football list on a recent
   // same-origin click. It never carries protected prediction or AI content.
@@ -3213,6 +3214,7 @@ async function setupJcMatchDetail(options={}){
          handoff.businessDate===handoff.match?.business_date &&
          Array.isArray(handoff.day) && handoff.day.length){
         jcDetailMatchCache.set(String(id),handoff.match);
+        usedRecentFootballHandoff=true;
         jcDetailDayCache={
           date:handoff.businessDate,
           rows:[...handoff.day].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}))
@@ -3315,6 +3317,29 @@ async function setupJcMatchDetail(options={}){
   jcSyncDetailNavToCurrent(root);
   jcBindDetailMatchSwitches(root);
   jcPrefetchDetailNeighbors(sameDay,m.id);
+
+  // The navigation cache is only a first frame. Refresh the authoritative
+  // public score/status after paint so a just-finished FT can never remain stale.
+  if(usedRecentFootballHandoff){
+    window.qcSupabase.from('jc_matches')
+      .select('id,match_status,raw')
+      .eq('id',id)
+      .maybeSingle()
+      .then(({data,error})=>{
+        if(loadSeq!==jcDetailLoadSeq || error || !data) return;
+        m.match_status=data.match_status;
+        m.raw=data.raw;
+        jcDetailMatchCache.set(String(id),m);
+        const freshScore=jcScoreInfo(m);
+        const scoreEl=$('.jc-odds-matchup .center-score strong',root);
+        const statusEl=$('.jc-odds-matchup .center-score small',root);
+        if(scoreEl){
+          scoreEl.textContent=freshScore.current||'VS';
+          scoreEl.classList.toggle('jc-detail-score-finished',Boolean(freshScore.finished));
+        }
+        if(statusEl) statusEl.textContent=jcMatchStatusLabel(m,qcBeijingToday());
+      }).catch(error=>console.warn('详情完赛状态补充读取失败',error));
+  }
   // Team logos do not block match title, scoreboard or protected AI snapshot.
   jcAttachTeamLogos([m]).then(()=>{
     if(loadSeq!==jcDetailLoadSeq) return;
