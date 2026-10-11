@@ -1410,6 +1410,29 @@ function qcBindFootballGuestLoginCta(){
   });
 }
 
+// Prefer the small public schedule snapshot for the first football-page paint.
+// Live FT/HT/status is refreshed from jc_matches without holding the first frame.
+async function jcFetchFootballScheduleRows(dateStr){
+  if(String(dateStr||'')<qcBeijingBusinessToday() || !window.qcSupabase){
+    return jcFetchDateRows(dateStr,false);
+  }
+  try{
+    const {data,error}=await window.qcSupabase
+      .from('jc_overview_schedule_snapshots')
+      .select('payload')
+      .eq('business_date',dateStr)
+      .maybeSingle();
+    const rows=data?.payload?.rows;
+    if(!error && Array.isArray(rows) && rows.length &&
+       rows.every(m=>m?.id && m?.business_date===dateStr)){
+      return {data:rows,error:null,fromScheduleSnapshot:true};
+    }
+  }catch(error){
+    console.warn('足球赛程静态读取失败，回退原数据链',error);
+  }
+  return jcFetchDateRows(dateStr,false);
+}
+
 async function loadJcFootball(){
   qcBindFootballGuestLoginCta();
   const cards=$('#jcFootballCards');
@@ -1421,7 +1444,7 @@ async function loadJcFootball(){
   const candidateDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
 
   // Base schedule and auth resolve in parallel. Odds/model/date-index data never blocks first paint.
-  const candidatePromise=jcFetchDateRows(candidateDate,false);
+  const candidatePromise=jcFetchFootballScheduleRows(candidateDate);
   const access=await qcGetAccessState();
   const initialDate=access.loggedIn?candidateDate:today;
   const initial=initialDate===candidateDate
@@ -1452,6 +1475,41 @@ async function loadJcFootball(){
   const leagueMenu=$('#jcFootballLeagueMenu');
   const inlineLeagueTabs=$('#jcFootballInlineLeagues');
   const fixtureCount=$('#jcFootballFixtureCount');
+
+  // Same-origin one-click handoff avoids re-fetching a match and its daily
+  // navigation immediately after the user opens it from this page. Only
+  // publicly visible fixture/score fields are transferred (never model/AI).
+  cards.addEventListener('click',event=>{
+    const link=event.target?.closest?.('a.jc-card-link');
+    if(!link || !cards.contains(link)) return;
+    const matchId=link.closest('[data-match-id]')?.dataset.matchId;
+    const match=allRows.find(row=>String(row.id)===String(matchId));
+    if(!match) return;
+    const publicFields=m=>({
+      id:m.id,match_num:m.match_num,business_date:m.business_date,
+      league_name:m.league_name,league_short_name:m.league_short_name,
+      home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+      match_date:m.match_date,match_time:m.match_time,kickoff_at:m.kickoff_at,
+      match_status:m.match_status,
+      raw:{
+        sectionsNo999:m.raw?.sectionsNo999||'',
+        sectionsNo1:m.raw?.sectionsNo1||'',
+        matchStatusName:m.raw?.matchStatusName||''
+      },
+      _homeLogoUrl:m._homeLogoUrl||'',_awayLogoUrl:m._awayLogoUrl||''
+    });
+    try{
+      sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
+        savedAt:Date.now(),businessDate:selectedDate,
+        match:publicFields(match),
+        day:allRows.filter(row=>jcBusinessDate(row)===selectedDate).map(row=>{
+          const item=publicFields(row);
+          delete item.raw;
+          return item;
+        })
+      }));
+    }catch(_){}
+  },true);
 
   if(dateLocked){
     [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
@@ -1563,7 +1621,7 @@ async function loadJcFootball(){
     const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
     if(!cacheFresh) cards.innerHTML='<div class="profile-card">正在加载中…</div>';
 
-    const result=await jcFetchDateRows(ds,false);
+    const result=await jcFetchFootballScheduleRows(ds);
     if(token!==loadToken) return;
     if(result.error){
       cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
@@ -1573,7 +1631,9 @@ async function loadJcFootball(){
     selectedDate=ds;
     activeLeague='全部';
     render();
-    hydrateFootballRows(allRows,ds,token);
+    hydrateFootballRows(allRows,ds,token).then(()=>{
+      if(result.fromScheduleSnapshot && token===loadToken) refreshFootballLive().catch(()=>{});
+    }).catch(error=>console.warn('竞彩足球补充数据失败',error));
   }
 
   function render(){
@@ -1644,7 +1704,9 @@ async function loadJcFootball(){
 
   const initialToken=++loadToken;
   render();
-  hydrateFootballRows(allRows,selectedDate,initialToken);
+  hydrateFootballRows(allRows,selectedDate,initialToken).then(()=>{
+    if(initial.fromScheduleSnapshot && initialToken===loadToken) refreshFootballLive().catch(()=>{});
+  }).catch(error=>console.warn('竞彩足球初次补充数据失败',error));
 
   async function refreshFootballLive(){
     const result=await jcFetchDateRows(selectedDate,false,true);
@@ -3141,6 +3203,21 @@ async function setupJcMatchDetail(options={}){
 
   jcBindDetailPopstate();
 
+  // Reuse public fixture information passed by the football list on a recent
+  // same-origin click. It never carries protected prediction or AI content.
+  if(!options.switching){
+    try{
+      const handoff=JSON.parse(sessionStorage.getItem('qc-football-detail-nav-v1')||'null');
+      if(handoff && Date.now()-Number(handoff.savedAt)<45000 &&
+         String(handoff.match?.id)===String(id) &&
+         handoff.businessDate===handoff.match?.business_date &&
+         Array.isArray(handoff.day) && handoff.day.length){
+        jcDetailMatchCache.set(String(id),handoff.match);
+        jcDetailDayCache={date:handoff.businessDate,rows:handoff.day};
+      }
+    }catch(_){}
+  }
+
   // Start access resolution immediately; do not put it in front of the match request.
   const accessPromise=qcGetAccessState();
 
@@ -3191,10 +3268,7 @@ async function setupJcMatchDetail(options={}){
   const detailSnapshotPromise=canViewPremium
     ? jcFetchDetailPredictionSnapshot(id,access)
     : Promise.resolve(null);
-  const [sameDay]=await Promise.all([
-    dayPromise,
-    jcAttachTeamLogos([m])
-  ]);
+  const sameDay=await dayPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
   const detailNav='<aside class="jc-detail-sidebar">'+
@@ -3236,6 +3310,14 @@ async function setupJcMatchDetail(options={}){
   jcSyncDetailNavToCurrent(root);
   jcBindDetailMatchSwitches(root);
   jcPrefetchDetailNeighbors(sameDay,m.id);
+  // Team logos do not block match title, scoreboard or protected AI snapshot.
+  jcAttachTeamLogos([m]).then(()=>{
+    if(loadSeq!==jcDetailLoadSeq) return;
+    const home=$('.jc-detail-team-home',root);
+    const away=$('.jc-detail-team-away',root);
+    if(home) home.innerHTML=jcDetailTeamBadgeHtml(m,'home');
+    if(away) away.innerHTML=jcDetailTeamBadgeHtml(m,'away');
+  }).catch(error=>console.warn('队徽延后加载失败',error));
 
   const lockedSnapshot=await detailSnapshotPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
