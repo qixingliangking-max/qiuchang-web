@@ -1599,7 +1599,7 @@ async function loadJcFootball(){
     }
   }
 
-  async function hydrateFootballRows(rows,ds,token){
+  async function hydrateFootballRows(rows,ds,token,patchDom=true){
     // Pro 读取全部赛前模型；未登录/普通用户只在完赛后读取已锁定模型，
     // 用于计算并展示“赛前预测命中”，不会开放未完赛的预测内容。
     const modelRows=access.isPro?rows:rows.filter(m=>jcScoreInfo(m).finished);
@@ -1612,7 +1612,7 @@ async function loadJcFootball(){
       jcAttachTeamLogos(rows)
     ]);
     if(token!==loadToken || selectedDate!==ds) return;
-    jcPatchFootballExtras(cards,rows,access);
+    if(patchDom) jcPatchFootballExtras(cards,rows,access);
   }
 
   async function loadFootballDate(ds){
@@ -1630,10 +1630,16 @@ async function loadJcFootball(){
     allRows=(result.data||[]).filter(m=>m.match_date);
     selectedDate=ds;
     activeLeague='全部';
+    // The list must have its odds, confirmed prediction hits and logo URLs
+    // before it is painted. Do not show an incomplete set of match cards.
+    try{
+      await hydrateFootballRows(allRows,ds,token,false);
+    }catch(error){
+      console.warn('竞彩足球补充数据失败，保留原始赛程',error);
+    }
+    if(token!==loadToken || selectedDate!==ds) return;
     render();
-    hydrateFootballRows(allRows,ds,token).then(()=>{
-      if(result.fromScheduleSnapshot && token===loadToken) refreshFootballLive().catch(()=>{});
-    }).catch(error=>console.warn('竞彩足球补充数据失败',error));
+    if(result.fromScheduleSnapshot) refreshFootballLive().catch(()=>{});
   }
 
   function render(){
@@ -1703,10 +1709,16 @@ async function loadJcFootball(){
   });
 
   const initialToken=++loadToken;
+  // A single stable first paint: until all three independent enrichment
+  // requests finish, keep the existing "正在加载中…" shell visible.
+  try{
+    await hydrateFootballRows(allRows,selectedDate,initialToken,false);
+  }catch(error){
+    console.warn('竞彩足球初次补充数据失败，保留原始赛程',error);
+  }
+  if(initialToken!==loadToken) return;
   render();
-  hydrateFootballRows(allRows,selectedDate,initialToken).then(()=>{
-    if(initial.fromScheduleSnapshot && initialToken===loadToken) refreshFootballLive().catch(()=>{});
-  }).catch(error=>console.warn('竞彩足球初次补充数据失败',error));
+  if(initial.fromScheduleSnapshot) refreshFootballLive().catch(()=>{});
 
   async function refreshFootballLive(){
     const refreshDate=selectedDate;
@@ -1717,7 +1729,21 @@ async function loadJcFootball(){
     if(result?.error || !Array.isArray(result?.data)) return;
 
     const oldById=new Map(allRows.map(m=>[String(m.id),m]));
-    allRows=result.data.filter(m=>m.match_date).map(fresh=>{
+    const incoming=result.data.filter(m=>m.match_date);
+    // A background FT check should not rebuild every card (and reload team
+    // crest images) if nothing visible actually changed.
+    let needsPaint=incoming.length!==allRows.length;
+    if(!needsPaint){
+      needsPaint=incoming.some(fresh=>{
+        const old=oldById.get(String(fresh.id));
+        if(!old) return true;
+        const before=jcScoreInfo(old),after=jcScoreInfo(fresh);
+        return before.ft!==after.ft || before.ht!==after.ht ||
+          before.finished!==after.finished ||
+          jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(fresh,calendarToday);
+      });
+    }
+    allRows=incoming.map(fresh=>{
       const old=oldById.get(String(fresh.id));
       if(!old) return fresh;
       return {
@@ -1735,12 +1761,14 @@ async function loadJcFootball(){
     });
 
     // 页面停留期间若后台刚回收到完赛结果，只补取该场已锁定模型并展示命中项。
+    let newlyFinishedCount=0;
     if(!access.isPro){
       const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
+      newlyFinishedCount=newlyFinished.length;
       if(newlyFinished.length) await jcAttachModels(newlyFinished);
     }
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
-    render();
+    if(needsPaint || newlyFinishedCount>0) render();
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
