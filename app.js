@@ -1709,7 +1709,11 @@ async function loadJcFootball(){
   }).catch(error=>console.warn('竞彩足球初次补充数据失败',error));
 
   async function refreshFootballLive(){
-    const result=await jcFetchDateRows(selectedDate,false,true);
+    const refreshDate=selectedDate;
+    const refreshToken=loadToken;
+    const result=await jcFetchDateRows(refreshDate,false,true);
+    // A slow score fetch must never paint data for a date the user left.
+    if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     if(result?.error || !Array.isArray(result?.data)) return;
 
     const oldById=new Map(allRows.map(m=>[String(m.id),m]));
@@ -1735,6 +1739,7 @@ async function loadJcFootball(){
       const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
       if(newlyFinished.length) await jcAttachModels(newlyFinished);
     }
+    if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     render();
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
