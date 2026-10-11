@@ -6,7 +6,7 @@
     "9080"
   ],
   "fotmob_ccode3": "KOR",
-  "baseline_finished_matches": 185,
+  "baseline_finished_matches": 186,
   "team_map": {
     "Jeju SK": "济州SK",
     "FC Seoul": "首尔FC",
@@ -21,6 +21,6 @@
     "Daejeon Hana Citizen": "大田韩亚市民",
     "Jeonbuk Hyundai Motors FC": "全北现代"
   },
-  "last_successful_refresh_at": "2026-10-10T19:27:44.108Z",
-  "last_published_blob_sha": "9c6fb83e13b5c2ce363e719d7e8eda82bfb0cf6a"
+  "last_successful_refresh_at": "2026-10-11T19:39:42.751Z",
+  "last_published_blob_sha": "5af4da89e19d2f3cfbf9f0a8ec1ae2164e30dacd"
 }

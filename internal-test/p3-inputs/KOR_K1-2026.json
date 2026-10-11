@@ -1473,7 +1473,7 @@
       "home_team": "首尔FC",
       "away_team": "济州SK",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T05:00:00.000Z"
+      "kickoff_at": "2026-10-10T05:00:00Z"
     },
     {
       "source_match_id": "5140046",
@@ -1481,7 +1481,15 @@
       "home_team": "金泉尚武",
       "away_team": "安养FC",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T07:30:00.000Z"
+      "kickoff_at": "2026-10-10T07:30:00Z"
+    },
+    {
+      "source_match_id": "5140047",
+      "match_id": "fotmob:5140047",
+      "home_team": "光州FC",
+      "away_team": "蔚山HD",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T05:00:00.000Z"
     }
   ]
 }

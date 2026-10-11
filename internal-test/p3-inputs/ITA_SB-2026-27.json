@@ -417,7 +417,7 @@
       "home_team": "贝内文托",
       "away_team": "切塞纳",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T13:00:00.000Z"
+      "kickoff_at": "2026-10-10T13:00:00Z"
     },
     {
       "source_match_id": "5967093",
@@ -425,7 +425,7 @@
       "home_team": "恩波利",
       "away_team": "巴勒莫",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T13:00:00.000Z"
+      "kickoff_at": "2026-10-10T13:00:00Z"
     },
     {
       "source_match_id": "5967094",
@@ -433,7 +433,7 @@
       "home_team": "恩特拉",
       "away_team": "史泰比亚",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T13:00:00.000Z"
+      "kickoff_at": "2026-10-10T13:00:00Z"
     },
     {
       "source_match_id": "5967098",
@@ -441,7 +441,7 @@
       "home_team": "南蒂罗尔",
       "away_team": "阿斯科利",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T13:00:00.000Z"
+      "kickoff_at": "2026-10-10T13:00:00Z"
     },
     {
       "source_match_id": "5967095",
@@ -449,7 +449,7 @@
       "home_team": "维琴察",
       "away_team": "比萨",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T15:15:00.000Z"
+      "kickoff_at": "2026-10-10T15:15:00Z"
     },
     {
       "source_match_id": "5967089",
@@ -457,7 +457,31 @@
       "home_team": "阿雷佐",
       "away_team": "克雷莫纳",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T17:30:00.000Z"
+      "kickoff_at": "2026-10-10T17:30:00Z"
+    },
+    {
+      "source_match_id": "5967092",
+      "match_id": "fotmob:5967092",
+      "home_team": "卡坦扎罗",
+      "away_team": "曼托瓦",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967097",
+      "match_id": "fotmob:5967097",
+      "home_team": "帕多瓦",
+      "away_team": "凯勒雷斯",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5967096",
+      "match_id": "fotmob:5967096",
+      "home_team": "摩德纳",
+      "away_team": "维罗纳",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T17:30:00.000Z"
     }
   ]
 }

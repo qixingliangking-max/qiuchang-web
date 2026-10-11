@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 57,
-  "collected_matches": 57,
+  "input_matches": 60,
+  "collected_matches": 60,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 576,
+  "aggregate_players": 583,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "凯勒雷斯",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -36,7 +36,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡坦扎罗",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "帕多瓦",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,12 +66,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "摩德纳",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼托瓦",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "维罗纳",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",

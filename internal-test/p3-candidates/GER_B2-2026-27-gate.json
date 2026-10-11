@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 60,
-  "collected_matches": 60,
+  "input_matches": 63,
+  "collected_matches": 63,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -21,12 +21,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡尔斯鲁厄",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "圣保利",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,12 +46,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "柏林赫塔",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "比勒费尔德",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "波鸿",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "菲尔特",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
