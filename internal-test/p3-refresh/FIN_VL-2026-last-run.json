@@ -1,25 +1,15 @@
 {
   "league_code": "FIN_VL",
   "season": "2026",
-  "run_at": "2026-10-10T19:26:46.719Z",
+  "run_at": "2026-10-11T06:11:15.781Z",
   "discovered_fixtures": 177,
   "discovered_finished": 156,
-  "baseline_finished_matches": 154,
-  "new_finished_matches": 2,
-  "added_source_match_ids": [
-    "6145906",
-    "6145907"
-  ],
+  "baseline_finished_matches": 156,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 156,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "PILOT_FULL",
-  "avg_team_depth_coverage_pct": 89.4,
-  "published_blob_sha": "f5532b43b071e4c15d801ff3708e0af9d06b5da4"
+  "status": "NO_NEW_FINISHED"
 }

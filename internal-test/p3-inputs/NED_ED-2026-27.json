@@ -521,7 +521,7 @@
       "home_team": "前进之鹰",
       "away_team": "鹿特丹斯巴达",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T14:30:00.000Z"
+      "kickoff_at": "2026-10-10T14:30:00Z"
     },
     {
       "source_match_id": "5781759",
@@ -529,7 +529,23 @@
       "home_team": "费耶诺德",
       "away_team": "阿尔克马尔",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T16:45:00.000Z"
+      "kickoff_at": "2026-10-10T16:45:00Z"
+    },
+    {
+      "source_match_id": "5781767",
+      "match_id": "fotmob:5781767",
+      "home_team": "锡塔德幸运",
+      "away_team": "特温特",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T18:00:00Z"
+    },
+    {
+      "source_match_id": "5781764",
+      "match_id": "fotmob:5781764",
+      "home_team": "阿贾克斯",
+      "away_team": "奈梅亨",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T19:00:00Z"
     }
   ]
 }

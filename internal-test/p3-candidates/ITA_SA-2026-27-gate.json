@@ -3,15 +3,21 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 52,
-  "collected_matches": 52,
+  "input_matches": 53,
+  "collected_matches": 53,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 612,
+  "aggregate_players": 614,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
-  "strict_gate_ok": true,
-  "strict_errors": [],
+  "strict_gate_ok": false,
+  "strict_errors": [
+    {
+      "type": "REQUIRED_SLOTS_NOT_11",
+      "team": "弗罗西诺内",
+      "value": 9
+    }
+  ],
   "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +72,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "弗罗西诺内",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,7 +112,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "那不勒斯",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -114,7 +120,7 @@
       "matches": 5
     }
   ],
-  "gate_status": "PASS",
+  "gate_status": "FAIL",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0
+  "avg_team_depth_coverage_pct": 1.1
 }

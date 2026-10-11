@@ -713,7 +713,7 @@
       "home_team": "休达",
       "away_team": "萨瓦德尔",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T14:15:00.000Z"
+      "kickoff_at": "2026-10-10T14:15:00Z"
     },
     {
       "source_match_id": "5868487",
@@ -721,7 +721,15 @@
       "home_team": "埃登斯",
       "away_team": "科尔多瓦",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T16:30:00.000Z"
+      "kickoff_at": "2026-10-10T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868485",
+      "match_id": "fotmob:5868485",
+      "home_team": "塞尔塔B",
+      "away_team": "皇家社会B",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T19:00:00Z"
     }
   ]
 }

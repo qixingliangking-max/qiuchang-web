@@ -521,7 +521,23 @@
       "home_team": "马里迪莫",
       "away_team": "波尔图",
       "match_date": "2026-10-10",
-      "kickoff_at": "2026-10-10T17:00:00.000Z"
+      "kickoff_at": "2026-10-10T17:00:00Z"
+    },
+    {
+      "source_match_id": "5887645",
+      "match_id": "fotmob:5887645",
+      "home_team": "维塞乌学院",
+      "away_team": "埃斯托里尔",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T19:30:00Z"
+    },
+    {
+      "source_match_id": "5887648",
+      "match_id": "fotmob:5887648",
+      "home_team": "卡萨皮亚",
+      "away_team": "圣克拉拉",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T19:30:00Z"
     }
   ]
 }

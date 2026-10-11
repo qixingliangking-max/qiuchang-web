@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 59,
-  "collected_matches": 59,
+  "input_matches": 60,
+  "collected_matches": 60,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 462,
+  "aggregate_players": 464,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "沃尔夫斯堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "纽伦堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
