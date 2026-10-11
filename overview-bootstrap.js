@@ -126,9 +126,12 @@
     window.qcFetchProOverviewDate=async function(dateStr){
       const ds=String(dateStr||'');
       if(onOverview()){
-        const cached=cache.get(ds)?.data;
-        if(cached?.prediction){
-          const pred=predictionResult(cached.prediction);
+        const entry=cache.get(ds);
+        // The day's public+Pro bootstrap may already be in flight. Share that
+        // request instead of issuing a second protected-snapshot roundtrip.
+        const bundle=entry?.data || (entry?.promise ? await entry.promise : null);
+        if(bundle?.prediction){
+          const pred=predictionResult(bundle.prediction);
           if(pred?.data?.length) return pred;
         }
       }
