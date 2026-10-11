@@ -3213,7 +3213,10 @@ async function setupJcMatchDetail(options={}){
          handoff.businessDate===handoff.match?.business_date &&
          Array.isArray(handoff.day) && handoff.day.length){
         jcDetailMatchCache.set(String(id),handoff.match);
-        jcDetailDayCache={date:handoff.businessDate,rows:handoff.day};
+        jcDetailDayCache={
+          date:handoff.businessDate,
+          rows:[...handoff.day].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}))
+        };
       }
     }catch(_){}
   }
@@ -3259,15 +3262,17 @@ async function setupJcMatchDetail(options={}){
         return [m];
       });
 
-  const access=await accessPromise;
-  if(loadSeq!==jcDetailLoadSeq) return;
-
-  // Locked model + first successful AI report are immutable. Read the single
-  // detail snapshot first; dynamic odds and score no longer block AI rendering.
-  const canViewPremium=qcCanViewPrematchContent(m,access);
-  const detailSnapshotPromise=canViewPremium
-    ? jcFetchDetailPredictionSnapshot(id,access)
-    : Promise.resolve(null);
+  // Start the protected snapshot as soon as access is known, but do not make
+  // the *public match header* wait for the auth network request.
+  const accessAndSnapshotPromise=accessPromise.then(access=>{
+    const canViewPremium=qcCanViewPrematchContent(m,access);
+    return {
+      access,canViewPremium,
+      detailSnapshotPromise:canViewPremium
+        ? jcFetchDetailPredictionSnapshot(id,access)
+        : Promise.resolve(null)
+    };
+  });
   const sameDay=await dayPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
@@ -3319,6 +3324,8 @@ async function setupJcMatchDetail(options={}){
     if(away) away.innerHTML=jcDetailTeamBadgeHtml(m,'away');
   }).catch(error=>console.warn('队徽延后加载失败',error));
 
+  const {access,canViewPremium,detailSnapshotPromise}=await accessAndSnapshotPromise;
+  if(loadSeq!==jcDetailLoadSeq) return;
   const lockedSnapshot=await detailSnapshotPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
 
