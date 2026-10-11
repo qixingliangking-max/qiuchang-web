@@ -2047,16 +2047,24 @@ async function loadJcFrontend(){
         (result?.data||[]).forEach(m=>freshById.set(String(m.id),m));
       });
 
+      let changed=false;
       if(freshById.size){
         allRows=allRows.map(old=>{
           const fresh=freshById.get(String(old.id));
-          return fresh?preserveOverviewStaticData(fresh,old):old;
+          if(!fresh) return old;
+          const before=jcScoreInfo(old),after=jcScoreInfo(fresh);
+          if(before.ft!==after.ft || before.ht!==after.ht ||
+             before.finished!==after.finished ||
+             jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(fresh,calendarToday)){
+            changed=true;
+          }
+          return preserveOverviewStaticData(fresh,old);
         });
       }
 
       const liveRows=allRows.filter(m=>dynamicDates.includes(jcBusinessDate(m)));
       await jcAttachLiveScores(liveRows);
-      if(token===loadToken && selectedDate===ds) render();
+      if(changed && token===loadToken && selectedDate===ds) render();
     }catch(err){
       console.warn('动态比分回读失败，继续使用锁板快照',err);
     }
@@ -2070,6 +2078,17 @@ async function loadJcFrontend(){
 
     previousHistoryFinal=Boolean(result?.historyFinal);
     const freshRows=(result?.data||[]).filter(m=>m.match_date);
+    const priorRows=allRows.filter(m=>jcBusinessDate(m)===prevDs);
+    const priorById=new Map(priorRows.map(m=>[String(m.id),m]));
+    const changed=freshRows.length!==priorRows.length ||
+      freshRows.some(m=>{
+        const prior=priorById.get(String(m.id));
+        if(!prior) return true;
+        const before=jcScoreInfo(prior),after=jcScoreInfo(m);
+        return before.ft!==after.ft || before.ht!==after.ht ||
+          before.finished!==after.finished;
+      });
+    if(!changed) return;
     allRows=[
       ...allRows.filter(m=>jcBusinessDate(m)!==prevDs),
       ...freshRows
