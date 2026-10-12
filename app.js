@@ -2871,43 +2871,40 @@ function jcRenderAiPanel(m,pools,model,analysis){
       ? '模型方向、单选倾向、让球保护、半全场、总进球与TOP需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
       : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
 
-    const isPriorityFive=String(analysis.analysis_version||'').startsWith('AI-REPORT-FIVE-PRIORITY-');
-    const sections=isPriorityFive ? [
+    // All published reports use four editorial sections; archived five-section records
+    // retain their original evidence but no longer display the redundant risk section.
+    const isPriorityReport=/^AI-REPORT-(FOUR|FIVE)-/.test(String(analysis.analysis_version||''));
+    const sections=isPriorityReport ? [
       {
-        title:'一、比赛背景与近期状态',
+        title:'一、比赛背景与双方实力分析',
         body:aiParagraphs([analysis.strength_baseline])
       },
       {
-        title:'二、方向为什么选择「'+directionText+'」',
+        title:'二、模型方向与单选倾向',
         body:aiParagraphs([
           analysis.summary,
           analysis.comprehensive_observation||analysis.summary
         ])
       },
       {
-        title:'三、让球方向与半全场怎么看',
+        title:'三、让球保护与半全场分析',
         body:aiParagraphs([
           analysis.market_movement,
           analysis.logic_relation||fallbackLogic
         ])
       },
       {
-        title:'四、总进球与比分参考',
+        title:'四、总进球与TOP3比分分析',
         body:aiParagraphs([
           analysis.match_path,
           analysis.recent_form
         ])
-      },
-      {
-        title:'五、风险变量提示',
-        body:aiParagraphs([analysis.risk_factors])
       }
     ] : [
       {
-        title:'一、比赛背景与近期状态',
+        title:'一、比赛背景与双方实力分析',
         body:aiParagraphs([
           analysis.strength_baseline,
-          analysis.recent_form,
           analysis.attack_defense,
           analysis.home_away,
           analysis.squad_integrity,
@@ -2915,23 +2912,22 @@ function jcRenderAiPanel(m,pools,model,analysis){
         ])
       },
       {
-        title:'二、方向为什么选择「'+directionText+'」',
-        body:aiParagraphs([analysis.summary])
+        title:'二、模型方向与单选倾向',
+        body:aiParagraphs([
+          analysis.summary,
+          analysis.comprehensive_observation
+        ])
       },
       {
-        title:'三、单选为什么选择「'+singlePickText+'」',
-        body:aiParagraphs([analysis.comprehensive_observation||analysis.summary])
-      },
-      {
-        title:'四、六项数据的逻辑关系',
+        title:'三、让球保护与半全场分析',
         body:aiParagraphs([
           analysis.market_movement,
           analysis.logic_relation||fallbackLogic
         ])
       },
       {
-        title:'五、比赛路径与风险',
-        body:aiParagraphs([analysis.match_path,analysis.risk_factors])
+        title:'四、总进球与TOP3比分分析',
+        body:aiParagraphs([analysis.match_path,analysis.recent_form])
       }
     ];
 
