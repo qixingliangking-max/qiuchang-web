@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 77,
-  "collected_matches": 77,
+  "input_matches": 78,
+  "collected_matches": 78,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "桑坦德竞技",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "瓦伦西亚",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,5 +116,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 7.7
+  "avg_team_depth_coverage_pct": 10
 }

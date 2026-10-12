@@ -1,27 +1,15 @@
 {
   "league_code": "NED_ED",
   "season": "2026/27",
-  "run_at": "2026-10-11T19:39:54.508Z",
+  "run_at": "2026-10-12T06:19:37.431Z",
   "discovered_fixtures": 306,
   "discovered_finished": 72,
-  "baseline_finished_matches": 68,
-  "new_finished_matches": 4,
-  "added_source_match_ids": [
-    "5781760",
-    "5781761",
-    "5781763",
-    "5781766"
-  ],
+  "baseline_finished_matches": 72,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 72,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 15.2,
-  "published_blob_sha": "5a3cd9fb33b6170657989bf8811e049c4e9330be"
+  "status": "NO_NEW_FINISHED"
 }

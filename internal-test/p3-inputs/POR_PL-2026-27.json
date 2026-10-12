@@ -545,7 +545,7 @@
       "home_team": "里奥阿维",
       "away_team": "葡萄牙国民",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T14:30:00.000Z"
+      "kickoff_at": "2026-10-11T14:30:00Z"
     },
     {
       "source_match_id": "5887653",
@@ -553,7 +553,15 @@
       "home_team": "本菲卡",
       "away_team": "吉马良斯",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T17:00:00.000Z"
+      "kickoff_at": "2026-10-11T17:00:00Z"
+    },
+    {
+      "source_match_id": "5887646",
+      "match_id": "fotmob:5887646",
+      "home_team": "阿罗卡",
+      "away_team": "阿马多拉之星",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T19:30:00Z"
     }
   ]
 }

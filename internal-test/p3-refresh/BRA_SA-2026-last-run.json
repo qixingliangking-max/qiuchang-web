@@ -1,15 +1,28 @@
 {
   "league_code": "BRA_SA",
   "season": "2026",
-  "run_at": "2026-10-11T19:38:36.719Z",
+  "run_at": "2026-10-12T06:18:42.908Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 291,
+  "discovered_finished": 296,
   "baseline_finished_matches": 291,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 5,
+  "added_source_match_ids": [
+    "5103654",
+    "5103657",
+    "5103659",
+    "5103660",
+    "5103662"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 291,
+  "mapped_finished": 296,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 88.2,
+  "published_blob_sha": "01a97b9daf5a5726cf2f2e9360852b3407712746"
 }

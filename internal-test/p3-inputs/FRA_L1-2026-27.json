@@ -417,7 +417,7 @@
       "home_team": "尼斯",
       "away_team": "斯特拉斯堡",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T13:00:00.000Z"
+      "kickoff_at": "2026-10-11T13:00:00Z"
     },
     {
       "source_match_id": "5802953",
@@ -425,7 +425,15 @@
       "home_team": "雷恩",
       "away_team": "欧塞尔",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T15:15:00.000Z"
+      "kickoff_at": "2026-10-11T15:15:00Z"
+    },
+    {
+      "source_match_id": "5802954",
+      "match_id": "fotmob:5802954",
+      "home_team": "特鲁瓦",
+      "away_team": "马赛",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T18:45:00Z"
     }
   ]
 }

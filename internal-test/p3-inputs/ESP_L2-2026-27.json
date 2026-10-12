@@ -737,7 +737,7 @@
       "home_team": "安道尔FC",
       "away_team": "卡斯特利翁",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T12:00:00.000Z"
+      "kickoff_at": "2026-10-11T12:00:00Z"
     },
     {
       "source_match_id": "5868481",
@@ -745,7 +745,7 @@
       "home_team": "阿尔梅里亚",
       "away_team": "莱加内斯",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T14:15:00.000Z"
+      "kickoff_at": "2026-10-11T14:15:00Z"
     },
     {
       "source_match_id": "5868488",
@@ -753,7 +753,15 @@
       "home_team": "马略卡",
       "away_team": "拉斯帕尔马斯",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T16:30:00.000Z"
+      "kickoff_at": "2026-10-11T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868484",
+      "match_id": "fotmob:5868484",
+      "home_team": "加的斯",
+      "away_team": "希洪竞技",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T19:00:00Z"
     }
   ]
 }
