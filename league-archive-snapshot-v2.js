@@ -289,15 +289,6 @@
     });
   }
 
-  async function getAccess(){
-    const {data,error}=await window.qcSupabase.auth.getSession();
-    if(error) throw error;
-    const session=data?.session||null;
-    if(!session) return {loggedIn:false,isPro:false};
-    const pro=await window.qcSupabase.rpc('has_active_pro_access');
-    return {loggedIn:true,isPro:pro.data===true};
-  }
-
   const leagueSnapshotCache=new Map();
 
   async function fetchLeagueSnapshot(comp,stat){
@@ -456,23 +447,30 @@
     const root=$('#leagueRecordRoot');
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
-      const access=await getAccess();
-      if(!access.loggedIn){
+      const {data:authData,error:authError}=await window.qcSupabase.auth.getSession();
+      if(authError) throw authError;
+      if(!authData?.session){
         root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
         return;
       }
-      if(!access.isPro){
+
+      // The league index is small and RLS restricts it to Pro members.
+      // Start the permission RPC and index read together; the user sees
+      // neither the index nor any Pro data until the RPC confirms access.
+      const [proRes,snapRes]=await Promise.all([
+        window.qcSupabase.rpc('has_active_pro_access'),
+        window.qcSupabase
+          .from('league_archive_snapshots')
+          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+          .eq('is_current',true)
+          .order('priority',{ascending:true})
+          .order('name_cn',{ascending:true})
+      ]);
+      if(proRes.error) throw proRes.error;
+      if(proRes.data!==true){
         root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂未开放</h2><p>当前账号没有联赛档案访问权限。</p></div>';
         return;
       }
-
-      const snapRes=await window.qcSupabase
-        .from('league_archive_snapshots')
-        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-        .eq('is_current',true)
-        .order('priority',{ascending:true})
-        .order('name_cn',{ascending:true});
-
       if(snapRes.error) throw snapRes.error;
 
       const rows=(snapRes.data||[]).slice().sort((a,b)=>{
