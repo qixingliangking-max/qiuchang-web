@@ -762,6 +762,38 @@
       "away_team": "希洪竞技",
       "match_date": "2026-10-11",
       "kickoff_at": "2026-10-11T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868491",
+      "match_id": "fotmob:5868491",
+      "home_team": "巴拉多利德",
+      "away_team": "阿尔瓦塞特",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868483",
+      "match_id": "fotmob:5868483",
+      "home_team": "布尔戈斯",
+      "away_team": "格拉纳达",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T14:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868489",
+      "match_id": "fotmob:5868489",
+      "home_team": "奥维耶多",
+      "away_team": "埃瓦尔",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T16:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868490",
+      "match_id": "fotmob:5868490",
+      "home_team": "特内里费",
+      "away_team": "赫罗纳",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T19:00:00.000Z"
     }
   ]
 }

@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 70,
-  "collected_matches": 70,
+  "input_matches": 71,
+  "collected_matches": 71,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "法马利康",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,7 +86,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿尔维卡",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,5 +106,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 2.5
+  "avg_team_depth_coverage_pct": 3
 }

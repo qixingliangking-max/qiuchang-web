@@ -2370,6 +2370,14 @@
       "away_team": "米拉索尔",
       "match_date": "2026-10-11",
       "kickoff_at": "2026-10-11T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103661",
+      "match_id": "fotmob:5103661",
+      "home_team": "科里蒂巴",
+      "away_team": "博塔弗戈",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T19:00:00.000Z"
     }
   ]
 }

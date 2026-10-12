@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 16,
-  "collected_matches": 16,
+  "input_matches": 22,
+  "collected_matches": 22,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
-  "aggregate_players": 718,
+  "aggregate_players": 752,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -36,12 +36,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利雅得胜利",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "加拉法",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,12 +51,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡迪西亚",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "吉达国民",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,12 +66,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "塔什干棉农",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "大不里士拖拉机",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,12 +86,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴格达空军",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "德黑兰独立",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -141,12 +141,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "舒马尔",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "艾因",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -156,12 +156,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费尔干纳石油",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "迪拜祈祷",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",

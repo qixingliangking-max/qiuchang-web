@@ -1377,7 +1377,7 @@
       "home_team": "腓特烈斯塔",
       "away_team": "特罗姆瑟",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T12:30:00.000Z"
+      "kickoff_at": "2026-10-11T12:30:00Z"
     },
     {
       "source_match_id": "5105021",
@@ -1385,7 +1385,7 @@
       "home_team": "斯达",
       "away_team": "汉坎",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T15:00:00.000Z"
+      "kickoff_at": "2026-10-11T15:00:00Z"
     },
     {
       "source_match_id": "5105022",
@@ -1393,7 +1393,7 @@
       "home_team": "奥勒松",
       "away_team": "萨普斯堡",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T15:00:00.000Z"
+      "kickoff_at": "2026-10-11T15:00:00Z"
     },
     {
       "source_match_id": "5105023",
@@ -1401,7 +1401,15 @@
       "home_team": "利勒斯特罗姆",
       "away_team": "莫尔德",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T17:15:00.000Z"
+      "kickoff_at": "2026-10-11T17:15:00Z"
+    },
+    {
+      "source_match_id": "5105024",
+      "match_id": "fotmob:5105024",
+      "home_team": "奥斯陆KFUM",
+      "away_team": "瓦勒伦加",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T17:00:00.000Z"
     }
   ]
 }

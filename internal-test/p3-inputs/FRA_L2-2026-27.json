@@ -570,6 +570,14 @@
       "away_team": "罗德兹",
       "match_date": "2026-10-10",
       "kickoff_at": "2026-10-10T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803273",
+      "match_id": "fotmob:5803273",
+      "home_team": "第戎",
+      "away_team": "梅斯",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T18:45:00.000Z"
     }
   ]
 }

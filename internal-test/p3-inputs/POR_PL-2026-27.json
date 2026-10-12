@@ -562,6 +562,14 @@
       "away_team": "阿马多拉之星",
       "match_date": "2026-10-11",
       "kickoff_at": "2026-10-11T19:30:00Z"
+    },
+    {
+      "source_match_id": "5887649",
+      "match_id": "fotmob:5887649",
+      "home_team": "法马利康",
+      "away_team": "阿尔维卡",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T19:15:00.000Z"
     }
   ]
 }

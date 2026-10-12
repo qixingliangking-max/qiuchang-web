@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 95,
-  "collected_matches": 95,
+  "input_matches": 99,
+  "collected_matches": 99,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 22,
-  "aggregate_players": 677,
+  "aggregate_players": 679,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃瓦尔",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "奥维耶多",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -56,12 +56,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴拉多利德",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "布尔戈斯",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -76,12 +76,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "格拉纳达",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "特内里费",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,7 +106,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "赫罗纳",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,7 +116,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿尔瓦塞特",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -126,5 +126,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 14.9
+  "avg_team_depth_coverage_pct": 15.7
 }

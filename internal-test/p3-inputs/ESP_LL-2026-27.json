@@ -626,6 +626,14 @@
       "away_team": "瓦伦西亚",
       "match_date": "2026-10-11",
       "kickoff_at": "2026-10-11T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868085",
+      "match_id": "fotmob:5868085",
+      "home_team": "莱万特",
+      "away_team": "塞维利亚",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T19:00:00.000Z"
     }
   ]
 }

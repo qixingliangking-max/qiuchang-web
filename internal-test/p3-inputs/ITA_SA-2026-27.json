@@ -466,6 +466,22 @@
       "away_team": "尤文图斯",
       "match_date": "2026-10-11",
       "kickoff_at": "2026-10-11T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749690",
+      "match_id": "fotmob:5749690",
+      "home_team": "亚特兰大",
+      "away_team": "威尼斯",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T16:30:00.000Z"
+    },
+    {
+      "source_match_id": "5749699",
+      "match_id": "fotmob:5749699",
+      "home_team": "都灵",
+      "away_team": "乌迪内斯",
+      "match_date": "2026-10-12",
+      "kickoff_at": "2026-10-12T18:45:00.000Z"
     }
   ]
 }
