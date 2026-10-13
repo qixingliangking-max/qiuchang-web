@@ -1,24 +1,15 @@
 {
   "league_code": "ENG_PL",
   "season": "2026/27",
-  "run_at": "2026-10-12T22:33:25.343Z",
+  "run_at": "2026-10-13T06:58:44.538Z",
   "discovered_fixtures": 380,
   "discovered_finished": 60,
-  "baseline_finished_matches": 59,
-  "new_finished_matches": 1,
-  "added_source_match_ids": [
-    "5795468"
-  ],
+  "baseline_finished_matches": 60,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 60,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0,
-  "published_blob_sha": "69a71c1f8584398d1a980d7ad9073ee95cd2dbb3"
+  "status": "NO_NEW_FINISHED"
 }

@@ -1,24 +1,15 @@
 {
   "league_code": "FRA_L2",
   "season": "2026/27",
-  "run_at": "2026-10-12T22:33:51.069Z",
+  "run_at": "2026-10-13T06:58:53.299Z",
   "discovered_fixtures": 306,
   "discovered_finished": 72,
-  "baseline_finished_matches": 71,
-  "new_finished_matches": 1,
-  "added_source_match_ids": [
-    "5803273"
-  ],
+  "baseline_finished_matches": 72,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 72,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 7.6,
-  "published_blob_sha": "7a011c7a5619bf5d7d30366eda22374b389ae309"
+  "status": "NO_NEW_FINISHED"
 }
