@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 18,
-  "collected_matches": 18,
+  "input_matches": 20,
+  "collected_matches": 20,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 798,
+  "aggregate_players": 813,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉格斯拉维亚",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "朗斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -141,12 +141,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨巴赫",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "葡萄牙体育",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",

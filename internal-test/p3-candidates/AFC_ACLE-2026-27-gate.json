@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 22,
-  "collected_matches": 22,
+  "input_matches": 30,
+  "collected_matches": 30,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
-  "aggregate_players": 752,
+  "aggregate_players": 811,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,12 +16,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "上海海港",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "京都不死鸟",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利雅得新月",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "北京国安",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "吉达联合",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -76,12 +76,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "大田韩亚市民",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "大阪钢巴",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "拉查布里",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,17 +106,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "柔佛新山",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "武里南联",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "河内公安",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -126,7 +126,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "浦项制铁",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -136,7 +136,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "纽卡斯尔喷气机",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -151,7 +151,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨德",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -166,12 +166,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "迪拜青年国民",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "鹿岛鹿角",
-      "matches": 1
+      "matches": 2
     }
   ],
   "gate_status": "PASS",
