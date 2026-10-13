@@ -478,8 +478,8 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
 
   const desc=isAi
     ? (loggedIn
-      ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，开通或续费 Pro 后可查看完整内容。'
-      : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。')
+      ? '本场报告涵盖双方实力、方向依据、比赛进程及比分分析，开通或续费 Pro 后可查看完整内容。'
+      : '本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。')
     : (loggedIn
       ? dayLabel+'预测包含本站 AI 玩法推荐与比分判断，开通或续费 Pro 后查看。如需开通或续费，请联系管理员。'
       : dayLabel+'预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。');
@@ -586,9 +586,10 @@ function jcDisplaySingleSuffix(model,m){
   // Website language rule: single pick always carries its locked probability.
   // For matches without ordinary HAD, the stored single_pick is already the
   // handicap single selected at lock time, so the probability still applies.
-  return model?.raw_input?.single_prob!=null
-    ? '｜'+model.raw_input.single_prob+'%'
-    : '';
+  const p=model?.raw_input?.single_prob;
+  if(p==null || p==='') return '';
+  const n=Number(p);
+  return '｜'+(Number.isFinite(n)?n.toFixed(1):String(p))+'%';
 }
 
 function jcOverviewActualDirection(model,m,score){
@@ -2795,8 +2796,8 @@ function jcRenderAiLockedPanel(m,pools,access){
   const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
   const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
   const lockDesc=loggedIn
-    ? '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，开通或续费 Pro 后可查看完整内容。'
-    : '本场分析包含 AI 玩法推荐、比分判断、比赛路径与风险分析，登录后可查看完整内容。';
+    ? '本场报告涵盖双方实力、方向依据、比赛进程及比分分析，开通或续费 Pro 后可查看完整内容。'
+    : '本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。';
 
   return '<div class="jc-ai-placeholder jc-ai-page jc-ai-locked">'+
     '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
@@ -2826,7 +2827,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
     ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
     : '等待本场模型结果写入';
 
-  // 2026-09-25: AI report is a single continuous article with five fixed sections.
+  // Four-part AI report: verified strength and form, direction, handicap/HTFT, goals/scores.
   // The stored model output remains the source of truth; legacy analysis fields are
   // folded into the new reading structure without changing the locked conclusions.
   const directionText=model?jcDisplayModelDirection(model,m):'待生成';
