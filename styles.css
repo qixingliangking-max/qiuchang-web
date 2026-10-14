@@ -5326,6 +5326,7 @@ body.qc-ticker-authenticated .ticker{
 @media(max-width:760px){
   body.qc-overview-page .qc-site-header .menu-btn,
   body.qc-football-page .qc-site-header .menu-btn,
+  body.qc-profile-page .qc-site-header .menu-btn,
   body.jc-odds-page .qc-site-header .menu-btn{
     position:relative!important;
     width:68px!important;
@@ -5346,6 +5347,7 @@ body.qc-ticker-authenticated .ticker{
   }
   body.qc-overview-page .qc-site-header .menu-btn::before,
   body.qc-football-page .qc-site-header .menu-btn::before,
+  body.qc-profile-page .qc-site-header .menu-btn::before,
   body.jc-odds-page .qc-site-header .menu-btn::before{
     content:""!important;
     position:absolute!important;
