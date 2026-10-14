@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 113,
-  "collected_matches": 113,
+  "input_matches": 115,
+  "collected_matches": 115,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 24,
@@ -13,11 +13,6 @@
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "伯明翰",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "南安普敦",
@@ -35,16 +30,6 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "斯托克城",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "普雷斯顿",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "朴茨茅斯",
       "matches": 8
     },
@@ -56,11 +41,6 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "狼队",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "米德尔斯堡",
       "matches": 9
     },
     {
@@ -81,5 +61,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 19.7
+  "avg_team_depth_coverage_pct": 22.4
 }
