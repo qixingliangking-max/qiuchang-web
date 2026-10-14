@@ -1924,6 +1924,65 @@ async function loadJcFrontend(){
     history.replaceState({},'',u);
   }
 
+  // Today's predictions are always supplied by an entire published day snapshot:
+  // a public static schedule before lock, a Pro-only static prediction after lock.
+  function qcCompleteStaticRows(record,ds){
+    const rows=record?.payload?.rows;
+    const count=Number(record?.match_count||0);
+    return Number.isInteger(count) && count>0 && Array.isArray(rows) &&
+      rows.length===count && rows.every(m=>m?.id && jcBusinessDate(m)===ds)
+        ? rows : null;
+  }
+
+  async function fetchOverviewDatePreferred(ds){
+    // Fully finished and published history is static and publicly accessible.
+    if(qcFrozenOverviewManifestCache?.dates?.[ds]){
+      const frozen=await qcFetchFrozenOverviewDate(ds);
+      if(frozen) return frozen;
+    }
+
+    // Server validates Pro entitlement. It never returns protected prediction
+    // rows to anonymous or non-Pro clients.
+    const bundle=typeof window.qcFetchOverviewBootstrap==='function'
+      ? await window.qcFetchOverviewBootstrap(ds) : null;
+
+    if(access.isPro && bundle?.is_pro===true){
+      const rows=qcCompleteStaticRows(bundle.prediction,ds);
+      if(rows && Number(bundle.prediction.model_count)===rows.length &&
+         rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)){
+        const prediction=qcCacheProOverviewSnapshot(bundle.prediction);
+        if(prediction?.data?.length) return prediction;
+      }
+    }
+
+    // Only a protected whole-day snapshot is allowed as an auth-race fallback.
+    if(access.isPro && (!bundle || bundle.is_pro!==true)){
+      const protectedSnapshot=await qcFetchProOverviewDate(ds);
+      if(protectedSnapshot?.data?.length) return protectedSnapshot;
+    }
+
+    let rows=qcCompleteStaticRows(bundle?.schedule,ds);
+    if(!rows){
+      // Do not fall back to fetching jc_matches + individual model outputs.
+      const {data,error}=await window.qcSupabase
+        .from('jc_overview_schedule_snapshots')
+        .select('business_date,payload,match_count')
+        .eq('business_date',ds)
+        .maybeSingle();
+      if(error) return {data:[],error};
+      rows=qcCompleteStaticRows(data,ds);
+    }
+    if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
+    return {
+      data:rows.map(m=>({
+        ...m,jc_model_outputs:[],_jcModelsLoaded:true,
+        _jcModelsLoading:false,_jcModelLoadFailed:false,
+        _jcScheduleSnapshot:true
+      })),
+      error:null,fromScheduleSnapshot:true,fromOverviewBootstrap:Boolean(bundle)
+    };
+  }
+
   function preserveOverviewStaticData(fresh,old){
     if(!old) return fresh;
     const merged={...old,...fresh};
@@ -1964,50 +2023,10 @@ async function loadJcFrontend(){
     return result || {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
   }
 
-  async function fetchOverviewDateReady(ds,freshHint=null){
-    const preferredPromise=fetchOverviewDatePreferred(ds);
-
-    // Frozen history is already authoritative for the first paint.
-    if(qcFrozenOverviewManifestCache?.dates?.[ds]){
-      return preferredPromise;
-    }
-
-    const preferred=await preferredPromise;
-    if(preferred?.error) return preferred;
-    // A verified complete daily snapshot is authoritative for the first paint.
-    // Fetching live rows before painting used to delay and repaint an already-complete day.
-    // Live scores/status still refresh AFTER paint via refreshOverviewDynamicState.
-    const hasCompleteSnapshot=Boolean(
-      preferred && (
-        preferred.fromOverviewBootstrap ||
-        preferred.fromScheduleSnapshot ||
-        preferred.fromPredictionSnapshot
-      ) &&
-      Array.isArray(preferred.data) &&
-      preferred.data.length>0 &&
-      preferred.data.every(row=>row?.id && jcBusinessDate(row)===ds)
-    );
-    if(hasCompleteSnapshot) return preferred;
-
-    const fresh=freshHint ? await freshHint : await jcFetchDateRows(ds,false,true);
-    if(fresh?.error || !Array.isArray(fresh?.data)) return preferred;
-
-    const preferredRows=Array.isArray(preferred?.data)?preferred.data:[];
-    const oldById=new Map(preferredRows.map(row=>[String(row.id),row]));
-    const merged=[];
-    const seen=new Set();
-
-    fresh.data.forEach(row=>{
-      const key=String(row.id);
-      merged.push(preserveOverviewStaticData(row,oldById.get(key)));
-      seen.add(key);
-    });
-    preferredRows.forEach(row=>{
-      const key=String(row.id);
-      if(!seen.has(key)) merged.push(row);
-    });
-
-    return {...preferred,data:merged,fromReadyOverview:true};
+  async function fetchOverviewDateReady(ds){
+    // One complete static day snapshot is authoritative for 今日预测.
+    // Scores may refresh separately but cannot alter frozen predictions.
+    return fetchOverviewDatePreferred(ds);
   }
 
   async function refreshOverviewDynamicState(ds,token){
