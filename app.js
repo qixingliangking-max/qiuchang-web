@@ -1795,7 +1795,7 @@ async function loadJcFrontend(){
   // paint immediately without waiting for login/Pro detection.
   qcLoadFrozenOverviewManifest();
   const accessPromise=qcGetAccessState();
-  const candidateCurrentPromise=jcFetchOverviewDateRows(candidateDate);
+  // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
 
@@ -1817,14 +1817,7 @@ async function loadJcFrontend(){
     if(result?.error || !result?.historyFinal) return;
     const publicRows=(result.data||[]).filter(m=>jcScoreInfo(m).finished);
     if(!publicRows.length || publicRows.length!==Number(result.matchCount||0)) return;
-    publicRows.forEach(m=>{
-      m._jcModelsLoading=!m._jcModelsLoaded;
-      m._jcModelLoadFailed=false;
-    });
-    await Promise.all([
-      jcAttachLatestSnapshots(publicRows),
-      jcAttachModels(publicRows)
-    ]);
+    // Completed public history already contains all official model/market data.
     reviewCards.innerHTML=jcRenderYesterdayReview(publicRows,calendarToday);
     jcBindOverviewRows(reviewCards);
     const meta=$('#jcYesterdayMeta');
@@ -1857,10 +1850,7 @@ async function loadJcFrontend(){
   let currentResult,previousResult;
   const initialPrevDate=qcAddDays(initialDate,-1);
   [currentResult,previousResult]=await Promise.all([
-    fetchOverviewDateReady(
-      initialDate,
-      initialDate===candidateDate ? candidateCurrentPromise : null
-    ),
+    fetchOverviewDateReady(initialDate),
     fetchHistoryReviewDateReady(
       initialPrevDate,
       initialDate===candidateDate ? candidatePreviousPromise : null
@@ -1900,7 +1890,7 @@ async function loadJcFrontend(){
     : null;
 
   if(initialDate!==initialToday){
-    jcFetchOverviewDateRows(initialToday).then(result=>{
+    fetchOverviewDateReady(initialToday).then(result=>{
       if(!result?.error) todayPredictionCount=(result.data||[]).length;
     }).catch(()=>{});
   }
@@ -1932,30 +1922,6 @@ async function loadJcFrontend(){
     if(ds===today) u.searchParams.delete('date');
     else u.searchParams.set('date',ds);
     history.replaceState({},'',u);
-  }
-
-  function modelRowsForBundle(rows,ds){
-    if(access.isPro) return rows;
-    const previousDate=qcAddDays(ds,-1);
-    return rows.filter(m=>jcBusinessDate(m)===previousDate && jcScoreInfo(m).finished);
-  }
-
-  async function fetchOverviewDatePreferred(ds){
-    // Fully-finalized history stays on public static JSON.
-    const finalFrozen=Boolean(qcFrozenOverviewManifestCache?.dates?.[ds]);
-    if(finalFrozen){
-      const frozen=await qcFetchFrozenOverviewDate(ds);
-      if(frozen) return frozen;
-    }
-
-    // Locked prediction days are served from a single Pro-only snapshot row.
-    // This is never requested for non-Pro users, and RLS enforces the same boundary.
-    if(access.isPro){
-      const protectedSnapshot=await qcFetchProOverviewDate(ds);
-      if(protectedSnapshot) return protectedSnapshot;
-    }
-
-    return jcFetchOverviewDateRows(ds);
   }
 
   function preserveOverviewStaticData(fresh,old){
@@ -2111,31 +2077,6 @@ async function loadJcFrontend(){
     render();
   }
 
-  async function hydrateOverviewRows(rows,ds,token,patchDom=true){
-    const modelRows=modelRowsForBundle(rows,ds);
-    const pendingModels=modelRows.filter(m=>!m._jcModelsLoaded);
-
-    pendingModels.forEach(m=>{
-      m._jcModelsLoading=true;
-      m._jcModelLoadFailed=false;
-    });
-
-    await Promise.all([
-      jcAttachLatestSnapshots(rows),
-      pendingModels.length?jcAttachModels(pendingModels):Promise.resolve(pendingModels)
-    ]);
-
-    if(token!==loadToken || selectedDate!==ds) return;
-    modelsLoaded=true;
-    if(patchDom){
-      jcPatchOverviewPredictionCells(cards,rows);
-      jcPatchOverviewPredictionCells(reviewCards,rows);
-    }
-
-    // Only the verified-final history fetch above may write the early-review cache.
-    // Never overwrite it with a partial set of finished rows during hydration.
-  }
-
   const overviewPrimeInFlight=new Map();
   async function primeOverviewDateBundle(ds){
     if(!isValidOverviewDate(ds)) return;
@@ -2150,14 +2091,7 @@ async function loadJcFrontend(){
       ]);
       if(cur.error||prevRowsResult.error) return;
 
-      const rows=[...(cur.data||[]),...(prevRowsResult.data||[])].filter(m=>m.match_date);
-      const modelRows=modelRowsForBundle(rows,ds).filter(m=>!m._jcModelsLoaded);
-      const snapshotRows=rows.filter(m=>!m._jcLatestSnapshotsLoaded);
-
-      await Promise.all([
-        modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows),
-        snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows)
-      ]);
+      // Snapshot prefetch is complete; browser never hydrates models per match.
     })().finally(()=>overviewPrimeInFlight.delete(ds));
 
     overviewPrimeInFlight.set(ds,promise);
@@ -2192,9 +2126,7 @@ async function loadJcFrontend(){
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
 
-    // Prepare locked model + market data before painting the new date.
-    // This restores the one-pass first paint: no visible "加载中" cells.
-    await hydrateOverviewRows(allRows,ds,token,false);
+    // The entire static day snapshot is rendered once, with no per-match fetch.
     if(token!==loadToken || selectedDate!==ds) return;
     render();
     refreshOverviewDynamicState(ds,token)
@@ -2307,30 +2239,15 @@ async function loadJcFrontend(){
   });
 
   const initialToken=++loadToken;
-  // Access has already been verified. Both current and previous-day rows are
-  // complete static snapshots at this point; paint the FULL set immediately.
-  // Locked data is only present in Pro-authorized rows; never copy it to guests.
-  // Pending model/market reads update prediction cells, never the row count.
+  // Both the before-lock schedule and after-lock Pro prediction are static.
+  // Display complete authorized snapshots immediately, never hydrate by match.
   render();
   if(initialToken!==loadToken) return;
-  const initialHydration=hydrateOverviewRows(allRows,selectedDate,initialToken,true)
-    .catch(err=>console.warn('今日预测后台补齐失败',err));
   refreshOverviewDynamicState(selectedDate,initialToken)
     .catch(err=>console.warn('速览动态比分补充失败',err));
-  // A large historical Pro snapshot batch must not contend with the first paint
-  // or the immediately-needed current-day model request.
-  if(access.isPro){
-    const primeProHistory=()=>initialHydration
-      .then(()=>qcPrimeProOverviewSnapshots())
-      .then(()=>primeOverviewNeighbors(selectedDate))
-      .catch(err=>console.warn('Pro历史快照后台预热失败',err));
-    if('requestIdleCallback' in window){
-      requestIdleCallback(primeProHistory,{timeout:2000});
-    }else{
-      setTimeout(primeProHistory,500);
-    }
-  }else{
-    primeOverviewNeighbors(selectedDate);
+  // Only prefetch neighboring static snapshots when the browser is idle.
+  if('requestIdleCallback' in window){
+    requestIdleCallback(()=>primeOverviewNeighbors(selectedDate),{timeout:2000});
   }
 
   async function refreshOverviewLive(){
