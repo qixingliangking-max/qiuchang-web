@@ -1420,11 +1420,13 @@ async function jcFetchFootballScheduleRows(dateStr){
   try{
     const {data,error}=await window.qcSupabase
       .from('jc_overview_schedule_snapshots')
-      .select('payload')
+      .select('payload,match_count')
       .eq('business_date',dateStr)
       .maybeSingle();
     const rows=data?.payload?.rows;
-    if(!error && Array.isArray(rows) && rows.length &&
+    const count=Number(data?.match_count||0);
+    if(!error && Number.isInteger(count) && count>0 &&
+       Array.isArray(rows) && rows.length===count &&
        rows.every(m=>m?.id && m?.business_date===dateStr)){
       return {data:rows,error:null,fromScheduleSnapshot:true};
     }
@@ -1631,16 +1633,17 @@ async function loadJcFootball(){
     allRows=(result.data||[]).filter(m=>m.match_date);
     selectedDate=ds;
     activeLeague='全部';
-    // The list must have its odds, confirmed prediction hits and logo URLs
-    // before it is painted. Do not show an incomplete set of match cards.
-    try{
-      await hydrateFootballRows(allRows,ds,token,false);
-    }catch(error){
-      console.warn('竞彩足球补充数据失败，保留原始赛程',error);
-    }
-    if(token!==loadToken || selectedDate!==ds) return;
+    // Render the COMPLETE fixture list immediately. Market summaries, frozen
+    // completed-result hits and logos enrich the same cards in the background.
+    // Waiting for all three requests here used to delay the entire first paint.
     render();
-    if(result.fromScheduleSnapshot) refreshFootballLive().catch(()=>{});
+    hydrateFootballRows(allRows,ds,token,true)
+      .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error))
+      .finally(()=>{
+        if(result.fromScheduleSnapshot && token===loadToken && selectedDate===ds){
+          refreshFootballLive().catch(()=>{});
+        }
+      });
   }
 
   function render(){
@@ -1710,16 +1713,17 @@ async function loadJcFootball(){
   });
 
   const initialToken=++loadToken;
-  // A single stable first paint: until all three independent enrichment
-  // requests finish, keep the existing "正在加载中…" shell visible.
-  try{
-    await hydrateFootballRows(allRows,selectedDate,initialToken,false);
-  }catch(error){
-    console.warn('竞彩足球初次补充数据失败，保留原始赛程',error);
-  }
-  if(initialToken!==loadToken) return;
+  // Paint all fixture cards from the validated whole-day schedule first.
+  // Never make odds, team-logo or completed-hit requests prerequisites for
+  // seeing the full list; enrich those fields without replacing the cards.
   render();
-  if(initial.fromScheduleSnapshot) refreshFootballLive().catch(()=>{});
+  hydrateFootballRows(allRows,selectedDate,initialToken,true)
+    .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error))
+    .finally(()=>{
+      if(initial.fromScheduleSnapshot && initialToken===loadToken){
+        refreshFootballLive().catch(()=>{});
+      }
+    });
 
   async function refreshFootballLive(){
     const refreshDate=selectedDate;
