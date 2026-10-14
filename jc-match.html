@@ -9,6 +9,38 @@
   <link rel="preconnect" href="https://oqtloldkfjxildoribkf.supabase.co" crossorigin>
   <link rel="stylesheet" href="styles.css?v=20261010footer1">
   <link rel="stylesheet" href="footer-compact.css?v=20261010footer1">
+  <style>
+    /* Scoped design preview only; all standard fixture pages remain unchanged. */
+    .jc-postmatch-preview{background:#fff;border:1px solid #e5eaf2;border-radius:16px;margin:16px 0 21px;padding:18px 18px 16px;box-shadow:0 5px 18px rgba(27,42,70,.035);color:#25314c}
+    .jc-pms-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+    .jc-pms-title h2{margin:0!important;font-size:18px!important;font-weight:900;line-height:1.3}
+    .jc-pms-title span{background:#edf3ff;color:#4666a3;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;white-space:nowrap}
+    .jc-pms-warning{background:#fff8e9;border:1px solid #f3e5c3;border-radius:9px;padding:9px 11px;color:#926e36;font-size:11px!important;line-height:1.65!important;margin:0 0 14px!important}
+    .jc-pms-legend{display:flex;justify-content:space-between;gap:14px;color:#69778f;font-size:12px;font-weight:800;margin-bottom:8px}
+    .jc-pms-legend>span{display:flex;align-items:center;gap:6px;min-width:0;overflow-wrap:anywhere}
+    .jc-pms-legend>span:last-child{text-align:right;justify-content:flex-end}
+    .jc-pms-swatch-home,.jc-pms-swatch-away{width:9px;height:9px;border-radius:50%;display:inline-block;background:#dc853e;flex-shrink:0}
+    .jc-pms-swatch-away{background:#3764ed}
+    .jc-pms-metric{padding:12px 0 13px;border-top:1px solid #eff2f7}
+    .jc-pms-values{display:grid;grid-template-columns:minmax(60px,1fr) auto minmax(60px,1fr);gap:8px;align-items:center}
+    .jc-pms-values strong{font-size:19px;line-height:1.3;font-weight:900;font-variant-numeric:tabular-nums}
+    .jc-pms-values strong:last-child{text-align:right}
+    .jc-pms-values span{text-align:center;font-size:12px;color:#66768c;font-weight:800}
+    .jc-pms-track{display:flex;overflow:hidden;border-radius:99px;background:#ebeff6;height:9px;gap:3px;margin-top:9px}
+    .jc-pms-home,.jc-pms-away{height:100%;display:block;background:#dc853e;flex-shrink:0}
+    .jc-pms-home{border-radius:99px 0 0 99px}
+    .jc-pms-away{flex:1;min-width:0;border-radius:0 99px 99px 0;background:#3764ed}
+    .jc-pms-analysis{border-radius:11px;background:#f5f7fb;padding:13px 14px;margin-top:5px}
+    .jc-pms-analysis strong{font-size:13px;font-weight:900}
+    .jc-pms-analysis p{margin:7px 0 0!important;color:#627189;font-size:12px!important;line-height:1.85!important}
+    @media(max-width:640px){
+      .jc-postmatch-preview{margin:13px 0 16px;padding:14px 12px}
+      .jc-pms-title h2{font-size:17px!important}
+      .jc-pms-values strong{font-size:17px}
+      .jc-pms-values span{font-size:11.5px}
+      .jc-pms-legend{font-size:11.5px}
+    }
+  </style>
 </head>
 <body class="jc-odds-page">
 <div class="shell">
@@ -48,6 +80,6 @@
 <script src="supabase-config.js"></script>
 <script src="supabase-client.js?v=20260927autologin1"></script>
 <script src="data.js"></script>
-<script src="app.js?v=20261014staticday1"></script>
+<script src="app.js?v=20261014postmatchinline1"></script>
 </body>
 </html>
