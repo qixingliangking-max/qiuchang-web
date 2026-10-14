@@ -1851,15 +1851,20 @@ async function loadJcFrontend(){
     ? candidateDate
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
 
-  let currentResult,previousResult;
+  // Today's entire protected/static day is the first-paint dependency.
+  // Yesterday's review may require an additional Pro snapshot merge; it must
+  // not hold up today's 14-row table on slow mobile connections.
   const initialPrevDate=qcAddDays(initialDate,-1);
-  [currentResult,previousResult]=await Promise.all([
-    fetchOverviewDateReady(initialDate),
-    fetchHistoryReviewDateReady(
-      initialPrevDate,
-      initialDate===candidateDate ? candidatePreviousPromise : null
-    )
-  ]);
+  const previousReadyPromise=fetchHistoryReviewDateReady(
+    initialPrevDate,
+    initialDate===candidateDate ? candidatePreviousPromise : null
+  ).catch(error=>{
+    console.warn('昨日回看异步读取失败',error);
+    return {data:[],error,historyFinal:false};
+  });
+  const currentResult=await fetchOverviewDateReady(initialDate);
+  const previousResult={data:[],error:null,historyFinal:false};
+  let previousLoading=true;
 
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
@@ -1875,16 +1880,8 @@ async function loadJcFrontend(){
     }).catch(err=>console.warn('日期索引延后读取失败',err));
   }
 
-  // Preload frozen history in the background. Guests get the full visible window
-  // (plus the previous day needed by "昨日回看"); signed-in users get up to 45 recent frozen days.
-  qcLoadFrozenOverviewManifest().then(manifest=>{
-    const frozenDates=Object.keys(manifest?.dates||{}).sort();
-    const guestDates=[qcAddDays(overviewMinDate,-1),...overviewSelectableDates];
-    const primeDates=access.loggedIn ? frozenDates.slice(-45) : guestDates;
-    const run=()=>qcPrimeFrozenOverviewDates(primeDates).catch(()=>{});
-    if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:700});
-    else setTimeout(run,120);
-  }).catch(()=>{});
+  // Historical frozen dates are fetched on demand, not 45 files at once.
+  // The previous day has its own independent initial request above.
 
   const dateLabel=$('#jcDateLabel');
   if(dateLabel) dateLabel.textContent=qcDateLabel(initialDate);
@@ -2184,6 +2181,7 @@ async function loadJcFrontend(){
 
     allRows=[...(nextCurrent.data||[]),...(nextPrevious.data||[])].filter(m=>m.match_date);
     previousHistoryFinal=Boolean(nextPrevious?.historyFinal);
+    previousLoading=false;
     selectedDate=ds;
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
@@ -2211,7 +2209,7 @@ async function loadJcFrontend(){
         : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
-    if($('#jcYesterdayMeta')){
+    if($('#jcYesterdayMeta') && !previousLoading){
       const reviewCount=predictionRestricted?finishedPrevious.length:previousRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
@@ -2235,7 +2233,7 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(reviewCards){
+      if(reviewCards && !previousLoading){
         if(predictionRestricted){
           reviewCards.innerHTML=finishedPrevious.length
             ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
@@ -2305,12 +2303,22 @@ async function loadJcFrontend(){
   // Display complete authorized snapshots immediately, never hydrate by match.
   render();
   if(initialToken!==loadToken) return;
+  // Keep the existing previous-day skeleton (or a complete cached history)
+  // until the separate review request has finished. Do not flash 4–6 rows.
+  previousReadyPromise.then(result=>{
+    if(initialToken!==loadToken || selectedDate!==initialDate) return;
+    previousLoading=false;
+    if(!result?.error){
+      previousHistoryFinal=Boolean(result.historyFinal);
+      const rows=(result.data||[]).filter(m=>m.match_date);
+      allRows=[...allRows.filter(m=>jcBusinessDate(m)!==initialPrevDate),...rows];
+    }
+    render();
+  });
   refreshOverviewDynamicState(selectedDate,initialToken)
     .catch(err=>console.warn('速览动态比分补充失败',err));
-  // Only prefetch neighboring static snapshots when the browser is idle.
-  if('requestIdleCallback' in window){
-    requestIdleCallback(()=>primeOverviewNeighbors(selectedDate),{timeout:2000});
-  }
+  // Do not prefetch adjacent dates on initial load; they are requested only
+  // when the user changes the date.
 
   async function refreshOverviewLive(){
     const token=loadToken;
