@@ -26,8 +26,10 @@
       root.innerHTML='<div class="profile-card">数据库连接失败，请刷新页面后重试。</div>';
       return false;
     }
-    var ur=await window.qcSupabase.auth.getUser();
-    if(ur.error || !ur.data || !ur.data.user){
+    // Cached session avoids a redundant auth round-trip. The subsequent
+    // SECURITY DEFINER dashboard RPC remains the authoritative admin check.
+    var ur=await window.qcSupabase.auth.getSession();
+    if(ur.error || !ur.data || !ur.data.session || !ur.data.session.user){
       location.href='login.html?next=admin-users.html';
       return false;
     }
