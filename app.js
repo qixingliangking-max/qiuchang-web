@@ -1802,7 +1802,7 @@ async function loadJcFrontend(){
   // Browser cache gives repeat opens an immediate first frame.
   try{
     const cached=JSON.parse(localStorage.getItem('qc-finished-review-'+candidatePreviousDate)||'null');
-    if(Array.isArray(cached?.rows) && cached.rows.length){
+    if(cached?.isFinal===true && Number(cached?.matchCount)>0 && Array.isArray(cached?.rows) && cached.rows.length===Number(cached.matchCount) && cached.rows.every(m=>jcScoreInfo(m).finished)){
       reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
       jcBindOverviewRows(reviewCards);
       const meta=$('#jcYesterdayMeta');
@@ -1812,9 +1812,11 @@ async function loadJcFrontend(){
 
   // Network refresh also does not wait for auth. Only finished rows are exposed here.
   candidatePreviousPromise.then(async result=>{
-    if(result?.error) return;
+    // Render yesterday's early preview only if the complete FINAL history is present.
+    // Partial finished-match caches used to show 4-6 rows before the full table arrived.
+    if(result?.error || !result?.historyFinal) return;
     const publicRows=(result.data||[]).filter(m=>jcScoreInfo(m).finished);
-    if(!publicRows.length) return;
+    if(!publicRows.length || publicRows.length!==Number(result.matchCount||0)) return;
     publicRows.forEach(m=>{
       m._jcModelsLoading=!m._jcModelsLoaded;
       m._jcModelLoadFailed=false;
@@ -1840,7 +1842,7 @@ async function loadJcFrontend(){
         _jcModelsLoaded:m._jcModelsLoaded,
         _jcLatestSnapshotsLoaded:m._jcLatestSnapshotsLoaded
       }));
-      localStorage.setItem('qc-finished-review-'+candidatePreviousDate,JSON.stringify({rows:finished,savedAt:Date.now()}));
+      localStorage.setItem('qc-finished-review-'+candidatePreviousDate,JSON.stringify({rows:finished,savedAt:Date.now(),isFinal:true,matchCount:Number(result.matchCount)}));
     }catch(_){}
   }).catch(()=>{});
 
@@ -1892,7 +1894,6 @@ async function loadJcFrontend(){
     else setTimeout(run,120);
   }).catch(()=>{});
 
-  const cacheKey='qc-finished-review-'+initialYesterday;
   const dateLabel=$('#jcDateLabel');
   if(dateLabel) dateLabel.textContent=qcDateLabel(initialDate);
 
@@ -2002,14 +2003,29 @@ async function loadJcFrontend(){
   async function fetchOverviewDateReady(ds,freshHint=null){
     const preferredPromise=fetchOverviewDatePreferred(ds);
 
-    // Fully frozen historical files already carry final score + prediction data.
+    // Frozen history is already authoritative for the first paint.
     if(qcFrozenOverviewManifestCache?.dates?.[ds]){
       return preferredPromise;
     }
 
-    const freshPromise=freshHint || jcFetchDateRows(ds,false,true);
-    const [preferred,fresh]=await Promise.all([preferredPromise,freshPromise]);
+    const preferred=await preferredPromise;
     if(preferred?.error) return preferred;
+    // A verified complete daily snapshot is authoritative for the first paint.
+    // Fetching live rows before painting used to delay and repaint an already-complete day.
+    // Live scores/status still refresh AFTER paint via refreshOverviewDynamicState.
+    const hasCompleteSnapshot=Boolean(
+      preferred && (
+        preferred.fromOverviewBootstrap ||
+        preferred.fromScheduleSnapshot ||
+        preferred.fromPredictionSnapshot
+      ) &&
+      Array.isArray(preferred.data) &&
+      preferred.data.length>0 &&
+      preferred.data.every(row=>row?.id && jcBusinessDate(row)===ds)
+    );
+    if(hasCompleteSnapshot) return preferred;
+
+    const fresh=freshHint ? await freshHint : await jcFetchDateRows(ds,false,true);
     if(fresh?.error || !Array.isArray(fresh?.data)) return preferred;
 
     const preferredRows=Array.isArray(preferred?.data)?preferred.data:[];
@@ -2118,25 +2134,8 @@ async function loadJcFrontend(){
       jcPatchOverviewPredictionCells(reviewCards,rows);
     }
 
-    const previousDate=qcAddDays(ds,-1);
-    const previousRows=rows.filter(m=>jcBusinessDate(m)===previousDate);
-    if(previousDate===initialYesterday && previousRows.some(m=>jcScoreInfo(m).finished)){
-      try{
-        const finished=previousRows.filter(m=>jcScoreInfo(m).finished).map(m=>({
-          id:m.id,match_num:m.match_num,business_date:m.business_date,
-          league_name:m.league_name,league_short_name:m.league_short_name,
-          home_team_name:m.home_team_name,away_team_name:m.away_team_name,
-          match_date:m.match_date,match_time:m.match_time,match_status:m.match_status,
-          raw:{sectionsNo999:m.raw?.sectionsNo999,sectionsNo1:m.raw?.sectionsNo1},
-          _apiFootballLive:m._apiFootballLive,
-          jc_model_outputs:m.jc_model_outputs,
-          _jcModelsLoaded:m._jcModelsLoaded,
-          _jcLatestSnapshotsLoaded:m._jcLatestSnapshotsLoaded,
-          jc_market_snapshots:m.jc_market_snapshots
-        }));
-        localStorage.setItem(cacheKey,JSON.stringify({rows:finished}));
-      }catch(err){ console.warn('昨日赛果缓存写入失败',err); }
-    }
+    // Only the verified-final history fetch above may write the early-review cache.
+    // Never overwrite it with a partial set of finished rows during hydration.
   }
 
   const overviewPrimeInFlight=new Map();
