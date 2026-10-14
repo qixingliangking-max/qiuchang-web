@@ -134,6 +134,11 @@
           const pred=predictionResult(bundle.prediction);
           if(pred?.data?.length) return pred;
         }
+        // The signed-in Pro bootstrap already checked this date's protected
+        // snapshot. If it is absent, do not make a redundant SELECT for the
+        // same missing record before the public schedule can paint.
+        // Anonymous/expired bootstrap auth still falls back to oldPro.
+        if(bundle?.is_pro===true && !bundle.prediction) return null;
       }
       return oldPro(dateStr);
     };
