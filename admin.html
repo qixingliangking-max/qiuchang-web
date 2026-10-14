@@ -3,19 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>球场档案｜后台管理</title>
+  <title>球场档案｜Admin</title>
   <link rel="stylesheet" href="styles.css?v=20260923adminops1">
+  <style>
+    /* Only the admin dashboard: compact nav and no redundant page heading. */
+    body.qc-admin-dashboard .qc-admin-header{
+      height:62px;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background:#fff;
+      border-bottom:1px solid var(--line);
+    }
+    body.qc-admin-dashboard .qc-admin-header .brand{
+      font-size:21px;
+      font-weight:900;
+      letter-spacing:-.35px;
+      line-height:1.25;
+      white-space:nowrap;
+    }
+    body.qc-admin-dashboard .qc-admin-header .brand span{
+      font-size:15px;
+      margin-left:2px;
+      color:var(--blue);
+    }
+    body.qc-admin-dashboard .qc-admin-return{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      height:38px;
+      flex-shrink:0;
+      padding:0 13px;
+      border:1px solid #dfe5f0;
+      border-radius:11px;
+      background:#fff;
+      color:#42516e;
+      font-size:14px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    body.qc-admin-dashboard .qc-admin-return:focus-visible,
+    body.qc-admin-dashboard .qc-admin-header .brand:focus-visible{
+      outline:3px solid #91a8f8;
+      outline-offset:3px;
+    }
+    body.qc-admin-dashboard #adminRoot{
+      padding-top:18px;
+      padding-bottom:70px;
+    }
+    body.qc-admin-dashboard #adminRoot>.admin-grid{margin-top:0}
+    body.qc-admin-dashboard #adminRoot>.admin-module-grid{margin-top:14px}
+    @media(max-width:640px){
+      body.qc-admin-dashboard .qc-admin-header{
+        height:56px;
+        padding:0 13px;
+      }
+      body.qc-admin-dashboard .qc-admin-header .brand{font-size:18px}
+      body.qc-admin-dashboard .qc-admin-header .brand span{font-size:13px}
+      body.qc-admin-dashboard .qc-admin-return{
+        height:36px;
+        padding:0 11px;
+        font-size:13px;
+      }
+      body.qc-admin-dashboard #adminRoot{
+        padding:12px 12px 64px;
+      }
+      body.qc-admin-dashboard #adminRoot>.admin-grid{gap:10px}
+      body.qc-admin-dashboard #adminRoot>.admin-grid .metric{
+        padding:14px;
+        border-radius:16px;
+      }
+      body.qc-admin-dashboard #adminRoot>.admin-grid .metric b{font-size:26px}
+      body.qc-admin-dashboard #adminRoot>.admin-module-grid{margin-top:12px}
+    }
+  </style>
 </head>
-<body>
+<body class="qc-admin-dashboard">
   <div class="shell">
-    <header class="header">
-      <div class="brand">球场档案<span>·Admin</span></div>
-      <a class="small-btn" href="profile.html" style="display:flex;align-items:center">返回个人中心</a>
+    <header class="header qc-admin-header">
+      <a class="brand" href="index.html" aria-label="返回球场档案首页">球场档案<span>·Admin</span></a>
+      <a class="qc-admin-return" href="profile.html">← 个人中心</a>
     </header>
 
     <main class="content" id="adminRoot">
-      <h1>后台管理</h1>
-
       <div class="admin-grid">
         <div class="metric"><b id="adminUsers">—</b><span>有效用户</span></div>
         <div class="metric"><b id="adminProUsers">—</b><span>Pro会员</span></div>
