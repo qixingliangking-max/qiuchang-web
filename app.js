@@ -4510,6 +4510,23 @@ async function setupProfile(){
   if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : activeSubscription ? 'Pro会员' : '基础用户';
   renderMembership(activeSubscription, role);
 
+  // The management shortcut exists ONLY inside the personal-center drawer,
+  // and only after the backend confirms this user is an active administrator.
+  // It does not grant access: admin pages still validate their own RPCs.
+  if(role === 'admin' && status === 'active'){
+    window.qcSupabase.rpc('admin_dashboard_stats').then(({error})=>{
+      if(error) return;
+      const drawer=$('#drawerBackdrop .drawer');
+      const logoutLink=$('#logoutBtn');
+      if(!drawer || !logoutLink || $('#profileAdminNavLink')) return;
+      const link=document.createElement('a');
+      link.id='profileAdminNavLink';
+      link.href='admin.html';
+      link.textContent='后台管理';
+      drawer.insertBefore(link,logoutLink);
+    }).catch(err=>console.warn('管理员导航入口验证失败',err));
+  }
+
   const redeemForm = $('#redeemForm');
   if(redeemForm){
     redeemForm.onsubmit = async e => {
