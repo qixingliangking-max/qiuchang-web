@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 27,
-  "collected_matches": 27,
+  "input_matches": 29,
+  "collected_matches": 29,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 848,
+  "aggregate_players": 853,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,12 +16,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "LASK林茨",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "利物浦",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -121,7 +121,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科莫",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -156,7 +156,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费耶诺德",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
