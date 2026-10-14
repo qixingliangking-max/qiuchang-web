@@ -1847,11 +1847,9 @@ async function loadJcFrontend(){
   }).catch(()=>{});
 
   const access=await accessPromise;
-  if(access.isPro){
-    // One protected row per locked day. Prime them after auth so Pro date switching can be memory-first.
-    qcPrimeProOverviewSnapshots().catch(()=>{});
-  }
-
+  // Do not bulk-download up to 90 historical Pro snapshots before the first frame.
+  // The authorized current-day bundle is loaded by fetchOverviewDateReady;
+  // background priming happens only after the visible table is painted.
   const initialDate=access.loggedIn
     ? candidateDate
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
@@ -2309,20 +2307,30 @@ async function loadJcFrontend(){
   });
 
   const initialToken=++loadToken;
-  // First entry waits for the locked model bundle, then paints once.
-  // Keep the existing booting shell until everything needed by the table is ready.
-  await hydrateOverviewRows(allRows,selectedDate,initialToken,false);
-  if(initialToken!==loadToken) return;
+  // Access has already been verified. Both current and previous-day rows are
+  // complete static snapshots at this point; paint the FULL set immediately.
+  // Locked data is only present in Pro-authorized rows; never copy it to guests.
+  // Pending model/market reads update prediction cells, never the row count.
   render();
+  if(initialToken!==loadToken) return;
+  hydrateOverviewRows(allRows,selectedDate,initialToken,true)
+    .catch(err=>console.warn('今日预测后台补齐失败',err));
   refreshOverviewDynamicState(selectedDate,initialToken)
     .catch(err=>console.warn('速览动态比分补充失败',err));
+  // A large historical Pro snapshot batch must not contend with the first paint
+  // or the immediately-needed current-day model request.
   if(access.isPro){
-    qcPrimeProOverviewSnapshots().then(()=>{
-      // If the initial day was loaded conventionally, the protected snapshot is now warm for the next visit.
-      primeOverviewNeighbors(selectedDate);
-    }).catch(()=>{});
+    const primeProHistory=()=>qcPrimeProOverviewSnapshots()
+      .then(()=>primeOverviewNeighbors(selectedDate))
+      .catch(err=>console.warn('Pro历史快照后台预热失败',err));
+    if('requestIdleCallback' in window){
+      requestIdleCallback(primeProHistory,{timeout:2000});
+    }else{
+      setTimeout(primeProHistory,500);
+    }
+  }else{
+    primeOverviewNeighbors(selectedDate);
   }
-  primeOverviewNeighbors(selectedDate);
 
   async function refreshOverviewLive(){
     const token=loadToken;
