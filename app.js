@@ -2005,6 +2005,14 @@ async function loadJcFrontend(){
     const history=resultOrEmpty(historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds));
     if(!access.isPro) return history;
 
+    // Once yesterday's COMPLETE final history includes every locked prediction,
+    // that single public static file suffices even for Pro users.
+    // Never request a second Pro day snapshot for an already-complete review.
+    if(history.historyFinal && Array.isArray(history.data) && history.data.length>0 &&
+       history.data.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)){
+      return history;
+    }
+
     // Pro 的“昨日回看”仍保留整日赛前锁板内容，但只从静态层组合：
     // 未完赛行来自受保护的锁板日快照；已完赛行用公开历史快照覆盖 FT/HT。
     // 这里不回查 jc_matches，也不重新读取/重算模型输出。
@@ -2068,6 +2076,37 @@ async function loadJcFrontend(){
     }catch(err){
       console.warn('动态比分回读失败，继续使用锁板快照',err);
     }
+  }
+
+  async function refreshNewLockedDaySnapshot(ds,token){
+    // A day may be locked after the Pro user opened it. Read ONLY the newly
+    // published complete static bundle, never individual model outputs.
+    if(!access.isPro || token!==loadToken || selectedDate!==ds ||
+       typeof window.qcFetchOverviewBootstrap!=='function') return;
+    const oldDay=allRows.filter(m=>jcBusinessDate(m)===ds);
+    if(!oldDay.length || oldDay.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
+
+    const bundle=await window.qcFetchOverviewBootstrap(ds,true);
+    if(token!==loadToken || selectedDate!==ds || bundle?.is_pro!==true) return;
+    const rows=qcCompleteStaticRows(bundle.prediction,ds);
+    if(!rows || rows.length!==oldDay.length ||
+       Number(bundle.prediction.model_count)!==rows.length ||
+       !rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
+    const prepared=qcCacheProOverviewSnapshot(bundle.prediction)?.data;
+    if(!prepared?.length) return;
+    const beforeById=new Map(oldDay.map(m=>[String(m.id),m]));
+    // Keep more recent live score/FT while replacing only the authorized
+    // daily prediction payload with an atomic all-rows static snapshot.
+    const replacement=prepared.map(m=>{
+      const old=beforeById.get(String(m.id));
+      return old ? {...m,match_status:old.match_status,raw:{...m.raw,...old.raw},
+        _apiFootballLive:old._apiFootballLive} : m;
+    });
+    allRows=[
+      ...allRows.filter(m=>jcBusinessDate(m)!==ds),
+      ...replacement
+    ];
+    render();
   }
 
   async function refreshYesterdayHistorySnapshot(ds,token){
@@ -2273,7 +2312,8 @@ async function loadJcFrontend(){
     const token=loadToken;
     await Promise.all([
       refreshOverviewDynamicState(selectedDate,token),
-      refreshYesterdayHistorySnapshot(selectedDate,token)
+      refreshYesterdayHistorySnapshot(selectedDate,token),
+      refreshNewLockedDaySnapshot(selectedDate,token)
     ]);
   }
 
