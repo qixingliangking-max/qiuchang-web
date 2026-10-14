@@ -2632,6 +2632,42 @@ function jcSportteryValue(details,type){
   return p?.value ?? p ?? null;
 }
 
+// Post-match layout demo: never show unverified screenshot figures on a normal
+// detail URL. The design preview is restricted to the one referenced fixture.
+const JC_POSTMATCH_PREVIEW_ID='ab895cc3-1159-4c5b-93f1-42527261c684';
+function jcPostmatchPreviewEnabled(m){
+  return String(m?.id||'')===JC_POSTMATCH_PREVIEW_ID &&
+    new URLSearchParams(location.search).get('stats_preview')==='1' &&
+    jcScoreInfo(m).finished;
+}
+
+function jcRenderPostmatchPreview(m){
+  if(!jcPostmatchPreviewEnabled(m)) return '';
+  const values=[
+    {label:'控球率',home:29,away:71,hText:'29%',aText:'71%'},
+    {label:'预期进球 xG',home:0.43,away:2.83,hText:'0.43',aText:'2.83'},
+    {label:'射门次数',home:5,away:22,hText:'5',aText:'22'},
+    {label:'对方禁区触球',home:9,away:35,hText:'9',aText:'35'}
+  ];
+  const rows=values.map(x=>{
+    const total=x.home+x.away;
+    const homePct=total>0 ? Math.min(100,Math.max(0,100*x.home/total)) : 50;
+    return '<div class="jc-pms-metric">'+
+      '<div class="jc-pms-values"><strong>'+qcEscape(x.hText)+'</strong><span>'+qcEscape(x.label)+'</span><strong>'+qcEscape(x.aText)+'</strong></div>'+
+      '<div class="jc-pms-track" role="img" aria-label="'+qcEscape(x.label+'：加拉塔萨雷'+x.hText+'，巴塞罗那'+x.aText)+'">'+
+        '<i class="jc-pms-home" style="width:'+homePct.toFixed(2)+'%"></i><i class="jc-pms-away"></i>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  return '<section class="jc-postmatch-preview" aria-label="赛后技术统计版式测试">'+
+    '<div class="jc-pms-title"><h2>赛后技术统计</h2><span>版式测试</span></div>'+
+    '<p class="jc-pms-warning">以下技术数据取自用户提供的截图，仅供版式演示，尚未接入或独立核验正式统计来源。</p>'+
+    '<div class="jc-pms-legend"><span><i class="jc-pms-swatch-home"></i>加拉塔萨雷</span><span><i class="jc-pms-swatch-away"></i>巴塞罗那</span></div>'+
+    '<div class="jc-pms-list">'+rows+'</div>'+
+    '<div class="jc-pms-analysis"><strong>赛后数据观察</strong><p>样例数据显示，巴塞罗那在控球率、预期进球与射门次数方面占优。巴塞罗那实际打入4球，高于2.83的xG；加拉塔萨雷打入1球，高于0.43的xG。此内容仅为展示示例，不能视为已归档的赛后统计。</p></div>'+
+  '</section>';
+}
+
 function jcRenderFeatureBlock(m,details,apiData){
   const feature=jcSportteryValue(details,'feature') || {};
   const live=jcSportteryValue(details,'live') || {};
@@ -2653,6 +2689,7 @@ function jcRenderFeatureBlock(m,details,apiData){
       '<div><span>半场比分</span><b>'+qcEscape(score.ht||live.sectionsNo1||'—')+'</b></div>'+
       '<div><span>全场比分</span><b>'+qcEscape(score.ft||live.sectionsNo999||'—')+'</b></div>'+
     '</div>'+
+    jcRenderPostmatchPreview(m)+
     '<div class="jc-section-title-row"><h2>赛事前瞻</h2><span>竞彩网</span></div>'+
     '<div class="jc-stat-pairs">'+
       stat('近况得分率',last.homeScoreRatio?last.homeScoreRatio+'%':'—',last.awayScoreRatio?last.awayScoreRatio+'%':'—')+
@@ -2753,7 +2790,9 @@ function jcRenderH2H(m,details){
     ).join('')+'</div>';
 }
 
-function jcRenderTechnicalStats(){
+function jcRenderTechnicalStats(m){
+  const demo=jcRenderPostmatchPreview(m);
+  if(demo) return demo;
   return '<div class="jc-empty-market">技术统计数据暂未接入。后续找到稳定数据源后，会在这里补充控球率、射门、射正、传球等比赛统计。</div>';
 }
 
@@ -3471,7 +3510,7 @@ async function setupJcMatchDetail(options={}){
       if(!content) return;
       if(tab==='lineups') content.innerHTML=jcRenderSportteryLineups(m,sportteryDetails);
       else if(tab==='standings') content.innerHTML=jcRenderStandings(m,sportteryDetails);
-      else if(tab==='stats') content.innerHTML=jcRenderTechnicalStats();
+      else if(tab==='stats') content.innerHTML=jcRenderTechnicalStats(m);
       else if(tab==='h2h') content.innerHTML=jcRenderH2H(m,sportteryDetails);
       else content.innerHTML=jcRenderFeatureBlock(m,sportteryDetails,null);
     }
@@ -3520,6 +3559,12 @@ async function setupJcMatchDetail(options={}){
       await renderMainTab(btn.dataset.mainTab||'ai');
     };
   });
+
+  // The dedicated design-review URL opens inside the EXISTING 赛况数据→数据
+  // view. Ordinary match links and all other fixtures retain their normal tab.
+  if(jcPostmatchPreviewEnabled(m)){
+    renderMainTab('facts').catch(error=>console.warn('赛后统计预览打开失败',error));
+  }
 
   // Live score refresh is never allowed to hold up AI rendering.
   if(jcShouldFetchLive(m)){
