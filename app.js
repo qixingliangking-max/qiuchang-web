@@ -1078,7 +1078,7 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
 function jcPatchFootballExtras(root,rows,access,part='all'){
   if(!root || !Array.isArray(rows) || !rows.length) return;
   const byId=new Map(rows.map(m=>[String(m.id),m]));
-  $('.jc-football-card[data-match-id]',root).forEach(card=>{
+  root.querySelectorAll('.jc-football-card[data-match-id]').forEach(card=>{
     const m=byId.get(String(card.dataset.matchId||''));
     if(!m) return;
 
