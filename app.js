@@ -142,6 +142,15 @@ function jcBusinessDate(m){
   return m?.business_date || m?.match_date || '';
 }
 
+// The 10/15 周四007 match was postponed: keep its immutable source record
+// and complete 14-row static snapshot, but exclude it from published lists.
+// Scope this exception to the original business date/fixture, so it cannot
+// hide a rescheduled match on a future date.
+function qcJcIsVisibleMatch(m){
+  return !(jcBusinessDate(m)==='2026-10-15' &&
+    String(m?.match_num||'')==='周四007');
+}
+
 function qcRenderDateCalendar(selectedDate,availableDates,onSelect,noteText='选择有比赛数据的日期'){
   const box=$('#jcDatePopover');
   if(!box) return;
@@ -1505,7 +1514,7 @@ async function loadJcFootball(){
       sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
         savedAt:Date.now(),businessDate:selectedDate,
         match:publicFields(match),
-        day:allRows.filter(row=>jcBusinessDate(row)===selectedDate).map(row=>{
+        day:allRows.filter(row=>jcBusinessDate(row)===selectedDate && qcJcIsVisibleMatch(row)).map(row=>{
           const item=publicFields(row);
           delete item.raw;
           return item;
@@ -1647,7 +1656,7 @@ async function loadJcFootball(){
   }
 
   function render(){
-    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate && qcJcIsVisibleMatch(m));
     if(activeLeague!=='全部' && !dateRows.some(m=>leagueKey(m)===activeLeague)) activeLeague='全部';
     const filtered=activeLeague==='全部'?dateRows:dateRows.filter(m=>leagueKey(m)===activeLeague);
 
@@ -1887,12 +1896,12 @@ async function loadJcFrontend(){
   if(dateLabel) dateLabel.textContent=qcDateLabel(initialDate);
 
   let todayPredictionCount=initialDate===initialToday
-    ? (currentResult.data||[]).length
+    ? (currentResult.data||[]).filter(qcJcIsVisibleMatch).length
     : null;
 
   if(initialDate!==initialToday){
     fetchOverviewDateReady(initialToday).then(result=>{
-      if(!result?.error) todayPredictionCount=(result.data||[]).length;
+      if(!result?.error) todayPredictionCount=(result.data||[]).filter(qcJcIsVisibleMatch).length;
     }).catch(()=>{});
   }
 
@@ -2184,7 +2193,7 @@ async function loadJcFrontend(){
     previousLoading=false;
     selectedDate=ds;
     modelsLoaded=false;
-    if(ds===today) todayPredictionCount=(nextCurrent.data||[]).length;
+    if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
 
     // The entire static day snapshot is rendered once, with no per-match fetch.
     if(token!==loadToken || selectedDate!==ds) return;
@@ -2195,9 +2204,9 @@ async function loadJcFrontend(){
   }
 
   function render(){
-    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate && qcJcIsVisibleMatch(m));
     const previousDate=qcAddDays(selectedDate,-1);
-    const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate);
+    const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate && qcJcIsVisibleMatch(m));
     const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
