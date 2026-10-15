@@ -274,9 +274,11 @@
     const {data,error}=await window.qcSupabase.auth.getSession();
     if(error) throw error;
     const session=data?.session||null;
-    if(!session) return {loggedIn:false,isPro:false};
-    const pro=await window.qcSupabase.rpc('has_active_pro_access');
-    return {loggedIn:true,isPro:pro.data===true};
+    if(!session) return {loggedIn:false,isAdmin:false};
+    // Admin only. A Pro membership must not unlock this internal archive.
+    // The RPC checks auth.uid(), profiles.role and profiles.status on server.
+    const check=await window.qcSupabase.rpc('admin_dashboard_stats');
+    return {loggedIn:true,isAdmin:!check.error && check.data!==null};
   }
 
   async function loadRows(){
@@ -405,8 +407,8 @@
         root.innerHTML='<div class="qc-record-gate"><h2>请先登录</h2><p>这个测试页暂时只用于内部核对，不对未登录用户开放。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
         return;
       }
-      if(!access.isPro){
-        root.innerHTML='<div class="qc-record-gate"><h2>测试页暂未开放</h2><p>当前账号没有测试页读取权限。</p></div>';
+      if(!access.isAdmin){
+        root.innerHTML='<div class="qc-record-gate"><h2>无访问权限</h2><p>模型档案仅对管理员开放。</p><a href="profile.html">返回个人中心</a></div>';
         return;
       }
       const rows=await loadRows();
