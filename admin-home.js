@@ -46,6 +46,10 @@
       root.insertAdjacentHTML('afterbegin','<p class="admin-note">后台权限验证失败，请确认管理员账号登录状态。</p>');
       return;
     }
+    // Never expose the internal model archive link until the server has
+    // confirmed an active administrator through admin_dashboard_stats.
+    const modelLink=el('adminModelRecordLink');
+    if(modelLink)modelLink.hidden=false;
     txt('adminUsers',stats?.users??0);
     txt('adminProUsers',stats?.pro_users??0);
     txt('adminUnusedCodes',stats?.unused_codes??0);
