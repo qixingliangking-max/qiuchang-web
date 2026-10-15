@@ -2919,7 +2919,27 @@ function jcRenderAiPanel(m,pools,model,analysis){
     // All published reports use four editorial sections; archived five-section records
     // retain their original evidence but no longer display the redundant risk section.
     const isPriorityReport=/^AI-REPORT-(FOUR|FIVE)-/.test(String(analysis.analysis_version||''));
-    const sections=isPriorityReport ? [
+    // This confirmed thirteen-match editorial edition follows the approved
+    // four-part reading template; other archived report layouts remain intact.
+    const isApprovedFourReport=String(analysis.analysis_version||'')==='AI-REPORT-FOUR-20261015';
+    const sections=isApprovedFourReport ? [
+      {
+        title:'一、近期基本面',
+        body:aiParagraphs([analysis.strength_baseline])
+      },
+      {
+        title:'二、这场主要看点',
+        body:aiParagraphs([analysis.summary])
+      },
+      {
+        title:'三、方向判断',
+        body:aiParagraphs([analysis.comprehensive_observation])
+      },
+      {
+        title:'四、比赛可能怎么走',
+        body:aiParagraphs([analysis.match_path])
+      }
+    ] : isPriorityReport ? [
       {
         title:'一、比赛背景与双方实力分析',
         body:aiParagraphs([analysis.strength_baseline])
