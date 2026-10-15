@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 29,
-  "collected_matches": 29,
+  "input_matches": 36,
+  "collected_matches": 36,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 853,
+  "aggregate_players": 879,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "博德闪耀",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "多特蒙德",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -56,7 +56,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴黎圣日耳曼",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉迪斯拉发",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,12 +81,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯图加特",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼城",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,17 +106,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "波尔图",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "皇家贝蒂斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "皇家马德里",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -131,7 +131,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "罗马",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -151,7 +151,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费内巴切",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -171,7 +171,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿斯顿维拉",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -181,12 +181,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "雅典AEK",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "顿涅茨克矿工",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",

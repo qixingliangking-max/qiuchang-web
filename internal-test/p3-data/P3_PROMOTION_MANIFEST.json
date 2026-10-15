@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "0a02dd766ae40a0cc55adb676f8b2994204de386",
+      "blob_sha": "8b4ef2963b2bdbe2ca5db9073f7d9381c4e85646",
       "gate_status": "PASS",
-      "avg_team_depth_coverage_pct": 83,
+      "avg_team_depth_coverage_pct": 84.2,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-12T06:19:53.772Z",
-      "finished_matches": 420,
+      "last_incremental_refresh_at": "2026-10-15T05:00:07.583Z",
+      "finished_matches": 435,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -114,14 +114,14 @@
       "quality_tier": "LIMITED",
       "teams": 36,
       "published_path": "internal-test/p3-data/UEFA_UCL-2026-27.json",
-      "blob_sha": "47c58de218dc79d5a42f639857625008ae74574d",
+      "blob_sha": "4065070aa6064205f936e9a27d593895dc0feb04",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UCL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-14T19:36:08.364Z",
-      "finished_matches": 29
+      "last_incremental_refresh_at": "2026-10-15T04:59:59.868Z",
+      "finished_matches": 36
     },
     {
       "league_code": "UEFA_UEL",
@@ -292,14 +292,14 @@
       "quality_tier": "LIMITED",
       "teams": 24,
       "published_path": "internal-test/p3-data/ENG_CH-2026-27.json",
-      "blob_sha": "df4c27ddbcdf1a10616a99252e07e5740e6f6a4a",
+      "blob_sha": "c164775093d1c72f04ecdc88d5a76cc754264ccd",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 22.4,
+      "avg_team_depth_coverage_pct": 23.9,
       "gate_report": "internal-test/p3-candidates/ENG_CH-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-14T05:12:13.993Z",
-      "finished_matches": 115
+      "last_incremental_refresh_at": "2026-10-15T04:59:24.767Z",
+      "finished_matches": 119
     },
     {
       "league_code": "ESP_L2",
