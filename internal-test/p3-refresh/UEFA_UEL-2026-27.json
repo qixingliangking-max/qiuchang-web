@@ -6,7 +6,7 @@
     "73"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 26,
   "team_map": {
     "Lyon": "里昂",
     "Milan": "AC米兰",
@@ -44,5 +44,7 @@
     "Hapoel Beer Sheva": "贝尔谢巴工人",
     "Union St.Gilloise": "圣吉罗斯联合",
     "Jagiellonia Białystok": "雅盖隆"
-  }
+  },
+  "last_successful_refresh_at": "2026-10-15T19:19:03.219Z",
+  "last_published_blob_sha": "2f455f5b92e03cfb2c97544e9f49fa050967fdb5"
 }
