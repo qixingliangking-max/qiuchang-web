@@ -1686,12 +1686,13 @@ async function loadJcFootball(){
     selectedDate=ds;
     activeLeague='全部';
     if(result.fromHistorySnapshot){
-      // Historical card set is rendered ONCE, after its small logo lookup and
-      // any exceptional unfinished fixture have been prepared.
-      await hydrateFootballRows(allRows,ds,token,false)
-        .catch(error=>console.warn('历史档案附加资料读取失败',error));
-      if(token!==loadToken || selectedDate!==ds) return;
+      // Archived records already include locked model and market snapshots.
+      // Render immediately: logos and exceptional unfinished fixtures must not
+      // block the first historical frame or trigger a second card render.
       render();
+      const exceptions=allRows.filter(m=>!m._jcHistorySnapshot && !m._jcFrozenOverview);
+      if(exceptions.length) hydrateFootballRows(exceptions,ds,token,true)
+        .catch(error=>console.warn('历史未完赛场次补充资料失败',error));
       return;
     }
     // Current-date fixtures still paint immediately and receive live odds.
@@ -1773,11 +1774,12 @@ async function loadJcFootball(){
 
   const initialToken=++loadToken;
   if(initial.fromHistorySnapshot){
-    // First open of an archived date also paints a complete card set just once.
-    await hydrateFootballRows(allRows,selectedDate,initialToken,false)
-      .catch(error=>console.warn('历史档案附加资料读取失败',error));
-    if(initialToken!==loadToken) return;
+    // Historical snapshot is already self-contained; do not wait for logos,
+    // market lookups or model lookups before the first complete paint.
     render();
+    const exceptions=allRows.filter(m=>!m._jcHistorySnapshot && !m._jcFrozenOverview);
+    if(exceptions.length) hydrateFootballRows(exceptions,selectedDate,initialToken,true)
+      .catch(error=>console.warn('历史未完赛场次补充资料失败',error));
   }else{
     // Current-date fixtures paint first; odds and crests follow as before.
     render();
