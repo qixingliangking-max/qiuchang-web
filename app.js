@@ -1075,6 +1075,26 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   }).join('')+'</div>';
 }
 
+// Historical archives are immutable, but the snapshot payload does not
+// include logo URLs. Add logos to existing team nodes without rebuilding
+// odds, predictions, hit markers or the entire finished card.
+function jcPatchFootballLogos(root,rows){
+  if(!root || !Array.isArray(rows) || !rows.length) return;
+  const byId=new Map(rows.map(m=>[String(m.id),m]));
+  $('.jc-football-card[data-match-id]',root).forEach(card=>{
+    const m=byId.get(String(card.dataset.matchId||''));
+    if(!m) return;
+    for(const [side,logo] of [
+      ['home',m._homeLogoUrl],['away',m._awayLogoUrl]
+    ]){
+      const team=$('.jc-team-'+side,card);
+      if(team && logo && !$('.jc-team-logo',team)){
+        team.insertAdjacentHTML('afterbegin',jcLogoImgHtml(logo,'jc-team-logo','lazy'));
+      }
+    }
+  });
+}
+
 function jcPatchFootballExtras(root,rows,access){
   if(!root || !Array.isArray(rows) || !rows.length) return;
   const byId=new Map(rows.map(m=>[String(m.id),m]));
@@ -1670,6 +1690,28 @@ async function loadJcFootball(){
     if(patchDom) jcPatchFootballExtras(cards,rows,access);
   }
 
+  function hydrateHistoricalFootballExtras(rows,ds,token){
+    // Archive cards have already painted. Logos are presentation-only:
+    // fetch them in the background and patch just the two team elements.
+    jcAttachTeamLogos(rows).then(()=>{
+      if(token!==loadToken || selectedDate!==ds) return;
+      jcPatchFootballLogos(cards,rows);
+    }).catch(error=>console.warn('历史球队队徽读取失败',error));
+
+    // A cancelled/postponed fixture is the only historical item that may
+    // still need dynamic model and pre-kickoff-market enrichment.
+    const exceptions=rows.filter(m=>!m._jcHistorySnapshot && !m._jcFrozenOverview);
+    if(!exceptions.length) return;
+    const modelRows=access.isPro?exceptions:exceptions.filter(m=>jcScoreInfo(m).finished);
+    Promise.all([
+      jcAttachLatestSnapshots(exceptions),
+      modelRows.length?jcAttachModels(modelRows):Promise.resolve()
+    ]).then(()=>{
+      if(token!==loadToken || selectedDate!==ds) return;
+      jcPatchFootballExtras(cards,exceptions,access);
+    }).catch(error=>console.warn('历史未完赛场次补充资料失败',error));
+  }
+
   async function loadFootballDate(ds){
     const token=++loadToken;
     const cache=qcJcDateRowsCache.get(ds);
@@ -1690,9 +1732,7 @@ async function loadJcFootball(){
       // Render immediately: logos and exceptional unfinished fixtures must not
       // block the first historical frame or trigger a second card render.
       render();
-      const exceptions=allRows.filter(m=>!m._jcHistorySnapshot && !m._jcFrozenOverview);
-      if(exceptions.length) hydrateFootballRows(exceptions,ds,token,true)
-        .catch(error=>console.warn('历史未完赛场次补充资料失败',error));
+      hydrateHistoricalFootballExtras(allRows,ds,token);
       return;
     }
     // Current-date fixtures still paint immediately and receive live odds.
@@ -1777,9 +1817,7 @@ async function loadJcFootball(){
     // Historical snapshot is already self-contained; do not wait for logos,
     // market lookups or model lookups before the first complete paint.
     render();
-    const exceptions=allRows.filter(m=>!m._jcHistorySnapshot && !m._jcFrozenOverview);
-    if(exceptions.length) hydrateFootballRows(exceptions,selectedDate,initialToken,true)
-      .catch(error=>console.warn('历史未完赛场次补充资料失败',error));
+    hydrateHistoricalFootballExtras(allRows,selectedDate,initialToken);
   }else{
     // Current-date fixtures paint first; odds and crests follow as before.
     render();
