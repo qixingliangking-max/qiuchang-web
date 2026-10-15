@@ -1075,40 +1075,20 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   }).join('')+'</div>';
 }
 
-function jcPatchFootballExtras(root,rows,access,part='all'){
+function jcPatchFootballExtras(root,rows,access){
   if(!root || !Array.isArray(rows) || !rows.length) return;
   const byId=new Map(rows.map(m=>[String(m.id),m]));
-  root.querySelectorAll('.jc-football-card[data-match-id]').forEach(card=>{
+  $$('.jc-football-card[data-match-id]',root).forEach(card=>{
     const m=byId.get(String(card.dataset.matchId||''));
     if(!m) return;
-
-    // Updating the complete card after each response discarded existing <img>
-    // nodes and restarted logo downloads even when the visual URL was unchanged.
-    // Patch only the field whose request has completed, preserving scroll/render.
-    if(part==='all' || part==='logos'){
-      for(const side of ['home','away']){
-        const el=$('.jc-team-'+side,card);
-        if(!el) continue;
-        const logo=side==='home'?m._homeLogoUrl:m._awayLogoUrl;
-        const desired=logo?jcLogoDisplayUrl(logo):'';
-        const existing=el.querySelector('img.jc-team-logo')?.getAttribute('src')||'';
-        if(desired!==existing) el.innerHTML=jcTeamInnerHtml(m,side);
-      }
-    }
-    if(part==='all' || part==='odds'){
-      const odds=$('.jc-mini-odds',card);
-      if(odds){
-        const next=jcRenderOddsMini(jcPrekickLatestPools(m));
-        if(odds.outerHTML!==next) odds.outerHTML=next;
-      }
-    }
-    if(part==='all' || part==='model'){
-      const hit=$('.jc-card-after-odds',card);
-      if(hit){
-        const next=jcFootballHitBlock(m,access);
-        if(hit.outerHTML!==next) hit.outerHTML=next;
-      }
-    }
+    const home=$('.jc-team-home',card);
+    const away=$('.jc-team-away',card);
+    if(home) home.innerHTML=jcTeamInnerHtml(m,'home');
+    if(away) away.innerHTML=jcTeamInnerHtml(m,'away');
+    const odds=$('.jc-mini-odds',card);
+    if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
+    const hit=$('.jc-card-after-odds',card);
+    if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
   });
 }
 
@@ -1632,27 +1612,19 @@ async function loadJcFootball(){
   }
 
   async function hydrateFootballRows(rows,ds,token,patchDom=true){
-    // Pro may load models; guests can access past completed-hit rows only.
+    // Pro 读取全部赛前模型；未登录/普通用户只在完赛后读取已锁定模型，
+    // 用于计算并展示“赛前预测命中”，不会开放未完赛的预测内容。
     const modelRows=access.isPro?rows:rows.filter(m=>jcScoreInfo(m).finished);
-    const update=part=>{
-      if(patchDom && token===loadToken && selectedDate===ds)
-        jcPatchFootballExtras(cards,rows,access,part);
-    };
-    // Odds, authorized results and team crests are independent. Previously
-    // Promise.all held back ALL updates until the slowest logo RPC completed,
-    // then re-created every card's logos and odds in a single DOM burst.
-    const tasks=[
-      (rows.length?jcAttachLatestSnapshots(rows):Promise.resolve(rows))
-        .then(()=>update('odds')),
-      (modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows))
-        .then(()=>update('model')),
-      jcAttachTeamLogos(rows).then(()=>update('logos'))
-    ];
-    const results=await Promise.allSettled(tasks);
-    results.forEach((result,i)=>{
-      if(result.status==='rejected')
-        console.warn(['竞彩足球赔率','竞彩足球锁板','竞彩足球队徽'][i]+'补充失败',result.reason);
-    });
+    // Public odds stay visible for every listed match. Use only the latest
+    // pre-kickoff snapshot per play, so this remains lightweight for guests.
+    const snapshotRows=rows;
+    await Promise.all([
+      snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows),
+      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows),
+      jcAttachTeamLogos(rows)
+    ]);
+    if(token!==loadToken || selectedDate!==ds) return;
+    if(patchDom) jcPatchFootballExtras(cards,rows,access);
   }
 
   async function loadFootballDate(ds){
@@ -1702,9 +1674,7 @@ async function loadJcFootball(){
     if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
-    // Calendar is a popover. Building dozens of day buttons for every
-    // odds/logo update while it is hidden causes avoidable main-thread work.
-    if(!dateLocked && datePop && !datePop.hidden){
+    if(!dateLocked){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
         closeLeague();
         loadFootballDate(ds);
@@ -2305,9 +2275,7 @@ async function loadJcFrontend(){
     document.body.classList.remove('qc-overview-booting');
 
     try{
-      // The visible date button creates a fresh calendar on demand; avoid
-      // constructing an invisible month's DOM during each overview repaint.
-      if(pop && !pop.hidden) qcRenderDateCalendar(
+      qcRenderDateCalendar(
         selectedDate,
         access.loggedIn ? availableDates : overviewSelectableDates,
         ds=>loadFrontendDateBundle(ds),
