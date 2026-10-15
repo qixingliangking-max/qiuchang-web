@@ -1702,7 +1702,9 @@ async function loadJcFootball(){
     if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
-    if(!dateLocked){
+    // Calendar is a popover. Building dozens of day buttons for every
+    // odds/logo update while it is hidden causes avoidable main-thread work.
+    if(!dateLocked && datePop && !datePop.hidden){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
         closeLeague();
         loadFootballDate(ds);
@@ -2303,7 +2305,9 @@ async function loadJcFrontend(){
     document.body.classList.remove('qc-overview-booting');
 
     try{
-      qcRenderDateCalendar(
+      // The visible date button creates a fresh calendar on demand; avoid
+      // constructing an invisible month's DOM during each overview repaint.
+      if(pop && !pop.hidden) qcRenderDateCalendar(
         selectedDate,
         access.loggedIn ? availableDates : overviewSelectableDates,
         ds=>loadFrontendDateBundle(ds),
