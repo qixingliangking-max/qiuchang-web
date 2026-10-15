@@ -288,39 +288,113 @@ async function setupAdminData(){
 
 async function setupAdminLogs(){
   const root=$('#adminLogsRoot');
-  if(!root) return;
-
+  if(!root)return;
   const session=await qcAdminSession(root,'admin-logs.html');
-  if(!session) return;
+  if(!session)return;
 
-  const {data:events,error}=await window.qcSupabase.rpc('admin_system_activity',{p_limit:150});
   const rows=$('#adminLogRows');
-  if(error){
-    if(rows) rows.innerHTML='<tr><td colspan="5">系统活动读取失败</td></tr>';
-    return;
+  const meta=$('#adminLogMeta');
+  const errorBox=$('#adminLogError');
+  const more=$('#adminLogMore');
+  const refresh=$('#adminLogRefresh');
+  const typeRoot=$('#adminLogTypes');
+  const dayRoot=$('#adminLogDays');
+  const pageSize=50;
+  let category='ops', days=7, events=[],hasMore=false, requestId=0;
+
+  const formatBJ=value=>{
+    const date=new Date(value||'');
+    if(Number.isNaN(date.getTime()))return '—';
+    return date.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false,
+      year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  };
+  const typeLabel={signup:'用户注册',login:'最近登录',activity:'每日活跃',
+    collector:'竞彩采集',score:'比分同步',code:'会员兑换'};
+  const statusLabel={success:'成功',failed:'失败',error:'异常',partial:'部分成功',
+    blocked:'被拦截',running:'运行中',recorded:'已记录'};
+  const dateNames={0:'全部历史',1:'近24小时',7:'近7天',30:'近30天'};
+
+  function renderStats(){
+    const set=(id,v)=>{const item=$('#'+id);if(item)item.textContent=String(v);};
+    set('logLoadedCount',events.length);
+    set('logSignupCount',events.filter(x=>x.event_type==='signup').length);
+    set('logLoginCount',events.filter(x=>x.event_type==='login').length);
+    set('logCollectorCount',events.filter(x=>x.event_type==='collector').length);
   }
-
-  const items=events||[];
-  const signupCount=items.filter(x=>x.event_type==='signup').length;
-  const loginCount=items.filter(x=>x.event_type==='login').length;
-  const collectorCount=items.filter(x=>x.event_type==='collector').length;
-  if($('#logSignupCount')) $('#logSignupCount').textContent=signupCount;
-  if($('#logLoginCount')) $('#logLoginCount').textContent=loginCount;
-  if($('#logCollectorCount')) $('#logCollectorCount').textContent=collectorCount;
-
-  const typeLabel={signup:'注册',login:'登录',collector:'采集'};
-  const statusLabel={success:'成功',failed:'失败',partial:'部分成功',blocked:'被拦截',running:'进行中'};
-  if(rows){
-    rows.innerHTML=items.length?items.map(x=>
+  function renderRows(){
+    if(!rows)return;
+    rows.innerHTML=events.length?events.map(x=>
       '<tr>'+
-        '<td>'+qcEscape(qcAdminFmt(x.event_time))+'</td>'+
-        '<td>'+qcEscape(typeLabel[x.event_type]||x.event_type||'系统')+'</td>'+
-        '<td>'+qcEscape(x.title||'—')+'</td>'+
+        '<td>'+qcEscape(formatBJ(x.event_time))+'</td>'+
+        '<td>'+qcEscape(typeLabel[x.event_type]||x.event_type||'其他')+'</td>'+
+        '<td><strong>'+qcEscape(x.title||'—')+'</strong></td>'+
         '<td>'+qcEscape(x.detail||'—')+'</td>'+
         '<td>'+qcEscape(statusLabel[x.status]||x.status||'—')+'</td>'+
+        '<td>'+qcEscape(x.source_label||'—')+'</td>'+
       '</tr>'
-    ).join(''):'<tr><td colspan="5">暂无系统活动</td></tr>';
+    ).join(''):'<tr><td colspan="6">该条件下暂无已记录事件。可切换「全部历史」或其他分类。</td></tr>';
+    renderStats();
+    if(more){more.hidden=!hasMore;more.disabled=false;more.textContent='加载更多记录';}
+    if(meta)meta.textContent=dateNames[days]+' · 已显示'+events.length+'条'+(hasMore?' · 还有更多':'');
   }
+  function showError(msg){
+    if(errorBox){errorBox.textContent=msg;errorBox.hidden=false;}
+  }
+  function clearError(){
+    if(errorBox){errorBox.textContent='';errorBox.hidden=true;}
+  }
+  async function load(reset=true){
+    if(reset)events=[];
+    const seq=++requestId;
+    clearError();
+    if(rows && reset)rows.innerHTML='<tr><td colspan="6">正在读取真实活动记录…</td></tr>';
+    if(meta)meta.textContent='读取中…';
+    if(more){more.disabled=true;more.hidden=true;}
+    if(refresh)refresh.disabled=true;
+    try{
+      const {data,error}=await window.qcSupabase.rpc('admin_system_activity_v2',{
+        p_type:category,p_days:days,p_limit:pageSize+1,p_offset:events.length
+      });
+      if(seq!==requestId)return;
+      if(error)throw error;
+      if(!Array.isArray(data))throw new Error('活动接口未返回记录列表');
+      hasMore=data.length>pageSize;
+      events=events.concat(data.slice(0,pageSize));
+      renderRows();
+    }catch(error){
+      if(seq!==requestId)return;
+      console.error('真实系统活动读取失败',error);
+      const msg='活动记录读取失败：'+String(error?.message||'网络或权限异常').slice(0,170)+'。请刷新重试。';
+      showError(msg);
+      if(rows && !events.length)rows.innerHTML='<tr><td colspan="6">无法读取系统活动，详细错误显示在表格上方。</td></tr>';
+      if(meta)meta.textContent='读取失败';
+      if(more && events.length){more.disabled=false;more.hidden=false;more.textContent='重新加载';}
+    }finally{
+      if(seq===requestId && refresh)refresh.disabled=false;
+    }
+  }
+
+  typeRoot?.querySelectorAll('button[data-type]').forEach(btn=>{
+    btn.onclick=()=>{
+      const next=btn.dataset.type||'ops';
+      if(next===category)return;
+      category=next;
+      typeRoot.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===btn));
+      load(true);
+    };
+  });
+  dayRoot?.querySelectorAll('button[data-days]').forEach(btn=>{
+    btn.onclick=()=>{
+      const next=Number(btn.dataset.days);
+      if(next===days)return;
+      days=next;
+      dayRoot.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===btn));
+      load(true);
+    };
+  });
+  if(more)more.onclick=()=>{if(!more.disabled)load(false);};
+  if(refresh)refresh.onclick=()=>load(true);
+  await load(true);
 }
 
   function init(){
