@@ -55,6 +55,7 @@
     }
     body.qc-admin-dashboard #adminRoot>.admin-grid{margin-top:0}
     body.qc-admin-dashboard #adminRoot>.admin-module-grid{margin-top:14px}
+    body.qc-admin-dashboard #adminModelRecordLink[hidden]{display:none!important}
     @media(max-width:640px){
       body.qc-admin-dashboard .qc-admin-header{
         height:56px;
@@ -119,6 +120,12 @@
           <p id="adminLogSummary">正在读取最近活动…</p>
           <strong>查看系统活动 ›</strong>
         </a>
+
+        <a class="admin-module-card" id="adminModelRecordLink" href="model-record-test.html" hidden>
+          <div><span class="admin-module-kicker">研究</span><h2>模型档案</h2></div>
+          <p>近7天、近30天、上线以来 · 六项赛后命中统计。</p>
+          <strong>查看模型档案 ›</strong>
+        </a>
       </div>
     </main>
   </div>
@@ -126,6 +133,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js?v=20260927autologin1"></script>
-  <script src="admin-home.js?v=20261014adminfast1"></script>
+  <script src="admin-home.js?v=20261015adminrecord1"></script>
 </body>
 </html>
