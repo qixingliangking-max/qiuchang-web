@@ -4562,42 +4562,48 @@ async function setupProfile(){
 
   if(emailEl) emailEl.textContent = user.email || '—';
 
-  const [profileResult,subscriptionResult]=await Promise.all([
-    window.qcSupabase
-      .from('profiles')
-      .select('email,nickname,role,status')
-      .eq('id', user.id)
-      .single(),
-    window.qcSupabase
-      .from('subscriptions')
-      .select('plan,expires_at,status')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .gt('expires_at', new Date().toISOString())
-      .order('expires_at', { ascending: false })
-      .limit(1)
-  ]);
+  // Start both protected queries immediately, but paint identity as soon as
+  // the profile request resolves instead of holding it behind subscription.
+  const profileRequest=Promise.resolve(window.qcSupabase
+    .from('profiles')
+    .select('email,nickname,role,status')
+    .eq('id',user.id)
+    .single());
+  const subscriptionRequest=Promise.resolve(window.qcSupabase
+    .from('subscriptions')
+    .select('plan,expires_at,status')
+    .eq('user_id',user.id)
+    .eq('status','active')
+    .gt('expires_at',new Date().toISOString())
+    .order('expires_at',{ascending:false})
+    .limit(1));
 
+  // The authenticated email is already available locally: do not display
+  // four simultaneous "loading" fields while waiting for membership data.
+  if(nicknameEl) nicknameEl.textContent=(user.email||'').split('@')[0]||'用户';
+
+  const profileResult=await profileRequest;
   const profile=profileResult.data||null;
-  const subscriptions=subscriptionResult.data||[];
   if(profileResult.error) console.error('读取用户资料失败',profileResult.error);
-  if(subscriptionResult.error) console.error('读取会员信息失败',subscriptionResult.error);
 
-  const nickname = (profile && profile.nickname ? profile.nickname.trim() : '') || (user.email ? user.email.split('@')[0] : '用户');
-  const role = profile && profile.role ? profile.role : 'basic';
-  const status = profile && profile.status ? profile.status : 'active';
+  const nickname=(profile?.nickname ? profile.nickname.trim() : '') || (user.email ? user.email.split('@')[0] : '用户');
+  const role=profile?.role||'basic';
+  const status=profile?.status||'active';
 
-  if(nicknameEl) nicknameEl.textContent = nickname;
-  if(nicknameInput) nicknameInput.value = nickname;
-  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : '正在加载中…';
+  if(nicknameEl) nicknameEl.textContent=nickname;
+  if(nicknameInput) nicknameInput.value=nickname;
+  if(roleEl) roleEl.textContent=role==='admin'?'管理员':'正在核验会员状态…';
   if(statusEl){
-    statusEl.textContent = status === 'active' ? '正常' : '已停用';
-    statusEl.style.color = status === 'active' ? 'var(--green)' : 'var(--red)';
+    statusEl.textContent=status==='active'?'正常':'已停用';
+    statusEl.style.color=status==='active'?'var(--green)':'var(--red)';
   }
 
-  const activeSubscription = subscriptions && subscriptions.length ? subscriptions[0] : null;
-  if(roleEl) roleEl.textContent = role === 'admin' ? '管理员' : activeSubscription ? 'Pro会员' : '基础用户';
-  renderMembership(activeSubscription, role);
+  const subscriptionResult=await subscriptionRequest;
+  const subscriptions=subscriptionResult.data||[];
+  if(subscriptionResult.error) console.error('读取会员信息失败',subscriptionResult.error);
+  const activeSubscription=subscriptions.length?subscriptions[0]:null;
+  if(roleEl) roleEl.textContent=role==='admin'?'管理员':activeSubscription?'Pro会员':'基础用户';
+  renderMembership(activeSubscription,role);
 
   // Keep private admin shortcuts in the personal-center navigation only.
   // The server-side admin RPC must succeed before either link is created;
