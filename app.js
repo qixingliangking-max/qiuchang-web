@@ -1423,9 +1423,52 @@ function qcBindFootballGuestLoginCta(){
 // Prefer the small public schedule snapshot for the first football-page paint.
 // Live FT/HT/status is refreshed from jc_matches without holding the first frame.
 async function jcFetchFootballScheduleRows(dateStr){
-  if(String(dateStr||'')<qcBeijingBusinessToday() || !window.qcSupabase){
+  if(!window.qcSupabase) return jcFetchDateRows(dateStr,false);
+
+  // Finished dates must open from the saved post-game archive. That archive
+  // already contains FT/HT, the original locked model, and pre-kickoff markets.
+  // Do NOT first paint live fixtures and then replace empty odds/cards.
+  if(String(dateStr||'')<qcBeijingBusinessToday()){
+    try{
+      const history=await qcFetchHistoryOverviewDate(dateStr);
+      if(Array.isArray(history?.data) && history.data.length){
+        let rows=history.data;
+        if(!history.historyFinal){
+          // Interrupted/postponed games do not block other already-frozen rows.
+          // Fill ONLY missing fixtures from the day's fixed schedule; never
+          // replace any finished historical record with a newer live row.
+          let schedule=[];
+          const {data,error}=await window.qcSupabase
+            .from('jc_overview_schedule_snapshots')
+            .select('payload,match_count')
+            .eq('business_date',dateStr)
+            .maybeSingle();
+          const candidate=data?.payload?.rows;
+          if(!error && Array.isArray(candidate) && candidate.length===Number(data?.match_count||0))
+            schedule=candidate;
+          if(!schedule.length){
+            const live=await jcFetchDateRows(dateStr,false);
+            if(!live?.error) schedule=live.data||[];
+          }
+          if(schedule.length){
+            const archived=new Map(rows.map(m=>[String(m.id),m]));
+            const seen=new Set();
+            const merged=schedule.map(m=>{
+              seen.add(String(m.id));
+              return archived.get(String(m.id))||m;
+            });
+            rows=[...merged,...rows.filter(m=>!seen.has(String(m.id)))];
+          }
+        }
+        return {data:rows,error:null,fromHistorySnapshot:true,
+          historyFinal:Boolean(history.historyFinal)};
+      }
+    }catch(error){
+      console.warn('历史完赛快照读取失败，继续原始兼容读取',error);
+    }
     return jcFetchDateRows(dateStr,false);
   }
+
   try{
     const {data,error}=await window.qcSupabase
       .from('jc_overview_schedule_snapshots')
@@ -1642,9 +1685,16 @@ async function loadJcFootball(){
     allRows=(result.data||[]).filter(m=>m.match_date);
     selectedDate=ds;
     activeLeague='全部';
-    // Render the COMPLETE fixture list immediately. Market summaries, frozen
-    // completed-result hits and logos enrich the same cards in the background.
-    // Waiting for all three requests here used to delay the entire first paint.
+    if(result.fromHistorySnapshot){
+      // Historical card set is rendered ONCE, after its small logo lookup and
+      // any exceptional unfinished fixture have been prepared.
+      await hydrateFootballRows(allRows,ds,token,false)
+        .catch(error=>console.warn('历史档案附加资料读取失败',error));
+      if(token!==loadToken || selectedDate!==ds) return;
+      render();
+      return;
+    }
+    // Current-date fixtures still paint immediately and receive live odds.
     render();
     hydrateFootballRows(allRows,ds,token,true)
       .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error))
@@ -1722,19 +1772,27 @@ async function loadJcFootball(){
   });
 
   const initialToken=++loadToken;
-  // Paint all fixture cards from the validated whole-day schedule first.
-  // Never make odds, team-logo or completed-hit requests prerequisites for
-  // seeing the full list; enrich those fields without replacing the cards.
-  render();
-  hydrateFootballRows(allRows,selectedDate,initialToken,true)
-    .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error))
-    .finally(()=>{
-      if(initial.fromScheduleSnapshot && initialToken===loadToken){
-        refreshFootballLive().catch(()=>{});
-      }
-    });
+  if(initial.fromHistorySnapshot){
+    // First open of an archived date also paints a complete card set just once.
+    await hydrateFootballRows(allRows,selectedDate,initialToken,false)
+      .catch(error=>console.warn('历史档案附加资料读取失败',error));
+    if(initialToken!==loadToken) return;
+    render();
+  }else{
+    // Current-date fixtures paint first; odds and crests follow as before.
+    render();
+    hydrateFootballRows(allRows,selectedDate,initialToken,true)
+      .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error))
+      .finally(()=>{
+        if(initial.fromScheduleSnapshot && initialToken===loadToken){
+          refreshFootballLive().catch(()=>{});
+        }
+      });
+  }
 
   async function refreshFootballLive(){
+    // Archived days are immutable. Only the active betting day still polls.
+    if(selectedDate<qcBeijingBusinessToday()) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
     const result=await jcFetchDateRows(refreshDate,false,true);
