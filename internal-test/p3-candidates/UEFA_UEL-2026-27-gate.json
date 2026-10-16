@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 26,
-  "collected_matches": 26,
+  "input_matches": 36,
+  "collected_matches": 36,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 832,
+  "aggregate_players": 882,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,17 +21,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "OFI克里特",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "伯恩茅斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "凯尔特人",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,17 +51,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞尔塔",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "奈梅亨",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "奥林匹亚科斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,12 +71,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "安德莱赫特",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "尤文图斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,12 +91,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "本菲卡",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "格拉茨风暴",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,7 +106,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "比尔森胜利",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -126,7 +126,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "索非亚列夫斯基",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -136,7 +136,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨格勒布迪纳摩",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -146,12 +146,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "贝西克塔斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "费伦茨瓦罗斯",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -171,27 +171,27 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿拉拉特亚美尼亚",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "雅盖隆",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "雷恩",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "霍芬海姆",
-      "matches": 1
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "马赛",
-      "matches": 1
+      "matches": 2
     }
   ],
   "gate_status": "PASS",

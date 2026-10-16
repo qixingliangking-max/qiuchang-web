@@ -153,7 +153,7 @@
       "home_team": "里昂",
       "away_team": "水晶宫",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112265",
@@ -161,7 +161,7 @@
       "home_team": "阿尔克马尔",
       "away_team": "贝尔谢巴工人",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112286",
@@ -169,7 +169,7 @@
       "home_team": "圣吉罗斯联合",
       "away_team": "皇家社会",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112294",
@@ -177,7 +177,7 @@
       "home_team": "萨尔茨堡",
       "away_team": "AC米兰",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112305",
@@ -185,7 +185,7 @@
       "home_team": "布拉格斯巴达",
       "away_team": "利勒斯特罗姆",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112318",
@@ -193,7 +193,7 @@
       "home_team": "波兹南莱赫",
       "away_team": "勒沃库森",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112336",
@@ -201,7 +201,7 @@
       "home_team": "采列",
       "away_team": "奥莫尼亚",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
     },
     {
       "source_match_id": "6112360",
@@ -209,7 +209,87 @@
       "home_team": "托伦斯",
       "away_team": "桑德兰",
       "match_date": "2026-10-15",
-      "kickoff_at": "2026-10-15T16:45:00.000Z"
+      "kickoff_at": "2026-10-15T16:45:00Z"
+    },
+    {
+      "source_match_id": "6112247",
+      "match_id": "fotmob:6112247",
+      "home_team": "本菲卡",
+      "away_team": "凯尔特人",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112274",
+      "match_id": "fotmob:6112274",
+      "home_team": "马赛",
+      "away_team": "奥林匹亚科斯",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112279",
+      "match_id": "fotmob:6112279",
+      "home_team": "费伦茨瓦罗斯",
+      "away_team": "比尔森胜利",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112291",
+      "match_id": "fotmob:6112291",
+      "home_team": "萨格勒布迪纳摩",
+      "away_team": "安德莱赫特",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112309",
+      "match_id": "fotmob:6112309",
+      "home_team": "雷恩",
+      "away_team": "OFI克里特",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112328",
+      "match_id": "fotmob:6112328",
+      "home_team": "伯恩茅斯",
+      "away_team": "格拉茨风暴",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112341",
+      "match_id": "fotmob:6112341",
+      "home_team": "雅盖隆",
+      "away_team": "阿拉拉特亚美尼亚",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112346",
+      "match_id": "fotmob:6112346",
+      "home_team": "塞尔塔",
+      "away_team": "尤文图斯",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112353",
+      "match_id": "fotmob:6112353",
+      "home_team": "霍芬海姆",
+      "away_team": "贝西克塔斯",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112369",
+      "match_id": "fotmob:6112369",
+      "home_team": "奈梅亨",
+      "away_team": "索非亚列夫斯基",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T19:00:00Z"
     }
   ]
 }
