@@ -3820,6 +3820,10 @@ function jcBindDetailMatchSwitches(root){
   });
 }
 
+// Neighbor metadata is optional. Wait until the selected detail panel has
+// finished loading; speculative requests must never compete with the user's
+// requested match, especially over slow mobile Safari connections.
+const jcDetailNeighborPrefetchPending=new Set();
 function jcPrefetchDetailNeighbors(rows,currentId){
   if(!window.qcSupabase || !Array.isArray(rows) || rows.length<2) return;
   const idx=rows.findIndex(x=>String(x.id)===String(currentId));
@@ -3828,14 +3832,36 @@ function jcPrefetchDetailNeighbors(rows,currentId){
     .filter(Boolean)
     .filter(id=>!jcDetailMatchCache.has(String(id)));
   if(!ids.length) return;
-  window.qcSupabase
-    .from('jc_matches')
-    .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
-    .in('id',ids)
-    .then(({data,error})=>{
-      if(error) return;
-      (data||[]).forEach(row=>jcDetailMatchCache.set(String(row.id),row));
-    });
+  const key=String(currentId)+'|'+ids.map(String).join(',');
+  if(jcDetailNeighborPrefetchPending.has(key)) return;
+  jcDetailNeighborPrefetchPending.add(key);
+  let attempts=0;
+  function fetchWhenPanelReady(){
+    // Abandon outdated navigation and background tabs.
+    const selected=new URLSearchParams(location.search).get('id');
+    if(String(selected)!==String(currentId) ||
+       !document.getElementById('jcMatchDetailRoot') || document.hidden){
+      jcDetailNeighborPrefetchPending.delete(key);
+      return;
+    }
+    if(document.querySelector('#jcMainPanel .jc-match-spinner')){
+      if(++attempts<8){ setTimeout(fetchWhenPanelReady,800); return; }
+      jcDetailNeighborPrefetchPending.delete(key);
+      return;
+    }
+    jcDetailNeighborPrefetchPending.delete(key);
+    const missing=ids.filter(id=>!jcDetailMatchCache.has(String(id)));
+    if(!missing.length) return;
+    window.qcSupabase
+      .from('jc_matches')
+      .select('id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw')
+      .in('id',missing)
+      .then(({data,error})=>{
+        if(error) return;
+        (data||[]).forEach(row=>jcDetailMatchCache.set(String(row.id),row));
+      }).catch(error=>console.warn('相邻赛事空闲预读取失败',error));
+  }
+  setTimeout(fetchWhenPanelReady,900);
 }
 
 function jcBindDetailPopstate(){
@@ -3994,7 +4020,7 @@ async function setupJcMatchDetail(options={}){
   // public score/status after paint so a just-finished FT can never remain stale.
   // An archived final score is immutable and must never be re-queried from
   // the live matches table on detail navigation.
-  if(usedRecentFootballHandoff && !jcScoreInfo(m).finished){
+  if(usedRecentFootballHandoff && !jcScoreInfo(m).finished && qcMatchHasStarted(m)){
     window.qcSupabase.from('jc_matches')
       .select('id,match_status,raw')
       .eq('id',id)
