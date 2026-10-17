@@ -1987,13 +1987,11 @@ async function loadJcFootball(){
     }
     // Current-date fixtures still paint immediately and receive live odds.
     render();
+    // Only HT/FT/completion refresh dynamically, independently of all other data.
+    if(ds===qcBeijingBusinessToday())
+      refreshFootballLive().catch(error=>console.warn('竞彩比分即时补充失败',error));
     hydrateFootballRows(allRows,ds,token,true)
-      .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error))
-      .finally(()=>{
-        if(result.fromScheduleSnapshot && token===loadToken && selectedDate===ds){
-          refreshFootballLive().catch(()=>{});
-        }
-      });
+      .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error));
   }
 
   function render(){
@@ -2083,13 +2081,11 @@ async function loadJcFootball(){
   }else{
     // Current-date fixtures paint first; odds and crests follow as before.
     render();
+    // Start the scoreboard check as soon as fixed cards are painted.
+    if(selectedDate===qcBeijingBusinessToday())
+      refreshFootballLive().catch(error=>console.warn('竞彩首次比分补充失败',error));
     hydrateFootballRows(allRows,selectedDate,initialToken,true)
-      .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error))
-      .finally(()=>{
-        if(initial.fromScheduleSnapshot && initialToken===loadToken){
-          refreshFootballLive().catch(()=>{});
-        }
-      });
+      .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error));
   }
 
   // One quiet public-FINAL prefetch after first paint. Date navigation can
@@ -2107,48 +2103,41 @@ async function loadJcFootball(){
   }
 
   async function refreshFootballLive(){
-    // Archived days are immutable. Only the active betting day still polls.
-    if(selectedDate<qcBeijingBusinessToday()) return;
+    // Live overlay is ONLY half/full time score and match completion.
+    // All fixed fixtures, teams, crests, odds, FINAL and AI stay unchanged.
+    if(selectedDate!==qcBeijingBusinessToday()) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
     const result=await jcFetchDateRows(refreshDate,false,true);
-    // A slow score fetch must never paint data for a date the user left.
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     if(result?.error || !Array.isArray(result?.data)) return;
 
-    const oldById=new Map(allRows.map(m=>[String(m.id),m]));
-    const incoming=result.data.filter(m=>m.match_date);
-    // A background FT check should not rebuild every card (and reload team
-    // crest images) if nothing visible actually changed.
-    let needsPaint=incoming.length!==allRows.length;
-    if(!needsPaint){
-      needsPaint=incoming.some(fresh=>{
-        const old=oldById.get(String(fresh.id));
-        if(!old) return true;
-        const before=jcScoreInfo(old),after=jcScoreInfo(fresh);
-        return before.ft!==after.ft || before.ht!==after.ht ||
-          before.finished!==after.finished ||
-          jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(fresh,calendarToday);
-      });
-    }
-    allRows=incoming.map(fresh=>{
-      const old=oldById.get(String(fresh.id));
-      if(!old) return fresh;
-      return {
+    const liveById=new Map(result.data.filter(m=>m?.id).map(m=>[String(m.id),m]));
+    let needsPaint=false;
+    allRows=allRows.map(old=>{
+      const fresh=liveById.get(String(old.id));
+      if(!fresh) return old;
+      const before=jcScoreInfo(old);
+      const incoming=fresh.raw||{};
+      const merged={
         ...old,
-        ...fresh,
-        jc_model_outputs:old.jc_model_outputs,
-        jc_market_snapshots:old.jc_market_snapshots,
-        _jcModelsLoaded:old._jcModelsLoaded,
-        _jcModelsLoading:old._jcModelsLoading,
-        _jcModelLoadFailed:old._jcModelLoadFailed,
-        _jcLatestSnapshotsLoaded:old._jcLatestSnapshotsLoaded,
-        _homeLogoUrl:old._homeLogoUrl,
-        _awayLogoUrl:old._awayLogoUrl
+        match_status:fresh.match_status||old.match_status,
+        raw:{
+          ...(old.raw||{}),
+          sectionsNo999:incoming.sectionsNo999 ?? old.raw?.sectionsNo999,
+          sectionsNo1:incoming.sectionsNo1 ?? old.raw?.sectionsNo1,
+          matchStatusName:incoming.matchStatusName ?? old.raw?.matchStatusName
+        }
       };
+      const after=jcScoreInfo(merged);
+      if(before.ft!==after.ft || before.ht!==after.ht ||
+         before.finished!==after.finished ||
+         jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(merged,calendarToday))
+        needsPaint=true;
+      return merged;
     });
 
-    // 页面停留期间若后台刚回收到完赛结果，只补取该场已锁定模型并展示命中项。
+    // The first post-game render restores public FINAL hit circles via RLS.
     let newlyFinishedCount=0;
     if(!access.isPro){
       const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
