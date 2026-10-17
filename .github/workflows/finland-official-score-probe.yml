@@ -23,6 +23,7 @@ jobs:
           const fs=require('fs');
           const urls=[
             ['fa-original','https://spl.torneopal.fi/taso/rest/getMatches?ysnyp4h6e9egetkc3s3v&competition_id=spljp26&date=2026-10-17'],
+            ['hjk-match','https://www.hjk.fi/ottelut/hjk-if-gnistan-2026-10-17/'],
             ['league-match','https://www.veikkausliiga.com/tilastot/2026/veikkausliiga/ottelut/4353570/seuranta/'],
             ['league-fixtures','https://www.veikkausliiga.com/tilastot/2026/veikkausliiga/ottelut/?group=2'],
             ['league-hjk','https://www.veikkausliiga.com/joukkueet/hjk/otteluohjelma'],
@@ -32,9 +33,11 @@ jobs:
             const out=[];
             for(const [label,url] of urls){
               try{
-                const r=await fetch(url,{signal:AbortSignal.timeout(16000),headers:{'user-agent':'Mozilla/5.0 (compatible; QiuchangArchive/1.0)','accept':'text/html,application/json;q=0.9,*/*;q=0.8'}});
+                const r=await fetch(url,{signal:AbortSignal.timeout(16000),headers:label==='fa-original' ?
+                   {'user-agent':'Mozilla/5.0 (compatible; QiuchangArchive/1.0)','accept':'json/df8e84j9xtdz269euy3h','origin':'https://tulospalvelu.palloliitto.fi','referer':'https://tulospalvelu.palloliitto.fi/'} :
+                   {'user-agent':'Mozilla/5.0 (compatible; QiuchangArchive/1.0)','accept':'text/html,application/json;q=0.9,*/*;q=0.8'}});
                 const txt=await r.text();
-                const keys=['HJK - IF Gnistan','HJK','IF Gnistan','4353570','17.10.2026','getMatches'];
+                const keys=['HJK - IF Gnistan','HJK','IF Gnistan','4353570','17.10.2026','matchStatus','teamAGoals','getMatches'];
                 const slices=[];
                 for(const term of keys){
                   const index=txt.indexOf(term);
