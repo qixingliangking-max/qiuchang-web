@@ -2329,6 +2329,33 @@ async function loadJcFrontend(){
         ? rows : null;
   }
 
+  // FINAL is deliberately frozen before kickoff, so its score fields stay
+  // empty forever. Reattach public HT/FT/status from the SAME day's schedule
+  // whenever a Pro snapshot is reopened (including date arrows/back-to-today).
+  // No model, market or AI field is read from or copied into the public layer.
+  function qcAttachPublishedScoresToPro(proResult,scheduleRecord,ds){
+    const scheduleRows=qcCompleteStaticRows(scheduleRecord,ds);
+    if(!proResult?.data?.length || !scheduleRows) return proResult;
+    const publicById=new Map(scheduleRows.map(m=>[String(m.id),m]));
+    return {
+      ...proResult,
+      data:proResult.data.map(row=>{
+        const official=publicById.get(String(row.id));
+        if(!official) return row;
+        const officialScore=jcScoreInfo(official);
+        // Do not regress a locally known FT to an older public schedule.
+        if(jcScoreInfo(row).finished && !officialScore.finished) return row;
+        const raw={...(row.raw||{})};
+        for(const field of ['sectionsNo999','sectionsNo1','matchStatusName']){
+          const value=official.raw?.[field];
+          if(value!==null && value!==undefined && String(value).trim()!=='') raw[field]=value;
+        }
+        return {...row,raw,
+          match_status:official.match_status||row.match_status};
+      })
+    };
+  }
+
   async function fetchOverviewDatePreferred(ds){
     // Historical dates must resolve through the immutable public archive even
     // if its manifest is still loading. Never fall through to live DB assembly
@@ -2357,7 +2384,8 @@ async function loadJcFrontend(){
       if(rows && Number(bundle.prediction.model_count)===rows.length &&
          rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)){
         const prediction=qcCacheProOverviewSnapshot(bundle.prediction);
-        if(prediction?.data?.length) return prediction;
+        if(prediction?.data?.length)
+          return qcAttachPublishedScoresToPro(prediction,bundle.schedule,ds);
       }
       // A partial FINAL contains only its locked rows. Join it to the
       // complete public schedule already returned by the same authorized
@@ -2365,14 +2393,16 @@ async function loadJcFrontend(){
       const merged=qcMergePartialLockedOverviewSnapshot(bundle.prediction,bundle.schedule);
       if(merged){
         const prediction=qcCacheProOverviewSnapshot(merged);
-        if(prediction?.data?.length) return prediction;
+        if(prediction?.data?.length)
+          return qcAttachPublishedScoresToPro(prediction,bundle.schedule,ds);
       }
     }
 
     // Only a protected whole-day snapshot is allowed as an auth-race fallback.
     if(access.isPro && (!bundle || bundle.is_pro!==true)){
       const protectedSnapshot=await qcFetchProOverviewDate(ds);
-      if(protectedSnapshot?.data?.length) return protectedSnapshot;
+      if(protectedSnapshot?.data?.length)
+        return qcAttachPublishedScoresToPro(protectedSnapshot,bundle?.schedule,ds);
     }
 
     let rows=qcCompleteStaticRows(bundle?.schedule,ds);
@@ -2506,7 +2536,8 @@ async function loadJcFrontend(){
     if(!rows || rows.length!==oldDay.length ||
        Number(bundle.prediction.model_count)!==rows.length ||
        !rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
-    const prepared=qcCacheProOverviewSnapshot(bundle.prediction)?.data;
+    const frozen=qcCacheProOverviewSnapshot(bundle.prediction);
+    const prepared=qcAttachPublishedScoresToPro(frozen,bundle.schedule,ds)?.data;
     if(!prepared?.length) return;
     const beforeById=new Map(oldDay.map(m=>[String(m.id),m]));
     // Keep more recent live score/FT while replacing only the authorized
