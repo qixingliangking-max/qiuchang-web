@@ -1489,7 +1489,15 @@
       "home_team": "光州FC",
       "away_team": "蔚山HD",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T05:00:00.000Z"
+      "kickoff_at": "2026-10-11T05:00:00Z"
+    },
+    {
+      "source_match_id": "5140049",
+      "match_id": "fotmob:5140049",
+      "home_team": "蔚山HD",
+      "away_team": "富川FC",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T07:30:00.000Z"
     }
   ]
 }

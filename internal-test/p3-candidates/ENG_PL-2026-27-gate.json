@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 60,
-  "collected_matches": 60,
+  "input_matches": 64,
+  "collected_matches": 64,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 520,
+  "aggregate_players": 521,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "伊普斯维奇",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "切尔西",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -36,22 +36,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利物浦",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃弗顿",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "富勒姆",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "布伦特福德",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼城",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,7 +101,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "赫尔城",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",

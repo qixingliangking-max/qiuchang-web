@@ -802,6 +802,22 @@
       "away_team": "科尔多瓦",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T18:30:00Z"
+    },
+    {
+      "source_match_id": "5868500",
+      "match_id": "fotmob:5868500",
+      "home_team": "皇家社会B",
+      "away_team": "阿尔梅里亚",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868495",
+      "match_id": "fotmob:5868495",
+      "home_team": "埃瓦尔",
+      "away_team": "马略卡",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T14:15:00.000Z"
     }
   ]
 }

@@ -642,6 +642,22 @@
       "away_team": "莱万特",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868094",
+      "match_id": "fotmob:5868094",
+      "home_team": "西班牙人",
+      "away_team": "马德里竞技",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868100",
+      "match_id": "fotmob:5868100",
+      "home_team": "比利亚雷亚尔",
+      "away_team": "埃尔切",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T14:15:00.000Z"
     }
   ]
 }

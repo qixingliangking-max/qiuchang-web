@@ -834,6 +834,14 @@
       "away_team": "阿尔克马尔青年队",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5832909",
+      "match_id": "fotmob:5832909",
+      "home_team": "埃门",
+      "away_team": "阿尔梅勒城",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T14:30:00.000Z"
     }
   ]
 }

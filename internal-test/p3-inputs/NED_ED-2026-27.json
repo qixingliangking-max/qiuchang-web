@@ -586,6 +586,14 @@
       "away_team": "SBV精英",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5781776",
+      "match_id": "fotmob:5781776",
+      "home_team": "海牙",
+      "away_team": "埃因霍温",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T14:30:00.000Z"
     }
   ]
 }

@@ -3,89 +3,19 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 90,
-  "collected_matches": 90,
+  "input_matches": 98,
+  "collected_matches": 98,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 579,
+  "aggregate_players": 588,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
-      "team": "FC东京",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "东京绿茵",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "京都不死鸟",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "冈山绿雉",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "千叶市原",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "名古屋鲸八",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "大阪樱花",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "大阪钢巴",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "川崎前锋",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "广岛三箭",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "柏太阳神",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "横滨水手",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "水户蜀葵",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "浦和红钻",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "清水心跳",
       "matches": 9
     },
     {
@@ -102,19 +32,9 @@
       "type": "LIMITED_SAMPLE",
       "team": "福冈黄蜂",
       "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "长崎成功丸",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "鹿岛鹿角",
-      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 4.1
+  "avg_team_depth_coverage_pct": 9.6
 }

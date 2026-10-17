@@ -618,6 +618,22 @@
       "away_team": "第戎",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803285",
+      "match_id": "fotmob:5803285",
+      "home_team": "梅斯",
+      "away_team": "索肖",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803286",
+      "match_id": "fotmob:5803286",
+      "home_team": "南特",
+      "away_team": "敦刻尔克",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T12:00:00.000Z"
     }
   ]
 }

@@ -1265,7 +1265,7 @@
       "home_team": "VPS瓦萨",
       "away_team": "格尼斯坦",
       "match_date": "2026-10-12",
-      "kickoff_at": "2026-10-12T15:00:00.000Z"
+      "kickoff_at": "2026-10-12T15:00:00Z"
     },
     {
       "source_match_id": "6145880",
@@ -1273,7 +1273,47 @@
       "home_team": "奥卢",
       "away_team": "HJK赫尔辛基",
       "match_date": "2026-10-12",
-      "kickoff_at": "2026-10-12T16:00:00.000Z"
+      "kickoff_at": "2026-10-12T16:00:00Z"
+    },
+    {
+      "source_match_id": "6145908",
+      "match_id": "fotmob:6145908",
+      "home_team": "拉赫蒂",
+      "away_team": "TPS图尔库",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T11:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145909",
+      "match_id": "fotmob:6145909",
+      "home_team": "雅罗",
+      "away_team": "玛丽港",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T11:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145910",
+      "match_id": "fotmob:6145910",
+      "home_team": "埃尔维斯",
+      "away_team": "塞伊奈约基",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T11:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145881",
+      "match_id": "fotmob:6145881",
+      "home_team": "HJK赫尔辛基",
+      "away_team": "格尼斯坦",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145882",
+      "match_id": "fotmob:6145882",
+      "home_team": "图尔库国际",
+      "away_team": "奥卢",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T15:00:00.000Z"
     }
   ]
 }

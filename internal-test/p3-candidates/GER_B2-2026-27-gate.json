@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 65,
-  "collected_matches": 65,
+  "input_matches": 68,
+  "collected_matches": 68,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 467,
+  "aggregate_players": 470,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "凯泽斯劳滕",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -36,7 +36,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布伦瑞克",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,17 +61,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "沃尔夫斯堡",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "波鸿",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "海登海姆",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "菲尔特",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,5 +106,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 6.1
+  "avg_team_depth_coverage_pct": 7.1
 }

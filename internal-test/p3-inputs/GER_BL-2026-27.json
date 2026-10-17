@@ -370,6 +370,46 @@
       "away_team": "科隆",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T18:30:00Z"
+    },
+    {
+      "source_match_id": "5881192",
+      "match_id": "fotmob:5881192",
+      "home_team": "埃尔弗斯堡",
+      "away_team": "奥格斯堡",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881193",
+      "match_id": "fotmob:5881193",
+      "home_team": "汉堡",
+      "away_team": "斯图加特",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881194",
+      "match_id": "fotmob:5881194",
+      "home_team": "沙尔克04",
+      "away_team": "美因茨",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881195",
+      "match_id": "fotmob:5881195",
+      "home_team": "柏林联合",
+      "away_team": "多特蒙德",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881196",
+      "match_id": "fotmob:5881196",
+      "home_team": "云达不莱梅",
+      "away_team": "帕德博恩",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T13:30:00.000Z"
     }
   ]
 }

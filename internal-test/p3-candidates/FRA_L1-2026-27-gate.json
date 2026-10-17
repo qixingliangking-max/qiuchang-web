@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 55,
-  "collected_matches": 55,
+  "input_matches": 56,
+  "collected_matches": 56,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴黎圣日耳曼",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -56,7 +56,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯特拉斯堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
