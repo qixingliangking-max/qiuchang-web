@@ -108,19 +108,4 @@
   }
   window.qcFetchLiveScheduleDate=qcFetchLiveScheduleDate;
 
-  // For the active betting day, show the public static schedule first.
-  // Historical dates continue using the immutable FINAL archive.
-  const original=window.jcFetchFootballScheduleRows;
-  if(typeof original==='function'){
-    window.jcFetchFootballScheduleRows=async function(dateStr){
-      try{
-        const active=typeof qcBeijingBusinessToday==='function'?qcBeijingBusinessToday():'';
-        if(String(dateStr||'')===active){
-          const local=await qcFetchLiveScheduleDate(dateStr);
-          if(local) return local;
-        }
-      }catch(_){}
-      return original.apply(this,arguments);
-    };
-  }
 })();
