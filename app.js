@@ -2583,6 +2583,9 @@ async function loadJcFrontend(){
       ...allRows.filter(m=>jcBusinessDate(m)!==ds),
       ...replacement
     ];
+    // A newly published, complete server-authorized Pro snapshot must exit
+    // the neutral loading state without asking the member to reopen the page.
+    accessDisplayPhase='ready';
     render();
   }
 
