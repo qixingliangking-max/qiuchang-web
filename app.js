@@ -1207,9 +1207,42 @@ function qcPrepareProOverviewRows(rows){
   });
 }
 
+function qcMergePartialLockedOverviewSnapshot(record,scheduleRecord){
+  const count=Number(record?.match_count||0);
+  const lockedCount=Number(record?.model_count||0);
+  const locked=record?.payload?.rows;
+  const schedule=scheduleRecord?.payload?.rows;
+  if(!(count>0 && lockedCount>0 && lockedCount<count &&
+       Array.isArray(locked) && locked.length===lockedCount &&
+       Number(scheduleRecord?.match_count)===count &&
+       Array.isArray(schedule) && schedule.length===count)) return null;
+  const lockedById=new Map(locked.map(row=>[String(row?.id||''),row]));
+  const scheduleIds=new Set(schedule.map(row=>String(row?.id||'')));
+  if(lockedById.size!==lockedCount || scheduleIds.size!==count ||
+     [...lockedById.keys()].some(id=>!scheduleIds.has(id)) ||
+     locked.some(row=>!Array.isArray(row?.jc_model_outputs) ||
+       !row.jc_model_outputs.some(model=>model?.is_current===true && model?.is_locked===true))){
+    return null;
+  }
+  // Preserve the complete static schedule while showing just the approved
+  // FINAL rows. Unlocked matches remain pending; no live per-match model reads.
+  const rows=schedule.map(row=>{
+    const prediction=lockedById.get(String(row.id));
+    return prediction
+      ? {...row,...prediction}
+      : {...row,jc_model_outputs:[],jc_market_snapshots:[]};
+  });
+  return {...record,payload:{...record.payload,rows}};
+}
+
 function qcCacheProOverviewSnapshot(record){
   const ds=String(record?.business_date||'');
   if(!ds) return null;
+  // Never cache a partial payload as a complete day; merge it with the
+  // matching public schedule before it reaches the Pro overview cache.
+  const count=Number(record?.match_count||0);
+  const locked=Number(record?.model_count||0);
+  if(locked>0 && locked<count && (record?.payload?.rows||[]).length!==count) return null;
   const rows=qcPrepareProOverviewRows(record?.payload?.rows||[]);
   qcProOverviewRowsCache.set(ds,{
     data:rows,
@@ -1259,7 +1292,17 @@ async function qcFetchProOverviewDate(dateStr){
     console.warn('读取Pro锁板日快照失败 '+key,error);
     return null;
   }
-  const record=(data||[])[0];
+  let record=(data||[])[0];
+  if(record && Number(record.model_count)>0 &&
+     Number(record.model_count)<Number(record.match_count)){
+    const scheduleResult=await window.qcSupabase
+      .from('jc_overview_schedule_snapshots')
+      .select('business_date,payload,match_count')
+      .eq('business_date',key).maybeSingle();
+    record=!scheduleResult.error
+      ? qcMergePartialLockedOverviewSnapshot(record,scheduleResult.data)
+      : null;
+  }
   return record?qcCacheProOverviewSnapshot(record):null;
 }
 
@@ -2059,6 +2102,14 @@ async function loadJcFrontend(){
       if(rows && Number(bundle.prediction.model_count)===rows.length &&
          rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)){
         const prediction=qcCacheProOverviewSnapshot(bundle.prediction);
+        if(prediction?.data?.length) return prediction;
+      }
+      // A partial FINAL contains only its locked rows. Join it to the
+      // complete public schedule already returned by the same authorized
+      // bootstrap request: 6/30 is visible, 24/30 remain "待生成".
+      const merged=qcMergePartialLockedOverviewSnapshot(bundle.prediction,bundle.schedule);
+      if(merged){
+        const prediction=qcCacheProOverviewSnapshot(merged);
         if(prediction?.data?.length) return prediction;
       }
     }
