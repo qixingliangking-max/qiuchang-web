@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T15:46:58.785Z",
+  "checked_at": "2026-10-17T15:49:12.381Z",
   "target": "HJK vs IF Gnistan (2026-10-17 16:00 Europe/Helsinki)",
   "noProductionWrite": true,
   "results": [
@@ -10,7 +10,9 @@
       "length": 0,
       "redirected": "https://spl.torneopal.fi/taso/rest/getMatches?ysnyp4h6e9egetkc3s3v&competition_id=spljp26&date=2026-10-17",
       "contexts": [],
-      "head": ""
+      "head": "",
+      "nextData": null,
+      "clubMatches": []
     },
     {
       "label": "hjk-match",
@@ -40,7 +42,37 @@
           "context": "tNodeChildrenConnection\",\"nodes\":[{\"__typename\":\"Page\",\"uri\":\"/miehet/ottelut/\",\"template\":{\"__typename\":\"Template_TeamMatches\",\"templateName\":\"Team Matches\"}},{\"__typename\":\"Page\",\"uri\":\"/miehet/uutiset/\",\"template\":{\"__typename\":\"Template_JoukkueenUutiset\",\"templateName\":\"Joukkueen Uutiset\"}}]}}]}}}]},\"ottelut\":{\"__typename\":\"Ottelut\",\"matchId\":\"4353570\",\"date\":\"2026-10-17T16:00:00+00:00\",\"teamA\":\"HJK\",\"teamACrest\":\"https://cdn.torneopal.net/logo/palloliitto/2611x.png\",\"teamAGoals\":0,\"htsA\":null,\"teamB\":\"IF Gnistan\",\"teamBCrest\":\"https://cdn.torneopal.net/logo/palloliitto/14x.png\",\"teamBGoals\":0,\"htsB\":null,\"venue\":\"Bolt Arena TN\",\"league\":\"Veikkausliiga\",\"ticketLink\":{\"__typename\":\"AcfLink\",\"url\":\"https://hjk.lippu.fi/event/HJK-IF-Gnistan/161429/404878/details\",\"target\":\"_blank\",\"title\":\"Osta liput\"},\"showStreamLinkOnCard\":false,\"streamLink\":{\"__typename\":\"AcfLink\",\"target\":\"_blank\",\"url\":\"https://www.ruutu.fi/stream/100329556\",\"title\":\"Katso suorana Ruudusta!\"},\"matchStatus\":\"Fixture\",\"attendance\":null,\"temperature\":null,\"matchAwards\":null,\"hjkTeamSide\":[\"a\"],\"matchLineupHjk\":null,\"matchLineupOpp\":null,\"matchAdvance\":{\"__typename\":\"AcfContentNodeConnection\",\"nodes\":[{\"__typenam"
         }
       ],
-      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\"></title><link rel=\"preload\" as=\"image\" imageSrcSet=\"https://media.cdn-h"
+      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\"></title><link rel=\"preload\" as=\"image\" imageSrcSet=\"https://media.cdn-h",
+      "nextData": {
+        "hasScript": true,
+        "bytes": 168592
+      },
+      "clubMatches": [
+        {
+          "matchId": "4353570",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "HJK",
+          "teamB": "IF Gnistan",
+          "league": "Veikkausliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0,
+          "htsA": null,
+          "htsB": null
+        },
+        {
+          "matchId": "4353570",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "HJK",
+          "teamB": "IF Gnistan",
+          "league": "Veikkausliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0,
+          "htsA": null,
+          "htsB": null
+        }
+      ]
     },
     {
       "label": "league-match",
@@ -82,7 +114,73 @@
           "context": "1 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM11 13H4V19H11V13ZM20 13H13V19H20V13ZM11 5H4V11H11V5ZM20 5H13V11H20V5Z\"></path></svg></button></div></div></div></section><div style=\"opacity:1;transform:none\"><div class=\"flex flex-col gap-24\"><div class=\"flex flex-col gap-12\"><h2 class=\"font-futura font-medium text-3xl text-slate-500\">17.10.2026</h2><div class=\"grid grid-cols-1 lg:grid-cols-2 gap-8\"><div class=\"bg-white rounded-3xl shadow flex flex-col lg:flex-row gap-8 lg:gap-12 p-8 \"><div class=\"lg:hidden flex items-center gap-x-2 flex-wrap\"><p class=\"font-futura font-semibold text-sm text-hjk-blue-1\">HJK Miehet</p><div class=\"w-1 h-1 rounded-full bg-hjk-blue-1\"></div><p class=\"font-futura font-semibold text-sm text-hjk-blue-1\">Veikkausliiga</p></div><div class=\"flex flex-col justify-between flex-1 gap-6\"><div class=\"flex items-center gap-4\"><div class=\"relative w-[72px] h-[72px] shrink-0\"><img alt=\"HJK\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-contain\" style=\"position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent\" sizes=\"100vw\" srcSet=\"https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F"
         }
       ],
-      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\">Ottelut - HJK Helsinki</title><meta property=\"og:locale\" content=\"fi_FI"
+      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\">Ottelut - HJK Helsinki</title><meta property=\"og:locale\" content=\"fi_FI",
+      "nextData": {
+        "hasScript": true,
+        "bytes": 191555
+      },
+      "clubMatches": [
+        {
+          "matchId": "4353570",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "HJK",
+          "teamB": "IF Gnistan",
+          "league": "Veikkausliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        },
+        {
+          "matchId": "4038176",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "KTP",
+          "teamB": "HJK Klubi 04",
+          "league": "Ykkösliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        },
+        {
+          "matchId": "4336856",
+          "date": "2026-10-17T18:00:00+00:00",
+          "teamA": "Åland United",
+          "teamB": "HJK",
+          "league": "Briotech Kansallinen Liiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        },
+        {
+          "matchId": "4353570",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "HJK",
+          "teamB": "IF Gnistan",
+          "league": "Veikkausliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        },
+        {
+          "matchId": "4038176",
+          "date": "2026-10-17T16:00:00+00:00",
+          "teamA": "KTP",
+          "teamB": "HJK Klubi 04",
+          "league": "Ykkösliiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        },
+        {
+          "matchId": "4336856",
+          "date": "2026-10-17T18:00:00+00:00",
+          "teamA": "Åland United",
+          "teamB": "HJK",
+          "league": "Briotech Kansallinen Liiga",
+          "matchStatus": "Fixture",
+          "teamAGoals": 0,
+          "teamBGoals": 0
+        }
+      ]
     }
   ]
 }
