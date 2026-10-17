@@ -3967,7 +3967,9 @@ async function setupJcMatchDetail(options={}){
 
   // The navigation cache is only a first frame. Refresh the authoritative
   // public score/status after paint so a just-finished FT can never remain stale.
-  if(usedRecentFootballHandoff){
+  // An archived final score is immutable and must never be re-queried from
+  // the live matches table on detail navigation.
+  if(usedRecentFootballHandoff && !jcScoreInfo(m).finished){
     window.qcSupabase.from('jc_matches')
       .select('id,match_status,raw')
       .eq('id',id)
