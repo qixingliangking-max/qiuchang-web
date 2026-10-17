@@ -2224,10 +2224,10 @@ async function loadJcFrontend(){
   async function refreshOverviewDynamicState(ds,token){
     // “昨日回看”只读后台生成的静态历史快照，不再由浏览器回查 jc_matches 动态拼比分。
     // 当前选中日期仍可回读最新状态；前一日的 FT/HT 由后台快照链负责补入。
-    const dynamicDates=[ds].filter((d,i,a)=>
-      a.indexOf(d)===i && !qcFrozenOverviewManifestCache?.dates?.[d]
-    );
-    if(!dynamicDates.length) return;
+    // Historical and future dates are static browsing only. The current
+    // Beijing calendar day alone needs post-match score/status refreshes.
+    if(ds!==today || qcFrozenOverviewManifestCache?.dates?.[ds]) return;
+    const dynamicDates=[ds];
 
     try{
       const results=await Promise.all(dynamicDates.map(d=>jcFetchDateRows(d,false,true)));
@@ -2265,7 +2265,7 @@ async function loadJcFrontend(){
   async function refreshNewLockedDaySnapshot(ds,token){
     // A day may be locked after the Pro user opened it. Read ONLY the newly
     // published complete static bundle, never individual model outputs.
-    if(!access.isPro || token!==loadToken || selectedDate!==ds ||
+    if(ds!==today || !access.isPro || token!==loadToken || selectedDate!==ds ||
        typeof window.qcFetchOverviewBootstrap!=='function') return;
     const oldDay=allRows.filter(m=>jcBusinessDate(m)===ds);
     if(!oldDay.length || oldDay.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
@@ -2294,7 +2294,9 @@ async function loadJcFrontend(){
   }
 
   async function refreshYesterdayHistorySnapshot(ds,token){
-    if(previousHistoryFinal) return;
+    // Keep older history strictly static; only the actual previous day may
+    // receive its last post-match settlement snapshot.
+    if(ds!==today || previousHistoryFinal) return;
     const prevDs=qcAddDays(ds,-1);
     const result=await qcFetchHistoryOverviewDate(prevDs,true);
     if(token!==loadToken || selectedDate!==ds || result?.error) return;
@@ -2317,34 +2319,6 @@ async function loadJcFrontend(){
       ...freshRows
     ];
     render();
-  }
-
-  const overviewPrimeInFlight=new Map();
-  async function primeOverviewDateBundle(ds){
-    if(!isValidOverviewDate(ds)) return;
-    if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
-    if(overviewPrimeInFlight.has(ds)) return overviewPrimeInFlight.get(ds);
-
-    const promise=(async()=>{
-      const prevDs=qcAddDays(ds,-1);
-      const [cur,prevRowsResult]=await Promise.all([
-        fetchOverviewDateReady(ds),
-        fetchHistoryReviewDateReady(prevDs)
-      ]);
-      if(cur.error||prevRowsResult.error) return;
-
-      // Snapshot prefetch is complete; browser never hydrates models per match.
-    })().finally(()=>overviewPrimeInFlight.delete(ds));
-
-    overviewPrimeInFlight.set(ds,promise);
-    return promise;
-  }
-
-  function primeOverviewNeighbors(ds){
-    const targets=[qcAddDays(ds,-1),qcAddDays(ds,1)];
-    setTimeout(()=>{
-      targets.forEach(target=>primeOverviewDateBundle(target).catch(()=>{}));
-    },80);
   }
 
   async function loadFrontendDateBundle(ds){
@@ -2372,9 +2346,8 @@ async function loadJcFrontend(){
     // The entire static day snapshot is rendered once, with no per-match fetch.
     if(token!==loadToken || selectedDate!==ds) return;
     render();
-    refreshOverviewDynamicState(ds,token)
-      .catch(err=>console.warn('速览动态比分补充失败',err));
-    primeOverviewNeighbors(ds);
+    // Date changes render only the chosen static day and its review.
+    // The existing two-minute timer checks only today's post-match scores.
   }
 
   function render(){
