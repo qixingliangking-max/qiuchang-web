@@ -144,5 +144,12 @@
     };
   }
 
+  // An entitlement change or sign-out must invalidate both public and
+  // protected in-memory bootstrap snapshots immediately.
+  window.qcInvalidateOverviewBootstrap=()=>cache.clear();
+  window.qcSupabase.auth.onAuthStateChange((event)=>{
+    if(event==='SIGNED_OUT') cache.clear();
+  });
+
   window.qcFetchOverviewBootstrap=fetchBundle;
 })();
