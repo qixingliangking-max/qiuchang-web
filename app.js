@@ -1564,6 +1564,13 @@ async function jcFetchFootballScheduleRows(dateStr){
   if(String(dateStr||'')<qcBeijingBusinessToday()){
     try{
       const history=await qcFetchHistoryOverviewDate(dateStr);
+      // GitHub archives are already complete public static display records,
+      // including empty dates and officially interrupted fixtures. Do not
+      // requery the live Supabase tables or rebuild a published static card.
+      if(history?.fromFrozen && Array.isArray(history.data)){
+        return {data:history.data,error:null,fromHistorySnapshot:true,
+          fromFrozen:true,historyFinal:true};
+      }
       if(Array.isArray(history?.data) && history.data.length){
         let rows=history.data;
         if(!history.historyFinal){
@@ -1640,7 +1647,7 @@ async function loadJcFootball(){
     const d=new Date(candidateDate+'T12:00:00+08:00');
     quickLabel.textContent=candidateDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
   }
-  if(candidateDate===today){
+  if(candidateDate<=today){
     candidatePromise.then(result=>{
       if(result?.error || !Array.isArray(result.data) || !cards.querySelector('.profile-card')) return;
       const visible=result.data.filter(m=>m.match_date && qcJcIsVisibleMatch(m));
@@ -1652,7 +1659,8 @@ async function loadJcFootball(){
     }).catch(()=>{});
   }
   const access=await accessPromise;
-  const initialDate=access.loggedIn?candidateDate:today;
+  const initialDate=(access.loggedIn || (candidateDate>='2026-09-22' && candidateDate<=today))
+    ? candidateDate : today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
     : await jcFetchFootballScheduleRows(initialDate);
@@ -1664,7 +1672,12 @@ async function loadJcFootball(){
   }
 
   let allRows=(data||[]).filter(m=>m.match_date);
-  const dateLocked=!access.loggedIn;
+  // Visitors may browse every published historical date without logging in.
+  // Access to unfinished predictions is still enforced by Pro/RLS checks.
+  const dateLocked=false;
+  let minArchivedDate='2026-09-22';
+  const isAllowedDate=ds=>/^\d{4}-\d{2}-\d{2}$/.test(String(ds||'')) &&
+    (access.loggedIn || (ds>=minArchivedDate && ds<=today));
   let selectedDate=initialDate;
   let activeLeague='全部';
   let availableDates=[selectedDate];
@@ -1717,16 +1730,29 @@ async function loadJcFootball(){
     }catch(_){}
   },true);
 
-  if(dateLocked){
-    [prev,next,todayBtn,label].filter(Boolean).forEach(el=>{
-      el.disabled=true;
-      el.setAttribute('aria-disabled','true');
-      el.classList.add('qc-date-locked-control');
-    });
-    if(datePop) datePop.hidden=true;
-  }else{
+  // Public static manifest is the history index for both guests and Pro.
+  // An empty business day is still selectable and renders a static empty card.
+  qcLoadFrozenOverviewManifest().then(manifest=>{
+    const archiveDates=Object.keys(manifest?.dates||{}).filter(ds=>/^\d{4}-\d{2}-\d{2}$/.test(ds)).sort();
+    if(archiveDates.length) minArchivedDate=archiveDates[0];
+    const eligible=archiveDates.filter(ds=>ds<=today);
+    availableDates=[...new Set([...availableDates,...eligible,today])].sort();
+    if(!access.loggedIn){
+      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        if(!isAllowedDate(ds)) return;
+        closeLeague();loadFootballDate(ds);
+      },'已结算历史为固定静态快照');
+    }
+  }).catch(err=>console.warn('读取历史静态日期索引失败',err));
+
+  if(access.loggedIn){
     jcFetchAvailableDates().then(dates=>{
-      if(Array.isArray(dates) && dates.length) availableDates=dates;
+      if(Array.isArray(dates) && dates.length){
+        availableDates=[...new Set([...availableDates,...dates])].sort();
+        qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+          closeLeague();loadFootballDate(ds);
+        });
+      }
     }).catch(err=>console.warn('日期索引延后读取失败',err));
   }
 
@@ -1825,12 +1851,15 @@ async function loadJcFootball(){
   }
 
   function hydrateHistoricalFootballExtras(rows,ds,token){
-    // Archive cards have already painted. Logos are presentation-only:
-    // fetch them in the background and patch just the two team elements.
-    jcAttachTeamLogos(rows).then(()=>{
-      if(token!==loadToken || selectedDate!==ds) return;
-      jcPatchFootballLogos(cards,rows);
-    }).catch(error=>console.warn('历史球队队徽读取失败',error));
+    // October archived public cards already embed official static crest URLs.
+    // Do not query team logos or model/market tables for frozen records.
+    const needsLogo=rows.filter(m=>!m._homeLogoUrl || !m._awayLogoUrl);
+    if(needsLogo.length && rows.length && !rows.every(m=>m._jcFrozenOverview)){
+      jcAttachTeamLogos(needsLogo).then(()=>{
+        if(token!==loadToken || selectedDate!==ds) return;
+        jcPatchFootballLogos(cards,needsLogo);
+      }).catch(error=>console.warn('历史球队队徽读取失败',error));
+    }
 
     // A cancelled/postponed fixture is the only historical item that may
     // still need dynamic model and pre-kickoff-market enrichment.
@@ -1847,6 +1876,7 @@ async function loadJcFootball(){
   }
 
   async function loadFootballDate(ds){
+    if(!isAllowedDate(ds)) return;
     const token=++loadToken;
     const cache=qcJcDateRowsCache.get(ds);
     const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
@@ -1903,14 +1933,24 @@ async function loadJcFootball(){
     renderLeagueMenu(dateRows);
     renderInlineLeagueTabs(dateRows);
     if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
+    if(prev){
+      prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
+      prev.setAttribute('aria-disabled',String(prev.disabled));
+    }
+    if(next){
+      next.disabled=!isAllowedDate(qcAddDays(selectedDate,1));
+      next.setAttribute('aria-disabled',String(next.disabled));
+    }
+    if(todayBtn) todayBtn.disabled=selectedDate===today;
     delete cards.dataset.qcPublicPreview;
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        if(!isAllowedDate(ds)) return;
         closeLeague();
         loadFootballDate(ds);
-      });
+      },access.loggedIn?'选择有比赛数据的日期':'历史已结算日期可直接查看');
     }
   }
 
@@ -1973,13 +2013,15 @@ async function loadJcFootball(){
 
   // One quiet public-FINAL prefetch after first paint. Date navigation can
   // then reuse the immutable history even after leaving and returning.
-  if(initialDate===today && access.loggedIn){
-    const yesterday=qcAddDays(today,-1);
-    const warm=()=>qcFetchHistoryOverviewDate(yesterday).catch(()=>{});
+  // Only after the live day has painted, warm the closest public static dates.
+  // Once loaded the previous dates flip with no live database roundtrip.
+  if(initialDate===today){
+    const recent=[1,2,3,4].map(n=>qcAddDays(today,-n));
+    const warm=()=>qcPrimeFrozenOverviewDates(recent).catch(()=>{});
     if(typeof window.requestIdleCallback==='function'){
-      window.requestIdleCallback(warm,{timeout:2400});
+      window.requestIdleCallback(warm,{timeout:3200});
     }else{
-      setTimeout(warm,800);
+      setTimeout(warm,1100);
     }
   }
 
