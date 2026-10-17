@@ -54,43 +54,6 @@ def public_history(start, before):
     })
 
 
-def additional_public_fixtures(day, original):
-    known = {str(r.get("id")) for r in original}
-    records = request_json("/rest/v1/jc_matches", params={
-        "select": "id,match_num,business_date,league_name,league_short_name,"
-                  "home_team_name,away_team_name,match_date,match_time,kickoff_at,"
-                  "match_status,raw",
-        "business_date": f"eq.{day}", "limit": "200"
-    })
-    extras = []
-    for r in records:
-        if str(r.get("id")) in known:
-            continue
-        raw = r.get("raw") or {}
-        status = str(r.get("match_status") or "") + " " + str(raw.get("matchStatusName") or "")
-        # Do not surface unfinished, stopped, postponed or not-yet-on-sale
-        # fixtures as immutable historical match cards.
-        final_score = str(raw.get("sectionsNo999") or "").strip()
-        if not final_score or any(token in status.lower() for token in (
-            "中止", "延期", "取消", "待开售", "未开赛",
-            "abandoned", "postponed", "cancelled", "suspended"
-        )):
-            continue
-        extras.append({
-            "id": r.get("id"), "match_num": r.get("match_num"),
-            "business_date": day, "league_name": r.get("league_name"),
-            "league_short_name": r.get("league_short_name"),
-            "home_team_name": r.get("home_team_name"),
-            "away_team_name": r.get("away_team_name"),
-            "match_date": r.get("match_date"), "match_time": r.get("match_time"),
-            "kickoff_at": r.get("kickoff_at"), "match_status": r.get("match_status"),
-            "raw": {k: raw.get(k, "") for k in
-                    ("sectionsNo999", "sectionsNo1", "matchStatusName")},
-            "jc_model_outputs": [], "jc_market_snapshots": []
-        })
-    return extras
-
-
 def embed_crest_links(rows):
     names = sorted({str(r.get(k)) for r in rows
                     for k in ("home_team_name", "away_team_name") if r.get(k)})
@@ -145,9 +108,9 @@ def publish():
         finished_count = int(record.get("finished_count") or 0)
         if not rows or len(rows) != finished_count or finished_count > match_count:
             continue
-        # Preserve public results. Any unplayed or stopped fixture has NO model.
-        if not record.get("is_final"):
-            rows.extend(additional_public_fixtures(day, rows))
+        # ONLY frozen, scored rows from the published history snapshot are
+        # eligible for a public archive. Unfinished/stopped fixtures have no
+        # history row; they remain absent until official FT is confirmed.
         if len({str(row.get("id")) for row in rows}) != len(rows):
             raise RuntimeError("Duplicate match in archive " + day)
         rows.sort(key=lambda r: str(r.get("match_num") or ""))
