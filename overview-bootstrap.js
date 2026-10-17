@@ -104,22 +104,10 @@
     };
   }
 
-  const oldHistory=typeof qcFetchHistoryOverviewDate==='function' ? qcFetchHistoryOverviewDate : null;
-  if(oldHistory){
-    window.qcFetchHistoryOverviewDate=async function(dateStr,force=false){
-      const ds=String(dateStr||'');
-      const parent=addDays(ds,1);
-      // Initial homepage pair is today/tomorrow + previous day. Reuse the same
-      // bootstrap promise so current + review cost one Supabase roundtrip.
-      if(onOverview() && !force && parent>=today()){
-        const bundle=await fetchBundle(parent,false);
-        if(bundle && String(bundle.previous_date||'')===ds){
-          return historyResult(bundle.history);
-        }
-      }
-      return oldHistory(dateStr,force);
-    };
-  }
+  // Archived public history is already published as immutable GitHub JSON.
+  // Never run qc_get_overview_bootstrap just to fetch yesterday's finished
+  // fixtures: that costly RPC races the static file and delays Safari renders.
+  // qcFetchHistoryOverviewDate in app.js handles archive files and safe fallback.
 
   const oldPro=typeof qcFetchProOverviewDate==='function' ? qcFetchProOverviewDate : null;
   if(oldPro){
