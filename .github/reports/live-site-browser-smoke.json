@@ -1,5 +1,5 @@
 {
-  "testedAt": "2026-10-17T16:10:59.077Z",
+  "testedAt": "2026-10-17T20:20:54.628Z",
   "base": "https://qcda.cn",
   "mode": "guest, production network, separate cold browser contexts, Android Chromium and Linux-hosted iPhone WebKit emulation",
   "results": [
@@ -9,11 +9,11 @@
       "coldContext": true,
       "entry": "/index.html",
       "httpStatus": 200,
-      "domMs": 879,
-      "listMs": 2183,
-      "detailHeaderMs": 3566,
-      "clickToHeaderMs": 1379,
-      "detailPanelMs": 3593,
+      "domMs": 849,
+      "listMs": 2664,
+      "detailHeaderMs": 3589,
+      "clickToHeaderMs": 920,
+      "detailPanelMs": 3604,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10月18日 周日",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n麦克阿瑟FC\n2-1\n半 0-0\n珀斯光荣\n赛况数据\n赔率详情\nAI分析",
@@ -24,54 +24,54 @@
       "slowRequests": [
         {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_history_overview_snapshots",
-          "ms": 1115
+          "ms": 1254
         },
         {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 931
+          "ms": 1218
         },
         {
           "path": "https://qcda.cn/index.html",
-          "ms": 669
+          "ms": 547
         },
         {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 530
+          "ms": 331
         },
         {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 337
+          "ms": 329
         },
         {
-          "path": "https://qcda.cn/overview-schedule-snapshot.js",
-          "ms": 200
+          "path": "https://qcda.cn/overview-bootstrap.js",
+          "ms": 284
         },
         {
           "path": "https://qcda.cn/app.js",
-          "ms": 136
+          "ms": 175
         },
         {
-          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
-          "ms": 117
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
+          "ms": 138
         },
         {
-          "path": "https://qcda.cn/data/overview/2026-10-17.history.v2.json",
-          "ms": 103
-        },
-        {
-          "path": "https://qcda.cn/styles.css",
-          "ms": 95
+          "path": "https://qcda.cn/overview-schedule-snapshot.js",
+          "ms": 131
         },
         {
           "path": "https://qcda.cn/data.js",
-          "ms": 76
+          "ms": 131
+        },
+        {
+          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
+          "ms": 128
         },
         {
           "path": "https://qcda.cn/supabase-config.js",
-          "ms": 76
+          "ms": 127
         }
       ],
-      "totalRequests": 31,
+      "totalRequests": 30,
       "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
     },
     {
@@ -80,11 +80,11 @@
       "coldContext": true,
       "entry": "/football.html",
       "httpStatus": 200,
-      "domMs": 227,
-      "listMs": 384,
-      "detailHeaderMs": 560,
-      "clickToHeaderMs": 171,
-      "detailPanelMs": 578,
+      "domMs": 270,
+      "listMs": 520,
+      "detailHeaderMs": 713,
+      "clickToHeaderMs": 188,
+      "detailPanelMs": 731,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10-17 周六",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n麦克阿瑟FC\n2-1\n半 0-0\n珀斯光荣\n赛况数据\n赔率详情\nAI分析",
@@ -93,77 +93,69 @@
       "jsExceptions": [],
       "failedRequests": [
         {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs",
+          "reason": "net::ERR_ABORTED"
+        },
+        {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
           "reason": "net::ERR_ABORTED"
         },
         {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots",
           "reason": "net::ERR_ABORTED"
-        },
-        {
-          "path": "https://qcda.cn/data/overview/2026-10-15.history.v2.json",
-          "reason": "net::ERR_ABORTED"
-        },
-        {
-          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs",
-          "reason": "net::ERR_ABORTED"
-        },
-        {
-          "path": "https://qcda.cn/data/overview/2026-10-13.history.v2.json",
-          "reason": "net::ERR_ABORTED"
         }
       ],
       "slowRequests": [
         {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
+          "path": "https://qcda.cn/assets/team-logos/fotmob-2361.png",
+          "ms": 130
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-9906.png",
           "ms": 127
         },
         {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5325.png",
-          "ms": 111
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8448.png",
+          "ms": 125
         },
         {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-8455.png",
-          "ms": 110
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
+          "ms": 123
         },
         {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19001.png",
-          "ms": 109
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
+          "ms": 123
         },
         {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-10388.png",
-          "ms": 109
-        },
-        {
-          "path": "https://qcda.cn/football.html",
-          "ms": 106
-        },
-        {
-          "path": "https://qcda.cn/supabase-config.js",
-          "ms": 104
+          "path": "https://qcda.cn/styles.css",
+          "ms": 122
         },
         {
           "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
-          "ms": 104
+          "ms": 122
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-10388.png",
+          "ms": 122
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8065.png",
+          "ms": 116
+        },
+        {
+          "path": "https://qcda.cn/football.html",
+          "ms": 115
         },
         {
           "path": "https://qcda.cn/app.js",
-          "ms": 104
+          "ms": 114
         },
         {
-          "path": "https://qcda.cn/supabase-client.js",
-          "ms": 102
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-9875.png",
-          "ms": 101
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-8006.png",
-          "ms": 99
+          "path": "https://qcda.cn/assets/team-logos/fotmob-9861.png",
+          "ms": 114
         }
       ],
-      "totalRequests": 51,
+      "totalRequests": 54,
       "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
     },
     {
@@ -172,11 +164,11 @@
       "coldContext": true,
       "entry": "/index.html",
       "httpStatus": 200,
-      "domMs": 477,
-      "listMs": 1871,
-      "detailHeaderMs": 2989,
-      "clickToHeaderMs": 1110,
-      "detailPanelMs": 3013,
+      "domMs": 493,
+      "listMs": 1502,
+      "detailHeaderMs": 3372,
+      "clickToHeaderMs": 1864,
+      "detailPanelMs": 3397,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10月18日 周日",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n\n麦克阿瑟FC\n2-1\n半 0-0\n\n珀斯光荣\n赛况数据\n赔率详情\nAI分析\n",
@@ -186,52 +178,52 @@
       "failedRequests": [],
       "slowRequests": [
         {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 1034
+        },
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 392
+        },
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 310
+        },
+        {
+          "path": "https://qcda.cn/overview-bootstrap.js",
+          "ms": 309
+        },
+        {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_history_overview_snapshots",
-          "ms": 937
+          "ms": 304
         },
         {
-          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 780
-        },
-        {
-          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 370
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
-          "ms": 346
-        },
-        {
-          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
-          "ms": 344
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
-          "ms": 343
-        },
-        {
-          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
-          "ms": 314
-        },
-        {
-          "path": "https://qcda.cn/index.html",
-          "ms": 153
+          "path": "https://qcda.cn/data/overview/manifest.json",
+          "ms": 220
         },
         {
           "path": "https://qcda.cn/data/overview/live-schedule-manifest.json",
-          "ms": 81
+          "ms": 215
         },
         {
-          "path": "https://qcda.cn/jc-match.html",
-          "ms": 78
+          "path": "https://qcda.cn/index.html",
+          "ms": 184
         },
         {
-          "path": "https://qcda.cn/footer-compact.css",
-          "ms": 71
+          "path": "https://qcda.cn/overview-static-first.js",
+          "ms": 171
         },
         {
-          "path": "https://qcda.cn/overview-live-static.js",
-          "ms": 71
+          "path": "https://qcda.cn/overview-schedule-snapshot.js",
+          "ms": 170
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
+          "ms": 139
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
+          "ms": 135
         }
       ],
       "totalRequests": 31,
@@ -243,11 +235,11 @@
       "coldContext": true,
       "entry": "/football.html",
       "httpStatus": 200,
-      "domMs": 406,
-      "listMs": 646,
-      "detailHeaderMs": 1091,
-      "clickToHeaderMs": 433,
-      "detailPanelMs": 1120,
+      "domMs": 219,
+      "listMs": 540,
+      "detailHeaderMs": 1018,
+      "clickToHeaderMs": 469,
+      "detailPanelMs": 1041,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10-17 周六",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n\n麦克阿瑟FC\n2-1\n半 0-0\n\n珀斯光荣\n赛况数据\n赔率详情\nAI分析\n",
@@ -260,65 +252,61 @@
           "reason": "Load request cancelled"
         },
         {
-          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots",
-          "reason": "Load request cancelled"
-        },
-        {
           "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs",
           "reason": "Load request cancelled"
         }
       ],
       "slowRequests": [
         {
-          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
-          "ms": 215
-        },
-        {
-          "path": "https://qcda.cn/football.html",
-          "ms": 192
-        },
-        {
-          "path": "https://qcda.cn/app.js",
-          "ms": 176
-        },
-        {
-          "path": "https://qcda.cn/overview-live-static.js",
-          "ms": 176
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots",
+          "ms": 305
         },
         {
           "path": "https://qcda.cn/assets/team-logos/espn-soccer-19001.png",
-          "ms": 157
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
-          "ms": 115
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-429441.png",
-          "ms": 113
-        },
-        {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-133896.png",
-          "ms": 111
+          "ms": 194
         },
         {
           "path": "https://qcda.cn/data/overview/manifest.json",
-          "ms": 111
+          "ms": 188
         },
         {
           "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
-          "ms": 110
+          "ms": 172
         },
         {
-          "path": "https://qcda.cn/assets/team-logos/fotmob-4397.png",
-          "ms": 106
+          "path": "https://qcda.cn/assets/team-logos/fotmob-133896.png",
+          "ms": 167
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-429441.png",
+          "ms": 167
+        },
+        {
+          "path": "https://qcda.cn/football.html",
+          "ms": 128
+        },
+        {
+          "path": "https://qcda.cn/data/overview/live-schedule-manifest.json",
+          "ms": 100
+        },
+        {
+          "path": "https://qcda.cn/jc-match.html",
+          "ms": 94
         },
         {
           "path": "https://qcda.cn/styles.css",
-          "ms": 103
+          "ms": 85
+        },
+        {
+          "path": "https://qcda.cn/app.js",
+          "ms": 77
+        },
+        {
+          "path": "https://qcda.cn/supabase-config.js",
+          "ms": 52
         }
       ],
-      "totalRequests": 32,
+      "totalRequests": 33,
       "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
     }
   ]
