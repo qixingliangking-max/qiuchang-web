@@ -1677,7 +1677,7 @@ async function loadJcFootball(){
   const dateLocked=false;
   let minArchivedDate='2026-09-22';
   const isAllowedDate=ds=>/^\d{4}-\d{2}-\d{2}$/.test(String(ds||'')) &&
-    (access.loggedIn || (ds>=minArchivedDate && ds<=today));
+    ds>=minArchivedDate && (access.loggedIn || ds<=today);
   let selectedDate=initialDate;
   let activeLeague='全部';
   let availableDates=[selectedDate];
