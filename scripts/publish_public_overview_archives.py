@@ -121,8 +121,12 @@ def publish():
                 # Published fully final archives are immutable.
                 if old.get("is_final") is True:
                     continue
-                # Partially completed dates are replaced only once they finalize.
-                if not record.get("is_final"):
+                # For an incomplete day, promote only additional confirmed FT
+                # results (or the definitive FINAL). Never rewrite already
+                # published completed rows in place.
+                if (not record.get("is_final")
+                        and int(record.get("finished_count") or 0)
+                        <= int(old.get("finished_count") or 0)):
                     continue
 
         rows = list((record.get("payload") or {}).get("rows") or [])
