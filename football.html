@@ -34,6 +34,19 @@
       <div class="jc-football-date-zone">
         <button id="jcFootballPrevDate" class="jc-football-arrow" type="button" aria-label="上一天">‹</button>
         <button id="jcFootballDateLabel" class="jc-football-date-label" type="button">读取日期…</button>
+<script>
+  // Date is public metadata: show it before any external JS/auth/database work.
+  (()=>{try{
+    const now=new Date();
+    const bj=new Date(now.getTime()+8*3600000);
+    if(bj.getUTCHours()<12)bj.setUTCDate(bj.getUTCDate()-1);
+    const value=new URLSearchParams(location.search).get('date');
+    const base=(!value || !/^\d{4}-\d{2}-\d{2}$/.test(value))?bj.toISOString().slice(0,10):value;
+    const date=new Date(base+'T12:00:00+08:00');
+    const el=document.getElementById('jcFootballDateLabel');
+    if(el)el.textContent=base.slice(5)+' '+new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'}).format(date);
+  }catch(_){} })();
+  </script>
         <button id="jcFootballNextDate" class="jc-football-arrow" type="button" aria-label="下一天">›</button>
         <button id="jcFootballTodayBtn" class="jc-football-today" type="button">回到今日</button>
         <span id="jcFootballFixtureCount" class="jc-football-inline-count">共0场</span>
@@ -79,7 +92,7 @@
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
 <script defer src="data.js"></script>
 <script defer src="assets/team-logos/catalog.js?v=20261017crestready2"></script>
-<script defer src="overview-live-static.js?v=20261017hitsfix3"></script>
-<script defer src="app.js?v=20261017finalonce11"></script>
+<script defer src="overview-live-static.js?v=20261018direct13"></script>
+<script defer src="app.js?v=20261018fastfirst13"></script>
 </body>
 </html>
