@@ -1949,6 +1949,12 @@ async function loadJcFrontend(){
   // paint immediately without waiting for login/Pro detection.
   qcLoadFrozenOverviewManifest();
   const accessPromise=qcGetAccessState();
+  // Start the current static snapshot request in parallel with membership
+  // validation, restoring the original fast first-load behavior. The RPC
+  // itself verifies Pro entitlement and never exposes protected predictions.
+  const candidateCurrentPromise=typeof window.qcFetchOverviewBootstrap==='function'
+    ? window.qcFetchOverviewBootstrap(candidateDate)
+    : null;
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
@@ -2095,7 +2101,9 @@ async function loadJcFrontend(){
     // Server validates Pro entitlement. It never returns protected prediction
     // rows to anonymous or non-Pro clients.
     const bundle=typeof window.qcFetchOverviewBootstrap==='function'
-      ? await window.qcFetchOverviewBootstrap(ds) : null;
+      ? await (ds===candidateDate && candidateCurrentPromise
+        ? candidateCurrentPromise
+        : window.qcFetchOverviewBootstrap(ds)) : null;
 
     if(access.isPro && bundle?.is_pro===true){
       const rows=qcCompleteStaticRows(bundle.prediction,ds);
