@@ -1,0 +1,87 @@
+name: Sporttery mobile live official browser audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sporttery-mobile-live-browser.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-node@v4
+        with: {node-version: '20'}
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/sporttery-browser
+          cd /tmp/sporttery-browser
+          npm init -y >/dev/null
+          npm i --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Open actual mobile Sporttery live and results
+        shell: bash
+        run: |
+          cat >/tmp/sporttery-browser/visit.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          const fs=require('fs');
+          const results=[];
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            for(const tab of ['live','result']){
+              const context=await browser.newContext({...devices['Pixel 7'],locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+              const page=await context.newPage();
+              const requests=[],errors=[],responseTexts=[];
+              page.on('pageerror',e=>errors.push(String(e).slice(0,350)));
+              page.on('response',async rsp=>{
+                const url=rsp.url();
+                if(/sporttery\.cn/.test(url) && /gateway|qry|api|match|zqsj|result/i.test(url)){
+                  const line={status:rsp.status(),url:url.slice(0,250),mime:rsp.headers()['content-type']};
+                  requests.push(line);
+                  if(/json/i.test(line.mime||'')||/qry/i.test(url)){
+                    try{
+                      const text=(await rsp.text()).slice(0,80000);
+                      let snippets=[];
+                      for(const target of ['2042029','赫尔辛基','周六012','赫尔火花','Gnistan']){
+                        const at=text.indexOf(target);
+                        if(at>=0)snippets.push({target,sample:text.slice(Math.max(0,at-170),at+1050)});
+                      }
+                      responseTexts.push({url:url.slice(0,220),status:rsp.status(),snippets:snippets.slice(0,6),head:text.slice(0,250)});
+                    }catch{}
+                  }
+                }
+              });
+              let status=null,err='';
+              try{
+                const rsp=await page.goto('https://m.sporttery.cn/mjc/zqsj/?tab='+tab,{timeout:30000,waitUntil:'domcontentloaded'});
+                status=rsp?.status();
+                await page.waitForTimeout(7000);
+              }catch(e){err=String(e).slice(0,500);}
+              const body=await page.locator('body').innerText({timeout:5000}).catch(()=>'');
+              results.push({tab,status,err,title:await page.title().catch(()=>''),body:body.slice(0,6000),matchIndex:body.indexOf('赫尔'),requests:requests.slice(0,40),responseTexts:responseTexts.slice(0,25),errors:errors.slice(0,20)});
+              await context.close();
+            }
+            await browser.close();
+            fs.mkdirSync('.github/reports',{recursive:true});
+            const output={checkedAt:new Date().toISOString(),livePage:'https://m.sporttery.cn/mjc/zqsj/?tab=live',noDatabaseWrites:true,results};
+            fs.writeFileSync('.github/reports/sporttery-mobile-live-browser.json',JSON.stringify(output,null,2)+'\n');
+            console.log(JSON.stringify(output).slice(0,27000));
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+          node /tmp/sporttery-browser/visit.cjs
+      - name: Preserve read-only browser report
+        if: always()
+        run: |
+          if [ ! -f .github/reports/sporttery-mobile-live-browser.json ]; then
+            echo '{"error":"browser audit did not write a report"}' > .github/reports/sporttery-mobile-live-browser.json
+          fi
+          git add .github/reports/sporttery-mobile-live-browser.json
+          git diff --cached --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(sporttery): log official mobile live match data'
+          git pull --rebase origin main
+          git push origin HEAD:main
