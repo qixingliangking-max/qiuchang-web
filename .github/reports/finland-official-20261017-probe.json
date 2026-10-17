@@ -1,16 +1,46 @@
 {
-  "checked_at": "2026-10-17T15:45:49.739Z",
+  "checked_at": "2026-10-17T15:46:58.785Z",
   "target": "HJK vs IF Gnistan (2026-10-17 16:00 Europe/Helsinki)",
   "noProductionWrite": true,
   "results": [
     {
       "label": "fa-original",
-      "status": 200,
-      "contentType": "text/html; charset=UTF-8",
-      "length": 57,
+      "status": 403,
+      "contentType": "text/html; charset=utf-8",
+      "length": 0,
       "redirected": "https://spl.torneopal.fi/taso/rest/getMatches?ysnyp4h6e9egetkc3s3v&competition_id=spljp26&date=2026-10-17",
       "contexts": [],
-      "head": "{\"call\":{\"status\":\"error\",\"error\":\"No API key provided\"}}"
+      "head": ""
+    },
+    {
+      "label": "hjk-match",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "length": 343401,
+      "redirected": "https://www.hjk.fi/ottelut/hjk-if-gnistan-2026-10-17",
+      "contexts": [
+        {
+          "term": "HJK - IF Gnistan",
+          "index": 240126,
+          "context": "\"_blank\"}}}]}},\"seo\":{\"__typename\":\"PostTypeSEO\",\"fullHead\":\"\\u003c!-- This site is optimized with the Yoast SEO plugin v28.4 - https://yoast.com/product/yoast-seo-wordpress/ --\\u003e\\n\\u003cmeta property=\\\"og:locale\\\" content=\\\"fi_FI\\\" /\\u003e\\n\\u003cmeta property=\\\"og:type\\\" content=\\\"article\\\" /\\u003e\\n\\u003cmeta property=\\\"og:title\\\" content=\\\"HJK - IF Gnistan 2026-10-17 - HJK Helsinki\\\" /\\u003e\\n\\u003cmeta property=\\\"og:url\\\" content=\\\"https://www.hjk.fi/ottelut/hjk-if-gnistan-2026-10-17/\\\" /\\u003e\\n\\u003cmeta property=\\\"og:site_name\\\" content=\\\"HJK Helsinki\\\" /\\u003e\\n\\u003cmeta property=\\\"article:publisher\\\" content=\\\"https://www.facebook.com/hjkhelsinki1907\\\" /\\u003e\\n\\u003cmeta property=\\\"article:modified_time\\\" content=\\\"2026-10-16T12:06:54+00:00\\\" /\\u003e\\n\\u003cmeta name=\\\"twitter:card\\\" content=\\\"summary_large_image\\\" /\\u003e\\n\\u003cmeta name=\\\"twitter:site\\\" content=\\\"@hjkhelsinki\\\" /\\u003e\\n\\u003cmeta name=\\\"twitter:label1\\\" content=\\\"Arvioitu lukuaika\\\" /\\u003e\\n\\t\\u003cmeta name=\\\"twitter:data1\\\" content=\\\"2 minuuttia\\\" /\\u003e\\n\\u003cscript type=\\\"application/ld+json\\\" class=\\\"yoast-schema-graph\\\"\\u003e{\\\"@context\\\":\\\"https:\\\\/\\\\/schema.org\\\",\\\"@graph\\\":[{\\\"@type\\"
+        },
+        {
+          "term": "HJK",
+          "index": 3634,
+          "context": "one\"><section class=\"bg-hjk-blue-3 z-90 relative\"><nav class=\"container py-2 text-white flex flex-row justify-between font-semibold font-futura text-sm\"><ul class=\"flex flex-row items-center flex-start gap-6\"><li><a class=\"flex items-center gap-1 text-sm leading-[20px] whitespace-nowrap font-normal text-white\" href=\"https://hallinta.hjk.fi/\"><span>HJK</span></a></li><li><a class=\"flex items-center gap-1 text-sm leading-[20px] whitespace-nowrap font-normal text-white\" href=\"https://www.hjk.fi/miehet/\"><span>Miehet</span></a></li><li><a class=\"flex items-center gap-1 text-sm leading-[20px] whitespace-nowrap font-normal text-white\" href=\"https://www.hjk.fi/naiset/\"><span>Naiset</span></a></li><li><a class=\"flex items-center gap-1 text-sm leading-[20px] whitespace-nowrap font-normal text-white\" href=\"https://www.hjk-j.fi/\" target=\"_blank\" rel=\"noopener noreferrer\"><span>Juniorit</span><svg stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" viewBox=\"0 0 24 24\" class=\"mb-0.5\" height=\"12\" width=\"12\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 "
+        },
+        {
+          "term": "IF Gnistan",
+          "index": 228289,
+          "context": "ndichotels.fi?utm_source=partner\\u0026utm_medium=partner\\u0026utm_id=partner\\u0026utm_content=hjk-scandiclogo\",\"logo\":{\"__typename\":\"AcfMediaItemConnectionEdge\",\"node\":{\"__typename\":\"MediaItem\",\"sourceUrl\":\"https://media.cdn-hjk.fi/wp-content/uploads/2026/03/02000816/scandic-6.png\",\"altText\":\"\"}}}}]}}]},\"match\":{\"__typename\":\"Match\",\"title\":\"HJK – IF Gnistan 2026-10-17\",\"content\":null,\"date\":\"2026-09-03T12:52:17\",\"modified\":\"2026-10-16T15:06:54\",\"modifiedGmt\":\"2026-10-16T12:06:54\",\"teams\":{\"__typename\":\"MatchToTeamConnection\",\"nodes\":[{\"__typename\":\"Team\",\"name\":\"HJK Miehet\",\"slug\":\"hjk-miehet\",\"uri\":\"/joukkue/hjk-miehet/\",\"teamFields\":{\"__typename\":\"TeamFields\",\"teamIdTeam\":\"60731\",\"linkedFrontPage\":{\"__typename\":\"AcfContentNodeConnection\",\"nodes\":[{\"__typename\":\"Page\",\"uri\":\"/miehet/\",\"children\":{\"__typename\":\"HierarchicalContentNodeToContentNodeChildrenConnection\",\"nodes\":[{\"__typename\":\"Page\",\"uri\":\"/miehet/ottelut/\",\"template\":{\"__typename\":\"Template_TeamMatches\",\"templateName\":\"Team Matches\"}},{\"__typename\":\"Page\",\"uri\":\"/miehet/uutiset/\",\"template\":{\"__typename\":\"Template_JoukkueenUutiset\",\"templateName\":\"Joukkueen Uutiset\"}}]}}]}}}]},\"ottelut\":{\"__typename\":\"Ottelut\",\"match"
+        },
+        {
+          "term": "4353570",
+          "index": 229144,
+          "context": "tNodeChildrenConnection\",\"nodes\":[{\"__typename\":\"Page\",\"uri\":\"/miehet/ottelut/\",\"template\":{\"__typename\":\"Template_TeamMatches\",\"templateName\":\"Team Matches\"}},{\"__typename\":\"Page\",\"uri\":\"/miehet/uutiset/\",\"template\":{\"__typename\":\"Template_JoukkueenUutiset\",\"templateName\":\"Joukkueen Uutiset\"}}]}}]}}}]},\"ottelut\":{\"__typename\":\"Ottelut\",\"matchId\":\"4353570\",\"date\":\"2026-10-17T16:00:00+00:00\",\"teamA\":\"HJK\",\"teamACrest\":\"https://cdn.torneopal.net/logo/palloliitto/2611x.png\",\"teamAGoals\":0,\"htsA\":null,\"teamB\":\"IF Gnistan\",\"teamBCrest\":\"https://cdn.torneopal.net/logo/palloliitto/14x.png\",\"teamBGoals\":0,\"htsB\":null,\"venue\":\"Bolt Arena TN\",\"league\":\"Veikkausliiga\",\"ticketLink\":{\"__typename\":\"AcfLink\",\"url\":\"https://hjk.lippu.fi/event/HJK-IF-Gnistan/161429/404878/details\",\"target\":\"_blank\",\"title\":\"Osta liput\"},\"showStreamLinkOnCard\":false,\"streamLink\":{\"__typename\":\"AcfLink\",\"target\":\"_blank\",\"url\":\"https://www.ruutu.fi/stream/100329556\",\"title\":\"Katso suorana Ruudusta!\"},\"matchStatus\":\"Fixture\",\"attendance\":null,\"temperature\":null,\"matchAwards\":null,\"hjkTeamSide\":[\"a\"],\"matchLineupHjk\":null,\"matchLineupOpp\":null,\"matchAdvance\":{\"__typename\":\"AcfContentNodeConnection\",\"nodes\":[{\"__typenam"
+        }
+      ],
+      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\"></title><link rel=\"preload\" as=\"image\" imageSrcSet=\"https://media.cdn-h"
     },
     {
       "label": "league-match",
