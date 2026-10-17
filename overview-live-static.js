@@ -30,7 +30,11 @@
       m._qcStaticLiveSchedule=true;
       m.jc_model_outputs=[];
       m.jc_market_snapshots=[];
-      m._jcModelsLoaded=true;
+      // Public static fixture JSON deliberately omits model outputs.
+      // Empty is NOT loaded: after FT the public locked FINAL is hydrated
+      // through the finished-only server RLS. Before FT the guest model remains
+      // protected by hydrateFootballRows() in app.js.
+      m._jcModelsLoaded=false;
       m._jcModelsLoading=false;
       m._jcModelLoadFailed=false;
       m._jcLatestSnapshotsLoaded=false;
