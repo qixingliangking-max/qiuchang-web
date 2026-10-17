@@ -2140,7 +2140,7 @@ async function loadJcFootball(){
     // The first post-game render restores public FINAL hit circles via RLS.
     let newlyFinishedCount=0;
     if(!access.isPro){
-      const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded);
+      const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded && !m._jcModelsLoading);
       newlyFinishedCount=newlyFinished.length;
       if(newlyFinished.length) await jcAttachModels(newlyFinished);
     }
