@@ -2148,16 +2148,12 @@ async function loadJcFrontend(){
   const initialDateRaw=new URLSearchParams(location.search).get('date');
   const candidateDate=isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday;
 
-  // Auth and data start together. Yesterday's finished review is public, so it can
-  // paint immediately without waiting for login/Pro detection.
+  // Public first paint is served by same-origin static JSON below. Do not call
+  // the Supabase bootstrap for every anonymous visitor; protected prediction
+  // bundles are fetched only after the session and Pro entitlement are verified.
   qcLoadFrozenOverviewManifest();
-  // Fetch the authorized static bundle immediately. Its server-verified
-  // is_pro verdict also replaces the homepage's redundant membership RPC.
-  // Session resolution and the static request still run concurrently.
-  const candidateCurrentPromise=typeof window.qcFetchOverviewBootstrap==='function'
-    ? window.qcFetchOverviewBootstrap(candidateDate)
-    : null;
-  const accessPromise=qcGetAccessState(false,candidateCurrentPromise);
+  const candidateCurrentPromise=null;
+  const accessPromise=qcGetAccessState(false,null);
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
