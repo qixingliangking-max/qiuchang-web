@@ -43,7 +43,28 @@ jobs:
                   const index=txt.indexOf(term);
                   if(index>=0)slices.push({term,index,context:txt.slice(Math.max(0,index-350),index+1100).replace(/\s+/g,' ').slice(0,1200)});
                 }
-                out.push({label,status:r.status,contentType:r.headers.get('content-type'),length:txt.length,redirected:r.url,contexts:slices.slice(0,4),head:txt.slice(0,300)});
+                let nextData=null, clubMatches=[];
+                if(label==='hjk-match'||label==='hjk-team'){
+                  const hit=txt.match(/<script id="__NEXT_DATA__" type="application\\/json">([\\s\\S]*?)<\\/script>/);
+                  nextData={hasScript:Boolean(hit),bytes:hit?.[1]?.length||0};
+                  if(hit){
+                    try{
+                      const root=JSON.parse(hit[1]);
+                      const visited=new WeakSet();
+                      function walk(obj){
+                        if(!obj || typeof obj!=='object'||visited.has(obj))return;
+                        visited.add(obj);
+                        if(obj.matchId&&obj.teamA&&obj.teamB&&obj.matchStatus){
+                          if(String(obj.date||'').startsWith('2026-10-17'))
+                            clubMatches.push({matchId:obj.matchId,date:obj.date,teamA:obj.teamA,teamB:obj.teamB,league:obj.league,matchStatus:obj.matchStatus,teamAGoals:obj.teamAGoals,teamBGoals:obj.teamBGoals,htsA:obj.htsA,htsB:obj.htsB});
+                        }
+                        Object.values(obj).forEach(walk);
+                      }
+                      walk(root);
+                    }catch(e){nextData.error=String(e);}
+                  }
+                }
+                out.push({label,status:r.status,contentType:r.headers.get('content-type'),length:txt.length,redirected:r.url,contexts:slices.slice(0,4),head:txt.slice(0,300),nextData,clubMatches:clubMatches.slice(0,12)});
               }catch(error){out.push({label,error:String(error)});}
             }
             const report={checked_at:new Date().toISOString(),target:'HJK vs IF Gnistan (2026-10-17 16:00 Europe/Helsinki)',noProductionWrite:true,results:out};
