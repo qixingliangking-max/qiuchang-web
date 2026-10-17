@@ -2293,15 +2293,17 @@ async function loadJcFrontend(){
   }
 
   async function fetchOverviewDatePreferred(ds){
-    // Fully finished and published history is static and publicly accessible.
-    if(qcFrozenOverviewManifestCache?.dates?.[ds]){
+    // Historical dates must resolve through the immutable public archive even
+    // if its manifest is still loading. Never fall through to live DB assembly
+    // just because the browser opened the date before the manifest completed.
+    if(ds<today){
       const frozen=await qcFetchFrozenOverviewDate(ds);
       if(frozen) return frozen;
     }
 
-    // The active public schedule is generated into same-origin static JSON.
+    // Active/future public schedules are generated into same-origin static JSON.
     // Anonymous first paint must not wait for a database RPC or auth service.
-    if(!access.isPro && ds===today && typeof window.qcFetchLiveScheduleDate==='function'){
+    if(!access.isPro && ds>=today && typeof window.qcFetchLiveScheduleDate==='function'){
       const localSchedule=await window.qcFetchLiveScheduleDate(ds);
       if(localSchedule?.data?.length) return localSchedule;
     }
