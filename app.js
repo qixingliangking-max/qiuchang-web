@@ -1758,8 +1758,9 @@ async function loadJcFootball(){
       if(counter) counter.textContent='共'+visible.length+'场';
     }).catch(()=>{});
   }
-  const access=await accessPromise;
-  const initialDate=(access.loggedIn || (candidateDate>='2026-09-22' && candidateDate<=today))
+  // Public fixture rendering must not depend on auth or Pro RPC latency.
+  let access={loggedIn:false,isPro:false,userId:null};
+  const initialDate=(candidateDate>='2026-09-22' && candidateDate<=today)
     ? candidateDate : today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
@@ -1858,7 +1859,7 @@ async function loadJcFootball(){
     }
   }).catch(err=>console.warn('读取历史静态日期索引失败',err));
 
-  if(access.loggedIn){
+  function expandMemberDates(){
     jcFetchAvailableDates().then(dates=>{
       if(Array.isArray(dates) && dates.length){
         availableDates=[...new Set([...availableDates,...dates])].sort();
@@ -2179,6 +2180,25 @@ async function loadJcFootball(){
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
+
+  // Progressive enhancement: resolve membership in the background.
+  // Server RLS still gates every unreleased FINAL and Pro market.
+  accessPromise.then(async result=>{
+    access=result||{loggedIn:false,isPro:false,userId:null};
+    if(access.loggedIn) expandMemberDates();
+    if(access.isPro){
+      const ds=selectedDate,token=loadToken;
+      if(ds>=today){
+        const current=allRows.filter(m=>jcBusinessDate(m)===ds);
+        await Promise.allSettled([
+          current.length?jcAttachModels(current):Promise.resolve(),
+          current.length?jcAttachLatestSnapshots(current):Promise.resolve()
+        ]);
+        if(token!==loadToken || ds!==selectedDate) return;
+      }
+    }
+    render();
+  }).catch(error=>console.warn('足球页会员身份后台核验失败',error));
 }
 
 async function loadJcFrontend(){
