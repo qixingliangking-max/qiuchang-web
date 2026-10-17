@@ -268,12 +268,38 @@ function jcMatchStatusLabel(m,today){
   return '未开赛';
 }
 
+// A final settlement is authoritative only when the backend marks the match
+// completed AND has written the full-time result. In-play numbers are ignored.
+function qcIsConfirmedFinal(m){
+  const status=String(m?.raw?.matchStatusName||'')+' '+String(m?.match_status||'');
+  const ft=String(m?.raw?.sectionsNo999||'').trim();
+  return /(?:已结束|完赛|已完成|finished|final)/i.test(status) &&
+    /^\d{1,2}[:\-]\d{1,2}$/.test(ft);
+}
+
+// Apply the settlement atomically once per fixture. Never copy other dynamic
+// properties across: fixture, odds, crests, FINAL and pregame report are frozen.
+function qcApplyOnceFinal(old,fresh){
+  if(!old || !fresh || qcIsConfirmedFinal(old) || !qcIsConfirmedFinal(fresh))
+    return old;
+  return {
+    ...old,
+    match_status:fresh.match_status||old.match_status,
+    raw:{
+      ...(old.raw||{}),
+      sectionsNo999:fresh.raw.sectionsNo999,
+      sectionsNo1:fresh.raw.sectionsNo1||old.raw?.sectionsNo1||'',
+      matchStatusName:fresh.raw.matchStatusName||'已结束'
+    }
+  };
+}
+
 function jcScoreInfo(m){
   const officialFt=String(m?.raw?.sectionsNo999 || '').trim().replace(':','-');
   const officialHt=String(m?.raw?.sectionsNo1 || '').trim().replace(':','-');
   const api=jcApiLiveInfo(m);
   const rawStatus=String(m?.raw?.matchStatusName || m?.match_status || '').trim();
-  const finished=api.finished || Boolean(officialFt) || /完成|结束|finished/i.test(rawStatus);
+  const finished=api.finished || /(?:已结束|完赛|已完成|finished|final)/i.test(rawStatus);
   const ft=finished ? (officialFt || api.current || '') : '';
   const ht=finished ? (officialHt || api.ht || '') : '';
   // Keep actual started state internally for access/automation logic, but never
@@ -2103,7 +2129,7 @@ async function loadJcFootball(){
   }
 
   async function refreshFootballLive(){
-    // Live overlay is ONLY half/full time score and match completion.
+    // No in-play updates: apply one official settlement only after FT.
     // All fixed fixtures, teams, crests, odds, FINAL and AI stay unchanged.
     if(selectedDate!==qcBeijingBusinessToday()) return;
     const refreshDate=selectedDate;
@@ -2116,25 +2142,9 @@ async function loadJcFootball(){
     let needsPaint=false;
     allRows=allRows.map(old=>{
       const fresh=liveById.get(String(old.id));
-      if(!fresh) return old;
-      const before=jcScoreInfo(old);
-      const incoming=fresh.raw||{};
-      const merged={
-        ...old,
-        match_status:fresh.match_status||old.match_status,
-        raw:{
-          ...(old.raw||{}),
-          sectionsNo999:incoming.sectionsNo999 ?? old.raw?.sectionsNo999,
-          sectionsNo1:incoming.sectionsNo1 ?? old.raw?.sectionsNo1,
-          matchStatusName:incoming.matchStatusName ?? old.raw?.matchStatusName
-        }
-      };
-      const after=jcScoreInfo(merged);
-      if(before.ft!==after.ft || before.ht!==after.ht ||
-         before.finished!==after.finished ||
-         jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(merged,calendarToday))
-        needsPaint=true;
-      return merged;
+      const settled=qcApplyOnceFinal(old,fresh);
+      if(settled!==old) needsPaint=true;
+      return settled;
     });
 
     // The first post-game render restores public FINAL hit circles via RLS.
@@ -2519,42 +2529,28 @@ async function loadJcFrontend(){
 
   async function refreshOverviewDynamicState(ds,token){
     // “昨日回看”只读后台生成的静态历史快照，不再由浏览器回查 jc_matches 动态拼比分。
-    // 当前选中日期仍可回读最新状态；前一日的 FT/HT 由后台快照链负责补入。
+    // 当前选中日期只在官方确认完赛后一次性写入FT/HT及命中圈。
     // Historical and future dates are static browsing only. The current
     // Beijing calendar day alone needs post-match score/status refreshes.
     if(ds!==today || qcFrozenOverviewManifestCache?.dates?.[ds]) return;
-    const dynamicDates=[ds];
-
     try{
-      const results=await Promise.all(dynamicDates.map(d=>jcFetchDateRows(d,false,true)));
-      if(token!==loadToken || selectedDate!==ds) return;
-
-      const freshById=new Map();
-      results.forEach(result=>{
-        if(result?.error) return;
-        (result?.data||[]).forEach(m=>freshById.set(String(m.id),m));
-      });
-
+      // Silent background status checks. On-field score, HT and clock remain
+      // unchanged until the backend persists the confirmed final result.
+      const result=await jcFetchDateRows(ds,false,true);
+      if(token!==loadToken || selectedDate!==ds || result?.error ||
+         !Array.isArray(result?.data)) return;
+      const finalById=new Map(result.data.filter(m=>m?.id && qcIsConfirmedFinal(m))
+        .map(m=>[String(m.id),m]));
       let changed=false;
-      if(freshById.size){
-        allRows=allRows.map(old=>{
-          const fresh=freshById.get(String(old.id));
-          if(!fresh) return old;
-          const before=jcScoreInfo(old),after=jcScoreInfo(fresh);
-          if(before.ft!==after.ft || before.ht!==after.ht ||
-             before.finished!==after.finished ||
-             jcMatchStatusLabel(old,calendarToday)!==jcMatchStatusLabel(fresh,calendarToday)){
-            changed=true;
-          }
-          return preserveOverviewStaticData(fresh,old);
-        });
-      }
-
-      const liveRows=allRows.filter(m=>dynamicDates.includes(jcBusinessDate(m)));
-      await jcAttachLiveScores(liveRows);
+      allRows=allRows.map(old=>{
+        if(jcBusinessDate(old)!==ds) return old;
+        const settled=qcApplyOnceFinal(old,finalById.get(String(old.id)));
+        if(settled!==old) changed=true;
+        return settled;
+      });
       if(changed && token===loadToken && selectedDate===ds) render();
     }catch(err){
-      console.warn('动态比分回读失败，继续使用锁板快照',err);
+      console.warn('后台完赛检测失败，继续保持赛前静态数据',err);
     }
   }
 
