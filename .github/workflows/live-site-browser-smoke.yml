@@ -36,31 +36,56 @@ jobs:
           const fs=require('fs');
           const BASE='https://qcda.cn';
           const results=[];
-          async function visit(page,entry,selector){
-            const errors=[];
-            const network=[];
-            page.on('pageerror',error=>errors.push(String(error).slice(0,300)));
-            page.on('requestfailed',request=>network.push({url:request.url().slice(0,170),why:request.failure()?.errorText||''}));
+          async function visit(browser,engine,entry,selector){
+            const context=await browser.newContext({...engine.device,locale:'zh-CN'});
+            const page=await context.newPage();
+            const exceptions=[],failedRequests=[];
+            const requests=new Map(),slowRequests=[];
+            page.on('pageerror',error=>exceptions.push(String(error).slice(0,300)));
+            page.on('request',request=>requests.set(request,{at:Date.now(),url:new URL(request.url()).origin+new URL(request.url()).pathname}));
+            page.on('requestfinished',request=>{
+              const info=requests.get(request);
+              if(info)slowRequests.push({path:info.url,ms:Date.now()-info.at});
+            });
+            page.on('requestfailed',request=>{
+              const info=requests.get(request);
+              failedRequests.push({path:info?.url||request.url().split('?')[0],reason:request.failure()?.errorText||''});
+            });
             const start=Date.now();
-            let httpStatus=null,domMs=null,dataMs=null,detailMs=null,clickedLink=null;
-            let dateLabel='',panelText='',matchText='',exception='';
+            let httpStatus=null,domMs=null,listMs=null,detailHeaderMs=null,detailPanelMs=null,clickToHeaderMs=null,clickedLink=null;
+            let dateLabel='',panelText='',matchText='',exception='',initialDocumentStatus='';
             try{
               const response=await page.goto(BASE+entry,{waitUntil:'domcontentloaded',timeout:45000});
               domMs=Date.now()-start;
               httpStatus=response?.status()||null;
-              await page.locator(selector).first().waitFor({state:'attached',timeout:30000});
-              dataMs=Date.now()-start;
+              await page.locator(selector).first().waitFor({state:'visible',timeout:25000});
+              listMs=Date.now()-start;
               dateLabel=await page.locator('#jcDateLabel,#jcFootballDateLabel').first().textContent().catch(()=>'');
               const link=page.locator(selector).first();
               clickedLink=await link.getAttribute('href');
-              await link.click({timeout:16000});
+              const clickStart=Date.now();
+              await link.click({timeout:15000});
               await page.locator('#jcMatchDetailRoot .detail-head').first().waitFor({state:'visible',timeout:30000});
-              detailMs=Date.now()-start;
+              detailHeaderMs=Date.now()-start;
+              clickToHeaderMs=Date.now()-clickStart;
               matchText=(await page.locator('#jcMatchDetailRoot .detail-head').first().innerText()).slice(0,240);
-              await page.waitForTimeout(1800);
-              panelText=(await page.locator('#jcMainPanel').first().innerText().catch(()=>'')).slice(0,300);
+              await page.waitForFunction(()=>{
+                const panel=document.querySelector('#jcMainPanel');
+                return panel && panel.textContent && !panel.textContent.includes('正在加载中');
+              },null,{timeout:25000});
+              detailPanelMs=Date.now()-start;
+              panelText=(await page.locator('#jcMainPanel').first().innerText().catch(()=>'')).slice(0,280);
             }catch(error){exception=String(error).slice(0,700);}
-            return {entry,selector,httpStatus,domMs,dataMs,detailMs,clickedLink,dateLabel,matchText,panelText,exception,errors:errors.slice(0,12),failedRequests:network.slice(0,12),finalUrl:page.url()};
+            const result={
+              engine:engine.name,source:entry==='/index.html'?'今日速览→昨日回看→详情':'竞彩足球→详情',
+              coldContext:true,entry,httpStatus,domMs,listMs,detailHeaderMs,clickToHeaderMs,detailPanelMs,
+              clickedLink,dateLabel,matchText,panelText,exception,jsExceptions:exceptions.slice(0,12),
+              failedRequests:failedRequests.slice(0,12),
+              slowRequests:slowRequests.sort((a,b)=>b.ms-a.ms).slice(0,12),
+              totalRequests:slowRequests.length,finalUrl:page.url()
+            };
+            await context.close();
+            return result;
           }
           (async()=>{
             const engines=[
@@ -71,23 +96,22 @@ jobs:
               let browser=null;
               try{
                 browser=await engine.browserType.launch({headless:true});
-                const context=await browser.newContext({...engine.device,locale:'zh-CN'});
-                const page=await context.newPage();
-                const overview=await visit(page,'/index.html','#jcYesterdayCards a[href*="jc-match.html?id="]');
-                results.push({engine:engine.name,source:'今日速览→昨日回看→详情',...overview});
-                const football=await visit(page,'/football.html','#jcFootballCards a.jc-card-link');
-                results.push({engine:engine.name,source:'竞彩足球→详情',...football});
-                await context.close();
-              }catch(error){
-                results.push({engine:engine.name,exception:String(error).slice(0,800)});
-              }finally{if(browser)await browser.close();}
+                for(const [entry,selector] of [
+                  ['/index.html','#jcYesterdayCards a[href*="jc-match.html?id="]'],
+                  ['/football.html','#jcFootballCards a.jc-card-link']
+                ]){
+                  const result=await visit(browser,engine,entry,selector);
+                  results.push(result);
+                }
+              }catch(error){results.push({engine:engine.name,exception:String(error).slice(0,800)});}
+              finally{if(browser)await browser.close();}
             }
-            const report={testedAt:new Date().toISOString(),base:BASE,mode:'guest, live network, Android Chromium + desktop-hosted iPhone WebKit emulation',results};
+            const report={testedAt:new Date().toISOString(),base:BASE,mode:'guest, production network, separate cold browser contexts, Android Chromium and Linux-hosted iPhone WebKit emulation',results};
             fs.mkdirSync('.github/reports',{recursive:true});
             fs.writeFileSync('.github/reports/live-site-browser-smoke.json',JSON.stringify(report,null,2)+'\n');
             console.log('QCDA_LIVE_BROWSER_TEST='+JSON.stringify(report));
             for(const row of results){
-              const msg=[row.engine,row.source,'HTTP='+row.httpStatus,'DOMContentLoaded='+row.domMs+'ms','cards='+row.dataMs+'ms','detail header='+row.detailMs+'ms','error='+String(row.exception||'').slice(0,200)].join(' ');
+              const msg=[row.engine,row.source,'HTTP='+row.httpStatus,'DOMContentLoaded='+row.domMs+'ms','cards='+row.listMs+'ms','click-header='+row.clickToHeaderMs+'ms','panel='+row.detailPanelMs+'ms','error='+String(row.exception||'').slice(0,200)].join(' ');
               console.log('::notice title=Mobile website test::'+msg.replace(/\n/g,' '));
             }
           })().catch(error=>{console.error(error);process.exitCode=1});
