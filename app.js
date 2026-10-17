@@ -1262,47 +1262,27 @@ async function qcFetchFrozenOverviewDate(dateStr){
   if(cached?.data) return {data:cached.data,error:null,fromFrozen:true};
   if(cached?.promise) return cached.promise;
 
-  // Historical archives are public immutable day files. On the fast path
-  // avoid manifest -> archive waterfall; older/renamed files use the manifest.
-  const direct='data/overview/'+key+'.history.v2.json';
-  const promise=(async()=>{
-    let file=direct;
-    try{
-      const response=await fetch(direct,{cache:'force-cache'});
-      if(response.ok){
-        const payload=await response.json();
-        if(Array.isArray(payload?.rows) &&
-           String(payload?.business_date||key)===key){
-          const rows=qcPrepareFrozenOverviewRows(payload.rows);
-          qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
-          return {data:rows,error:null,fromFrozen:true};
-        }
-      }
-    }catch(_){}
-    const manifest=await qcLoadFrozenOverviewManifest();
-    file=manifest?.dates?.[key];
-    if(!file) return null;
-    const response=await fetch(file,{cache:'force-cache'});
-    if(!response.ok) throw new Error('HTTP '+response.status);
-    const payload=await response.json();
-    const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
-    qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
-    return {data:rows,error:null,fromFrozen:true};
-  })()
-    .then(result=>{
-      if(!result) qcFrozenOverviewRowsCache.delete(key);
-      return result;
+  const manifest=await qcLoadFrozenOverviewManifest();
+  const file=manifest?.dates?.[key];
+  if(!file) return null;
+
+  const promise=fetch(file,{cache:'force-cache'})
+    .then(async res=>{
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const payload=await res.json();
+      const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
+      qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
+      return {data:rows,error:null,fromFrozen:true};
     })
     .catch(error=>{
       qcFrozenOverviewRowsCache.delete(key);
       console.warn('读取历史冻结快照失败 '+key,error);
       return null;
     });
-  qcFrozenOverviewRowsCache.set(key,{promise,savedAt:Date.now(),file:direct});
+
+  qcFrozenOverviewRowsCache.set(key,{promise,savedAt:Date.now(),file});
   return promise;
 }
-
-
 
 async function qcPrimeFrozenOverviewDates(dateList){
   const manifest=await qcLoadFrozenOverviewManifest();
@@ -1758,9 +1738,8 @@ async function loadJcFootball(){
       if(counter) counter.textContent='共'+visible.length+'场';
     }).catch(()=>{});
   }
-  // Public fixture rendering must not depend on auth or Pro RPC latency.
-  let access={loggedIn:false,isPro:false,userId:null};
-  const initialDate=(candidateDate>='2026-09-22' && candidateDate<=today)
+  const access=await accessPromise;
+  const initialDate=(access.loggedIn || (candidateDate>='2026-09-22' && candidateDate<=today))
     ? candidateDate : today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
@@ -1859,7 +1838,7 @@ async function loadJcFootball(){
     }
   }).catch(err=>console.warn('读取历史静态日期索引失败',err));
 
-  function expandMemberDates(){
+  if(access.loggedIn){
     jcFetchAvailableDates().then(dates=>{
       if(Array.isArray(dates) && dates.length){
         availableDates=[...new Set([...availableDates,...dates])].sort();
@@ -2180,25 +2159,6 @@ async function loadJcFootball(){
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
-
-  // Progressive enhancement: resolve membership in the background.
-  // Server RLS still gates every unreleased FINAL and Pro market.
-  accessPromise.then(async result=>{
-    access=result||{loggedIn:false,isPro:false,userId:null};
-    if(access.loggedIn) expandMemberDates();
-    if(access.isPro){
-      const ds=selectedDate,token=loadToken;
-      if(ds>=today){
-        const current=allRows.filter(m=>jcBusinessDate(m)===ds);
-        await Promise.allSettled([
-          current.length?jcAttachModels(current):Promise.resolve(),
-          current.length?jcAttachLatestSnapshots(current):Promise.resolve()
-        ]);
-        if(token!==loadToken || ds!==selectedDate) return;
-      }
-    }
-    render();
-  }).catch(error=>console.warn('足球页会员身份后台核验失败',error));
 }
 
 async function loadJcFrontend(){
