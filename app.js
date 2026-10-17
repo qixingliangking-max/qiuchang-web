@@ -2703,7 +2703,7 @@ async function loadJcFrontend(){
       if(accessDisplayPhase==='verifying'){
         // Neutral placeholder: neither claims the member is logged out nor
         // exposes protected FINAL before entitlement has been verified.
-        cards.innerHTML='<div class="profile-card" role="status">正在确认会员权限并读取今日预测…</div>';
+        cards.innerHTML='<div class="profile-card" role="status">正在加载中…</div>';
       }else if(accessDisplayPhase==='unavailable'){
         cards.innerHTML='<div class="profile-card" role="status">会员预测暂时无法读取，请稍后刷新重试。</div>';
       }else if(predictionRestricted){
