@@ -2191,10 +2191,54 @@ async function loadJcFrontend(){
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
 
+  // A detail link already has its PUBLIC fixture identity on this page.
+  // Transfer only basic fixture/score/crest fields, never model or AI data.
+  // This lets both 今日速览 and 昨日回看 skip re-querying jc_matches on click.
+  const detailPublicRowsByDate=new Map();
+  function rememberDetailPublicRows(ds,rows){
+    if(!Array.isArray(rows) || !rows.length) return;
+    detailPublicRowsByDate.set(ds,rows.filter(m=>m?.id && qcJcIsVisibleMatch(m)));
+  }
+  function publicDetailFields(m){
+    return {
+      id:m.id,match_num:m.match_num,business_date:jcBusinessDate(m),
+      league_name:m.league_name,league_short_name:m.league_short_name,
+      home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+      match_date:m.match_date,match_time:m.match_time,kickoff_at:m.kickoff_at,
+      match_status:m.match_status,
+      raw:{sectionsNo999:m.raw?.sectionsNo999||'',
+        sectionsNo1:m.raw?.sectionsNo1||'',
+        matchStatusName:m.raw?.matchStatusName||''},
+      _homeLogoUrl:m._homeLogoUrl||'',_awayLogoUrl:m._awayLogoUrl||''
+    };
+  }
+  for(const container of [cards,reviewCards].filter(Boolean)){
+    container.addEventListener('click',event=>{
+      const link=event.target?.closest?.('a[href*="jc-match.html?id="]');
+      if(!link || !container.contains(link)) return;
+      const id=new URL(link.href,location.href).searchParams.get('id');
+      const ds=[...detailPublicRowsByDate].find(([date,rows])=>rows.some(m=>String(m.id)===String(id)));
+      if(!ds) return;
+      const match=ds[1].find(m=>String(m.id)===String(id));
+      try{
+        sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
+          savedAt:Date.now(),businessDate:ds[0],
+          match:publicDetailFields(match),
+          day:ds[1].map(row=>{
+            const item=publicDetailFields(row);
+            delete item.raw;
+            return item;
+          })
+        }));
+      }catch(_){}
+    },true);
+  }
+
   // Browser cache gives repeat opens an immediate first frame.
   try{
     const cached=JSON.parse(localStorage.getItem('qc-finished-review-'+candidatePreviousDate)||'null');
     if(cached?.isFinal===true && Number(cached?.matchCount)>0 && Array.isArray(cached?.rows) && cached.rows.length===Number(cached.matchCount) && cached.rows.every(m=>jcScoreInfo(m).finished)){
+      rememberDetailPublicRows(candidatePreviousDate,cached.rows);
       reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
       jcBindOverviewRows(reviewCards);
       const meta=$('#jcYesterdayMeta');
@@ -2210,6 +2254,7 @@ async function loadJcFrontend(){
     const publicRows=(result.data||[]).filter(m=>jcScoreInfo(m).finished);
     if(!publicRows.length || publicRows.length!==Number(result.matchCount||0)) return;
     // Completed public history already contains all official model/market data.
+    rememberDetailPublicRows(candidatePreviousDate,publicRows);
     reviewCards.innerHTML=jcRenderYesterdayReview(publicRows,calendarToday);
     jcBindOverviewRows(reviewCards);
     const meta=$('#jcYesterdayMeta');
@@ -2301,6 +2346,8 @@ async function loadJcFrontend(){
   }
 
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
+  rememberDetailPublicRows(initialDate,(currentResult.data||[]));
+  rememberDetailPublicRows(candidatePreviousDate,(previousResult.data||[]));
   let previousHistoryFinal=Boolean(previousResult?.historyFinal);
   let selectedDate=initialDate;
   let modelsLoaded=false;
@@ -2613,6 +2660,7 @@ async function loadJcFrontend(){
 
   function render(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate && qcJcIsVisibleMatch(m));
+    rememberDetailPublicRows(selectedDate,dateRows);
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate && qcJcIsVisibleMatch(m));
     const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
@@ -3863,12 +3911,13 @@ async function setupJcMatchDetail(options={}){
         : Promise.resolve(null)
     };
   });
-  const sameDay=await dayPromise;
-  if(loadSeq!==jcDetailLoadSeq) return;
-
-  const detailNav='<aside class="jc-detail-sidebar">'+
-    '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+sameDay.length+' 场</b></div>'+
-    '<div class="jc-detail-match-list">'+sameDay.map(x=>{
+  // A slow same-day query must never hold the selected match title hostage.
+  // The list can be updated independently after the match header paints.
+  let sameDay=jcDetailDayCache?.date===m.business_date
+    ? jcDetailDayCache.rows : [m];
+  const detailNavFor=rows=>'<aside class="jc-detail-sidebar">'+
+    '<div class="jc-detail-sidebar-head"><a href="football.html?date='+encodeURIComponent(m.business_date||m.match_date||qcBeijingBusinessToday())+'">‹ 返回赛事</a><b>'+rows.length+' 场</b></div>'+
+    '<div class="jc-detail-match-list">'+rows.map(x=>{
       const compactNum=String(x.match_num||'竞彩').replace(/^周[一二三四五六日天]/,'');
       const compactTime=String(x.match_time||'').slice(0,5);
       return '<a class="jc-detail-match-item'+(String(x.id)===String(m.id)?' active':'')+'" href="jc-match.html?id='+encodeURIComponent(x.id)+'">'+
@@ -3882,7 +3931,7 @@ async function setupJcMatchDetail(options={}){
         '<time class="jc-detail-match-time-desktop">'+qcEscape(String(x.match_date||'').slice(5)+' '+compactTime)+'</time>'+
       '</a>';
     }).join('')+'</div></aside>';
-  const detailShell=content=>'<div class="jc-detail-layout">'+detailNav+'<section class="jc-detail-main">'+content+'</section></div>';
+  const detailShell=content=>'<div class="jc-detail-layout">'+detailNavFor(sameDay)+'<section class="jc-detail-main">'+content+'</section></div>';
 
   // Paint the selected match immediately. Only the small main panel waits for fast data.
   const scoreNow=jcScoreInfo(m);
@@ -3904,7 +3953,17 @@ async function setupJcMatchDetail(options={}){
   );
   jcSyncDetailNavToCurrent(root);
   jcBindDetailMatchSwitches(root);
-  jcPrefetchDetailNeighbors(sameDay,m.id);
+  // Finish the sidebar in the background; never recreate the main AI panel.
+  dayPromise.then(rows=>{
+    if(loadSeq!==jcDetailLoadSeq || !root.isConnected || !Array.isArray(rows)) return;
+    sameDay=rows;
+    const sidebar=$('.jc-detail-sidebar',root);
+    if(sidebar) sidebar.outerHTML=detailNavFor(rows);
+    jcSyncDetailNavToCurrent(root);
+    jcBindDetailMatchSwitches(root);
+    jcPrefetchDetailNeighbors(rows,m.id);
+  }).catch(error=>console.warn('同日列表后台读取失败',error));
+  if(sameDay.length>1) jcPrefetchDetailNeighbors(sameDay,m.id);
 
   // The navigation cache is only a first frame. Refresh the authoritative
   // public score/status after paint so a just-finished FT can never remain stale.
