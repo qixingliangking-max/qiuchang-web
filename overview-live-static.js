@@ -61,6 +61,30 @@
     const cached=memory.get(ds);
     if(!force && cached?.result) return cached.result;
     const local=readJson(localKey(ds));
+    // Paint a previously validated static copy immediately. Check the manifest
+    // and refresh its cache in the background so page entry never waits on network.
+    if(!force && local?.payload){
+      const localRows=normalizeRows(local.payload,ds);
+      if(localRows){
+        const localResult={data:localRows,error:null,fromScheduleSnapshot:true,
+          fromLiveStaticSchedule:true,fromLocalCache:true};
+        memory.set(ds,{version:local.version,result:localResult});
+        loadManifest(true).then(async manifest=>{
+          const entry=manifest.dates?.[ds];
+          if(!entry || entry.version===local.version) return;
+          const response=await fetch(entry.file+'?v='+encodeURIComponent(entry.version),{cache:'force-cache'});
+          if(!response.ok) return;
+          const payload=await response.json();
+          if(payload?.business_date!==ds || Number(payload.match_count)!==Number(entry.match_count)) return;
+          const rows=normalizeRows(payload,ds);
+          if(!rows) return;
+          writeJson(localKey(ds),{version:entry.version,payload});
+          const result={data:rows,error:null,fromScheduleSnapshot:true,fromLiveStaticSchedule:true};
+          memory.set(ds,{version:entry.version,result});
+        }).catch(()=>{});
+        return localResult;
+      }
+    }
     try{
       const manifest=await loadManifest(force);
       const entry=manifest.dates?.[ds];
