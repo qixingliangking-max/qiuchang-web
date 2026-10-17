@@ -1,0 +1,49 @@
+name: Cache immutable fixture team logos
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Beijing 11:00-19:59: check shortly after new schedules are collected.
+    - cron: '7,22,37,52 3-11 * * *'
+    # Off-peak: discover newly published fixtures without frequent polling.
+    - cron: '19 0-2,12-23 * * *'
+  push:
+    paths:
+      - 'scripts/cache_static_team_logos.py'
+      - 'data/overview/**'
+      - '.github/workflows/cache-static-team-logos.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qcda-immutable-team-crests
+  cancel-in-progress: false
+
+jobs:
+  cache-crests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out public website content
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache newly discovered team logos from public schedules
+        run: python3 scripts/cache_static_team_logos.py
+
+      - name: Publish immutable binary images and updated static catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add assets/team-logos/ data/team-logos/catalog.json
+          if git diff --cached --quiet; then
+            echo 'No new teams or crest files. Nothing to publish.'
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets(team-logos): archive newly discovered static crest files"
+          git pull --rebase origin main
+          git push origin HEAD:main
