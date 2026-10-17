@@ -2231,15 +2231,20 @@ async function loadJcFrontend(){
     }catch(_){}
   }).catch(()=>{});
 
-  // Do not hold the public first paint on login/session or Pro verification.
-  // Start in the guest-safe state, then upgrade only after server verification.
+  // Pending verification is not an anonymous verdict. Never show a
+  // "login to view" prompt to an already-signed-in Pro member on refresh.
+  // Authorized models are rendered only after a fresh server entitlement check.
   let access={loggedIn:false,isPro:false,userId:null};
+  let accessDisplayPhase='verifying'; // verifying | ready | unavailable
   // Do not bulk-download up to 90 historical Pro snapshots before the first frame.
   // The authorized current-day bundle is loaded by fetchOverviewDateReady;
   // background priming happens only after the visible table is painted.
   const initialDate=access.loggedIn
     ? candidateDate
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
+  // Date is public metadata: paint it before waiting for ANY network fetch.
+  const initialDateLabel=$('#jcDateLabel');
+  if(initialDateLabel) initialDateLabel.textContent=qcDateLabel(initialDate);
 
   // Today's entire protected/static day is the first-paint dependency.
   // Yesterday's review may require an additional Pro snapshot merge; it must
@@ -2631,7 +2636,13 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(predictionRestricted){
+      if(accessDisplayPhase==='verifying'){
+        // Neutral placeholder: neither claims the member is logged out nor
+        // exposes protected FINAL before entitlement has been verified.
+        cards.innerHTML='<div class="profile-card" role="status">正在确认会员权限并读取今日预测…</div>';
+      }else if(accessDisplayPhase==='unavailable'){
+        cards.innerHTML='<div class="profile-card" role="status">会员预测暂时无法读取，请稍后刷新重试。</div>';
+      }else if(predictionRestricted){
         cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
       }else{
         cards.innerHTML=jcRenderOverviewTable(dateRows,calendarToday,'today');
@@ -2710,8 +2721,8 @@ async function loadJcFrontend(){
     ]);
   }
 
-  // Upgrade guest-safe static first paint after auth/Pro verification finishes.
-  // This request is deliberately background-only; it never blocks the initial public table.
+  // Upgrade public first paint after server auth/Pro verification.
+  // Keep the protected card neutral until the authorized FINAL is available.
   accessPromise.then(async resolved=>{
     access=resolved||{loggedIn:false,isPro:false,userId:null};
     if(access.isPro){
@@ -2720,7 +2731,10 @@ async function loadJcFrontend(){
       try{
         const current=await fetchOverviewDatePreferred(ds);
         if(token!==loadToken || selectedDate!==ds) return;
-        if(!current?.error && Array.isArray(current?.data) && current.data.length){
+        const authorized=(!current?.error && Array.isArray(current?.data) &&
+          current.data.length>0 && current.data.some(m=>
+            Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length>0));
+        if(authorized){
           const oldById=new Map(allRows.filter(m=>jcBusinessDate(m)===ds).map(m=>[String(m.id),m]));
           const replacement=current.data.map(row=>{
             const old=oldById.get(String(row.id));
@@ -2729,6 +2743,9 @@ async function loadJcFrontend(){
           });
           allRows=[...allRows.filter(m=>jcBusinessDate(m)!==ds),...replacement];
         }
+        accessDisplayPhase=authorized?'ready':'unavailable';
+        // Do not wait for yesterday's second snapshot to release today's card.
+        render();
         const prevDate=qcAddDays(ds,-1);
         const history=await fetchHistoryReviewDateReady(
           prevDate,ds===candidateDate?candidatePreviousPromise:null
@@ -2738,10 +2755,17 @@ async function loadJcFrontend(){
           previousHistoryFinal=Boolean(history.historyFinal);
           allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
             ...(history.data||[]).filter(m=>m.match_date)];
+          render();
         }
-        render();
-      }catch(error){ console.warn('Pro静态快照后台补齐失败',error); }
-    }else if(access.loggedIn){
+      }catch(error){
+        console.warn('Pro静态快照后台补齐失败',error);
+        if(token===loadToken && selectedDate===ds){
+          accessDisplayPhase='unavailable';
+          render();
+        }
+      }
+    }else{
+      accessDisplayPhase='ready';
       render();
     }
     if(access.loggedIn){
@@ -2752,7 +2776,11 @@ async function loadJcFrontend(){
         }
       }).catch(err=>console.warn('登录后日期索引读取失败',err));
     }
-  }).catch(error=>console.warn('后台权限状态读取失败，保留公开静态首屏',error));
+  }).catch(error=>{
+    console.warn('后台权限状态读取失败',error);
+    accessDisplayPhase='unavailable';
+    render();
+  });
 
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
