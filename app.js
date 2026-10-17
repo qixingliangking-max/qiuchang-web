@@ -1595,6 +1595,18 @@ function qcBindFootballGuestLoginCta(){
 // Prefer the small public schedule snapshot for the first football-page paint.
 // Live FT/HT/status is refreshed from jc_matches without holding the first frame.
 async function jcFetchFootballScheduleRows(dateStr){
+  // Active/future fixture dates use same-origin static JSON first. This keeps
+  // the initial public cards independent of a slow Supabase request.
+  const activeBusinessDate=qcBeijingBusinessToday();
+  if(String(dateStr||'')>=activeBusinessDate &&
+     typeof window.qcFetchLiveScheduleDate==='function'){
+    try{
+      const staticSchedule=await window.qcFetchLiveScheduleDate(dateStr);
+      if(staticSchedule?.data?.length) return staticSchedule;
+    }catch(error){
+      console.warn('静态赛程读取失败，回退兼容读取',error);
+    }
+  }
   if(!window.qcSupabase) return jcFetchDateRows(dateStr,false);
 
   // Finished dates must open from the saved post-game archive. That archive
