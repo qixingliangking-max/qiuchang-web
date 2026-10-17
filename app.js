@@ -4346,6 +4346,11 @@ function setupAuthStateRecovery(){
   qcAuthRecoveryBound=true;
 
   window.qcSupabase.auth.onAuthStateChange((event,session)=>{
+    if(event==='SIGNED_OUT'){
+      qcAccessStatePromise=null;
+      qcLastAccessState=null;
+      return;
+    }
     if(session) qcAccessStatePromise=null;
 
     const lateSession=Boolean(
@@ -4355,6 +4360,11 @@ function setupAuthStateRecovery(){
       ['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)
     );
     if(!lateSession) return;
+    // The initial anonymous static bundle cannot be reused after a late
+    // authenticated session becomes available.
+    if(typeof window.qcInvalidateOverviewBootstrap==='function'){
+      window.qcInvalidateOverviewBootstrap();
+    }
 
     const hasProtectedDataPage=Boolean(
       $('#jcLiveCards') || $('#jcFootballCards') || $('#jcMatchDetailRoot')
@@ -4493,6 +4503,10 @@ function qcEnsureDesktopRedeemModal(){
     hint.className='code-hint success';
 
     if(typeof qcAccessStatePromise!=='undefined') qcAccessStatePromise=null;
+    // Reload the bootstrap with the newly redeemed Pro entitlement.
+    if(typeof window.qcInvalidateOverviewBootstrap==='function'){
+      window.qcInvalidateOverviewBootstrap();
+    }
     setTimeout(()=>{
       close();
       if($('#jcLiveCards')) loadJcFrontend();
