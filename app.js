@@ -2667,6 +2667,10 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(selectedDate,dateRows);
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate && qcJcIsVisibleMatch(m));
+    // Yesterday's review uses this same public fixture data on screen. Hand it
+    // to the detail page even when the full day archive isn't finalized yet.
+    // Only PUBLIC identity/score/crest fields cross the navigation boundary.
+    rememberDetailPublicRows(previousDate,previousRows);
     const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
