@@ -1,0 +1,109 @@
+name: Live site mobile browser smoke test
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/live-site-browser-smoke.yml'
+permissions:
+  contents: write
+concurrency:
+  group: qcda-live-browser-smoke
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install isolated browser test tools
+        shell: bash
+        run: |
+          mkdir -p /tmp/qcda-smoke
+          cd /tmp/qcda-smoke
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Visit LIVE website and CLICK two detail entry paths
+        shell: bash
+        run: |
+          cat > /tmp/qcda-smoke/check.cjs <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          const fs=require('fs');
+          const BASE='https://qcda.cn';
+          const results=[];
+          async function visit(page,entry,selector){
+            const errors=[];
+            const network=[];
+            page.on('pageerror',error=>errors.push(String(error).slice(0,300)));
+            page.on('requestfailed',request=>network.push({url:request.url().slice(0,170),why:request.failure()?.errorText||''}));
+            const start=Date.now();
+            let httpStatus=null,domMs=null,dataMs=null,detailMs=null,clickedLink=null;
+            let dateLabel='',panelText='',matchText='',exception='';
+            try{
+              const response=await page.goto(BASE+entry,{waitUntil:'domcontentloaded',timeout:45000});
+              domMs=Date.now()-start;
+              httpStatus=response?.status()||null;
+              await page.locator(selector).first().waitFor({state:'attached',timeout:30000});
+              dataMs=Date.now()-start;
+              dateLabel=await page.locator('#jcDateLabel,#jcFootballDateLabel').first().textContent().catch(()=>'');
+              const link=page.locator(selector).first();
+              clickedLink=await link.getAttribute('href');
+              await link.click({timeout:16000});
+              await page.locator('#jcMatchDetailRoot .detail-head').first().waitFor({state:'visible',timeout:30000});
+              detailMs=Date.now()-start;
+              matchText=(await page.locator('#jcMatchDetailRoot .detail-head').first().innerText()).slice(0,240);
+              await page.waitForTimeout(1800);
+              panelText=(await page.locator('#jcMainPanel').first().innerText().catch(()=>'')).slice(0,300);
+            }catch(error){exception=String(error).slice(0,700);}
+            return {entry,selector,httpStatus,domMs,dataMs,detailMs,clickedLink,dateLabel,matchText,panelText,exception,errors:errors.slice(0,12),failedRequests:network.slice(0,12),finalUrl:page.url()};
+          }
+          (async()=>{
+            const engines=[
+              {name:'android-chromium',browserType:chromium,device:devices['Pixel 7']},
+              {name:'iphone-webkit',browserType:webkit,device:devices['iPhone 13']}
+            ];
+            for(const engine of engines){
+              let browser=null;
+              try{
+                browser=await engine.browserType.launch({headless:true});
+                const context=await browser.newContext({...engine.device,locale:'zh-CN'});
+                const page=await context.newPage();
+                const overview=await visit(page,'/index.html','#jcYesterdayCards a[href*="jc-match.html?id="]');
+                results.push({engine:engine.name,source:'今日速览→昨日回看→详情',...overview});
+                const football=await visit(page,'/football.html','#jcFootballCards a.jc-card-link');
+                results.push({engine:engine.name,source:'竞彩足球→详情',...football});
+                await context.close();
+              }catch(error){
+                results.push({engine:engine.name,exception:String(error).slice(0,800)});
+              }finally{if(browser)await browser.close();}
+            }
+            const report={testedAt:new Date().toISOString(),base:BASE,mode:'guest, live network, Android Chromium + desktop-hosted iPhone WebKit emulation',results};
+            fs.mkdirSync('.github/reports',{recursive:true});
+            fs.writeFileSync('.github/reports/live-site-browser-smoke.json',JSON.stringify(report,null,2)+'\n');
+            console.log('QCDA_LIVE_BROWSER_TEST='+JSON.stringify(report));
+            for(const row of results){
+              const msg=[row.engine,row.source,'HTTP='+row.httpStatus,'DOMContentLoaded='+row.domMs+'ms','cards='+row.dataMs+'ms','detail header='+row.detailMs+'ms','error='+String(row.exception||'').slice(0,200)].join(' ');
+              console.log('::notice title=Mobile website test::'+msg.replace(/\n/g,' '));
+            }
+          })().catch(error=>{console.error(error);process.exitCode=1});
+          JS
+          node /tmp/qcda-smoke/check.cjs
+      - name: Persist audit report to repository
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -f .github/reports/live-site-browser-smoke.json ]; then
+            echo '{"error":"Browser installation or test did not produce a report"}' > .github/reports/live-site-browser-smoke.json
+          fi
+          git add .github/reports/live-site-browser-smoke.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(site): save live mobile browser click timings'
+          git pull --rebase origin main
+          git push origin HEAD:main
