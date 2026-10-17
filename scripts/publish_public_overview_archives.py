@@ -67,6 +67,15 @@ def additional_public_fixtures(day, original):
         if str(r.get("id")) in known:
             continue
         raw = r.get("raw") or {}
+        status = str(r.get("match_status") or "") + " " + str(raw.get("matchStatusName") or "")
+        # Do not surface unfinished, stopped, postponed or not-yet-on-sale
+        # fixtures as immutable historical match cards.
+        final_score = str(raw.get("sectionsNo999") or "").strip()
+        if not final_score or any(token in status.lower() for token in (
+            "中止", "延期", "取消", "待开售", "未开赛",
+            "abandoned", "postponed", "cancelled", "suspended"
+        )):
+            continue
         extras.append({
             "id": r.get("id"), "match_num": r.get("match_num"),
             "business_date": day, "league_name": r.get("league_name"),
@@ -119,7 +128,9 @@ def publish():
             if target.is_file():
                 old = json.loads(target.read_text(encoding="utf-8"))
                 # Published fully final archives are immutable.
-                if old.get("is_final") is True:
+                # A manually hidden interrupted fixture stays excluded until
+                # a maintainer explicitly revisits that publishing decision.
+                if old.get("is_final") is True or old.get("hidden_exceptions"):
                     continue
                 # For an incomplete day, promote only additional confirmed FT
                 # results (or the definitive FINAL). Never rewrite already
