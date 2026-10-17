@@ -89,6 +89,29 @@
         return localResult;
       }
     }
+    // The public day file has a deterministic same-origin name. Fetch it
+    // directly on a cold open instead of serializing manifest.json -> day.json.
+    // The manifest remains a compatibility fallback for unpublished dates.
+    if(!force && !local?.payload){
+      try{
+        const direct='data/overview/live/'+ds+'.json';
+        const response=await fetch(direct,{cache:'no-cache'});
+        if(response.ok){
+          const payload=await response.json();
+          if(payload?.business_date===ds){
+            const rows=normalizeRows(payload,ds);
+            if(rows){
+              writeJson(localKey(ds),{version:'direct',payload});
+              const result={data:rows,error:null,fromScheduleSnapshot:true,fromLiveStaticSchedule:true,fromDirectStatic:true};
+              memory.set(ds,{version:'direct',result});
+              return result;
+            }
+          }
+        }
+      }catch(error){
+        console.warn('当日固定赛程直读失败，回退清单路径',ds,error);
+      }
+    }
     try{
       const manifest=await loadManifest(force);
       const entry=manifest.dates?.[ds];
