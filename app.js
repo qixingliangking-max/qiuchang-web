@@ -2793,6 +2793,12 @@ async function loadJcFrontend(){
   accessPromise.then(async resolved=>{
     access=resolved||{loggedIn:false,isPro:false,userId:null};
     if(access.isPro){
+      // The public static schedule is already loaded. After server-verified
+      // Pro access, show the complete table immediately with "待生成" for
+      // unapproved rows. A missing/slow prediction snapshot is NOT a reason
+      // to hide the 25 fixtures behind a perpetual loading card.
+      accessDisplayPhase='ready';
+      render();
       const ds=selectedDate;
       const token=loadToken;
       try{
@@ -2810,8 +2816,11 @@ async function loadJcFrontend(){
           });
           allRows=[...allRows.filter(m=>jcBusinessDate(m)!==ds),...replacement];
         }
-        accessDisplayPhase=authorized?'ready':'unavailable';
-        // Do not wait for yesterday's second snapshot to release today's card.
+        // A complete published prediction replaces placeholders for Pro.
+        // With no locked snapshot, continue showing the static fixture table.
+        // Only unavailable public fixtures have no table to display.
+        accessDisplayPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
+          ? 'ready' : 'unavailable';
         render();
         const prevDate=qcAddDays(ds,-1);
         const history=await fetchHistoryReviewDateReady(
@@ -2825,9 +2834,10 @@ async function loadJcFrontend(){
           render();
         }
       }catch(error){
-        console.warn('Pro静态快照后台补齐失败',error);
+        console.warn('Pro静态快照后台补齐失败，保留完整公开赛程与待生成占位',error);
         if(token===loadToken && selectedDate===ds){
-          accessDisplayPhase='unavailable';
+          accessDisplayPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
+            ? 'ready' : 'unavailable';
           render();
         }
       }
