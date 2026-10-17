@@ -1129,6 +1129,25 @@ function jcPatchFootballExtras(root,rows,access){
   });
 }
 
+function jcPatchFootballOddsOnly(root,rows){
+  if(!root || !Array.isArray(rows) || !rows.length) return;
+  const byId=new Map(rows.map(m=>[String(m.id),m]));
+  $$('.jc-football-card[data-match-id]',root).forEach(card=>{
+    const m=byId.get(String(card.dataset.matchId||''));
+    const odds=m?$('.jc-mini-odds',card):null;
+    if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
+  });
+}
+function jcPatchFootballHitsOnly(root,rows,access){
+  if(!root || !Array.isArray(rows) || !rows.length) return;
+  const byId=new Map(rows.map(m=>[String(m.id),m]));
+  $$('.jc-football-card[data-match-id]',root).forEach(card=>{
+    const m=byId.get(String(card.dataset.matchId||''));
+    const hit=m?$('.jc-card-after-odds',card):null;
+    if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
+  });
+}
+
 const JC_MATCH_BASE_SELECT='id,match_num,business_date,league_name,league_short_name,home_team_name,away_team_name,match_date,match_time,kickoff_at,match_status,raw';
 const JC_MATCH_WITH_SNAPSHOTS_SELECT=JC_MATCH_BASE_SELECT+',jc_market_snapshots(pool_code,goal_line,outcomes,captured_at,official_update_time)';
 const JC_MATCH_OVERVIEW_SELECT=JC_MATCH_BASE_SELECT;
@@ -1332,14 +1351,36 @@ function qcPrepareHistoryOverviewRows(record){
   return rows;
 }
 
+// Public, finalized match history can be reused across separate page visits.
+// Do not persist incomplete dates or protected current-day predictions.
+function qcFinalHistoryKey(ds){ return 'qc-public-final-history-v1:'+ds; }
+function qcReadFinalHistoryFromStorage(ds){
+  try{
+    const record=JSON.parse(localStorage.getItem(qcFinalHistoryKey(ds))||'null');
+    const count=Number(record?.match_count||0);
+    if(!record || record.is_final!==true || String(record.business_date)!==ds ||
+       !Number.isInteger(count) || count<=0 || Number(record.finished_count)!==count ||
+       !Array.isArray(record.payload?.rows) || record.payload.rows.length!==count ||
+       !record.payload.rows.every(m=>m?.id && String(m.business_date)===ds)) return null;
+    const rows=qcPrepareHistoryOverviewRows(record);
+    if(!rows.every(m=>jcScoreInfo(m).finished)) return null;
+    return {data:rows,error:null,fromHistorySnapshot:true,historyFinal:true,
+      finishedCount:count,matchCount:count,historySource:record.source||'final_static_history',
+      fromLocalFinalHistory:true};
+  }catch(_){return null;}
+}
+function qcSaveFinalHistoryToStorage(ds,record,rows){
+  const count=Number(record?.match_count||0);
+  if(!record || record.is_final!==true || String(record.business_date)!==ds ||
+     !Number.isInteger(count) || count<=0 || Number(record.finished_count)!==count ||
+     !Array.isArray(rows) || rows.length!==count ||
+     !rows.every(m=>jcScoreInfo(m).finished)) return;
+  try{localStorage.setItem(qcFinalHistoryKey(ds),JSON.stringify(record));}catch(_){}
+}
+
 async function qcFetchHistoryOverviewDate(dateStr,force=false){
   const key=String(dateStr||'');
   if(!key || !window.qcSupabase) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
-
-  const frozen=await qcFetchFrozenOverviewDate(key);
-  if(frozen){
-    return {...frozen,fromHistorySnapshot:true,historyFinal:true};
-  }
 
   const now=Date.now();
   const cached=qcHistoryOverviewRowsCache.get(key);
@@ -1352,6 +1393,17 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
     };
   }
   if(!force && cached?.promise) return cached.promise;
+  if(!force){
+    const local=qcReadFinalHistoryFromStorage(key);
+    if(local){
+      qcHistoryOverviewRowsCache.set(key,{data:local.data,savedAt:now,isFinal:true,
+        finishedCount:local.finishedCount,matchCount:local.matchCount});
+      return local;
+    }
+  }
+
+  const frozen=await qcFetchFrozenOverviewDate(key);
+  if(frozen) return {...frozen,fromHistorySnapshot:true,historyFinal:true};
 
   const promise=window.qcSupabase
     .from('jc_history_overview_snapshots')
@@ -1373,6 +1425,7 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
         data:rows,savedAt:Date.now(),isFinal:meta.historyFinal,
         finishedCount:meta.finishedCount,matchCount:meta.matchCount
       });
+      qcSaveFinalHistoryToStorage(key,record,rows);
       return meta;
     })
     .catch(error=>{
@@ -1578,13 +1631,31 @@ async function loadJcFootball(){
   const paramDate=new URLSearchParams(location.search).get('date');
   const candidateDate=paramDate && /^\d{4}-\d{2}-\d{2}$/.test(paramDate)?paramDate:today;
 
-  // Base schedule and auth resolve in parallel. Odds/model/date-index data never blocks first paint.
+  // Public fixtures start immediately; Safari session checks cannot gate them.
+  // The preview contains only public match data, never Pro predictions.
   const candidatePromise=jcFetchFootballScheduleRows(candidateDate);
-  const access=await qcGetAccessState();
+  const accessPromise=qcGetAccessState();
+  const quickLabel=$('#jcFootballDateLabel');
+  if(quickLabel){
+    const d=new Date(candidateDate+'T12:00:00+08:00');
+    quickLabel.textContent=candidateDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+  }
+  if(candidateDate===today){
+    candidatePromise.then(result=>{
+      if(result?.error || !Array.isArray(result.data) || !cards.querySelector('.profile-card')) return;
+      const visible=result.data.filter(m=>m.match_date && qcJcIsVisibleMatch(m));
+      if(!visible.length) return;
+      cards.dataset.qcPublicPreview='1';
+      cards.innerHTML=jcRenderFootballCards(visible,calendarToday,{loggedIn:false,isPro:false});
+      const counter=$('#jcFootballFixtureCount');
+      if(counter) counter.textContent='共'+visible.length+'场';
+    }).catch(()=>{});
+  }
+  const access=await accessPromise;
   const initialDate=access.loggedIn?candidateDate:today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
-    : await jcFetchDateRows(initialDate,false);
+    : await jcFetchFootballScheduleRows(initialDate);
   const {data,error}=initial;
 
   if(error){
@@ -1735,19 +1806,22 @@ async function loadJcFootball(){
   }
 
   async function hydrateFootballRows(rows,ds,token,patchDom=true){
-    // Pro 读取全部赛前模型；未登录/普通用户只在完赛后读取已锁定模型，
-    // 用于计算并展示“赛前预测命中”，不会开放未完赛的预测内容。
     const modelRows=access.isPro?rows:rows.filter(m=>jcScoreInfo(m).finished);
-    // Public odds stay visible for every listed match. Use only the latest
-    // pre-kickoff snapshot per play, so this remains lightweight for guests.
-    const snapshotRows=rows;
-    await Promise.all([
-      snapshotRows.length?jcAttachLatestSnapshots(snapshotRows):Promise.resolve(snapshotRows),
-      modelRows.length?jcAttachModels(modelRows):Promise.resolve(modelRows),
-      jcAttachTeamLogos(rows)
+    const valid=()=>patchDom && token===loadToken && selectedDate===ds;
+    // Odds are public and must not wait for models or image proxy latency.
+    await Promise.allSettled([
+      jcAttachLatestSnapshots(rows).then(()=>{
+        if(!valid()) return;
+        jcPatchFootballOddsOnly(cards,rows);
+        jcPatchFootballHitsOnly(cards,rows,access);
+      }),
+      (modelRows.length?jcAttachModels(modelRows):Promise.resolve()).then(()=>{
+        if(valid()) jcPatchFootballHitsOnly(cards,rows,access);
+      }),
+      jcAttachTeamLogos(rows).then(()=>{
+        if(valid()) jcPatchFootballLogos(cards,rows);
+      })
     ]);
-    if(token!==loadToken || selectedDate!==ds) return;
-    if(patchDom) jcPatchFootballExtras(cards,rows,access);
   }
 
   function hydrateHistoricalFootballExtras(rows,ds,token){
@@ -1776,7 +1850,13 @@ async function loadJcFootball(){
     const token=++loadToken;
     const cache=qcJcDateRowsCache.get(ds);
     const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
-    if(!cacheFresh) cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+    const historyCached=ds<today && (
+      Boolean(qcHistoryOverviewRowsCache.get(ds)?.isFinal) ||
+      Boolean(qcReadFinalHistoryFromStorage(ds))
+    );
+    if(!cacheFresh && !historyCached && !cards.querySelector('.jc-football-card')){
+      cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+    }
 
     const result=await jcFetchFootballScheduleRows(ds);
     if(token!==loadToken) return;
@@ -1823,6 +1903,7 @@ async function loadJcFootball(){
     renderLeagueMenu(dateRows);
     renderInlineLeagueTabs(dateRows);
     if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
+    delete cards.dataset.qcPublicPreview;
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
     if(!dateLocked){
@@ -1888,6 +1969,18 @@ async function loadJcFootball(){
           refreshFootballLive().catch(()=>{});
         }
       });
+  }
+
+  // One quiet public-FINAL prefetch after first paint. Date navigation can
+  // then reuse the immutable history even after leaving and returning.
+  if(initialDate===today && access.loggedIn){
+    const yesterday=qcAddDays(today,-1);
+    const warm=()=>qcFetchHistoryOverviewDate(yesterday).catch(()=>{});
+    if(typeof window.requestIdleCallback==='function'){
+      window.requestIdleCallback(warm,{timeout:2400});
+    }else{
+      setTimeout(warm,800);
+    }
   }
 
   async function refreshFootballLive(){
