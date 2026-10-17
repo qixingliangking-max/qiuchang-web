@@ -12,6 +12,7 @@ on:
       - 'scripts/cache_static_team_logos.py'
       - 'data/overview/manifest.json'
       - 'data/overview/*.json'
+      - '!data/overview/live-schedule-manifest.json'
       - '.github/workflows/cache-static-team-logos.yml'
 
 permissions:
