@@ -1,0 +1,51 @@
+name: Publish confirmed final scores into static fixture file
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Silent checks. Git commits/deployments happen ONLY for newly confirmed FT.
+    # GH scheduled jobs are best effort and may start a few minutes late.
+    - cron: '4,14,24,34,44,54 * * * *'
+  push:
+    paths:
+      - 'scripts/publish_final_scores.py'
+      - '.github/workflows/publish-finished-scores.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  # Shares the crest/schedule writer lock: never race on live manifest/files.
+  group: qcda-immutable-team-crests
+  cancel-in-progress: false
+
+jobs:
+  publish-confirmed-final:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Checkout published public data
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assert final-only update invariants
+        run: python3 scripts/publish_final_scores.py --self-test
+
+      - name: Copy newly confirmed FT into static fixture without changing other fields
+        run: python3 scripts/publish_final_scores.py
+
+      - name: Publish versioned final snapshot only if any match newly finished
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add data/overview/live/ data/overview/live-schedule-manifest.json
+          if git diff --cached --quiet; then
+            echo 'No new official finals. No file change or deployment.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'data(scores): freeze newly confirmed finished fixtures'
+          git pull --rebase origin main
+          git push origin HEAD:main
