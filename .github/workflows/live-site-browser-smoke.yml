@@ -9,7 +9,7 @@ on:
       - 'index.html'
       - 'football.html'
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: qcda-live-browser-smoke
   cancel-in-progress: false
@@ -121,17 +121,11 @@ jobs:
           })().catch(error=>{console.error(error);process.exitCode=1});
           JS
           node /tmp/qcda-smoke/check.cjs
-      - name: Persist audit report to repository
+      - name: Upload standalone browser audit (no Pages rebuild)
         if: always()
-        shell: bash
-        run: |
-          if [ ! -f .github/reports/live-site-browser-smoke.json ]; then
-            echo '{"error":"Browser installation or test did not produce a report"}' > .github/reports/live-site-browser-smoke.json
-          fi
-          git add .github/reports/live-site-browser-smoke.json
-          if git diff --cached --quiet; then exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'test(site): save live mobile browser click timings'
-          git pull --rebase origin main
-          git push origin HEAD:main
+        uses: actions/upload-artifact@v4
+        with:
+          name: qcda-live-browser-audit
+          path: .github/reports/live-site-browser-smoke.json
+          if-no-files-found: warn
+          retention-days: 14
