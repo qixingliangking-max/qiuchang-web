@@ -36,6 +36,19 @@
         <div class="date-switch">
           <button id="jcPrevDate" type="button" aria-label="上一天">◀</button>
           <button id="jcDateLabel" class="date-label-btn" type="button">读取日期…</button>
+<script>
+  // Date is public metadata: show it before any external JS/auth/database work.
+  (()=>{try{
+    const now=new Date();
+    const bj=new Date(now.getTime()+8*3600000);
+    
+    const value=new URLSearchParams(location.search).get('date');
+    const base=(!value || !/^\d{4}-\d{2}-\d{2}$/.test(value))?bj.toISOString().slice(0,10):value;
+    const date=new Date(base+'T12:00:00+08:00');
+    const el=document.getElementById('jcDateLabel');
+    if(el)el.textContent=base.slice(5)+' '+new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'}).format(date);
+  }catch(_){} })();
+  </script>
           <button id="jcNextDate" type="button" aria-label="下一天">▶</button>
         </div>
         <button id="jcTodayBtn" class="jc-today-btn" type="button">回到今日</button>
@@ -89,8 +102,8 @@
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
 <script defer src="data.js"></script>
 <script defer src="assets/team-logos/catalog.js?v=20261017crestready2"></script>
-<script defer src="overview-live-static.js?v=20261017hitsfix3"></script>
-<script defer src="app.js?v=20261017loadingcopy12"></script>
+<script defer src="overview-live-static.js?v=20261018direct13"></script>
+<script defer src="app.js?v=20261018fastfirst13"></script>
 <script defer src="overview-static-first.js?v=20261009staticfirst4"></script>
 <script defer src="overview-schedule-snapshot.js?v=20261017forcefix1"></script>
 <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
