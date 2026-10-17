@@ -10,7 +10,8 @@ on:
   push:
     paths:
       - 'scripts/cache_static_team_logos.py'
-      - 'data/overview/**'
+      - 'data/overview/manifest.json'
+      - 'data/overview/*.json'
       - '.github/workflows/cache-static-team-logos.yml'
 
 permissions:
@@ -37,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add assets/team-logos/ data/team-logos/catalog.json
+          git add assets/team-logos/ data/team-logos/catalog.json data/overview/live/ data/overview/live-schedule-manifest.json
           if git diff --cached --quiet; then
             echo 'No new teams or crest files. Nothing to publish.'
             exit 0
