@@ -1,0 +1,532 @@
+{
+  "version": 1,
+  "business_date": "2026-10-18",
+  "match_count": 25,
+  "rows": [
+    {
+      "id": "474674ef-1119-4e50-9921-f31e3d1aea03",
+      "match_num": "周日001",
+      "business_date": "2026-10-18",
+      "league_name": "日职",
+      "league_short_name": "日职",
+      "home_team_name": "町田泽维亚",
+      "away_team_name": "福冈黄蜂",
+      "match_date": "2026-10-18",
+      "match_time": "15:00:00",
+      "kickoff_at": "2026-10-18T07:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-194011.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8270.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67",
+      "match_num": "周日002",
+      "business_date": "2026-10-18",
+      "league_name": "韩职",
+      "league_short_name": "韩职",
+      "home_team_name": "江原FC",
+      "away_team_name": "仁川联",
+      "match_date": "2026-10-18",
+      "match_time": "15:30:00",
+      "kickoff_at": "2026-10-18T07:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-164734.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-133895.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "20aceaf6-69b8-42b4-9bd7-a63244d4a802",
+      "match_num": "周日003",
+      "business_date": "2026-10-18",
+      "league_name": "韩职",
+      "league_short_name": "韩职",
+      "home_team_name": "首尔FC",
+      "away_team_name": "金泉尚武",
+      "match_date": "2026-10-18",
+      "match_time": "15:30:00",
+      "kickoff_at": "2026-10-18T07:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-92630.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-133901.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "220632a5-8b77-4be3-bc48-ca06727fbdc0",
+      "match_num": "周日004",
+      "business_date": "2026-10-18",
+      "league_name": "荷甲",
+      "league_short_name": "荷甲",
+      "home_team_name": "兹沃勒",
+      "away_team_name": "前进之鹰",
+      "match_date": "2026-10-18",
+      "match_time": "18:15:00",
+      "kickoff_at": "2026-10-18T10:15:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6413.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6433.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d1ce48cb-1774-4f6a-9079-641693f9e466",
+      "match_num": "周日005",
+      "business_date": "2026-10-18",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "乌迪内斯",
+      "away_team_name": "莱切",
+      "match_date": "2026-10-18",
+      "match_time": "18:30:00",
+      "kickoff_at": "2026-10-18T10:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8600.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9888.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "bb8e0f6e-0c99-4d59-b5db-80ca6b3365a8",
+      "match_num": "周日006",
+      "business_date": "2026-10-18",
+      "league_name": "西甲",
+      "league_short_name": "西甲",
+      "home_team_name": "奥萨苏纳",
+      "away_team_name": "桑坦德竞技",
+      "match_date": "2026-10-18",
+      "match_time": "20:00:00",
+      "kickoff_at": "2026-10-18T12:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8371.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8696.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "49c967ed-c286-47e0-905b-5a113ead86f8",
+      "match_num": "周日007",
+      "business_date": "2026-10-18",
+      "league_name": "瑞超",
+      "league_short_name": "瑞超",
+      "home_team_name": "天狼星",
+      "away_team_name": "埃尔夫斯堡",
+      "match_date": "2026-10-18",
+      "match_time": "20:00:00",
+      "kickoff_at": "2026-10-18T12:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6694.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8014.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "ffcf6a55-c78b-4c44-8fa7-cdaf72ad9a18",
+      "match_num": "周日008",
+      "business_date": "2026-10-18",
+      "league_name": "芬超",
+      "league_short_name": "芬超",
+      "home_team_name": "库奥皮奥",
+      "away_team_name": "瓦萨",
+      "match_date": "2026-10-18",
+      "match_time": "20:00:00",
+      "kickoff_at": "2026-10-18T12:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-1693.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6597.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f655137a-7c06-48d2-8e8d-673aae8582ee",
+      "match_num": "周日009",
+      "business_date": "2026-10-18",
+      "league_name": "挪超",
+      "league_short_name": "挪超",
+      "home_team_name": "萨尔普斯堡",
+      "away_team_name": "罗森博格",
+      "match_date": "2026-10-18",
+      "match_time": "20:30:00",
+      "kickoff_at": "2026-10-18T12:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-5002.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8422.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d249567a-aa4a-48c5-9a6f-abd8a324cdd1",
+      "match_num": "周日010",
+      "business_date": "2026-10-18",
+      "league_name": "英超",
+      "league_short_name": "英超",
+      "home_team_name": "利兹联",
+      "away_team_name": "曼彻斯特联",
+      "match_date": "2026-10-18",
+      "match_time": "21:00:00",
+      "kickoff_at": "2026-10-18T13:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8463.png",
+      "_awayLogoUrl": "assets/team-logos/espn-soccer-360.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "223cfa51-a118-4f63-a154-82c9d4080bb1",
+      "match_num": "周日011",
+      "business_date": "2026-10-18",
+      "league_name": "英超",
+      "league_short_name": "英超",
+      "home_team_name": "伯恩茅斯",
+      "away_team_name": "桑德兰",
+      "match_date": "2026-10-18",
+      "match_time": "21:00:00",
+      "kickoff_at": "2026-10-18T13:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8678.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8472.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "0ad0538c-804a-40ff-84ae-912f2acfac98",
+      "match_num": "周日012",
+      "business_date": "2026-10-18",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "佛罗伦萨",
+      "away_team_name": "科莫",
+      "match_date": "2026-10-18",
+      "match_time": "21:00:00",
+      "kickoff_at": "2026-10-18T13:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8535.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10171.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "2f5bd91b-4252-418d-8434-61e6a08cd1fe",
+      "match_num": "周日013",
+      "business_date": "2026-10-18",
+      "league_name": "法甲",
+      "league_short_name": "法甲",
+      "home_team_name": "昂热",
+      "away_team_name": "马赛",
+      "match_date": "2026-10-18",
+      "match_time": "21:00:00",
+      "kickoff_at": "2026-10-18T13:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8121.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8592.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "b9ba7a38-a617-40ff-a9e9-aae1e8ac3c07",
+      "match_num": "周日014",
+      "business_date": "2026-10-18",
+      "league_name": "德甲",
+      "league_short_name": "德甲",
+      "home_team_name": "勒沃库森",
+      "away_team_name": "弗赖堡",
+      "match_date": "2026-10-18",
+      "match_time": "21:30:00",
+      "kickoff_at": "2026-10-18T13:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8178.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8358.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "44406d65-5652-4351-9f55-c7f88b914976",
+      "match_num": "周日015",
+      "business_date": "2026-10-18",
+      "league_name": "西甲",
+      "league_short_name": "西甲",
+      "home_team_name": "维戈塞尔塔",
+      "away_team_name": "阿拉维斯",
+      "match_date": "2026-10-18",
+      "match_time": "22:15:00",
+      "kickoff_at": "2026-10-18T14:15:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9910.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9866.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "95b0bdbc-8fba-4327-b445-28b5573ceb48",
+      "match_num": "周日016",
+      "business_date": "2026-10-18",
+      "league_name": "荷甲",
+      "league_short_name": "荷甲",
+      "home_team_name": "格罗宁根",
+      "away_team_name": "阿贾克斯",
+      "match_date": "2026-10-18",
+      "match_time": "22:45:00",
+      "kickoff_at": "2026-10-18T14:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8674.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8593.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "4a4f7a54-0d02-41f1-8c7e-fc7926aa9769",
+      "match_num": "周日017",
+      "business_date": "2026-10-18",
+      "league_name": "法甲",
+      "league_short_name": "法甲",
+      "home_team_name": "洛里昂",
+      "away_team_name": "摩纳哥",
+      "match_date": "2026-10-18",
+      "match_time": "23:15:00",
+      "kickoff_at": "2026-10-18T15:15:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8689.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9829.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "2d1dcabd-2a9a-40f3-9f56-5b5f37472f8f",
+      "match_num": "周日018",
+      "business_date": "2026-10-18",
+      "league_name": "英超",
+      "league_short_name": "英超",
+      "home_team_name": "诺丁汉森林",
+      "away_team_name": "阿森纳",
+      "match_date": "2026-10-18",
+      "match_time": "23:30:00",
+      "kickoff_at": "2026-10-18T15:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10203.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9825.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "9314d77c-bf77-4dca-8f14-b7e3e7350c2d",
+      "match_num": "周日019",
+      "business_date": "2026-10-18",
+      "league_name": "德甲",
+      "league_short_name": "德甲",
+      "home_team_name": "门兴格拉德巴赫",
+      "away_team_name": "霍芬海姆",
+      "match_date": "2026-10-18",
+      "match_time": "23:30:00",
+      "kickoff_at": "2026-10-18T15:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9788.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8226.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "22dfcd6a-829b-408c-ba98-fcc652e777df",
+      "match_num": "周日020",
+      "business_date": "2026-10-18",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "AC米兰",
+      "away_team_name": "亚特兰大",
+      "match_date": "2026-10-19",
+      "match_time": "00:00:00",
+      "kickoff_at": "2026-10-18T16:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8564.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8524.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "dc2ea5e4-9b7b-49cc-a022-db29d168a4b6",
+      "match_num": "周日021",
+      "business_date": "2026-10-18",
+      "league_name": "西甲",
+      "league_short_name": "西甲",
+      "home_team_name": "马拉加",
+      "away_team_name": "皇家社会",
+      "match_date": "2026-10-19",
+      "match_time": "00:30:00",
+      "kickoff_at": "2026-10-18T16:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9864.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8560.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "41fedf23-9d54-4260-afa4-64f42ad07dba",
+      "match_num": "周日022",
+      "business_date": "2026-10-18",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "尤文图斯",
+      "away_team_name": "拉齐奥",
+      "match_date": "2026-10-19",
+      "match_time": "02:45:00",
+      "kickoff_at": "2026-10-18T18:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9885.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8543.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "7f4393d3-6600-42f2-997b-5fbe5e91b1f5",
+      "match_num": "周日023",
+      "business_date": "2026-10-18",
+      "league_name": "法甲",
+      "league_short_name": "法甲",
+      "home_team_name": "里昂",
+      "away_team_name": "尼斯",
+      "match_date": "2026-10-19",
+      "match_time": "02:45:00",
+      "kickoff_at": "2026-10-18T18:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9748.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9831.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "e31872d5-3964-468d-9e9b-24eb38848b6c",
+      "match_num": "周日024",
+      "business_date": "2026-10-18",
+      "league_name": "西甲",
+      "league_short_name": "西甲",
+      "home_team_name": "皇家马德里",
+      "away_team_name": "塞维利亚",
+      "match_date": "2026-10-19",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-10-18T19:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8633.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8302.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "fc9e002e-dae1-40ab-91d9-5748d1efa960",
+      "match_num": "周日025",
+      "business_date": "2026-10-18",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "弗鲁米嫩塞",
+      "away_team_name": "桑托斯",
+      "match_date": "2026-10-19",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-10-18T19:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9863.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8514.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
