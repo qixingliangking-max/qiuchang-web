@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - '.github/workflows/live-site-browser-smoke.yml'
+      - 'app.js'
+      - 'overview-live-static.js'
+      - 'index.html'
+      - 'football.html'
 permissions:
   contents: write
 concurrency:
