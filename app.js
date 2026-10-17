@@ -402,7 +402,7 @@ function jcHandicapResult(score,goalLine){
 let qcAccessStatePromise=null;
 let qcLastAccessState=null;
 
-async function qcGetAccessState(force=false){
+async function qcGetAccessState(force=false,overviewBundlePromise=null){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
 
@@ -441,16 +441,33 @@ async function qcGetAccessState(force=false){
 
       let isPro=false;
       let proError=null;
-      for(let attempt=0;attempt<2;attempt++){
-        const result=await window.qcSupabase.rpc('has_active_pro_access');
-        proError=result.error||null;
-        if(!proError){
-          isPro=result.data===true;
-          break;
+      let verifiedByOverview=false;
+      // The homepage bootstrap already checks the current user's Pro access
+      // on the server. Reuse that verdict rather than issuing a second RPC.
+      // Other pages (or a failed bootstrap) retain the original check.
+      if(overviewBundlePromise){
+        try{
+          const bundle=await overviewBundlePromise;
+          if(bundle && typeof bundle.is_pro==='boolean'){
+            isPro=bundle.is_pro===true;
+            verifiedByOverview=true;
+          }
+        }catch(error){
+          console.warn('首页权限复用失败，使用独立权限检查',error);
         }
-        if(attempt===0) await new Promise(resolve=>setTimeout(resolve,320));
       }
-      if(proError) console.warn('读取Pro权限失败',proError);
+      if(!verifiedByOverview){
+        for(let attempt=0;attempt<2;attempt++){
+          const result=await window.qcSupabase.rpc('has_active_pro_access');
+          proError=result.error||null;
+          if(!proError){
+            isPro=result.data===true;
+            break;
+          }
+          if(attempt===0) await new Promise(resolve=>setTimeout(resolve,320));
+        }
+        if(proError) console.warn('读取Pro权限失败',proError);
+      }
 
       qcLastAccessState={loggedIn:true,isPro,userId:session.user?.id||null};
       return qcLastAccessState;
@@ -1948,13 +1965,13 @@ async function loadJcFrontend(){
   // Auth and data start together. Yesterday's finished review is public, so it can
   // paint immediately without waiting for login/Pro detection.
   qcLoadFrozenOverviewManifest();
-  const accessPromise=qcGetAccessState();
-  // Start the current static snapshot request in parallel with membership
-  // validation, restoring the original fast first-load behavior. The RPC
-  // itself verifies Pro entitlement and never exposes protected predictions.
+  // Fetch the authorized static bundle immediately. Its server-verified
+  // is_pro verdict also replaces the homepage's redundant membership RPC.
+  // Session resolution and the static request still run concurrently.
   const candidateCurrentPromise=typeof window.qcFetchOverviewBootstrap==='function'
     ? window.qcFetchOverviewBootstrap(candidateDate)
     : null;
+  const accessPromise=qcGetAccessState(false,candidateCurrentPromise);
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
