@@ -2841,9 +2841,14 @@ async function loadJcFrontend(){
         // A complete published prediction replaces placeholders for Pro.
         // With no locked snapshot, continue showing the static fixture table.
         // Only unavailable public fixtures have no table to display.
-        accessDisplayPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
+        const nextPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
           ? 'ready' : 'unavailable';
-        render();
+        const changedTable=authorized || nextPhase!==accessDisplayPhase;
+        accessDisplayPhase=nextPhase;
+        // The static schedule and "待生成" cells are already on screen.
+        // Do not tear down/rebuild all rows merely because an empty Pro
+        // snapshot request has returned; update only on actual data change.
+        if(changedTable) render();
         const prevDate=qcAddDays(ds,-1);
         const history=await fetchHistoryReviewDateReady(
           prevDate,ds===candidateDate?candidatePreviousPromise:null
