@@ -1,0 +1,107 @@
+{
+  "testedAt": "2026-10-17T14:55:55.873Z",
+  "base": "https://qcda.cn",
+  "mode": "guest, live network, Android Chromium + desktop-hosted iPhone WebKit emulation",
+  "results": [
+    {
+      "engine": "android-chromium",
+      "source": "今日速览→昨日回看→详情",
+      "entry": "/index.html",
+      "selector": "#jcYesterdayCards a[href*=\"jc-match.html?id=\"]",
+      "httpStatus": 200,
+      "domMs": 1074,
+      "dataMs": 1268,
+      "detailMs": 2688,
+      "clickedLink": "jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930",
+      "dateLabel": "10月17日 周六",
+      "matchText": "周五001 · 澳超\n2026-10-16 17:00\n悉尼FC\n0-0\n完赛\n西悉尼漫步者\n赛况数据\n赔率详情\nAI分析",
+      "panelText": "悉尼FC vs 西悉尼漫步者｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-16 17:00\n🔒 登录查看完整报告",
+      "exception": "",
+      "errors": [],
+      "failedRequests": [
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches?select=id%2Cmatch_num%2Cbusiness_date%2Cleague_name%2Cleague_short_name%2Chome_team_name%2Caway_team_name%2Cma",
+          "why": "net::ERR_ABORTED"
+        }
+      ],
+      "finalUrl": "https://qcda.cn/jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930"
+    },
+    {
+      "engine": "android-chromium",
+      "source": "竞彩足球→详情",
+      "entry": "/football.html",
+      "selector": "#jcFootballCards a.jc-card-link",
+      "httpStatus": 200,
+      "domMs": 94,
+      "dataMs": 156,
+      "detailMs": 451,
+      "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
+      "dateLabel": "10-17 周六",
+      "matchText": "周六001 · 澳超\n2026-10-17 14:00\n麦克阿瑟FC\n2-1\n半 0-0\n珀斯光荣\n赛况数据\n赔率详情\nAI分析",
+      "panelText": "麦克阿瑟FC vs 珀斯光荣｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-17 14:00\n🔒 登录查看完整报告",
+      "exception": "",
+      "errors": [],
+      "failedRequests": [
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots?select=jc_match_id%2Cpool_code%2Cgoal_line%2Coutcomes%2Ccaptured_at%2Cofficial_update_",
+          "why": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs?select=id%2Cjc_match_id%2Cmodel_version%2Cstage%2Cdirection%2Csingle_pick%2Chandicap_direction%2Chtft_to",
+          "why": "net::ERR_ABORTED"
+        }
+      ],
+      "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
+    },
+    {
+      "engine": "iphone-webkit",
+      "source": "今日速览→昨日回看→详情",
+      "entry": "/index.html",
+      "selector": "#jcYesterdayCards a[href*=\"jc-match.html?id=\"]",
+      "httpStatus": 200,
+      "domMs": 677,
+      "dataMs": 990,
+      "detailMs": 2861,
+      "clickedLink": "jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930",
+      "dateLabel": "10月17日 周六",
+      "matchText": "周五001 · 澳超\n2026-10-16 17:00\n\n悉尼FC\n0-0\n完赛\n\n西悉尼漫步者\n赛况数据\n赔率详情\nAI分析\n",
+      "panelText": "悉尼FC vs 西悉尼漫步者｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-16 17:00\n🔒 登录查看完整报告\n",
+      "exception": "",
+      "errors": [],
+      "failedRequests": [
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches?select=id%2Cmatch_num%2Cbusiness_date%2Cleague_name%2Cleague_short_name%2Chome_team_name%2Caway_team_name%2Cma",
+          "why": "Load request cancelled"
+        }
+      ],
+      "finalUrl": "https://qcda.cn/jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930"
+    },
+    {
+      "engine": "iphone-webkit",
+      "source": "竞彩足球→详情",
+      "entry": "/football.html",
+      "selector": "#jcFootballCards a.jc-card-link",
+      "httpStatus": 200,
+      "domMs": 108,
+      "dataMs": 140,
+      "detailMs": 335,
+      "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
+      "dateLabel": "10-17 周六",
+      "matchText": "周六001 · 澳超\n2026-10-17 14:00\n\n麦克阿瑟FC\n2-1\n半 0-0\n\n珀斯光荣\n赛况数据\n赔率详情\nAI分析\n",
+      "panelText": "麦克阿瑟FC vs 珀斯光荣｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-17 14:00\n🔒 登录查看完整报告\n",
+      "exception": "",
+      "errors": [],
+      "failedRequests": [
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots?select=jc_match_id%2Cpool_code%2Cgoal_line%2Coutcomes%2Ccaptured_at%2Cofficial_update_",
+          "why": "Load request cancelled"
+        },
+        {
+          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs?select=id%2Cjc_match_id%2Cmodel_version%2Cstage%2Cdirection%2Csingle_pick%2Chandicap_direction%2Chtft_to",
+          "why": "Load request cancelled"
+        }
+      ],
+      "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
+    }
+  ]
+}
