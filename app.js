@@ -2140,6 +2140,9 @@ async function loadJcFrontend(){
   // 今日速览按北京时间自然日；竞彩足球页继续使用独立的竞彩日规则。
   const calendarToday=qcBeijingToday();
   const initialToday=calendarToday;
+  // Must exist before the first awaited fetchOverviewDateReady() invocation:
+  // fetchOverviewDatePreferred() reads 'today' synchronously.
+  const today=initialToday;
   const initialYesterday=qcAddDays(initialToday,-1);
   const overviewMinDate=qcAddDays(initialToday,-3);
   const overviewMaxDate=qcAddDays(initialToday,1);
@@ -2264,7 +2267,6 @@ async function loadJcFrontend(){
 
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
   let previousHistoryFinal=Boolean(previousResult?.historyFinal);
-  const today=initialToday;
   let selectedDate=initialDate;
   let modelsLoaded=false;
   let loadToken=0;
