@@ -997,30 +997,67 @@ function jcFootballHitBlock(m,access){
   return '<div class="jc-card-after-odds">'+guestLock+'</div>';
 }
 
+// Team crests are captured ONCE when fixtures are first collected.
+// The catalog contains only public, immutable same-origin image paths.
 const qcTeamLogoCache=new Map();
 
+function jcStaticTeamLogoUrl(teamName){
+  const key=String(teamName||'');
+  return window.QC_TEAM_LOGO_CATALOG?.by_team?.[key]||'';
+}
+
 async function jcAttachTeamLogos(rows){
-  if(!window.qcSupabase || !Array.isArray(rows) || !rows.length) return rows||[];
+  if(!Array.isArray(rows) || !rows.length) return rows||[];
   const names=[...new Set(rows.flatMap(m=>[m?.home_team_name,m?.away_team_name]).filter(Boolean))];
-  const missing=names.filter(name=>!qcTeamLogoCache.has(String(name)));
-  if(missing.length){
+  const missing=[];
+  for(const name of names){
+    const key=String(name);
+    if(qcTeamLogoCache.has(key)) continue;
+    const local=jcStaticTeamLogoUrl(key);
+    if(local){
+      qcTeamLogoCache.set(key,local);
+      continue;
+    }
+    // Frozen match rows already contain a historical logo reference; never
+    // look it up again simply because another page was opened.
+    const owner=rows.find(m=>String(m?.home_team_name||'')===key && m?._homeLogoUrl ||
+                              String(m?.away_team_name||'')===key && m?._awayLogoUrl);
+    const saved=String(owner?.home_team_name===key?owner?._homeLogoUrl:owner?._awayLogoUrl||'');
+    if(saved){
+      qcTeamLogoCache.set(key,jcLogoDisplayUrl(saved));
+      continue;
+    }
+    missing.push(key);
+  }
+  // Safety fallback only for a NEW team not yet archived by the fixture job.
+  // Once catalog.js receives its immutable local crest, future page loads
+  // will never require this RPC again.
+  if(missing.length && window.qcSupabase){
     const {data,error}=await window.qcSupabase.rpc('resolve_team_logos',{p_names:missing});
     if(error){
-      console.warn('读取球队队徽缓存失败',error);
+      console.warn('新赛程队徽尚未进入静态库',error);
     }else{
       const found=new Map((data||[]).map(x=>[String(x.input_name),String(x.logo_url||'')]));
-      missing.forEach(name=>qcTeamLogoCache.set(String(name),found.get(String(name))||''));
+      missing.forEach(name=>qcTeamLogoCache.set(name,
+        jcLogoDisplayUrl(found.get(name)||'')));
     }
   }
   rows.forEach(m=>{
-    m._homeLogoUrl=qcTeamLogoCache.get(String(m.home_team_name||''))||'';
-    m._awayLogoUrl=qcTeamLogoCache.get(String(m.away_team_name||''))||'';
+    const h=String(m.home_team_name||''),a=String(m.away_team_name||'');
+    m._homeLogoUrl=jcStaticTeamLogoUrl(h)||qcTeamLogoCache.get(h)||m._homeLogoUrl||'';
+    m._awayLogoUrl=jcStaticTeamLogoUrl(a)||qcTeamLogoCache.get(a)||m._awayLogoUrl||'';
   });
   return rows;
 }
 
 function jcLogoDisplayUrl(rawUrl){
   const raw=String(rawUrl||'').trim();
+  if(!raw) return '';
+  if(/^assets\/team-logos\/[a-z0-9-]+\.(png|jpg|webp)$/i.test(raw)) return raw;
+  const staticAsset=window.QC_TEAM_LOGO_CATALOG?.by_source?.[raw];
+  if(staticAsset) return staticAsset;
+  // Temporary fallback for a newly discovered team while the static-image
+  // publishing workflow is running. Archived/mapped teams use local assets.
   const match=raw.match(/^https:\/\/images\.fotmob\.com\/image_resources\/logo\/teamlogo\/(\d+)\.png(?:\?.*)?$/i);
   if(!match) return raw;
   return 'https://oqtloldkfjxildoribkf.supabase.co/functions/v1/team-logo-proxy?id='+encodeURIComponent(match[1]);
@@ -1041,7 +1078,7 @@ function jcLogoImgHtml(rawUrl,className,loading='lazy'){
 function jcTeamInnerHtml(m,side,logoLoading='lazy'){
   const isHome=side==='home';
   const name=isHome?m?.home_team_name:m?.away_team_name;
-  const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
+  const logo=jcStaticTeamLogoUrl(name)||(isHome?m?._homeLogoUrl:m?._awayLogoUrl);
   return jcLogoImgHtml(logo,'jc-team-logo',logoLoading)+
     '<span class="jc-team-name">'+qcEscape(name||'—')+'</span>';
 }
@@ -1049,7 +1086,7 @@ function jcTeamInnerHtml(m,side,logoLoading='lazy'){
 function jcDetailTeamBadgeHtml(m,side){
   const isHome=side==='home';
   const name=isHome?m?.home_team_name:m?.away_team_name;
-  const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
+  const logo=jcStaticTeamLogoUrl(name)||(isHome?m?._homeLogoUrl:m?._awayLogoUrl);
   return (logo
     ? jcLogoImgHtml(logo,'jc-detail-team-logo','eager')
     : '<span class="badge-circle">'+(isHome?'主':'客')+'</span>')+
