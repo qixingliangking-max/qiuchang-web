@@ -2705,7 +2705,7 @@ async function loadJcFrontend(){
         // exposes protected FINAL before entitlement has been verified.
         cards.innerHTML='<div class="profile-card" role="status">正在加载中…</div>';
       }else if(accessDisplayPhase==='unavailable'){
-        cards.innerHTML='<div class="profile-card" role="status">会员预测暂时无法读取，请稍后刷新重试。</div>';
+        cards.innerHTML='<div class="profile-card" role="status">正在加载中…</div>';
       }else if(predictionRestricted){
         cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
       }else{
@@ -2715,7 +2715,7 @@ async function loadJcFrontend(){
     }catch(err){
       console.error('今日预测渲染失败',err);
       if(predictionShell) predictionShell.hidden=false;
-      cards.innerHTML='<div class="profile-card">今日预测列表暂时无法显示</div>';
+      cards.innerHTML='<div class="profile-card">正在加载中…</div>';
     }
 
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
