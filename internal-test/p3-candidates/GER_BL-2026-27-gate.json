@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 45,
-  "collected_matches": 45,
+  "input_matches": 46,
+  "collected_matches": 46,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 445,
+  "aggregate_players": 446,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -76,12 +76,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "法兰克福",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "科隆",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",

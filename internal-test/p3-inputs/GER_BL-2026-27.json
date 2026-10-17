@@ -353,7 +353,7 @@
       "home_team": "科隆",
       "away_team": "门兴格拉德巴赫",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T13:30:00.000Z"
+      "kickoff_at": "2026-10-11T13:30:00Z"
     },
     {
       "source_match_id": "5881182",
@@ -361,7 +361,15 @@
       "home_team": "弗赖堡",
       "away_team": "沙尔克04",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T15:30:00.000Z"
+      "kickoff_at": "2026-10-11T15:30:00Z"
+    },
+    {
+      "source_match_id": "5881191",
+      "match_id": "fotmob:5881191",
+      "home_team": "法兰克福",
+      "away_team": "科隆",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:30:00Z"
     }
   ]
 }

@@ -1,15 +1,24 @@
 {
   "league_code": "ESP_L2",
   "season": "2026/27",
-  "run_at": "2026-10-16T18:54:45.968Z",
+  "run_at": "2026-10-17T04:50:13.925Z",
   "discovered_fixtures": 462,
-  "discovered_finished": 99,
+  "discovered_finished": 100,
   "baseline_finished_matches": 99,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 1,
+  "added_source_match_ids": [
+    "5868498"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 99,
+  "mapped_finished": 100,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 17.4,
+  "published_blob_sha": "4ccf17bbb648d1cd4a86a1ee2ae43d5cf39a886e"
 }

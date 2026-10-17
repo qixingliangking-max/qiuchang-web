@@ -3,21 +3,15 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 60,
-  "collected_matches": 60,
+  "input_matches": 61,
+  "collected_matches": 61,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 623,
+  "aggregate_players": 624,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
-  "strict_gate_ok": false,
-  "strict_errors": [
-    {
-      "type": "REQUIRED_SLOTS_NOT_11",
-      "team": "弗罗西诺内",
-      "value": 9
-    }
-  ],
+  "strict_gate_ok": true,
+  "strict_errors": [],
   "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
@@ -72,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "弗罗西诺内",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -102,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨索洛",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -120,7 +114,7 @@
       "matches": 6
     }
   ],
-  "gate_status": "FAIL",
+  "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 1.1
+  "avg_team_depth_coverage_pct": 0
 }

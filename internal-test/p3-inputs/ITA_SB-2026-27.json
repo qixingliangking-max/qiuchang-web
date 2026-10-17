@@ -465,7 +465,7 @@
       "home_team": "卡坦扎罗",
       "away_team": "曼托瓦",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T13:00:00.000Z"
+      "kickoff_at": "2026-10-11T13:00:00Z"
     },
     {
       "source_match_id": "5967097",
@@ -473,7 +473,7 @@
       "home_team": "帕多瓦",
       "away_team": "凯勒雷斯",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T15:15:00.000Z"
+      "kickoff_at": "2026-10-11T15:15:00Z"
     },
     {
       "source_match_id": "5967096",
@@ -481,7 +481,15 @@
       "home_team": "摩德纳",
       "away_team": "维罗纳",
       "match_date": "2026-10-11",
-      "kickoff_at": "2026-10-11T17:30:00.000Z"
+      "kickoff_at": "2026-10-11T17:30:00Z"
+    },
+    {
+      "source_match_id": "5967108",
+      "match_id": "fotmob:5967108",
+      "home_team": "维罗纳",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:30:00Z"
     }
   ]
 }

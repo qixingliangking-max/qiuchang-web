@@ -2393,7 +2393,15 @@
       "home_team": "布拉干蒂诺RB",
       "away_team": "克鲁塞罗",
       "match_date": "2026-10-13",
-      "kickoff_at": "2026-10-13T00:00:00.000Z"
+      "kickoff_at": "2026-10-13T00:00:00Z"
+    },
+    {
+      "source_match_id": "5103668",
+      "match_id": "fotmob:5103668",
+      "home_team": "米拉索尔",
+      "away_team": "巴西国际",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T23:00:00Z"
     }
   ]
 }

@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 54,
-  "collected_matches": 54,
+  "input_matches": 55,
+  "collected_matches": 55,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "勒芒",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "图卢兹",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",

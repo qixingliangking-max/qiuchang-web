@@ -577,7 +577,47 @@
       "home_team": "第戎",
       "away_team": "梅斯",
       "match_date": "2026-10-12",
-      "kickoff_at": "2026-10-12T18:45:00.000Z"
+      "kickoff_at": "2026-10-12T18:45:00Z"
+    },
+    {
+      "source_match_id": "5803281",
+      "match_id": "fotmob:5803281",
+      "home_team": "阿讷西",
+      "away_team": "南锡",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803282",
+      "match_id": "fotmob:5803282",
+      "home_team": "格勒诺布尔",
+      "away_team": "布洛涅",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803283",
+      "match_id": "fotmob:5803283",
+      "home_team": "甘冈",
+      "away_team": "波城",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803284",
+      "match_id": "fotmob:5803284",
+      "home_team": "拉瓦勒",
+      "away_team": "克莱蒙",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803288",
+      "match_id": "fotmob:5803288",
+      "home_team": "兰斯",
+      "away_team": "第戎",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T18:00:00Z"
     }
   ]
 }
