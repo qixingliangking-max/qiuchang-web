@@ -69,7 +69,12 @@ def safe_source(url):
 
 class NoExternalRedirects(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
-        raise ValueError("Unexpected CDN image redirect")
+        location = urllib.parse.urlsplit(newurl)
+        if (location.scheme == "https" and location.hostname in
+                ("a.espncdn.com", "images.fotmob.com") and
+                not location.username and not location.password):
+            return super().redirect_request(req, fp, code, msg, headers, newurl)
+        raise ValueError("Redirect outside trusted image CDNs")
 
 
 IMAGE_OPENER = urllib.request.build_opener(NoExternalRedirects)
@@ -94,7 +99,7 @@ def download_immutable_logo(url):
             return "assets/team-logos/" + candidate.name
     try:
         req = urllib.request.Request(url, headers={
-            "User-Agent": "Mozilla/5.0 (compatible; QCDA-StaticCrestArchiver/1.0)",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
             "Accept": "image/png,image/webp,image/jpeg"})
         with IMAGE_OPENER.open(req, timeout=16) as response:
             data = response.read(MAX_LOGO_BYTES + 1)
@@ -116,6 +121,10 @@ def download_immutable_logo(url):
         return "assets/team-logos/" + destination.name
     except Exception as exc:
         print("WARNING crest cache:", asset_stem, str(exc)[:160])
+        if asset_stem == "espn-soccer-817":
+            # Official alternate team ID for Al Nassr FC, not a substitute crest.
+            alternate = "https://images.fotmob.com/image_resources/logo/teamlogo/101918.png"
+            return download_immutable_logo(alternate)
         return None
 
 
