@@ -1262,27 +1262,47 @@ async function qcFetchFrozenOverviewDate(dateStr){
   if(cached?.data) return {data:cached.data,error:null,fromFrozen:true};
   if(cached?.promise) return cached.promise;
 
-  const manifest=await qcLoadFrozenOverviewManifest();
-  const file=manifest?.dates?.[key];
-  if(!file) return null;
-
-  const promise=fetch(file,{cache:'force-cache'})
-    .then(async res=>{
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const payload=await res.json();
-      const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
-      qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
-      return {data:rows,error:null,fromFrozen:true};
+  // Historical archives are public immutable day files. On the fast path
+  // avoid manifest -> archive waterfall; older/renamed files use the manifest.
+  const direct='data/overview/'+key+'.history.v2.json';
+  const promise=(async()=>{
+    let file=direct;
+    try{
+      const response=await fetch(direct,{cache:'force-cache'});
+      if(response.ok){
+        const payload=await response.json();
+        if(Array.isArray(payload?.rows) &&
+           String(payload?.business_date||key)===key){
+          const rows=qcPrepareFrozenOverviewRows(payload.rows);
+          qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
+          return {data:rows,error:null,fromFrozen:true};
+        }
+      }
+    }catch(_){}
+    const manifest=await qcLoadFrozenOverviewManifest();
+    file=manifest?.dates?.[key];
+    if(!file) return null;
+    const response=await fetch(file,{cache:'force-cache'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const payload=await response.json();
+    const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
+    qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
+    return {data:rows,error:null,fromFrozen:true};
+  })()
+    .then(result=>{
+      if(!result) qcFrozenOverviewRowsCache.delete(key);
+      return result;
     })
     .catch(error=>{
       qcFrozenOverviewRowsCache.delete(key);
       console.warn('读取历史冻结快照失败 '+key,error);
       return null;
     });
-
-  qcFrozenOverviewRowsCache.set(key,{promise,savedAt:Date.now(),file});
+  qcFrozenOverviewRowsCache.set(key,{promise,savedAt:Date.now(),file:direct});
   return promise;
 }
+
+
 
 async function qcPrimeFrozenOverviewDates(dateList){
   const manifest=await qcLoadFrozenOverviewManifest();
