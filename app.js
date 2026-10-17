@@ -1033,14 +1033,16 @@ function jcLogoImgHtml(rawUrl,className,loading='lazy'){
   const fallbackAttr=display!==raw
     ? ' data-qc-logo-raw="'+qcEscape(raw)+'" onerror="if(!this.dataset.qcLogoFallback){this.dataset.qcLogoFallback=\'1\';this.src=this.dataset.qcLogoRaw;}else{this.style.display=\'none\'}"'
     : ' onerror="this.style.display=\'none\'"';
-  return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(loading)+'" decoding="async" referrerpolicy="no-referrer"'+fallbackAttr+'>';
+  return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(loading)+'"'+
+    (loading==='eager'?' fetchpriority="high"':'')+
+    ' decoding="async" referrerpolicy="no-referrer"'+fallbackAttr+'>';
 }
 
-function jcTeamInnerHtml(m,side){
+function jcTeamInnerHtml(m,side,logoLoading='lazy'){
   const isHome=side==='home';
   const name=isHome?m?.home_team_name:m?.away_team_name;
   const logo=isHome?m?._homeLogoUrl:m?._awayLogoUrl;
-  return jcLogoImgHtml(logo,'jc-team-logo','lazy')+
+  return jcLogoImgHtml(logo,'jc-team-logo',logoLoading)+
     '<span class="jc-team-name">'+qcEscape(name||'—')+'</span>';
 }
 
@@ -1057,7 +1059,7 @@ function jcDetailTeamBadgeHtml(m,side){
 function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   if(!rows.length) return '<div class="profile-card">这一天暂时没有符合筛选条件的竞彩足球比赛。</div>';
   const ordered=[...rows].sort((a,b)=>String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true}));
-  return '<div class="jc-football-grid">'+ordered.map(m=>{
+  return '<div class="jc-football-grid">'+ordered.map((m,index)=>{
     const score=jcScoreInfo(m);
     const href='jc-match.html?id='+encodeURIComponent(m.id);
     const oddsMini=jcRenderOddsMini(jcPrekickLatestPools(m));
@@ -1077,12 +1079,12 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<time>'+qcEscape(String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5))+'</time>'+
         '</div>'+
         '<div class="jc-card-score-axis">'+
-          '<strong class="jc-team jc-team-home">'+jcTeamInnerHtml(m,'home')+'</strong>'+
+          '<strong class="jc-team jc-team-home">'+jcTeamInnerHtml(m,'home',index<3?'eager':'lazy')+'</strong>'+
           '<span class="jc-score-center">'+
             '<b class="jc-score-main'+centerStateClass+'">'+centerScore+'</b>'+
             '<small class="jc-score-meta'+centerStateClass+'">'+qcEscape(centerMeta)+'</small>'+
           '</span>'+
-          '<strong class="jc-team away-team jc-team-away">'+jcTeamInnerHtml(m,'away')+'</strong>'+
+          '<strong class="jc-team away-team jc-team-away">'+jcTeamInnerHtml(m,'away',index<3?'eager':'lazy')+'</strong>'+
         '</div>'+
         oddsMini+
         cardCta+
@@ -4496,38 +4498,35 @@ function setupAuthStateRecovery(){
 
 async function setupAuthNav(){
   if(!window.qcSupabase) return;
-
-  const loginLink = $('#navLogin');
-  const registerLink = $('#navRegister');
-  const profileLink = $('#navProfile');
-  const logoutLink = $('#navLogout');
-
+  const loginLink=$('#navLogin');
+  const registerLink=$('#navRegister');
+  const profileLink=$('#navProfile');
+  const logoutLink=$('#navLogout');
   if(!loginLink && !registerLink && !profileLink && !logoutLink) return;
 
-  const { data } = await window.qcSupabase.auth.getSession();
-  const session = data && data.session;
-
-  if(session){
-    if(loginLink) loginLink.style.display = 'none';
-    if(registerLink) registerLink.style.display = 'none';
-    if(profileLink) profileLink.style.display = 'block';
-    if(logoutLink){
-      logoutLink.style.display = 'block';
-      logoutLink.textContent = '退出登录';
-      logoutLink.onclick = async e => {
-        e.preventDefault();
-        await window.qcSupabase.auth.signOut();
-        location.href = 'index.html';
-      };
-    }
-  }else{
-    if(loginLink) loginLink.style.display = 'block';
-    if(registerLink) registerLink.style.display = 'block';
-    if(profileLink) profileLink.style.display = 'block';
-    if(logoutLink) logoutLink.style.display = 'none';
+  const apply=session=>{
+    const loggedIn=Boolean(session?.user);
+    if(loginLink){loginLink.hidden=loggedIn;loginLink.style.display=loggedIn?'none':'block';}
+    if(registerLink){registerLink.hidden=loggedIn;registerLink.style.display=loggedIn?'none':'block';}
+    if(profileLink){profileLink.hidden=!loggedIn;profileLink.style.display=loggedIn?'block':'none';}
+    if(logoutLink){logoutLink.hidden=!loggedIn;logoutLink.style.display=loggedIn?'block':'none';}
+  };
+  // Hide protected navigation immediately, before Safari resolves a session.
+  apply(null);
+  if(logoutLink){
+    logoutLink.textContent='退出登录';
+    logoutLink.onclick=async e=>{
+      e.preventDefault();
+      await window.qcSupabase.auth.signOut();
+      apply(null);
+      location.href='index.html';
+    };
   }
+  const {data,error}=await window.qcSupabase.auth.getSession();
+  apply(!error?data?.session:null);
+  // An expired or restored session must update the menu without a page reload.
+  window.qcSupabase.auth.onAuthStateChange((_event,session)=>apply(session));
 }
-
 
 function qcEnsureDesktopRedeemModal(){
   let modal=$('#qcDesktopRedeemModal');
