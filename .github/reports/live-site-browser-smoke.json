@@ -1,106 +1,317 @@
 {
-  "testedAt": "2026-10-17T14:55:55.873Z",
+  "testedAt": "2026-10-17T14:58:52.364Z",
   "base": "https://qcda.cn",
-  "mode": "guest, live network, Android Chromium + desktop-hosted iPhone WebKit emulation",
+  "mode": "guest, production network, separate cold browser contexts, Android Chromium and Linux-hosted iPhone WebKit emulation",
   "results": [
     {
       "engine": "android-chromium",
       "source": "今日速览→昨日回看→详情",
+      "coldContext": true,
       "entry": "/index.html",
-      "selector": "#jcYesterdayCards a[href*=\"jc-match.html?id=\"]",
       "httpStatus": 200,
-      "domMs": 1074,
-      "dataMs": 1268,
-      "detailMs": 2688,
+      "domMs": 391,
+      "listMs": 524,
+      "detailHeaderMs": 1432,
+      "clickToHeaderMs": 900,
+      "detailPanelMs": 1452,
       "clickedLink": "jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930",
       "dateLabel": "10月17日 周六",
       "matchText": "周五001 · 澳超\n2026-10-16 17:00\n悉尼FC\n0-0\n完赛\n西悉尼漫步者\n赛况数据\n赔率详情\nAI分析",
       "panelText": "悉尼FC vs 西悉尼漫步者｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-16 17:00\n🔒 登录查看完整报告",
       "exception": "",
-      "errors": [],
+      "jsExceptions": [],
       "failedRequests": [
         {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches?select=id%2Cmatch_num%2Cbusiness_date%2Cleague_name%2Cleague_short_name%2Chome_team_name%2Caway_team_name%2Cma",
-          "why": "net::ERR_ABORTED"
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "reason": "net::ERR_ABORTED"
         }
       ],
+      "slowRequests": [
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 312
+        },
+        {
+          "path": "https://qcda.cn/index.html",
+          "ms": 276
+        },
+        {
+          "path": "https://qcda.cn/overview-static-first.js",
+          "ms": 92
+        },
+        {
+          "path": "https://qcda.cn/app.js",
+          "ms": 92
+        },
+        {
+          "path": "https://qcda.cn/overview-live-static.js",
+          "ms": 92
+        },
+        {
+          "path": "https://qcda.cn/overview-schedule-snapshot.js",
+          "ms": 91
+        },
+        {
+          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
+          "ms": 87
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5327.png",
+          "ms": 85
+        },
+        {
+          "path": "https://qcda.cn/jc-match.html",
+          "ms": 50
+        },
+        {
+          "path": "https://qcda.cn/styles.css",
+          "ms": 48
+        },
+        {
+          "path": "https://qcda.cn/footer-compact.css",
+          "ms": 48
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/catalog.js",
+          "ms": 46
+        }
+      ],
+      "totalRequests": 29,
       "finalUrl": "https://qcda.cn/jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930"
     },
     {
       "engine": "android-chromium",
       "source": "竞彩足球→详情",
+      "coldContext": true,
       "entry": "/football.html",
-      "selector": "#jcFootballCards a.jc-card-link",
       "httpStatus": 200,
-      "domMs": 94,
-      "dataMs": 156,
-      "detailMs": 451,
+      "domMs": 116,
+      "listMs": 281,
+      "detailHeaderMs": 418,
+      "clickToHeaderMs": 127,
+      "detailPanelMs": 437,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10-17 周六",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n麦克阿瑟FC\n2-1\n半 0-0\n珀斯光荣\n赛况数据\n赔率详情\nAI分析",
       "panelText": "麦克阿瑟FC vs 珀斯光荣｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-17 14:00\n🔒 登录查看完整报告",
       "exception": "",
-      "errors": [],
+      "jsExceptions": [],
       "failedRequests": [
         {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots?select=jc_match_id%2Cpool_code%2Cgoal_line%2Coutcomes%2Ccaptured_at%2Cofficial_update_",
-          "why": "net::ERR_ABORTED"
+          "path": "https://qcda.cn/assets/team-logos/fotmob-9875.png",
+          "reason": "net::ERR_ABORTED"
         },
         {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs?select=id%2Cjc_match_id%2Cmodel_version%2Cstage%2Cdirection%2Csingle_pick%2Chandicap_direction%2Chtft_to",
-          "why": "net::ERR_ABORTED"
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots",
+          "reason": "net::ERR_ABORTED"
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8402.png",
+          "reason": "net::ERR_ABORTED"
+        },
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs",
+          "reason": "net::ERR_ABORTED"
         }
       ],
+      "slowRequests": [
+        {
+          "path": "https://qcda.cn/data/overview/manifest.json",
+          "ms": 123
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19001.png",
+          "ms": 112
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-133896.png",
+          "ms": 112
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
+          "ms": 111
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-4397.png",
+          "ms": 110
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
+          "ms": 110
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-429441.png",
+          "ms": 109
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8699.png",
+          "ms": 68
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-7881.png",
+          "ms": 66
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8668.png",
+          "ms": 59
+        },
+        {
+          "path": "https://qcda.cn/football.html",
+          "ms": 58
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-8065.png",
+          "ms": 53
+        }
+      ],
+      "totalRequests": 52,
       "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
     },
     {
       "engine": "iphone-webkit",
       "source": "今日速览→昨日回看→详情",
+      "coldContext": true,
       "entry": "/index.html",
-      "selector": "#jcYesterdayCards a[href*=\"jc-match.html?id=\"]",
       "httpStatus": 200,
-      "domMs": 677,
-      "dataMs": 990,
-      "detailMs": 2861,
+      "domMs": 490,
+      "listMs": 858,
+      "detailHeaderMs": 3541,
+      "clickToHeaderMs": 2670,
+      "detailPanelMs": 3570,
       "clickedLink": "jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930",
       "dateLabel": "10月17日 周六",
       "matchText": "周五001 · 澳超\n2026-10-16 17:00\n\n悉尼FC\n0-0\n完赛\n\n西悉尼漫步者\n赛况数据\n赔率详情\nAI分析\n",
       "panelText": "悉尼FC vs 西悉尼漫步者｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-16 17:00\n🔒 登录查看完整报告\n",
       "exception": "",
-      "errors": [],
-      "failedRequests": [
+      "jsExceptions": [],
+      "failedRequests": [],
+      "slowRequests": [
         {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches?select=id%2Cmatch_num%2Cbusiness_date%2Cleague_name%2Cleague_short_name%2Chome_team_name%2Caway_team_name%2Cma",
-          "why": "Load request cancelled"
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 577
+        },
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 443
+        },
+        {
+          "path": "https://qcda.cn/overview-schedule-snapshot.js",
+          "ms": 378
+        },
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_matches",
+          "ms": 309
+        },
+        {
+          "path": "https://qcda.cn/data/overview/manifest.json",
+          "ms": 235
+        },
+        {
+          "path": "https://qcda.cn/data/overview/live-schedule-manifest.json",
+          "ms": 230
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-13696.png",
+          "ms": 168
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5327.png",
+          "ms": 164
+        },
+        {
+          "path": "https://qcda.cn/index.html",
+          "ms": 102
+        },
+        {
+          "path": "https://qcda.cn/data/overview/2026-10-16.history.v2.json",
+          "ms": 98
+        },
+        {
+          "path": "https://qcda.cn/app.js",
+          "ms": 53
+        },
+        {
+          "path": "https://qcda.cn/styles.css",
+          "ms": 50
         }
       ],
+      "totalRequests": 31,
       "finalUrl": "https://qcda.cn/jc-match.html?id=7ef61067-f87c-42c5-8363-488345475930"
     },
     {
       "engine": "iphone-webkit",
       "source": "竞彩足球→详情",
+      "coldContext": true,
       "entry": "/football.html",
-      "selector": "#jcFootballCards a.jc-card-link",
       "httpStatus": 200,
-      "domMs": 108,
-      "dataMs": 140,
-      "detailMs": 335,
+      "domMs": 452,
+      "listMs": 769,
+      "detailHeaderMs": 1401,
+      "clickToHeaderMs": 611,
+      "detailPanelMs": 1439,
       "clickedLink": "jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6",
       "dateLabel": "10-17 周六",
       "matchText": "周六001 · 澳超\n2026-10-17 14:00\n\n麦克阿瑟FC\n2-1\n半 0-0\n\n珀斯光荣\n赛况数据\n赔率详情\nAI分析\n",
       "panelText": "麦克阿瑟FC vs 珀斯光荣｜赛前分析报告\n🔒 登录后查看完整赛前分析报告\n本场报告涵盖双方实力、方向依据、比赛进程及比分分析，登录后可查看完整内容。\n竞彩玩法\n—\n比赛状态\n完赛\n比赛时间\n2026-10-17 14:00\n🔒 登录查看完整报告\n",
       "exception": "",
-      "errors": [],
+      "jsExceptions": [],
       "failedRequests": [
         {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots?select=jc_match_id%2Cpool_code%2Cgoal_line%2Coutcomes%2Ccaptured_at%2Cofficial_update_",
-          "why": "Load request cancelled"
-        },
-        {
-          "url": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs?select=id%2Cjc_match_id%2Cmodel_version%2Cstage%2Cdirection%2Csingle_pick%2Chandicap_direction%2Chtft_to",
-          "why": "Load request cancelled"
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_model_outputs",
+          "reason": "Load request cancelled"
         }
       ],
+      "slowRequests": [
+        {
+          "path": "https://oqtloldkfjxildoribkf.supabase.co/rest/v1/jc_prekick_latest_market_snapshots",
+          "ms": 401
+        },
+        {
+          "path": "https://qcda.cn/app.js",
+          "ms": 305
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19001.png",
+          "ms": 242
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-5322.png",
+          "ms": 241
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-133896.png",
+          "ms": 237
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-4397.png",
+          "ms": 237
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/fotmob-429441.png",
+          "ms": 237
+        },
+        {
+          "path": "https://qcda.cn/assets/team-logos/espn-soccer-19340.png",
+          "ms": 233
+        },
+        {
+          "path": "https://qcda.cn/data/overview/manifest.json",
+          "ms": 232
+        },
+        {
+          "path": "https://qcda.cn/data/overview/live-schedule-manifest.json",
+          "ms": 190
+        },
+        {
+          "path": "https://qcda.cn/football.html",
+          "ms": 146
+        },
+        {
+          "path": "https://qcda.cn/assets/vendor/supabase-js-2.117.3.js",
+          "ms": 84
+        }
+      ],
+      "totalRequests": 33,
       "finalUrl": "https://qcda.cn/jc-match.html?id=44c183fe-6157-4770-a627-e700fd38bfb6"
     }
   ]
