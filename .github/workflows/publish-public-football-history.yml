@@ -2,7 +2,8 @@ name: Publish finalized public football history
 
 on:
   schedule:
-    # Beijing 13:30 / 20:30: after the previous betting-day score window.
+    # Beijing 10:20 / 13:30 / 20:30: new archived day, then FT catch-ups.
+    - cron: '20 2 * * *'
     - cron: '30 5 * * *'
     - cron: '30 12 * * *'
   workflow_dispatch:
