@@ -1,0 +1,58 @@
+{
+  "checked_at": "2026-10-17T15:45:49.739Z",
+  "target": "HJK vs IF Gnistan (2026-10-17 16:00 Europe/Helsinki)",
+  "noProductionWrite": true,
+  "results": [
+    {
+      "label": "fa-original",
+      "status": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "length": 57,
+      "redirected": "https://spl.torneopal.fi/taso/rest/getMatches?ysnyp4h6e9egetkc3s3v&competition_id=spljp26&date=2026-10-17",
+      "contexts": [],
+      "head": "{\"call\":{\"status\":\"error\",\"error\":\"No API key provided\"}}"
+    },
+    {
+      "label": "league-match",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "label": "league-fixtures",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "label": "league-hjk",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "label": "hjk-team",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "length": 409661,
+      "redirected": "https://www.hjk.fi/ottelut",
+      "contexts": [
+        {
+          "term": "HJK",
+          "index": 239,
+          "context": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\">Ottelut - HJK Helsinki</title><meta property=\"og:locale\" content=\"fi_FI\" data-next-head=\"\"/><meta property=\"og:type\" content=\"article\" data-next-head=\"\"/><meta property=\"og:title\" content=\"Ottelut - HJK Helsinki\" data-next-head=\"\"/><meta property=\"og:url\" content=\"https://www.hjk.fi/ottelut/\" data-next-head=\"\"/><meta property=\"og:site_name\" content=\"HJK Helsinki\" data-next-head=\"\"/><meta property=\"article:publisher\" content=\"https://www.facebook.com/hjkhelsinki1907\" data-next-head=\"\"/><meta property=\"article:modified_time\" content=\"2026-09-24T07:21:28+00:00\" data-next-head=\"\"/><meta name=\"twitter:card\" content=\"summary_large_image\" data-next-head=\"\"/><meta name=\"twitter:site\" content=\"@hjkhelsinki\" data-next-head=\"\"/><link rel=\"preload\" as=\"image\" imageSrcSet=\"https://media.cdn-hjk.fi/wp-content/uploads/2026/03/02000829/hjk-logo.svg 375w, https://media.cdn-hjk.fi/wp-content/uploads/2026/03/02000829/hjk-logo.svg 384w, https://media.cdn-hjk.fi/wp-content/uplo"
+        },
+        {
+          "term": "IF Gnistan",
+          "index": 39394,
+          "context": "webp&amp;we 3840w\" src=\"https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F2611x.png&amp;w=1920&amp;q=100&amp;output=webp&amp;we\"/></div><p class=\"flex flex-row font-futura font-bold text-base text-slate-500 flex-1\">HJK</p></div><div class=\"flex items-center gap-4\"><div class=\"relative w-[72px] h-[72px] shrink-0\"><img alt=\"IF Gnistan\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-contain\" style=\"position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent\" sizes=\"100vw\" srcSet=\"https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F14x.png&amp;w=525&amp;q=100&amp;output=webp&amp;we 375w, https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F14x.png&amp;w=546&amp;q=100&amp;output=webp&amp;we 390w, https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F14x.png&amp;w=896&amp;q=100&amp;output=webp&amp;we 640w, https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F14x.png&amp;w=1050&amp;q=100&amp;output=webp&amp;we 750w, https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F14x.png&amp;w=1159.1999999999998&amp;q"
+        },
+        {
+          "term": "4353570",
+          "index": 281854,
+          "context": "/hjk-if-gnistan-2026-10-17/\",\"teams\":{\"__typename\":\"MatchToTeamConnection\",\"nodes\":[{\"__typename\":\"Team\",\"name\":\"HJK Miehet\"}]},\"competitions\":{\"__typename\":\"MatchToCompetitionConnection\",\"nodes\":[{\"__typename\":\"Competition\",\"name\":\"Veikkausliiga\",\"databaseId\":20780}]},\"ottelut\":{\"__typename\":\"Ottelut\",\"date\":\"2026-10-17T16:00:00+00:00\",\"matchId\":\"4353570\",\"venue\":\"Bolt Arena TN\",\"teamA\":\"HJK\",\"teamB\":\"IF Gnistan\",\"teamACrest\":\"https://cdn.torneopal.net/logo/palloliitto/2611x.png\",\"teamBCrest\":\"https://cdn.torneopal.net/logo/palloliitto/14x.png\",\"teamAGoals\":0,\"teamBGoals\":0,\"matchStatus\":\"Fixture\",\"league\":\"Veikkausliiga\",\"hjkTeamSide\":[\"a\"],\"ticketLink\":{\"__typename\":\"AcfLink\",\"url\":\"https://hjk.lippu.fi/event/HJK-IF-Gnistan/161429/404878/details\",\"title\":\"Osta liput\",\"target\":\"_blank\"},\"showStreamLinkOnCard\":false,\"streamLink\":{\"__typename\":\"AcfLink\",\"target\":\"_blank\",\"url\":\"https://www.ruutu.fi/stream/100329556\",\"title\":\"Katso suorana Ruudusta!\"}}}},{\"__typename\":\"RootQueryToMatchConnectionEdge\",\"node\":{\"__typename\":\"Match\",\"title\":\"KTP – HJK Klubi 04 2026-10-17\",\"uri\":\"/ottelut/ktp-hjk-klubi-04-2026-10-17/\",\"teams\":{\"__typename\":\"MatchToTeamConnection\",\"nodes\":[{\"__typename\":\""
+        },
+        {
+          "term": "17.10.2026",
+          "index": 36913,
+          "context": "1 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM11 13H4V19H11V13ZM20 13H13V19H20V13ZM11 5H4V11H11V5ZM20 5H13V11H20V5Z\"></path></svg></button></div></div></div></section><div style=\"opacity:1;transform:none\"><div class=\"flex flex-col gap-24\"><div class=\"flex flex-col gap-12\"><h2 class=\"font-futura font-medium text-3xl text-slate-500\">17.10.2026</h2><div class=\"grid grid-cols-1 lg:grid-cols-2 gap-8\"><div class=\"bg-white rounded-3xl shadow flex flex-col lg:flex-row gap-8 lg:gap-12 p-8 \"><div class=\"lg:hidden flex items-center gap-x-2 flex-wrap\"><p class=\"font-futura font-semibold text-sm text-hjk-blue-1\">HJK Miehet</p><div class=\"w-1 h-1 rounded-full bg-hjk-blue-1\"></div><p class=\"font-futura font-semibold text-sm text-hjk-blue-1\">Veikkausliiga</p></div><div class=\"flex flex-col justify-between flex-1 gap-6\"><div class=\"flex items-center gap-4\"><div class=\"relative w-[72px] h-[72px] shrink-0\"><img alt=\"HJK\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-contain\" style=\"position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent\" sizes=\"100vw\" srcSet=\"https://wsrv.nl/?url=https%3A%2F%2Fcdn.torneopal.net%2Flogo%2Fpalloliitto%2F"
+        }
+      ],
+      "head": "<!DOCTYPE html><html lang=\"fi\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><link rel=\"icon\" href=\"/favicon.png\" data-next-head=\"\"/><title data-next-head=\"\">Ottelut - HJK Helsinki</title><meta property=\"og:locale\" content=\"fi_FI"
+    }
+  ]
+}
