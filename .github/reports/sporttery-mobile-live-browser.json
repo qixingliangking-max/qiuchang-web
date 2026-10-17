@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-17T15:56:00.040Z",
+  "livePage": "https://m.sporttery.cn/mjc/zqsj/?tab=live",
+  "noDatabaseWrites": true,
+  "results": [
+    {
+      "tab": "live",
+      "status": 567,
+      "err": "",
+      "title": "请求已被拦截",
+      "body": "567\n请求已被站点的安全策略拦截。\n本站点已启用安全防护服务以抵御在线攻击，本次访问已被限制。若此页面持续出现，请联系网站管理员，并提供当前页面显示的请求 ID。\n请求 ID: 13721111415026497601 \n请求时间: 2026-10-17 23:55:44 UTC+8\n若您是网站拥有者:\n请参阅 EdgeOne Web 安全分析官方文档，了解如何筛选请求 ID 查看样本日志与命中规则。\n由 Tencent Cloud EdgeOne 提供防护",
+      "matchIndex": -1,
+      "requests": [
+        {
+          "status": 567,
+          "url": "https://m.sporttery.cn/mjc/zqsj/?tab=live",
+          "mime": "text/html; charset=UTF-8"
+        }
+      ],
+      "responseTexts": [],
+      "errors": []
+    },
+    {
+      "tab": "result",
+      "status": 567,
+      "err": "",
+      "title": "请求已被拦截",
+      "body": "567\n请求已被站点的安全策略拦截。\n本站点已启用安全防护服务以抵御在线攻击，本次访问已被限制。若此页面持续出现，请联系网站管理员，并提供当前页面显示的请求 ID。\n请求 ID: 6221984122033682803 \n请求时间: 2026-10-17 23:55:52 UTC+8\n若您是网站拥有者:\n请参阅 EdgeOne Web 安全分析官方文档，了解如何筛选请求 ID 查看样本日志与命中规则。\n由 Tencent Cloud EdgeOne 提供防护",
+      "matchIndex": -1,
+      "requests": [
+        {
+          "status": 567,
+          "url": "https://m.sporttery.cn/mjc/zqsj/?tab=result",
+          "mime": "text/html; charset=UTF-8"
+        }
+      ],
+      "responseTexts": [],
+      "errors": []
+    }
+  ]
+}
