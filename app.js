@@ -2190,7 +2190,9 @@ async function loadJcFrontend(){
     }catch(_){}
   }).catch(()=>{});
 
-  const access=await accessPromise;
+  // Do not hold the public first paint on login/session or Pro verification.
+  // Start in the guest-safe state, then upgrade only after server verification.
+  let access={loggedIn:false,isPro:false,userId:null};
   // Do not bulk-download up to 90 historical Pro snapshots before the first frame.
   // The authorized current-day bundle is loaded by fetchOverviewDateReady;
   // background priming happens only after the visible table is painted.
@@ -2287,6 +2289,13 @@ async function loadJcFrontend(){
     if(qcFrozenOverviewManifestCache?.dates?.[ds]){
       const frozen=await qcFetchFrozenOverviewDate(ds);
       if(frozen) return frozen;
+    }
+
+    // The active public schedule is generated into same-origin static JSON.
+    // Anonymous first paint must not wait for a database RPC or auth service.
+    if(!access.isPro && ds===today && typeof window.qcFetchLiveScheduleDate==='function'){
+      const localSchedule=await window.qcFetchLiveScheduleDate(ds);
+      if(localSchedule?.data?.length) return localSchedule;
     }
 
     // Server validates Pro entitlement. It never returns protected prediction
@@ -2658,6 +2667,50 @@ async function loadJcFrontend(){
       refreshNewLockedDaySnapshot(selectedDate,token)
     ]);
   }
+
+  // Upgrade guest-safe static first paint after auth/Pro verification finishes.
+  // This request is deliberately background-only; it never blocks the initial public table.
+  accessPromise.then(async resolved=>{
+    access=resolved||{loggedIn:false,isPro:false,userId:null};
+    if(access.isPro){
+      const ds=selectedDate;
+      const token=loadToken;
+      try{
+        const current=await fetchOverviewDatePreferred(ds);
+        if(token!==loadToken || selectedDate!==ds) return;
+        if(!current?.error && Array.isArray(current?.data) && current.data.length){
+          const oldById=new Map(allRows.filter(m=>jcBusinessDate(m)===ds).map(m=>[String(m.id),m]));
+          const replacement=current.data.map(row=>{
+            const old=oldById.get(String(row.id));
+            return old?{...row,match_status:old.match_status,raw:{...(row.raw||{}),...(old.raw||{})},
+              _apiFootballLive:old._apiFootballLive}:row;
+          });
+          allRows=[...allRows.filter(m=>jcBusinessDate(m)!==ds),...replacement];
+        }
+        const prevDate=qcAddDays(ds,-1);
+        const history=await fetchHistoryReviewDateReady(
+          prevDate,ds===candidateDate?candidatePreviousPromise:null
+        );
+        if(token!==loadToken || selectedDate!==ds) return;
+        if(!history?.error){
+          previousHistoryFinal=Boolean(history.historyFinal);
+          allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
+            ...(history.data||[]).filter(m=>m.match_date)];
+        }
+        render();
+      }catch(error){ console.warn('Pro静态快照后台补齐失败',error); }
+    }else if(access.loggedIn){
+      render();
+    }
+    if(access.loggedIn){
+      jcFetchAvailableDates().then(dates=>{
+        if(Array.isArray(dates)&&dates.length){
+          availableDates=[...new Set([...availableDates,...dates])].sort();
+          render();
+        }
+      }).catch(err=>console.warn('登录后日期索引读取失败',err));
+    }
+  }).catch(error=>console.warn('后台权限状态读取失败，保留公开静态首屏',error));
 
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
