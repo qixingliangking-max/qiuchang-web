@@ -1419,7 +1419,7 @@ function qcSaveFinalHistoryToStorage(ds,record,rows){
 
 async function qcFetchHistoryOverviewDate(dateStr,force=false){
   const key=String(dateStr||'');
-  if(!key || !window.qcSupabase) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
+  if(!key) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
 
   const now=Date.now();
   const cached=qcHistoryOverviewRowsCache.get(key);
@@ -1443,6 +1443,9 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
 
   const frozen=await qcFetchFrozenOverviewDate(key);
   if(frozen) return {...frozen,fromHistorySnapshot:true,historyFinal:true};
+  // Unpublished dates may still use the public DB fallback, but a network
+  // error in the Supabase SDK must not prevent archived static dates loading.
+  if(!window.qcSupabase) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
 
   const promise=window.qcSupabase
     .from('jc_history_overview_snapshots')
@@ -1733,6 +1736,19 @@ async function loadJcFootball(){
   let activeLeague='全部';
   let availableDates=[selectedDate];
   let loadToken=0;
+  const warmHistoryRequested=new Set();
+  function warmHistoryNeighbors(ds){
+    // On any archived day, warm the two adjacent days in idle time. Previously
+    // only opening TODAY primed archives; historical arrows cold-fetched JSON.
+    if(ds>=today || warmHistoryRequested.has(ds)) return;
+    warmHistoryRequested.add(ds);
+    const closeDates=[-1,1,-2,2].map(offset=>qcAddDays(ds,offset))
+      .filter(candidate=>candidate>=minArchivedDate && candidate<today);
+    const warm=()=>qcPrimeFrozenOverviewDates(closeDates).catch(()=>{});
+    if(typeof window.requestIdleCallback==='function')
+      window.requestIdleCallback(warm,{timeout:1600});
+    else setTimeout(warm,250);
+  }
 
   const leagueKey=m=>m.league_short_name||m.league_name||'其他';
   const label=$('#jcFootballDateLabel');
@@ -1929,6 +1945,14 @@ async function loadJcFootball(){
   async function loadFootballDate(ds){
     if(!isAllowedDate(ds)) return;
     const token=++loadToken;
+    // The date control must acknowledge the tap immediately. Keep the existing
+    // card visible while a not-yet-cached public JSON file is fetched.
+    const alreadyFrozen=Boolean(qcFrozenOverviewRowsCache.get(ds)?.data);
+    if(ds!==selectedDate && label && !alreadyFrozen){
+      const date=new Date(ds+'T12:00:00+08:00');
+      label.textContent=ds.slice(5)+' '+date.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'})+' · 打开中…';
+    }
+    cards.setAttribute('aria-busy','true');
     const cache=qcJcDateRowsCache.get(ds);
     const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
     const historyCached=ds<today && (
@@ -1941,8 +1965,13 @@ async function loadJcFootball(){
 
     const result=await jcFetchFootballScheduleRows(ds);
     if(token!==loadToken) return;
+    cards.removeAttribute('aria-busy');
     if(result.error){
       cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
+      if(label){
+        const current=new Date(selectedDate+'T12:00:00+08:00');
+        label.textContent=selectedDate.slice(5)+' '+current.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+      }
       return;
     }
     allRows=(result.data||[]).filter(m=>m.match_date);
@@ -1996,6 +2025,7 @@ async function loadJcFootball(){
     delete cards.dataset.qcPublicPreview;
     cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
     setUrlDate(selectedDate);
+    warmHistoryNeighbors(selectedDate);
     if(!dateLocked){
       qcRenderDateCalendar(selectedDate,availableDates,ds=>{
         if(!isAllowedDate(ds)) return;
