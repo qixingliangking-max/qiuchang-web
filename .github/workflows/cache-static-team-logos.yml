@@ -3,10 +3,10 @@ name: Cache immutable fixture team logos
 on:
   workflow_dispatch:
   schedule:
-    # Beijing 11:00-19:59: check shortly after new schedules are collected.
-    - cron: '7,22,37,52 3-11 * * *'
-    # Off-peak: discover newly published fixtures without frequent polling.
-    - cron: '19 0-2,12-23 * * *'
+    # During the live fixture window, publish public score/status changes
+    # approximately every 10 minutes, including late-night Beijing fixtures.
+    # Completed historical archives are immutable and not rebuilt here.
+    - cron: '3,13,23,33,43,53 * * * *'
   push:
     paths:
       - 'scripts/cache_static_team_logos.py'
