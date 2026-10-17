@@ -447,7 +447,20 @@
     const root=$('#leagueRecordRoot');
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
-      const {data:authData,error:authError}=await window.qcSupabase.auth.getSession();
+      const authPromise=window.qcSupabase.auth.getSession();
+      const authRace=await Promise.race([
+        authPromise,
+        new Promise(resolve=>setTimeout(()=>resolve({__qcAuthTimeout:true}),450))
+      ]);
+      let authResult=authRace;
+      if(authRace?.__qcAuthTimeout){
+        // Never leave an anonymous visitor staring at an indefinite loader.
+        // The real session check continues; a valid Pro session replaces this
+        // temporary public-safe prompt when it resolves.
+        root.innerHTML='<div class="qc-league-gate"><h2>正在确认访问权限</h2><p>联赛档案需要登录并通过会员权限验证。若尚未登录，可先登录后返回。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
+        authResult=await authPromise;
+      }
+      const {data:authData,error:authError}=authResult;
       if(authError) throw authError;
       if(!authData?.session){
         root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
