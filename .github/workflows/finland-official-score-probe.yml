@@ -1,0 +1,65 @@
+name: Finland official score source probe
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/finland-official-score-probe.yml'
+permissions:
+  contents: write
+jobs:
+  official-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Probe public Finnish official league sources (no writes to scores)
+        run: |
+          cat > /tmp/finland-probe.cjs <<'JS'
+          const fs=require('fs');
+          const urls=[
+            ['fa-original','https://spl.torneopal.fi/taso/rest/getMatches?ysnyp4h6e9egetkc3s3v&competition_id=spljp26&date=2026-10-17'],
+            ['league-match','https://www.veikkausliiga.com/tilastot/2026/veikkausliiga/ottelut/4353570/seuranta/'],
+            ['league-fixtures','https://www.veikkausliiga.com/tilastot/2026/veikkausliiga/ottelut/?group=2'],
+            ['league-hjk','https://www.veikkausliiga.com/joukkueet/hjk/otteluohjelma'],
+            ['hjk-team','https://www.hjk.fi/ottelut']
+          ];
+          (async()=>{
+            const out=[];
+            for(const [label,url] of urls){
+              try{
+                const r=await fetch(url,{signal:AbortSignal.timeout(16000),headers:{'user-agent':'Mozilla/5.0 (compatible; QiuchangArchive/1.0)','accept':'text/html,application/json;q=0.9,*/*;q=0.8'}});
+                const txt=await r.text();
+                const keys=['HJK - IF Gnistan','HJK','IF Gnistan','4353570','17.10.2026','getMatches'];
+                const slices=[];
+                for(const term of keys){
+                  const index=txt.indexOf(term);
+                  if(index>=0)slices.push({term,index,context:txt.slice(Math.max(0,index-350),index+1100).replace(/\s+/g,' ').slice(0,1200)});
+                }
+                out.push({label,status:r.status,contentType:r.headers.get('content-type'),length:txt.length,redirected:r.url,contexts:slices.slice(0,4),head:txt.slice(0,300)});
+              }catch(error){out.push({label,error:String(error)});}
+            }
+            const report={checked_at:new Date().toISOString(),target:'HJK vs IF Gnistan (2026-10-17 16:00 Europe/Helsinki)',noProductionWrite:true,results:out};
+            fs.mkdirSync('.github/reports',{recursive:true});
+            fs.writeFileSync('.github/reports/finland-official-20261017-probe.json',JSON.stringify(report,null,2)+'\n');
+            console.log(JSON.stringify(report,null,2));
+          })().catch(error=>{console.error(error);process.exitCode=1});
+          JS
+          node /tmp/finland-probe.cjs
+      - name: Persist audit result
+        if: always()
+        run: |
+          if [ ! -f .github/reports/finland-official-20261017-probe.json ]; then
+            echo '{"error":"official source probe failed"}' > .github/reports/finland-official-20261017-probe.json
+          fi
+          git add .github/reports/finland-official-20261017-probe.json
+          git diff --cached --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(finland): log public official result-source availability'
+          git pull --rebase origin main
+          git push origin HEAD:main
