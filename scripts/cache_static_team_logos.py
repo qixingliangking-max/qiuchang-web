@@ -155,6 +155,16 @@ def collect_team_names():
 
 
 def fill_missing_sources(teams):
+    # Three verified source-specific aliases absent or unreliable in the
+    # initial public resolver. Fixed canonical team IDs, never scraped per page.
+    verified = {
+        "磐田喜悦": "https://images.fotmob.com/image_resources/logo/teamlogo/8065.png",
+        "宫崎惊奇牛鸟": "https://images.fotmob.com/image_resources/logo/teamlogo/941024.png",
+        "利雅得胜利": "https://a.espncdn.com/i/teamlogos/soccer/500/817.png",
+    }
+    for name, url in verified.items():
+        if name in teams:
+            teams[name] = url
     unknown = [name for name, url in teams.items() if not safe_source(url)]
     for pos in range(0, len(unknown), 90):
         batch = unknown[pos:pos + 90]
