@@ -1,0 +1,71 @@
+name: Sporttery official football result 1017 probe
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sporttery-official-1017-result-probe.yml'
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Query official China Sports Lottery match results
+        shell: bash
+        run: |
+          cat > /tmp/checksporttery.cjs <<'JS'
+          const fs=require('fs');
+          const url='https://webapi.sporttery.cn/gateway/jc/football/getMatchResultV1.qry';
+          const tasks=[
+            ['jc-result-1017',url+'?matchPage=1&matchBeginDate=2026-10-17&matchEndDate=2026-10-17&leagueId=&pageSize=200&pageNo=1&isFix=0&pcOrWap=1'],
+            ['jc-result-1017-client',url+'?matchPage=1&matchBeginDate=2026-10-17&matchEndDate=2026-10-17&leagueId=&pageSize=200&pageNo=1&isFix=0&pcOrWap=1&clientCode=3001'],
+            ['jc-result-1016-1018',url+'?matchPage=1&matchBeginDate=2026-10-16&matchEndDate=2026-10-18&leagueId=&pageSize=300&pageNo=1&isFix=0&pcOrWap=1'],
+            ['uniform-1017','https://webapi.sporttery.cn/gateway/uniform/fb/getMatchDataPageListV1.qry?method=concern&matchDate=2026-10-17&pageSize=200&pageNo=1&isFix=0&isForceSort=1'],
+            ['h2h-2042029','https://webapi.sporttery.cn/gateway/uniform/football/getResultHistoryV1.qry?sportteryMatchId=2042029&termLimits=10&tournamentFlag=0&homeAwayFlag=0']
+          ];
+          const report={created_at:new Date().toISOString(),source:'中国体育彩票官方 webapi.sporttery.cn',match:'2026-10-17 周六012',readOnly:true,items:[]};
+          function matches(node,out=[],depth=0){
+             if(!node||typeof node!=='object'||depth>14)return out;
+             if(Array.isArray(node)){for(const x of node)matches(x,out,depth+1);return out;}
+             const s=JSON.stringify(node);
+             if(s.length<15000 && (/2042029|周六012|赫尔火花|格尼斯坦/.test(s) && (node.matchId||node.matchNum||node.matchNumStr||node.sportteryMatchId||node.sectionsNo999||node.fullCourtGoal||node.homeTeamAllName)))out.push(node);
+             for(const [k,v] of Object.entries(node))if(v && typeof v==='object')matches(v,out,depth+1);
+             return out;
+          }
+          (async()=>{
+            for(const [label,endpoint] of tasks){
+              try{
+                const rsp=await fetch(endpoint,{signal:AbortSignal.timeout(18000),headers:{'user-agent':'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 Chrome/121.0 Mobile Safari/537.36','accept':'application/json,text/plain,*/*','accept-language':'zh-CN,zh;q=0.9','referer':'https://m.sporttery.cn/mjc/zqsj/','origin':'https://www.sporttery.cn'}});
+                const text=await rsp.text();let data;
+                try{data=JSON.parse(text)}catch{}
+                const hits=data?matches(data):[];
+                const item={label,status:rsp.status,length:text.length,contentType:rsp.headers.get('content-type'),topKeys:data?Object.keys(data):[],valueKeys:data?.value?Object.keys(data.value):[],preview:text.slice(0,800),hits:hits.slice(0,10).map(x=>JSON.stringify(x).slice(0,2500))};
+                report.items.push(item);
+                console.log('SPORTTERY_RESULT '+JSON.stringify(item));
+              }catch(err){const item={label,error:String(err)};report.items.push(item);console.log('SPORTTERY_RESULT '+JSON.stringify(item))}
+            }
+            fs.mkdirSync('.github/reports',{recursive:true});
+            fs.writeFileSync('.github/reports/sporttery-official-1017-result.json',JSON.stringify(report,null,2)+'\n');
+          })();
+          JS
+          node /tmp/checksporttery.cjs
+      - name: Save result-source diagnosis
+        if: always()
+        run: |
+          if [ ! -f .github/reports/sporttery-official-1017-result.json ]; then
+            echo '{"error":"result source probe failed"}' > .github/reports/sporttery-official-1017-result.json
+          fi
+          git add .github/reports/sporttery-official-1017-result.json
+          git diff --cached --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(sporttery): official 2026-10-17 result source check'
+          git pull --rebase origin main
+          git push origin HEAD:main
