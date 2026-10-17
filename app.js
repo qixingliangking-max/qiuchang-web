@@ -2703,12 +2703,18 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(accessDisplayPhase==='verifying'){
-        // Neutral placeholder: neither claims the member is logged out nor
-        // exposes protected FINAL before entitlement has been verified.
-        cards.innerHTML='<div class="profile-card" role="status">正在加载中…</div>';
-      }else if(accessDisplayPhase==='unavailable'){
-        cards.innerHTML='<div class="profile-card" role="status">正在加载中…</div>';
+      if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
+        // Public fixture identities are already available from static JSON.
+        // Render them immediately, even if an auth request is slow/failed.
+        // Never include private FINAL/odds while entitlement is unresolved.
+        const publicRows=dateRows.map(m=>({
+          ...m,jc_model_outputs:[],jc_market_snapshots:[],
+          _jcModelsLoaded:false,_jcModelsLoading:false,_jcModelLoadFailed:false
+        }));
+        cards.innerHTML=publicRows.length
+          ? jcRenderOverviewTable(publicRows,calendarToday,'today')
+          : '<div class="profile-card" role="status">正在加载中…</div>';
+        jcBindOverviewRows(cards);
       }else if(predictionRestricted){
         cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
       }else{
