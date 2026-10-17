@@ -62,7 +62,9 @@
   if(oldDate){
     window.jcFetchDateRows=async function(dateStr,withSnapshots,force){
       const ds=String(dateStr||'');
-      if(onOverview() && !withSnapshots && ds>=today()){
+      // Forced calls are deliberate live score refreshes; never replace them
+      // with the cached schedule (which may still contain pre-match status).
+      if(onOverview() && !withSnapshots && !force && ds>=today()){
         const rows=await fetchScheduleSnapshot(ds,Boolean(force));
         if(rows) return {data:rows,error:null,fromScheduleSnapshot:true};
       }
