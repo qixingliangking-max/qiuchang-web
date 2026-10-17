@@ -6,6 +6,7 @@ Existing crest files are immutable and never re-downloaded.
 """
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -18,6 +19,8 @@ ASSETS = ROOT / "assets" / "team-logos"
 CATALOG = ROOT / "data" / "team-logos" / "catalog.json"
 CATALOG_JS = ASSETS / "catalog.js"
 ARCHIVE_MANIFEST = ROOT / "data" / "overview" / "manifest.json"
+LIVE_SCHEDULE_DIR = ROOT / "data" / "overview" / "live"
+LIVE_SCHEDULE_MANIFEST = ROOT / "data" / "overview" / "live-schedule-manifest.json"
 BEIJING = timezone(timedelta(hours=8))
 MAX_LOGO_BYTES = 900_000
 
@@ -186,6 +189,108 @@ def fill_missing_sources(teams):
                 teams[name] = source
 
 
+
+def publish_live_schedules(by_team):
+    """Publish public-only current schedule snapshots so first paint never needs Supabase."""
+    LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
+    today = datetime.now(BEIJING).date()
+    start = (today - timedelta(days=1)).isoformat()
+    end = (today + timedelta(days=2)).isoformat()
+    records = public_request("/rest/v1/jc_overview_schedule_snapshots", {
+        "select": "business_date,payload,match_count",
+        "business_date": "gte." + start,
+        "and": "(business_date.lte." + end + ")",
+        "order": "business_date.asc",
+        "limit": "12"
+    })
+    if not isinstance(records, list) or not records:
+        raise RuntimeError("No public schedule snapshots returned; keeping previous live files")
+
+    old_manifest = {}
+    if LIVE_SCHEDULE_MANIFEST.exists():
+        try:
+            old_manifest = json.loads(LIVE_SCHEDULE_MANIFEST.read_text(encoding="utf-8"))
+        except Exception:
+            old_manifest = {}
+    dates = {}
+    changed = False
+    allowed_fields = (
+        "id", "match_num", "business_date", "league_name", "league_short_name",
+        "home_team_name", "away_team_name", "match_date", "match_time",
+        "kickoff_at", "match_status"
+    )
+    for record in records:
+        ds = str(record.get("business_date") or "")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", ds):
+            continue
+        if ds < start or ds > end:
+            continue
+        base_rows = (record.get("payload") or {}).get("rows")
+        count = int(record.get("match_count") or 0)
+        if not isinstance(base_rows, list) or count <= 0 or len(base_rows) != count:
+            print("WARNING incomplete live schedule; skipped:", ds, "count=", count,
+                  "rows=", len(base_rows) if isinstance(base_rows, list) else "invalid")
+            continue
+
+        rows = []
+        valid = True
+        for source_row in base_rows:
+            if not isinstance(source_row, dict) or str(source_row.get("business_date") or ds) != ds or not source_row.get("id"):
+                valid = False
+                break
+            row = {k: source_row.get(k) for k in allowed_fields if k in source_row}
+            raw = source_row.get("raw") if isinstance(source_row.get("raw"), dict) else {}
+            row["raw"] = {
+                "matchStatusName": raw.get("matchStatusName"),
+                "sectionsNo999": raw.get("sectionsNo999"),
+                "sectionsNo1": raw.get("sectionsNo1")
+            }
+            home = str(row.get("home_team_name") or "").strip()
+            away = str(row.get("away_team_name") or "").strip()
+            row["_homeLogoUrl"] = by_team.get(home, "")
+            row["_awayLogoUrl"] = by_team.get(away, "")
+            row["_jcScheduleSnapshot"] = True
+            rows.append(row)
+        if not valid or len(rows) != count:
+            print("WARNING invalid live schedule rows; skipped:", ds)
+            continue
+
+        payload = {
+            "version": 1,
+            "business_date": ds,
+            "match_count": count,
+            "rows": rows
+        }
+        compact = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+        digest = hashlib.sha256(compact.encode("utf-8")).hexdigest()[:16]
+        relative = "data/overview/live/" + ds + ".json"
+        destination = ROOT / relative
+        if not destination.exists() or destination.read_text(encoding="utf-8") != json.dumps(payload, ensure_ascii=False, indent=2) + "\n":
+            destination.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            changed = True
+        dates[ds] = {"file": relative, "version": digest, "match_count": count}
+
+    if not dates:
+        raise RuntimeError("No complete public schedule snapshot validated; keeping previous live manifest")
+
+    previous_dates = old_manifest.get("dates") if isinstance(old_manifest.get("dates"), dict) else {}
+    manifest_changed = dates != previous_dates or changed or old_manifest.get("version") != 1
+    manifest = {
+        "version": 1,
+        "updated_at": datetime.now(BEIJING).isoformat(timespec="seconds") if manifest_changed
+                     else old_manifest.get("updated_at"),
+        "dates": dict(sorted(dates.items()))
+    }
+    serialized = json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
+    if not LIVE_SCHEDULE_MANIFEST.exists() or LIVE_SCHEDULE_MANIFEST.read_text(encoding="utf-8") != serialized:
+        LIVE_SCHEDULE_MANIFEST.write_text(serialized, encoding="utf-8")
+        changed = True
+    print("Public live schedule snapshots:", len(dates),
+          "dates:", ",".join(sorted(dates)),
+          "changed:", changed)
+
+
+
 def publish():
     ASSETS.mkdir(parents=True, exist_ok=True)
     CATALOG.parent.mkdir(parents=True, exist_ok=True)
@@ -226,6 +331,7 @@ def publish():
         CATALOG.write_text(new_json, encoding="utf-8")
     if not CATALOG_JS.exists() or CATALOG_JS.read_text(encoding="utf-8") != new_js:
         CATALOG_JS.write_text(new_js, encoding="utf-8")
+    publish_live_schedules(by_team)
     print("LOCAL static team crests mapped:", len(by_team),
           "sources:", len(by_source), "unresolved:", len(teams) - len([
               name for name in teams if name in by_team]))
