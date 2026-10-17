@@ -2132,6 +2132,14 @@ async function loadJcFootball(){
     // No in-play updates: apply one official settlement only after FT.
     // All fixed fixtures, teams, crests, odds, FINAL and AI stay unchanged.
     if(selectedDate!==qcBeijingBusinessToday()) return;
+    // If every published kickoff is in the future, no completed match can
+    // exist. Avoid a redundant database request on cold opens and every tick.
+    // With any missing kickoff, retain the original database fallback.
+    const candidates=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    if(candidates.length && candidates.every(m=>{
+      const kickoff=new Date(m.kickoff_at||'').getTime();
+      return Number.isFinite(kickoff) && kickoff>Date.now();
+    })) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
     const result=await jcFetchDateRows(refreshDate,false,true);
@@ -2533,6 +2541,14 @@ async function loadJcFrontend(){
     // Historical and future dates are static browsing only. The current
     // Beijing calendar day alone needs post-match score/status refreshes.
     if(ds!==today || qcFrozenOverviewManifestCache?.dates?.[ds]) return;
+    // Public schedule is complete. Before its FIRST kickoff, only use the
+    // fixed fixture card: there cannot yet be any post-game FT to collect.
+    // Unknown kickoff timestamps deliberately retain the old network path.
+    const publicDayRows=allRows.filter(m=>jcBusinessDate(m)===ds);
+    if(publicDayRows.length && publicDayRows.every(m=>{
+      const kickoff=new Date(m.kickoff_at||'').getTime();
+      return Number.isFinite(kickoff) && kickoff>Date.now();
+    })) return;
     try{
       // Silent background status checks. On-field score, HT and clock remain
       // unchanged until the backend persists the confirmed final result.
