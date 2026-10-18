@@ -1254,7 +1254,8 @@ function jcPatchFootballOddsOnly(root,rows){
   $$('.jc-football-card[data-match-id]',root).forEach(card=>{
     const m=byId.get(String(card.dataset.matchId||''));
     const odds=m?$('.jc-mini-odds',card):null;
-    if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
+    const html=m?jcRenderOddsMini(jcPrekickLatestPools(m)):'';
+    if(odds && odds.outerHTML!==html) odds.outerHTML=html;
   });
 }
 function jcPatchFootballHitsOnly(root,rows,access){
@@ -1263,7 +1264,8 @@ function jcPatchFootballHitsOnly(root,rows,access){
   $$('.jc-football-card[data-match-id]',root).forEach(card=>{
     const m=byId.get(String(card.dataset.matchId||''));
     const hit=m?$('.jc-card-after-odds',card):null;
-    if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
+    const html=m?jcFootballHitBlock(m,access):'';
+    if(hit && hit.outerHTML!==html) hit.outerHTML=html;
   });
 }
 
