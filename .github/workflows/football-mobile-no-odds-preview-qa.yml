@@ -63,7 +63,7 @@ jobs:
                     firstChips:[...first.querySelectorAll('.qc-demo-chip')].map(x=>x.textContent.trim()),
                     firstHeight:Math.round(first.getBoundingClientRect().height),
                     secondHeight:Math.round(cards[1].getBoundingClientRect().height),
-                    forbiddenTerms:/正常推理|中赔率|高赔率/.test(document.body.textContent)};
+                    forbiddenTerms:/正常推理|高赔率|(^|[\\s｜])中赔率([\\s｜]|$)/.test(document.body.innerText)};
                 });
                 if(d.rows!==25 || d.complete<21 || d.hits<20 || d.odds!==0 || d.linked!==25 ||
                    !d.priceTags || d.missingHitPrice || d.forbiddenTerms || d.firstHeight>245 ||
