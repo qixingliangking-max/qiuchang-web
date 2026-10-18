@@ -74,6 +74,14 @@ jobs:
           const cardTo=source.indexOf('// Historical archives are immutable',cardFrom);
           if(cardFrom<0 || cardTo<=cardFrom)throw Error('Football static card reconciler missing');
           const reconcileCards=source.slice(cardFrom,cardTo);
+          const confirmFrom=source.indexOf('function qcIsConfirmedFinal(');
+          const confirmTo=source.indexOf('// Apply the settlement atomically',confirmFrom);
+          const guestFrom=source.indexOf('function jcGuestFinishedReviewRows(');
+          const guestTo=source.indexOf('function jcRenderYesterdayReview(',guestFrom);
+          if(confirmFrom<0 || confirmTo<=confirmFrom || guestFrom<0 || guestTo<=guestFrom)
+            throw Error('Guest FT-only filter missing');
+          const guestFilter=source.slice(confirmFrom,confirmTo)+'\n'+
+            'function qcJcIsVisibleMatch(){return true;}\n'+source.slice(guestFrom,guestTo);
           const rows=(a,b)=>'<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table"><thead><tr><th>编号</th><th>预测</th></tr></thead><tbody>'+
             '<tr data-match-id="fixture-1"><td>001</td><td>'+a+'</td></tr>'+
             '<tr data-match-id="fixture-2"><td>002</td><td>'+b+'</td></tr>'+
@@ -86,6 +94,7 @@ jobs:
                 await page.setContent('<main id="snapshot"></main>');
                 await page.addScriptTag({content:reconcile});
                 await page.addScriptTag({content:reconcileCards});
+                await page.addScriptTag({content:guestFilter});
                 const result=await page.evaluate(({rowsSource})=>{
                   const rows=Function('return ('+rowsSource+')')();
                   const el=document.getElementById('snapshot');
@@ -110,7 +119,41 @@ jobs:
                   // Unauthorized switch: remove protected table completely.
                   qcReconcileOverviewTable(el,'<div class="member-gate">订阅查看</div>');
                   if(el.querySelector('[data-match-id]'))throw Error('Protected predictions leaked across permission change');
-                  return {lockChangedOne:true,firstFinalChangedOne:true,secondFinalPreservedFirst:true,gateClearsProtectedMarkup:true};
+                  // A guest gets only officially confirmed FT + HT. A started
+                  // match, an FT without HT, and an interrupted fixture stay hidden.
+                  const fixture=(n,status,ft,ht)=>({
+                    id:n,match_status:status,
+                    raw:{matchStatusName:status,sectionsNo999:ft,sectionsNo1:ht}
+                  });
+                  const history=[
+                    fixture('a','完赛','2-1','1-0'),
+                    fixture('b','进行中','1-0','1-0'),
+                    fixture('c','完赛','0-2',''),
+                    fixture('d','完赛','2-2','1-1')
+                  ];
+                  let visible=jcGuestFinishedReviewRows(history);
+                  if(visible.length!==2 || visible.some(row=>row.id==='b'||row.id==='c'))
+                    throw Error('Guest filter exposed unfinished fixtures');
+                  history[2]=fixture('c','完赛','0-2','0-1');
+                  visible=jcGuestFinishedReviewRows(history);
+                  if(visible.length!==3)throw Error('Confirmed FT+HT was not added');
+                  const host=document.createElement('div');document.body.append(host);
+                  const numbered=(count)=>'<table class="jc-review-table jc-overview-table"><tbody>'+
+                    Array.from({length:count},(_,i)=>'<tr data-match-id="settled-'+(i+1)+'"><td>FT '+(i+1)+'</td></tr>').join('')+
+                    '</tbody></table>';
+                  qcReconcileOverviewTable(host,numbered(21));
+                  const frozen=host.querySelector('[data-match-id="settled-1"]');
+                  qcReconcileOverviewTable(host,numbered(22));
+                  if(host.querySelectorAll('[data-match-id]').length!==22 ||
+                     host.querySelector('[data-match-id="settled-1"]')!==frozen)
+                    throw Error('Adding row 22 rebuilt archived rows');
+                  qcReconcileOverviewTable(host,numbered(23));
+                  if(host.querySelectorAll('[data-match-id]').length!==23 ||
+                     host.querySelector('[data-match-id="settled-1"]')!==frozen)
+                    throw Error('Adding row 23 rebuilt archived rows');
+                  host.remove();
+                  return {lockChangedOne:true,firstFinalChangedOne:true,secondFinalPreservedFirst:true,
+                    gateClearsProtectedMarkup:true,guestOnlyFinal:true,progressive21to23:true};
                 },{rowsSource:rows.toString()});
                 const football=await page.evaluate(()=>{
                   const host=document.createElement('div');document.body.append(host);
