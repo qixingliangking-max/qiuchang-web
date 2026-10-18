@@ -7,6 +7,13 @@ on:
     - cron: '30 5 * * *'
     - cron: '30 12 * * *'
   workflow_dispatch:
+  # Editing this guarded workflow or exporter also launches an immediate
+  # catch-up run when a scheduled GitHub Actions execution is delayed.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-public-football-history.yml'
+      - 'scripts/publish_public_overview_archives.py'
 
 permissions:
   contents: write
@@ -25,6 +32,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0
       - name: Python runtime
         uses: actions/setup-python@v5
         with:
@@ -42,4 +50,5 @@ jobs:
             exit 0
           fi
           git commit -m "archive(history): publish daily public fixed snapshots"
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
