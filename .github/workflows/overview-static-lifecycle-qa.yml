@@ -70,6 +70,10 @@ jobs:
           const to=source.indexOf('function jcBindOverviewRows(',from);
           if(from<0 || to<=from)throw Error('Static row reconciler missing');
           const reconcile=source.slice(from,to);
+          const cardFrom=source.indexOf('function qcReconcileFootballCards(');
+          const cardTo=source.indexOf('// Historical archives are immutable',cardFrom);
+          if(cardFrom<0 || cardTo<=cardFrom)throw Error('Football static card reconciler missing');
+          const reconcileCards=source.slice(cardFrom,cardTo);
           const rows=(a,b)=>'<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table"><thead><tr><th>编号</th><th>预测</th></tr></thead><tbody>'+
             '<tr data-match-id="fixture-1"><td>001</td><td>'+a+'</td></tr>'+
             '<tr data-match-id="fixture-2"><td>002</td><td>'+b+'</td></tr>'+
@@ -81,6 +85,7 @@ jobs:
                 const page=await browser.newPage({viewport});
                 await page.setContent('<main id="snapshot"></main>');
                 await page.addScriptTag({content:reconcile});
+                await page.addScriptTag({content:reconcileCards});
                 const result=await page.evaluate(({rowsSource})=>{
                   const rows=Function('return ('+rowsSource+')')();
                   const el=document.getElementById('snapshot');
@@ -107,7 +112,25 @@ jobs:
                   if(el.querySelector('[data-match-id]'))throw Error('Protected predictions leaked across permission change');
                   return {lockChangedOne:true,firstFinalChangedOne:true,secondFinalPreservedFirst:true,gateClearsProtectedMarkup:true};
                 },{rowsSource:rows.toString()});
-                console.log('QCDA_STATIC_LIFECYCLE_QA '+label+' '+JSON.stringify(result));
+                const football=await page.evaluate(()=>{
+                  const host=document.createElement('div');document.body.append(host);
+                  const markup=(a,b)=>'<div class="jc-football-grid">'+
+                    '<article class="jc-football-card" data-match-id="x"><a>'+a+'</a></article>'+
+                    '<article class="jc-football-card" data-match-id="y"><a>'+b+'</a></article></div>';
+                  qcReconcileFootballCards(host,markup('赛前','赛前'));
+                  const unchanged=host.querySelector('[data-match-id="y"]');
+                  qcReconcileFootballCards(host,markup('FT 2-1 ✓','赛前'));
+                  if(host.querySelector('[data-match-id="y"]')!==unchanged)
+                    throw Error('Football rebuilt untouched card y');
+                  const first=host.querySelector('[data-match-id="x"]');
+                  qcReconcileFootballCards(host,markup('FT 2-1 ✓','FT 1-0 ✓'));
+                  if(host.querySelector('[data-match-id="x"]')!==first)
+                    throw Error('Football rebuilt already frozen card x');
+                  if(!host.textContent.includes('FT 1-0'))throw Error('Second fixture did not settle');
+                  host.remove();
+                  return {onlyChangedCardReplaced:true};
+                });
+                console.log('QCDA_STATIC_LIFECYCLE_QA '+label+' '+JSON.stringify({overview:result,football}));
                 await page.close();
               }
             }finally{await browser.close()}
