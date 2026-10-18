@@ -931,7 +931,13 @@ function jcOverviewPredictionParts(m){
   let market=jcPredictionPlaceholder(placeholderState);
   let goals=jcPredictionPlaceholder(placeholderState);
   let hafu=jcPredictionPlaceholder(placeholderState);
-  const model=jcPublicModel(m);
+  const model=m?._qcPendingHistoryFixture?null:jcPublicModel(m);
+
+  if(m?._qcPendingHistoryFixture){
+    // Public fixture is visible, but an unverified historical selection is not.
+    const pending='<span class="jc-overview-pending">—</span>';
+    return {market:pending,goals:pending,hafu:pending};
+  }
 
   if(model){
     market=jcOverviewInlineChoicesHtml(jcOverviewDirectionChoices(model,m));
@@ -995,7 +1001,7 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       if(score.finished){
         scoreMeta=score.ht?'半 '+score.ht:'完赛';
       }else{
-        scoreMeta=jcMatchStatusLabel(m,today);
+        scoreMeta=m?._qcPendingHistoryFixture?'待完赛':jcMatchStatusLabel(m,today);
       }
       const scoreStack=displayScore
         ? '<strong class="jc-score-full">'+qcEscape(displayScore)+'</strong><span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span>'
@@ -2559,13 +2565,47 @@ async function loadJcFrontend(){
     // Fully frozen public history needs NO additional protected query.
     const archived=Boolean(qcFrozenOverviewManifestCache?.dates?.[ds] ||
       qcHistoryOverviewRowsCache.get(ds)?.isFinal);
+    // The finished-only history snapshot is intentionally PARTIAL until every
+    // fixture has ended. Merge the PUBLIC, complete 25-row fixture schedule so
+    // a date change never makes 015-025 disappear. Never expose pending models.
+    const pendingPublicSchedule=!archived && ds>=qcAddDays(today,-3) &&
+      typeof window.qcFetchLiveScheduleDate==='function'
+      ? window.qcFetchLiveScheduleDate(ds).catch(()=>null) : null;
     const pendingPrediction=access.isPro && !archived
       ? qcFetchProOverviewDate(ds).catch(error=>{
           console.warn('昨日受保护快照后台读取失败',error);return null;
         })
       : null;
     const history=resultOrEmpty(historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds));
-    if(!access.isPro) return history;
+    const ensureCompletePublicReview=async()=>{
+      if(history.historyFinal || !pendingPublicSchedule) return history;
+      const publicResult=await pendingPublicSchedule;
+      const schedule=(publicResult?.data||[]).filter(m=>m?.id && jcBusinessDate(m)===ds);
+      const expected=Number(history.matchCount||0);
+      if(!schedule.length || (expected>0 && schedule.length<expected)) return history;
+      const finishedById=new Map((history.data||[]).filter(m=>jcScoreInfo(m).finished)
+        .map(m=>[String(m.id),m]));
+      const rows=schedule.map(m=>{
+        const finished=finishedById.get(String(m.id));
+        if(finished) return finished;
+        // Only public fixture/FT/HT fields on unfinished/unsettled rows.
+        return {
+          id:m.id,match_num:m.match_num,business_date:ds,
+          match_date:m.match_date,match_time:m.match_time,kickoff_at:m.kickoff_at,
+          league_name:m.league_name,league_short_name:m.league_short_name,
+          home_team_name:m.home_team_name,away_team_name:m.away_team_name,
+          match_status:m.match_status,
+          raw:{matchStatusName:m.raw?.matchStatusName||'',
+            sectionsNo999:m.raw?.sectionsNo999||'',sectionsNo1:m.raw?.sectionsNo1||''},
+          jc_model_outputs:[],jc_market_snapshots:[],
+          _jcModelsLoaded:true,_jcLatestSnapshotsLoaded:true,
+          _qcPendingHistoryFixture:true
+        };
+      });
+      return {...history,data:rows,fromHistorySnapshot:true,
+        fromCompletePublicSchedule:true};
+    };
+    if(!access.isPro) return ensureCompletePublicReview();
 
     // Once yesterday's COMPLETE final history includes every locked prediction,
     // that single public static file suffices even for Pro users.
@@ -2579,7 +2619,7 @@ async function loadJcFrontend(){
     // 未完赛行来自受保护的锁板日快照；已完赛行用公开历史快照覆盖 FT/HT。
     // 这里不回查 jc_matches，也不重新读取/重算模型输出。
     const protectedSnapshot=await (pendingPrediction || qcFetchProOverviewDate(ds));
-    if(!protectedSnapshot?.data?.length) return history;
+    if(!protectedSnapshot?.data?.length) return ensureCompletePublicReview();
 
     const finishedById=new Map((history.data||[]).map(row=>[String(row.id),row]));
     const merged=(protectedSnapshot.data||[]).map(row=>{
@@ -2674,7 +2714,8 @@ async function loadJcFrontend(){
     // receive its last post-match settlement snapshot.
     if(ds!==today || previousHistoryFinal) return;
     const prevDs=qcAddDays(ds,-1);
-    const result=await qcFetchHistoryOverviewDate(prevDs,true);
+    const result=await fetchHistoryReviewDateReady(prevDs,
+      qcFetchHistoryOverviewDate(prevDs,true));
     if(token!==loadToken || selectedDate!==ds || result?.error) return;
 
     previousHistoryFinal=Boolean(result?.historyFinal);
@@ -2747,7 +2788,7 @@ async function loadJcFrontend(){
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
     if($('#jcYesterdayMeta') && !previousLoading){
-      const reviewCount=predictionRestricted?finishedPrevious.length:previousRows.length;
+      const reviewCount=previousRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
@@ -2772,9 +2813,12 @@ async function loadJcFrontend(){
     try{
       if(reviewCards && !previousLoading){
         if(predictionRestricted){
-          reviewCards.innerHTML=finishedPrevious.length
-            ? jcRenderYesterdayReview(finishedPrevious,calendarToday)
-            : '<div class="jc-review-empty">上一日暂时还没有完赛场次</div>';
+          // Show the ENTIRE public previous-day fixture list, with FT-only
+          // locked predictions on completed rows and neutral pending cells
+          // for fixtures that have not settled.
+          reviewCards.innerHTML=previousRows.length
+            ? jcRenderYesterdayReview(previousRows,calendarToday)
+            : '<div class="jc-review-empty">上一日暂时没有可展示的赛程</div>';
         }else{
           reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
         }
