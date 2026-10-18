@@ -449,7 +449,23 @@
       "home_team": "斯特拉斯堡",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T15:15:00.000Z"
+      "kickoff_at": "2026-10-17T15:15:00Z"
+    },
+    {
+      "source_match_id": "5802958",
+      "match_id": "fotmob:5802958",
+      "home_team": "里尔",
+      "away_team": "布雷斯特",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802963",
+      "match_id": "fotmob:5802963",
+      "home_team": "特鲁瓦",
+      "away_team": "朗斯",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T18:45:00Z"
     }
   ]
 }

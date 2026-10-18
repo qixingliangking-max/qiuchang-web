@@ -2402,6 +2402,38 @@
       "away_team": "巴西国际",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103665",
+      "match_id": "fotmob:5103665",
+      "home_team": "博塔弗戈",
+      "away_team": "沙佩科恩斯",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T21:00:00Z"
+    },
+    {
+      "source_match_id": "5103669",
+      "match_id": "fotmob:5103669",
+      "home_team": "米内罗竞技",
+      "away_team": "科里蒂巴",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T21:30:00Z"
+    },
+    {
+      "source_match_id": "5103671",
+      "match_id": "fotmob:5103671",
+      "home_team": "巴拉纳竞技",
+      "away_team": "帕尔梅拉斯",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103666",
+      "match_id": "fotmob:5103666",
+      "home_team": "圣保罗",
+      "away_team": "瓦斯科达伽马",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T00:00:00.000Z"
     }
   ]
 }

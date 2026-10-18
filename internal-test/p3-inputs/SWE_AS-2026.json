@@ -1482,6 +1482,14 @@
       "away_team": "佐加顿斯",
       "match_date": "2026-10-16",
       "kickoff_at": "2026-10-16T17:00:00Z"
+    },
+    {
+      "source_match_id": "5107621",
+      "match_id": "fotmob:5107621",
+      "home_team": "AIK索尔纳",
+      "away_team": "哥德堡",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T16:10:00Z"
     }
   ]
 }

@@ -593,7 +593,23 @@
       "home_team": "海牙",
       "away_team": "埃因霍温",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:30:00.000Z"
+      "kickoff_at": "2026-10-17T14:30:00Z"
+    },
+    {
+      "source_match_id": "5781774",
+      "match_id": "fotmob:5781774",
+      "home_team": "特尔斯达",
+      "away_team": "费耶诺德",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T18:00:00Z"
+    },
+    {
+      "source_match_id": "5781768",
+      "match_id": "fotmob:5781768",
+      "home_team": "鹿特丹斯巴达",
+      "away_team": "威廉二世",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T19:00:00Z"
     }
   ]
 }

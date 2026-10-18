@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 68,
-  "collected_matches": 68,
+  "input_matches": 69,
+  "collected_matches": 69,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "圣保利",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -56,7 +56,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "汉诺威96",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",

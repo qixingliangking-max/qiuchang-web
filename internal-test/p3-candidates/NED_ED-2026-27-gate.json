@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 74,
-  "collected_matches": 74,
+  "input_matches": 76,
+  "collected_matches": 76,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "威廉二世",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "特尔斯达",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费耶诺德",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,7 +101,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "鹿特丹斯巴达",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",

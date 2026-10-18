@@ -489,7 +489,7 @@
       "home_team": "埃弗顿",
       "away_team": "切尔西",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T11:30:00.000Z"
+      "kickoff_at": "2026-10-17T11:30:00Z"
     },
     {
       "source_match_id": "5795476",
@@ -497,7 +497,7 @@
       "home_team": "布伦特福德",
       "away_team": "利物浦",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:00:00.000Z"
+      "kickoff_at": "2026-10-17T14:00:00Z"
     },
     {
       "source_match_id": "5795479",
@@ -505,7 +505,7 @@
       "home_team": "富勒姆",
       "away_team": "赫尔城",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:00:00.000Z"
+      "kickoff_at": "2026-10-17T14:00:00Z"
     },
     {
       "source_match_id": "5795481",
@@ -513,7 +513,15 @@
       "home_team": "曼城",
       "away_team": "伊普斯维奇",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:00:00.000Z"
+      "kickoff_at": "2026-10-17T14:00:00Z"
+    },
+    {
+      "source_match_id": "5795482",
+      "match_id": "fotmob:5795482",
+      "home_team": "纽卡斯尔联",
+      "away_team": "阿斯顿维拉",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T16:30:00Z"
     }
   ]
 }
