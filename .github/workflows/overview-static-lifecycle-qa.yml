@@ -1,0 +1,111 @@
+name: Overview three-stage static lifecycle regression
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'overview-live-static.js'
+      - '.github/workflows/overview-static-lifecycle-qa.yml'
+permissions:
+  contents: read
+jobs:
+  overview-static-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check existing official score freeze rules
+        run: python3 scripts/publish_final_scores.py --self-test
+      - name: Check static fixture & crest correctness
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('.')
+          manifest=json.loads((root/'data/overview/live-schedule-manifest.json').read_text())
+          assert len(manifest['dates'])>=1
+          for day,entry in manifest['dates'].items():
+            p=root/entry['file']
+            assert p.is_file()
+            payload=json.loads(p.read_text())
+            assert day==payload['business_date']
+            assert entry['match_count']==len(payload['rows'])
+            ids=set()
+            for row in payload['rows']:
+              assert row['id'] not in ids
+              ids.add(row['id'])
+              assert 'jc_model_outputs' not in row
+              assert 'jc_match_ai_analysis' not in row
+              assert 'jc_market_snapshots' not in row
+              for side in ['home','away']:
+                logo=row.get('_'+side+'LogoUrl','')
+                if logo:
+                  assert logo.startswith('assets/team-logos/'),logo
+                  assert (root/logo).is_file(),logo
+          print('PASS static public files: correct rosters, complete local crest paths, no protected fields')
+          PY
+      - name: Install headless Chromium
+        run: |
+          mkdir -p /tmp/qc-overview-qa
+          cd /tmp/qc-overview-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify pending, lock, per-match FT, archive and access transition
+        run: |
+          cat >/tmp/qc-overview-qa/check.cjs <<'JS'
+          const fs=require('fs');
+          const {chromium}=require('playwright');
+          const source=fs.readFileSync('app.js','utf8');
+          const from=source.indexOf('function qcReconcileOverviewTable(');
+          const to=source.indexOf('function jcBindOverviewRows(',from);
+          if(from<0 || to<=from)throw Error('Static row reconciler missing');
+          const reconcile=source.slice(from,to);
+          const rows=(a,b)=>'<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table"><thead><tr><th>编号</th><th>预测</th></tr></thead><tbody>'+
+            '<tr data-match-id="fixture-1"><td>001</td><td>'+a+'</td></tr>'+
+            '<tr data-match-id="fixture-2"><td>002</td><td>'+b+'</td></tr>'+
+            '</tbody></table></div>';
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try{
+              for(const [label,viewport] of [['mobile',{width:393,height:852}],['desktop',{width:1280,height:900}]]){
+                const page=await browser.newPage({viewport});
+                await page.setContent('<main id="snapshot"></main>');
+                await page.addScriptTag({content:reconcile});
+                const result=await page.evaluate(({rowsSource})=>{
+                  const rows=Function('return ('+rowsSource+')')();
+                  const el=document.getElementById('snapshot');
+                  // Fixture intake, before-lock: both rows have static "待更新".
+                  qcReconcileOverviewTable(el,rows('待更新','待更新'));
+                  let a=el.querySelector('[data-match-id="fixture-1"]');
+                  let b=el.querySelector('[data-match-id="fixture-2"]');
+                  // Lock only first match: second row DOM node must be untouched.
+                  qcReconcileOverviewTable(el,rows('模型方向：胜','待更新'));
+                  if(el.querySelector('[data-match-id="fixture-2"]')!==b)throw Error('Lock rebuilt unchanged row');
+                  a=el.querySelector('[data-match-id="fixture-1"]');b=el.querySelector('[data-match-id="fixture-2"]');
+                  // First match settles, only first gets FT and hit ring.
+                  qcReconcileOverviewTable(el,rows('模型方向：胜 ✓｜比分 2-1','待更新'));
+                  if(el.querySelector('[data-match-id="fixture-2"]')!==b)throw Error('FT rebuilt the second fixture');
+                  if(el.querySelector('[data-match-id="fixture-1"]')===a)throw Error('FT did not swap row one');
+                  a=el.querySelector('[data-match-id="fixture-1"]');
+                  // Second match locks and settles, previous frozen row stays identical.
+                  qcReconcileOverviewTable(el,rows('模型方向：胜 ✓｜比分 2-1','模型方向：负 ✓｜比分 0-2'));
+                  if(el.querySelector('[data-match-id="fixture-1"]')!==a)throw Error('Finalization rebuilt archived row one');
+                  const archived=el.innerText;
+                  if(!archived.includes('2-1')||!archived.includes('0-2'))throw Error('Final FT disappeared');
+                  // Unauthorized switch: remove protected table completely.
+                  qcReconcileOverviewTable(el,'<div class="member-gate">订阅查看</div>');
+                  if(el.querySelector('[data-match-id]'))throw Error('Protected predictions leaked across permission change');
+                  return {lockChangedOne:true,firstFinalChangedOne:true,secondFinalPreservedFirst:true,gateClearsProtectedMarkup:true};
+                },{rowsSource:rows.toString()});
+                console.log('QCDA_STATIC_LIFECYCLE_QA '+label+' '+JSON.stringify(result));
+                await page.close();
+              }
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e.stack||String(e));process.exitCode=1});
+          JS
+          node /tmp/qc-overview-qa/check.cjs
