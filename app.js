@@ -473,7 +473,8 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       // Other pages (or a failed bootstrap) retain the original check.
       if(overviewBundlePromise){
         try{
-          const bundle=await overviewBundlePromise;
+          const bundle=await (typeof overviewBundlePromise==='function'
+            ? overviewBundlePromise() : overviewBundlePromise);
           if(bundle && typeof bundle.is_pro==='boolean'){
             isPro=bundle.is_pro===true;
             verifiedByOverview=true;
@@ -2204,8 +2205,16 @@ async function loadJcFrontend(){
       ? window.qcFetchLiveScheduleDate(candidateDate) : null;
   // Protected prediction bundles still require server-verified Pro access.
   qcLoadFrozenOverviewManifest();
-  const candidateCurrentPromise=null;
-  const accessPromise=qcGetAccessState(false,null);
+  // One lazy server-authorized bootstrap is shared by Pro verification and
+  // the authenticated prediction read. Anonymous public first paint never
+  // starts this protected request.
+  let candidateCurrentPromise=null;
+  const requestCandidateCurrentBundle=()=>{
+    if(!candidateCurrentPromise && typeof window.qcFetchOverviewBootstrap==='function')
+      candidateCurrentPromise=window.qcFetchOverviewBootstrap(candidateDate);
+    return candidateCurrentPromise;
+  };
+  const accessPromise=qcGetAccessState(false,requestCandidateCurrentBundle);
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
@@ -2442,8 +2451,8 @@ async function loadJcFrontend(){
     // Server validates Pro entitlement. It never returns protected prediction
     // rows to anonymous or non-Pro clients.
     const bundle=typeof window.qcFetchOverviewBootstrap==='function'
-      ? await (ds===candidateDate && candidateCurrentPromise
-        ? candidateCurrentPromise
+      ? await (ds===candidateDate
+        ? requestCandidateCurrentBundle()
         : window.qcFetchOverviewBootstrap(ds)) : null;
 
     if(access.isPro && bundle?.is_pro===true){
