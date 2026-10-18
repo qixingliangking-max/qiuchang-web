@@ -210,7 +210,9 @@ function attach(){
  $('nextMonth').addEventListener('click',function(){state.month.setMonth(state.month.getMonth()+1);calendar()});
  document.addEventListener('click',function(e){if(!e.target.closest('.date-control')){$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false')}});
  $('budget').addEventListener('input',function(e){var n=Number(e.target.value);if(Number.isFinite(n)&&n>=10&&n<=100000){state.budget=Math.round(n*100)/100;renderPlans();renderHistory();if(state.open)renderDialog();document.querySelectorAll('[data-budget]').forEach(function(b){b.classList.toggle('selected',+b.dataset.budget===state.budget)})}});
- $('budget').addEventListener('blur',function(){var n=Number(this.value);state.budget=Math.round(Math.min(100000,Math.max(10,Number.isFinite(n)?n:100))*100)/100;renderAll()});
+ // Never replace the cards on input blur: clicking "查看" after editing would
+ // otherwise remove the target between pointerdown and click.
+ $('budget').addEventListener('blur',function(){var n=Number(this.value),before=state.budget;state.budget=Math.round(Math.min(100000,Math.max(10,Number.isFinite(n)?n:100))*100)/100;this.value=String(state.budget);if(state.budget!==before){renderPlans();renderHistory();if(state.open)renderDialog()}});
  document.querySelectorAll('[data-budget]').forEach(function(b){b.addEventListener('click',function(){state.budget=+b.dataset.budget;renderAll()})});
  document.addEventListener('click',function(e){var b=e.target.closest('[data-open-date][data-open-index]');if(b)openDetail(b.dataset.openDate,+b.dataset.openIndex)});
  $('modeTabs').addEventListener('click',function(e){var b=e.target.closest('button[data-mode]');if(!b)return;state.mode=b.dataset.mode;renderDialog();renderPlans();renderHistory()});
