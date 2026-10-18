@@ -1028,11 +1028,29 @@ function qcReconcileOverviewTable(root,markup){
   if(original && next){
     const before=[...original.querySelectorAll('tr[data-match-id]')];
     const after=[...next.querySelectorAll('tr[data-match-id]')];
-    if(before.length===after.length &&
-       before.every((row,i)=>row.dataset.matchId && row.dataset.matchId===after[i].dataset.matchId)){
-      // No redraw at all for 24 unchanged fixtures when only one FT arrives.
-      after.forEach((row,i)=>{
-        if(before[i].outerHTML!==row.outerHTML) before[i].replaceWith(row);
+    const present=new Map(before.map(row=>[row.dataset.matchId,row]));
+    const incomingIds=new Set(after.map(row=>row.dataset.matchId));
+    if(before.length && after.length>=before.length &&
+       present.size===before.length && incomingIds.size===after.length &&
+       before.every(row=>row.dataset.matchId && incomingIds.has(row.dataset.matchId))){
+      // 21 FT -> 22 FT -> 23 FT: insert only the newly settled row,
+      // without rebuilding any unchanged final match.
+      after.forEach((row,index)=>{
+        const id=row.dataset.matchId;
+        const old=present.get(id);
+        if(old){
+          if(old.outerHTML!==row.outerHTML){
+            old.replaceWith(row);
+            present.set(id,row);
+          }
+        }else{
+          const nextExisting=after.slice(index+1)
+            .map(candidate=>present.get(candidate.dataset.matchId))
+            .find(Boolean);
+          if(nextExisting) original.insertBefore(row,nextExisting);
+          else original.appendChild(row);
+          present.set(id,row);
+        }
       });
       return;
     }
@@ -1050,6 +1068,12 @@ function jcBindOverviewRows(root=document){
   });
 }
 
+// Guest history is published ONLY after the backend has confirmed FT+HT.
+// The full schedule stays available to authenticated viewers as before.
+function jcGuestFinishedReviewRows(rows){
+  return (Array.isArray(rows)?rows:[])
+    .filter(m=>m && qcIsConfirmedFinal(m) && qcJcIsVisibleMatch(m));
+}
 function jcRenderYesterdayReview(rows,today){
   return jcRenderOverviewTable(rows,today,'yesterday');
 }
@@ -2906,11 +2930,11 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(selectedDate,dateRows);
     const previousDate=qcAddDays(selectedDate,-1);
     const previousRows=allRows.filter(m=>jcBusinessDate(m)===previousDate && qcJcIsVisibleMatch(m));
-    // Yesterday's review uses this same public fixture data on screen. Hand it
-    // to the detail page even when the full day archive isn't finalized yet.
-    // Only PUBLIC identity/score/crest fields cross the navigation boundary.
-    rememberDetailPublicRows(previousDate,previousRows);
-    const finishedPrevious=previousRows.filter(m=>jcScoreInfo(m).finished);
+    // Guests see only officially settled FT+HT rows; unfinished fixtures
+    // remain hidden until the next immutable public settlement is published.
+    const reviewVisibleRows=access.loggedIn
+      ? previousRows : jcGuestFinishedReviewRows(previousRows);
+    rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
 
@@ -2922,7 +2946,7 @@ async function loadJcFrontend(){
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
     if($('#jcYesterdayMeta') && !previousLoading){
-      const reviewCount=previousRows.length;
+      const reviewCount=reviewVisibleRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
@@ -2946,16 +2970,9 @@ async function loadJcFrontend(){
 
     try{
       if(reviewCards && !previousLoading){
-        if(predictionRestricted){
-          // Show the ENTIRE public previous-day fixture list, with FT-only
-          // locked predictions on completed rows and neutral pending cells
-          // for fixtures that have not settled.
-          qcReconcileOverviewTable(reviewCards,previousRows.length
-            ? jcRenderYesterdayReview(previousRows,calendarToday)
-            : '<div class="jc-review-empty">上一日暂时没有可展示的赛程</div>');
-        }else{
-          qcReconcileOverviewTable(reviewCards,jcRenderYesterdayReview(previousRows,calendarToday));
-        }
+        // Only the display layer is role-filtered. The existing protected
+        // snapshot and full Pro fixture navigation are not modified.
+        qcReconcileOverviewTable(reviewCards,jcRenderYesterdayReview(reviewVisibleRows,calendarToday));
         jcBindOverviewRows(reviewCards);
       }
     }catch(err){
