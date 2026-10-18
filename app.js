@@ -1834,7 +1834,12 @@ async function loadJcFootball(){
     }).catch(()=>{});
   }
   const access=await accessPromise;
-  const initialDate=(access.loggedIn || (candidateDate>='2026-09-22' && candidateDate<=today))
+  // Published future fixtures remain visible before the 10:00 business-day
+  // rollover; this checks public roster only and never bypasses Pro access.
+  const candidatePublic=Boolean((await candidatePromise)?.fromLiveStaticSchedule);
+  const initialDate=(access.loggedIn ||
+    (candidateDate>='2026-09-22' && candidateDate<=today) ||
+    (candidateDate>today && candidatePublic))
     ? candidateDate : today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
@@ -1851,8 +1856,10 @@ async function loadJcFootball(){
   // Access to unfinished predictions is still enforced by Pro/RLS checks.
   const dateLocked=false;
   let minArchivedDate='2026-09-22';
+  const publishedPublicDates=new Set(candidatePublic && candidateDate>today?[candidateDate]:[]);
   const isAllowedDate=ds=>/^\d{4}-\d{2}-\d{2}$/.test(String(ds||'')) &&
-    ds>=minArchivedDate && (access.loggedIn || ds<=today);
+    ds>=minArchivedDate &&
+    (access.loggedIn || ds<=today || publishedPublicDates.has(ds));
   let selectedDate=initialDate;
   let activeLeague='全部';
   let availableDates=[selectedDate];
@@ -1917,6 +1924,29 @@ async function loadJcFootball(){
       }));
     }catch(_){}
   },true);
+
+  // Static fixture intake already published tomorrow; it must be selectable
+  // overnight, even for a guest (only public roster/odds, never Pro models).
+  if(typeof window.qcGetPublishedScheduleDates==='function'){
+    window.qcGetPublishedScheduleDates().then(dates=>{
+      if(!Array.isArray(dates) || !dates.length) return;
+      dates.forEach(ds=>publishedPublicDates.add(ds));
+      availableDates=[...new Set([...availableDates,...dates])].sort();
+      if(next){
+        next.disabled=!isAllowedDate(qcAddDays(selectedDate,1));
+        next.setAttribute('aria-disabled',String(next.disabled));
+      }
+      if(prev){
+        prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
+        prev.setAttribute('aria-disabled',String(prev.disabled));
+      }
+      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        if(!isAllowedDate(ds)) return;
+        closeLeague();
+        loadFootballDate(ds);
+      },access.loggedIn?'选择有比赛数据的日期':'已发布赛程及历史静态记录');
+    }).catch(error=>console.warn('公开赛程日期索引加载失败',error));
+  }
 
   // Public static manifest is the history index for both guests and Pro.
   // An empty business day is still selectable and renders a static empty card.
