@@ -60,11 +60,8 @@ def settlement_updates(current, official):
     return True
 
 
-def run():
-    now = datetime.now(BEIJING)
-    # The football business day runs 10:00 BJT -> next 09:59 BJT.
-    day = now.date() if now.hour >= 10 else now.date() - timedelta(days=1)
-    ds = day.isoformat()
+def run_one(ds, now):
+    # Publish confirmed full/half-time scores from ONE immutable fixture day.
     path = LIVE_DIR / (ds + ".json")
     if not path.exists():
         print("No current fixed schedule yet, leaving unchanged:", ds)
@@ -123,6 +120,16 @@ def run():
     )
     print("New public immutable FT settlements:", ds, len(done), ",".join(done))
     return len(done)
+
+
+def run():
+    now = datetime.now(BEIJING)
+    # Football fixtures use a 12:00-next-10:00 business day. Check both the
+    # current fixture day and the previous one: matches recovered late after
+    # 10:00 BJT must still reach yesterday's immutable static archive.
+    current_day = now.date() if now.hour >= 12 else now.date() - timedelta(days=1)
+    dates = [current_day, current_day - timedelta(days=1)]
+    return sum(run_one(ds.isoformat(), now) for ds in dates)
 
 
 def self_test():
