@@ -63,6 +63,20 @@ jobs:
               domMs=Date.now()-start;
               httpStatus=response?.status()||null;
               await page.locator(selector).first().waitFor({state:'visible',timeout:25000});
+              // Regression: 2026-10-18 contains 25 fixtures. Just after the
+              // date rolls over to Oct 19, the unfinished tail of yesterday
+              // MUST remain visible as public fixtures, with no private model.
+              if(entry==='/index.html'){
+                const bjToday=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+                if(bjToday==='2026-10-19'){
+                  await page.waitForFunction(()=>document.querySelectorAll('#jcYesterdayCards .jc-overview-row').length===25,null,{timeout:30000});
+                  const last=await page.locator('#jcYesterdayCards .jc-overview-row').last().innerText();
+                  if(!last.includes('025'))throw Error('Yesterday row 025 is missing: '+last.slice(0,180));
+                  const pending=await page.locator('#jcYesterdayCards .jc-overview-row').evaluateAll(rows=>rows.filter(r=>r.innerText.includes('待完赛')));
+                  if(!pending.length)throw Error('No public pending fixture rows in partially settled day');
+                  console.log('QCDA_PREVIOUS_DAY_FULL_ROSTER_PASS='+JSON.stringify({day:'2026-10-18',rows:25,last:last.slice(0,100),pending:pending.length}));
+                }
+              }
               listMs=Date.now()-start;
               dateLabel=await page.locator('#jcDateLabel,#jcFootballDateLabel').first().textContent().catch(()=>'');
               const link=page.locator(selector).first();
