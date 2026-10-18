@@ -50,7 +50,11 @@ jobs:
             await page.locator('#budget').fill('1000');
             if(!(await page.locator('#plans .plan').first().innerText()).includes('1,000.00'))throw Error(name+': budget not recalculated');
             await page.locator('#plans .plan .inspect').first().click();
-            await page.locator('#overlay:not([hidden]) .dialog').waitFor();
+            await page.waitForTimeout(250);
+            const modalState=await page.evaluate(()=>({hidden:document.getElementById('overlay').hidden,dialog:document.getElementById('dialogBody').innerText.slice(0,200),state:document.getElementById('overlay').outerHTML.slice(0,120)}));
+            console.log('MODAL_DIAG '+JSON.stringify({name,modalState,errors}));
+            if(modalState.hidden)throw Error(name+': modal did not open: '+JSON.stringify({modalState,errors}));
+            await page.locator('#overlay:not([hidden]) .dialog').waitFor({timeout:4000});
             const modalRows=await page.locator('.alloc tbody tr').count();
             if(modalRows<1)throw Error(name+': missing calculated branches');
             const firstShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
@@ -61,7 +65,7 @@ jobs:
             await page.locator('#closeDialog').click();
             for(const type of ['htft','goals','score','direction']){
               await page.locator('#tabs button[data-type="'+type+'"]').click();
-              if(!await page.locator('#tabs button[data-type="'+type+'"]').getAttribute('aria-selected')==='true')throw Error(name+': tab not active');
+              if((await page.locator('#tabs button[data-type="'+type+'"]').getAttribute('aria-selected'))!=='true')throw Error(name+': tab not active');
               if(!(await page.locator('#plans').innerText()).length)throw Error(name+': blank category '+type);
             }
             await page.locator('#dateLabel').click();
