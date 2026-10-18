@@ -1284,7 +1284,9 @@ function qcPrepareFrozenOverviewRows(rows){
 async function qcFetchFrozenOverviewDate(dateStr){
   const key=String(dateStr||'');
   const cached=qcFrozenOverviewRowsCache.get(key);
-  if(cached?.data) return {data:cached.data,error:null,fromFrozen:true};
+  if(cached?.data) return {data:cached.data,error:null,fromFrozen:true,
+    historyFinal:Boolean(cached.historyFinal),matchCount:cached.matchCount,
+    finishedCount:cached.finishedCount};
   if(cached?.promise) return cached.promise;
 
   const manifest=await qcLoadFrozenOverviewManifest();
@@ -1296,8 +1298,18 @@ async function qcFetchFrozenOverviewDate(dateStr){
       if(!res.ok) throw new Error('HTTP '+res.status);
       const payload=await res.json();
       const rows=qcPrepareFrozenOverviewRows(payload?.rows||[]);
-      qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file});
-      return {data:rows,error:null,fromFrozen:true};
+      // A partial archived snapshot may be linked in the history manifest.
+      // Its presence does NOT make the entire football day FINAL.
+      const finalFlag=payload?.is_final!==false &&
+        (!Number.isFinite(Number(payload?.match_count)) ||
+         Number(payload?.match_count)===rows.length) &&
+        rows.every(m=>jcScoreInfo(m).finished);
+      const matchCount=Number(payload?.match_count||rows.length);
+      const finishedCount=Number(payload?.finished_count||rows.length);
+      qcFrozenOverviewRowsCache.set(key,{data:rows,savedAt:Date.now(),file,
+        historyFinal:finalFlag,matchCount,finishedCount});
+      return {data:rows,error:null,fromFrozen:true,historyFinal:finalFlag,
+        matchCount,finishedCount};
     })
     .catch(error=>{
       qcFrozenOverviewRowsCache.delete(key);
@@ -1493,10 +1505,14 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
   }
 
   const frozen=await qcFetchFrozenOverviewDate(key);
-  if(frozen) return {...frozen,fromHistorySnapshot:true,historyFinal:true};
+  if(frozen?.historyFinal) return {...frozen,fromHistorySnapshot:true};
+  // A PARTIAL archive is only a first-frame fallback. Keep reading the
+  // public DB history snapshot to include newer official settlements.
   // Unpublished dates may still use the public DB fallback, but a network
   // error in the Supabase SDK must not prevent archived static dates loading.
-  if(!window.qcSupabase) return {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
+  if(!window.qcSupabase) return frozen
+    ? {...frozen,fromHistorySnapshot:true}
+    : {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
 
   const promise=window.qcSupabase
     .from('jc_history_overview_snapshots')
@@ -1524,7 +1540,9 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
     .catch(error=>{
       qcHistoryOverviewRowsCache.delete(key);
       console.warn('读取昨日静态回看快照失败 '+key,error);
-      return {data:[],error,fromHistorySnapshot:true,historyFinal:false};
+      return frozen
+        ? {...frozen,fromHistorySnapshot:true,error:null}
+        : {data:[],error,fromHistorySnapshot:true,historyFinal:false};
     });
 
   qcHistoryOverviewRowsCache.set(key,{promise,savedAt:now,isFinal:false});
@@ -1672,7 +1690,7 @@ async function jcFetchFootballScheduleRows(dateStr){
       // GitHub archives are already complete public static display records,
       // including empty dates and officially interrupted fixtures. Do not
       // requery the live Supabase tables or rebuild a published static card.
-      if(history?.fromFrozen && Array.isArray(history.data)){
+      if(history?.fromFrozen && history.historyFinal && Array.isArray(history.data)){
         return {data:history.data,error:null,fromHistorySnapshot:true,
           fromFrozen:true,historyFinal:true};
       }
@@ -2474,7 +2492,11 @@ async function loadJcFrontend(){
     // just because the browser opened the date before the manifest completed.
     if(ds<today){
       const frozen=await qcFetchFrozenOverviewDate(ds);
-      if(frozen) return frozen;
+      if(frozen?.historyFinal) return frozen;
+      // Past-day partial archives must display all scheduled matches, not
+      // silently truncate the selected historical date at the latest FT.
+      const incomplete=await fetchHistoryReviewDateReady(ds);
+      if(incomplete?.data?.length) return incomplete;
     }
 
     // Active/future public schedules are generated into same-origin static JSON.
@@ -2563,8 +2585,9 @@ async function loadJcFrontend(){
     // the server-RLS-protected Pro pregame snapshot are independent requests.
     // Start both concurrently; still publish their merged table just once.
     // Fully frozen public history needs NO additional protected query.
-    const archived=Boolean(qcFrozenOverviewManifestCache?.dates?.[ds] ||
-      qcHistoryOverviewRowsCache.get(ds)?.isFinal);
+    // A manifest entry may point to a completed-only PARTIAL archive.
+    // Only the verified isFinal cache is allowed to skip the fixture merge.
+    const archived=Boolean(qcHistoryOverviewRowsCache.get(ds)?.isFinal);
     // The finished-only history snapshot is intentionally PARTIAL until every
     // fixture has ended. Merge the PUBLIC, complete 25-row fixture schedule so
     // a date change never makes 015-025 disappear. Never expose pending models.
