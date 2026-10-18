@@ -2693,10 +2693,10 @@ async function loadJcFrontend(){
     // A manifest entry may point to a completed-only PARTIAL archive.
     // Only the verified isFinal cache is allowed to skip the fixture merge.
     const archived=Boolean(qcHistoryOverviewRowsCache.get(ds)?.isFinal);
-    // The finished-only history snapshot is intentionally PARTIAL until every
-    // fixture has ended. Merge the PUBLIC, complete 25-row fixture schedule so
-    // a date change never makes 015-025 disappear. Never expose pending models.
-    const pendingPublicSchedule=!archived && ds>=qcAddDays(today,-3) &&
+    // Guests see only confirmed FT+HT results. They never need the complete
+    // future/pending fixture roster, so avoid fetching and merging it for
+    // every initial review/date switch. Pro retains the existing full roster.
+    const pendingPublicSchedule=access.isPro && !archived && ds>=qcAddDays(today,-3) &&
       typeof window.qcFetchLiveScheduleDate==='function'
       ? window.qcFetchLiveScheduleDate(ds).catch(()=>null) : null;
     const pendingPrediction=access.isPro && !archived
@@ -2746,7 +2746,7 @@ async function loadJcFrontend(){
       return {...history,data:rows,fromHistorySnapshot:true,
         fromCompletePublicSchedule:true};
     };
-    if(!access.isPro) return ensureCompletePublicReview();
+    if(!access.isPro) return history;
 
     // Once yesterday's COMPLETE final history includes every locked prediction,
     // that single public static file suffices even for Pro users.
