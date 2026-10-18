@@ -137,6 +137,19 @@
       return null;
     }
   }
+  // Public fixture dates are visible as soon as intake publishes static JSON,
+  // independently of whether the 12:00-next-10:00 business day has started.
+  window.qcGetPublishedScheduleDates=async function(){
+    try{
+      const manifest=await loadManifest();
+      return Object.keys(manifest?.dates||{}).filter(ds=>
+        /^\d{4}-\d{2}-\d{2}$/.test(ds) &&
+        manifest.dates[ds]?.match_count>0);
+    }catch(error){
+      console.warn('公开静态赛程日期索引暂不可用',error);
+      return [];
+    }
+  };
   window.qcFetchLiveScheduleDate=qcFetchLiveScheduleDate;
 
 })();
