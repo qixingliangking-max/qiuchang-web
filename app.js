@@ -2500,6 +2500,17 @@ async function loadJcFrontend(){
     return merged;
   }
   async function fetchHistoryReviewDateReady(ds,historyHint=null){
+    // For a not-yet-frozen previous day, its public settlement history and
+    // the server-RLS-protected Pro pregame snapshot are independent requests.
+    // Start both concurrently; still publish their merged table just once.
+    // Fully frozen public history needs NO additional protected query.
+    const archived=Boolean(qcFrozenOverviewManifestCache?.dates?.[ds] ||
+      qcHistoryOverviewRowsCache.get(ds)?.isFinal);
+    const pendingPrediction=access.isPro && !archived
+      ? qcFetchProOverviewDate(ds).catch(error=>{
+          console.warn('昨日受保护快照后台读取失败',error);return null;
+        })
+      : null;
     const history=resultOrEmpty(historyHint ? await historyHint : await qcFetchHistoryOverviewDate(ds));
     if(!access.isPro) return history;
 
@@ -2514,7 +2525,7 @@ async function loadJcFrontend(){
     // Pro 的“昨日回看”仍保留整日赛前锁板内容，但只从静态层组合：
     // 未完赛行来自受保护的锁板日快照；已完赛行用公开历史快照覆盖 FT/HT。
     // 这里不回查 jc_matches，也不重新读取/重算模型输出。
-    const protectedSnapshot=await qcFetchProOverviewDate(ds);
+    const protectedSnapshot=await (pendingPrediction || qcFetchProOverviewDate(ds));
     if(!protectedSnapshot?.data?.length) return history;
 
     const finishedById=new Map((history.data||[]).map(row=>[String(row.id),row]));
