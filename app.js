@@ -2158,15 +2158,28 @@ async function loadJcFootball(){
       return settled;
     });
 
-    // The first post-game render restores public FINAL hit circles via RLS.
-    let newlyFinishedCount=0;
-    if(!access.isPro){
-      const newlyFinished=allRows.filter(m=>jcScoreInfo(m).finished && !m._jcModelsLoaded && !m._jcModelsLoading);
-      newlyFinishedCount=newlyFinished.length;
-      if(newlyFinished.length) await jcAttachModels(newlyFinished);
+    // Newly settled fixtures arrive independently of today's static schedule.
+    // Recover BOTH the public finished FINAL and frozen pre-kickoff markets
+    // before repainting hit cards. An earlier empty/rejected fetch must not
+    // permanently mark a fixture hydrated.
+    const confirmed=allRows.filter(qcIsConfirmedFinal);
+    const needModels=confirmed.filter(m=>!jcPublicModel(m));
+    const needMarkets=confirmed.filter(m=>
+      !Array.isArray(m.jc_market_snapshots) || !m.jc_market_snapshots.length);
+    needModels.forEach(m=>{
+      m._jcModelsLoaded=false;
+      m._jcModelsLoading=false;
+      m._jcModelLoadFailed=false;
+    });
+    needMarkets.forEach(m=>{ m._jcLatestSnapshotsLoaded=false; });
+    if(needModels.length || needMarkets.length){
+      await Promise.allSettled([
+        needModels.length?jcAttachModels(needModels):Promise.resolve(),
+        needMarkets.length?jcAttachLatestSnapshots(needMarkets):Promise.resolve()
+      ]);
     }
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
-    if(needsPaint || newlyFinishedCount>0) render();
+    if(needsPaint || needModels.length || needMarkets.length) render();
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
