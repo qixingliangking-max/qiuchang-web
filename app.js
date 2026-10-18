@@ -1581,11 +1581,14 @@ async function qcFetchHistoryOverviewDate(dateStr,force=false){
   }
 
   const frozen=await qcFetchFrozenOverviewDate(key);
-  if(frozen?.historyFinal) return {...frozen,fromHistorySnapshot:true};
-  // A PARTIAL archive is only a first-frame fallback. Keep reading the
-  // public DB history snapshot to include newer official settlements.
-  // Unpublished dates may still use the public DB fallback, but a network
-  // error in the Supabase SDK must not prevent archived static dates loading.
+  // A published PARTIAL archive is already a complete static picture of
+  // confirmed FT+HT rows as of its publication. Paint it immediately instead
+  // of blocking yesterday's review on a second Supabase round trip.
+  // force=true (the existing 2-minute catch-up) still checks newly settled FT.
+  if(frozen?.data?.length && (!force || frozen.historyFinal))
+    return {...frozen,fromHistorySnapshot:true};
+  // Missing static dates and explicit background refreshes keep the proven
+  // public DB fallback, so recent FT cannot be lost between publications.
   if(!window.qcSupabase) return frozen
     ? {...frozen,fromHistorySnapshot:true}
     : {data:[],error:null,fromHistorySnapshot:true,historyFinal:false};
