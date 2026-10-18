@@ -98,7 +98,7 @@ function allocation(plan,budget,mode){
  var returned=list.reduce(function(acc,c){return acc+(c.hit?c.projected:0)},0);
  return {list:list,covered:covered,returns:returned,grossMin:Math.min.apply(null,list.map(function(x){return x.projected})),grossMax:Math.max.apply(null,list.map(function(x){return x.projected})),budget:total/100,mode:mode};
 }
-function readableDay(v){var d=new Date(v+'T12:00:00+08:00');return (d.getMonth()+1)+'月'+d.getDate()+'日 '+['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]}
+function readableDay(v){var d=new Date(v+'T12:00:00');return (d.getMonth()+1)+'月'+d.getDate()+'日 '+['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]}
 function idNum(row){return String(row.num||'').slice(-3)}
 function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'}
 function miniLeg(leg){
@@ -163,7 +163,7 @@ function calendar(){
  $('prevMonth').disabled=current<=monthPresent[monthPresent.length-1];
  $('nextMonth').disabled=current>=monthPresent[0];
 }
-function selectDay(v){if(!dates.includes(v))return;state.day=v;state.month=new Date(v+'T12:00:00+08:00');$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');renderAll()}
+function selectDay(v){if(!dates.includes(v))return;state.day=v;state.month=new Date(v+'T12:00:00');$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');renderAll()}
 function strategyDescription(mode){
  if(mode==='balanced')return '按赔率倒数分配，使各互斥结果组合的理论返还尽可能接近；不是“稳赚”或“保本”。';
  if(mode==='hot')return '提高较低赔率结果的模拟分配比例，强调常规路径；只用于比较权重。';
@@ -224,7 +224,7 @@ function init(){
  all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Array.from(new Set(all.map(function(r){return r.d}))).sort().reverse();
  if(!dates.length){$('plans').innerHTML='<div class="empty">暂无可核验的完赛样本。</div>';return}
- state.day=dates[0];state.month=new Date(state.day+'T12:00:00+08:00');renderMetrics();attach();renderAll();
+ state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 init();
 })();
