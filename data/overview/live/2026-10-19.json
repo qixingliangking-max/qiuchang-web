@@ -14,9 +14,9 @@
       "match_date": "2026-10-20",
       "match_time": "00:30:00",
       "kickoff_at": "2026-10-19T16:30:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -35,9 +35,9 @@
       "match_date": "2026-10-20",
       "match_time": "01:00:00",
       "kickoff_at": "2026-10-19T17:00:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -56,9 +56,9 @@
       "match_date": "2026-10-20",
       "match_time": "02:45:00",
       "kickoff_at": "2026-10-19T18:45:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -77,9 +77,9 @@
       "match_date": "2026-10-20",
       "match_time": "02:45:00",
       "kickoff_at": "2026-10-19T18:45:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -98,9 +98,9 @@
       "match_date": "2026-10-20",
       "match_time": "03:00:00",
       "kickoff_at": "2026-10-19T19:00:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -119,9 +119,9 @@
       "match_date": "2026-10-20",
       "match_time": "03:00:00",
       "kickoff_at": "2026-10-19T19:00:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -140,9 +140,9 @@
       "match_date": "2026-10-20",
       "match_time": "03:15:00",
       "kickoff_at": "2026-10-19T19:15:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
@@ -161,9 +161,9 @@
       "match_date": "2026-10-20",
       "match_time": "07:00:00",
       "kickoff_at": "2026-10-19T23:00:00+00:00",
-      "match_status": "2",
+      "match_status": "3",
       "raw": {
-        "matchStatusName": "已开售",
+        "matchStatusName": "暂停销售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
