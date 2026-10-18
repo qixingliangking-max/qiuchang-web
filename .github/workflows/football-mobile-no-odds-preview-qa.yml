@@ -54,15 +54,24 @@ jobs:
                 const d=await page.evaluate(()=>{
                   const cards=[...document.querySelectorAll('.qc-demo-card')];
                   const complete=cards.filter(x=>/半\s*\d+[-:]\d+/.test(x.innerText)).length;
+                  const first=cards[0];
                   return {rows:cards.length,complete,hits:cards.filter(x=>x.querySelector('.qc-demo-chip')).length,
                     linked:cards.filter(x=>x.querySelector('a[href^="../jc-match.html?id="]')).length,
-                    odds:document.querySelectorAll('.jc-mini-odds').length};
+                    odds:document.querySelectorAll('.jc-mini-odds').length,
+                    priceTags:document.querySelectorAll('.qc-demo-chip-odd').length,
+                    missingHitPrice:[...document.querySelectorAll('.qc-demo-chip')].filter(x=>!x.querySelector('.qc-demo-chip-odd')?.textContent?.includes('@')).length,
+                    firstChips:[...first.querySelectorAll('.qc-demo-chip')].map(x=>x.textContent.trim()),
+                    firstHeight:Math.round(first.getBoundingClientRect().height),
+                    secondHeight:Math.round(cards[1].getBoundingClientRect().height),
+                    forbiddenTerms:/正常推理|中赔率|高赔率/.test(document.body.textContent)};
                 });
-                if(d.rows!==25 || d.complete<21 || !d.hits || d.odds!==0 || d.linked!==25)
+                if(d.rows!==25 || d.complete<21 || d.hits<20 || d.odds!==0 || d.linked!==25 ||
+                   !d.priceTags || d.missingHitPrice || d.forbiddenTerms || d.firstHeight>245 ||
+                   !d.firstChips.some(x=>x.includes('1.67')) || !d.firstChips.some(x=>x.includes('3.35')))
                   throw Error(e.name+' invalid 18th display '+JSON.stringify(d));
                 if(exceptions.length)throw Error(e.name+' exceptions '+exceptions.join('|'));
                 await page.screenshot({path:'preview-screenshots/'+e.name+'-20261018.png',fullPage:false});
-                console.log('PASS '+e.name+' static date switching, real local crests, zero odds cards, FT hit pills '+JSON.stringify(d));
+                console.log('PASS '+e.name+' compact dates, local logos, zero odds tables, public FT hit price pills '+JSON.stringify(d));
                 await ctx.close();
               }finally{await browser.close()}
             }
