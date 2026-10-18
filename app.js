@@ -1233,8 +1233,10 @@ function jcPatchFootballExtras(root,rows,access){
     if(!m) return;
     const home=$('.jc-team-home',card);
     const away=$('.jc-team-away',card);
-    const homeHtml=jcTeamInnerHtml(m,'home');
-    const awayHtml=jcTeamInnerHtml(m,'away');
+    const rank=[...card.parentElement.children].indexOf(card);
+    const logoPriority=rank<3?'eager':'eager-normal';
+    const homeHtml=jcTeamInnerHtml(m,'home',logoPriority);
+    const awayHtml=jcTeamInnerHtml(m,'away',logoPriority);
     if(home && home.innerHTML!==homeHtml) home.innerHTML=homeHtml;
     if(away && away.innerHTML!==awayHtml) away.innerHTML=awayHtml;
     const odds=$('.jc-mini-odds',card);
@@ -2747,11 +2749,20 @@ async function loadJcFrontend(){
 
     const bundle=await window.qcFetchOverviewBootstrap(ds,true);
     if(token!==loadToken || selectedDate!==ds || bundle?.is_pro!==true) return;
-    const rows=qcCompleteStaticRows(bundle.prediction,ds);
-    if(!rows || rows.length!==oldDay.length ||
-       Number(bundle.prediction.model_count)!==rows.length ||
-       !rows.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
-    const frozen=qcCacheProOverviewSnapshot(bundle.prediction);
+    const fullRows=qcCompleteStaticRows(bundle.prediction,ds);
+    const merged=fullRows && fullRows.length===oldDay.length &&
+      Number(bundle.prediction?.model_count)===fullRows.length
+      ? bundle.prediction
+      : qcMergePartialLockedOverviewSnapshot(bundle.prediction,bundle.schedule);
+    if(!merged) return;
+    const alreadyLocked=new Set(oldDay
+      .filter(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)
+      .map(m=>String(m.id)));
+    const newlyLocked=(merged.payload?.rows||[]).some(m=>
+      Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length &&
+      !alreadyLocked.has(String(m.id)));
+    if(!newlyLocked) return;
+    const frozen=qcCacheProOverviewSnapshot(merged);
     const prepared=qcAttachPublishedScoresToPro(frozen,bundle.schedule,ds)?.data;
     if(!prepared?.length) return;
     const beforeById=new Map(oldDay.map(m=>[String(m.id),m]));
@@ -4222,8 +4233,10 @@ async function setupJcMatchDetail(options={}){
     if(loadSeq!==jcDetailLoadSeq) return;
     const home=$('.jc-detail-team-home',root);
     const away=$('.jc-detail-team-away',root);
-    if(home) home.innerHTML=jcDetailTeamBadgeHtml(m,'home');
-    if(away) away.innerHTML=jcDetailTeamBadgeHtml(m,'away');
+    const homeHtml=jcDetailTeamBadgeHtml(m,'home');
+    const awayHtml=jcDetailTeamBadgeHtml(m,'away');
+    if(home && home.innerHTML!==homeHtml) home.innerHTML=homeHtml;
+    if(away && away.innerHTML!==awayHtml) away.innerHTML=awayHtml;
   }).catch(error=>console.warn('队徽延后加载失败',error));
 
   const {access,canViewPremium,detailSnapshotPromise}=await accessAndSnapshotPromise;
