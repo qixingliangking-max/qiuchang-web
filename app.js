@@ -1018,6 +1018,28 @@ function jcRenderOverviewTable(rows,today,mode='today'){
       '</tr>';
     }).join('')+'</tbody></table></div>';
 }
+// Preserve unchanged fixtures when a static score or locked prediction is published.
+function qcReconcileOverviewTable(root,markup){
+  if(!root || typeof markup!=='string') return;
+  const original=root.querySelector('.jc-overview-table tbody');
+  const template=document.createElement('template');
+  template.innerHTML=markup;
+  const next=template.content.querySelector('.jc-overview-table tbody');
+  if(original && next){
+    const before=[...original.querySelectorAll('tr[data-match-id]')];
+    const after=[...next.querySelectorAll('tr[data-match-id]')];
+    if(before.length===after.length &&
+       before.every((row,i)=>row.dataset.matchId && row.dataset.matchId===after[i].dataset.matchId)){
+      // No redraw at all for 24 unchanged fixtures when only one FT arrives.
+      after.forEach((row,i)=>{
+        if(before[i].outerHTML!==row.outerHTML) before[i].replaceWith(row);
+      });
+      return;
+    }
+  }
+  // Different day, entitlement or presentation: replace atomically.
+  if(root.innerHTML!==markup) root.innerHTML=markup;
+}
 function jcBindOverviewRows(root=document){
   $$('.jc-overview-row',root).forEach(row=>{
     row.onclick=e=>{
@@ -1115,13 +1137,14 @@ function jcLogoDisplayUrl(rawUrl){
 }
 
 function jcLogoImgHtml(rawUrl,className,loading='lazy'){
+  const mode=loading==='eager-normal'?'eager':loading;
   const raw=String(rawUrl||'').trim();
   if(!raw) return '';
   const display=jcLogoDisplayUrl(raw);
   const fallbackAttr=display!==raw
     ? ' data-qc-logo-raw="'+qcEscape(raw)+'" onerror="if(!this.dataset.qcLogoFallback){this.dataset.qcLogoFallback=\'1\';this.src=this.dataset.qcLogoRaw;}else{this.style.display=\'none\'}"'
     : ' onerror="this.style.display=\'none\'"';
-  return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(loading)+'"'+
+  return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(mode)+'"'+
     (loading==='eager'?' fetchpriority="high"':'')+
     ' decoding="async" referrerpolicy="no-referrer"'+fallbackAttr+'>';
 }
@@ -1167,12 +1190,12 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
           '<time>'+qcEscape(String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5))+'</time>'+
         '</div>'+
         '<div class="jc-card-score-axis">'+
-          '<strong class="jc-team jc-team-home">'+jcTeamInnerHtml(m,'home',index<3?'eager':'lazy')+'</strong>'+
+          '<strong class="jc-team jc-team-home">'+jcTeamInnerHtml(m,'home',index<3?'eager':'eager-normal')+'</strong>'+
           '<span class="jc-score-center">'+
             '<b class="jc-score-main'+centerStateClass+'">'+centerScore+'</b>'+
             '<small class="jc-score-meta'+centerStateClass+'">'+qcEscape(centerMeta)+'</small>'+
           '</span>'+
-          '<strong class="jc-team away-team jc-team-away">'+jcTeamInnerHtml(m,'away',index<3?'eager':'lazy')+'</strong>'+
+          '<strong class="jc-team away-team jc-team-away">'+jcTeamInnerHtml(m,'away',index<3?'eager':'eager-normal')+'</strong>'+
         '</div>'+
         oddsMini+
         cardCta+
@@ -1210,12 +1233,16 @@ function jcPatchFootballExtras(root,rows,access){
     if(!m) return;
     const home=$('.jc-team-home',card);
     const away=$('.jc-team-away',card);
-    if(home) home.innerHTML=jcTeamInnerHtml(m,'home');
-    if(away) away.innerHTML=jcTeamInnerHtml(m,'away');
+    const homeHtml=jcTeamInnerHtml(m,'home');
+    const awayHtml=jcTeamInnerHtml(m,'away');
+    if(home && home.innerHTML!==homeHtml) home.innerHTML=homeHtml;
+    if(away && away.innerHTML!==awayHtml) away.innerHTML=awayHtml;
     const odds=$('.jc-mini-odds',card);
-    if(odds) odds.outerHTML=jcRenderOddsMini(jcPrekickLatestPools(m));
+    const oddsHtml=jcRenderOddsMini(jcPrekickLatestPools(m));
+    if(odds && odds.outerHTML!==oddsHtml) odds.outerHTML=oddsHtml;
     const hit=$('.jc-card-after-odds',card);
-    if(hit) hit.outerHTML=jcFootballHitBlock(m,access);
+    const hitHtml=jcFootballHitBlock(m,access);
+    if(hit && hit.outerHTML!==hitHtml) hit.outerHTML=hitHtml;
   });
 }
 
@@ -2852,11 +2879,11 @@ async function loadJcFrontend(){
           // Show the ENTIRE public previous-day fixture list, with FT-only
           // locked predictions on completed rows and neutral pending cells
           // for fixtures that have not settled.
-          reviewCards.innerHTML=previousRows.length
+          qcReconcileOverviewTable(reviewCards,previousRows.length
             ? jcRenderYesterdayReview(previousRows,calendarToday)
-            : '<div class="jc-review-empty">上一日暂时没有可展示的赛程</div>';
+            : '<div class="jc-review-empty">上一日暂时没有可展示的赛程</div>');
         }else{
-          reviewCards.innerHTML=jcRenderYesterdayReview(previousRows,calendarToday);
+          qcReconcileOverviewTable(reviewCards,jcRenderYesterdayReview(previousRows,calendarToday));
         }
         jcBindOverviewRows(reviewCards);
       }
@@ -2875,14 +2902,14 @@ async function loadJcFrontend(){
           ...m,jc_model_outputs:[],jc_market_snapshots:[],
           _jcModelsLoaded:false,_jcModelsLoading:false,_jcModelLoadFailed:false
         }));
-        cards.innerHTML=publicRows.length
+        qcReconcileOverviewTable(cards,publicRows.length
           ? jcRenderOverviewTable(publicRows,calendarToday,'today')
-          : '<div class="profile-card" role="status">正在加载中…</div>';
+          : '<div class="profile-card" role="status">正在加载中…</div>');
         jcBindOverviewRows(cards);
       }else if(predictionRestricted){
-        cards.innerHTML=qcPremiumGateHtml(access,'prediction','today');
+        qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else{
-        cards.innerHTML=jcRenderOverviewTable(dateRows,calendarToday,'today');
+        qcReconcileOverviewTable(cards,jcRenderOverviewTable(dateRows,calendarToday,'today'));
         jcBindOverviewRows(cards);
       }
     }catch(err){
