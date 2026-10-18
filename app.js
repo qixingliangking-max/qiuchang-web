@@ -2580,8 +2580,21 @@ async function loadJcFrontend(){
     const ensureCompletePublicReview=async()=>{
       if(history.historyFinal || !pendingPublicSchedule) return history;
       const publicResult=await pendingPublicSchedule;
-      const schedule=(publicResult?.data||[]).filter(m=>m?.id && jcBusinessDate(m)===ds);
+      let schedule=(publicResult?.data||[]).filter(m=>m?.id && jcBusinessDate(m)===ds);
       const expected=Number(history.matchCount||0);
+      if(!schedule.length || (expected>0 && schedule.length<expected)){
+        // Same public 25-row fixed-day DB snapshot is a safe fallback if the
+        // user's local static cache or GitHub network is temporarily stale.
+        try{
+          const snap=await window.qcSupabase?.from('jc_overview_schedule_snapshots')
+            .select('payload,match_count').eq('business_date',ds).maybeSingle();
+          const candidate=snap?.data?.payload?.rows;
+          if(!snap?.error && Array.isArray(candidate) &&
+             candidate.length===Number(snap?.data?.match_count||0)){
+            schedule=candidate.filter(m=>m?.id && jcBusinessDate(m)===ds);
+          }
+        }catch(_){}
+      }
       if(!schedule.length || (expected>0 && schedule.length<expected)) return history;
       const finishedById=new Map((history.data||[]).filter(m=>jcScoreInfo(m).finished)
         .map(m=>[String(m.id),m]));
