@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow,noarchive">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>球场档案｜会员赛前报告展示测试</title>
+<style>
+:root{color-scheme:light;--ink:#1b2b49;--blue:#315fe6;--line:#e3e9f4;--muted:#748096;--paper:#fff;--back:#f3f6fb}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--back);color:var(--ink)}
+button{font:inherit;cursor:pointer}
+.sitehead{background:#fff;border-bottom:1px solid var(--line);padding:19px max(18px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-size:21px;font-weight:850;letter-spacing:.1px;white-space:nowrap}
+.brand small{font-size:11px;color:#4670d7;font-weight:750;margin-left:6px;white-space:nowrap}
+.sitehead a{text-decoration:none;color:#4c5b76;font-size:13px;border:1px solid var(--line);padding:9px 13px;border-radius:11px;white-space:nowrap}
+main{width:min(740px,100%);margin:24px auto 70px;padding:0 14px}
+.preview-top{background:#ecf2ff;border:1px solid #d9e3ff;color:#46618e;border-radius:15px;padding:13px 16px;line-height:1.6;font-size:13px;margin-bottom:16px}
+.preview-top strong{color:#3058b8}
+.control-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin-bottom:16px;box-shadow:0 5px 21px rgba(27,43,73,.035)}
+.control-title{font-size:12px;font-weight:760;color:#76849b;margin-bottom:11px}
+.switches{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.switches+.control-title{margin-top:18px}
+.toggle{min-height:42px;border:1px solid #dfe5ef;background:#f6f8fc;border-radius:11px;color:#68768d;font-weight:730;font-size:14px}
+.toggle.active{border-color:#bdcbff;background:#ebf1ff;color:#3156c3;box-shadow:inset 0 0 0 1px #d2dcff}
+#statusline{margin:12px 0 0;color:#748096;font-size:12px;line-height:1.6}
+.fixture{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
+.fixture strong{display:block;font-size:15px;font-weight:850;line-height:1.45}
+.fixture span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
+.fixture .fixture-time{font-size:13px;font-weight:760;color:#596987;white-space:nowrap}
+.report-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:25px 26px;box-shadow:0 10px 32px rgba(38,54,88,.045)}
+.report-card h1{font-size:23px;letter-spacing:-.25px;line-height:1.45;margin:0 0 18px;font-weight:840}
+.rule{height:1px;background:var(--line);margin:0 0 20px}
+.facts{display:grid;grid-template-columns:1fr;gap:0;margin:0 0 20px}
+.fact{display:grid;grid-template-columns:94px 1fr;align-items:start;padding:10px 0;border-bottom:1px solid #f0f3f8;gap:8px}
+.fact:last-child{border-bottom:0}
+.fact dt{color:#7c889a;font-size:13px}
+.fact dd{margin:0;font-size:14px;line-height:1.6;font-weight:620}
+.section-title{font-size:14px;font-weight:840;margin:24px 0 14px;color:#334669}
+.gate{border:1px solid #e4eafa;background:#f8faff;border-radius:15px;padding:18px 17px}
+.gate strong{font-size:15px;display:block;color:#273c70;line-height:1.5}
+.gate p{color:#76839a;font-size:13px;line-height:1.8;margin:8px 0 0}
+.button-cta{display:block;width:100%;background:#345fdf;color:#fff;border:0;border-radius:13px;padding:15px 13px;font-size:16px;font-weight:830;margin-top:14px;box-shadow:0 7px 18px rgba(52,95,223,.16)}
+.test-hint{font-size:12px;color:#8490a3;text-align:center;line-height:1.6;margin-top:12px}
+.pro-placeholder{min-height:90px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#8994a7}
+.pro-report section{padding:18px 0;border-bottom:1px solid #eaf0f7}
+.pro-report section:first-child{padding-top:0}
+.pro-report section:last-child{border-bottom:0}
+.pro-report h2{font-size:16px;margin:0 0 10px}
+.pro-report .draft{font-size:13px;color:#8995a7;line-height:1.8;margin:0}
+.unpublished-note{font-size:12px;color:#7b8699;line-height:1.7;margin-top:14px}
+.demo-label{background:#fff9e9;border:1px solid #f1e1b5;border-radius:12px;color:#836828;padding:11px 13px;margin-bottom:15px;font-size:12px;line-height:1.65}
+.disclaimer{padding:22px 12px;color:#b4534d;font-size:12px;line-height:1.8;text-align:center}
+@media(max-width:540px){.brand{font-size:19px}.brand small{font-size:10px}.sitehead{padding:16px 14px}main{margin-top:14px}.control-card{padding:14px}.fixture{padding:14px}.report-card{padding:21px 17px}.report-card h1{font-size:20px}.fact{grid-template-columns:86px 1fr}.fact dd{font-size:13px}}
+</style>
+</head>
+<body>
+<header class="sitehead"><div class="brand">球场档案<small>赛事数据管家</small></div><a href="../index.html">返回网站</a></header>
+<main>
+<div class="preview-top"><strong>独立测试页｜不代表正式会员权限</strong><br>用于确认普通用户与Pro会员的AI报告展示样式。此页不读取账号、不包含正式报告正文，也不改变网站现有页面。</div>
+<div class="control-card">
+  <div class="control-title">查看身份（仅预览切换，不代表实际会员权限）</div>
+  <div class="switches" role="group" aria-label="预览身份">
+    <button class="toggle active" id="btn-guest" type="button" aria-pressed="true">普通用户</button>
+    <button class="toggle" id="btn-pro" type="button" aria-pressed="false">Pro会员</button>
+  </div>
+  <div class="control-title">报告发布状态</div>
+  <div class="switches" role="group" aria-label="模拟报告状态">
+    <button class="toggle active" id="btn-pending" type="button" aria-pressed="true">尚未发布</button>
+    <button class="toggle" id="btn-ready" type="button" aria-pressed="false">已发布 · 版式演示</button>
+  </div>
+  <p id="statusline" aria-live="polite">普通用户 · 尚未发布：展示赛事资料和订阅入口，不出现“待更新”。</p>
+</div>
+<div class="fixture">
+  <div><strong>周日001｜日职</strong><span>町田泽维亚 vs 福冈黄蜂</span></div>
+  <div class="fixture-time">10月18日 15:00</div>
+</div>
+<section class="report-card">
+  <h1>町田泽维亚 vs 福冈黄蜂｜赛前分析报告</h1>
+  <div class="rule"></div>
+  <div id="preview-content" aria-live="polite"></div>
+</section>
+<p class="disclaimer">本站内容仅用于赛事数据分析与信息参考，不构成任何建议。</p>
+</main>
+<script>
+(function(){
+  'use strict';
+  var state={role:'guest',publication:'pending'};
+  var buttons={
+    guest:document.getElementById('btn-guest'),pro:document.getElementById('btn-pro'),
+    pending:document.getElementById('btn-pending'),ready:document.getElementById('btn-ready')
+  };
+  var content=document.getElementById('preview-content');
+  var statusline=document.getElementById('statusline');
+  function facts(){
+    return '<dl class="facts">'+
+      '<div class="fact"><dt>赛事</dt><dd>日本职业联赛（日职）</dd></div>'+
+      '<div class="fact"><dt>比赛时间</dt><dd>2026-10-18 15:00（北京时间）</dd></div>'+
+      '<div class="fact"><dt>对阵</dt><dd>町田泽维亚 vs 福冈黄蜂</dd></div>'+
+      '</dl>';
+  }
+  function reportMeta(){
+    // The current 001 match has NO approved report generated_at.
+    // Production must only show this row when the approved report has a real timestamp.
+    return '<div class="demo-label">已发布版式预览：001尚无批准的正式报告生成时间，故本测试不填写虚构日期；上线后只读取真实发布时间。</div>';
+  }
+  function guestView(){
+    return (state.publication==='ready'?reportMeta():'')+
+      facts()+
+      '<div class="section-title">完整赛前分析报告</div>'+
+      '<div class="gate"><strong>🔒 订阅后查看完整赛前分析报告</strong>'+
+      '<p>赛前研究内容仅对Pro会员开放；普通用户不会看到模型分析正文。</p></div>'+
+      '<button class="button-cta" id="preview-subscribe" type="button">订阅查看完整报告</button>'+
+      '<div class="test-hint">此按钮仅演示位置，不会开通会员或付款。</div>';
+  }
+  function proView(){
+    if(state.publication==='pending') return '<div class="pro-placeholder" role="status">待更新</div>';
+    return reportMeta()+'<div class="pro-report">'+
+      '<section><h2>一、比赛背景与双方实力分析</h2><p class="draft">正式报告审核通过后显示真实分析正文。</p></section>'+
+      '<section><h2>二、模型方向与单选倾向</h2><p class="draft">正式报告审核通过后显示真实分析正文。</p></section>'+
+      '<section><h2>三、让球保护与半全场分析</h2><p class="draft">正式报告审核通过后显示真实分析正文。</p></section>'+
+      '<section><h2>四、总进球与TOP3比分分析</h2><p class="draft">正式报告审核通过后显示真实分析正文。</p></section>'+
+      '</div>';
+  }
+  function draw(){
+    Object.keys(buttons).forEach(function(k){
+      var active=(k===state.role || k===state.publication);
+      buttons[k].classList.toggle('active',active);
+      buttons[k].setAttribute('aria-pressed',active?'true':'false');
+    });
+    content.innerHTML=state.role==='guest'?guestView():proView();
+    statusline.textContent=state.role==='guest'
+      ? '普通用户 · '+(state.publication==='pending'?'尚未发布':'已发布演示')+'：只显示赛事资料与订阅入口，不显示“待更新”。'
+      : 'Pro会员 · '+(state.publication==='pending'?'尚未发布：只显示“待更新”。':'已发布演示：四章全文版式，未放入真实正文。');
+    var cta=document.getElementById('preview-subscribe');
+    if(cta) cta.addEventListener('click',function(){
+      alert('这是设计测试页。正式上线后，订阅按钮将沿用球场档案现有会员中心入口。');
+    });
+  }
+  buttons.guest.addEventListener('click',function(){state.role='guest';draw()});
+  buttons.pro.addEventListener('click',function(){state.role='pro';draw()});
+  buttons.pending.addEventListener('click',function(){state.publication='pending';draw()});
+  buttons.ready.addEventListener('click',function(){state.publication='ready';draw()});
+  draw();
+})();
+</script>
+</body>
+</html>
