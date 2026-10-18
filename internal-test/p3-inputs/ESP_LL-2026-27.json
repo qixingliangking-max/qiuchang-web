@@ -674,6 +674,22 @@
       "away_team": "毕尔巴鄂竞技",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868097",
+      "match_id": "fotmob:5868097",
+      "home_team": "奥萨苏纳",
+      "away_team": "桑坦德竞技",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868092",
+      "match_id": "fotmob:5868092",
+      "home_team": "塞尔塔",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:15:00.000Z"
     }
   ]
 }

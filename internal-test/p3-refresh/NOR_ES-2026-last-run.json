@@ -1,15 +1,27 @@
 {
   "league_code": "NOR_ES",
   "season": "2026",
-  "run_at": "2026-10-18T04:57:02.584Z",
+  "run_at": "2026-10-18T18:17:15.002Z",
   "discovered_fixtures": 240,
-  "discovered_finished": 179,
+  "discovered_finished": 183,
   "baseline_finished_matches": 179,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 4,
+  "added_source_match_ids": [
+    "5105027",
+    "5105029",
+    "5105030",
+    "5105032"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 179,
+  "mapped_finished": 183,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 80.1,
+  "published_blob_sha": "ed6bfbc5af90641eb44bd6c5a57b4801847ba5ae"
 }

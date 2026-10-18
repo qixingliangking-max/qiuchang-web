@@ -538,6 +538,22 @@
       "away_team": "克雷莫纳",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T17:30:00Z"
+    },
+    {
+      "source_match_id": "5967103",
+      "match_id": "fotmob:5967103",
+      "home_team": "史泰比亚",
+      "away_team": "南蒂罗尔",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967102",
+      "match_id": "fotmob:5967102",
+      "home_team": "切塞纳",
+      "away_team": "阿维利诺",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T15:15:00.000Z"
     }
   ]
 }

@@ -1417,7 +1417,7 @@
       "home_team": "汉坎",
       "away_team": "博德闪耀",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T12:00:00.000Z"
+      "kickoff_at": "2026-10-17T12:00:00Z"
     },
     {
       "source_match_id": "5105028",
@@ -1425,7 +1425,7 @@
       "home_team": "克里斯蒂安松",
       "away_team": "奥勒松",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:00:00.000Z"
+      "kickoff_at": "2026-10-17T14:00:00Z"
     },
     {
       "source_match_id": "5105026",
@@ -1433,7 +1433,39 @@
       "home_team": "维京",
       "away_team": "腓特烈斯塔",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T16:00:00.000Z"
+      "kickoff_at": "2026-10-17T16:00:00Z"
+    },
+    {
+      "source_match_id": "5105032",
+      "match_id": "fotmob:5105032",
+      "home_team": "萨普斯堡",
+      "away_team": "罗森博格",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5105027",
+      "match_id": "fotmob:5105027",
+      "home_team": "瓦勒伦加",
+      "away_team": "布兰",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T15:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105029",
+      "match_id": "fotmob:5105029",
+      "home_team": "莫尔德",
+      "away_team": "斯达",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T15:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105030",
+      "match_id": "fotmob:5105030",
+      "home_team": "桑德菲杰",
+      "away_team": "利勒斯特罗姆",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T15:00:00.000Z"
     }
   ]
 }

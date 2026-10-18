@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 67,
-  "collected_matches": 67,
+  "input_matches": 69,
+  "collected_matches": 69,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -26,12 +26,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "切塞纳",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "南蒂罗尔",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "史泰比亚",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,7 +106,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿维利诺",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",

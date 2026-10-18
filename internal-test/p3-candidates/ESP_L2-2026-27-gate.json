@@ -3,26 +3,16 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 104,
-  "collected_matches": 104,
+  "input_matches": 106,
+  "collected_matches": 106,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 22,
-  "aggregate_players": 682,
+  "aggregate_players": 685,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "休达",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "加的斯",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃登斯",
@@ -31,11 +21,6 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞尔塔B",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "奥维耶多",
       "matches": 9
     },
     {
@@ -51,11 +36,6 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布尔戈斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "格拉纳达",
       "matches": 9
     },
     {
@@ -76,5 +56,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 17.4
+  "avg_team_depth_coverage_pct": 15.7
 }

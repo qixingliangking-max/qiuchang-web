@@ -834,6 +834,22 @@
       "away_team": "卡斯特利翁",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868494",
+      "match_id": "fotmob:5868494",
+      "home_team": "休达",
+      "away_team": "奥维耶多",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868497",
+      "match_id": "fotmob:5868497",
+      "home_team": "格拉纳达",
+      "away_team": "加的斯",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:15:00.000Z"
     }
   ]
 }

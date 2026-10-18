@@ -610,6 +610,30 @@
       "away_team": "威廉二世",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T19:00:00Z"
+    },
+    {
+      "source_match_id": "5781775",
+      "match_id": "fotmob:5781775",
+      "home_team": "兹沃勒",
+      "away_team": "前进之鹰",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T10:15:00.000Z"
+    },
+    {
+      "source_match_id": "5781771",
+      "match_id": "fotmob:5781771",
+      "home_team": "坎布尔",
+      "away_team": "阿尔克马尔",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5781772",
+      "match_id": "fotmob:5781772",
+      "home_team": "格罗宁根",
+      "away_team": "阿贾克斯",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:45:00.000Z"
     }
   ]
 }

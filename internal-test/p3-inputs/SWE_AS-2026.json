@@ -1490,6 +1490,46 @@
       "away_team": "哥德堡",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T16:10:00Z"
+    },
+    {
+      "source_match_id": "5107626",
+      "match_id": "fotmob:5107626",
+      "home_team": "天狼星",
+      "away_team": "埃尔夫斯堡",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107627",
+      "match_id": "fotmob:5107627",
+      "home_team": "瓦斯特拉斯",
+      "away_team": "米亚尔比",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107622",
+      "match_id": "fotmob:5107622",
+      "home_team": "奥尔格里特",
+      "away_team": "哥德堡盖斯",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5107623",
+      "match_id": "fotmob:5107623",
+      "home_team": "马尔默",
+      "away_team": "赫根",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5107628",
+      "match_id": "fotmob:5107628",
+      "home_team": "哈尔姆斯塔德",
+      "away_team": "哈马比",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:30:00.000Z"
     }
   ]
 }

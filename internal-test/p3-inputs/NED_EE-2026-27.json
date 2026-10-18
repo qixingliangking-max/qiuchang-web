@@ -841,7 +841,23 @@
       "home_team": "埃门",
       "away_team": "阿尔梅勒城",
       "match_date": "2026-10-17",
-      "kickoff_at": "2026-10-17T14:30:00.000Z"
+      "kickoff_at": "2026-10-17T14:30:00Z"
+    },
+    {
+      "source_match_id": "5832910",
+      "match_id": "fotmob:5832910",
+      "home_team": "瓦尔韦克",
+      "away_team": "福伦丹",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T10:15:00.000Z"
+    },
+    {
+      "source_match_id": "5832911",
+      "match_id": "fotmob:5832911",
+      "home_team": "马斯特里赫特",
+      "away_team": "赫拉克勒斯",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T14:45:00.000Z"
     }
   ]
 }
