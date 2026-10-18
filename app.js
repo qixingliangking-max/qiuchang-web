@@ -3458,10 +3458,9 @@ function jcRenderAiPanel(m,pools,model,analysis){
     ? ['had','hhad','crs','ttg','hafu'].filter(k=>pools?.[k]).length
     : null;
   const poolCountText=poolCount===null?'—':poolCount+'/5';
-  const modelReady=!!model;
-  const statusText=modelReady
-    ? (analysis?.status==='ready'?'AI分析已生成':analysis?.status==='generating'?'AI分析生成中':'模型已锁板，等待AI分析')
-    : '等待本场模型结果写入';
+  // Public-facing reports expose only content readiness. Internal generation,
+  // lock and retry statuses must never appear in the Pro report card.
+  const reportPublished=analysis?.status==='ready';
 
   // Four-part AI report: verified strength and form, direction, handicap/HTFT, goals/scores.
   // The stored model output remains the source of truth; legacy analysis fields are
@@ -3503,7 +3502,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   };
 
   let analysisHtml='';
-  if(analysis?.status==='ready'){
+  if(reportPublished){
     const fallbackLogic=model
       ? '模型方向、单选倾向、让球保护、半全场、总进球与TOP需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
       : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
@@ -3595,10 +3594,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
       '</section>'
     ).join('')+'</article>';
   }else{
-    analysisHtml='<div class="jc-ai-wait">'+
-      '<b>'+qcEscape(statusText)+'</b>'+
-      '<p>锁板结果会作为固定结论，AI只负责结合真实比赛资料解释，不会改写模型方向。</p>'+
-    '</div>';
+    analysisHtml='<div class="jc-ai-wait" role="status">待更新</div>';
   }
 
   return '<div class="jc-ai-page-stack">'+
@@ -3606,10 +3602,9 @@ function jcRenderAiPanel(m,pools,model,analysis){
       modelBlock+
       contextBlock+
     '</section>'+
-    '<section class="jc-ai-placeholder jc-ai-page jc-ai-article-page">'+
+    '<section class="jc-ai-placeholder jc-ai-page jc-ai-article-page'+(reportPublished?'':' jc-ai-article-pending')+'">'+
       '<div class="jc-ai-article-head">'+
         '<h2>'+qcEscape(m.home_team_name || '主队')+' vs '+qcEscape(m.away_team_name || '客队')+'｜赛前分析报告</h2>'+
-        '<span>'+qcEscape(statusText)+'</span>'+
       '</div>'+
       analysisHtml+
     '</section>'+

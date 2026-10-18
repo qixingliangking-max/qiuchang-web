@@ -5588,3 +5588,29 @@ body.qc-profile-contact-open{overflow:hidden}
     padding:10px 12px;
   }
 }
+
+
+/* 2026-10-18 | Unified public pending-report state: no internal progress copy. */
+.jc-ai-article-page.jc-ai-article-pending{
+  padding-bottom:18px;
+}
+.jc-ai-article-page.jc-ai-article-pending .jc-ai-wait{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:76px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#8994a7;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.5;
+  text-align:center;
+}
+@media(max-width:640px){
+  .jc-odds-page .jc-ai-article-page.jc-ai-article-pending{padding-bottom:12px;}
+  .jc-odds-page .jc-ai-article-page.jc-ai-article-pending .jc-ai-wait{min-height:64px;}
+}
