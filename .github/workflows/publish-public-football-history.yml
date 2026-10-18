@@ -2,10 +2,11 @@ name: Publish finalized public football history
 
 on:
   schedule:
-    # Beijing 10:20 / 13:30 / 20:30: new archived day, then FT catch-ups.
+    # Latest confirmed FT/HT: every 10 minutes, near the score publisher.
+    # GitHub schedule is best effort; deploys happen ONLY when rows change.
+    - cron: '6,16,26,36,46,56 * * * *'
+    # Beijing 10:20: daily full 35-day catch-up for late official recoveries.
     - cron: '20 2 * * *'
-    - cron: '30 5 * * *'
-    - cron: '30 12 * * *'
   workflow_dispatch:
   # Editing this guarded workflow or exporter also launches an immediate
   # catch-up run when a scheduled GitHub Actions execution is delayed.
@@ -38,6 +39,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Publish public history snapshots only
+        env:
+          # High-frequency runs scan only the last three business days.
+          # Push/manual and daily catch-up scan the full 35-day horizon.
+          QC_ARCHIVE_RECENT_ONLY: ${{ github.event_name == 'schedule' && github.event.schedule != '20 2 * * *' && '1' || '0' }}
         run: python scripts/publish_public_overview_archives.py
       - name: Commit only static archive assets and manifest
         shell: bash
