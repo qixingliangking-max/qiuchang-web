@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'scripts/performance_audit_20261019.cjs'
+      - 'app.js'
+      - 'index.html'
       - '.github/workflows/site-performance-audit-20261019.yml'
 permissions:
   contents: read
