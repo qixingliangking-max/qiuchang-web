@@ -689,13 +689,26 @@ function jcFootballHitOddsHtml(m,model,score){
 
   const actual=jcShortResultByScore(score.ft);
   const directionChoices=jcOverviewDirectionChoices(model,m);
-  const hadKey={胜:'h',平:'d',负:'a'}[actual];
-  const hadOdd=hadKey?jcPoolNumber(pools.had,hadKey):null;
-  if(directionChoices.includes(actual) && hadOdd!=null){
-    hits.push({kind:'胜平负',label:actual,odds:hadOdd});
+  const hhad=pools.hhad;
+  // Ordinary HAD and handicap-only HHAD are two different official plays.
+  // A handicap-only match has no HAD odds: grade its locked main direction
+  // against the handicap result, never against the ordinary FT result.
+  if(jcHasOrdinaryResult(m)){
+    const hadKey={胜:'h',平:'d',负:'a'}[actual];
+    const hadOdd=hadKey?jcPoolNumber(pools.had,hadKey):null;
+    if(directionChoices.includes(actual) && hadOdd!=null){
+      hits.push({kind:'胜平负',label:actual,odds:hadOdd});
+    }
+  }else if(hhad?.goal_line!=null){
+    const handicapActual=String(jcHandicapResult(score.ft,hhad.goal_line)||'')
+      .replace(/^[+-]?\d+(?:\.\d+)?/,'');
+    const handicapKey={让胜:'h',让平:'d',让负:'a'}[handicapActual];
+    const directionOdd=handicapKey?jcPoolNumber(hhad,handicapKey):null;
+    if(directionChoices.includes(handicapActual) && directionOdd!=null){
+      hits.push({kind:'让球方向',label:handicapActual,odds:directionOdd});
+    }
   }
 
-  const hhad=pools.hhad;
   if(hhad?.goal_line!=null){
     const full=jcHandicapResult(score.ft,hhad.goal_line);
     const handicapLabel=String(full||'').replace(/^[+-]?\d+(?:\.\d+)?/,'');
@@ -718,10 +731,12 @@ function jcFootballHitOddsHtml(m,model,score){
     }
   }
 
-  const totalGoals=(Number(score.ft?.[0])||0)+(Number(score.ft?.[2])||0);
+  // Parse the entire score, not one character from each side: 10-1 is 11.
+  const scoreParts=String(score.ft||'').match(/^(\d{1,2})-(\d{1,2})$/);
+  const totalGoals=scoreParts?Number(scoreParts[1])+Number(scoreParts[2]):null;
   const goalChoices=String(model.goal_range||'').match(/[0-7](?:\+)?球/g)||[];
   const goalLabel=totalGoals>=7?'7+球':totalGoals+'球';
-  if(goalChoices.some(x=>x.replace('球','')===String(totalGoals) || (x.startsWith('7')&&totalGoals>=7))){
+  if(totalGoals!=null && goalChoices.some(x=>x.replace('球','')===String(totalGoals) || (x.startsWith('7')&&totalGoals>=7))){
     const odd=jcPoolNumber(pools.ttg,'s'+Math.min(totalGoals,7));
     if(odd!=null) hits.push({kind:'总进球',label:goalLabel,odds:odd});
   }
