@@ -2096,13 +2096,8 @@ async function loadJcFootball(){
   async function loadFootballDate(ds){
     if(!isAllowedDate(ds)) return;
     const token=++loadToken;
-    // The date control must acknowledge the tap immediately. Keep the existing
-    // card visible while a not-yet-cached public JSON file is fetched.
-    const alreadyFrozen=Boolean(qcFrozenOverviewRowsCache.get(ds)?.data);
-    if(ds!==selectedDate && label && !alreadyFrozen){
-      const date=new Date(ds+'T12:00:00+08:00');
-      label.textContent=ds.slice(5)+' '+date.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'})+' · 打开中…';
-    }
+    // Keep the existing date label and cards unchanged until the destination
+    // static snapshot is ready; never show an "opening" suffix during taps.
     cards.setAttribute('aria-busy','true');
     const cache=qcJcDateRowsCache.get(ds);
     const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
