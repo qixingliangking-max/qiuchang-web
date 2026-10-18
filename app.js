@@ -1205,6 +1205,27 @@ function jcRenderFootballCards(rows,today,access={loggedIn:false,isPro:false}){
   }).join('')+'</div>';
 }
 
+// Static card reconciliation: FT/HT/odds changes update only their own match.
+function qcReconcileFootballCards(root,html){
+  if(!root || typeof html!=='string') return;
+  const original=root.querySelector('.jc-football-grid');
+  const template=document.createElement('template');
+  template.innerHTML=html;
+  const next=template.content.querySelector('.jc-football-grid');
+  if(original && next){
+    const previous=[...original.querySelectorAll(':scope > .jc-football-card[data-match-id]')];
+    const incoming=[...next.querySelectorAll(':scope > .jc-football-card[data-match-id]')];
+    if(previous.length===incoming.length &&
+       previous.every((el,i)=>el.dataset.matchId && el.dataset.matchId===incoming[i].dataset.matchId)){
+      incoming.forEach((el,i)=>{
+        if(previous[i].outerHTML!==el.outerHTML) previous[i].replaceWith(el);
+      });
+      return;
+    }
+  }
+  if(root.innerHTML!==html) root.innerHTML=html;
+}
+
 // Historical archives are immutable, but the snapshot payload does not
 // include logo URLs. Add logos to existing team nodes without rebuilding
 // odds, predictions, hit markers or the entire finished card.
@@ -1807,7 +1828,7 @@ async function loadJcFootball(){
       const visible=result.data.filter(m=>m.match_date && qcJcIsVisibleMatch(m));
       if(!visible.length) return;
       cards.dataset.qcPublicPreview='1';
-      cards.innerHTML=jcRenderFootballCards(visible,calendarToday,{loggedIn:false,isPro:false});
+      qcReconcileFootballCards(cards,jcRenderFootballCards(visible,calendarToday,{loggedIn:false,isPro:false}));
       const counter=$('#jcFootballFixtureCount');
       if(counter) counter.textContent='共'+visible.length+'场';
     }).catch(()=>{});
@@ -2121,7 +2142,7 @@ async function loadJcFootball(){
     }
     if(todayBtn) todayBtn.disabled=selectedDate===today;
     delete cards.dataset.qcPublicPreview;
-    cards.innerHTML=jcRenderFootballCards(filtered,calendarToday,access);
+    qcReconcileFootballCards(cards,jcRenderFootballCards(filtered,calendarToday,access));
     setUrlDate(selectedDate);
     warmHistoryNeighbors(selectedDate);
     if(!dateLocked){
@@ -2218,7 +2239,11 @@ async function loadJcFootball(){
     })) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
-    const result=await jcFetchDateRows(refreshDate,false,true);
+    // The server publishes each confirmed FT into immutable public JSON.
+    // Every visitor reads that one snapshot instead of polling jc_matches.
+    const published=typeof window.qcFetchLiveScheduleDate==='function'
+      ? await window.qcFetchLiveScheduleDate(refreshDate,true).catch(()=>null) : null;
+    const result=published?.data?.length?published:await jcFetchDateRows(refreshDate,false,true);
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     if(result?.error || !Array.isArray(result?.data)) return;
 
