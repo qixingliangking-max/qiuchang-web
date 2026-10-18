@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="googlebot" content="noindex,nofollow,noarchive">
+  <title>球场档案｜拓展比分路径自动化测试</title>
+  <style>
+    :root{--ink:#1c2c4b;--blue:#315fe6;--blue-soft:#edf2ff;--green:#17795a;--gold:#9a6800;--line:#e2e8f2;--muted:#748096;--paper:#fff;--back:#f4f7fb;--danger:#b35b49}
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--back);color:var(--ink)}
+    button,input{font:inherit}.site-head{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(16px,env(safe-area-inset-left));gap:12px}.brand{font-size:20px;font-weight:850;letter-spacing:.2px}.brand small{font-size:11px;color:#5471bb;margin-left:6px}.site-head a{color:#52617a;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:13px;white-space:nowrap}
+    main{width:min(1120px,100%);margin:22px auto 64px;padding:0 14px}.notice{background:#fff8e8;border:1px solid #f1dfae;color:#745a17;border-radius:15px;padding:12px 14px;font-size:13px;line-height:1.7}.notice b{color:#604904}.intro{margin:18px 0 14px}.intro h1{font-size:25px;line-height:1.35;margin:0 0 7px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+    .control{margin:16px 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px 16px;display:flex;gap:12px;align-items:end;flex-wrap:wrap;box-shadow:0 6px 20px rgba(28,44,75,.04)}.field{display:grid;gap:7px}.field label{font-size:12px;font-weight:750;color:#6d7b90}.field input{height:40px;padding:0 11px;border:1px solid #dbe3ee;border-radius:10px;color:var(--ink);background:#fff}.primary{height:40px;border:0;border-radius:10px;background:var(--blue);color:white;padding:0 17px;font-weight:800;cursor:pointer}.primary:disabled{background:#9ca9c5;cursor:wait}.status{font-size:13px;color:var(--muted);min-height:22px;line-height:1.55}.status.error{color:var(--danger)}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px}.metric span{display:block;color:var(--muted);font-size:12px}.metric b{display:block;margin-top:6px;font-size:20px}.metric.em{background:var(--blue-soft);border-color:#cedbff}.metric.em b{color:#254ebc}
+    .rules{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 16px;margin:0 0 16px}.rules h2{font-size:15px;margin:0 0 8px}.rules ul{margin:0;padding-left:19px;color:#627089;font-size:13px;line-height:1.8}.rules code{background:#f0f3f8;border-radius:5px;padding:1px 4px;color:#46536c}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 5px 18px rgba(28,44,75,.035)}.card-top{padding:15px 16px 12px;border-bottom:1px solid #edf1f6}.line{display:flex;gap:8px;justify-content:space-between;align-items:center}.num{color:#66758d;font-size:12px;font-weight:800}.league{font-size:12px;background:#eff3fb;color:#53637c;padding:4px 7px;border-radius:6px}.teams{font-size:16px;line-height:1.45;font-weight:830;margin-top:7px}.time{font-size:12px;color:var(--muted);margin-top:4px}.content{padding:14px 16px}.label{font-size:11px;color:#7a879a;font-weight:800;letter-spacing:.2px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.chip{padding:5px 8px;border-radius:7px;background:#f2f5fa;color:#52617a;font-size:12px;font-weight:750}.chip.primary{height:auto;background:#eaf0ff;color:#3156bf}.candidate{background:#f8faff;border:1px solid #dce7ff;border-radius:13px;padding:12px;margin-top:13px}.candidate .score{font-size:26px;line-height:1;font-weight:900;color:#294fae}.candidate p{margin:7px 0 0;font-size:13px;line-height:1.65;color:#52617a}.candidate .path-type{font-size:12px;color:#5271be;font-weight:820;margin-bottom:7px}.meta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.meta{padding:9px 10px;background:#fbfcfe;border-radius:9px;border:1px solid #edf1f6}.meta span{display:block;font-size:11px;color:#7a879a}.meta b{display:block;font-size:13px;margin-top:4px;color:#41516b}.card details{border-top:1px solid #edf1f6;margin-top:13px}.card summary{list-style:none;padding:11px 0 0;cursor:pointer;color:#5570b6;font-size:13px;font-weight:780}.card summary::-webkit-details-marker{display:none}.reason-list{margin:9px 0 2px;padding:11px 12px;background:#fffaf0;border:1px solid #f3e5c5;color:#74613c;border-radius:9px;font-size:12px;line-height:1.65}.reason-list li+li{margin-top:5px}.empty{grid-column:1/-1;background:#fff;border:1px dashed #cbd6e6;border-radius:16px;padding:35px 18px;text-align:center;color:#78869a;line-height:1.7}
+    footer{text-align:center;font-size:12px;color:#8b96a7;line-height:1.7;margin:24px 10px 0}.hidden{display:none!important}@media(max-width:720px){main{margin-top:14px}.intro h1{font-size:21px}.summary{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.control{align-items:stretch}.field{width:100%}.primary{width:100%}.teams{font-size:15px}}
+  </style>
+</head>
+<body>
+  <header class="site-head"><div class="brand">球场档案<small>内部测试</small></div><a href="../index.html">返回网站</a></header>
+  <main>
+    <div class="notice"><b>拓展比分路径｜自动化测试</b><br>只读取当天已锁板的预测快照，生成TOP3之外的一条比赛路径。不会写回数据库、不会替换正式TOP3、不会加入模型命中统计或对外页面。</div>
+    <div class="intro"><h1>今日25场｜拓展比分路径</h1><p>规则测试版：以锁板方向、总进球档和TOP3为边界，自动提出一条未覆盖但仍符合主比赛路径的比分，并明确展示被排除的相邻路径。</p></div>
+    <section class="control" aria-label="测试控制">
+      <div class="field"><label for="businessDate">锁板日期</label><input id="businessDate" type="date"></div>
+      <button id="loadBtn" class="primary" type="button">读取锁板并生成</button>
+      <div id="status" class="status" role="status">等待读取当天锁板数据。</div>
+    </section>
+    <section id="summary" class="summary hidden" aria-label="生成汇总"></section>
+    <section class="rules"><h2>本页当前自动规则</h2><ul><li>正式TOP3始终保留；候选比分必须不在TOP3内。</li><li>候选优先保持锁板的主方向；平局场才优先选择更高总进球的平局尾部。</li><li>候选比分最多只比TOP3最高总进球多1球；超过此上界会被标为“上界淘汰”。</li><li>反向结果、TOP3重复结果、超上界结果会展示在“相邻路径淘汰”中。</li><li>本测试不读取赔率，不生成EV，也不使用“高赔”字样。</li></ul></section>
+    <section id="grid" class="grid" aria-live="polite"></section>
+    <footer>球场档案内部测试页 · 内容仅用于赛事数据研究与产品验证，不构成任何建议。</footer>
+  </main>
+  <script src="../assets/vendor/supabase-js-2.117.3.js"></script>
+  <script src="../supabase-config.js"></script>
+  <script src="../supabase-client.js?v=20260927autologin1"></script>
+  <script>
+  (function(){
+    'use strict';
+    const $=id=>document.getElementById(id);
+    const dateInput=$('businessDate'),loadBtn=$('loadBtn'),status=$('status'),grid=$('grid'),summary=$('summary');
+    const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+    dateInput.value=today;
+
+    function esc(value){return String(value??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));}
+    function parseScore(value){
+      const m=String(value||'').trim().match(/^(\d+)\s*[-:：]\s*(\d+)$/);
+      return m?{h:Number(m[1]),a:Number(m[2]),raw:m[1]+'-'+m[2]}:null;
+    }
+    function scoreText(score){return score.h+'-'+score.a;}
+    function resultOf(score){return score.h>score.a?'主胜':score.h<score.a?'客胜':'平局';}
+    function modelOf(row){
+      const list=Array.isArray(row?.jc_model_outputs)?row.jc_model_outputs:[];
+      return list.find(x=>x&&x.is_current&&x.is_locked)||list.find(x=>x&&x.is_locked)||list[0]||null;
+    }
+    function readTopScores(model){
+      const value=model?.top_scores;
+      const list=Array.isArray(value)?value:(typeof value==='string'?value.split(/[｜|,，、\s]+/):[]);
+      return list.map(parseScore).filter(Boolean).slice(0,3);
+    }
+    function readDirection(model,top){
+      const raw=String(model?.direction||'');
+      if(/胜/.test(raw)&&!/平/.test(raw)) return raw.includes('负')?'客胜':'主胜';
+      if(/负/.test(raw)&&!/胜/.test(raw)) return '客胜';
+      if(/平/.test(raw)&&!/胜|负/.test(raw)) return '平局';
+      return top[0]?resultOf(top[0]):'—';
+    }
+    function readGoals(model,top){
+      const raw=Array.isArray(model?.goal_range)?model.goal_range.join('｜'):String(model?.goal_range||'');
+      const items=(raw.match(/\d+(?:\+)?球/g)||[]).map(x=>x.replace('球',''));
+      return items.length?items.join('｜'):(top.length?[...new Set(top.map(s=>s.h+s.a))].map(x=>x+'球').join('｜'):'—');
+    }
+    function candidateSet(direction,anchor){
+      if(direction==='主胜') return [
+        {score:{h:anchor.h+1,a:anchor.a},type:'主线放大',reason:'主方向不变，主队多打入一球的延伸路径。'},
+        {score:{h:anchor.h,a:anchor.a+1},type:'均势风险',reason:'客队回应进球后，主队未能扩大优势的相邻路径。'},
+        {score:{h:Math.max(0,anchor.h-1),a:anchor.a+1},type:'方向反转',reason:'客队先得分或后程反击成功的反向结果。'}
+      ];
+      if(direction==='客胜') return [
+        {score:{h:anchor.h,a:anchor.a+1},type:'主线放大',reason:'主方向不变，客队多打入一球的延伸路径。'},
+        {score:{h:anchor.h+1,a:anchor.a},type:'均势风险',reason:'主队追回一球后，客队优势被压缩的相邻路径。'},
+        {score:{h:anchor.h+1,a:Math.max(0,anchor.a-1)},type:'方向反转',reason:'主队先得分并把比赛带往反向结果。'}
+      ];
+      return [
+        {score:{h:anchor.h+1,a:anchor.a+1},type:'开放平局',reason:'双方均得分路径延续，比赛总进球向上打开。'},
+        {score:{h:Math.max(0,anchor.h-1),a:Math.max(0,anchor.a-1)},type:'低分平局',reason:'双方进攻效率同时下降的低比分尾部。'},
+        {score:{h:anchor.h+1,a:anchor.a},type:'方向反转',reason:'主队率先建立优势后的非平局路径。'}
+      ];
+    }
+    function buildPath(row){
+      const model=modelOf(row),top=readTopScores(model),anchor=top[0];
+      if(!model||!anchor) return null;
+      const direction=readDirection(model,top),topSet=new Set(top.map(scoreText));
+      const maxTotal=Math.max(...top.map(s=>s.h+s.a));
+      const attempts=candidateSet(direction,anchor);
+      const rejected=[];
+      let selected=null;
+      attempts.forEach(item=>{
+        const key=scoreText(item.score),total=item.score.h+item.score.a;
+        let reject='';
+        if(topSet.has(key)) reject='已由正式TOP3覆盖';
+        else if(resultOf(item.score)!==direction) reject='方向反转，仅保留作风险路径';
+        else if(total>maxTotal+1) reject='超过当前TOP3的总进球上界';
+        else if(!selected) selected=item;
+        else reject='相邻路径优先级低于主推候选';
+        if(reject) rejected.push({score:key,reason:reject});
+      });
+      if(!selected){
+        const fallback={h:anchor.h+(direction==='主胜'?1:0),a:anchor.a+(direction==='客胜'?1:0)};
+        selected={score:fallback,type:'同向尾部',reason:'自动规则未找到更合格的相邻路径，暂以同向尾部作观察。'};
+      }
+      return {model,top,direction,goals:readGoals(model,top),selected,rejected};
+    }
+    function card(row,index){
+      const p=buildPath(row);
+      if(!p) return '';
+      const topText=p.top.map(scoreText).join('｜');
+      const candidate=scoreText(p.selected.score);
+      const reject=p.rejected.length?p.rejected.map(x=>'<li><b>'+esc(x.score)+'</b>：'+esc(x.reason)+'</li>').join(''):'<li>暂无额外相邻路径。</li>';
+      const number=String(row.match_num||('第'+(index+1)+'场'));
+      return '<article class="card">'+
+        '<div class="card-top"><div class="line"><span class="num">'+esc(number)+'</span><span class="league">'+esc(row.league_short_name||row.league_name||'—')+'</span></div>'+ 
+        '<div class="teams">'+esc(row.home_team_name||'主队')+' <span style="color:#a1adbf">vs</span> '+esc(row.away_team_name||'客队')+'</div><div class="time">'+esc(String(row.match_date||'').slice(5).replace('-','月')+'日 '+String(row.match_time||'').slice(0,5))+' · 正式锁板读取</div></div>'+ 
+        '<div class="content"><div class="label">正式TOP3（保持不变）</div><div class="chips">'+p.top.map((s,i)=>'<span class="chip '+(i===0?'primary':'')+'">TOP'+(i+1)+' '+esc(scoreText(s))+'</span>').join('')+'</div>'+ 
+        '<div class="candidate"><div class="path-type">'+esc(p.selected.type)+'｜不计入正式TOP3</div><div class="score">'+esc(candidate)+'</div><p>'+esc(p.selected.reason)+'</p></div>'+ 
+        '<div class="meta-row"><div class="meta"><span>锁板主方向</span><b>'+esc(p.direction)+'</b></div><div class="meta"><span>锁板总进球</span><b>'+esc(p.goals)+'</b></div></div>'+ 
+        '<details><summary>查看相邻路径淘汰原因</summary><ul class="reason-list">'+reject+'</ul></details></div></article>';
+    }
+    function setStatus(message,isError){status.textContent=message;status.classList.toggle('error',Boolean(isError));}
+    function render(rows,date){
+      const withPath=rows.filter(r=>buildPath(r));
+      const home=withPath.filter(r=>buildPath(r).direction==='主胜').length;
+      const away=withPath.filter(r=>buildPath(r).direction==='客胜').length;
+      const draw=withPath.length-home-away;
+      summary.innerHTML='<div class="metric em"><span>读取锁板场次</span><b>'+withPath.length+'/'+rows.length+'</b></div><div class="metric"><span>主方向延伸</span><b>'+home+' 场</b></div><div class="metric"><span>客方向延伸</span><b>'+away+' 场</b></div><div class="metric"><span>平局尾部观察</span><b>'+draw+' 场</b></div>';
+      summary.classList.remove('hidden');
+      grid.innerHTML=withPath.length?withPath.map(card).join(''):'<div class="empty">此日期的锁板快照中没有可读取的TOP3数据。</div>';
+      setStatus(date+' · 已自动生成 '+withPath.length+' 场拓展比分路径。');
+    }
+    async function load(){
+      const date=dateInput.value;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){setStatus('请选择正确的锁板日期。',true);return;}
+      if(!window.qcSupabase){setStatus('Supabase 客户端未加载。',true);return;}
+      loadBtn.disabled=true;loadBtn.textContent='正在读取…';grid.innerHTML='';summary.classList.add('hidden');setStatus('正在读取 '+date+' 的整日锁板快照…');
+      try{
+        const session=await window.qcSupabase.auth.getSession();
+        if(!session?.data?.session) throw new Error('请先在球场档案登录具有Pro权限的测试账号。');
+        const result=await window.qcSupabase.from('jc_overview_prediction_snapshots').select('business_date,payload,generated_at,match_count,model_count').eq('business_date',date).limit(1);
+        if(result.error) throw result.error;
+        const record=(result.data||[])[0];
+        const rows=Array.isArray(record?.payload?.rows)?record.payload.rows:[];
+        if(!rows.length) throw new Error('未读取到该日期的完整锁板快照。');
+        render(rows,date);
+      }catch(error){
+        const message=String(error?.message||error||'读取失败');
+        grid.innerHTML='<div class="empty">'+esc(message)+'</div>';
+        setStatus(message,true);
+      }finally{loadBtn.disabled=false;loadBtn.textContent='读取锁板并生成';}
+    }
+    loadBtn.addEventListener('click',load);
+    load();
+  })();
+  </script>
+</body>
+</html>
