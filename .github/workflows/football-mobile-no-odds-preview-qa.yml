@@ -1,0 +1,78 @@
+name: Mobile football no-odds preview smoke
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'internal-test/football-mobile-no-odds-20261019.html'
+      - '.github/workflows/football-mobile-no-odds-preview-qa.yml'
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser runners
+        run: |
+          mkdir -p /tmp/qc-mobile-odds-qa
+          cd /tmp/qc-mobile-odds-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Check published preview in both mobile engines
+        env:
+          NODE_PATH: /tmp/qc-mobile-odds-qa/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          const fs=require('fs');
+          (async()=>{
+            const engines=[
+              {name:'android',type:chromium,device:devices['Pixel 7']},
+              {name:'iphone',type:webkit,device:devices['iPhone 13']}
+            ];
+            fs.mkdirSync('preview-screenshots',{recursive:true});
+            for(const e of engines){
+              const browser=await e.type.launch({headless:true});
+              try{
+                const ctx=await browser.newContext({...e.device,locale:'zh-CN'});
+                const page=await ctx.newPage();
+                const exceptions=[];
+                page.on('pageerror',error=>exceptions.push(String(error)));
+                const url='https://qcda.cn/internal-test/football-mobile-no-odds-20261019.html';
+                const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
+                if(response.status()!==200)throw Error(e.name+' preview HTTP '+response.status());
+                await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===8,null,{timeout:30000});
+                if(await page.locator('.jc-mini-odds, .jc-mini-row').count())throw Error('Odds still rendered in preview cards');
+                await page.screenshot({path:'preview-screenshots/'+e.name+'-20261019.png',fullPage:false});
+                await page.locator('#qcPrev').click();
+                await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===25,null,{timeout:30000});
+                const d=await page.evaluate(()=>{
+                  const cards=[...document.querySelectorAll('.qc-demo-card')];
+                  const complete=cards.filter(x=>/半\s*\d+[-:]\d+/.test(x.innerText)).length;
+                  return {rows:cards.length,complete,hits:cards.filter(x=>x.querySelector('.qc-demo-chip')).length,
+                    linked:cards.filter(x=>x.querySelector('a[href^="../jc-match.html?id="]')).length,
+                    odds:document.querySelectorAll('.jc-mini-odds').length};
+                });
+                if(d.rows!==25 || d.complete<21 || !d.hits || d.odds!==0 || d.linked!==25)
+                  throw Error(e.name+' invalid 18th display '+JSON.stringify(d));
+                if(exceptions.length)throw Error(e.name+' exceptions '+exceptions.join('|'));
+                await page.screenshot({path:'preview-screenshots/'+e.name+'-20261018.png',fullPage:false});
+                console.log('PASS '+e.name+' static date switching, real local crests, zero odds cards, FT hit pills '+JSON.stringify(d));
+                await ctx.close();
+              }finally{await browser.close()}
+            }
+          })().catch(error=>{console.error(error.stack||String(error));process.exitCode=1});
+          JS
+      - name: Upload mobile preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-football-no-odds-preview
+          path: preview-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
