@@ -1927,20 +1927,20 @@ async function loadJcFootball(){
   async function hydrateFootballRows(rows,ds,token,patchDom=true){
     const modelRows=access.isPro?rows:rows.filter(m=>jcScoreInfo(m).finished);
     const valid=()=>patchDom && token===loadToken && selectedDate===ds;
-    // Odds are public and must not wait for models or image proxy latency.
-    await Promise.allSettled([
-      jcAttachLatestSnapshots(rows).then(()=>{
-        if(!valid()) return;
-        jcPatchFootballOddsOnly(cards,rows);
-        jcPatchFootballHitsOnly(cards,rows,access);
-      }),
-      (modelRows.length?jcAttachModels(modelRows):Promise.resolve()).then(()=>{
-        if(valid()) jcPatchFootballHitsOnly(cards,rows,access);
-      }),
-      jcAttachTeamLogos(rows).then(()=>{
-        if(valid()) jcPatchFootballLogos(cards,rows);
-      })
-    ]);
+    // Odds and static crests are independent. Patch hit badges ONLY after
+    // both official market and permitted FINAL have settled: avoid two full
+    // card traversals and prevent briefly grading with stale markets.
+    const oddsReady=jcAttachLatestSnapshots(rows).then(()=>{
+      if(valid()) jcPatchFootballOddsOnly(cards,rows);
+    });
+    const modelsReady=modelRows.length?jcAttachModels(modelRows):Promise.resolve();
+    const hitsReady=Promise.allSettled([oddsReady,modelsReady]).then(()=>{
+      if(valid()) jcPatchFootballHitsOnly(cards,rows,access);
+    });
+    const logosReady=jcAttachTeamLogos(rows).then(()=>{
+      if(valid()) jcPatchFootballLogos(cards,rows);
+    });
+    await Promise.allSettled([hitsReady,logosReady]);
   }
 
   function hydrateHistoricalFootballExtras(rows,ds,token){
@@ -2131,11 +2131,13 @@ async function loadJcFootball(){
   async function refreshFootballLive(){
     // No in-play updates: apply one official settlement only after FT.
     // All fixed fixtures, teams, crests, odds, FINAL and AI stay unchanged.
-    if(selectedDate!==qcBeijingBusinessToday()) return;
+    // Invisible tabs should not compete with the user's active page for RPCs.
+    if(document.hidden || selectedDate!==qcBeijingBusinessToday()) return;
     // If every published kickoff is in the future, no completed match can
     // exist. Avoid a redundant database request on cold opens and every tick.
     // With any missing kickoff, retain the original database fallback.
     const candidates=allRows.filter(m=>jcBusinessDate(m)===selectedDate);
+    if(candidates.length && candidates.every(qcIsConfirmedFinal)) return;
     if(candidates.length && candidates.every(m=>{
       const kickoff=new Date(m.kickoff_at||'').getTime();
       return Number.isFinite(kickoff) && kickoff>Date.now();
@@ -2167,6 +2169,12 @@ async function loadJcFootball(){
   }
   if(window.__jcFootballLiveTimer) clearInterval(window.__jcFootballLiveTimer);
   window.__jcFootballLiveTimer=setInterval(refreshFootballLive,120000);
+  if(window.__qcFootballVisibilityHandler)
+    document.removeEventListener('visibilitychange',window.__qcFootballVisibilityHandler);
+  window.__qcFootballVisibilityHandler=()=>{
+    if(!document.hidden) refreshFootballLive().catch(error=>console.warn('竞彩足球返回前台补查失败',error));
+  };
+  document.addEventListener('visibilitychange',window.__qcFootballVisibilityHandler);
 }
 
 async function loadJcFrontend(){
@@ -2817,6 +2825,7 @@ async function loadJcFrontend(){
   // when the user changes the date.
 
   async function refreshOverviewLive(){
+    if(document.hidden) return;
     const token=loadToken;
     await Promise.all([
       refreshOverviewDynamicState(selectedDate,token),
@@ -2903,6 +2912,12 @@ async function loadJcFrontend(){
 
   if(window.__jcOverviewLiveTimer) clearInterval(window.__jcOverviewLiveTimer);
   window.__jcOverviewLiveTimer=setInterval(refreshOverviewLive,120000);
+  if(window.__qcOverviewVisibilityHandler)
+    document.removeEventListener('visibilitychange',window.__qcOverviewVisibilityHandler);
+  window.__qcOverviewVisibilityHandler=()=>{
+    if(!document.hidden) refreshOverviewLive().catch(error=>console.warn('速览返回前台补查失败',error));
+  };
+  document.addEventListener('visibilitychange',window.__qcOverviewVisibilityHandler);
 }
 
 const JC_FIXED_ODDS_TEMPLATE = Object.freeze({
