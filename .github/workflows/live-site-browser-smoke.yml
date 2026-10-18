@@ -72,9 +72,9 @@ jobs:
                   await page.waitForFunction(()=>document.querySelectorAll('#jcYesterdayCards .jc-overview-row').length===25,null,{timeout:30000});
                   const last=await page.locator('#jcYesterdayCards .jc-overview-row').last().innerText();
                   if(!last.includes('025'))throw Error('Yesterday row 025 is missing: '+last.slice(0,180));
-                  const pending=await page.locator('#jcYesterdayCards .jc-overview-row').evaluateAll(rows=>rows.filter(r=>r.innerText.includes('待完赛')));
-                  if(!pending.length)throw Error('No public pending fixture rows in partially settled day');
-                  console.log('QCDA_PREVIOUS_DAY_FULL_ROSTER_PASS='+JSON.stringify({day:'2026-10-18',rows:25,last:last.slice(0,100),pending:pending.length}));
+                  const pendingCount=await page.locator('#jcYesterdayCards .jc-overview-row').evaluateAll(rows=>rows.filter(r=>r.innerText.includes('待完赛')).length);
+                  if(!pendingCount)throw Error('No public pending fixture rows in partially settled day');
+                  console.log('QCDA_PREVIOUS_DAY_FULL_ROSTER_PASS='+JSON.stringify({day:'2026-10-18',rows:25,last:last.slice(0,100),pending:pendingCount}));
                 }
               }
               listMs=Date.now()-start;
@@ -125,6 +125,9 @@ jobs:
               finally{if(browser)await browser.close();}
             }
             const report={testedAt:new Date().toISOString(),base:BASE,mode:'guest, production network, separate cold browser contexts, Android Chromium and Linux-hosted iPhone WebKit emulation',results};
+            const bjToday=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+            if(bjToday==='2026-10-19' && results.some(row=>row.entry==='/index.html' && row.exception))
+              process.exitCode=1;
             fs.mkdirSync('.github/reports',{recursive:true});
             fs.writeFileSync('.github/reports/live-site-browser-smoke.json',JSON.stringify(report,null,2)+'\n');
             console.log('QCDA_LIVE_BROWSER_TEST='+JSON.stringify(report));
