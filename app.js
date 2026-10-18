@@ -2196,9 +2196,13 @@ async function loadJcFrontend(){
   const initialDateRaw=new URLSearchParams(location.search).get('date');
   const candidateDate=isValidOverviewDate(initialDateRaw)?initialDateRaw:initialToday;
 
-  // Public first paint is served by same-origin static JSON below. Do not call
-  // the Supabase bootstrap for every anonymous visitor; protected prediction
-  // bundles are fetched only after the session and Pro entitlement are verified.
+  // Start the SAME public static day reader before auth and yesterday's
+  // archive fetch. Reuse this promise at first paint: no new endpoint, no
+  // direct-file experiment, no private data, no serial network waterfall.
+  const candidatePublicSchedulePromise=candidateDate>=today &&
+    typeof window.qcFetchLiveScheduleDate==='function'
+      ? window.qcFetchLiveScheduleDate(candidateDate) : null;
+  // Protected prediction bundles still require server-verified Pro access.
   qcLoadFrozenOverviewManifest();
   const candidateCurrentPromise=null;
   const accessPromise=qcGetAccessState(false,null);
@@ -2430,7 +2434,8 @@ async function loadJcFrontend(){
     // Active/future public schedules are generated into same-origin static JSON.
     // Anonymous first paint must not wait for a database RPC or auth service.
     if(!access.isPro && ds>=today && typeof window.qcFetchLiveScheduleDate==='function'){
-      const localSchedule=await window.qcFetchLiveScheduleDate(ds);
+      const localSchedule=await (ds===candidateDate && candidatePublicSchedulePromise
+        ? candidatePublicSchedulePromise : window.qcFetchLiveScheduleDate(ds));
       if(localSchedule?.data?.length) return localSchedule;
     }
 
