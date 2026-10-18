@@ -21,15 +21,15 @@
 <body>
   <header class="site-head"><div class="brand">球场档案<small>内部测试</small></div><a href="../index.html">返回网站</a></header>
   <main>
-    <div class="notice"><b>拓展比分路径｜自动化测试</b><br>只读取当天已锁板的预测快照，生成TOP3之外的一条比赛路径。不会写回数据库、不会替换正式TOP3、不会加入模型命中统计或对外页面。</div>
-    <div class="intro"><h1>今日25场｜拓展比分路径</h1><p>规则测试版：以锁板方向、总进球档和TOP3为边界，自动提出一条未覆盖但仍符合主比赛路径的比分，并明确展示被排除的相邻路径。</p></div>
+    <div class="notice"><b>拓展比分路径｜独立重跑测试</b><br>候选不按正式TOP3延伸：先从锁板留存的官方比分池中，按方向与总进球范围独立排序；正式TOP3只在最后用于去重。不会写回数据库、不会替换正式TOP3、不会加入模型命中统计或对外页面。</div>
+    <div class="intro"><h1>今日25场｜独立比分路径</h1><p>试跑逻辑：正式TOP3保持原样；候选从完整比分池独立筛出，再排除与TOP3重复的比分。周日001可作为首个核对样例。</p></div>
     <section class="control" aria-label="测试控制">
       <div class="field"><label for="businessDate">锁板日期</label><input id="businessDate" type="date"></div>
       <button id="loadBtn" class="primary" type="button">读取锁板并生成</button>
       <div id="status" class="status" role="status">等待读取当天锁板数据。</div>
     </section>
     <section id="summary" class="summary hidden" aria-label="生成汇总"></section>
-    <section class="rules"><h2>本页当前自动规则</h2><ul><li>正式TOP3始终保留；候选比分必须不在TOP3内。</li><li>候选优先保持锁板的主方向；平局场才优先选择更高总进球的平局尾部。</li><li>候选比分最多只比TOP3最高总进球多1球；超过此上界会被标为“上界淘汰”。</li><li>反向结果、TOP3重复结果、超上界结果会展示在“相邻路径淘汰”中。</li><li>本测试不读取赔率，不生成EV，也不使用“高赔”字样。</li></ul></section>
+    <section class="rules"><h2>本页当前独立筛选规则</h2><ul><li>先从锁板留存的完整官方比分池重新排序，正式TOP3不参与候选排序。</li><li>只保留符合锁板主方向及总进球范围的比分；没有适配档位时才扩展到相邻总进球。</li><li>正式TOP3仅作为最终去重条件：若独立池前列已被覆盖，则顺延取下一条。</li><li>反向结果、总进球不符、TOP3重复会展示在“相邻路径淘汰”中。</li><li>本测试不生成EV，也不使用“高赔”字样。</li></ul></section>
     <section id="grid" class="grid" aria-live="polite"></section>
     <footer>球场档案内部测试页 · 内容仅用于赛事数据研究与产品验证，不构成任何建议。</footer>
   </main>
@@ -72,45 +72,35 @@
       const items=(raw.match(/\d+(?:\+)?球/g)||[]).map(x=>x.replace('球',''));
       return items.length?items.join('｜'):(top.length?[...new Set(top.map(s=>s.h+s.a))].map(x=>x+'球').join('｜'):'—');
     }
-    function candidateSet(direction,anchor){
-      if(direction==='主胜') return [
-        {score:{h:anchor.h+1,a:anchor.a},type:'主线放大',reason:'主方向不变，主队多打入一球的延伸路径。'},
-        {score:{h:anchor.h,a:anchor.a+1},type:'均势风险',reason:'客队回应进球后，主队未能扩大优势的相邻路径。'},
-        {score:{h:Math.max(0,anchor.h-1),a:anchor.a+1},type:'方向反转',reason:'客队先得分或后程反击成功的反向结果。'}
-      ];
-      if(direction==='客胜') return [
-        {score:{h:anchor.h,a:anchor.a+1},type:'主线放大',reason:'主方向不变，客队多打入一球的延伸路径。'},
-        {score:{h:anchor.h+1,a:anchor.a},type:'均势风险',reason:'主队追回一球后，客队优势被压缩的相邻路径。'},
-        {score:{h:anchor.h+1,a:Math.max(0,anchor.a-1)},type:'方向反转',reason:'主队先得分并把比赛带往反向结果。'}
-      ];
-      return [
-        {score:{h:anchor.h+1,a:anchor.a+1},type:'开放平局',reason:'双方均得分路径延续，比赛总进球向上打开。'},
-        {score:{h:Math.max(0,anchor.h-1),a:Math.max(0,anchor.a-1)},type:'低分平局',reason:'双方进攻效率同时下降的低比分尾部。'},
-        {score:{h:anchor.h+1,a:anchor.a},type:'方向反转',reason:'主队率先建立优势后的非平局路径。'}
-      ];
+    function scorePool(row){
+      const markets=Array.isArray(row?.jc_market_snapshots)?row.jc_market_snapshots:[];
+      const crs=markets.find(x=>x?.pool_code==='crs')?.outcomes||{};
+      return Object.entries(crs).map(([key,odd])=>{
+        const m=key.match(/^s(\d{2})s(\d{2})$/), price=Number(odd);
+        return m&&Number.isFinite(price)&&price>0?{score:{h:Number(m[1]),a:Number(m[2])},price}:null;
+      }).filter(Boolean).sort((a,b)=>a.price-b.price||a.score.h+a.score.a-(b.score.h+b.score.a)||a.score.h-b.score.h);
+    }
+    function goalTotals(model){
+      const raw=Array.isArray(model?.goal_range)?model.goal_range.join('｜'):String(model?.goal_range||'');
+      return [...new Set((raw.match(/\d+(?=球)/g)||[]).map(Number))];
     }
     function buildPath(row){
-      const model=modelOf(row),top=readTopScores(model),anchor=top[0];
-      if(!model||!anchor) return null;
-      const direction=readDirection(model,top),topSet=new Set(top.map(scoreText));
-      const maxTotal=Math.max(...top.map(s=>s.h+s.a));
-      const attempts=candidateSet(direction,anchor);
+      const model=modelOf(row),top=readTopScores(model);
+      if(!model||!top.length) return null;
+      const direction=readDirection(model,top),topSet=new Set(top.map(scoreText)),totals=goalTotals(model),pool=scorePool(row);
       const rejected=[];
       let selected=null;
-      attempts.forEach(item=>{
+      pool.forEach(item=>{
         const key=scoreText(item.score),total=item.score.h+item.score.a;
         let reject='';
-        if(topSet.has(key)) reject='已由正式TOP3覆盖';
-        else if(resultOf(item.score)!==direction) reject='方向反转，仅保留作风险路径';
-        else if(total>maxTotal+1) reject='超过当前TOP3的总进球上界';
-        else if(!selected) selected=item;
-        else reject='相邻路径优先级低于主推候选';
-        if(reject) rejected.push({score:key,reason:reject});
+        if(resultOf(item.score)!==direction) reject='不符合锁板主方向';
+        else if(totals.length&&!totals.includes(total)) reject='不在锁板总进球范围';
+        else if(topSet.has(key)) reject='已由正式TOP3覆盖，独立排序后跳过';
+        else if(!selected) selected={score:item.score,type:'独立比分池候选',reason:'从完整比分池按价格顺序独立筛选；符合方向与总进球范围，且未被正式TOP3覆盖。',price:item.price};
+        else if(rejected.length<6) reject='独立池排序位于候选之后';
+        if(reject&&rejected.length<6) rejected.push({score:key,reason:reject+(Number.isFinite(item.price)?'（'+item.price+'）':'')});
       });
-      if(!selected){
-        const fallback={h:anchor.h+(direction==='主胜'?1:0),a:anchor.a+(direction==='客胜'?1:0)};
-        selected={score:fallback,type:'同向尾部',reason:'自动规则未找到更合格的相邻路径，暂以同向尾部作观察。'};
-      }
+      if(!selected) return null;
       return {model,top,direction,goals:readGoals(model,top),selected,rejected};
     }
     function card(row,index){
