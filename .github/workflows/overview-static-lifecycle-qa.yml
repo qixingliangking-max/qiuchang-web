@@ -40,13 +40,18 @@ jobs:
               ids.add(row['id'])
               assert 'jc_model_outputs' not in row
               assert 'jc_match_ai_analysis' not in row
-              assert 'jc_market_snapshots' not in row
+              for market in row.get('jc_market_snapshots',[]):
+                assert row.get('_jcMarketsComplete') is True
+                assert market['pool_code'] in ('had','hhad','crs','ttg','hafu')
+                assert isinstance(market['outcomes'],dict)
+                assert market['jc_match_id']==row['id']
+                assert 'analysis' not in market and 'model' not in market
               for side in ['home','away']:
                 logo=row.get('_'+side+'LogoUrl','')
                 if logo:
                   assert logo.startswith('assets/team-logos/'),logo
                   assert (root/logo).is_file(),logo
-          print('PASS static public files: correct rosters, complete local crest paths, no protected fields')
+          print('PASS static public files: correct rosters, complete local crest paths, no protected fields; official public odds allowed')
           PY
       - name: Install headless Chromium
         run: |
