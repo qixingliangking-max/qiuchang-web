@@ -190,6 +190,71 @@ def fill_missing_sources(teams):
 
 
 
+def public_prekick_markets(base_rows):
+    """Read PUBLIC official odds once during fixture publication, not per visitor.
+
+    Pro FINAL and AI are never queried or exposed. Only valid pre-kickoff
+    market snapshots are frozen into the date's static roster.
+    """
+    ids = [str(row.get("id") or "") for row in base_rows]
+    ids = [value for value in ids if re.fullmatch(r"[a-f0-9-]{36}", value, re.I)]
+    if not ids:
+        return {}
+    by_id = {value: [] for value in ids}
+    kickoff_by_id = {}
+    for row in base_rows:
+        value = str(row.get("id") or "")
+        try:
+            kickoff = datetime.fromisoformat(str(row.get("kickoff_at") or "").replace("Z", "+00:00"))
+            kickoff_by_id[value] = kickoff
+        except (ValueError, TypeError):
+            pass
+    try:
+        records = public_request("/rest/v1/jc_prekick_latest_market_snapshots", {
+            "select": "jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time",
+            "jc_match_id": "in.(" + ",".join(ids) + ")",
+            "limit": "500"
+        })
+    except Exception as error:
+        print("WARNING public odds unavailable, keep schedule and default fallback:", str(error)[:180])
+        return {}
+    if not isinstance(records, list):
+        return {}
+    for item in records:
+        if not isinstance(item, dict):
+            continue
+        mid = str(item.get("jc_match_id") or "")
+        pool = str(item.get("pool_code") or "")
+        if mid not in by_id or pool not in ("had", "hhad", "crs", "ttg", "hafu"):
+            continue
+        values = item.get("outcomes")
+        if not isinstance(values, dict) or not values:
+            continue
+        try:
+            captured = datetime.fromisoformat(str(item.get("captured_at") or "").replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            continue
+        kickoff = kickoff_by_id.get(mid)
+        if kickoff and captured > kickoff:
+            continue
+        safe_odds = {
+            str(k): v for k, v in values.items()
+            if isinstance(v, (float, int)) and not isinstance(v, bool) and 1 <= v <= 10000
+        }
+        if not safe_odds:
+            continue
+        by_id[mid].append({
+            "jc_match_id": mid,
+            "pool_code": pool,
+            "goal_line": item.get("goal_line"),
+            "outcomes": safe_odds,
+            "captured_at": item["captured_at"],
+            "official_update_time": item.get("official_update_time"),
+        })
+    return {mid: sorted(items, key=lambda m: m["pool_code"])
+            for mid, items in by_id.items() if items}
+
+
 def publish_live_schedules(by_team):
     """Publish public-only current schedule snapshots so first paint never needs Supabase."""
     LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
@@ -232,6 +297,9 @@ def publish_live_schedules(by_team):
                   "rows=", len(base_rows) if isinstance(base_rows, list) else "invalid")
             continue
 
+        # Same public intake event freezes both fixtures and official odds.
+        # An unavailable public market reader never blocks fixed schedules.
+        public_markets = public_prekick_markets(base_rows)
         rows = []
         valid = True
         for source_row in base_rows:
@@ -249,6 +317,10 @@ def publish_live_schedules(by_team):
             away = str(row.get("away_team_name") or "").strip()
             row["_homeLogoUrl"] = by_team.get(home, "")
             row["_awayLogoUrl"] = by_team.get(away, "")
+            match_markets = public_markets.get(str(row.get("id") or ""), [])
+            if match_markets:
+                row["jc_market_snapshots"] = match_markets
+                row["_jcMarketsComplete"] = True
             row["_jcScheduleSnapshot"] = True
             rows.append(row)
         if not valid or len(rows) != count:
