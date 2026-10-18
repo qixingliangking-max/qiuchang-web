@@ -1,0 +1,11 @@
+endent-25-test-data.js','internal-test/independent-25-run.html']){process.stdout.write('@@@'+f+'\n'+require('fs').readFileSync(f,'utf8')}
+                                                                                                                                                                           ^
+Expected ',', got '}'
+
+SyntaxError: missing ) after argument list
+    at makeContextifyScript (node:internal/vm:194:14)
+    at compileScript (node:internal/process/execution:388:10)
+    at evalTypeScript (node:internal/process/execution:260:22)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
