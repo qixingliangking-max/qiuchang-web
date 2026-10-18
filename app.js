@@ -2696,7 +2696,7 @@ async function loadJcFrontend(){
     // Guests see only confirmed FT+HT results. They never need the complete
     // future/pending fixture roster, so avoid fetching and merging it for
     // every initial review/date switch. Pro retains the existing full roster.
-    const pendingPublicSchedule=access.isPro && !archived && ds>=qcAddDays(today,-3) &&
+    const pendingPublicSchedule=access.loggedIn && !archived && ds>=qcAddDays(today,-3) &&
       typeof window.qcFetchLiveScheduleDate==='function'
       ? window.qcFetchLiveScheduleDate(ds).catch(()=>null) : null;
     const pendingPrediction=access.isPro && !archived
@@ -2746,7 +2746,7 @@ async function loadJcFrontend(){
       return {...history,data:rows,fromHistorySnapshot:true,
         fromCompletePublicSchedule:true};
     };
-    if(!access.isPro) return history;
+    if(!access.isPro) return access.loggedIn ? ensureCompletePublicReview() : history;
 
     // Once yesterday's COMPLETE final history includes every locked prediction,
     // that single public static file suffices even for Pro users.
