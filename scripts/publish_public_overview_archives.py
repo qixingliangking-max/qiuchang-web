@@ -75,7 +75,10 @@ def embed_crest_links(rows):
 def publish():
     today = dt.datetime.now(BEIJING).date()
     cutoff = today - dt.timedelta(days=1)
-    earliest = today - dt.timedelta(days=35)
+    # Frequent settlement checks only read recent football business days;
+    # the daily full sweep retains the prior 35-day late-recovery window.
+    recent_only = os.environ.get("QC_ARCHIVE_RECENT_ONLY", "0") == "1"
+    earliest = today - dt.timedelta(days=3 if recent_only else 35)
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     dates = dict(manifest.get("dates") or {})
     changed = []
@@ -111,10 +114,35 @@ def publish():
         # ONLY frozen, scored rows from the published history snapshot are
         # eligible for a public archive. Unfinished/stopped fixtures have no
         # history row; they remain absent until official FT is confirmed.
-        if len({str(row.get("id")) for row in rows}) != len(rows):
-            raise RuntimeError("Duplicate match in archive " + day)
+        incoming_by_id = {str(row.get("id")): row for row in rows}
+        if len(incoming_by_id) != len(rows) or "None" in incoming_by_id:
+            raise RuntimeError("Duplicate/missing match ID in archive " + day)
+        score_re = re.compile(r"^\d{1,2}[:-]\d{1,2}$")
+        for row in rows:
+            raw = row.get("raw") if isinstance(row.get("raw"), dict) else {}
+            ft, ht = str(raw.get("sectionsNo999") or ""), str(raw.get("sectionsNo1") or "")
+            status = str(row.get("match_status") or "") + " " + str(raw.get("matchStatusName") or "")
+            if not score_re.fullmatch(ft) or not score_re.fullmatch(ht) or not re.search(
+                r"已结束|完赛|已完成|finished|final", status, re.I):
+                raise RuntimeError("Unconfirmed FT/HT in public archive " + day)
+        if old:
+            # A partial archive is append-only: never reserialize previously
+            # settled predictions, score circles, FT or AI/market fields from
+            # newer DB copies. Official corrections require manual audit.
+            existing = old.get("rows") or []
+            existing_by_id = {str(row.get("id")): row for row in existing}
+            if len(existing_by_id) != len(existing):
+                raise RuntimeError("Duplicate frozen match in archive " + day)
+            if not set(existing_by_id).issubset(incoming_by_id):
+                raise RuntimeError("Published frozen match disappeared from DB " + day)
+            newcomers = [row for row in rows if str(row.get("id")) not in existing_by_id]
+            embed_crest_links(newcomers)
+            rows = existing + newcomers
+            if len(rows) != finished_count:
+                raise RuntimeError("Append-only history count mismatch for " + day)
+        else:
+            embed_crest_links(rows)
         rows.sort(key=lambda r: str(r.get("match_num") or ""))
-        embed_crest_links(rows)
 
         serial = 2
         while (DATA / f"{day}.history.v{serial}.json").exists():
