@@ -29,15 +29,18 @@
       m._jcScheduleSnapshot=true;
       m._qcStaticLiveSchedule=true;
       m.jc_model_outputs=[];
-      m.jc_market_snapshots=[];
-      // Public static fixture JSON deliberately omits model outputs.
-      // Empty is NOT loaded: after FT the public locked FINAL is hydrated
-      // through the finished-only server RLS. Before FT the guest model remains
-      // protected by hydrateFootballRows() in app.js.
+      // Only publicly collected official odds are embedded in this static
+      // schedule. Locked predictions and AI remain server-protected.
+      const staticOdds=Array.isArray(m.jc_market_snapshots)
+        ? m.jc_market_snapshots.filter(x=>x && ['had','hhad','crs','ttg','hafu'].includes(x.pool_code))
+        : [];
+      m.jc_market_snapshots=staticOdds;
+      // If the public odds publisher has not run yet, the original safe
+      // market hydration stays enabled as a backwards-compatible fallback.
+      m._jcLatestSnapshotsLoaded=Boolean(m._jcMarketsComplete && staticOdds.length);
       m._jcModelsLoaded=false;
       m._jcModelsLoading=false;
       m._jcModelLoadFailed=false;
-      m._jcLatestSnapshotsLoaded=false;
       return m;
     });
   }
