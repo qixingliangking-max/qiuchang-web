@@ -184,12 +184,18 @@ jobs:
                 const map=Object.fromEntries(beijing.map(x=>[x.type,x.value]));
                 if(map.year==='2026' && map.month==='10' && map.day==='19' && Number(map.hour)<10){
                   await page.goto(BASE+'/football.html?date=2026-10-18',{waitUntil:'domcontentloaded',timeout:45000});
-                  await page.locator('#jcFootballNextDate').waitFor({state:'visible',timeout:30000});
+                  // Wait until the 18th is fully rendered AND its navigation
+                  // handlers are attached; a bare enabled HTML button can exist
+                  // before async first-paint initialization.
                   await page.waitForFunction(()=>{
                     const btn=document.querySelector('#jcFootballNextDate');
-                    return btn && !btn.disabled;
+                    const label=document.querySelector('#jcFootballDateLabel')?.textContent||'';
+                    return btn && !btn.disabled && /10.18/.test(label) &&
+                      document.querySelectorAll('#jcFootballCards .jc-football-card').length===25;
                   },null,{timeout:30000});
                   await page.locator('#jcFootballNextDate').click();
+                  if((await page.locator('#jcFootballDateLabel').textContent()).includes('打开中'))
+                    throw Error('Date navigation displayed forbidden opening status');
                   await page.waitForFunction(()=>{
                     const date=document.querySelector('#jcFootballDateLabel')?.textContent||'';
                     return /10.19/.test(date) &&
