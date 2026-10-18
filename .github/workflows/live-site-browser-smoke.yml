@@ -146,3 +146,60 @@ jobs:
           path: .github/reports/live-site-browser-smoke.json
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Regression - published Oct 19 public schedule must be browseable
+        shell: bash
+        run: |
+          cat > /tmp/qcda-smoke/published-future.cjs <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          const BASE='https://qcda.cn';
+          (async()=>{
+            const engines=[
+              {name:'Android Chromium',type:chromium,device:devices['Pixel 7']},
+              {name:'iPhone WebKit',type:webkit,device:devices['iPhone 13']}
+            ];
+            for(const engine of engines){
+              const browser=await engine.type.launch({headless:true});
+              try{
+                const context=await browser.newContext({...engine.device,locale:'zh-CN'});
+                const page=await context.newPage();
+                const errors=[];
+                page.on('pageerror',e=>errors.push(String(e)));
+                const url=BASE+'/football.html?date=2026-10-19';
+                const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
+                if(response?.status()!==200)throw Error(engine.name+' HTTP '+response?.status());
+                await page.waitForFunction(()=>{
+                  const label=document.querySelector('#jcFootballDateLabel');
+                  const cards=document.querySelectorAll('#jcFootballCards .jc-football-card');
+                  return label && /10.19/.test(label.textContent||'') && cards.length===8;
+                },null,{timeout:30000});
+                const roster=await page.locator('#jcFootballCards .jc-football-card').count();
+                if(roster!==8)throw Error(engine.name+' missing 19 Oct static roster: '+roster);
+                if(errors.length)throw Error(engine.name+' JS exceptions: '+errors.slice(0,3));
+                console.log('PASS '+engine.name+' direct 2026-10-19: 8 static fixtures, no JS errors');
+                const beijing=new Intl.DateTimeFormat('en-CA',{
+                  timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',
+                  day:'2-digit',hour:'2-digit',hourCycle:'h23'
+                }).formatToParts(new Date());
+                const map=Object.fromEntries(beijing.map(x=>[x.type,x.value]));
+                if(map.year==='2026' && map.month==='10' && map.day==='19' && Number(map.hour)<10){
+                  await page.goto(BASE+'/football.html?date=2026-10-18',{waitUntil:'domcontentloaded',timeout:45000});
+                  await page.locator('#jcFootballNextDate').waitFor({state:'visible',timeout:30000});
+                  await page.waitForFunction(()=>{
+                    const btn=document.querySelector('#jcFootballNextDate');
+                    return btn && !btn.disabled;
+                  },null,{timeout:30000});
+                  await page.locator('#jcFootballNextDate').click();
+                  await page.waitForFunction(()=>{
+                    const date=document.querySelector('#jcFootballDateLabel')?.textContent||'';
+                    return /10.19/.test(date) &&
+                      document.querySelectorAll('#jcFootballCards .jc-football-card').length===8;
+                  },null,{timeout:30000});
+                  console.log('PASS '+engine.name+' overnight Oct18 => Oct19 click: 8 published fixtures');
+                }
+                await context.close();
+              }finally{await browser.close()}
+            }
+          })().catch(error=>{console.error(error.stack||String(error));process.exitCode=1});
+          JS
+          node /tmp/qcda-smoke/published-future.cjs
