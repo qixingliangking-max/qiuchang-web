@@ -273,8 +273,11 @@ function jcMatchStatusLabel(m,today){
 function qcIsConfirmedFinal(m){
   const status=String(m?.raw?.matchStatusName||'')+' '+String(m?.match_status||'');
   const ft=String(m?.raw?.sectionsNo999||'').trim();
+  const ht=String(m?.raw?.sectionsNo1||'').trim();
+  // Full + half are both required before freezing a settlement; an FT-only
+  // partial row must keep polling and must not create an incomplete hit card.
   return /(?:已结束|完赛|已完成|finished|final)/i.test(status) &&
-    /^\d{1,2}[:\-]\d{1,2}$/.test(ft);
+    /^\d{1,2}[:\-]\d{1,2}$/.test(ft) && /^\d{1,2}[:\-]\d{1,2}$/.test(ht);
 }
 
 // Apply the settlement atomically once per fixture. Never copy other dynamic
