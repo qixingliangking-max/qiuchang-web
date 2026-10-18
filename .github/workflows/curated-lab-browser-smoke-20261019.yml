@@ -41,8 +41,11 @@ jobs:
             page.on('pageerror',e=>errors.push(String(e)));
             await page.goto(url,{waitUntil:'load'});
             await page.waitForSelector('#plans .plan',{timeout:15000});
-            const metric=await page.locator('#metrics').innerText();
-            if(!metric.includes('104'))throw Error(name+': wrong real sample metric: '+metric);
+            const title=await page.locator('.hero h1').innerText();
+            if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
+            if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
+            if((await page.locator('#history .hist-row').count())<8)throw Error(name+': history missing');
+            if(await page.locator('.method').evaluate(el=>el.open))throw Error(name+': method text not collapsed');
             const dayBefore=await page.locator('#dateLabel').innerText();
             if(!dayBefore.includes('10月18日'))throw Error(name+': default date incorrect: '+dayBefore);
             const firstPlan=await page.locator('#plans .plan').count();
