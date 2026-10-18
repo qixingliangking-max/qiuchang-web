@@ -63,18 +63,27 @@ jobs:
               domMs=Date.now()-start;
               httpStatus=response?.status()||null;
               await page.locator(selector).first().waitFor({state:'visible',timeout:25000});
-              // Regression: 2026-10-18 contains 25 fixtures. Just after the
-              // date rolls over to Oct 19, the unfinished tail of yesterday
-              // MUST remain visible as public fixtures, with no private model.
+              // Guest yesterday's review is a progressive, finished-only
+              // public archive: a new confirmed FT appends one match, while
+              // unfinished fixtures must never appear in the guest table.
               if(entry==='/index.html'){
                 const bjToday=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
                 if(bjToday==='2026-10-19'){
-                  await page.waitForFunction(()=>document.querySelectorAll('#jcYesterdayCards .jc-overview-row').length===25,null,{timeout:30000});
-                  const last=await page.locator('#jcYesterdayCards .jc-overview-row').last().innerText();
-                  if(!last.includes('025'))throw Error('Yesterday row 025 is missing: '+last.slice(0,180));
-                  const pendingCount=await page.locator('#jcYesterdayCards .jc-overview-row').evaluateAll(rows=>rows.filter(r=>r.innerText.includes('待完赛')).length);
-                  if(!pendingCount)throw Error('No public pending fixture rows in partially settled day');
-                  console.log('QCDA_PREVIOUS_DAY_FULL_ROSTER_PASS='+JSON.stringify({day:'2026-10-18',rows:25,last:last.slice(0,100),pending:pendingCount}));
+                  await page.waitForFunction(()=>{
+                    const meta=document.querySelector('#jcYesterdayMeta')?.textContent||'';
+                    return /10-18\\s*[·｜]\\s*\\d+场/.test(meta);
+                  },null,{timeout:30000});
+                  const audit=await page.evaluate(()=>{
+                    const rows=[...document.querySelectorAll('#jcYesterdayCards .jc-overview-row')];
+                    const meta=document.querySelector('#jcYesterdayMeta')?.textContent||'';
+                    const count=Number((meta.match(/(\\d+)场/)||[])[1]);
+                    return {rows:rows.length,metaCount:count,
+                      pending:rows.filter(row=>/待完赛|未开赛|\\bVS\\b/.test(row.innerText)).length,
+                      noScore:rows.filter(row=>!/\\d+[-:]\\d+/.test(row.querySelector('.jc-score-full')?.textContent||'')).length};
+                  });
+                  if(!audit.rows || audit.metaCount!==audit.rows || audit.pending || audit.noScore)
+                    throw Error('Guest finished-only history failed: '+JSON.stringify(audit));
+                  console.log('QCDA_GUEST_HISTORY_FINISHED_ONLY_PASS='+JSON.stringify(audit));
                 }
               }
               listMs=Date.now()-start;
