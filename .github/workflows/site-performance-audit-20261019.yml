@@ -1,0 +1,40 @@
+name: Production UI performance audit (read-only)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/performance_audit_20261019.cjs'
+      - '.github/workflows/site-performance-audit-20261019.yml'
+permissions:
+  contents: read
+concurrency:
+  group: qcda-production-performance-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install independent browser test dependencies
+        run: |
+          mkdir -p /tmp/qcda-perf-test
+          cd /tmp/qcda-perf-test
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Audit real production navigation and interactions
+        env:
+          NODE_PATH: /tmp/qcda-perf-test/node_modules
+        run: node scripts/performance_audit_20261019.cjs
+      - name: Upload read-only performance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qcda-production-performance-audit
+          path: .github/reports/production-perf-20261019.json
+          if-no-files-found: warn
+          retention-days: 14
