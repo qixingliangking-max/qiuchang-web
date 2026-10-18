@@ -2721,7 +2721,15 @@ async function loadJcFrontend(){
     try{
       // Silent background status checks. On-field score, HT and clock remain
       // unchanged until the backend persists the confirmed final result.
-      const result=await jcFetchDateRows(ds,false,true);
+      // The scheduled FT publisher already freezes one confirmed match into
+      // versioned public JSON. Read THAT published artifact first, rather than
+      // asking the production database to compute every visitor's score.
+      // If the publisher is temporarily unavailable, retain the proven
+      // public match-status fallback so a finished score is never lost.
+      const published=typeof window.qcFetchLiveScheduleDate==='function'
+        ? await window.qcFetchLiveScheduleDate(ds,true).catch(()=>null) : null;
+      const result=published?.data?.length ? published
+        : await jcFetchDateRows(ds,false,true);
       if(token!==loadToken || selectedDate!==ds || result?.error ||
          !Array.isArray(result?.data)) return;
       const finalById=new Map(result.data.filter(m=>m?.id && qcIsConfirmedFinal(m))
