@@ -1,0 +1,98 @@
+name: Curated research lab offline browser test
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/curated-lab-browser-smoke-20261019.yml'
+      - 'internal-test/curated-lab-20261019.html'
+      - 'internal-test/curated-lab-20261019.js'
+      - 'internal-test/curated-lab-data-20261019.js'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright Chromium
+        run: |
+          mkdir -p /tmp/curated-test
+          cd /tmp/curated-test
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate mobile and desktop interactions offline
+        shell: bash
+        run: |
+          cat > /tmp/curated-test/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          const fs=require('fs');
+          const path=require('path');
+          const url='file://'+path.resolve('internal-test/curated-lab-20261019.html');
+          const report=[];
+          async function check(browser,device,name){
+            const context=await browser.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+            const page=await context.newPage();
+            const errors=[];
+            page.on('pageerror',e=>errors.push(String(e)));
+            await page.goto(url,{waitUntil:'load'});
+            await page.waitForSelector('#plans .plan',{timeout:15000});
+            const metric=await page.locator('#metrics').innerText();
+            if(!metric.includes('104'))throw Error(name+': wrong real sample metric: '+metric);
+            const dayBefore=await page.locator('#dateLabel').innerText();
+            if(!dayBefore.includes('10月18日'))throw Error(name+': default date incorrect: '+dayBefore);
+            const firstPlan=await page.locator('#plans .plan').count();
+            if(firstPlan<1)throw Error(name+': missing initial plan');
+            await page.locator('#budget').fill('1000');
+            if(!(await page.locator('#plans .plan').first().innerText()).includes('1,000.00'))throw Error(name+': budget not recalculated');
+            await page.locator('#plans .plan .inspect').first().click();
+            await page.locator('#overlay:not([hidden]) .dialog').waitFor();
+            const modalRows=await page.locator('.alloc tbody tr').count();
+            if(modalRows<1)throw Error(name+': missing calculated branches');
+            const firstShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
+            await page.locator('#modeTabs button[data-mode="cold"]').click();
+            const secondShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
+            if(modalRows>1&&firstShare===secondShare)throw Error(name+': strategy does not change stake');
+            await page.screenshot({path:'/tmp/curated-test/'+name+'-modal.png',fullPage:true});
+            await page.locator('#closeDialog').click();
+            for(const type of ['htft','goals','score','direction']){
+              await page.locator('#tabs button[data-type="'+type+'"]').click();
+              if(!await page.locator('#tabs button[data-type="'+type+'"]').getAttribute('aria-selected')==='true')throw Error(name+': tab not active');
+              if(!(await page.locator('#plans').innerText()).length)throw Error(name+': blank category '+type);
+            }
+            await page.locator('#dateLabel').click();
+            await page.locator('#calDays button[data-date="2026-10-17"]').click();
+            const dayAfter=await page.locator('#dateLabel').innerText();
+            if(!dayAfter.includes('10月17日'))throw Error(name+': calendar failed: '+dayAfter);
+            await page.screenshot({path:'/tmp/curated-test/'+name+'-page.png',fullPage:true});
+            if(errors.length)throw Error(name+': JS errors '+JSON.stringify(errors));
+            const details={engine:name,samples:104,firstPlan,dayBefore,dayAfter,modalRows,budgetInput:1000,firstShare,secondShare,errors};
+            report.push(details);
+            await context.close();
+          }
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              await check(browser,devices['Pixel 7'],'mobile');
+              await check(browser,{viewport:{width:1280,height:900},deviceScaleFactor:1},'desktop');
+              fs.writeFileSync('/tmp/curated-test/report.json',JSON.stringify({status:'pass',checks:report},null,2));
+              console.log(JSON.stringify({status:'PASS',checks:report}));
+            }finally{await browser.close();}
+          })().catch(e=>{console.error(String(e.stack||e));process.exitCode=1});
+          JS
+          cd "$GITHUB_WORKSPACE"
+          node /tmp/curated-test/check.cjs
+      - name: Save screenshots and result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: curated-lab-ui-qa
+          path: |
+            /tmp/curated-test/*-page.png
+            /tmp/curated-test/*-modal.png
+            /tmp/curated-test/report.json
+          if-no-files-found: ignore
