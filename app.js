@@ -1175,7 +1175,7 @@ function jcLogoImgHtml(rawUrl,className,loading='lazy'){
   // Offline/local logo files are immutable. Retry a temporarily failed
   // request once with a cache-busted URL before hiding the icon. This handles
   // stale/error-cached logo loads on mobile without touching frozen match data.
-  const isLocal=/^assets\\/team-logos\\/[a-z0-9-]+\\.(png|jpg|webp)$/i.test(display);
+  const isLocal=/^assets\/team-logos\/[a-z0-9-]+\.(png|jpg|webp)$/i.test(display);
   const fallbackAttr=isLocal
     ? ' onerror="if(!this.dataset.qcLogoRetry){this.dataset.qcLogoRetry=\'1\';this.src=this.src.split(\'?\')[0]+\'?v=20261019histlogo1\';}else{this.style.display=\'none\'}"'
     : display!==raw
