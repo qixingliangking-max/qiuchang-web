@@ -94,7 +94,7 @@ function selectionSets(f,type,k,{singleOddsFloor=0}={}){
   if(opts.length<k)continue;
   for(const indices of choose(opts.length,k)){
    const picks=indices.map(i=>opts[i]),coverage=picks.reduce((s,x)=>s+x.p,0),weightedOdds=picks.reduce((s,x)=>s+x.p*x.odds,0);
-   all.push({fixtureId:f.id,num:f.num,league:f.league,type,pool,
+   all.push({fixtureId:f.id,num:f.num,league:f.league,type,pool,line:numeric(f.markets?.[pool]?.line),
     picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),odds:x.odds})),
     options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),
     minOdds:Math.min(...picks.map(x=>x.odds)),maxOdds:Math.max(...picks.map(x=>x.odds)),
@@ -149,8 +149,8 @@ function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN
 function selectDay(fixtures,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=3,structures=STRUCTURES}={}){
  const seen=new Set();for(const f of fixtures){if(seen.has(f.id))throw Error("DUPLICATE_FIXTURE_ID");seen.add(f.id)}
  const types=structures.map(s=>buildPairCandidates(fixtures,s,{bankroll,minReturn,topK}));
- return {version:"V2-CLEAN-SHADOW-0.2",bankroll,minReturn,minReturnRatio:MIN_RETURN_RATIO,
-  requiredMinCombinedOddsByLines:Object.fromEntries([1,2,4,6,9].map(n=>[n,+(MIN_RETURN_RATIO*n).toFixed(4)])),
+ return {version:"V2-CLEAN-SHADOW-0.2",bankroll,minReturn,minReturnRatio:+(minReturn/bankroll).toFixed(6),
+  requiredMinCombinedOddsByLines:Object.fromEntries([1,2,4,6,9].map(n=>[n,+(minReturn/bankroll*n).toFixed(4)])),
   onlyTwoLegs:true,published:false,asOfOnly:true,types,
   warnings:["Every candidate is two distinct fixtures only","Each possible winning branch must return at least the configured minimum",
    "Probabilities remain uncalibrated; estimated EV is research-only","No candidate auto-publishes; no outcomes are read by this module"]};
