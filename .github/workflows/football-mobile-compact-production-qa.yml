@@ -85,6 +85,15 @@ jobs:
                   };
                 });
                 console.log('QCDA_CREST_DIAG '+item.name+' '+JSON.stringify(measurements));
+                if(item.name!=='desktop'){
+                  if(measurements.cardHitTitleBg!=='rgba(0, 0, 0, 0)' ||
+                     measurements.cardHitTitleShadow!=='none' ||
+                     measurements.reportColor!=='rgb(71, 143, 229)' ||
+                     measurements.teamColor!=='rgb(31, 42, 68)')
+                    throw Error(item.name+' preview color mismatch '+JSON.stringify(measurements));
+                  if(measurements.logoState.some(img=>!img.complete||img.naturalWidth<=0))
+                    throw Error(item.name+' Oct18 team crests not loaded '+JSON.stringify(measurements.logoState));
+                }
                 if(errors.length)throw Error(item.name+' JS '+errors.join(' | '));
                 if(measurements.cardCount!==25 || measurements.missingPrices || measurements.logoCount<2)
                   throw Error(item.name+' missing match data '+JSON.stringify(measurements));
@@ -120,6 +129,10 @@ jobs:
                 if(item.name!=='desktop'){
                   await page.goto(BASE+'2026-10-19',{waitUntil:'domcontentloaded',timeout:50000});
                   await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===8,null,{timeout:35000});
+                  await page.waitForFunction(()=>{
+                    const imgs=[...document.querySelectorAll('.jc-football-card')].slice(0,4).flatMap(card=>[...card.querySelectorAll('img.jc-team-logo')]);
+                    return imgs.length===8 && imgs.every(img=>img.complete&&img.naturalWidth>0);
+                  },null,{timeout:15000});
                   const todayLogos=await page.evaluate(()=>({
                     catalog:Boolean(window.QC_TEAM_LOGO_CATALOG?.by_team),
                     fixtures:[...document.querySelectorAll('.jc-football-card')].slice(0,4).map(card=>({
@@ -128,6 +141,8 @@ jobs:
                     }))
                   }));
                   console.log('QCDA_TODAY_CREST_DIAG '+item.name+' '+JSON.stringify(todayLogos));
+                  if(!todayLogos.catalog || todayLogos.fixtures.some(x=>x.imgs.length!==2||x.imgs.some(img=>img.w<=0||!img.complete)))
+                    throw Error(item.name+' Oct19 team crest missing '+JSON.stringify(todayLogos));
                   await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'-20261019.png',fullPage:false});
                 }
                 await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'.png',fullPage:false});
