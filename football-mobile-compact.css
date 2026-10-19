@@ -20,7 +20,7 @@
   }
   .qc-football-page .jc-football-date-zone {
     display:grid!important;
-    grid-template-columns:40px minmax(0,1fr) 40px minmax(62px,auto)!important;
+    grid-template-columns:40px minmax(0,1fr) 40px 52px!important;
     grid-template-rows:42px auto!important;
     align-items:center!important;gap:7px!important;
     overflow:visible!important;width:100%!important;padding:0!important;
@@ -38,7 +38,10 @@
   .qc-football-page .jc-football-date-zone .jc-football-arrow { font-size:22px!important;padding:0!important; }
   .qc-football-page #jcFootballDateLabel { min-width:0!important;font-size:15px!important; }
   .qc-football-page #jcFootballLeagueToggle {
-    min-width:62px!important;max-width:none!important;
+    min-width:52px!important;max-width:52px!important;
+    height:38px!important;min-height:38px!important;
+    padding:0 5px!important;border:1px solid #e5ebf3!important;
+    border-radius:9px!important;box-shadow:none!important;
     font-size:12px!important;color:#3764ed!important;
     font-weight:800!important;overflow:visible!important;white-space:nowrap!important;
   }
@@ -74,8 +77,37 @@
   .qc-football-page .qc-football-calendar-today:disabled{opacity:.45!important;cursor:default!important}
   .qc-football-page #jcFootballLeaguePopover{
     position:absolute!important;top:49px!important;right:0!important;left:auto!important;
-    width:min(335px,calc(100vw - 24px))!important;
-    max-height:68vh!important;z-index:75!important;
+    width:min(248px,calc(100vw - 24px))!important;
+    max-height:54vh!important;z-index:75!important;
+    border:1px solid #e5ebf3!important;
+    border-radius:11px!important;background:#fff!important;
+    box-shadow:0 6px 18px rgba(31,42,68,.09)!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-title{
+    padding:9px 11px!important;min-height:0!important;
+    font-size:12px!important;line-height:1.35!important;
+    background:#f8faff!important;color:#3764ed!important;
+    border-bottom:1px solid #edf1f7!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-menu{
+    max-height:calc(54vh - 36px)!important;
+    overflow-y:auto!important;overscroll-behavior:contain!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-menu button[data-league]{
+    min-height:39px!important;padding:6px 10px!important;
+    grid-template-columns:17px minmax(0,1fr) auto!important;
+    gap:8px!important;border-bottom:1px solid #f0f2f6!important;
+    font-size:12px!important;line-height:1.3!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-check{
+    width:16px!important;height:16px!important;
+    border-radius:5px!important;font-size:11px!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-name{
+    font-size:12px!important;font-weight:750!important;
+  }
+  .qc-football-page #jcFootballLeaguePopover .jc-football-league-menu b{
+    font-size:11px!important;font-weight:650!important;
   }
   .qc-football-page .qc-football-desktop-title{display:none!important}
   .qc-football-page .qc-football-mobile-title{display:inline!important}
@@ -97,7 +129,7 @@
     background:#eaf3ff!important;border-color:#93b9ec!important;color:#3764ed!important;
   }
   .qc-football-page .qc-mobile-filter-status small{font-size:10px!important;color:#9aa5b8!important}
-  .qc-football-page .jc-football-league-menu{max-height:calc(68vh - 53px)!important}
+  .qc-football-page .jc-football-league-menu{max-height:calc(54vh - 36px)!important}
   .qc-football-page #jcFootballCards {background:#fff!important;}
   .qc-football-page #jcFootballCards .jc-football-grid{
     display:block!important;grid-template-columns:1fr!important;
@@ -279,7 +311,7 @@
 @media(max-width:380px){
   .qc-football-page .jc-football-toolbar{padding:9px 9px 6px!important}
   .qc-football-page .jc-football-date-zone{
-    grid-template-columns:37px minmax(0,1fr) 37px minmax(56px,auto)!important;
+    grid-template-columns:37px minmax(0,1fr) 37px 50px!important;
     gap:5px!important;
   }
   .qc-football-page #jcFootballCards .jc-football-card .jc-card-link{padding:12px 11px 0!important}
