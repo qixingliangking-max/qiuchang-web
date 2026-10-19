@@ -113,17 +113,33 @@ jobs:
                     measurements.firstPricePrefix!=='"@"')
                     throw Error(item.name+' compact layout failed '+JSON.stringify(measurements));
                   await page.locator('#jcFootballLeagueToggle').click();
-                  await page.locator('#jcFootballLeagueMenu button[data-status="pending"]').click();
-                  const pendingAudit=await page.evaluate(()=>({
-                    activeMenu:[...document.querySelectorAll('#jcFootballLeagueMenu button[data-status]')].map(x=>({status:x.dataset.status,active:x.classList.contains('active'),text:x.textContent?.trim()})),
-                    cardCount:document.querySelectorAll('.jc-football-card').length,
-                    emptyText:document.querySelector('#jcFootballCards')?.textContent?.slice(0,110),
-                    date:document.querySelector('#jcFootballDateLabel')?.textContent
-                  }));
-                  console.log('QCDA_FILTER_PENDING '+item.name+' '+JSON.stringify(pendingAudit));
-                  await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===0,null,{timeout:12000});
+                  const menuAudit=await page.evaluate(()=>{
+                    const panel=document.querySelector('#jcFootballLeaguePopover');
+                    const menu=document.querySelector('#jcFootballLeagueMenu');
+                    const buttons=[...menu.querySelectorAll('button[data-league]')];
+                    return {
+                      toggle:document.querySelector('#jcFootballLeagueToggle')?.textContent.trim(),
+                      title:panel.querySelector('.qc-football-mobile-title')?.textContent.trim(),
+                      statusCount:menu.querySelectorAll('[data-status]').length,
+                      statusLabel:menu.textContent.includes('比赛状态'),
+                      allCount:buttons.length,
+                      width:Math.round(panel.getBoundingClientRect().width),
+                      firstRowHeight:Math.round(buttons[0]?.getBoundingClientRect().height||0),
+                      panelOverflow:panel.scrollWidth>panel.clientWidth+2
+                    };
+                  });
+                  console.log('QCDA_MOBILE_LEAGUE_MENU '+item.name+' '+JSON.stringify(menuAudit));
+                  if(menuAudit.toggle!=='赛事'||menuAudit.title!=='赛事'||
+                     menuAudit.statusCount!==0||menuAudit.statusLabel||
+                     menuAudit.allCount<2||menuAudit.width>260||
+                     menuAudit.firstRowHeight>44||menuAudit.panelOverflow)
+                    throw Error(item.name+' mobile league menu not compact '+JSON.stringify(menuAudit));
+                  const leagueButton=page.locator('#jcFootballLeagueMenu button[data-league]').nth(1);
+                  const expectedCount=Number(await leagueButton.locator('b').textContent());
+                  await leagueButton.click();
+                  await page.waitForFunction(n=>document.querySelectorAll('.jc-football-card').length===n,expectedCount,{timeout:12000});
                   await page.locator('#jcFootballLeagueToggle').click();
-                  await page.locator('#jcFootballLeagueMenu button[data-status="all"]').click();
+                  await page.locator('#jcFootballLeagueMenu button[data-league="全部"]').click();
                   await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===25,null,{timeout:12000});
                   await page.locator('#jcFootballDateLabel').click();
                   if(!await page.locator('#jcDatePopover .qc-football-calendar-today').isVisible())
