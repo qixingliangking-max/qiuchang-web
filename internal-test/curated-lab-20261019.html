@@ -217,12 +217,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 }
 
 .flag.pending{color:#4465a8!important;background:#eff4ff!important;border-color:#d8e6ff!important}
+/* Two immutable research versions rendered side by side; no shared edits. */
+.plan.variant-original{border-top:3px solid #4171c6}
+.plan.variant-shadow{border-top:3px solid #8b70bf}
+.plan.variant-shadow .plan-head{background:#fbf9ff}
+.plan.variant-shadow .plan-id{color:#654d99}
+.plan.variant-shadow .flag.pending{background:#f3effc!important;color:#795ca3!important;border:1px solid #e3d8f5!important}
+.version-note{font-size:11px;line-height:1.65;color:#7c89a1;margin:0 14px 6px;padding:9px 10px;border-radius:9px;background:#f7f9fc}
+@media(max-width:680px){.plan-head{flex-wrap:wrap;gap:8px}.version-note{margin:0 12px 6px}.plan .flag{white-space:normal;max-width:100%;text-align:right}}
 </style>
 </head>
 <body>
 <header class="site-header"><a class="brand" href="../index.html"><span class="brand-icon">⚽</span><span>球场档案</span></a><div class="header-right"><a class="back-btn" href="../football.html">返回竞彩足球 ↗</a></div></header>
 <main class="container">
-<section class="hero"><div class="hero-line"><span class="pulse"></span> 赛事数据研究</div><h1>精选方案</h1><p>按不同比赛维度查看双场组合、模拟结果和历史记录。</p></section>
+<section class="hero"><div class="hero-line"><span class="pulse"></span> 赛事数据研究</div><h1>精选方案</h1><p>按不同比赛维度对照原方案与AI精选师测试版，查看赛前赔率、组合明细和历史记录。</p></section>
 <section class="control-strip"><div class="date-control"><button class="step-btn" id="prevDate" aria-label="上一个有数据日期">◀</button><button class="date-label" id="dateLabel" aria-expanded="false" aria-controls="calendar">日期加载中… <span>▾</span></button><button class="step-btn" id="nextDate" aria-label="下一个有数据日期">▶</button><div class="cal" id="calendar" hidden><div class="cal-top"><span id="monthLabel">2026年10月</span><div><button class="cal-month-btn" id="prevMonth" aria-label="上个月">‹</button> <button class="cal-month-btn" id="nextMonth" aria-label="下个月">›</button></div></div><div class="cal-grid" id="calDays"></div><div class="cal-foot">可选择已有精选方案或历史记录的日期。</div></div></div><div class="budget-control"><label for="budget">模拟金额</label><input type="number" id="budget" value="100" min="10" max="100000" step="10" inputmode="decimal" aria-label="模拟金额"><span>点</span><div class="budget-shortcuts"><button type="button" data-budget="100" class="selected">100</button><button type="button" data-budget="500">500</button><button type="button" data-budget="1000">1000</button></div></div></section>
 <nav class="tabs" id="tabs" role="tablist" aria-label="方案类别"><button class="tab active" role="tab" data-type="direction" aria-selected="true"><strong>胜平负</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="htft" aria-selected="false"><strong>半全场</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="goals" aria-selected="false"><strong>总进球</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="score" aria-selected="false"><strong>比分</strong><span>双场方案</span></button></nav>
 <div class="info-band" id="infoBand" role="status">历史回溯演示，方案并非当时赛前发布。</div>
@@ -230,11 +238,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 <section class="panels" id="plans" aria-live="polite"><div class="empty">正在读取方案…</div></section>
 <div class="section-bar"><h2>历史回看</h2><span>点击查看详情</span></div>
 <section class="history"><div class="hist-top"><span>日期</span><span>比赛组合</span><span style="text-align:right">模拟返还</span><span style="text-align:right">结果</span></div><div id="history"><div class="empty">正在读取记录…</div></div></section>
-<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月19日精选方案依据已确认的两场选择，逐项匹配相应玩法与开赛前留存的官方赔率；组合赔率等于两场选项赔率相乘。赛前只展示赔率、组合结构和条件模拟，不提前计算赛果。</p><p>历史回看采用已完赛比赛的赛前锁定研究和官方赔率，以固定规则重建演示组合。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；不同分配方式只改变权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
+<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月19日并排展示两版：原方案完整保持已确认的选场和选项；AI精选师V1为独立影子测试候选，其中比分属于高风险观察。两版均逐项匹配开赛前留存的官方赔率，组合赔率等于两场赔率相乘。赛前只展示赔率、组合结构和情景计算，不提前计算赛果。</p><p>历史回看采用已完赛比赛的赛前锁定研究和官方赔率，以固定规则重建演示组合。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；不同分配方式只改变权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
 <footer class="footer">球场档案 · 数据研究演示｜不构成投注建议</footer>
 </main>
 <div class="overlay" id="overlay" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" tabindex="-1" id="dialog"><div class="dialog-header"><div><small id="dialogSub">历史回溯演示</small><h2 id="dialogTitle">方案详情</h2></div><button class="close" id="closeDialog" aria-label="关闭弹窗">×</button></div><div class="mode-tabs" id="modeTabs" role="tablist" aria-label="分配方式"><button data-mode="balanced" class="active" aria-selected="true">平均分配</button><button data-mode="hot" aria-selected="false">常规优先</button><button data-mode="cold" aria-selected="false">冷门优先</button><button data-mode="hybrid" aria-selected="false">均衡策略</button></div><div class="dialog-body" id="dialogBody"></div><div class="dialog-actions"><button id="copyPlan" type="button">复制方案</button><button id="dialogCloseBottom" class="primary-action" type="button">关闭</button></div></div></div>
-<script src="curated-lab-data-20261019.js?v=3"></script>
-<script src="curated-lab-20261019.js?v=5"></script>
+<script src="curated-lab-data-20261019.js?v=4"></script>
+<script src="curated-lab-20261019.js?v=6"></script>
 </body>
 </html>
