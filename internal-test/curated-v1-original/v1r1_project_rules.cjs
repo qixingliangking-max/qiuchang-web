@@ -68,7 +68,7 @@ function branches(plan){
  if(t.length!==project.branchCount)fail("TICKET_COUNT_ERROR");
  const cents=centSplit(BANKROLL_CENTS,t.length);
  const tickets=t.map((x,i)=>({...x,stakeCents:cents[i],
-  winningPayout:Math.round((x.combinedOdd*cents[i])/100)/100}));
+  winningPayout:Math.round(x.combinedOdd*cents[i])/100}));
  const minimumPayout=Math.min(...tickets.map(t=>t.winningPayout));
  const result={version:VERSION,project:project.id,tickets,branchCount:tickets.length,
   budget:1000,minimumPayout,highestPayout:Math.max(...tickets.map(x=>x.winningPayout)),
