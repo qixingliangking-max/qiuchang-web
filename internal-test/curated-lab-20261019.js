@@ -182,31 +182,60 @@ function renderHistory(){
  var html=[],n=0;
  for(var d=0;d<dates.length;d++){
    var day=dates[d];if(db.selectedPlans&&db.selectedPlans[day])continue;
-   var ps=plansFor(day,state.type);
-   ps.forEach(function(plan){
+   plansFor(day,state.type).forEach(function(plan){
      n++;var sim=allocation(plan,state.budget,state.mode);
-     html.push('<button class="hist-row" data-open-date="'+esc(day)+'" data-open-index="'+plan.index+'"><span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'</span><span class="hist-leg"><b>'+esc(idNum(plan.a.row))+' '+esc(plan.a.row.h)+' / '+esc(idNum(plan.b.row))+' '+esc(plan.b.row.h)+'</b><small>方案'+String(plan.index).padStart(2,'0')+' · '+esc(plan.a.options.map(function(o){return o.name}).join('+'))+' / '+esc(plan.b.options.map(function(o){return o.name}).join('+'))+'</small></span><span class="hist-amount">'+money(sim.returns)+'</span><span class="hist-status '+(sim.covered?'hit':'')+'">'+rowStatus(sim)+'</span></button>');
+     var hidden=plan.blind&&!state.reveal,unsettled=plan.blind&&plan.unsettled;
+     var status=hidden?'遮挡':unsettled?'待结算':rowStatus(sim);
+     var amount=hidden?'—':unsettled?'待结算':money(sim.returns);
+     var title=plan.blind?'冻结精选V1':'方案'+String(plan.index).padStart(2,'0');
+     html.push('<button class="hist-row" data-open-date="'+esc(day)+'" data-open-index="'+plan.index+'"><span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'</span><span class="hist-leg"><b>'+esc(idNum(plan.a.row))+' '+esc(plan.a.row.h)+' / '+esc(idNum(plan.b.row))+' '+esc(plan.b.row.h)+'</b><small>'+esc(title)+' · '+esc(plan.a.options.map(function(o){return o.name}).join('+'))+' / '+esc(plan.b.options.map(function(o){return o.name}).join('+'))+'</small></span><span class="hist-amount">'+amount+'</span><span class="hist-status '+(!hidden&&!unsettled&&sim.covered?'hit':'')+'">'+status+'</span></button>');
    });
  }
  $('history').innerHTML=html.join('')||'<div class="empty">此研究类别没有可回溯的组合。</div>';
 }
-function renderTabs(){
- document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
- var selected=!!(db.selectedPlans&&db.selectedPlans[state.day]),backtest=!!(blind&&blind.days&&blind.days[state.day]);
- $('infoBand').textContent=selected?'10月19日双版本对照 · 原方案与AI精选师V1影子测试并排展示，赔率来自赛前快照，均未结算。':backtest?'历史赛果遮挡回测 · 四类精选方案先冻结、后揭晓，非比赛当日真实发布。':'历史演示 · 组合为事后回溯生成，并非当时赛前发布。';
- $('revealRow').hidden=!backtest;
- $('revealBlind').textContent=state.reveal?'隐藏回测赛果':'揭晓回测赛果';
- $('revealBlind').setAttribute('aria-pressed',String(state.reveal));
+function singleHalfReturns(plan){
+ var legs=[plan.a,plan.b],returned=0;
+ for(var k=0;k<legs.length;k++){
+   var opts=legs[k].options,n=opts.length,unit=Math.floor(50000/n),remain=50000-unit*n;
+   for(var j=0;j<n;j++)if(opts[j].hit)returned+=(unit+(j<remain?1:0))/100*opts[j].odds;
+ }
+ return Math.round(returned*100)/100;
 }
-function renderDate(){
- $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
- var idx=dates.indexOf(state.day);
- $('prevDate').disabled=idx===dates.length-1;
- $('nextDate').disabled=idx===0;
- $('budget').value=String(state.budget);
- document.querySelectorAll('[data-budget]').forEach(function(el){el.classList.toggle('selected',+el.dataset.budget===state.budget)});
+function renderCompare(){
+ var block=$('compareSection'),backtest=!!(blind&&blind.days&&blind.days[state.day]);block.hidden=!backtest;
+ if(!backtest)return;
+ if(!state.reveal){
+   $('compareBody').innerHTML='<p class="compare-mask">当前已遮挡比分与收益。点击上方「揭晓回测赛果」，查看本日1000点双场、两场分别单场的差异。</p>';
+   $('dailyReview').innerHTML='<p class="compare-mask">14天逐日净盈亏在揭晓后显示。</p>';
+   return;
+ }
+ var current=plansFor(state.day,state.type)[0];
+ if(!current||current.unsettled){
+   $('compareBody').innerHTML='<p class="compare-mask">该组涉及中断比赛，暂不结算，不计入亏损。</p>';
+ }else{
+   var pair=allocation(current,1000,'balanced').returns,single=singleHalfReturns(current);
+   function compareCard(label,value){
+     var net=value-1000;
+     return '<div class="compare-cell"><small>'+label+' · 1000点</small><strong>'+money(value)+'</strong><span class="'+(net>=0?'positive':'negative')+'">净'+(net>=0?'+':'−')+money(Math.abs(net))+'</span></div>';
+   }
+   $('compareBody').innerHTML='<div class="compare-grid">'+compareCard('双场等额2串1',pair)+compareCard('两场分别单场 · 各500点',single)+'</div><p class="compare-disclaimer">仅做赔率与组合结构比较；单场是独立结算的假设模拟，尚未核实具体比赛是否支持官方单关。</p>';
+ }
+ var types=['direction','htft','goals','score'],days=Object.keys(blind.days).sort(),stakeTotal=0,grossTotal=0,rows=[];
+ function tdNet(val){return val===null?'<td>待结算</td>':'<td class="'+(val>=0?'positive':'negative')+'">'+(val>=0?'+':'−')+money(Math.abs(val))+'</td>';}
+ for(var i=0;i<days.length;i++){
+   var day=days[i],dayStake=0,dayGross=0;
+   var nets=types.map(function(type){
+     var plan=plansFor(day,type)[0];
+     if(!plan||plan.unsettled)return null;
+     var gross=allocation(plan,1000,'balanced').returns;dayGross+=gross;dayStake+=1000;return gross-1000;
+   });
+   stakeTotal+=dayStake;grossTotal+=dayGross;
+   rows.push('<tr><td>'+esc(day.slice(5))+'</td>'+nets.map(tdNet).join('')+tdNet(dayGross-dayStake)+'</tr>');
+ }
+ var net=grossTotal-stakeTotal;
+ $('dailyReview').innerHTML='<p class="compare-disclaimer">14天，每种玩法每日1000点，所有组合等额。中断的总进球1组未计入已结算投入。</p><div class="compare-table-scroll"><table><thead><tr><th>日期</th><th>方向</th><th>半全场</th><th>总进球</th><th>比分</th><th>当天净盈亏</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div><p class="compare-total">已结算投入 '+money(stakeTotal)+'点 · 模拟返还 '+money(grossTotal)+'点 · 净'+(net>=0?'+':'−')+money(Math.abs(net))+'点</p>';
 }
-function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
+function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();renderCompare();if(state.open)renderDialog()}
 function calendar(){
  var y=state.month.getFullYear(),mo=state.month.getMonth(),first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate(),html='';
  $('monthLabel').textContent=y+'年'+(mo+1)+'月';
@@ -268,6 +297,7 @@ function copyText(){
  else window.prompt('复制方案摘要',t);
 }
 function attach(){
+ $('revealBlind').addEventListener('click',function(){state.reveal=!state.reveal;state.open=null;renderAll()});
  $('tabs').addEventListener('click',function(e){var b=e.target.closest('button[data-type]');if(!b)return;state.type=b.dataset.type;state.open=null;renderAll()});
  $('prevDate').addEventListener('click',function(){var i=dates.indexOf(state.day);if(i<dates.length-1)selectDay(dates[i+1])});
  $('nextDate').addEventListener('click',function(){var i=dates.indexOf(state.day);if(i>0)selectDay(dates[i-1])});
