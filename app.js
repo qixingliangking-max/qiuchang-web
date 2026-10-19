@@ -2053,19 +2053,7 @@ async function loadJcFootball(){
       {key:'全部',label:'全部赛事',count:rows.length},
       ...Object.keys(counts).sort((x,y)=>x.localeCompare(y,'zh-CN')).map(k=>({key:k,label:k,count:counts[k]}))
     ];
-    const mobileStatuses=[
-      {key:'all',label:'全部赛事',count:rows.length},
-      {key:'finished',label:'已完赛',count:rows.filter(qcIsConfirmedFinal).length},
-      {key:'pending',label:'未开赛',count:rows.filter(m=>jcMatchStatusLabel(m,calendarToday)==='未开赛').length}
-    ];
-    const statuses='<div class="qc-mobile-filter-group">'+
-      '<div class="qc-mobile-filter-heading">比赛状态</div>'+
-      '<div class="qc-mobile-filter-status">'+mobileStatuses.map(item=>
-        '<button type="button" class="'+(activeStatus===item.key?'active':'')+
-        '" data-status="'+item.key+'" aria-pressed="'+(activeStatus===item.key)+'">'+
-        qcEscape(item.label)+' <small>'+item.count+'</small></button>'
-      ).join('')+'</div><div class="qc-mobile-filter-heading">选择联赛</div></div>';
-    leagueMenu.innerHTML=statuses+items.map(item=>
+    leagueMenu.innerHTML=items.map(item=>
       '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+
         '<span class="jc-football-league-check">'+(activeLeague===item.key?'✓':'')+'</span>'+
         '<span class="jc-football-league-name">'+qcEscape(item.label)+'</span>'+
@@ -2081,15 +2069,7 @@ async function loadJcFootball(){
         render();
       };
     });
-    Array.from(leagueMenu.querySelectorAll('button[data-status]')).forEach(btn=>{
-      btn.onclick=e=>{
-        e.preventDefault();
-        e.stopPropagation();
-        activeStatus=btn.dataset.status||'all';
-        closeLeague();
-        render();
-      };
-    });
+
   }
 
 
@@ -2233,7 +2213,7 @@ async function loadJcFootball(){
       label.textContent=selectedDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
     }
     if(leagueToggle){
-      leagueToggle.textContent=isCompactMobile()?'☷ 筛选':(activeLeague==='全部'?'赛事':activeLeague);
+      leagueToggle.textContent=isCompactMobile()?'赛事':(activeLeague==='全部'?'赛事':activeLeague);
       leagueToggle.classList.toggle('qc-mobile-filter-active',activeStatus!=='all'||activeLeague!=='全部');
       leagueToggle.title=activeLeague==='全部'?'选择赛事':'当前：'+activeLeague;
     }
@@ -2242,7 +2222,7 @@ async function loadJcFootball(){
     renderInlineLeagueTabs(dateRows);
     if(fixtureCount) fixtureCount.textContent=isCompactMobile()
       ? dateRows.length+'场比赛 · '+dateRows.filter(qcIsConfirmedFinal).length+'场完赛'+
-        ((activeStatus!=='all'||activeLeague!=='全部')?' · 筛选'+filtered.length+'场':'')
+        ((activeStatus!=='all'||activeLeague!=='全部')?' · 当前'+filtered.length+'场':'')
       : '共'+filtered.length+'场';
     if(prev){
       prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
