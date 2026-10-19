@@ -849,7 +849,7 @@
       "home_team": "瓦尔韦克",
       "away_team": "福伦丹",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T10:15:00.000Z"
+      "kickoff_at": "2026-10-18T10:15:00Z"
     },
     {
       "source_match_id": "5832911",
@@ -857,7 +857,31 @@
       "home_team": "马斯特里赫特",
       "away_team": "赫拉克勒斯",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T14:45:00.000Z"
+      "kickoff_at": "2026-10-18T14:45:00Z"
+    },
+    {
+      "source_match_id": "5832912",
+      "match_id": "fotmob:5832912",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832913",
+      "match_id": "fotmob:5832913",
+      "home_team": "埃因霍温青年队",
+      "away_team": "多德勒支",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832914",
+      "match_id": "fotmob:5832914",
+      "home_team": "乌德勒支青年队",
+      "away_team": "罗达JC",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:00:00.000Z"
     }
   ]
 }

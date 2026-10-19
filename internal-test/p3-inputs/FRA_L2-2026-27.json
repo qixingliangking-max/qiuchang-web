@@ -642,6 +642,14 @@
       "away_team": "圣埃蒂安",
       "match_date": "2026-10-17",
       "kickoff_at": "2026-10-17T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803289",
+      "match_id": "fotmob:5803289",
+      "home_team": "罗德兹",
+      "away_team": "蒙彼利埃",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:45:00.000Z"
     }
   ]
 }

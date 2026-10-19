@@ -874,6 +874,14 @@
       "away_team": "萨瓦德尔",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868493",
+      "match_id": "fotmob:5868493",
+      "home_team": "塞尔塔B",
+      "away_team": "特内里费",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:30:00.000Z"
     }
   ]
 }
