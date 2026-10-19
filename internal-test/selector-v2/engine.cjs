@@ -1,4 +1,4 @@
-/* QCDA AI Curator V2.0 — two-leg combination selector.
+/* RETIRED 2026-10-20 — DO NOT RUN. QCDA AI Curator V2.0 — two-leg combination selector.
  * Research-only. Uses only pre-decision inputs; never reads outcomes.
  * All probabilities are an uncalibrated independent Poisson baseline until forward-validated.
  */
@@ -178,6 +178,7 @@ function evaluatePortfolio(legA,legB,{bankroll=BANKROLL,minReturn=MIN_RETURN}={}
 function topInsert(arr,item,limit,rank){arr.push(item);arr.sort(rank);if(arr.length>limit)arr.length=limit}
 function rankCandidates(a,b){return b.metrics.hitProbability-a.metrics.hitProbability||b.metrics.expectedGross-a.metrics.expectedGross||b.metrics.minPayout-a.metrics.minPayout||String(a.legs[0].num).localeCompare(String(b.legs[0].num))}
 function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=5}={}){
+ throw new Error('V2_RETIRED_DO_NOT_USE: user rejected V2.0; no further selection or portfolio generation is authorized.');
  const cache=fixtures.map(f=>({f,prob:baseProbabilities(f)})),eligible=cache.filter(x=>x.prob.ready);
  const rejected=cache.filter(x=>!x.prob.ready).map(x=>({num:x.f.num,reason:x.prob.reason}));
  const pools=eligible.map(x=>({f:x.f,setsByK:{}}));
@@ -207,6 +208,7 @@ function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN
   rejected,combinationsChecked:combosSeen,returnFloorPassed:passedFloor,abstained:top.length===0,proposals:top};
 }
 function selectDay(fixtures,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=3,structures=STRUCTURES}={}){
+ throw new Error('V2_RETIRED_DO_NOT_USE: user rejected V2.0; no further selection or portfolio generation is authorized.');
  const seen=new Set();for(const f of fixtures){if(seen.has(f.id))throw Error("DUPLICATE_FIXTURE_ID");seen.add(f.id)}
  const types=structures.map(s=>buildPairCandidates(fixtures,s,{bankroll,minReturn,topK}));
  return {version:"V2-HYBRID-SHADOW-0.3",bankroll,minReturn,minReturnRatio:+(minReturn/bankroll).toFixed(6),
