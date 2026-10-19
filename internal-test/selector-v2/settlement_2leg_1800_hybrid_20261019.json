@@ -57,7 +57,10 @@
           "net": 3202.4,
           "lines": 1,
           "minPayout": 4202.4,
-          "estimatedGross": 1.313921
+          "estimatedGross": 1.313921,
+          "predictedHitProbability": 0.31266,
+          "predictedExpectedGross": 1.313921,
+          "predictedMinimumPayout": 4202.4
         },
         {
           "day": "2026-09-25",
@@ -94,7 +97,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5904,
-          "estimatedGross": 2.14804
+          "estimatedGross": 2.14804,
+          "predictedHitProbability": 0.363828,
+          "predictedExpectedGross": 2.14804,
+          "predictedMinimumPayout": 5904
         },
         {
           "day": "2026-09-28",
@@ -131,7 +137,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5590.2,
-          "estimatedGross": 1.26516
+          "estimatedGross": 1.26516,
+          "predictedHitProbability": 0.226318,
+          "predictedExpectedGross": 1.26516,
+          "predictedMinimumPayout": 5590.2
         },
         {
           "day": "2026-09-29",
@@ -168,7 +177,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 4858.5,
-          "estimatedGross": 1.763166
+          "estimatedGross": 1.763166,
+          "predictedHitProbability": 0.362903,
+          "predictedExpectedGross": 1.763166,
+          "predictedMinimumPayout": 4858.5
         },
         {
           "day": "2026-10-05",
@@ -205,7 +217,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 7236,
-          "estimatedGross": 2.039272
+          "estimatedGross": 2.039272,
+          "predictedHitProbability": 0.281823,
+          "predictedExpectedGross": 2.039272,
+          "predictedMinimumPayout": 7236
         },
         {
           "day": "2026-10-06",
@@ -242,7 +257,10 @@
           "net": 3343,
           "lines": 1,
           "minPayout": 4343,
-          "estimatedGross": 1.866208
+          "estimatedGross": 1.866208,
+          "predictedHitProbability": 0.429705,
+          "predictedExpectedGross": 1.866208,
+          "predictedMinimumPayout": 4343
         },
         {
           "day": "2026-10-07",
@@ -279,7 +297,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 4560,
-          "estimatedGross": 1.585993
+          "estimatedGross": 1.585993,
+          "predictedHitProbability": 0.347805,
+          "predictedExpectedGross": 1.585993,
+          "predictedMinimumPayout": 4560
         },
         {
           "day": "2026-10-09",
@@ -316,7 +337,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5865,
-          "estimatedGross": 1.874428
+          "estimatedGross": 1.874428,
+          "predictedHitProbability": 0.319596,
+          "predictedExpectedGross": 1.874428,
+          "predictedMinimumPayout": 5865
         },
         {
           "day": "2026-10-10",
@@ -353,7 +377,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5326.5,
-          "estimatedGross": 1.987691
+          "estimatedGross": 1.987691,
+          "predictedHitProbability": 0.37317,
+          "predictedExpectedGross": 1.987691,
+          "predictedMinimumPayout": 5326.5
         },
         {
           "day": "2026-10-11",
@@ -390,7 +417,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5107.2,
-          "estimatedGross": 2.078111
+          "estimatedGross": 2.078111,
+          "predictedHitProbability": 0.406898,
+          "predictedExpectedGross": 2.078111,
+          "predictedMinimumPayout": 5107.2
         },
         {
           "day": "2026-10-12",
@@ -427,7 +457,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5798,
-          "estimatedGross": 1.491641
+          "estimatedGross": 1.491641,
+          "predictedHitProbability": 0.257268,
+          "predictedExpectedGross": 1.491641,
+          "predictedMinimumPayout": 5798
         },
         {
           "day": "2026-10-14",
@@ -464,7 +497,10 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 8399,
-          "estimatedGross": 3.079328
+          "estimatedGross": 3.079328,
+          "predictedHitProbability": 0.36663,
+          "predictedExpectedGross": 3.079328,
+          "predictedMinimumPayout": 8399
         },
         {
           "day": "2026-10-17",
@@ -501,9 +537,14 @@
           "net": -1000,
           "lines": 1,
           "minPayout": 5485.8,
-          "estimatedGross": 2.118963
+          "estimatedGross": 2.118963,
+          "predictedHitProbability": 0.386263,
+          "predictedExpectedGross": 2.118963,
+          "predictedMinimumPayout": 5485.8
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.3411,
+      "predictedMinusObservedHitRate": -18.73
     },
     {
       "structure": "direction_1x2",
@@ -554,7 +595,10 @@
           "net": 2419.6,
           "lines": 2,
           "minPayout": 1967.3,
-          "estimatedGross": 1.563402
+          "estimatedGross": 1.563402,
+          "predictedHitProbability": 0.624609,
+          "predictedExpectedGross": 1.563402,
+          "predictedMinimumPayout": 1967.3
         },
         {
           "day": "2026-09-25",
@@ -591,7 +635,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1998.75,
-          "estimatedGross": 1.239483
+          "estimatedGross": 1.239483,
+          "predictedHitProbability": 0.535233,
+          "predictedExpectedGross": 1.239483,
+          "predictedMinimumPayout": 1998.75
         },
         {
           "day": "2026-09-28",
@@ -628,7 +675,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 2105.4,
-          "estimatedGross": 1.0397
+          "estimatedGross": 1.0397,
+          "predictedHitProbability": 0.396879,
+          "predictedExpectedGross": 1.0397,
+          "predictedMinimumPayout": 2105.4
         },
         {
           "day": "2026-09-29",
@@ -665,7 +715,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1836.75,
-          "estimatedGross": 1.25898
+          "estimatedGross": 1.25898,
+          "predictedHitProbability": 0.513449,
+          "predictedExpectedGross": 1.25898,
+          "predictedMinimumPayout": 1836.75
         },
         {
           "day": "2026-10-05",
@@ -702,7 +755,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1971,
-          "estimatedGross": 1.425917
+          "estimatedGross": 1.425917,
+          "predictedHitProbability": 0.495281,
+          "predictedExpectedGross": 1.425917,
+          "predictedMinimumPayout": 1971
         },
         {
           "day": "2026-10-06",
@@ -739,7 +795,10 @@
           "net": 1171.5,
           "lines": 2,
           "minPayout": 2171.5,
-          "estimatedGross": 1.447996
+          "estimatedGross": 1.447996,
+          "predictedHitProbability": 0.586565,
+          "predictedExpectedGross": 1.447996,
+          "predictedMinimumPayout": 2171.5
         },
         {
           "day": "2026-10-07",
@@ -776,7 +835,10 @@
           "net": 920,
           "lines": 2,
           "minPayout": 1920,
-          "estimatedGross": 1.15308
+          "estimatedGross": 1.15308,
+          "predictedHitProbability": 0.49993,
+          "predictedExpectedGross": 1.15308,
+          "predictedMinimumPayout": 1920
         },
         {
           "day": "2026-10-09",
@@ -813,7 +875,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 2070,
-          "estimatedGross": 1.361332
+          "estimatedGross": 1.361332,
+          "predictedHitProbability": 0.527642,
+          "predictedExpectedGross": 1.361332,
+          "predictedMinimumPayout": 2070
         },
         {
           "day": "2026-10-10",
@@ -850,7 +915,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 2000.75,
-          "estimatedGross": 1.464127
+          "estimatedGross": 1.464127,
+          "predictedHitProbability": 0.555339,
+          "predictedExpectedGross": 1.464127,
+          "predictedMinimumPayout": 2000.75
         },
         {
           "day": "2026-10-11",
@@ -887,7 +955,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1858.2,
-          "estimatedGross": 1.326471
+          "estimatedGross": 1.326471,
+          "predictedHitProbability": 0.545928,
+          "predictedExpectedGross": 1.326471,
+          "predictedMinimumPayout": 1858.2
         },
         {
           "day": "2026-10-12",
@@ -924,7 +995,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1884.35,
-          "estimatedGross": 1.037716
+          "estimatedGross": 1.037716,
+          "predictedHitProbability": 0.431513,
+          "predictedExpectedGross": 1.037716,
+          "predictedMinimumPayout": 1884.35
         },
         {
           "day": "2026-10-14",
@@ -961,7 +1035,10 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 1986.25,
-          "estimatedGross": 1.493785
+          "estimatedGross": 1.493785,
+          "predictedHitProbability": 0.611863,
+          "predictedExpectedGross": 1.493785,
+          "predictedMinimumPayout": 1986.25
         },
         {
           "day": "2026-10-17",
@@ -998,9 +1075,14 @@
           "net": -1000,
           "lines": 2,
           "minPayout": 2054.1,
-          "estimatedGross": 1.371072
+          "estimatedGross": 1.371072,
+          "predictedHitProbability": 0.525522,
+          "predictedExpectedGross": 1.371072,
+          "predictedMinimumPayout": 2054.1
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.5269,
+      "predictedMinusObservedHitRate": -29.61
     },
     {
       "structure": "direction_2x2",
@@ -1051,7 +1133,10 @@
           "net": 1446.25,
           "lines": 4,
           "minPayout": 1802.5,
-          "estimatedGross": 0.725101
+          "estimatedGross": 0.725101,
+          "predictedHitProbability": 0.349643,
+          "predictedExpectedGross": 0.725101,
+          "predictedMinimumPayout": 1802.5
         },
         {
           "day": "2026-09-25",
@@ -1088,7 +1173,10 @@
           "net": 1467.5,
           "lines": 4,
           "minPayout": 2056.25,
-          "estimatedGross": 1.256713
+          "estimatedGross": 1.256713,
+          "predictedHitProbability": 0.569035,
+          "predictedExpectedGross": 1.256713,
+          "predictedMinimumPayout": 2056.25
         },
         {
           "day": "2026-09-28",
@@ -1125,7 +1213,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2057,
-          "estimatedGross": 1.033183
+          "estimatedGross": 1.033183,
+          "predictedHitProbability": 0.478138,
+          "predictedExpectedGross": 1.033183,
+          "predictedMinimumPayout": 2057
         },
         {
           "day": "2026-09-29",
@@ -1162,7 +1253,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2007.5,
-          "estimatedGross": 1.247805
+          "estimatedGross": 1.247805,
+          "predictedHitProbability": 0.592729,
+          "predictedExpectedGross": 1.247805,
+          "predictedMinimumPayout": 2007.5
         },
         {
           "day": "2026-10-05",
@@ -1199,7 +1293,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 1809,
-          "estimatedGross": 1.25037
+          "estimatedGross": 1.25037,
+          "predictedHitProbability": 0.563771,
+          "predictedExpectedGross": 1.25037,
+          "predictedMinimumPayout": 1809
         },
         {
           "day": "2026-10-06",
@@ -1236,7 +1333,10 @@
           "net": 1338.13,
           "lines": 4,
           "minPayout": 1935,
-          "estimatedGross": 1.478254
+          "estimatedGross": 1.478254,
+          "predictedHitProbability": 0.588739,
+          "predictedExpectedGross": 1.478254,
+          "predictedMinimumPayout": 1935
         },
         {
           "day": "2026-10-07",
@@ -1273,7 +1373,10 @@
           "net": 850,
           "lines": 4,
           "minPayout": 1850,
-          "estimatedGross": 1.121083
+          "estimatedGross": 1.121083,
+          "predictedHitProbability": 0.510414,
+          "predictedExpectedGross": 1.121083,
+          "predictedMinimumPayout": 1850
         },
         {
           "day": "2026-10-09",
@@ -1310,7 +1413,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 1846.25,
-          "estimatedGross": 1.096474
+          "estimatedGross": 1.096474,
+          "predictedHitProbability": 0.553653,
+          "predictedExpectedGross": 1.096474,
+          "predictedMinimumPayout": 1846.25
         },
         {
           "day": "2026-10-10",
@@ -1347,7 +1453,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 1987.5,
-          "estimatedGross": 1.400729
+          "estimatedGross": 1.400729,
+          "predictedHitProbability": 0.60357,
+          "predictedExpectedGross": 1.400729,
+          "predictedMinimumPayout": 1987.5
         },
         {
           "day": "2026-10-11",
@@ -1384,7 +1493,10 @@
           "net": 1763.75,
           "lines": 4,
           "minPayout": 1881,
-          "estimatedGross": 1.18174
+          "estimatedGross": 1.18174,
+          "predictedHitProbability": 0.54177,
+          "predictedExpectedGross": 1.18174,
+          "predictedMinimumPayout": 1881
         },
         {
           "day": "2026-10-12",
@@ -1421,7 +1533,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 1842.75,
-          "estimatedGross": 0.969203
+          "estimatedGross": 0.969203,
+          "predictedHitProbability": 0.466847,
+          "predictedExpectedGross": 0.969203,
+          "predictedMinimumPayout": 1842.75
         },
         {
           "day": "2026-10-14",
@@ -1458,7 +1573,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2099.75,
-          "estimatedGross": 1.486502
+          "estimatedGross": 1.486502,
+          "predictedHitProbability": 0.624167,
+          "predictedExpectedGross": 1.486502,
+          "predictedMinimumPayout": 2099.75
         },
         {
           "day": "2026-10-17",
@@ -1495,9 +1613,14 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 1889.73,
-          "estimatedGross": 1.191264
+          "estimatedGross": 1.191264,
+          "predictedHitProbability": 0.518247,
+          "predictedExpectedGross": 1.191264,
+          "predictedMinimumPayout": 1889.73
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.5354,
+      "predictedMinusObservedHitRate": -15.08
     },
     {
       "structure": "goals_2x2",
@@ -1548,7 +1671,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2600,
-          "estimatedGross": 0.855377
+          "estimatedGross": 0.855377,
+          "predictedHitProbability": 0.257972,
+          "predictedExpectedGross": 0.855377,
+          "predictedMinimumPayout": 2600
         },
         {
           "day": "2026-09-25",
@@ -1585,7 +1711,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2680,
-          "estimatedGross": 0.738742
+          "estimatedGross": 0.738742,
+          "predictedHitProbability": 0.228412,
+          "predictedExpectedGross": 0.738742,
+          "predictedMinimumPayout": 2680
         },
         {
           "day": "2026-09-28",
@@ -1622,7 +1751,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2560,
-          "estimatedGross": 0.779988
+          "estimatedGross": 0.779988,
+          "predictedHitProbability": 0.241867,
+          "predictedExpectedGross": 0.779988,
+          "predictedMinimumPayout": 2560
         },
         {
           "day": "2026-09-29",
@@ -1659,7 +1791,10 @@
           "net": 2040,
           "lines": 4,
           "minPayout": 2520,
-          "estimatedGross": 0.756706
+          "estimatedGross": 0.756706,
+          "predictedHitProbability": 0.245176,
+          "predictedExpectedGross": 0.756706,
+          "predictedMinimumPayout": 2520
         },
         {
           "day": "2026-10-05",
@@ -1696,7 +1831,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2638.13,
-          "estimatedGross": 0.841825
+          "estimatedGross": 0.841825,
+          "predictedHitProbability": 0.258323,
+          "predictedExpectedGross": 0.841825,
+          "predictedMinimumPayout": 2638.13
         },
         {
           "day": "2026-10-06",
@@ -1733,7 +1871,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2559.37,
-          "estimatedGross": 0.825854
+          "estimatedGross": 0.825854,
+          "predictedHitProbability": 0.248858,
+          "predictedExpectedGross": 0.825854,
+          "predictedMinimumPayout": 2559.37
         },
         {
           "day": "2026-10-07",
@@ -1770,7 +1911,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2720,
-          "estimatedGross": 0.747461
+          "estimatedGross": 0.747461,
+          "predictedHitProbability": 0.237745,
+          "predictedExpectedGross": 0.747461,
+          "predictedMinimumPayout": 2720
         },
         {
           "day": "2026-10-09",
@@ -1807,7 +1951,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2800,
-          "estimatedGross": 0.797505
+          "estimatedGross": 0.797505,
+          "predictedHitProbability": 0.23076,
+          "predictedExpectedGross": 0.797505,
+          "predictedMinimumPayout": 2800
         },
         {
           "day": "2026-10-10",
@@ -1844,7 +1991,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2973.13,
-          "estimatedGross": 0.786358
+          "estimatedGross": 0.786358,
+          "predictedHitProbability": 0.224504,
+          "predictedExpectedGross": 0.786358,
+          "predictedMinimumPayout": 2973.13
         },
         {
           "day": "2026-10-11",
@@ -1881,7 +2031,10 @@
           "net": 2622.5,
           "lines": 4,
           "minPayout": 2760,
-          "estimatedGross": 0.996934
+          "estimatedGross": 0.996934,
+          "predictedHitProbability": 0.265894,
+          "predictedExpectedGross": 0.996934,
+          "predictedMinimumPayout": 2760
         },
         {
           "day": "2026-10-12",
@@ -1918,7 +2071,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2805.63,
-          "estimatedGross": 0.760106
+          "estimatedGross": 0.760106,
+          "predictedHitProbability": 0.221638,
+          "predictedExpectedGross": 0.760106,
+          "predictedMinimumPayout": 2805.63
         },
         {
           "day": "2026-10-14",
@@ -1955,7 +2111,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2920,
-          "estimatedGross": 0.734335
+          "estimatedGross": 0.734335,
+          "predictedHitProbability": 0.229382,
+          "predictedExpectedGross": 0.734335,
+          "predictedMinimumPayout": 2920
         },
         {
           "day": "2026-10-17",
@@ -1992,9 +2151,14 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 2635,
-          "estimatedGross": 0.631315
+          "estimatedGross": 0.631315,
+          "predictedHitProbability": 0.22167,
+          "predictedExpectedGross": 0.631315,
+          "predictedMinimumPayout": 2635
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.2394,
+      "predictedMinusObservedHitRate": -8.56
     },
     {
       "structure": "score_2x2",
@@ -2045,7 +2209,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9343.75,
-          "estimatedGross": 0.711045
+          "estimatedGross": 0.711045,
+          "predictedHitProbability": 0.071431,
+          "predictedExpectedGross": 0.711045,
+          "predictedMinimumPayout": 9343.75
         },
         {
           "day": "2026-09-25",
@@ -2082,7 +2249,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 10562.5,
-          "estimatedGross": 0.567694
+          "estimatedGross": 0.567694,
+          "predictedHitProbability": 0.053746,
+          "predictedExpectedGross": 0.567694,
+          "predictedMinimumPayout": 10562.5
         },
         {
           "day": "2026-09-28",
@@ -2119,7 +2289,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9062.5,
-          "estimatedGross": 0.755308
+          "estimatedGross": 0.755308,
+          "predictedHitProbability": 0.066067,
+          "predictedExpectedGross": 0.755308,
+          "predictedMinimumPayout": 9062.5
         },
         {
           "day": "2026-09-29",
@@ -2156,7 +2329,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 8531.25,
-          "estimatedGross": 0.688971
+          "estimatedGross": 0.688971,
+          "predictedHitProbability": 0.066924,
+          "predictedExpectedGross": 0.688971,
+          "predictedMinimumPayout": 8531.25
         },
         {
           "day": "2026-10-05",
@@ -2193,7 +2369,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9750,
-          "estimatedGross": 0.760987
+          "estimatedGross": 0.760987,
+          "predictedHitProbability": 0.072293,
+          "predictedExpectedGross": 0.760987,
+          "predictedMinimumPayout": 9750
         },
         {
           "day": "2026-10-06",
@@ -2230,7 +2409,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9425,
-          "estimatedGross": 1.065833
+          "estimatedGross": 1.065833,
+          "predictedHitProbability": 0.08526,
+          "predictedExpectedGross": 1.065833,
+          "predictedMinimumPayout": 9425
         },
         {
           "day": "2026-10-07",
@@ -2267,7 +2449,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 8250,
-          "estimatedGross": 0.745649
+          "estimatedGross": 0.745649,
+          "predictedHitProbability": 0.061497,
+          "predictedExpectedGross": 0.745649,
+          "predictedMinimumPayout": 8250
         },
         {
           "day": "2026-10-09",
@@ -2304,7 +2489,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9425,
-          "estimatedGross": 0.648778
+          "estimatedGross": 0.648778,
+          "predictedHitProbability": 0.061098,
+          "predictedExpectedGross": 0.648778,
+          "predictedMinimumPayout": 9425
         },
         {
           "day": "2026-10-10",
@@ -2341,7 +2529,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 10850,
-          "estimatedGross": 0.723203
+          "estimatedGross": 0.723203,
+          "predictedHitProbability": 0.063841,
+          "predictedExpectedGross": 0.723203,
+          "predictedMinimumPayout": 10850
         },
         {
           "day": "2026-10-11",
@@ -2378,7 +2569,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9375,
-          "estimatedGross": 1.007709
+          "estimatedGross": 1.007709,
+          "predictedHitProbability": 0.07325,
+          "predictedExpectedGross": 1.007709,
+          "predictedMinimumPayout": 9375
         },
         {
           "day": "2026-10-12",
@@ -2415,7 +2609,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 11375,
-          "estimatedGross": 0.680668
+          "estimatedGross": 0.680668,
+          "predictedHitProbability": 0.055929,
+          "predictedExpectedGross": 0.680668,
+          "predictedMinimumPayout": 11375
         },
         {
           "day": "2026-10-14",
@@ -2452,7 +2649,10 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9187.5,
-          "estimatedGross": 0.834618
+          "estimatedGross": 0.834618,
+          "predictedHitProbability": 0.057064,
+          "predictedExpectedGross": 0.834618,
+          "predictedMinimumPayout": 9187.5
         },
         {
           "day": "2026-10-17",
@@ -2489,9 +2689,14 @@
           "net": -1000,
           "lines": 4,
           "minPayout": 9100,
-          "estimatedGross": 0.598781
+          "estimatedGross": 0.598781,
+          "predictedHitProbability": 0.0585,
+          "predictedExpectedGross": 0.598781,
+          "predictedMinimumPayout": 9100
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.0651,
+      "predictedMinusObservedHitRate": -6.51
     },
     {
       "structure": "score_3x3",
@@ -2542,7 +2747,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4152.78,
-          "estimatedGross": 0.788608
+          "estimatedGross": 0.788608,
+          "predictedHitProbability": 0.149838,
+          "predictedExpectedGross": 0.788608,
+          "predictedMinimumPayout": 4152.78
         },
         {
           "day": "2026-09-25",
@@ -2579,7 +2787,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4694.44,
-          "estimatedGross": 0.688253
+          "estimatedGross": 0.688253,
+          "predictedHitProbability": 0.110805,
+          "predictedExpectedGross": 0.688253,
+          "predictedMinimumPayout": 4694.44
         },
         {
           "day": "2026-09-28",
@@ -2616,7 +2827,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4027.78,
-          "estimatedGross": 0.749458
+          "estimatedGross": 0.749458,
+          "predictedHitProbability": 0.128365,
+          "predictedExpectedGross": 0.749458,
+          "predictedMinimumPayout": 4027.78
         },
         {
           "day": "2026-09-29",
@@ -2653,7 +2867,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 3791.67,
-          "estimatedGross": 0.70892
+          "estimatedGross": 0.70892,
+          "predictedHitProbability": 0.134168,
+          "predictedExpectedGross": 0.70892,
+          "predictedMinimumPayout": 3791.67
         },
         {
           "day": "2026-10-05",
@@ -2690,7 +2907,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4333.33,
-          "estimatedGross": 0.772721
+          "estimatedGross": 0.772721,
+          "predictedHitProbability": 0.150033,
+          "predictedExpectedGross": 0.772721,
+          "predictedMinimumPayout": 4333.33
         },
         {
           "day": "2026-10-06",
@@ -2727,7 +2947,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4188.89,
-          "estimatedGross": 1.032552
+          "estimatedGross": 1.032552,
+          "predictedHitProbability": 0.17231,
+          "predictedExpectedGross": 1.032552,
+          "predictedMinimumPayout": 4188.89
         },
         {
           "day": "2026-10-07",
@@ -2764,7 +2987,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 3666.67,
-          "estimatedGross": 0.752865
+          "estimatedGross": 0.752865,
+          "predictedHitProbability": 0.122706,
+          "predictedExpectedGross": 0.752865,
+          "predictedMinimumPayout": 3666.67
         },
         {
           "day": "2026-10-09",
@@ -2801,7 +3027,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4188.89,
-          "estimatedGross": 0.70916
+          "estimatedGross": 0.70916,
+          "predictedHitProbability": 0.122631,
+          "predictedExpectedGross": 0.70916,
+          "predictedMinimumPayout": 4188.89
         },
         {
           "day": "2026-10-10",
@@ -2838,7 +3067,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4822.22,
-          "estimatedGross": 0.835572
+          "estimatedGross": 0.835572,
+          "predictedHitProbability": 0.124407,
+          "predictedExpectedGross": 0.835572,
+          "predictedMinimumPayout": 4822.22
         },
         {
           "day": "2026-10-11",
@@ -2875,7 +3107,10 @@
           "net": 4638.89,
           "lines": 9,
           "minPayout": 4166.67,
-          "estimatedGross": 1.032234
+          "estimatedGross": 1.032234,
+          "predictedHitProbability": 0.157197,
+          "predictedExpectedGross": 1.032234,
+          "predictedMinimumPayout": 4166.67
         },
         {
           "day": "2026-10-12",
@@ -2912,7 +3147,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 5055.56,
-          "estimatedGross": 0.703727
+          "estimatedGross": 0.703727,
+          "predictedHitProbability": 0.113121,
+          "predictedExpectedGross": 0.703727,
+          "predictedMinimumPayout": 5055.56
         },
         {
           "day": "2026-10-14",
@@ -2949,7 +3187,10 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4083.33,
-          "estimatedGross": 0.774756
+          "estimatedGross": 0.774756,
+          "predictedHitProbability": 0.113802,
+          "predictedExpectedGross": 0.774756,
+          "predictedMinimumPayout": 4083.33
         },
         {
           "day": "2026-10-17",
@@ -2986,10 +3227,16 @@
           "net": -1000,
           "lines": 9,
           "minPayout": 4044.44,
-          "estimatedGross": 0.783297
+          "estimatedGross": 0.783297,
+          "predictedHitProbability": 0.112966,
+          "predictedExpectedGross": 0.783297,
+          "predictedMinimumPayout": 4044.44
         }
-      ]
+      ],
+      "meanPredictedHitProbability": 0.1317,
+      "predictedMinusObservedHitRate": -5.48
     }
   ],
-  "warning": "Development-set settlement only: the same historical window has already been used to inspect the baseline and design the selector. No claim of out-of-sample profit; uncalibrated probabilities remain research-only."
+  "warning": "Development-set settlement only: the same historical window has already been used to inspect the baseline and design the selector. No claim of out-of-sample profit; uncalibrated probabilities remain research-only.",
+  "diagnostic": "V2.1 ranks by model-estimated hit coverage first; expected gross is secondary. Estimated probabilities remain uncalibrated, so the predicted-vs-observed difference is diagnostic only."
 }
