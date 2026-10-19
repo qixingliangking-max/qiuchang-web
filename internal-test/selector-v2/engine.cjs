@@ -153,14 +153,25 @@ function selectionSets(f,type,k,{singleOddsFloor=0}={}){
  return all;
 }
 function evaluatePortfolio(legA,legB,{bankroll=BANKROLL,minReturn=MIN_RETURN}={}){
- const lines=legA.options*legB.options,stakePerLine=bankroll/lines;
+ const lines=legA.options*legB.options,amountCents=Math.round(bankroll*100);
+ const unit=Math.floor(amountCents/lines),extra=amountCents-unit*lines;
+ // Evaluate each winning line using the real cent-level equal stake allocation.
+ // With nine lines, a 111.11 stake at odds 16.20 returns 1799.982, not 1800.
+ let payouts=[];
+ if(Array.isArray(legA.picks)&&Array.isArray(legB.picks)){
+  let ix=0;
+  for(const p of legA.picks)for(const q of legB.picks){
+   const stake=(unit+(ix++<extra?1:0))/100;
+   payouts.push(stake*p.odds*q.odds);
+  }
+ }else payouts=[unit/100*legA.minOdds*legB.minOdds,(unit+(extra?1:0))/100*legA.maxOdds*legB.maxOdds];
+ const minPay=Math.min(...payouts),maxPay=Math.max(...payouts);
  const minOdds=legA.minOdds*legB.minOdds,maxOdds=legA.maxOdds*legB.maxOdds;
- const minPayout=stakePerLine*minOdds,maxPayout=stakePerLine*maxOdds;
  const hitProbability=legA.coverage*legB.coverage,expectedGrossRatio=(legA.weightedOdds*legB.weightedOdds)/lines;
- return {bankroll,lines,stakePerLine:+stakePerLine.toFixed(4),minReturnRequired:minReturn,
-  minPayout:+minPayout.toFixed(2),maxPayout:+maxPayout.toFixed(2),
+ return {bankroll,lines,stakePerLine:+(bankroll/lines).toFixed(4),minReturnRequired:minReturn,
+  minPayout:+minPay.toFixed(2),maxPayout:+maxPay.toFixed(2),
   minCombinedOdds:+minOdds.toFixed(4),maxCombinedOdds:+maxOdds.toFixed(4),
-  minReturnRatio:+(minPayout/bankroll).toFixed(6),returnFloorPass:minPayout+1e-8>=minReturn,
+  minReturnRatio:+(minPay/bankroll).toFixed(6),returnFloorPass:minPay+1e-8>=minReturn,
   hitProbability:+hitProbability.toFixed(6),expectedGross:+expectedGrossRatio.toFixed(6),
   estimatedEdge:+(expectedGrossRatio-1).toFixed(6),probabilityCalibrated:false,status:"RESEARCH_ONLY_UNCALIBRATED"};
 }
