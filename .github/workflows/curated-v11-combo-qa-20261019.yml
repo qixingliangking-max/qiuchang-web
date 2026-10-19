@@ -1,0 +1,97 @@
+name: Curated V1.1 combo 22-day browser QA
+on:
+  push:
+    paths:
+      - 'internal-test/curated-v11-combo-*.js'
+      - 'internal-test/curated-v11-combo-review-20260923-1018.html'
+      - '.github/workflows/curated-v11-combo-qa-20261019.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser runner
+        run: |
+          mkdir -p /tmp/curated-v11 && cd /tmp/curated-v11
+          npm init -y >/dev/null
+          npm install --no-fund --no-audit playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test combo structure, budget and masked result UX
+        shell: bash
+        run: |
+          cat > /tmp/curated-v11/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          const path=require('path');
+          const pageUrl='file://'+path.resolve('internal-test/curated-v11-combo-review-20260923-1018.html');
+          const originUrl='file://'+path.resolve('internal-test/curated-lab-20261019.html');
+          const report=[];
+          async function test(browser,label,device){
+            const ctx=await browser.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+            const page=await ctx.newPage(),errors=[];
+            page.on('pageerror',x=>errors.push(String(x)));
+            await page.goto(pageUrl,{waitUntil:'load'});
+            await page.waitForSelector('#history button',{timeout:10000});
+            const integrity=await page.evaluate(()=>{
+              const x=window.QC_CURATED_V11_BLIND,y=window.QC_CURATED_V11_COMBO_RESULTS;
+              return {days:Object.keys(x.days).length,groups:Object.values(x.days).reduce((s,d)=>s+d.entries.length,0),results:Object.keys(y.days).length,
+                noFT:Object.values(x.days).every(d=>d.entries.every(e=>e.legs.every(l=>l.row.ft===null&&l.row.ht===null))),
+                counts: Object.keys(y.summary),  score3:Object.values(x.days).filter(d=>d.entries.some(x=>x.type==='scoreThreeLegExperiment')).length,
+                frozenSHA:y.freezeBlobSha, robots:document.querySelector('meta[name=robots]')?.content};
+            });
+            if(integrity.days!==22||integrity.groups!==103||integrity.results!==22||integrity.score3!==20||!integrity.noFT||integrity.frozenSHA!=='2741ab5419c9541ea3ef150367823aea6fb062a8'||!integrity.robots.includes('noindex'))throw Error(label+': bad frozen archive '+JSON.stringify(integrity));
+            if(await page.locator('#daySelect option').count()!==22)throw Error(label+': 22 daily date options expected');
+            if(!(await page.locator('#history').innerText()).includes('遮挡'))throw Error(label+': mask missing');
+            if((await page.locator('#aggregate').innerText()).includes('4,284.88'))throw Error(label+': pnl leaked before reveal');
+            await page.locator('button[data-type="scoreThreeLegExperiment"]').click();
+            if(!(await page.locator('#cards').innerText()).includes('3×3×3'))throw Error(label+': triple score structure missing');
+            await page.locator('.details summary').click();
+            if(await page.locator('.details tbody tr').count()!==27)throw Error(label+': 3x3x3 must create 27 lines');
+            await page.locator('#budget').fill('1000');await page.locator('#budget').dispatchEvent('change');
+            await page.locator('.details summary').click();
+            const stakes=await page.locator('.details tbody tr td:nth-child(4)').allTextContents();
+            const sum=stakes.reduce((a,x)=>a+Number(x.replaceAll(',','')),0);
+            if(Math.abs(sum-1000)>.015)throw Error(label+': unequal 27-line total '+sum);
+            await page.locator('#revealer').click();
+            const all=await page.locator('#aggregate').innerText();
+            for(const item of ['84.21%','57.14%','31.58%','19.05%','5%','4,284.88','12,057.06'])if(!all.includes(item))throw Error(label+': missing audited metric '+item);
+            await page.locator('#daySelect').selectOption('2026-09-23');
+            if(!(await page.locator('#cards').innerText()).includes('弃选'))throw Error(label+': blank date must abstain');
+            await page.locator('#revealer').click();
+            if((await page.locator('#aggregate').innerText()).includes('4,284.88'))throw Error(label+': remask did not hide total');
+            const widths=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
+            if(widths.scroll>widths.client+2)throw Error(label+': horizontal overflow '+JSON.stringify(widths));
+            if(errors.length)throw Error(label+': runtime errors '+JSON.stringify(errors));
+            await page.screenshot({path:'/tmp/curated-v11/'+label+'.png',fullPage:true});
+            report.push({label,integrity:{days:integrity.days,groups:integrity.groups,score3:integrity.score3},widths,conditions:'5 tabs,22 days,103 frozen proposals,27 lines,1000.00 budget,masked before/after,missing-day abstention'});
+            await ctx.close();
+          }
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              await test(browser,'mobile320',{viewport:{width:320,height:760},isMobile:true,hasTouch:true});
+              await test(browser,'android',devices['Pixel 7']);
+              await test(browser,'desktop',{viewport:{width:1280,height:900}});
+              const context=await browser.newContext(),page=await context.newPage();
+              await page.goto(originUrl);
+              if(await page.locator('a[href="curated-v11-combo-review-20260923-1018.html"]').count()!==1)throw Error('Main research lab missing V1.1 entry link');
+              if(await page.locator('a[href="curated-lab-blind-20261005-18.html"]').count()!==1)throw Error('V1.0 backtest entry must remain');
+              console.log('QC_CURATED_V11_QA='+JSON.stringify({status:'PASS',report}));
+              await context.close();
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e.stack||e);process.exitCode=1});
+          JS
+          node /tmp/curated-v11/check.cjs
+      - name: Save audited mobile / desktop screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: curated-v11-combo-qa
+          path: /tmp/curated-v11/*.png
+          if-no-files-found: ignore
