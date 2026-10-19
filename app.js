@@ -4001,6 +4001,28 @@ async function jcFetchDetailLatestSnapshots(id){
   return data||[];
 }
 
+// The detail page's 赔率变化 table needs the complete sequence, not the
+// per-pool latest-only view used by compact cards and public hit grading.
+// Limit to genuine PRE-KICKOFF captures; never admit in-play prices into
+// historical comparison or final-hit settlement.
+async function jcFetchDetailOddsHistory(id,kickoffAt){
+  if(!window.qcSupabase) return [];
+  const kickoffMs=new Date(kickoffAt||'').getTime();
+  if(!Number.isFinite(kickoffMs)) return jcFetchDetailLatestSnapshots(id);
+  const {data,error}=await window.qcSupabase
+    .from('jc_market_snapshots')
+    .select('jc_match_id,pool_code,goal_line,outcomes,captured_at,official_update_time')
+    .eq('jc_match_id',id)
+    .lte('captured_at',new Date(kickoffMs).toISOString())
+    .order('captured_at',{ascending:false})
+    .limit(500);
+  if(error){
+    console.warn('读取赛前赔率变化历史失败，保留最新赔率摘要',error);
+    return jcFetchDetailLatestSnapshots(id);
+  }
+  return data||[];
+}
+
 function jcPrefetchDetailPredictionSnapshots(rows,currentId,access){
   if(!window.qcSupabase || !access?.isPro || !Array.isArray(rows) || rows.length<2) return;
   const idx=rows.findIndex(x=>String(x.id)===String(currentId));
@@ -4415,12 +4437,14 @@ async function setupJcMatchDetail(options={}){
   // Immutable neighbor snapshots can be prefetched once and reused for instant match switching.
   setTimeout(()=>jcPrefetchDetailPredictionSnapshots(sameDay,m.id,access),120);
 
-  let latestRowsPromise=null;
-  async function ensureLatestSnapshotRows(){
-    if(Array.isArray(snapshotRowsFast)) return snapshotRowsFast;
-    if(!latestRowsPromise) latestRowsPromise=jcFetchDetailLatestSnapshots(id);
-    snapshotRowsFast=await latestRowsPromise;
-    return snapshotRowsFast;
+  let oddsHistoryPromise=null;
+  async function ensureOddsHistoryRows(){
+    // The AI fallback may already contain the latest five pools, but not
+    // their earlier captures. Always load full public pre-kick history when
+    // the user explicitly opens 赔率. Keep locked AI / FINAL untouched.
+    if(!oddsHistoryPromise) oddsHistoryPromise=jcFetchDetailOddsHistory(id,m.kickoff_at);
+    const history=await oddsHistoryPromise;
+    return history.length?history:(Array.isArray(snapshotRowsFast)?snapshotRowsFast:[]);
   }
 
   // Facts panels always read the current Sporttery detail cache.
@@ -4486,9 +4510,9 @@ async function setupJcMatchDetail(options={}){
 
   async function renderOdds(){
     if(!panel) return;
-    // Odds stay dynamic: fetch the newest pre-kickoff snapshot only when this tab is opened.
-    // This keeps the immutable AI/detail snapshot off the critical rendering path.
-    const latestRows=await ensureLatestSnapshotRows();
+    // Lazy-load the full pre-kickoff capture history only on the odds tab.
+    // It does not change published predictions or immutable final settlement.
+    const latestRows=await ensureOddsHistoryRows();
     if(loadSeq!==jcDetailLoadSeq) return;
     const latestPools=jcLatestPools(latestRows);
     panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(latestPools,latestRows,'had')+'</div>';
