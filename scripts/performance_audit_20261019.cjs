@@ -1,120 +1,94 @@
-// Read-only production browser latency audit. No credentials or DB writes.
+// Branch-only isolated responsive audit of 4 admin subpages.
+// NO real login, privileged API calls, code generation, form submissions or production mutations.
 const {chromium,webkit,devices}=require('playwright');
-const fs=require('fs');
-const BASE='https://qcda.cn';
-const audit={testedAt:new Date().toISOString(),base:BASE,mode:'Guest; GitHub runner to live site; fresh browser contexts; browser-based user interactions',results:[]};
-const limit=18000;
-const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-async function trackStep(out,name,action,verify){
-  const before=Date.now();
-  try{
-    await action();
-    if(verify) await verify();
-    out.steps.push({name,ms:Date.now()-before,ok:true});
-  }catch(e){
-    out.steps.push({name,ms:Date.now()-before,ok:false,error:String(e).slice(0,240)});
-  }
-}
-async function nonempty(page,selector){
-  await page.locator(selector).first().waitFor({state:'visible',timeout:limit});
-}
-async function waitFor(page,predicate,arg){
-  await page.waitForFunction(predicate,arg,{timeout:limit});
-}
-async function checkPanel(page){
-  await waitFor(page,()=>{const p=document.querySelector('#jcMainPanel');return p && p.textContent?.trim() && !p.querySelector('.jc-match-spinner')&&!/正在加载中/.test(p.textContent)},null);
-}
-async function clickTab(page,out,tab){
-  const selector='button[data-main-tab="'+tab+'"]';
-  await trackStep(out,'detail-tab-'+tab,()=>page.locator(selector).click(),async()=>{
-    await waitFor(page,tab=>{
-      const button=document.querySelector('button[data-main-tab="'+tab+'"]');
-      const panel=document.querySelector('#jcMainPanel');
-      return button?.classList.contains('active') && panel &&
-        panel.textContent?.trim() && !panel.querySelector('.jc-match-spinner');
-    },tab);
+const http=require('http'),fs=require('fs'),path=require('path');
+const root=process.cwd();
+const mime={'.css':'text/css','.html':'text/html','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png'};
+const server=http.createServer((req,res)=>{
+  let pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+  const file=path.resolve(root,'.'+pathname);
+  if(!file.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
+  fs.readFile(file,(err,data)=>{
+    if(err){res.writeHead(404);res.end('Not found');return;}
+    res.setHeader('content-type',(mime[path.extname(file)]||'application/octet-stream')+'; charset=utf-8');
+    res.writeHead(200);res.end(data);
   });
-}
-async function auditEngine(engine){
- const browser=await engine.type.launch({headless:true});
- try{
-   for(const surface of ['overview','football']){
-     const ctx=await browser.newContext({...engine.device,locale:'zh-CN'});
-     const page=await ctx.newPage(),out={engine:engine.name,surface,steps:[],exceptions:[],failedRequests:[],resourceCount:0,apiRequests:0,imageRequests:0,missingLogos:0};
-     const firstTime=Date.now();
-     page.on('pageerror',e=>out.exceptions.push(String(e).slice(0,250)));
-     page.on('requestfailed',r=>out.failedRequests.push({url:r.url().split('?')[0].slice(0,125),why:r.failure()?.errorText?.slice(0,100)}));
-     page.on('request',r=>{out.resourceCount++;if(r.url().includes('supabase.co/rest/'))out.apiRequests++;if(r.resourceType()==='image')out.imageRequests++});
-     const target=surface==='overview' ? '/index.html?date=2026-10-19' : '/football.html?date=2026-10-19';
-     try{
-       const nav=await page.goto(BASE+target,{waitUntil:'domcontentloaded',timeout:30000});
-       out.http=nav?.status();
-       out.domContentLoadedMs=Date.now()-firstTime;
-       await trackStep(out,'first-content-visible',async()=>{
-         if(surface==='overview'){
-           await nonempty(page,'#jcYesterdayCards .jc-overview-row');
-           await waitFor(page,()=>/10-18.*[0-9]+场/.test(document.querySelector('#jcYesterdayMeta')?.textContent||''),null);
-         }else{
-           await waitFor(page,()=>document.querySelectorAll('#jcFootballCards .jc-football-card').length===8,null);
-         }
-       });
-       out.firstContentMs=Date.now()-firstTime;
-       out.firstRowCount=await page.locator(surface==='overview'?'#jcYesterdayCards .jc-overview-row':'#jcFootballCards .jc-football-card').count();
-       const perf=await page.evaluate(()=>{
-         const n=performance.getEntriesByType('navigation')[0];
-         const es=performance.getEntriesByType('resource');
-         return {ttfbMs:Math.round(n?.responseStart||0),dclMs:Math.round(n?.domContentLoadedEventEnd||0),jsTransfer:(es.filter(e=>e.name.includes('/app.js')).map(e=>({durationMs:Math.round(e.duration),transferSize:e.transferSize}))),staticResources:es.filter(e=>e.name.includes('/data/overview/')).length};
-       });
-       out.performance=perf;
-       if(surface==='overview'){
-         const firstDate='2026-10-18';
-         await trackStep(out,'date-19-to-18',()=>page.locator('#jcPrevDate').click(),async()=>waitFor(page,()=>/10月18日/.test(document.querySelector('#jcDateLabel')?.textContent||''),null));
-         out.reviewCountAfterPrevious=await page.locator('#jcYesterdayCards .jc-overview-row').count();
-         await trackStep(out,'date-18-to-19',()=>page.locator('#jcNextDate').click(),async()=>waitFor(page,()=>/10月19日/.test(document.querySelector('#jcDateLabel')?.textContent||''),null));
-         await trackStep(out,'click-match-from-overview',async()=>{
-            await page.locator('#jcYesterdayCards .jc-review-match').first().click();
-         },async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
-       }else{
-         await trackStep(out,'date-19-to-18',()=>page.locator('#jcFootballPrevDate').click(),async()=>waitFor(page,()=>/10.18/.test(document.querySelector('#jcFootballDateLabel')?.textContent||'') && document.querySelectorAll('#jcFootballCards .jc-football-card').length>=21,null));
-         out.rowsAfterPrevious=await page.locator('#jcFootballCards .jc-football-card').count();
-         await trackStep(out,'date-18-to-19',()=>page.locator('#jcFootballNextDate').click(),async()=>waitFor(page,()=>/10.19/.test(document.querySelector('#jcFootballDateLabel')?.textContent||'') && document.querySelectorAll('#jcFootballCards .jc-football-card').length===8,null));
-         out.dateHasOpeningMessage=(await page.locator('#jcFootballDateLabel').innerText()).includes('打开中');
-         await trackStep(out,'click-match-from-football',()=>page.locator('#jcFootballCards a.jc-card-link').first().click(),async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
-       }
-       if(page.url().includes('/jc-match.html')){
-         await clickTab(page,out,'odds');
-         await clickTab(page,out,'facts');
-         await clickTab(page,out,'ai');
-         const switcher=page.locator('.jc-detail-match-item').filter({visible:true});
-         const n=await switcher.count();
-         out.detailMatchSwitcherCount=n;
-         if(n>=2){
-           await trackStep(out,'same-day-match-switch',async()=>{
-             const current=new URL(page.url()).searchParams.get('id');
-             const next=page.locator('.jc-detail-match-item').filter({visible:true}).filter({hasNot:page.locator('.active')});
-             const ids=await page.locator('.jc-detail-match-item').evaluateAll(els=>els.map(e=>({href:e.getAttribute('href'),active:e.classList.contains('active')})));
-             const item=ids.find(x=>!x.active && x.href && !x.href.includes('id='+current));
-             if(!item) throw Error('No other match in navigation');
-             await page.locator('.jc-detail-match-item[href="'+item.href+'"]').first().click();
-           },async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
-         }
-       }
-       out.missingLogos=await page.locator('img.jc-team-logo, img.jc-detail-team-logo').evaluateAll(imgs=>imgs.filter(i=>i.complete && i.naturalWidth===0).length);
-     }catch(error){out.fatal=String(error).slice(0,320)}
-     audit.results.push(out);
-     console.log('QCDA_SITE_PERF_RESULT='+JSON.stringify(out));
-     await ctx.close();
-   }
- }finally{await browser.close();}
-}
+});
+const routes=[
+{name:'users',url:'admin-users.html',required:['usersTotal','usersPro','usersToday','usersLogin24h','adminDailyRows','adminDailyDetailRows','adminUserSearch','adminUserRows']},
+{name:'codes',url:'admin-codes.html',required:['codesUnused','codesUsed','createCodeForm','codeDays','codeNote','createdCodeBox','copyCodeBtn','redeemCodeRows']},
+{name:'data',url:'admin-data.html',required:['dataMatchCount','dataSnapshotCount','dataLastSync','dataCollectorStatus','createCollectorBtn','collectorTokenBox','dataRunRows']},
+{name:'logs',url:'admin-logs.html',required:['adminLogRefresh','logLoadedCount','logSignupCount','logLoginCount','logCollectorCount','adminLogTypes','adminLogDays','adminLogRows','adminLogMore']}
+];
+const devicesToRun=[
+{name:'320px',browser:chromium,context:{viewport:{width:320,height:640},deviceScaleFactor:2,isMobile:true,hasTouch:true}},
+{name:'375px',browser:webkit,context:{viewport:{width:375,height:667},deviceScaleFactor:2,isMobile:true,hasTouch:true}},
+{name:'iphone-13',browser:webkit,context:devices['iPhone 13']},
+{name:'pixel-7',browser:chromium,context:devices['Pixel 7']},
+{name:'tablet-768',browser:chromium,context:{viewport:{width:768,height:1024}}},
+{name:'desktop-1280',browser:chromium,context:{viewport:{width:1280,height:800}}}
+];
+const output=[];
 (async()=>{
- for(const e of [
-  {name:'android-chromium',type:chromium,device:devices['Pixel 7']},
-  {name:'iphone-webkit',type:webkit,device:devices['iPhone 13']}
- ])await auditEngine(e);
- fs.mkdirSync('.github/reports',{recursive:true});
- fs.writeFileSync('.github/reports/production-perf-20261019.json',JSON.stringify(audit,null,2)+'\n');
- console.log('QCDA_PERF_SUMMARY='+JSON.stringify({at:audit.testedAt,results:audit.results.map(x=>({device:x.engine,surface:x.surface,dom:x.domContentLoadedMs,first:x.firstContentMs,steps:x.steps,errors:x.exceptions.length,failed:x.failedRequests.length,api:x.apiRequests,static:x.performance?.staticResources}))}));
- const failures=audit.results.filter(x=>x.fatal || x.steps.some(s=>!s.ok));
- if(failures.length)console.warn('QCDA_PERF_WARNINGS '+JSON.stringify(failures.map(x=>({device:x.engine,surface:x.surface,fatal:x.fatal,failedSteps:x.steps.filter(s=>!s.ok)}))));
-})().catch(e=>{console.error(e);process.exitCode=1});
+await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
+const origin='http://127.0.0.1:'+server.address().port;
+for(const dev of devicesToRun){
+ const browser=await dev.browser.launch({headless:true});
+ const context=await browser.newContext({...dev.context,locale:'zh-CN'});
+ // Stub every script to avoid privileged backend APIs and auth/session access during layout tests.
+ await context.route('**/*.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:''}));
+ for(const item of routes){
+  const page=await context.newPage();const errors=[];
+  page.on('pageerror',e=>errors.push(String(e)));
+  const result={device:dev.name,page:item.name,htmlStatus:null,errors};
+  try{
+   const response=await page.goto(origin+'/'+item.url,{waitUntil:'load',timeout:20000});
+   result.htmlStatus=response.status();
+   result.layout=await page.evaluate(required=>{
+    const body=document.body,head=document.querySelector('.qc-admin-header'),content=document.querySelector('main.content');
+    const intro=document.querySelector('.qc-admin-intro'),h1=intro?.querySelector('h1');
+    const returnLink=document.querySelector('.qc-admin-return');
+    const viewWidth=window.innerWidth;
+    const headBox=head?.getBoundingClientRect(),contentBox=content?.getBoundingClientRect();
+    const primaryButtons=[...document.querySelectorAll('main button')].filter(b=>!b.hidden).length;
+    const allIds=[...document.querySelectorAll('[id]')].map(e=>e.id);
+    const tabs=[...document.querySelectorAll('[data-days]')].length;
+    const tables=[...document.querySelectorAll('.admin-table-wrap')].map(w=>{
+      const a=w.getBoundingClientRect(),child=w.querySelector('table');
+      return {outer:Math.round(a.width),table:Math.round(child?.getBoundingClientRect().width||0),overflowX:getComputedStyle(w).overflowX};
+    });
+    const cards=[...document.querySelectorAll('main .profile-card')].length;
+    const metrics=[...document.querySelectorAll('main .metric')].length;
+    const cssLoaded=[...document.styleSheets].some(s=>s.href?.includes('admin-subpages.css'));
+    return {
+     width:viewWidth,docWidth:document.documentElement.scrollWidth,bodyWidth:body.scrollWidth,
+     height:headBox?.height,headerBrandSize:parseFloat(getComputedStyle(document.querySelector('.qc-admin-header .brand')).fontSize),
+     introTitle:h1?.textContent?.trim(),introWhite:getComputedStyle(intro).backgroundColor,
+     introTop:Math.round(intro?.getBoundingClientRect().y||0),
+     returnButtonText:returnLink?.textContent?.trim(),returnButtonBackground:getComputedStyle(returnLink).backgroundColor,
+     hasBrand:!!document.querySelector('.qc-admin-header .brand'),hasCss:cssLoaded,
+     contentsWidth:Math.round(contentBox?.width||0),introCount:document.querySelectorAll('main .qc-admin-intro').length,
+     cards,metrics,buttons:primaryButtons,tabs,
+     missingIds:required.filter(i=>!allIds.includes(i)),
+     tables,scriptTags:[...document.querySelectorAll('script[src]')].map(x=>x.getAttribute('src'))
+    };
+   },item.required);
+   const l=result.layout;
+   result.pass=result.htmlStatus===200&&l.hasCss&&l.introCount===1&&
+    l.height>=54&&l.height<=64&&l.headerBrandSize<=21&&
+    l.returnButtonText==='← 返回后台'&&l.missingIds.length===0&&
+    l.docWidth<=l.width+1&&l.bodyWidth<=l.width+1&&
+    l.tables.every(t=>t.outer<=l.contentsWidth+1&&['auto','scroll'].includes(t.overflowX))&&
+    errors.length===0;
+  }catch(err){result.pass=false;result.error=String(err).slice(0,350)}
+  output.push(result);console.log('QCDA_ADMIN_SUBPAGE_QA='+JSON.stringify(result));
+  await page.close();
+ }
+ await context.close();await browser.close();
+}
+fs.mkdirSync('.github/reports',{recursive:true});
+fs.writeFileSync('.github/reports/production-perf-20261019.json',JSON.stringify({mode:'staging local static-only, auth/js stubbed, no privileged requests',output},null,2)+'\n');
+const failures=output.filter(x=>!x.pass);
+console.log('QCDA_ADMIN_SUBPAGE_SUMMARY='+JSON.stringify({total:output.length,passed:output.length-failures.length,failures:failures.map(x=>({device:x.device,page:x.page,error:x.error||x.layout}))}));
+if(failures.length)process.exitCode=1;
+})().catch(e=>{console.error(e.stack||e);process.exitCode=1}).finally(()=>server.close());
