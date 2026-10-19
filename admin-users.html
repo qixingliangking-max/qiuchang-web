@@ -5,15 +5,20 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>球场档案｜用户管理</title>
   <link rel="stylesheet" href="styles.css?v=20261007daily2">
+  <link rel="stylesheet" href="admin-subpages.css?v=20261019adminsub1">
 </head>
-<body>
+<body class="qc-admin-subpage">
   <div class="shell">
-    <header class="header">
-      <div class="brand">球场档案<span>·Admin</span></div>
-      <a class="small-btn" href="admin.html" style="display:flex;align-items:center">返回后台</a>
+    <header class="header qc-admin-header">
+      <a class="brand" href="admin.html" aria-label="返回球场档案后台">球场档案<span>·Admin</span></a>
+      <a class="qc-admin-return" href="admin.html">← 返回后台</a>
     </header>
     <main class="content admin-user-page" id="adminUsersRoot">
-      <h1>用户管理</h1>
+      <section class="qc-admin-intro">
+        <span class="qc-admin-kicker">账号</span>
+        <h1>用户管理</h1>
+        <p>查看用户、Pro会员及每日活跃记录。</p>
+      </section>
       <div class="admin-grid">
         <div class="metric"><b id="usersTotal">—</b><span>注册用户</span></div>
         <div class="metric"><b id="usersPro">—</b><span>Pro会员</span></div>
