@@ -2072,7 +2072,7 @@ async function loadJcFootball(){
         '<b>'+item.count+'</b>'+
       '</button>'
     ).join('');
-    $('button[data-league]',leagueMenu).forEach(btn=>{
+    Array.from(leagueMenu.querySelectorAll('button[data-league]')).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
@@ -2081,7 +2081,7 @@ async function loadJcFootball(){
         render();
       };
     });
-    $('button[data-status]',leagueMenu).forEach(btn=>{
+    Array.from(leagueMenu.querySelectorAll('button[data-status]')).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
