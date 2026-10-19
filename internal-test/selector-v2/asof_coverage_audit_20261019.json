@@ -1,0 +1,1174 @@
+{
+  "version": "V2-ASOF-ELIGIBILITY-AUDIT-20261019",
+  "sourceRange": "2026-09-23..2026-10-18",
+  "engineBlobSha": "4511212e78cfee7f2dc02d1e181e3f668f9f5d6e",
+  "selectionCutoff": "max(FINAL locked_at, FINAL updated_at) strictly before kickoff",
+  "inputCount": 284,
+  "dataEligible": 170,
+  "dateCount": 22,
+  "types": [
+    {
+      "type": "direction",
+      "eligibleLegs": 55,
+      "eligiblePortfolioDays": 7,
+      "abstainDays": 15
+    },
+    {
+      "type": "htft",
+      "eligibleLegs": 0,
+      "eligiblePortfolioDays": 0,
+      "abstainDays": 22
+    },
+    {
+      "type": "goals",
+      "eligibleLegs": 170,
+      "eligiblePortfolioDays": 1,
+      "abstainDays": 21
+    },
+    {
+      "type": "score2x2",
+      "eligibleLegs": 170,
+      "eligiblePortfolioDays": 2,
+      "abstainDays": 20
+    },
+    {
+      "type": "score2x3",
+      "eligibleLegs": 170,
+      "eligiblePortfolioDays": 0,
+      "abstainDays": 22
+    },
+    {
+      "type": "score3x3",
+      "eligibleLegs": 170,
+      "eligiblePortfolioDays": 0,
+      "abstainDays": 22
+    }
+  ],
+  "byDay": [
+    {
+      "day": "2026-09-23",
+      "total": 1,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-24",
+      "total": 8,
+      "rejected": 5,
+      "reasons": {
+        "TIMESTAMP_MISSING": 5
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 3,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 3,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 3,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 3,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-25",
+      "total": 13,
+      "rejected": 5,
+      "reasons": {
+        "TIMESTAMP_MISSING": 5
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-26",
+      "total": 17,
+      "rejected": 17,
+      "reasons": {
+        "TIMESTAMP_MISSING": 17
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-27",
+      "total": 9,
+      "rejected": 9,
+      "reasons": {
+        "TIMESTAMP_MISSING": 9
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-28",
+      "total": 8,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 4,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 8,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-29",
+      "total": 14,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 1,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 14,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 14,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 14,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 14,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-09-30",
+      "total": 2,
+      "rejected": 2,
+      "reasons": {
+        "TIMESTAMP_MISSING": 2
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-05",
+      "total": 7,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 2,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 7,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 7,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 7,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 7,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-06",
+      "total": 12,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 2,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-07",
+      "total": 6,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 3,
+          "portfolioCount": 1,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 6,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 6,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 6,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 6,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-08",
+      "total": 6,
+      "rejected": 6,
+      "reasons": {
+        "TIMESTAMP_MISSING": 6
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-09",
+      "total": 12,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 5,
+          "portfolioCount": 1,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 12,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-10",
+      "total": 30,
+      "rejected": 6,
+      "reasons": {
+        "TIMESTAMP_MISSING": 6
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 8,
+          "portfolioCount": 18,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 24,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 24,
+          "portfolioCount": 5,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 24,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 24,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-11",
+      "total": 28,
+      "rejected": 3,
+      "reasons": {
+        "TIMESTAMP_MISSING": 3
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 9,
+          "portfolioCount": 12,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 25,
+          "portfolioCount": 1,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 25,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 25,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 25,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-12",
+      "total": 10,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 5,
+          "portfolioCount": 1,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-13",
+      "total": 12,
+      "rejected": 12,
+      "reasons": {
+        "TIMESTAMP_MISSING": 12
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-14",
+      "total": 10,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 7,
+          "portfolioCount": 15,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 10,
+          "portfolioCount": 2,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 10,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-15",
+      "total": 13,
+      "rejected": 13,
+      "reasons": {
+        "TIMESTAMP_MISSING": 13
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-16",
+      "total": 11,
+      "rejected": 11,
+      "reasons": {
+        "TIMESTAMP_MISSING": 11
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-17",
+      "total": 30,
+      "rejected": 0,
+      "reasons": {},
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 8,
+          "portfolioCount": 25,
+          "abstained": false,
+          "proposalCount": 1
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 30,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 30,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 30,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 30,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    },
+    {
+      "day": "2026-10-18",
+      "total": 25,
+      "rejected": 25,
+      "reasons": {
+        "TIMESTAMP_MISSING": 25
+      },
+      "types": [
+        {
+          "type": "direction",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "htft",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "goals",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x2",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score2x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        },
+        {
+          "type": "score3x3",
+          "singleLegCount": 0,
+          "portfolioCount": 0,
+          "abstained": true,
+          "proposalCount": 0
+        }
+      ]
+    }
+  ],
+  "warning": "Only temporal/input coverage and uncalibrated research proposals; no FT/HT loaded, no earnings/long-run predictive claims. No portfolio approved for publication."
+}
