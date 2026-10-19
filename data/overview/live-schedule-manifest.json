@@ -1,12 +1,7 @@
 {
   "version": 1,
-  "updated_at": "2026-10-19T23:54:28+08:00",
+  "updated_at": "2026-10-20T02:45:20+08:00",
   "dates": {
-    "2026-10-18": {
-      "file": "data/overview/live/2026-10-18.json",
-      "version": "79903fd7c6acc214",
-      "match_count": 25
-    },
     "2026-10-19": {
       "file": "data/overview/live/2026-10-19.json",
       "version": "7f4f538f4e8c1a2c",
@@ -20,6 +15,11 @@
     "2026-10-21": {
       "file": "data/overview/live/2026-10-21.json",
       "version": "d153cba3e784d7e0",
+      "match_count": 13
+    },
+    "2026-10-22": {
+      "file": "data/overview/live/2026-10-22.json",
+      "version": "a00e9c84c30d43f9",
       "match_count": 13
     }
   }
