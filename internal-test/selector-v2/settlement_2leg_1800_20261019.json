@@ -1,0 +1,4646 @@
+{
+  "version": "V2-2LEG-1800-SETTLEMENT-20261019",
+  "frozenCandidatesCommit": "225042b339fd4d8c88b95105ecc55e04afc0a2fc",
+  "range": "2026-09-23..2026-10-18",
+  "bankroll": 1000,
+  "minReturn": 1800,
+  "selectedFixtureIds": 51,
+  "scoreRows": 51,
+  "completedRows": 51,
+  "structures": [
+    {
+      "structure": "direction_1x1",
+      "portfolios": 13,
+      "wins": 0,
+      "losses": 13,
+      "hitRate": 0,
+      "totalStake": 13000,
+      "totalReturn": 0,
+      "netProfit": -13000,
+      "roiPct": -100,
+      "minWinReturn": null,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 13000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "had",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 3.35
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周四003",
+              "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "pool": "hhad",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 2.06
+                }
+              ],
+              "hit": true,
+              "hitOdds": 2.06
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 6901,
+          "estGross": 2.302236,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "had",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 8.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "had",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 57750,
+          "estGross": 10.362613,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一001",
+              "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 12.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一007",
+              "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 3.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 43750,
+          "estGross": 3.215348,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二009",
+              "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+              "pool": "had",
+              "ft": "0:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.45
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二011",
+              "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 108675,
+          "estGross": 13.721628,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "had",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.2
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 37200,
+          "estGross": 4.219083,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二002",
+              "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "pool": "had",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.35
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.35
+            },
+            {
+              "num": "周二010",
+              "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+              "pool": "had",
+              "ft": "0:4",
+              "ht": "0:2",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 7.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 32625,
+          "estGross": 4.961692,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三005",
+              "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "pool": "had",
+              "ft": "4:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.3
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三006",
+              "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+              "pool": "hhad",
+              "ft": "1:2",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.7
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 24910,
+          "estGross": 3.576615,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五007",
+              "fixtureId": "3c47f796-2e53-4bc8-9dac-6156082bfc9c",
+              "pool": "had",
+              "ft": "3:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五008",
+              "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+              "pool": "had",
+              "ft": "2:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8.25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 47437.5,
+          "estGross": 4.59924,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六005",
+              "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 9.3
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 74400,
+          "estGross": 7.373948,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日004",
+              "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.4
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日017",
+              "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.15
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 27810,
+          "estGross": 5.211477,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一006",
+              "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+              "pool": "hhad",
+              "ft": "4:2",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 28500,
+          "estGross": 2.789223,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "had",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.1
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三012",
+              "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+              "pool": "had",
+              "ft": "6:0",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 43680,
+          "estGross": 9.520265,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六019",
+              "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六021",
+              "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+              "pool": "had",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.35
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 1,
+          "minPayout": 69850,
+          "estGross": 6.837561,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    },
+    {
+      "structure": "direction_1x2",
+      "portfolios": 13,
+      "wins": 0,
+      "losses": 13,
+      "hitRate": 0,
+      "totalStake": 13000,
+      "totalReturn": 0,
+      "netProfit": -13000,
+      "roiPct": -100,
+      "minWinReturn": null,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 13000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "had",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 3.35
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 2.94
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周四003",
+              "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "pool": "hhad",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 2.06
+                }
+              ],
+              "hit": true,
+              "hitOdds": 2.06
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 3028.2,
+          "estGross": 2.109707,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "had",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 8.75
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "had",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 18150,
+          "estGross": 7.132585,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一001",
+              "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 12.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一005",
+              "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "pool": "had",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 3.65
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 3.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 22812.5,
+          "estGross": 2.538659,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二009",
+              "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+              "pool": "had",
+              "ft": "0:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.45
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.45
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二011",
+              "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 31337.5,
+          "estGross": 9.329937,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "had",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.2
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.62
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 14322,
+          "estGross": 3.711985,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二002",
+              "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "pool": "had",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.35
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.35
+            },
+            {
+              "num": "周二010",
+              "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+              "pool": "had",
+              "ft": "0:4",
+              "ht": "0:2",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 7.5
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.4
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 9570,
+          "estGross": 3.775058,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三005",
+              "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "pool": "had",
+              "ft": "4:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.3
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三006",
+              "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+              "pool": "hhad",
+              "ft": "1:2",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.7
+                },
+                {
+                  "key": "d",
+                  "label": "让平",
+                  "odds": 4
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 10600,
+          "estGross": 2.772881,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五008",
+              "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+              "pool": "had",
+              "ft": "2:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8.25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五010",
+              "fixtureId": "80688b0b-4598-40d4-b2b2-4be8a005dee8",
+              "pool": "had",
+              "ft": "1:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.75
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.45
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.45
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 18356.25,
+          "estGross": 3.550821,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六005",
+              "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 9.3
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 23200,
+          "estGross": 5.841037,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日004",
+              "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.4
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.35
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日017",
+              "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.15
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 11201.25,
+          "estGross": 3.827232,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.3
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一006",
+              "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+              "pool": "hhad",
+              "ft": "4:2",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 10212.5,
+          "estGross": 2.254971,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "had",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.1
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三012",
+              "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+              "pool": "had",
+              "ft": "6:0",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 13440,
+          "estGross": 6.762,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六019",
+              "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六021",
+              "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+              "pool": "had",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.35
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.8
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.8
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 2,
+          "minPayout": 26400,
+          "estGross": 5.065181,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    },
+    {
+      "structure": "direction_2x2",
+      "portfolios": 13,
+      "wins": 1,
+      "losses": 12,
+      "hitRate": 7.69,
+      "totalStake": 13000,
+      "totalReturn": 6118.75,
+      "netProfit": -6881.25,
+      "roiPct": -52.93,
+      "minWinReturn": 6118.75,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 7000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四001",
+              "fixtureId": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+              "pool": "hhad",
+              "ft": "3-1",
+              "ht": "1-1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "让胜",
+                  "odds": 3.32
+                },
+                {
+                  "key": "d",
+                  "label": "让平",
+                  "odds": 3.28
+                }
+              ],
+              "hit": true,
+              "hitOdds": 3.32
+            },
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "had",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 3.35
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 2.94
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 2410.8,
+          "estGross": 0.915216,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "had",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 8.75
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "had",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.6
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 6393.75,
+          "estGross": 4.796904,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一001",
+              "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.15
+                },
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 12.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一005",
+              "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "pool": "had",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 3.65
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 3.75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 4699.38,
+          "estGross": 1.987907,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二009",
+              "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+              "pool": "had",
+              "ft": "0:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.45
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.45
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二011",
+              "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11.5
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.15
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 7016.88,
+          "estGross": 6.177936,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "had",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.2
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.62
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 5197.5,
+          "estGross": 2.641407,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二002",
+              "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "pool": "had",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.35
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 3.6
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.35
+            },
+            {
+              "num": "周二010",
+              "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+              "pool": "had",
+              "ft": "0:4",
+              "ht": "0:2",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 7.5
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.4
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 3960,
+          "estGross": 2.492806,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三005",
+              "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "pool": "had",
+              "ft": "4:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.3
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 3.85
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三006",
+              "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+              "pool": "hhad",
+              "ft": "1:2",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.7
+                },
+                {
+                  "key": "d",
+                  "label": "让平",
+                  "odds": 4
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 3850,
+          "estGross": 2.102819,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五008",
+              "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+              "pool": "had",
+              "ft": "2:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8.25
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.5
+                }
+              ],
+              "hit": true,
+              "hitOdds": 5.5
+            },
+            {
+              "num": "周五010",
+              "fixtureId": "80688b0b-4598-40d4-b2b2-4be8a005dee8",
+              "pool": "had",
+              "ft": "1:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.75
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.45
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.45
+            }
+          ],
+          "won": true,
+          "payout": 6118.75,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 6118.75,
+          "estGross": 2.704704,
+          "valid": true,
+          "net": 5118.75
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六005",
+              "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+              "pool": "had",
+              "ft": "2:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 8
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 9.3
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.8
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 6525,
+          "estGross": 4.083569,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日004",
+              "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.4
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.35
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日017",
+              "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 5.15
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 3.85
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 4186.88,
+          "estGross": 2.672357,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "had",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.3
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一006",
+              "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+              "pool": "hhad",
+              "ft": "4:2",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "让负",
+                  "odds": 4.75
+                },
+                {
+                  "key": "d",
+                  "label": "让平",
+                  "odds": 3.9
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 4192.5,
+          "estGross": 1.759629,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "had",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "a",
+              "selected": [
+                {
+                  "key": "h",
+                  "label": "主胜",
+                  "odds": 9.1
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 5.6
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三012",
+              "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+              "pool": "had",
+              "ft": "6:0",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 4.8
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 5600,
+          "estGross": 4.380055,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六019",
+              "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+              "pool": "had",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "h",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 11
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 6.9
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六021",
+              "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+              "pool": "had",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "d",
+              "selected": [
+                {
+                  "key": "a",
+                  "label": "客胜",
+                  "odds": 6.35
+                },
+                {
+                  "key": "d",
+                  "label": "平局",
+                  "odds": 4.8
+                }
+              ],
+              "hit": true,
+              "hitOdds": 4.8
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 8280,
+          "estGross": 3.693892,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    },
+    {
+      "structure": "goals_2x2",
+      "portfolios": 13,
+      "wins": 0,
+      "losses": 13,
+      "hitRate": 0,
+      "totalStake": 13000,
+      "totalReturn": 0,
+      "netProfit": -13000,
+      "roiPct": -100,
+      "minWinReturn": null,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 13000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "ttg",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 4
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 8.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周四003",
+              "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "pool": "ttg",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 20
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 20000,
+          "estGross": 11.363797,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "ttg",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s1",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 10.25
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 33
+                }
+              ],
+              "hit": true,
+              "hitOdds": 10.25
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "ttg",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s6",
+                  "label": "6球",
+                  "odds": 16
+                },
+                {
+                  "key": "s7",
+                  "label": "7+球",
+                  "odds": 23
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 41000,
+          "estGross": 2.223291,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一003",
+              "fixtureId": "0b3b20ac-df39-481e-bae5-ca0736066e7b",
+              "pool": "ttg",
+              "ft": "2:3",
+              "ht": "1:2",
+              "state": "completed",
+              "actualKey": "s5",
+              "selected": [
+                {
+                  "key": "s5",
+                  "label": "5球",
+                  "odds": 13
+                },
+                {
+                  "key": "s7",
+                  "label": "7+球",
+                  "odds": 35
+                }
+              ],
+              "hit": true,
+              "hitOdds": 13
+            },
+            {
+              "num": "周一007",
+              "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+              "pool": "ttg",
+              "ft": "3:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s4",
+              "selected": [
+                {
+                  "key": "s5",
+                  "label": "5球",
+                  "odds": 9.25
+                },
+                {
+                  "key": "s7",
+                  "label": "7+球",
+                  "odds": 23
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 30062.5,
+          "estGross": 1.556738,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二013",
+              "fixtureId": "433aa3cb-596b-409c-9d91-0e416bd4d497",
+              "pool": "ttg",
+              "ft": "4:1",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "s5",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 7.75
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 23
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二014",
+              "fixtureId": "9919f313-f42f-42d3-83eb-55ba440ea6b7",
+              "pool": "ttg",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s0",
+              "selected": [
+                {
+                  "key": "s5",
+                  "label": "5球",
+                  "odds": 14
+                },
+                {
+                  "key": "s7",
+                  "label": "7+球",
+                  "odds": 40
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 27125,
+          "estGross": 2.539759,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "ttg",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "s5",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 7.5
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "ttg",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s4",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 8
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 26
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 15000,
+          "estGross": 2.603375,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二006",
+              "fixtureId": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+              "pool": "ttg",
+              "ft": "1:2",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 4.3
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 10
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二009",
+              "fixtureId": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+              "pool": "ttg",
+              "ft": "3:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 8.25
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 31
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 8868.75,
+          "estGross": 2.708451,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三001",
+              "fixtureId": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+              "pool": "ttg",
+              "ft": "0-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s0",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 5.75
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 16
+                }
+              ],
+              "hit": true,
+              "hitOdds": 16
+            },
+            {
+              "num": "周三004",
+              "fixtureId": "1d62dd29-cbda-43c4-ab21-98de8c533f97",
+              "pool": "ttg",
+              "ft": "1:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s2",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 5.2
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 14
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 7475,
+          "estGross": 1.453416,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五003",
+              "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+              "pool": "ttg",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s0",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 6.65
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 18
+                }
+              ],
+              "hit": true,
+              "hitOdds": 18
+            },
+            {
+              "num": "周五006",
+              "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+              "pool": "ttg",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s2",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 18
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 29925,
+          "estGross": 2.096034,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六011",
+              "fixtureId": "aea9fe56-b16b-457a-aa07-21ce893c36ff",
+              "pool": "ttg",
+              "ft": "0:2",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "s2",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 9.65
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 32
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+              "pool": "ttg",
+              "ft": "3:2",
+              "ht": "2:1",
+              "state": "completed",
+              "actualKey": "s5",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 9
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 31
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 21712.5,
+          "estGross": 3.886514,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日022",
+              "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+              "pool": "ttg",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s2",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 7.45
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日024",
+              "fixtureId": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+              "pool": "ttg",
+              "ft": "1:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s2",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 4.7
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 11
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 8753.75,
+          "estGross": 2.756624,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "ttg",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "s4",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 7
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 21
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "77bb33de-56b2-4770-8b09-544065b0b37a",
+              "pool": "ttg",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s3",
+              "selected": [
+                {
+                  "key": "s7",
+                  "label": "7+球",
+                  "odds": 15.5
+                },
+                {
+                  "key": "s6",
+                  "label": "6球",
+                  "odds": 12.5
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 21875,
+          "estGross": 1.858035,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "ttg",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "s7",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 8.65
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 29
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三008",
+              "fixtureId": "d4dcfeaf-9f50-4600-860f-00678f2fa819",
+              "pool": "ttg",
+              "ft": "3:4",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s7",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 8.5
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 27
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 18381.25,
+          "estGross": 2.149942,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六012",
+              "fixtureId": "c832d804-4b97-4333-bf27-61b11de6b195",
+              "pool": "ttg",
+              "ft": "4-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s4",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 8.4
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 31
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+              "pool": "ttg",
+              "ft": "6:1",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "s7",
+              "selected": [
+                {
+                  "key": "s1",
+                  "label": "1球",
+                  "odds": 20
+                },
+                {
+                  "key": "s0",
+                  "label": "0球",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 42000,
+          "estGross": 2.88694,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    },
+    {
+      "structure": "score_2x2",
+      "portfolios": 13,
+      "wins": 0,
+      "losses": 13,
+      "hitRate": 0,
+      "totalStake": 13000,
+      "totalReturn": 0,
+      "netProfit": -13000,
+      "roiPct": -100,
+      "minWinReturn": null,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 13000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "crs",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 8.5
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 8.25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周四003",
+              "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "pool": "crs",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 80
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 100
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 165000,
+          "estGross": 16.533744,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "crs",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 60
+                },
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "crs",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "s02s01",
+              "selected": [
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 60
+                },
+                {
+                  "key": "s02s03",
+                  "label": "2-3",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 825000,
+          "estGross": 10.356661,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一005",
+              "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "pool": "crs",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 16
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 25
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一007",
+              "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 28
+                },
+                {
+                  "key": "s02s03",
+                  "label": "2-3",
+                  "odds": 34
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 112000,
+          "estGross": 2.076955,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二009",
+              "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+              "pool": "crs",
+              "ft": "0:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s02",
+              "selected": [
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 60
+                },
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二011",
+              "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "pool": "crs",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s02s01",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 450000,
+          "estGross": 8.593278,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "crs",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "s04s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 23
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 38
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 23
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 26
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 132250,
+          "estGross": 4.809177,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二002",
+              "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "pool": "crs",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 75
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二007",
+              "fixtureId": "6714b9e6-eeb9-4f00-95e9-5bfec8d243d5",
+              "pool": "crs",
+              "ft": "3:0",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 45
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 47
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 618750,
+          "estGross": 9.024816,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三005",
+              "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "pool": "crs",
+              "ft": "4:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s04s00",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 45
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三006",
+              "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+              "pool": "crs",
+              "ft": "1:2",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "s01s02",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 12.5
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 26
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 93750,
+          "estGross": 3.013088,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五003",
+              "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+              "pool": "crs",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s00",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 16
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 23
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五006",
+              "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+              "pool": "crs",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s02s00",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 24
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 96000,
+          "estGross": 3.694445,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六018",
+              "fixtureId": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+              "pool": "crs",
+              "ft": "1:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s01s01",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 22
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六022",
+              "fixtureId": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+              "pool": "crs",
+              "ft": "3:0",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 60
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 330000,
+          "estGross": 9.077347,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日017",
+              "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+              "pool": "crs",
+              "ft": "3:2",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s02",
+              "selected": [
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 50
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日022",
+              "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+              "pool": "crs",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s02s00",
+              "selected": [
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 25
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 32
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 312500,
+          "estGross": 6.223102,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一001",
+              "fixtureId": "4ac25754-1494-487a-ad16-7e30b570c527",
+              "pool": "crs",
+              "ft": "1:3",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s01s03",
+              "selected": [
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 25
+                },
+                {
+                  "key": "s03s02",
+                  "label": "3-2",
+                  "odds": 29
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 20
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 34
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 125000,
+          "estGross": 1.946049,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "crs",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "s03s06",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 31
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三012",
+              "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+              "pool": "crs",
+              "ft": "6:0",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "s06s00",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 232500,
+          "estGross": 12.222151,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六010",
+              "fixtureId": "1fc36327-eeb4-4d97-84cb-511f2da406dd",
+              "pool": "crs",
+              "ft": "0:2",
+              "ht": "0:2",
+              "state": "completed",
+              "actualKey": "s00s02",
+              "selected": [
+                {
+                  "key": "s02s01",
+                  "label": "2-1",
+                  "odds": 30
+                },
+                {
+                  "key": "s03s02",
+                  "label": "3-2",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+              "pool": "crs",
+              "ft": "6:1",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "s06s01",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 4,
+          "minPayout": 225000,
+          "estGross": 4.717309,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    },
+    {
+      "structure": "score_3x3",
+      "portfolios": 13,
+      "wins": 0,
+      "losses": 13,
+      "hitRate": 0,
+      "totalStake": 13000,
+      "totalReturn": 0,
+      "netProfit": -13000,
+      "roiPct": -100,
+      "minWinReturn": null,
+      "allWinsMeet1800": true,
+      "maxDrawdown": 13000,
+      "daily": [
+        {
+          "day": "2026-09-24",
+          "legs": [
+            {
+              "num": "周四002",
+              "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+              "pool": "crs",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 8.5
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 8.25
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 17
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周四003",
+              "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "pool": "crs",
+              "ft": "3-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 80
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 100
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 200
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 73333.33,
+          "estGross": 15.659745,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-25",
+          "legs": [
+            {
+              "num": "周五011",
+              "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "pool": "crs",
+              "ft": "0-1",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 30
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 60
+                },
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周五012",
+              "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "pool": "crs",
+              "ft": "2-1",
+              "ht": "2-1",
+              "state": "completed",
+              "actualKey": "s02s01",
+              "selected": [
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 60
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 45
+                },
+                {
+                  "key": "s02s03",
+                  "label": "2-3",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 150000,
+          "estGross": 8.510717,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-28",
+          "legs": [
+            {
+              "num": "周一005",
+              "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "pool": "crs",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 16
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 25
+                },
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 27
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一007",
+              "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 21
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 28
+                },
+                {
+                  "key": "s02s03",
+                  "label": "2-3",
+                  "odds": 34
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 37333.33,
+          "estGross": 1.906448,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-09-29",
+          "legs": [
+            {
+              "num": "周二009",
+              "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+              "pool": "crs",
+              "ft": "0:2",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s02",
+              "selected": [
+                {
+                  "key": "s02s01",
+                  "label": "2-1",
+                  "odds": 23
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 60
+                },
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二011",
+              "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "pool": "crs",
+              "ft": "2:1",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s02s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 24
+                },
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 61333.33,
+          "estGross": 6.684135,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-05",
+          "legs": [
+            {
+              "num": "周一002",
+              "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "pool": "crs",
+              "ft": "4:1",
+              "ht": "0:1",
+              "state": "completed",
+              "actualKey": "s04s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 23
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 38
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 40
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一004",
+              "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 10.5
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 23
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 26
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 26833.33,
+          "estGross": 3.862543,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-06",
+          "legs": [
+            {
+              "num": "周二002",
+              "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "pool": "crs",
+              "ft": "0:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s01",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 75
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周二007",
+              "fixtureId": "6714b9e6-eeb9-4f00-95e9-5bfec8d243d5",
+              "pool": "crs",
+              "ft": "3:0",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s02s02",
+                  "label": "2-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 45
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 47
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 100000,
+          "estGross": 7.830639,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-07",
+          "legs": [
+            {
+              "num": "周三001",
+              "fixtureId": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+              "pool": "crs",
+              "ft": "0-0",
+              "ht": "0-0",
+              "state": "completed",
+              "actualKey": "s00s00",
+              "selected": [
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 14
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 16
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 24
+                }
+              ],
+              "hit": true,
+              "hitOdds": 16
+            },
+            {
+              "num": "周三005",
+              "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "pool": "crs",
+              "ft": "4:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s04s00",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 14
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 45
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 21777.78,
+          "estGross": 2.582934,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-09",
+          "legs": [
+            {
+              "num": "周五003",
+              "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+              "pool": "crs",
+              "ft": "0:0",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s00s00",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 16
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 18
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 23
+                }
+              ],
+              "hit": true,
+              "hitOdds": 18
+            },
+            {
+              "num": "周五006",
+              "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+              "pool": "crs",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s02s00",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 24
+                },
+                {
+                  "key": "s02s03",
+                  "label": "2-3",
+                  "odds": 36
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 42666.67,
+          "estGross": 3.185781,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-10",
+          "legs": [
+            {
+              "num": "周六018",
+              "fixtureId": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+              "pool": "crs",
+              "ft": "1:1",
+              "ht": "0:0",
+              "state": "completed",
+              "actualKey": "s01s01",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 22
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 65
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 35
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六022",
+              "fixtureId": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+              "pool": "crs",
+              "ft": "3:0",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s00",
+              "selected": [
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 60
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 70
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 50
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 122222.22,
+          "estGross": 7.135267,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-11",
+          "legs": [
+            {
+              "num": "周日017",
+              "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+              "pool": "crs",
+              "ft": "3:2",
+              "ht": "2:0",
+              "state": "completed",
+              "actualKey": "s03s02",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 27
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 50
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 75
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周日022",
+              "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+              "pool": "crs",
+              "ft": "2:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s02s00",
+              "selected": [
+                {
+                  "key": "s01s01",
+                  "label": "1-1",
+                  "odds": 12.5
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 25
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 32
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 37500,
+          "estGross": 5.187206,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-12",
+          "legs": [
+            {
+              "num": "周一001",
+              "fixtureId": "4ac25754-1494-487a-ad16-7e30b570c527",
+              "pool": "crs",
+              "ft": "1:3",
+              "ht": "1:1",
+              "state": "completed",
+              "actualKey": "s01s03",
+              "selected": [
+                {
+                  "key": "s03s01",
+                  "label": "3-1",
+                  "odds": 25
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 22
+                },
+                {
+                  "key": "s03s02",
+                  "label": "3-2",
+                  "odds": 29
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周一002",
+              "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+              "pool": "crs",
+              "ft": "3:1",
+              "ht": "3:1",
+              "state": "completed",
+              "actualKey": "s03s01",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 20
+                },
+                {
+                  "key": "s00s00",
+                  "label": "0-0",
+                  "odds": 21
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 34
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 48888.89,
+          "estGross": 1.793015,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-14",
+          "legs": [
+            {
+              "num": "周三006",
+              "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "pool": "crs",
+              "ft": "3:6",
+              "ht": "0:3",
+              "state": "completed",
+              "actualKey": "s03s06",
+              "selected": [
+                {
+                  "key": "s02s01",
+                  "label": "2-1",
+                  "odds": 25
+                },
+                {
+                  "key": "s01s00",
+                  "label": "1-0",
+                  "odds": 31
+                },
+                {
+                  "key": "s02s00",
+                  "label": "2-0",
+                  "odds": 65
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周三012",
+              "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+              "pool": "crs",
+              "ft": "6:0",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "s06s00",
+              "selected": [
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 38
+                },
+                {
+                  "key": "s00s03",
+                  "label": "0-3",
+                  "odds": 80
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 83333.33,
+          "estGross": 9.572953,
+          "valid": true,
+          "net": -1000
+        },
+        {
+          "day": "2026-10-17",
+          "legs": [
+            {
+              "num": "周六020",
+              "fixtureId": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+              "pool": "crs",
+              "ft": "1:0",
+              "ht": "1:0",
+              "state": "completed",
+              "actualKey": "s01s00",
+              "selected": [
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 15
+                },
+                {
+                  "key": "s00s02",
+                  "label": "0-2",
+                  "odds": 33
+                },
+                {
+                  "key": "s01s03",
+                  "label": "1-3",
+                  "odds": 55
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            },
+            {
+              "num": "周六025",
+              "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+              "pool": "crs",
+              "ft": "6:1",
+              "ht": "3:0",
+              "state": "completed",
+              "actualKey": "s06s01",
+              "selected": [
+                {
+                  "key": "s01s01",
+                  "label": "1-1",
+                  "odds": 18
+                },
+                {
+                  "key": "s01s02",
+                  "label": "1-2",
+                  "odds": 30
+                },
+                {
+                  "key": "s00s01",
+                  "label": "0-1",
+                  "odds": 70
+                }
+              ],
+              "hit": false,
+              "hitOdds": null
+            }
+          ],
+          "won": false,
+          "payout": 0,
+          "stake": 1000,
+          "lines": 9,
+          "minPayout": 30000,
+          "estGross": 3.873522,
+          "valid": true,
+          "net": -1000
+        }
+      ]
+    }
+  ],
+  "warning": "This is a historical replay on a development sample already used for system construction. It is not out-of-sample proof; all probabilities are uncalibrated. Candidate choices were frozen before this separate result query."
+}
