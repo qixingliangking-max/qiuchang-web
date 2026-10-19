@@ -78,10 +78,10 @@ function choose(n,k,out=[],start=0,buf=[]){
 const MARKET_PRIOR_WEIGHT={had:0.25,hhad:0.25,hafu:0.25,ttg:0.35,crs:0.35};
 function splitModelLabels(value){
  if(Array.isArray(value))return value.map(x=>String(x).trim()).filter(Boolean);
- return String(value||"").split(/[\/｜|、,，\\s]+/).map(x=>x.trim()).filter(Boolean);
+ return String(value||"").split(/[\/｜|、,，\s]+/).map(x=>x.trim()).filter(Boolean);
 }
 function directionKey(token,pool){
- const t=String(token||"").replace(/[（(].*?[）)]/g,"").replace(/\\s/g,"");
+ const t=String(token||"").replace(/[（(].*?[）)]/g,"").replace(/\s/g,"");
  if(pool==="hhad"){if(t==="让胜")return "h";if(t==="让平")return "d";if(t==="让负")return "a";return null}
  if(t==="胜"||t==="主胜"||t==="主队胜")return "h";
  if(t==="平"||t==="平局")return "d";
@@ -89,11 +89,11 @@ function directionKey(token,pool){
  return null;
 }
 function scoreTextKey(value){
- const m=String(value||"").match(/^\\s*(\\d+)\\s*[-:：]\\s*(\\d+)\\s*$/);
+ const m=String(value||"").match(/^\s*(\d+)\s*[-:：]\s*(\d+)\s*$/);
  return m?"s"+String(Number(m[1])).padStart(2,"0")+"s"+String(Number(m[2])).padStart(2,"0"):null;
 }
 function htftTextKey(value){
- const t=String(value||"").replace(/[\/｜|、\\s]/g,"");if(t.length<2)return null;
+ const t=String(value||"").replace(/[\/｜|、\s]/g,"");if(t.length<2)return null;
  const m={胜:"h",平:"d",负:"a"};return m[t[0]]&&m[t[1]]?m[t[0]]+m[t[1]]:null;
 }
 function modelKeys(f,type,pool,k){
@@ -108,7 +108,7 @@ function modelKeys(f,type,pool,k){
  }
  if(type==="htft")return k===1?[htftTextKey(m.htftTop1)].filter(Boolean):[];
  if(type==="goals"){
-  const values=[...String(m.goalCandidates||"").matchAll(/(\\d+)\\s*\\+?\\s*球/g)].map(x=>Math.min(7,Number(x[1])));
+  const values=[...String(m.goalCandidates||"").matchAll(/(\d+)\s*\\+?\s*球/g)].map(x=>Math.min(7,Number(x[1])));
   return [...new Set(values)].map(x=>"s"+x);
  }
  if(type==="score"){
