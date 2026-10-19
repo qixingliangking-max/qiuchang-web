@@ -6,7 +6,7 @@
     "59"
   ],
   "fotmob_ccode3": "NOR",
-  "baseline_finished_matches": 183,
+  "baseline_finished_matches": 184,
   "team_map": {
     "KFUM": "奥斯陆KFUM",
     "Brann": "布兰",
@@ -25,6 +25,6 @@
     "Sarpsborg 08": "萨普斯堡",
     "Hamarkameratene": "汉坎"
   },
-  "last_successful_refresh_at": "2026-10-18T18:17:15.002Z",
-  "last_published_blob_sha": "ed6bfbc5af90641eb44bd6c5a57b4801847ba5ae"
+  "last_successful_refresh_at": "2026-10-19T05:05:57.774Z",
+  "last_published_blob_sha": "326cbe47c537661b485b5f8b87daffad18ffe0c6"
 }

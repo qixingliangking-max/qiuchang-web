@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 69,
-  "collected_matches": 69,
+  "input_matches": 70,
+  "collected_matches": 70,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -76,7 +76,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "桑普多利亚",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -111,7 +111,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿雷佐",
-      "matches": 6
+      "matches": 7
     }
   ],
   "gate_status": "PASS",

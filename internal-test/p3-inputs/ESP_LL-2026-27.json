@@ -681,7 +681,7 @@
       "home_team": "奥萨苏纳",
       "away_team": "桑坦德竞技",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T12:00:00.000Z"
+      "kickoff_at": "2026-10-18T12:00:00Z"
     },
     {
       "source_match_id": "5868092",
@@ -689,7 +689,23 @@
       "home_team": "塞尔塔",
       "away_team": "阿拉维斯",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T14:15:00.000Z"
+      "kickoff_at": "2026-10-18T14:15:00Z"
+    },
+    {
+      "source_match_id": "5868096",
+      "match_id": "fotmob:5868096",
+      "home_team": "马拉加",
+      "away_team": "皇家社会",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868098",
+      "match_id": "fotmob:5868098",
+      "home_team": "皇家马德里",
+      "away_team": "塞维利亚",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T19:00:00Z"
     }
   ]
 }

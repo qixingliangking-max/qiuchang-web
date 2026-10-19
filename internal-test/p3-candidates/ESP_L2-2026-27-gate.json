@@ -3,21 +3,16 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 106,
-  "collected_matches": 106,
+  "input_matches": 109,
+  "collected_matches": 109,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 22,
-  "aggregate_players": 685,
+  "aggregate_players": 686,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "埃登斯",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞尔塔B",
@@ -25,36 +20,11 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "安道尔FC",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "巴拉多利德",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "布尔戈斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "特内里费",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "萨瓦德尔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "赫罗纳",
       "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 15.7
+  "avg_team_depth_coverage_pct": 14.5
 }

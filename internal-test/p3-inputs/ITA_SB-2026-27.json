@@ -545,7 +545,7 @@
       "home_team": "史泰比亚",
       "away_team": "南蒂罗尔",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:00:00.000Z"
+      "kickoff_at": "2026-10-18T13:00:00Z"
     },
     {
       "source_match_id": "5967102",
@@ -553,7 +553,15 @@
       "home_team": "切塞纳",
       "away_team": "阿维利诺",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T15:15:00.000Z"
+      "kickoff_at": "2026-10-18T15:15:00Z"
+    },
+    {
+      "source_match_id": "5967107",
+      "match_id": "fotmob:5967107",
+      "home_team": "桑普多利亚",
+      "away_team": "阿雷佐",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T17:30:00Z"
     }
   ]
 }

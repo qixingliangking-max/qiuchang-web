@@ -521,7 +521,7 @@
       "home_team": "乌迪内斯",
       "away_team": "莱切",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T10:30:00.000Z"
+      "kickoff_at": "2026-10-18T10:30:00Z"
     },
     {
       "source_match_id": "5749703",
@@ -529,7 +529,7 @@
       "home_team": "佛罗伦萨",
       "away_team": "科莫",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:00:00.000Z"
+      "kickoff_at": "2026-10-18T13:00:00Z"
     },
     {
       "source_match_id": "5749700",
@@ -537,7 +537,15 @@
       "home_team": "AC米兰",
       "away_team": "亚特兰大",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T16:00:00.000Z"
+      "kickoff_at": "2026-10-18T16:00:00Z"
+    },
+    {
+      "source_match_id": "5749705",
+      "match_id": "fotmob:5749705",
+      "home_team": "尤文图斯",
+      "away_team": "拉齐奥",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T18:45:00Z"
     }
   ]
 }
