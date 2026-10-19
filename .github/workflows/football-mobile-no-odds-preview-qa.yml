@@ -48,6 +48,25 @@ jobs:
                 if(response.status()!==200)throw Error(e.name+' preview HTTP '+response.status());
                 await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===8,null,{timeout:30000});
                 if(await page.locator('.jc-mini-odds, .jc-mini-row').count())throw Error('Odds still rendered in preview cards');
+                const publicView=await page.evaluate(()=>{
+                  const pending=document.querySelector('.qc-demo-result.pending');
+                  const status=pending?.nextElementSibling;
+                  return {
+                    privateCopy:/紧凑列表测试|正式页面|命中赔率保留|未公开的Pro预测|仅展示已公开/.test(document.body.innerText),
+                    pendingColor:pending?getComputedStyle(pending).color:'',
+                    pendingStatusColor:status?getComputedStyle(status).color:'',
+                    awaitingText:status?.textContent?.trim(),
+                    summary:document.querySelector('#qcSummary')?.textContent||'',
+                    title:document.title
+                  };
+                });
+                if(publicView.privateCopy || publicView.pendingColor!=='rgb(71, 143, 229)' ||
+                   publicView.pendingStatusColor!=='rgb(120, 168, 229)' ||
+                   publicView.awaitingText!=='未开赛' ||
+                   publicView.title!=='球场档案｜竞彩足球' ||
+                   !/8场比赛.*0场完赛/.test(publicView.summary))
+                  throw Error(e.name+' copy / pending palette invalid '+JSON.stringify(publicView));
+                console.log('PASS '+e.name+' no internal wording, clear blue VS / 未开赛 '+JSON.stringify(publicView));
                 await page.screenshot({path:'preview-screenshots/'+e.name+'-20261019.png',fullPage:false});
                 await page.locator('#qcPrev').click();
                 await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===25,null,{timeout:30000});
