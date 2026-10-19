@@ -68,7 +68,9 @@ jobs:
            await page.locator('#budget').dispatchEvent('change');
            await page.locator('#plans .plan details.detail summary').click();
            const amount=await page.locator('#plans .table-wrap tbody tr:first-child td:nth-child(4)').innerText();
-           if(+amount.replaceAll(',','')<=0)throw Error(name+': no 500-point allocation');
+           const amountRaw=+amount.replaceAll(',','');
+           console.log('ALLOCATION_DIAG='+JSON.stringify({name,amount,amountRaw,shown:await page.locator('#plans .table-wrap tbody tr:first-child').innerText(),budget:await page.locator('#budget').inputValue()}));
+           if(!Number.isFinite(amountRaw)||amountRaw<=0)throw Error(name+': no 500-point allocation '+JSON.stringify({amount,amountRaw}));
            await page.locator('#revealer').click();
            for(const [type,n,hit] of [['direction',14,9],['htft',14,8],['goals',13,3],['score',14,4]]){
              const summary=await page.locator('#summary .summary-card').nth(Object.keys(expected).indexOf(type)).innerText();
