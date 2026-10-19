@@ -41,10 +41,11 @@
   padding-top: 4px;
 }
 .auth-register-page .qc-register-brand {
-  color: #637593;
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: .13em;
+  color: #536c91;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.4;
 }
 .auth-register-page .auth-card h1 {
   margin: 11px 0 6px;
@@ -177,16 +178,6 @@
 }
 .auth-register-page .qc-register-footer a:hover {
   text-decoration: underline;
-}
-.auth-register-page .qc-register-footer-divider {
-  width: 1px;
-  height: 13px;
-  margin: 0 5px;
-  background: #d8dfeb;
-}
-.auth-register-page .qc-register-footer-home {
-  color: #8994a6 !important;
-  font-weight: 650 !important;
 }
 @media (max-width: 480px) {
   .auth-register-page .auth-wrap {
