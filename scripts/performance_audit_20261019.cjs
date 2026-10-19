@@ -36,7 +36,7 @@ for(const dev of devicesToRun){
  const browser=await dev.browser.launch({headless:true});
  const context=await browser.newContext({...dev.context,locale:'zh-CN'});
  // Stub every script to avoid privileged backend APIs and auth/session access during layout tests.
- await context.route('**/*.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:''}));
+ await context.route('**/*',route=>route.request().resourceType()==='script' ? route.fulfill({status:200,contentType:'application/javascript',body:''}) : route.continue());
  for(const item of routes){
   const page=await context.newPage();const errors=[];
   page.on('pageerror',e=>errors.push(String(e)));
