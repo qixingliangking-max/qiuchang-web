@@ -49,6 +49,10 @@ jobs:
                 const navigation=await page.goto(BASE+'2026-10-18',{waitUntil:'domcontentloaded',timeout:50000});
                 if(navigation.status()!==200)throw Error(item.name+' bad status '+navigation.status());
                 await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===25,null,{timeout:35000});
+                await page.waitForFunction(()=>{
+                  const imgs=[...document.querySelectorAll('.jc-football-card')[0]?.querySelectorAll('img.jc-team-logo')||[]];
+                  return imgs.length===2 && imgs.every(img=>img.complete&&img.naturalWidth>0);
+                },null,{timeout:15000});
                 const measurements=await page.evaluate(()=>{
                   const cards=[...document.querySelectorAll('.jc-football-card')];
                   const vis=e=>e && getComputedStyle(e).display!=='none' && e.getBoundingClientRect().height>0;
