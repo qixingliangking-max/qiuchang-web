@@ -51,6 +51,15 @@ async function measure(browser,engine,target,repeat){
           const e=document.querySelector(t);
           return e&&e.querySelectorAll('input').length>=2;
         },target.selector,{timeout:16000});
+        if(target.name==='register'){
+          await page.waitForFunction(()=>{
+            const css=[...document.styleSheets].some(x=>x.href&&x.href.includes('register-page.css'));
+            const panel=document.querySelector('.auth-register-page .auth-card');
+            return css && panel && document.querySelector('.qc-register-benefit') &&
+              document.documentElement.scrollWidth<=innerWidth+1 &&
+              panel.getBoundingClientRect().right<=innerWidth+1;
+          },null,{timeout:16000});
+        }
       }
       row.readyMs=now()-start;
     }catch(e){row.readyError=String(e).slice(0,280)}
@@ -65,7 +74,7 @@ async function measure(browser,engine,target,repeat){
         return {redirectedToLogin:!!document.querySelector('#loginForm'),profileVisible:!!document.querySelector('#profileRoot'),profileLoading:/加载中/.test(document.querySelector('#profileEmail')?.innerText||'')};
       }
       if(name==='login')return {form:!!document.querySelector('#loginForm'),fields:document.querySelectorAll('#loginForm input').length};
-      if(name==='register')return {form:!!document.querySelector('#registerForm'),fields:document.querySelectorAll('#registerForm input').length};
+      if(name==='register')return {form:!!document.querySelector('#registerForm'),fields:document.querySelectorAll('#registerForm input').length,newCss:[...document.styleSheets].some(x=>x.href&&x.href.includes('register-page.css')),benefit:!!document.querySelector('.qc-register-benefit'),layoutWidth:document.querySelector('.auth-card')?.getBoundingClientRect().width,overflow:document.documentElement.scrollWidth>innerWidth+1};
       return {cards:document.querySelectorAll(name==='overview-reference'?'#jcYesterdayCards .jc-overview-row':'#jcFootballCards .jc-football-card').length};
     },target.name);
     row.performance=await page.evaluate(()=>{
