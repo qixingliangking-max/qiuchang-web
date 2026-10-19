@@ -58,7 +58,24 @@ body.qc-demo{background:#f3f6fb}
 .qc-demo .qc-demo-toolbar button:disabled{opacity:.35}
 .qc-demo .qc-demo-arrow{width:44px;font-size:21px;flex:none}
 .qc-demo .qc-demo-current{flex:1;min-width:0;font-size:16px}
-.qc-demo .qc-demo-today{flex:none;padding:0 12px;font-size:12px}
+.qc-demo .qc-demo-filter-btn{flex:none;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 10px;font-size:12px;white-space:nowrap;position:relative}
+.qc-demo .qc-demo-filter-btn.active{border-color:#94b6eb;color:#3764ed;background:#eef5ff}
+.qc-demo .qc-demo-filter-dot{width:5px;height:5px;border-radius:50%;background:#478fe5;position:absolute;right:5px;top:5px}
+.qc-demo .qc-demo-toolbar{position:relative;z-index:3}
+.qc-demo .qc-demo-panel{display:none;position:relative;z-index:3;max-width:514px;margin:-4px auto 12px;padding:14px;background:#fff;border:1px solid #e1e8f3;border-radius:16px;box-shadow:0 10px 24px rgba(35,56,89,.09)}
+.qc-demo .qc-demo-panel.open{display:block}
+.qc-demo .qc-demo-panelhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px;font-size:13px;font-weight:800;color:#1f2a44}
+.qc-demo .qc-demo-panelclose{border:0;background:transparent;color:#687995;font-size:19px;padding:4px 8px}
+.qc-demo .qc-demo-panel-label{font-size:11px;color:#7d8ca3;margin:10px 0 7px;font-weight:700}
+.qc-demo .qc-demo-choices{display:flex;gap:7px;flex-wrap:wrap}
+.qc-demo .qc-demo-choice{border:1px solid #e0e7f2;border-radius:10px;padding:8px 12px;color:#44516b;background:#fff;font-size:12px;font-weight:700;min-height:34px}
+.qc-demo .qc-demo-choice.active{background:#eaf3ff;border-color:#90b7ee;color:#326bdd}
+.qc-demo .qc-demo-choice:disabled{opacity:.4}
+.qc-demo .qc-demo-choice-today{width:100%;margin-top:13px;display:flex;align-items:center;justify-content:center}
+.qc-demo .qc-demo-panel-result{margin-top:12px;padding-top:10px;border-top:1px solid #edf1f6;display:flex;justify-content:space-between;align-items:center;color:#8793a9;font-size:12px}
+.qc-demo .qc-demo-clear{border:0;background:none;color:#3764ed;font-size:12px;font-weight:750;padding:5px}
+@media(max-width:540px){.qc-demo .qc-demo-panel{margin-left:12px;margin-right:12px}}
+@media(max-width:380px){.qc-demo .qc-demo-toolbar{gap:5px;padding:0 9px}.qc-demo .qc-demo-arrow{width:38px}.qc-demo .qc-demo-filter-btn{font-size:11px;padding:0 8px}}
 .qc-demo .qc-demo-count{padding:0 5px}
 .qc-demo .qc-demo-empty{text-align:center;padding:30px 10px;color:#99a4b4}
 .qc-demo .qc-demo-header-note{font-size:11px;font-weight:750;color:#3764ed}
@@ -86,9 +103,22 @@ body.qc-demo{background:#f3f6fb}
 </header>
 <div class="qc-demo-toolbar" aria-label="测试日期切换">
  <button id="qcPrev" class="qc-demo-arrow" aria-label="前一天">‹</button>
- <button id="qcDate" class="qc-demo-current" aria-label="当前测试日期">10-19 周一</button>
+ <button id="qcDate" class="qc-demo-current" aria-label="选择日期" aria-expanded="false" aria-controls="qcDatePanel">10-19 周一</button>
  <button id="qcNext" class="qc-demo-arrow" aria-label="后一天">›</button>
- <button id="qcToday" class="qc-demo-today">19号</button>
+ <button id="qcFilter" class="qc-demo-filter-btn" aria-expanded="false" aria-controls="qcFilterPanel" aria-label="赛事筛选">☷ 筛选</button>
+</div>
+<div id="qcDatePanel" class="qc-demo-panel" role="region" aria-label="选择日期" hidden>
+ <div class="qc-demo-panelhead"><span>选择赛事日期</span><button type="button" class="qc-demo-panelclose" data-close aria-label="关闭日期选择">×</button></div>
+ <div class="qc-demo-choices" id="qcDateChoices"></div>
+ <button type="button" id="qcBackToToday" class="qc-demo-choice qc-demo-choice-today">回到今天</button>
+</div>
+<div id="qcFilterPanel" class="qc-demo-panel" role="region" aria-label="赛事筛选" hidden>
+ <div class="qc-demo-panelhead"><span>赛事筛选</span><button type="button" class="qc-demo-panelclose" data-close aria-label="关闭筛选">×</button></div>
+ <div class="qc-demo-panel-label">比赛状态</div>
+ <div class="qc-demo-choices" id="qcStatusChoices"></div>
+ <div class="qc-demo-panel-label">选择联赛</div>
+ <div class="qc-demo-choices" id="qcLeagueChoices"></div>
+ <div class="qc-demo-panel-result"><span id="qcFilterCount">全部赛事</span><button id="qcResetFilter" class="qc-demo-clear" type="button">重置筛选</button></div>
 </div>
 <div class="qc-demo-subtitle" id="qcSummary">赛程加载中…</div>
 <main class="qc-demo-main">
@@ -101,10 +131,22 @@ body.qc-demo{background:#f3f6fb}
  'use strict';
  var dates=['2026-10-18','2026-10-19','2026-10-20','2026-10-21'];
  var current='2026-10-19';
+ var selectedLeague='全部';
+ var selectedStatus='all';
+ var activePanel=null;
+ var latestData=null;
  var memo=new Map();
  var container=document.getElementById('qcCards');
  var dateLabel=document.getElementById('qcDate');
  var summary=document.getElementById('qcSummary');
+ var datePanel=document.getElementById('qcDatePanel');
+ var filterPanel=document.getElementById('qcFilterPanel');
+ var todayButton=document.getElementById('qcBackToToday');
+ function beijingToday(){
+   var p=Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+   var parts=Object.fromEntries(p.map(function(x){return [x.type,x.value];}));
+   return parts.year+'-'+parts.month+'-'+parts.day;
+ }
  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[c];});}
  function logoUrl(m,side){
    var name=side==='home'?m.home_team_name:m.away_team_name;
@@ -255,9 +297,94 @@ body.qc-demo{background:#f3f6fb}
    memo.set(ds,p);
    return p;
  }
+ function closePanels(){
+   activePanel=null;
+   [datePanel,filterPanel].forEach(function(p){p.classList.remove('open');p.hidden=true;});
+   document.getElementById('qcDate').setAttribute('aria-expanded','false');
+   document.getElementById('qcFilter').setAttribute('aria-expanded','false');
+ }
+ function openPanel(which){
+   if(activePanel===which){closePanels();return;}
+   closePanels();
+   activePanel=which;
+   var p=which==='date'?datePanel:filterPanel;
+   p.hidden=false;p.classList.add('open');
+   document.getElementById(which==='date'?'qcDate':'qcFilter').setAttribute('aria-expanded','true');
+   if(which==='date')renderDateOptions();
+   if(which==='filter')renderFilters();
+ }
+ function renderDateOptions(){
+   var weekdays=['周日','周一','周二','周三','周四','周五','周六'];
+   var today=beijingToday();
+   document.getElementById('qcDateChoices').innerHTML=dates.map(function(ds){
+     var label=ds.slice(5)+' '+weekdays[new Date(ds+'T12:00:00+08:00').getUTCDay()]+(ds===today?' · 今天':'');
+     return '<button type="button" class="qc-demo-choice'+(current===ds?' active':'')+'" data-date="'+esc(ds)+'" aria-pressed="'+(current===ds)+'">'+esc(label)+'</button>';
+   }).join('');
+   todayButton.disabled=!dates.includes(today);
+   todayButton.textContent=dates.includes(today)?'回到今天':'今天暂无已发布赛程';
+ }
+ function leagueOf(m){return String(m.league_short_name||m.league_name||'其他');}
+ function filterMatches(fixtures){
+   return fixtures.filter(function(m){
+     return (selectedLeague==='全部'||leagueOf(m)===selectedLeague) &&
+       (selectedStatus==='all'||(selectedStatus==='finished'?confirmed(m):!confirmed(m)));
+   });
+ }
+ function renderFilters(){
+   if(!latestData)return;
+   var fixtures=latestData.fixtures;
+   var states=[['all','全部'],['finished','已完赛'],['pending','未开赛']];
+   document.getElementById('qcStatusChoices').innerHTML=states.map(function(item){
+     return '<button type="button" class="qc-demo-choice'+(selectedStatus===item[0]?' active':'')+'" data-status="'+item[0]+'" aria-pressed="'+(selectedStatus===item[0])+'">'+item[1]+'</button>';
+   }).join('');
+   var counts={};
+   fixtures.forEach(function(m){var lg=leagueOf(m);counts[lg]=(counts[lg]||0)+1;});
+   var choices=['全部'].concat(Object.keys(counts).sort(function(a,b){return a.localeCompare(b,'zh-CN');}));
+   document.getElementById('qcLeagueChoices').innerHTML=choices.map(function(x){
+     return '<button type="button" class="qc-demo-choice'+(selectedLeague===x?' active':'')+'" data-league="'+esc(x)+'" aria-pressed="'+(selectedLeague===x)+'">'+esc(x==='全部'?'全部联赛':x)+'</button>';
+   }).join('');
+   document.getElementById('qcFilterCount').textContent='符合条件 '+filterMatches(fixtures).length+' / '+fixtures.length+' 场';
+   document.getElementById('qcFilter').innerHTML='☷ 筛选'+(selectedStatus!=='all'||selectedLeague!=='全部'?'<span class="qc-demo-filter-dot" aria-hidden="true"></span>':'');
+   document.getElementById('qcFilter').classList.toggle('active',selectedStatus!=='all'||selectedLeague!=='全部');
+ }
+ function renderVisible(){
+   if(!latestData)return;
+   var all=[...latestData.fixtures].sort(function(a,b){return String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true});});
+   var filtered=filterMatches(all);
+   var finished=all.filter(confirmed).length;
+   var filtering=selectedStatus!=='all'||selectedLeague!=='全部';
+   summary.textContent=all.length+'场比赛 · '+finished+'场完赛'+(filtering?' · 筛选显示'+filtered.length+'场':'');
+   container.innerHTML=filtered.length?filtered.map(function(m){return renderRow(m,latestData.byId.get(String(m.id)));}).join(''):'<div class="qc-demo-empty">当前筛选条件下暂无比赛</div>';
+   renderFilters();
+ }
+ document.getElementById('qcDate').addEventListener('click',function(){openPanel('date');});
+ document.getElementById('qcFilter').addEventListener('click',function(){openPanel('filter');});
+ document.querySelectorAll('[data-close]').forEach(function(btn){btn.addEventListener('click',closePanels);});
+ document.getElementById('qcDateChoices').addEventListener('click',function(e){
+   var btn=e.target.closest('[data-date]');if(!btn)return;
+   closePanels();show(btn.dataset.date);
+ });
+ todayButton.addEventListener('click',function(){var today=beijingToday();if(dates.includes(today)){closePanels();show(today);}});
+ document.getElementById('qcStatusChoices').addEventListener('click',function(e){
+   var btn=e.target.closest('[data-status]');if(!btn)return;
+   selectedStatus=btn.dataset.status;renderVisible();
+ });
+ document.getElementById('qcLeagueChoices').addEventListener('click',function(e){
+   var btn=e.target.closest('[data-league]');if(!btn)return;
+   selectedLeague=btn.dataset.league;renderVisible();
+ });
+ document.getElementById('qcResetFilter').addEventListener('click',function(){
+   selectedStatus='all';selectedLeague='全部';renderVisible();
+ });
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePanels();});
+ document.addEventListener('click',function(e){
+   if(activePanel && !e.target.closest('.qc-demo-panel,.qc-demo-toolbar'))closePanels();
+ });
  async function show(ds){
    if(!dates.includes(ds))return;
    current=ds;
+   closePanels();
+   latestData=null;
    var index=dates.indexOf(ds);
    dateLabel.textContent=ds.slice(5)+' '+['周日','周一','周二','周三','周四','周五','周六'][new Date(ds+'T12:00:00+08:00').getUTCDay()];
    document.getElementById('qcPrev').disabled=index===0;
@@ -268,10 +395,9 @@ body.qc-demo{background:#f3f6fb}
    try{
      var data=await day(ds);
      if(current!==ds)return;
-     var ordered=[...data.fixtures].sort(function(a,b){return String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true});});
-     var finished=ordered.filter(confirmed).length;
-     summary.textContent=ordered.length+'场比赛 · '+finished+'场完赛';
-     container.innerHTML=ordered.length?ordered.map(function(m){return renderRow(m,data.byId.get(String(m.id)));}).join(''):'<div class="qc-demo-error">本日暂无已发布的赛程。</div>';
+     latestData=data;
+     if(selectedLeague!=='全部'&&!data.fixtures.some(function(m){return leagueOf(m)===selectedLeague;}))selectedLeague='全部';
+     renderVisible();
    }catch(error){
      if(current===ds){container.innerHTML='<div class="qc-demo-error">静态赛程暂时无法读取，请刷新后重试。</div>';summary.textContent='读取失败';}
      console.warn('竞彩足球手机测试页静态读取异常',error);
@@ -279,10 +405,9 @@ body.qc-demo{background:#f3f6fb}
  }
  document.getElementById('qcPrev').addEventListener('click',function(){show(dates[dates.indexOf(current)-1]);});
  document.getElementById('qcNext').addEventListener('click',function(){show(dates[dates.indexOf(current)+1]);});
- document.getElementById('qcToday').addEventListener('click',function(){show('2026-10-19');});
- dateLabel.addEventListener('click',function(){show(current==='2026-10-18'?'2026-10-19':'2026-10-18');});
  var requested=new URLSearchParams(location.search).get('date');
- show(dates.includes(requested)?requested:'2026-10-19');
+ var today=beijingToday();
+ show(dates.includes(requested)?requested:(dates.includes(today)?today:'2026-10-19'));
 })();
 </script>
 </body>
