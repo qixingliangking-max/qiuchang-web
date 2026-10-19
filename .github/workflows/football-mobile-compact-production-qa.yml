@@ -165,6 +165,23 @@ jobs:
                   if(!todayLogos.catalog || todayLogos.fixtures.some(x=>x.imgs.length!==2||x.imgs.some(img=>img.w<=0||!img.complete)))
                     throw Error(item.name+' Oct19 team crest missing '+JSON.stringify(todayLogos));
                   await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'-20261019.png',fullPage:false});
+                  // Audit frozen historical dates older than Oct18. Frozen
+                  // archives must resolve the same immutable on-site crests.
+                  for(const day of ['2026-10-17','2026-10-16','2026-10-10','2026-09-27']){
+                    await page.goto(BASE+day,{waitUntil:'domcontentloaded',timeout:50000});
+                    await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length>0,null,{timeout:35000});
+                    const historic=await page.evaluate(()=>{
+                      const cards=[...document.querySelectorAll('.jc-football-card')];
+                      const imgs=[...document.querySelectorAll('.jc-football-card img.jc-team-logo')];
+                      return {count:cards.length,catalogCount:Object.keys(window.QC_TEAM_LOGO_CATALOG?.by_team||{}).length,
+                        imgCount:imgs.length,firstTeams:[...cards[0].querySelectorAll('.jc-team-name')].map(x=>x.textContent),
+                        firstImgs:[...cards[0].querySelectorAll('img.jc-team-logo')].map(x=>({src:x.getAttribute('src'),naturalWidth:x.naturalWidth,loaded:x.complete})),
+                        firstCard:cards[0].textContent.slice(0,110),
+                        rowsWithImage:[...cards].filter(c=>c.querySelectorAll('img.jc-team-logo').length===2).length};
+                    });
+                    console.log('QCDA_HISTORIC_LOGO_DIAG '+item.name+' '+day+' '+JSON.stringify(historic));
+                    await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'-'+day+'.png',fullPage:false});
+                  }
                 }
                 await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'.png',fullPage:false});
                 console.log('QCDA_MOBILE_COMPACT_PASS '+item.name+' '+JSON.stringify(measurements));
