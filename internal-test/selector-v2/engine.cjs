@@ -7,7 +7,7 @@ const PAIRS=[["direction",2,1],["htft",2,1],["goals",2,2],["score2x2",2,2],["sco
 const POOL={direction:["had","hhad"],htft:["hafu"],goals:["ttg"],score2x2:["crs"],score2x3:["crs"],score3x3:["crs"]};
 const MAX=12;
 function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
-function numeric(x){const n=Number(x);return Number.isFinite(n)?n:null}
+function numeric(x){if(x===null||x===undefined||x==="")return null;const n=Number(x);return Number.isFinite(n)?n:null}
 function utc(t){const v=Date.parse(t||"");return Number.isFinite(v)?v:null}
 function poisson(lambda){let values=[Math.exp(-lambda)];for(let i=1;i<=MAX;i++)values.push(values[i-1]*lambda/i);
  const sum=values.reduce((a,b)=>a+b,0);return values.map(x=>x/sum);}
@@ -142,7 +142,7 @@ function selectDay(fixtures,{minExpectedEdge=.08,maxPairsPerType=1,requireCalibr
   best.sort((a,b)=>b.metrics.edge-a.metrics.edge||b.metrics.coverage-a.metrics.coverage);
   const shortlist=best.slice(0,maxPairsPerType);
   return {type,eligibleSingleLegs:all.length,candidatePortfolios:best.length,abstained:!shortlist.length,
-    proposals:shortlist.map(v=>({...v,publishable:!requireCalibration&&false}))};
+    proposals:shortlist.map(v=>({...v,publishable:false}))};
  });
  return {version:"V2-CLEAN-SHADOW-0.1",published:false,asOfOnly:true,
   dataRejected:bad,types,warnings:["No settlement inputs accepted","All calculated probabilities are uncalibrated",
