@@ -67,6 +67,43 @@ jobs:
                    !/8场比赛.*0场完赛/.test(publicView.summary))
                   throw Error(e.name+' copy / pending palette invalid '+JSON.stringify(publicView));
                 console.log('PASS '+e.name+' no internal wording, clear blue VS / 未开赛 '+JSON.stringify(publicView));
+                // Interactive right-hand 赛事筛选 must actually filter the
+                // public static roster; date selector owns 回到今天.
+                if(await page.locator('#qcToday').count())
+                  throw Error('Obsolete 19号 date shortcut remains');
+                await page.locator('#qcFilter').click();
+                await page.locator('#qcStatusChoices [data-status="finished"]').click();
+                if(await page.locator('.qc-demo-card').count())
+                  throw Error('No finished fixtures expected in 19th static roster');
+                await page.locator('#qcStatusChoices [data-status="pending"]').click();
+                if(await page.locator('.qc-demo-card').count()!==8)
+                  throw Error('Pending status filter failed to restore 8 fixtures');
+                const league=await page.locator('#qcLeagueChoices [data-league]:not([data-league="全部"])').first().getAttribute('data-league');
+                await page.locator('#qcLeagueChoices [data-league="'+league+'"]').click();
+                const filtered=await page.locator('.qc-demo-card').count();
+                if(filtered<1 || filtered>=8 || !(await page.locator('#qcFilter').getAttribute('class')).includes('active'))
+                  throw Error('League filter failed '+JSON.stringify({league,filtered}));
+                await page.locator('#qcResetFilter').click();
+                if(await page.locator('.qc-demo-card').count()!==8)
+                  throw Error('Reset filter failed to restore 8 fixtures');
+                await page.locator('#qcDate').click();
+                if(!await page.locator('#qcDatePanel').isVisible() ||
+                   !await page.locator('#qcBackToToday').isVisible() ||
+                   !await page.locator('#qcFilterPanel').isHidden())
+                  throw Error('Date picker or 回到今天 missing');
+                await page.locator('#qcDateChoices [data-date="2026-10-18"]').click();
+                await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===25,null,{timeout:30000});
+                await page.locator('#qcDate').click();
+                const bjt=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+                if(bjt==='2026-10-19'){
+                  await page.locator('#qcBackToToday').click();
+                  await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===8,null,{timeout:30000});
+                } else {
+                  if(await page.locator('#qcBackToToday').isEnabled() && !await page.locator('#qcDateChoices [data-date="'+bjt+'"]').count())
+                    throw Error('Return to today should be disabled for unpublished test date');
+                  await page.locator('#qcDateChoices [data-date="2026-10-19"]').click();
+                  await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===8,null,{timeout:30000});
+                }
                 await page.screenshot({path:'preview-screenshots/'+e.name+'-20261019.png',fullPage:false});
                 await page.locator('#qcPrev').click();
                 await page.waitForFunction(()=>document.querySelectorAll('.qc-demo-card').length===25,null,{timeout:30000});
