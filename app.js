@@ -1933,12 +1933,15 @@ async function loadJcFootball(){
     mobileToday.type='button';
     mobileToday.className='qc-football-calendar-today';
     mobileToday.textContent='回到今天';
-    mobileToday.disabled=selectedDate===today;
+    // Mobile calendar button means natural Beijing "today" when that roster
+    // has already been publicly published, including before 10:00 BJT.
+    const returnDate=isCompactMobile() && isAllowedDate(calendarToday)?calendarToday:today;
+    mobileToday.disabled=selectedDate===returnDate;
     mobileToday.addEventListener('click',e=>{
       e.preventDefault();e.stopPropagation();
       datePop.hidden=true;
       closeLeague();
-      loadFootballDate(today);
+      loadFootballDate(returnDate);
     });
     datePop.appendChild(mobileToday);
   }
