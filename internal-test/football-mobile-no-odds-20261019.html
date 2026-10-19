@@ -34,8 +34,8 @@ body.qc-demo{background:#f3f6fb}
 .qc-demo .qc-demo-result:not(.pending)+.qc-demo-ht{color:#cc7980}
 .qc-demo .qc-demo-divider{display:none}
 .qc-demo .qc-demo-hits{padding:7px 16px 10px}
-.qc-demo .qc-demo-hits-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:23px;margin-bottom:5px}
-.qc-demo .qc-demo-hit-title{color:#d34c55;font-size:11px;font-weight:850;line-height:1.2}
+.qc-demo .qc-demo-hits-head{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:23px;margin-bottom:5px}
+.qc-demo .qc-demo-hit-title{color:#d34c55;font-size:11px;font-weight:850;line-height:1.2;white-space:nowrap;min-width:0}
 .qc-demo .qc-demo-hit-count{color:#a2aabb;font-size:10px;font-weight:650}
 .qc-demo .qc-demo-hitlist{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(2,27px);gap:5px;min-height:59px;align-content:start}
 .qc-demo .qc-demo-chip{grid-column:span 3;min-width:0;border:1px solid #edbdc0;border-radius:18px;color:#cc4b55;background:#fff8f8;font-size:10.5px;font-weight:750;padding:3px 6px;line-height:1.2;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap}
@@ -43,7 +43,7 @@ body.qc-demo{background:#f3f6fb}
 .qc-demo .qc-demo-hitlist.count-5 .qc-demo-chip:nth-child(-n+3){grid-column:span 2}
 .qc-demo .qc-demo-hitlist.count-5 .qc-demo-chip:nth-child(n+4){grid-column:span 3}
 .qc-demo .qc-demo-chip-odd{color:#d36f30;font-size:10.5px;font-weight:850;white-space:nowrap}
-.qc-demo .qc-demo-cta{display:inline-flex;justify-content:flex-end;align-items:center;gap:4px;color:#3764ed;font-size:12px;font-weight:750;white-space:nowrap}
+.qc-demo .qc-demo-cta{display:inline-flex;justify-content:flex-end;align-items:center;gap:3px;color:#3764ed;font-size:11.5px;font-weight:750;white-space:nowrap;flex:none}
 .qc-demo .qc-demo-cta span:last-child{font-size:16px}
 .qc-demo .qc-demo-precta{padding:6px 16px 10px;display:flex;justify-content:flex-end;align-items:center}
 .qc-demo .qc-demo-txt{font-size:12px;color:#8795ad}
@@ -95,7 +95,7 @@ body.qc-demo{background:#f3f6fb}
 <div class="qc-demo-subtitle" id="qcSummary">读取已发布的公开静态赛程…</div>
 <main class="qc-demo-main">
  <div id="qcCards" aria-live="polite"><div class="qc-demo-error">正在载入静态赛程…</div></div>
- <p class="qc-demo-footnote">仅展示已公开的赛前预测命中及对应赛前赔率，不包含未公开的Pro预测。点击「玩法详情／玩法结果」进入现有详情页。</p>
+ <p class="qc-demo-footnote">仅展示已公开的赛前预测命中及对应赛前赔率，不包含未公开的Pro预测。点击「玩法分析报告／玩法分析报告」进入现有详情页。</p>
 </main>
 </div>
 <script src="../assets/team-logos/catalog.js?v=20261017crestready2"></script>
@@ -208,18 +208,18 @@ body.qc-demo{background:#f3f6fb}
  }
  function renderRow(m,archived){
    var done=confirmed(m), raw=m.raw||{},result=norm(raw.sectionsNo999),half=norm(raw.sectionsNo1);
-   var label=done?'玩法结果':'玩法详情';
+   var label=done?'玩法分析报告':'玩法分析报告';
    var status=done?'半 '+half:'未开赛';
    var chips=done?publicHits(archived||m):[];
    var hitHead='<div class="qc-demo-hits-head">'+
        '<div class="qc-demo-hit-title">赛前预测命中 <span class="qc-demo-hit-count">· '+chips.length+'项</span></div>'+
-       '<span class="qc-demo-cta">玩法结果 <span>›</span></span></div>';
+       '<span class="qc-demo-cta">玩法分析报告 <span>›</span></span></div>';
    var hits=done?(chips.length
      ? '<section class="qc-demo-hits">'+hitHead+
        '<div class="qc-demo-hitlist count-'+chips.length+'">'+chips.map(function(x){
          return '<span class="qc-demo-chip">'+esc(x.kind)+' '+esc(x.label)+' <span class="qc-demo-chip-odd">@'+esc(x.odds)+'</span></span>';
        }).join('')+'</div></section>'
-     : '<section class="qc-demo-hits"><div class="qc-demo-hits-head"><span class="qc-demo-hit-title">暂无命中</span><span class="qc-demo-cta">玩法结果 <span>›</span></span></div></section>'):'<div class="qc-demo-precta"><span class="qc-demo-cta">玩法详情 <span>›</span></span></div>';
+     : '<section class="qc-demo-hits"><div class="qc-demo-hits-head"><span class="qc-demo-hit-title">暂无命中</span><span class="qc-demo-cta">玩法分析报告 <span>›</span></span></div></section>'):'<div class="qc-demo-precta"><span class="qc-demo-cta">玩法分析报告 <span>›</span></span></div>';
    var when=String(m.match_date||'').slice(5)+' '+String(m.match_time||'').slice(0,5);
    var href='../jc-match.html?id='+encodeURIComponent(m.id);
    return '<article class="qc-demo-card">'+
