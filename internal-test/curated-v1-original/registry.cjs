@@ -50,9 +50,17 @@ function verifySettlement(originalSettlement){
  }
  return true;
 }
+const CURRENT_RESEARCH_RULESET=Object.freeze({
+ version:"CURATED_V1_0_R1_STRUCTURES_20261020",
+ ruleModule:"internal-test/curated-v1-original/v1r1_project_rules.cjs",
+ analystCount:4,projectCount:5,status:"CONFIGURED_FOR_RESEARCH_NOT_AUTONOMOUS",
+ fourRoles:["direction","htft","goals","score"],
+ projects:["direction","htft","goals","score_2","score_3"],
+ source:"Original V1.0 archived 14-day freeze preserved, current new structural rules are separate and not historical V1.0 results"
+});
 function activeRoles(){return ROLES.map(x=>({...x}))}
 function produceNewDate(){
  throw Error("V1_REPRODUCTION_NOT_ATTESTED: original first-version scorer was archived as frozen results, not as executable source; do not invent a new V1.0 forecast.");
 }
 module.exports={RESTORED_VERSION,RESTORED_SELECTION_SHA,RESTORED_SETTLEMENT_SHA,ROLES,originalBasePaths,
- validateFrozen,fromFrozen,verifySettlement,activeRoles,produceNewDate};
+ validateFrozen,fromFrozen,verifySettlement,activeRoles,produceNewDate,CURRENT_RESEARCH_RULESET};
