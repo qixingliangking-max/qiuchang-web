@@ -1359,6 +1359,18 @@ function qcLoadFrozenOverviewManifest(){
 function qcPrepareFrozenOverviewRows(rows){
   return (Array.isArray(rows)?rows:[]).map(row=>{
     const m={...row};
+    // Archived fixtures must be self-contained at render time: resolve both
+    // crests exclusively from the published local static catalog, never RPC,
+    // team lookup, or a runtime rewrite of an immutable archive file.
+    const archiveCatalog=window.QC_TEAM_LOGO_CATALOG||{};
+    for(const side of ['home','away']){
+      const teamName=String(m[side+'_team_name']||'');
+      const original=String(m['_'+side+'LogoUrl']||'');
+      const local=archiveCatalog.by_team?.[teamName] ||
+        archiveCatalog.by_source?.[original] ||
+        (/^assets\\/team-logos\\/[a-z0-9-]+\\.(?:png|jpg|webp)$/i.test(original)?original:'');
+      if(local) m['_'+side+'LogoUrl']=local;
+    }
     m.jc_model_outputs=Array.isArray(m.jc_model_outputs)?m.jc_model_outputs:[];
     m.jc_market_snapshots=Array.isArray(m.jc_market_snapshots)?m.jc_market_snapshots:[];
     m._jcModelsLoaded=true;
