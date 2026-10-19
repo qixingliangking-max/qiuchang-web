@@ -41,35 +41,26 @@ jobs:
             page.on('pageerror',e=>errors.push(String(e)));
             await page.goto(url,{waitUntil:'load'});
             await page.waitForSelector('#plans .plan',{timeout:15000});
-            await page.waitForSelector('#manualPlans .manual-card',{timeout:15000});
-            const manualCards=page.locator('#manualPlans .manual-card');
-            if(await manualCards.count()!==4)throw Error(name+': manual plan cards must be 4');
-            const manualTitles=await page.locator('#manualPlans .manual-card h3').allTextContents();
-            const expectedTitles=['① 方向 2串1','② 半全场','③ 总进球','④ 比分'];
-            if(JSON.stringify(manualTitles)!==JSON.stringify(expectedTitles))throw Error(name+': manual category/order mismatch '+JSON.stringify(manualTitles));
-            const manualTexts=[];
-            for(let i=0;i<4;i++)manualTexts.push(await manualCards.nth(i).innerText());
-            const requiredPicks=[
-              ['周一002','让胜（+1）','周一007','普通主胜'],
-              ['周一005','胜胜','平胜','周一007'],
-              ['周一003','3球','2球','1球','周一005','4球'],
-              ['周一002','2-0','1-1','1-0','周一003','1-2','0-2']
-            ];
-            requiredPicks.forEach((list,i)=>{let previous=-1;list.forEach(value=>{const pos=manualTexts[i].indexOf(value);if(pos<0||pos<=previous)throw Error(name+': selection missing or order changed in '+expectedTitles[i]+': '+value);previous=pos;});});
-            if(manualTexts.some(t=>/模拟返还|命中|未命中/.test(t)))throw Error(name+': manual pre-match cards contain simulated settlement fields');
-            const manualWidth=await page.locator('.manual-set').evaluate(el=>({scroll:el.scrollWidth,client:el.clientWidth}));
-            if(manualWidth.scroll>manualWidth.client+1)throw Error(name+': manual section overflows viewport '+JSON.stringify(manualWidth));
+            if(await page.locator('#manualPlans').count())throw Error(name+': separate manual panel must be removed');
+            const initialDay=await page.locator('#dateLabel').innerText();
+            if(!initialDay.includes('10月19日'))throw Error(name+': selected day should open first '+initialDay);
+            if(await page.locator('#plans .plan').count()!==1)throw Error(name+': expected one selected pair');
+            const intro=await page.locator('#plans .plan').innerText();
+            for(const word of ['周一002','让胜（+1）','1.50','周一007','普通主胜','1.36','2.04','待赛']){
+              if(!intro.includes(word))throw Error(name+': missing official selection '+word);
+            }
+            if(/人工录入|未命中|模拟返还/.test(intro))throw Error(name+': inappropriate text on pending pair');
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
             if((await page.locator('#history .hist-row').count())<8)throw Error(name+': history missing');
             if(await page.locator('.method').evaluate(el=>el.open))throw Error(name+': method text not collapsed');
             const dayBefore=await page.locator('#dateLabel').innerText();
-            if(!dayBefore.includes('10月18日'))throw Error(name+': default date incorrect: '+dayBefore);
+            if(!dayBefore.includes('10月19日'))throw Error(name+': default date incorrect: '+dayBefore);
             const firstPlan=await page.locator('#plans .plan').count();
-            if(firstPlan<1)throw Error(name+': missing initial plan');
+            if(firstPlan!==1)throw Error(name+': selected day should have one plan');
             await page.locator('#budget').fill('1000');
-            if(!(await page.locator('#plans .plan').first().innerText()).includes('1,000.00'))throw Error(name+': budget not recalculated');
+            if(!(await page.locator('#budget').inputValue()).includes('1000'))throw Error(name+': budget input incorrect');
             await page.locator('#plans .plan .inspect').first().click();
             await page.waitForTimeout(250);
             const modalState=await page.evaluate(()=>({hidden:document.getElementById('overlay').hidden,dialog:document.getElementById('dialogBody').innerText.slice(0,200),state:document.getElementById('overlay').outerHTML.slice(0,120)}));
@@ -77,17 +68,31 @@ jobs:
             if(modalState.hidden)throw Error(name+': modal did not open: '+JSON.stringify({modalState,errors}));
             await page.locator('#overlay:not([hidden]) .dialog').waitFor({timeout:4000});
             const modalRows=await page.locator('.alloc tbody tr').count();
-            if(modalRows<1)throw Error(name+': missing calculated branches');
+            if(modalRows!==1)throw Error(name+': direction must have one priced branch');
+            if(!(await page.locator('.alloc tbody').innerText()).includes('2.04'))throw Error(name+': direction combined odds missing');
+            if(!(await page.locator('#dialogBody').innerText()).includes('待赛'))throw Error(name+': pending modal must not settle');
             const firstShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
             await page.locator('#modeTabs button[data-mode="cold"]').click();
             const secondShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
             if(modalRows>1&&firstShare===secondShare)throw Error(name+': strategy does not change stake');
             await page.screenshot({path:'/tmp/curated-test/'+name+'-modal.png',fullPage:true});
             await page.locator('#closeDialog').click();
-            for(const type of ['htft','goals','score','direction']){
+            for(const [type,count,picks] of [
+              ['htft',4,['1.92','4.00','2.05','3.80']],
+              ['goals',9,['3.80','2.95','3.90','4.35','4.00','3.20']],
+              ['score',9,['14.00','6.00','9.00','8.00','9.00','5.25']],
+              ['direction',1,['1.50','1.36']]
+            ]){
               await page.locator('#tabs button[data-type="'+type+'"]').click();
               if((await page.locator('#tabs button[data-type="'+type+'"]').getAttribute('aria-selected'))!=='true')throw Error(name+': tab not active');
-              if(!(await page.locator('#plans').innerText()).length)throw Error(name+': blank category '+type);
+              if(await page.locator('#plans .plan').count()!==1)throw Error(name+': selected plan count must be one for '+type);
+              const legText=await page.locator('#plans .plan').innerText();
+              for(const pick of picks)if(!legText.includes(pick))throw Error(name+': missing selected price '+pick+' for '+type);
+              await page.locator('#plans .plan .inspect').click();
+              const n=await page.locator('.alloc tbody tr').count();
+              if(n!==count)throw Error(name+': expected '+count+' combination branches for '+type+', found '+n);
+              if((await page.locator('#dialogBody').innerText()).includes('未命中'))throw Error(name+': pre-match should not show failure');
+              await page.locator('#closeDialog').click();
             }
             await page.locator('#dateLabel').click();
             await page.locator('#calDays button[data-date="2026-10-17"]').click();

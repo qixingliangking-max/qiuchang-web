@@ -216,78 +216,25 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 .dialog-body{padding:11px 13px 15px}
 }
 
-/* User-supplied pre-match selections are kept separate from retrospective simulations. */
-.manual-set{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
-.manual-set-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
-.manual-set-head>div{min-width:0}
-.manual-set-kicker{display:inline-flex;align-items:center;background:#eef3ff;color:#315db3;border-radius:999px;padding:5px 9px;font-size:10px;letter-spacing:.08em;font-weight:900}
-.manual-set-head h2{font-size:21px;line-height:1.35;margin:9px 0 6px;color:#1f2e48;font-weight:950}
-.manual-set-head p{margin:0;color:#7b899e;font-size:12px;line-height:1.75;max-width:650px}
-.manual-set-status{flex:0 0 auto;background:#f2f6ff;border:1px solid #dce7fb;color:#4969a7;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:850;white-space:nowrap}
-.manual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.manual-card{border:1px solid #e3e9f2;border-radius:15px;background:#fcfdff;overflow:hidden;min-width:0}
-.manual-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 14px;background:#f7f9fd;border-bottom:1px solid #e9edf4}
-.manual-card-head h3{margin:0;color:#253958;font-size:14px;line-height:1.4;font-weight:900}
-.manual-card-status{flex:0 0 auto;font-size:10px;font-weight:850;color:#5472ad;background:#edf3ff;border-radius:999px;padding:5px 8px}
-.manual-card-legs{padding:0 14px}
-.manual-leg{padding:13px 0 12px;border-bottom:1px dashed #e0e7f1}
-.manual-leg:last-child{border-bottom:0}
-.manual-leg-meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.manual-match-num{background:#edf2ff;color:#315db3;border-radius:6px;padding:4px 6px;font-size:10px;font-weight:900}
-.manual-league{font-size:11px;color:#6e7e98;font-weight:800}
-.manual-kickoff{font-size:10px;color:#909bae}
-.manual-fixture{display:flex;align-items:baseline;gap:7px;min-width:0;color:#233653;font-size:13px;line-height:1.5}
-.manual-fixture strong{font-weight:900;overflow-wrap:anywhere}
-.manual-fixture span{color:#a1aabd;font-size:10px;flex:0 0 auto}
-.manual-market{font-size:10px;color:#8794a8;margin-top:8px}
-.manual-picks{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.manual-pick{display:inline-flex;align-items:center;background:#edf3ff;border:1px solid #dce7ff;color:#3159a7;padding:6px 9px;border-radius:8px;font-size:12px;line-height:1.3;font-weight:850}
-.manual-join{display:flex;align-items:center;justify-content:center;width:29px;height:24px;margin:-2px auto 0;border:1px solid #dbe4f4;background:#f1f5ff;color:#315db3;border-radius:999px;font-size:17px;line-height:1;font-weight:900;position:relative;z-index:1}
-.manual-leg-sep{height:1px;margin:0;background:#e9edf4}
-.manual-card-note{margin:0;padding:10px 14px 12px;background:#fff;color:#8a96a8;font-size:10px;line-height:1.65}
-@media(max-width:680px){
- .manual-set{padding:14px;border-radius:15px}
- .manual-set-head{gap:8px;margin-bottom:12px}
- .manual-set-head h2{font-size:18px}
- .manual-set-head p{font-size:11px}
- .manual-set-status{font-size:10px;padding:6px 7px}
- .manual-grid{grid-template-columns:minmax(0,1fr);gap:10px}
- .manual-card-head{padding:12px}
- .manual-card-legs{padding:0 12px}
- .manual-fixture{font-size:13px}
-}
-
+.flag.pending{color:#4465a8!important;background:#eff4ff!important;border-color:#d8e6ff!important}
 </style>
 </head>
 <body>
 <header class="site-header"><a class="brand" href="../index.html"><span class="brand-icon">⚽</span><span>球场档案</span></a><div class="header-right"><a class="back-btn" href="../football.html">返回竞彩足球 ↗</a></div></header>
 <main class="container">
 <section class="hero"><div class="hero-line"><span class="pulse"></span> 赛事数据研究</div><h1>精选方案</h1><p>按不同比赛维度查看双场组合、模拟结果和历史记录。</p></section>
-<section class="manual-set" aria-labelledby="manualTitle">
-  <div class="manual-set-head">
-    <div>
-      <span class="manual-set-kicker">PRE-MATCH · MANUAL ENTRY</span>
-      <h2 id="manualTitle">10月19日赛前人工精选</h2>
-      <p id="manualSubtitle">由你提供方案，网站按原顺序录入。与下方历史回溯演示分开展示；赛前不计算命中或模拟返还。</p>
-    </div>
-    <span class="manual-set-status">赛前方案</span>
-  </div>
-  <div class="manual-grid" id="manualPlans" aria-live="polite">
-    <div class="empty">正在读取人工精选方案…</div>
-  </div>
-</section>
-<section class="control-strip"><div class="date-control"><button class="step-btn" id="prevDate" aria-label="上一个有数据日期">◀</button><button class="date-label" id="dateLabel" aria-expanded="false" aria-controls="calendar">日期加载中… <span>▾</span></button><button class="step-btn" id="nextDate" aria-label="下一个有数据日期">▶</button><div class="cal" id="calendar" hidden><div class="cal-top"><span id="monthLabel">2026年10月</span><div><button class="cal-month-btn" id="prevMonth" aria-label="上个月">‹</button> <button class="cal-month-btn" id="nextMonth" aria-label="下个月">›</button></div></div><div class="cal-grid" id="calDays"></div><div class="cal-foot">可选择已有历史记录的日期。</div></div></div><div class="budget-control"><label for="budget">模拟金额</label><input type="number" id="budget" value="100" min="10" max="100000" step="10" inputmode="decimal" aria-label="模拟金额"><span>点</span><div class="budget-shortcuts"><button type="button" data-budget="100" class="selected">100</button><button type="button" data-budget="500">500</button><button type="button" data-budget="1000">1000</button></div></div></section>
+<section class="control-strip"><div class="date-control"><button class="step-btn" id="prevDate" aria-label="上一个有数据日期">◀</button><button class="date-label" id="dateLabel" aria-expanded="false" aria-controls="calendar">日期加载中… <span>▾</span></button><button class="step-btn" id="nextDate" aria-label="下一个有数据日期">▶</button><div class="cal" id="calendar" hidden><div class="cal-top"><span id="monthLabel">2026年10月</span><div><button class="cal-month-btn" id="prevMonth" aria-label="上个月">‹</button> <button class="cal-month-btn" id="nextMonth" aria-label="下个月">›</button></div></div><div class="cal-grid" id="calDays"></div><div class="cal-foot">可选择已有精选方案或历史记录的日期。</div></div></div><div class="budget-control"><label for="budget">模拟金额</label><input type="number" id="budget" value="100" min="10" max="100000" step="10" inputmode="decimal" aria-label="模拟金额"><span>点</span><div class="budget-shortcuts"><button type="button" data-budget="100" class="selected">100</button><button type="button" data-budget="500">500</button><button type="button" data-budget="1000">1000</button></div></div></section>
 <nav class="tabs" id="tabs" role="tablist" aria-label="方案类别"><button class="tab active" role="tab" data-type="direction" aria-selected="true"><strong>胜平负</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="htft" aria-selected="false"><strong>半全场</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="goals" aria-selected="false"><strong>总进球</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="score" aria-selected="false"><strong>比分</strong><span>双场方案</span></button></nav>
 <div class="info-band" id="infoBand" role="status">历史回溯演示，方案并非当时赛前发布。</div>
 <div class="section-bar"><h2 id="dailyTitle">当日方案</h2><span id="dailyMeta">—</span></div>
 <section class="panels" id="plans" aria-live="polite"><div class="empty">正在读取方案…</div></section>
 <div class="section-bar"><h2>历史回看</h2><span>点击查看详情</span></div>
 <section class="history"><div class="hist-top"><span>日期</span><span>比赛组合</span><span style="text-align:right">模拟返还</span><span style="text-align:right">结果</span></div><div id="history"><div class="empty">正在读取记录…</div></div></section>
-<details class="method"><summary>数据说明</summary><div class="method-inner"><p>本页采用已完赛比赛的赛前锁定研究与当时官方赔率，按照固定规则重新构建历史双场组合。<b>这些组合不是当时实际提前发布的方案，不能用于计算正式历史命中率或连续命中纪录。</b></p><p>修改模拟金额只会改变计算结果；不同分配方式只改变权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
+<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月19日精选方案依据已确认的两场选择，逐项匹配相应玩法与开赛前留存的官方赔率；组合赔率等于两场选项赔率相乘。赛前只展示赔率、组合结构和条件模拟，不提前计算赛果。</p><p>历史回看采用已完赛比赛的赛前锁定研究和官方赔率，以固定规则重建演示组合。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；不同分配方式只改变权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
 <footer class="footer">球场档案 · 数据研究演示｜不构成投注建议</footer>
 </main>
 <div class="overlay" id="overlay" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" tabindex="-1" id="dialog"><div class="dialog-header"><div><small id="dialogSub">历史回溯演示</small><h2 id="dialogTitle">方案详情</h2></div><button class="close" id="closeDialog" aria-label="关闭弹窗">×</button></div><div class="mode-tabs" id="modeTabs" role="tablist" aria-label="分配方式"><button data-mode="balanced" class="active" aria-selected="true">平均分配</button><button data-mode="hot" aria-selected="false">常规优先</button><button data-mode="cold" aria-selected="false">冷门优先</button><button data-mode="hybrid" aria-selected="false">均衡策略</button></div><div class="dialog-body" id="dialogBody"></div><div class="dialog-actions"><button id="copyPlan" type="button">复制方案</button><button id="dialogCloseBottom" class="primary-action" type="button">关闭</button></div></div></div>
-<script src="curated-lab-data-20261019.js?v=2"></script>
-<script src="curated-lab-20261019.js?v=4"></script>
+<script src="curated-lab-data-20261019.js?v=3"></script>
+<script src="curated-lab-20261019.js?v=5"></script>
 </body>
 </html>
