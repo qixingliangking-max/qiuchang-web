@@ -55,12 +55,14 @@ jobs:
                     privateCopy:/紧凑列表测试|正式页面|命中赔率保留|未公开的Pro预测|仅展示已公开/.test(document.body.innerText),
                     pendingColor:pending?getComputedStyle(pending).color:'',
                     pendingStatusColor:status?getComputedStyle(status).color:'',
+                    reportColor:document.querySelector('.qc-demo-cta')?getComputedStyle(document.querySelector('.qc-demo-cta')).color:'',
                     awaitingText:status?.textContent?.trim(),
                     summary:document.querySelector('#qcSummary')?.textContent||'',
                     title:document.title
                   };
                 });
                 if(publicView.privateCopy || publicView.pendingColor!=='rgb(71, 143, 229)' ||
+                   publicView.reportColor!==publicView.pendingColor ||
                    publicView.pendingStatusColor!=='rgb(120, 168, 229)' ||
                    publicView.awaitingText!=='未开赛' ||
                    publicView.title!=='球场档案｜竞彩足球' ||
