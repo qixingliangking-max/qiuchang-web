@@ -64,12 +64,21 @@ function makeLeg(row,type){
  return {row:row,options:options,market:market};
 }
 function plansFor(day,type){
- var items=all.filter(function(r){return r.d===day}).map(function(row){return makeLeg(row,type)}).filter(Boolean);
- // Stable source order: fixture number / kickoff. Absolutely no outcome or score-based ranking.
- items.sort(function(a,b){return String(a.row.num).localeCompare(String(b.row.num),'zh-Hans-CN',{numeric:true})});
- var pairs=[];for(var i=0;i+1<Math.min(items.length,6);i+=2){
-   pairs.push({day:day,type:type,index:pairs.length+1,a:items[i],b:items[i+1]});
+ var pack=db.selectedPlans&&db.selectedPlans[day];
+ if(pack){
+   var record=(pack.entries||[]).find(function(e){return e.type===type});
+   if(!record||record.legs.length!==2)return [];
+   var legs=record.legs.map(function(leg){
+     var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
+     if(opts.some(function(o){return !o}))return null;
+     return {row:leg.row,market:leg.market,options:opts};
+   });
+   if(legs.some(function(l){return !l}))return [];
+   return [{day:day,type:type,index:1,a:legs[0],b:legs[1],prematch:true}];
  }
+ var items=all.filter(function(r){return r.d===day}).map(function(row){return makeLeg(row,type)}).filter(Boolean);
+ items.sort(function(a,b){return String(a.row.num).localeCompare(String(b.row.num),'zh-Hans-CN',{numeric:true})});
+ var pairs=[];for(var i=0;i+1<Math.min(items.length,6);i+=2) pairs.push({day:day,type:type,index:pairs.length+1,a:items[i],b:items[i+1]});
  return pairs;
 }
 function combosFor(plan){
@@ -122,7 +131,8 @@ function renderPlans(){
 function renderHistory(){
  var html=[],n=0;
  for(var d=0;d<dates.length;d++){
-   var day=dates[d],ps=plansFor(day,state.type);
+   var day=dates[d];if(db.selectedPlans&&db.selectedPlans[day])continue;
+   var ps=plansFor(day,state.type);
    ps.forEach(function(plan){
      n++;var sim=allocation(plan,state.budget,state.mode);
      html.push('<button class="hist-row" data-open-date="'+esc(day)+'" data-open-index="'+plan.index+'"><span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'</span><span class="hist-leg"><b>'+esc(idNum(plan.a.row))+' '+esc(plan.a.row.h)+' / '+esc(idNum(plan.b.row))+' '+esc(plan.b.row.h)+'</b><small>方案'+String(plan.index).padStart(2,'0')+' · '+esc(plan.a.options.map(function(o){return o.name}).join('+'))+' / '+esc(plan.b.options.map(function(o){return o.name}).join('+'))+'</small></span><span class="hist-amount">'+money(sim.returns)+'</span><span class="hist-status '+(sim.covered?'hit':'')+'">'+rowStatus(sim)+'</span></button>');
@@ -132,7 +142,7 @@ function renderHistory(){
 }
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
- $('infoBand').textContent='历史模拟 · 组合为事后回溯生成，并非当时赛前发布。';
+ $('infoBand').textContent=(db.selectedPlans&&db.selectedPlans[state.day])?'10月19日精选方案 · 官方赛前赔率已匹配，尚未结算。':'历史模拟 · 组合为事后回溯生成，并非当时赛前发布。';
 }
 function renderDate(){
  $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
@@ -218,25 +228,13 @@ function attach(){
  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(state.open)closeDetail();else $('calendar').hidden=true}});
  $('copyPlan').addEventListener('click',copyText);
 }
-function renderManualPlans(){
- var root=$('manualPlans');if(!root)return;
- var pack=db&&db.manualPlans&&db.manualPlans['2026-10-19'];
- if(!pack||!Array.isArray(pack.entries)){root.innerHTML='<div class="empty">暂无人工录入的赛前方案。</div>';return;}
- root.innerHTML=pack.entries.map(function(entry){
-   var legs=(entry.legs||[]).map(function(leg,index){
-     var picks=(leg.picks||[]).map(function(pick){return '<span class="manual-pick">'+esc(pick)+'</span>'}).join('');
-     return '<div class="manual-leg"><div class="manual-leg-meta"><span class="manual-match-num">'+esc(leg.num)+'</span><span class="manual-league">'+esc(leg.league)+'</span><span class="manual-kickoff">'+esc(leg.kickoff)+'</span></div><div class="manual-fixture"><strong>'+esc(leg.home)+'</strong><span>vs</span><strong>'+esc(leg.away)+'</strong></div><div class="manual-market">'+esc(leg.market||'指定选项')+'</div><div class="manual-picks">'+picks+'</div></div>';
-   }).join(entry.type==='direction'?'<div class="manual-join" aria-label="串联">×</div>':'<div class="manual-leg-sep" aria-hidden="true"></div>');
-   return '<article class="manual-card" data-manual-type="'+esc(entry.type)+'"><div class="manual-card-head"><h3>'+esc(entry.title)+'</h3><span class="manual-card-status">人工录入</span></div><div class="manual-card-legs">'+legs+'</div><p class="manual-card-note">'+esc(entry.note||'按原始顺序展示。')+'</p></article>';
- }).join('');
-}
 
 function init(){
  if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
  all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
- dates=Array.from(new Set(all.map(function(r){return r.d}))).sort().reverse();
+ dates=Array.from(new Set(all.map(function(r){return r.d}).concat(Object.keys(db.selectedPlans||{})))).sort().reverse();
  if(!dates.length){$('plans').innerHTML='<div class="empty">暂无可核验的完赛样本。</div>';return}
- state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();renderManualPlans();attach();renderAll();
+ state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 init();
 })();
