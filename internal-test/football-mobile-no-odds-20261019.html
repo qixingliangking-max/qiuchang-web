@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>球场档案｜竞彩足球手机卡片无赔率测试</title>
+<title>球场档案｜竞彩足球</title>
 <link rel="stylesheet" href="../styles.css?v=20261018aipending21">
 <style>
 :root{--qc-blue:#3764ed;--qc-ink:#1f2a44;--qc-muted:#8996ad;--qc-line:#e4eaf3}
@@ -29,8 +29,8 @@ body.qc-demo{background:#f3f6fb}
 .qc-demo .qc-demo-team.away .qc-demo-teamname{text-align:right}
 .qc-demo .qc-demo-mid{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;min-height:43px}
 .qc-demo .qc-demo-result{font-size:29px;font-weight:900;line-height:1.05;letter-spacing:-.5px;color:#e14f51;font-variant-numeric:tabular-nums}
-.qc-demo .qc-demo-result.pending{font-size:26px;color:#98a4b8}
-.qc-demo .qc-demo-ht{font-size:11px;color:#919caf;font-weight:700;white-space:nowrap}
+.qc-demo .qc-demo-result.pending{font-size:26px;color:#478fe5}
+.qc-demo .qc-demo-ht{font-size:11px;color:#78a8e5;font-weight:700;white-space:nowrap}
 .qc-demo .qc-demo-result:not(.pending)+.qc-demo-ht{color:#cc7980}
 .qc-demo .qc-demo-divider{display:none}
 .qc-demo .qc-demo-hits{padding:7px 16px 10px}
@@ -83,20 +83,17 @@ body.qc-demo{background:#f3f6fb}
 <div class="shell">
 <header class="header qc-site-header">
  <a class="brand qc-brand-line" href="../index.html"><span class="qc-brand-main">球场档案</span><span class="qc-brand-sep">|</span><span class="qc-brand-sub">赛事数据管家</span></a>
- <a href="../football.html" style="font-size:13px;border:1px solid #dfe6f2;padding:10px 13px;border-radius:12px;color:#3764ed;font-weight:800;background:white">正式页面 ↗</a>
 </header>
-<div class="qc-demo-banner">紧凑列表测试 · 取消大赔率表 · 命中赔率保留 · 正式页不变</div>
 <div class="qc-demo-toolbar" aria-label="测试日期切换">
  <button id="qcPrev" class="qc-demo-arrow" aria-label="前一天">‹</button>
  <button id="qcDate" class="qc-demo-current" aria-label="当前测试日期">10-19 周一</button>
  <button id="qcNext" class="qc-demo-arrow" aria-label="后一天">›</button>
  <button id="qcToday" class="qc-demo-today">19号</button>
 </div>
-<div class="qc-demo-subtitle" id="qcSummary">读取已发布的公开静态赛程…</div>
+<div class="qc-demo-subtitle" id="qcSummary">赛程加载中…</div>
 <main class="qc-demo-main">
- <div id="qcCards" aria-live="polite"><div class="qc-demo-error">正在载入静态赛程…</div></div>
- <p class="qc-demo-footnote">仅展示已公开的赛前预测命中及对应赛前赔率，不包含未公开的Pro预测。点击「玩法分析报告／玩法分析报告」进入现有详情页。</p>
-</main>
+ <div id="qcCards" aria-live="polite"><div class="qc-demo-error">赛程加载中…</div></div>
+ </main>
 </div>
 <script src="../assets/team-logos/catalog.js?v=20261017crestready2"></script>
 <script>
@@ -267,13 +264,13 @@ body.qc-demo{background:#f3f6fb}
    document.getElementById('qcNext').disabled=index===dates.length-1;
    history.replaceState(null,'','?date='+encodeURIComponent(ds));
    var cached=memo.get(ds);
-   if(!cached) container.innerHTML='<div class="qc-demo-error">正在读取已发布静态赛程…</div>';
+   if(!cached) container.innerHTML='<div class="qc-demo-error">赛程加载中…</div>';
    try{
      var data=await day(ds);
      if(current!==ds)return;
      var ordered=[...data.fixtures].sort(function(a,b){return String(a.match_num||'').localeCompare(String(b.match_num||''),'zh-CN',{numeric:true});});
      var finished=ordered.filter(confirmed).length;
-     summary.textContent=ordered.length+'场比赛 · '+finished+'场完赛 · 命中赔率保留';
+     summary.textContent=ordered.length+'场比赛 · '+finished+'场完赛';
      container.innerHTML=ordered.length?ordered.map(function(m){return renderRow(m,data.byId.get(String(m.id)));}).join(''):'<div class="qc-demo-error">本日暂无已发布的赛程。</div>';
    }catch(error){
      if(current===ds){container.innerHTML='<div class="qc-demo-error">静态赛程暂时无法读取，请刷新后重试。</div>';summary.textContent='读取失败';}
