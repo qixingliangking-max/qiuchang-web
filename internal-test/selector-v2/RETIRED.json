@@ -1,0 +1,19 @@
+{
+  "version": "AI_SELECTOR_V2.0",
+  "status": "FAILED_RETIRED",
+  "effectiveDate": "2026-10-20",
+  "directive": "V2不合格正式下线",
+  "eligibleForUse": false,
+  "publishAllowed": false,
+  "selectorsDisabled": [
+    "selectDay",
+    "buildPairCandidates"
+  ],
+  "siteDeployed": false,
+  "productionDatabaseChanges": false,
+  "productionRollbackNeeded": false,
+  "guardError": "V2_RETIRED_DO_NOT_USE",
+  "archivePolicy": "Keep archived source and frozen historical inputs/results; do not modify outcome history or use V2 for future picks.",
+  "scope": "Isolated research branch only; no modifications to production website, FINAL lock or prior V1 series.",
+  "successor": "No replacement selected or activated."
+}
