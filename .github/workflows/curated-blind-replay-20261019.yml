@@ -1,0 +1,114 @@
+name: Curated blind replay 14-day offline QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'internal-test/curated-lab-blind-20261005-18.html'
+      - 'internal-test/curated-lab-blind-20261005-18.js'
+      - 'internal-test/curated-lab-blind-selection-20261005-18.js'
+      - 'internal-test/curated-lab-blind-settlement-20261005-18.js'
+      - '.github/workflows/curated-blind-replay-20261019.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Chromium for offline UI check
+        run: |
+          mkdir -p /tmp/qcda-blind
+          cd /tmp/qcda-blind
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Audit hidden result gate, selections, combinations and responsive layout
+        shell: bash
+        run: |
+          cat > /tmp/qcda-blind/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          const fs=require('fs'),path=require('path');
+          const u='file://'+path.resolve('internal-test/curated-lab-blind-20261005-18.html');
+          const origin='file://'+path.resolve('internal-test/curated-lab-20261019.html');
+          const expected={direction:{day:'2026-10-18',n:1},htft:{day:'2026-10-18',n:4},goals:{day:'2026-10-18',n:4},score:{day:'2026-10-18',n:9}};
+          const tests=[];
+          async function run(browser,name,device){
+           const ctx=await browser.newContext({...device,timezoneId:'Asia/Shanghai',locale:'zh-CN'});
+           const page=await ctx.newPage(),errors=[];page.on('pageerror',e=>errors.push(String(e)));
+           await page.goto(u,{waitUntil:'load'});
+           await page.waitForSelector('#plans .plan',{timeout:15000});
+           let a=await page.evaluate(()=>{
+            const b=window.QC_CURATED_BLIND_SELECTION_V1,s=window.QC_CURATED_BLIND_SETTLEMENT_V1;
+            const all=Object.values(b.days).flatMap(x=>x.entries);
+            const totals=Object.values(b.days).reduce((x,y)=>x+y.eligibleMatches,0);
+            const pair=all.filter(x=>x.type==='goals').every(x=>x.legs.every(l=>l.picks.length===2));
+            return {dates:Object.keys(b.days).length,entries:all.length,rows:totals,
+              noResultsInFrozen:all.every(x=>x.legs.every(l=>l.row.ft===null&&l.row.ht===null)),
+              goalsTwo:pair,validFreeze:s.freezeBlobSha==='1f5c7b346be18aac4740f677cb844ba9045154a3',
+              privateNoIndex:document.querySelector('meta[name="robots"]')?.content.includes('noindex')};
+           });
+           if(!a.noResultsInFrozen||!a.goalsTwo||!a.validFreeze||!a.privateNoIndex||a.dates!==14||a.entries!==56||a.rows!==212)throw Error(name+' freeze integrity '+JSON.stringify(a));
+           if(!await page.locator('#dateChooser option').count()===14)throw Error(name+': dates missing');
+           if((await page.locator('#dateChooser').inputValue())!=='2026-10-18')throw Error(name+': not latest day');
+           if((await page.locator('#plans .outcome-line').count())!==0)throw Error(name+': real outcomes leaked before reveal');
+           if(!(await page.locator('#plans').innerText()).includes('赛果已遮挡'))throw Error(name+': no masked marker');
+           for(const [type,spec] of Object.entries(expected)){
+             await page.locator('#tabs button[data-type="'+type+'"]').click();
+             const box=page.locator('#plans .plan');
+             if(await box.count()!==1)throw Error(name+' missing '+type);
+             await box.locator('details.detail summary').click();
+             const count=await page.locator('#plans .table-wrap tbody tr').count();
+             if(count!==spec.n)throw Error(name+': '+type+' combo count '+count+' not '+spec.n);
+           }
+           await page.locator('#budget').fill('500');
+           await page.locator('#budget').dispatchEvent('change');
+           const amount=await page.locator('#plans .table-wrap tbody tr:first-child td:nth-child(4)').innerText();
+           if(+amount.replaceAll(',','')<=0)throw Error(name+': no 500-point allocation');
+           await page.locator('#revealer').click();
+           for(const [type,n,hit] of [['direction',14,9],['htft',14,8],['goals',13,3],['score',14,4]]){
+             const summary=await page.locator('#summary .summary-card').nth(Object.keys(expected).indexOf(type)).innerText();
+             if(!summary.includes(hit+' / '+n))throw Error(name+': bad '+type+' summary '+summary);
+           }
+           await page.locator('#dateChooser').selectOption('2026-10-10');
+           await page.locator('#tabs button[data-type="goals"]').click();
+           if(!(await page.locator('#plans').innerText()).includes('待结算'))throw Error(name+': suspended match must be pending');
+           await page.locator('#revealer').click();
+           if(await page.locator('#plans .outcome-line').count())throw Error(name+': masking did not restore');
+           let dx=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+           if(dx.scroll>dx.client+1)throw Error(name+': horizontal overflow '+JSON.stringify(dx));
+           if(errors.length)throw Error(name+': JS errors '+JSON.stringify(errors));
+           await page.screenshot({path:'/tmp/qcda-blind/'+name+'.png',fullPage:true});
+           tests.push({device:name,checks:'freeze first;14d,212 prekick matches,56 plans;14x4 specialists;2-goal limit;default mask; reveal;pending;allocation;responsive',dx,errors});
+           await ctx.close();
+          }
+          (async()=>{
+            const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+             for(const [name,opts] of [
+              ['mobile320',{viewport:{width:320,height:720},isMobile:true,hasTouch:true}],
+              ['pixel7',devices['Pixel 7']],
+              ['desktop',{viewport:{width:1280,height:900}}]
+             ])await run(b,name,opts);
+             const ctx=await b.newContext();const p=await ctx.newPage();await p.goto(origin);
+             const link=p.locator('a[href="curated-lab-blind-20261005-18.html"]');
+             if(await link.count()!==1)throw Error('Parent research lab missing blind replay entry');
+             await ctx.close();
+             console.log('QCDA_BLIND_REPLAY_QA='+JSON.stringify({status:'PASS',tests}));
+             fs.writeFileSync('/tmp/qcda-blind/report.json',JSON.stringify({status:'PASS',tests},null,2));
+            }finally{await b.close()}
+          })().catch(e=>{console.error(e.stack||e);process.exitCode=1});
+          JS
+          node /tmp/qcda-blind/check.cjs
+      - name: Save QA visual records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: curated-blind-replay-ui-qa
+          path: |
+            /tmp/qcda-blind/*.png
+            /tmp/qcda-blind/report.json
+          if-no-files-found: ignore
