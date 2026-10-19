@@ -37,22 +37,24 @@
       .qc-activity-stats .metric b{font-size:25px}
     }
   </style>
+  <link rel="stylesheet" href="admin-subpages.css?v=20261019adminsub1">
 </head>
-<body>
+<body class="qc-admin-subpage">
   <div class="shell">
-    <header class="header">
-      <div class="brand">球场档案<span>·Admin</span></div>
-      <a class="small-btn" href="admin.html" style="display:flex;align-items:center">返回后台</a>
+    <header class="header qc-admin-header">
+      <a class="brand" href="admin.html" aria-label="返回球场档案后台">球场档案<span>·Admin</span></a>
+      <a class="qc-admin-return" href="admin.html">← 返回后台</a>
     </header>
 
     <main class="content qc-activity-page" id="adminLogsRoot">
-      <div class="qc-activity-title">
+      <section class="qc-admin-intro qc-activity-title">
         <div>
+          <span class="qc-admin-kicker">系统</span>
           <h1>系统活动</h1>
-          <p class="admin-note">真实数据来源：账号、每日活跃、竞彩采集、比分同步及会员兑换。仅管理员可见。</p>
+          <p class="admin-note">账号、每日活跃、竞彩采集、比分同步与会员兑换记录，仅管理员可见。</p>
         </div>
-        <button type="button" class="small-btn" id="adminLogRefresh">刷新记录</button>
-      </div>
+        <button type="button" class="qc-admin-quiet-btn" id="adminLogRefresh">刷新记录</button>
+      </section>
 
       <div class="admin-grid qc-activity-stats">
         <div class="metric"><b id="logLoadedCount">—</b><span>本次已加载</span></div>

@@ -1,0 +1,297 @@
+/* 球场档案 Admin 子页面（4页）｜与 admin.html 统一视觉，功能和权限逻辑不变 */
+body.qc-admin-subpage {
+  background: #eef2f7;
+  color: #202b46;
+}
+body.qc-admin-subpage .shell {
+  max-width: 1100px;
+  background: #f2f5fa;
+  min-height: 100vh;
+}
+body.qc-admin-subpage .header.qc-admin-header {
+  position: relative;
+  top: auto;
+  z-index: 10;
+  height: 62px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f2;
+}
+body.qc-admin-subpage .qc-admin-header .brand {
+  min-width: 0;
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 900;
+  letter-spacing: -.35px;
+  white-space: nowrap;
+}
+body.qc-admin-subpage .qc-admin-header .brand span {
+  font-size: 15px;
+  margin-left: 2px;
+  color: var(--blue);
+}
+body.qc-admin-subpage .qc-admin-return {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 13px;
+  color: #42516e;
+  background: #fff;
+  border: 1px solid #dfe5f0;
+  border-radius: 11px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 800;
+  white-space: nowrap;
+}
+body.qc-admin-subpage .qc-admin-return:hover {
+  background: #f4f7fd;
+}
+body.qc-admin-subpage .qc-admin-return:focus-visible,
+body.qc-admin-subpage .qc-admin-header .brand:focus-visible {
+  outline: 3px solid #91a8f8;
+  outline-offset: 3px;
+}
+body.qc-admin-subpage .content {
+  padding: 18px 18px 76px;
+}
+body.qc-admin-subpage .qc-admin-intro {
+  background: #fff;
+  border: 1px solid #e1e7f2;
+  border-radius: 22px;
+  padding: 21px 24px;
+  margin: 0 0 14px;
+  box-shadow: 0 5px 18px rgba(30, 55, 91, .035);
+}
+body.qc-admin-subpage .qc-admin-kicker {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: #eef3ff;
+  color: #3565d8;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.3;
+}
+body.qc-admin-subpage .qc-admin-intro h1 {
+  margin: 9px 0 7px;
+  color: #202b46;
+  font-size: 24px;
+  line-height: 1.35;
+  letter-spacing: -.35px;
+  font-weight: 900;
+}
+body.qc-admin-subpage .qc-admin-intro p {
+  margin: 0;
+  color: #78859b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+body.qc-admin-subpage .qc-admin-intro-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+body.qc-admin-subpage .qc-admin-intro-row > div {min-width: 0}
+body.qc-admin-subpage .admin-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+body.qc-admin-subpage .admin-grid .metric {
+  min-width: 0;
+  padding: 17px 16px;
+  background: #fff;
+  border: 1px solid #e0e6f0;
+  border-radius: 18px;
+  box-shadow: none;
+}
+body.qc-admin-subpage .admin-grid .metric b {
+  font-size: 28px;
+  line-height: 1.25;
+  color: #202b46;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+body.qc-admin-subpage .admin-grid .metric span {
+  display: block;
+  padding-top: 5px;
+  color: #7e8ba0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+body.qc-admin-subpage .profile-card {
+  margin: 0 0 14px;
+  padding: 21px 23px;
+  background: #fff;
+  border: 1px solid #e0e6f0;
+  border-radius: 22px;
+  box-shadow: 0 5px 18px rgba(30, 55, 91, .035);
+}
+body.qc-admin-subpage .profile-card h2 {
+  margin: 0 0 13px;
+  color: #202b46;
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 850;
+}
+body.qc-admin-subpage .profile-card h3 {color: #263550}
+body.qc-admin-subpage .admin-note {
+  color: #7c899f;
+  line-height: 1.7;
+  font-size: 13px;
+}
+body.qc-admin-subpage .admin-daily-panel {
+  margin-top: 0;
+}
+body.qc-admin-subpage .admin-daily-head {
+  gap: 12px;
+}
+body.qc-admin-subpage .admin-daily-tabs button,
+body.qc-admin-subpage .qc-activity-filters button {
+  border-radius: 10px;
+  min-height: 36px;
+}
+body.qc-admin-subpage .admin-daily-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+body.qc-admin-subpage .admin-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #edf0f6;
+  border-radius: 13px;
+}
+body.qc-admin-subpage .admin-table-wrap .brief-table {
+  margin: 0;
+}
+body.qc-admin-subpage .admin-table-wrap .brief-table th {
+  color: #65748e;
+  background: #f7f9fd;
+}
+body.qc-admin-subpage .field {
+  margin: 12px 0 17px;
+}
+body.qc-admin-subpage .field label {font-size: 14px}
+body.qc-admin-subpage .field input,
+body.qc-admin-subpage .admin-users-toolbar input {
+  max-width: 100%;
+  height: 46px;
+  border-radius: 11px;
+  font-size: 16px;
+}
+body.qc-admin-subpage .primary-btn {
+  height: 48px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 800;
+}
+body.qc-admin-subpage .qc-admin-quiet-btn {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 12px;
+  background: #f3f6fc;
+  border: 1px solid #dfe6f2;
+  border-radius: 10px;
+  color: #345bc0;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+body.qc-admin-subpage .qc-admin-quiet-btn:hover {background: #e9effc}
+body.qc-admin-subpage .qc-admin-quiet-btn:focus-visible {
+  outline: 3px solid #91a8f8;
+  outline-offset: 2px;
+}
+body.qc-admin-subpage .qc-activity-title {
+  margin: 0 0 14px;
+  align-items: center;
+}
+body.qc-admin-subpage .qc-activity-title h1 {
+  margin-top: 9px;
+}
+body.qc-admin-subpage .qc-activity-title .admin-note {
+  margin: 0;
+}
+body.qc-admin-subpage .qc-activity-stats {
+  margin-bottom: 14px;
+}
+body.qc-admin-subpage .qc-activity-panel {margin-top: 0}
+body.qc-admin-subpage .qc-activity-filters {gap: 8px}
+body.qc-admin-subpage .qc-activity-filters button {
+  font-size: 12px;
+  padding: 8px 10px;
+}
+body.qc-admin-subpage .qc-activity-toolbar {margin-top: 15px}
+body.qc-admin-subpage .qc-activity-panel .brief-table {min-width: 760px}
+@media(max-width: 760px) {
+  body.qc-admin-subpage .admin-grid,
+  body.qc-admin-subpage .admin-daily-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media(max-width: 640px) {
+  body.qc-admin-subpage .header.qc-admin-header {
+    height: 56px;
+    padding: 0 13px;
+  }
+  body.qc-admin-subpage .qc-admin-header .brand {font-size: 18px}
+  body.qc-admin-subpage .qc-admin-header .brand span {font-size: 13px}
+  body.qc-admin-subpage .qc-admin-return {
+    height: 36px;
+    padding: 0 11px;
+    font-size: 13px;
+  }
+  body.qc-admin-subpage .content {
+    padding: 12px 12px 64px;
+  }
+  body.qc-admin-subpage .qc-admin-intro {
+    padding: 18px 19px;
+    border-radius: 19px;
+    margin-bottom: 12px;
+  }
+  body.qc-admin-subpage .qc-admin-intro h1 {font-size: 21px}
+  body.qc-admin-subpage .qc-admin-intro p {font-size: 13px}
+  body.qc-admin-subpage .admin-grid {gap: 10px;margin-bottom: 12px}
+  body.qc-admin-subpage .admin-grid .metric {
+    padding: 13px 14px;
+    border-radius: 16px;
+  }
+  body.qc-admin-subpage .admin-grid .metric b {font-size: 25px}
+  body.qc-admin-subpage .admin-grid .metric span {font-size: 12px}
+  body.qc-admin-subpage .profile-card {
+    padding: 18px;
+    margin-bottom: 12px;
+    border-radius: 19px;
+  }
+  body.qc-admin-subpage .profile-card h2 {font-size: 18px}
+  body.qc-admin-subpage .admin-daily-head {
+    flex-direction: column;
+  }
+  body.qc-admin-subpage .admin-daily-tabs {
+    width: 100%;
+  }
+  body.qc-admin-subpage .admin-daily-tabs button {flex: 1}
+  body.qc-admin-subpage .qc-activity-title {align-items: flex-start}
+  body.qc-admin-subpage .qc-activity-title .qc-admin-quiet-btn {margin-top: 5px}
+  body.qc-admin-subpage .qc-activity-filters {gap: 6px}
+}
+@media(max-width: 370px) {
+  body.qc-admin-subpage .qc-admin-header .brand {font-size: 16px}
+  body.qc-admin-subpage .qc-admin-header .brand span {font-size: 12px}
+  body.qc-admin-subpage .qc-admin-return {font-size: 12px;padding:0 9px}
+  body.qc-admin-subpage .qc-admin-intro {padding: 16px}
+  body.qc-admin-subpage .profile-card {padding: 15px}
+  body.qc-admin-subpage .qc-admin-intro-row {gap: 8px}
+}
