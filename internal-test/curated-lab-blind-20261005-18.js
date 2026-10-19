@@ -70,7 +70,16 @@ function start(){
  $('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(b){state.type=b.dataset.type;render()}});
  $('revealer').addEventListener('click',()=>{state.reveal=!state.reveal;render()});
  $('mode').addEventListener('change',e=>{state.mode=e.target.value;render()});
- $('budget').addEventListener('change',e=>{let v=+e.target.value;state.budget=Number.isFinite(v)?Math.max(10,Math.min(100000,Math.round(v*100)/100)):100;e.target.value=state.budget;render()});
+ // Update simulated stakes while typing. Avoid rerender on blur because it removes
+ // the clicked "展开组合明细" target between pointerdown and click.
+ $('budget').addEventListener('input',e=>{
+   const v=Number(e.target.value);
+   if(Number.isFinite(v)&&v>=10&&v<=100000){state.budget=Math.round(v*100)/100;render()}
+ });
+ $('budget').addEventListener('blur',e=>{
+   const v=Number(e.target.value);
+   if(!Number.isFinite(v)||v<10||v>100000)e.target.value=String(state.budget);
+ });
  render();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
