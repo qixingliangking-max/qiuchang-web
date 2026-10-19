@@ -1,0 +1,3869 @@
+{
+  "type": "R1_HISTORICAL_RETROSPECTIVE_SETTLEMENT_NOT_OUT_OF_SAMPLE",
+  "hasBeenFrozenBeforeThisScoreQuery": true,
+  "sourceFreezeBlobSha": "beafa293d283c042beb4856d0ecbc6e800817d29",
+  "selectionCutoff": "strict as-of snapshots with pre-fixture or pre-first-fixture portfolio coherence",
+  "observations": "Complete result only counted with both fulltime and halftime and state completed. Suspended, missing, and future results pending without stake.",
+  "note": "Archived V1 selection reused but new payout floor rejects certain archived winning/losing combos. Results are not original V1.0 ROI or proof of model edge.",
+  "totals": {
+    "planned": 107,
+    "settled": 102,
+    "hits": 29,
+    "misses": 73,
+    "pending": 5,
+    "stake": 102000,
+    "payout": 74041.83,
+    "net": -27958.17
+  },
+  "summary": {
+    "direction": {
+      "id": "direction",
+      "days": 27,
+      "fixturesAvailableDays": 23,
+      "planned": 18,
+      "settled": 17,
+      "hits": 11,
+      "misses": 6,
+      "pending": 1,
+      "abstain": 5,
+      "noDataDays": 4,
+      "stake": 17000,
+      "payout": 22829.6,
+      "archived": 9,
+      "heuristic": 9,
+      "net": 5829.6,
+      "hitRate": 64.71,
+      "roi": 34.29
+    },
+    "htft": {
+      "id": "htft",
+      "days": 27,
+      "fixturesAvailableDays": 23,
+      "planned": 23,
+      "settled": 22,
+      "hits": 9,
+      "misses": 13,
+      "pending": 1,
+      "abstain": 0,
+      "noDataDays": 4,
+      "stake": 22000,
+      "payout": 18450,
+      "archived": 0,
+      "heuristic": 23,
+      "net": -3550,
+      "hitRate": 40.91,
+      "roi": -16.14
+    },
+    "goals": {
+      "id": "goals",
+      "days": 27,
+      "fixturesAvailableDays": 23,
+      "planned": 23,
+      "settled": 22,
+      "hits": 5,
+      "misses": 17,
+      "pending": 1,
+      "abstain": 0,
+      "noDataDays": 4,
+      "stake": 22000,
+      "payout": 9875,
+      "archived": 0,
+      "heuristic": 23,
+      "net": -12125,
+      "hitRate": 22.73,
+      "roi": -55.11
+    },
+    "score_2": {
+      "id": "score_2",
+      "days": 27,
+      "fixturesAvailableDays": 23,
+      "planned": 22,
+      "settled": 21,
+      "hits": 3,
+      "misses": 18,
+      "pending": 1,
+      "abstain": 1,
+      "noDataDays": 4,
+      "stake": 21000,
+      "payout": 14944.29,
+      "archived": 13,
+      "heuristic": 9,
+      "net": -6055.71,
+      "hitRate": 14.29,
+      "roi": -28.84
+    },
+    "score_3": {
+      "id": "score_3",
+      "days": 27,
+      "fixturesAvailableDays": 23,
+      "planned": 21,
+      "settled": 20,
+      "hits": 1,
+      "misses": 19,
+      "pending": 1,
+      "abstain": 2,
+      "noDataDays": 4,
+      "stake": 20000,
+      "payout": 7942.94,
+      "archived": 0,
+      "heuristic": 21,
+      "net": -12057.06,
+      "hitRate": 5,
+      "roi": -60.29
+    }
+  },
+  "daily": {
+    "2026-09-23": {
+      "fixtures": 3,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1654.4,
+          "payout": 2654.4,
+          "minPayout": 2654.4,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4f50411f-8682-45e8-8b48-20e68fbc7de9",
+              "home": "日本亚足",
+              "away": "泰国亚运男足",
+              "market": "hhad",
+              "picks": "让胜@1.58",
+              "resultKey": "h",
+              "ft": "3-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "4f50411f-8682-45e8-8b48-20e68fbc7de9"
+            },
+            {
+              "num": null,
+              "fixture": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2",
+              "home": "西雅图海湾人",
+              "away": "皇家盐湖城",
+              "market": "had",
+              "picks": "胜@1.68",
+              "resultKey": "h",
+              "ft": "2-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2850,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2",
+              "home": "西雅图海湾人",
+              "away": "皇家盐湖城",
+              "market": "hafu",
+              "picks": "胜/胜@2.85",
+              "resultKey": "dh",
+              "ft": "2-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2"
+            }
+          ]
+        },
+        "goals": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1250,
+          "payout": 2250,
+          "minPayout": 2125,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4f50411f-8682-45e8-8b48-20e68fbc7de9",
+              "home": "日本亚足",
+              "away": "泰国亚运男足",
+              "market": "ttg",
+              "picks": "3球@4.5 / 4球@4.25",
+              "resultKey": "s3",
+              "ft": "3-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "4f50411f-8682-45e8-8b48-20e68fbc7de9"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4340.23,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2",
+              "home": "西雅图海湾人",
+              "away": "皇家盐湖城",
+              "market": "crs",
+              "picks": "1-0@10.5 / 2-1@6.25 / 1-1@7.55",
+              "resultKey": "s02s00",
+              "ft": "2-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "4d153518-d6c7-45d9-ba62-ad574ed7e2c2"
+            },
+            {
+              "num": null,
+              "fixture": "4f50411f-8682-45e8-8b48-20e68fbc7de9",
+              "home": "日本亚足",
+              "away": "泰国亚运男足",
+              "market": "crs",
+              "picks": "2-0@7.5 / 3-0@6.25 / 2-1@13.5",
+              "resultKey": "s03s00",
+              "ft": "3-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "4f50411f-8682-45e8-8b48-20e68fbc7de9"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "ABSTAIN",
+          "reason": "NO_GROUP_PASSED_RETURN_AND_PREMATCH_CHECK",
+          "legacyMinPayout": null
+        }
+      }
+    },
+    "2026-09-24": {
+      "fixtures": 8,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1451.6,
+          "payout": 2451.6,
+          "minPayout": 2451.6,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "448513e4-4c2c-4f6e-8047-a0550ed59c4d",
+              "home": "葡萄牙",
+              "away": "威尔士",
+              "market": "had",
+              "picks": "胜@1.08",
+              "resultKey": "h",
+              "ft": "1-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "448513e4-4c2c-4f6e-8047-a0550ed59c4d"
+            },
+            {
+              "num": null,
+              "fixture": "21a58867-6ced-41b6-a1b4-b555fd52e013",
+              "home": "科索沃",
+              "away": "爱尔兰",
+              "market": "had",
+              "picks": "胜@2.27",
+              "resultKey": "h",
+              "ft": "1-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "21a58867-6ced-41b6-a1b4-b555fd52e013"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1600,
+          "payout": 2600,
+          "minPayout": 2600,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "e111698b-06fa-427f-8de5-e40eba0cc8f0",
+              "home": "挪威",
+              "away": "丹麦",
+              "market": "hafu",
+              "picks": "胜/胜@2.6",
+              "resultKey": "hh",
+              "ft": "3-2",
+              "ht": "2-1",
+              "dataStatus": "completed",
+              "matchId": "e111698b-06fa-427f-8de5-e40eba0cc8f0"
+            }
+          ]
+        },
+        "goals": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1050,
+          "payout": 2050,
+          "minPayout": 1850,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "21a58867-6ced-41b6-a1b4-b555fd52e013",
+              "home": "科索沃",
+              "away": "爱尔兰",
+              "market": "ttg",
+              "picks": "1球@4.1 / 3球@3.7",
+              "resultKey": "s1",
+              "ft": "1-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "21a58867-6ced-41b6-a1b4-b555fd52e013"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4549.95,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+              "home": "中国",
+              "away": "马尔代夫",
+              "market": "crs",
+              "picks": "3-0@6.5 / 4-0@6.3 / 5-0@6.9",
+              "resultKey": "s03s00",
+              "ft": "3-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "c7a97bc4-b077-48cd-ae07-67fef74875e9"
+            },
+            {
+              "num": null,
+              "fixture": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+              "home": "日本",
+              "away": "乌拉圭",
+              "market": "crs",
+              "picks": "1-0@6.5 / 1-1@6.5 / 2-0@7.75",
+              "resultKey": "s03s01",
+              "ft": "3-1",
+              "ht": "1-1",
+              "dataStatus": "completed",
+              "matchId": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 6366.25,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "68737706-42ce-490d-8cf9-acdf1e8e3492",
+              "home": "塞尔维亚",
+              "away": "希腊",
+              "market": "crs",
+              "picks": "1-1@5 / 0-1@8 / 1-2@9",
+              "resultKey": "s01s02",
+              "ft": "1-2",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "68737706-42ce-490d-8cf9-acdf1e8e3492"
+            },
+            {
+              "num": null,
+              "fixture": "21a58867-6ced-41b6-a1b4-b555fd52e013",
+              "home": "科索沃",
+              "away": "爱尔兰",
+              "market": "crs",
+              "picks": "1-1@5.5 / 1-0@7.5 / 2-1@8.5",
+              "resultKey": "s01s00",
+              "ft": "1-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "21a58867-6ced-41b6-a1b4-b555fd52e013"
+            },
+            {
+              "num": null,
+              "fixture": "448513e4-4c2c-4f6e-8047-a0550ed59c4d",
+              "home": "葡萄牙",
+              "away": "威尔士",
+              "market": "crs",
+              "picks": "2-0@6.25 / 3-0@6.5 / 2-1@8.5",
+              "resultKey": "s01s00",
+              "ft": "1-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "448513e4-4c2c-4f6e-8047-a0550ed59c4d"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-25": {
+      "fixtures": 13,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1873.3,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "home": "瑞典",
+              "away": "罗马尼亚",
+              "market": "had",
+              "picks": "胜@1.31",
+              "resultKey": "h",
+              "ft": "2-1",
+              "ht": "2-1",
+              "dataStatus": "completed",
+              "matchId": "7a49a7f9-b6a9-41e3-a720-15ca57160402"
+            },
+            {
+              "num": null,
+              "fixture": "99f9666f-f7b1-4a73-9e0a-9b7897511a3f",
+              "home": "波兰",
+              "away": "波黑",
+              "market": "had",
+              "picks": "胜@1.43",
+              "resultKey": "d",
+              "ft": "0-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "99f9666f-f7b1-4a73-9e0a-9b7897511a3f"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 900,
+          "payout": 1900,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "home": "瑞典",
+              "away": "罗马尼亚",
+              "market": "hafu",
+              "picks": "胜/胜@1.9",
+              "resultKey": "hh",
+              "ft": "2-1",
+              "ht": "2-1",
+              "dataStatus": "completed",
+              "matchId": "7a49a7f9-b6a9-41e3-a720-15ca57160402"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1850,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+              "home": "土耳其",
+              "away": "法国",
+              "market": "ttg",
+              "picks": "3球@3.7 / 4球@3.9",
+              "resultKey": "s1",
+              "ft": "0-1",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "c47ceeae-0c8a-428c-842e-8a5c2076076a"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3297.74,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "2a3c77d9-a5ee-465e-b16f-498a31eaf085",
+              "home": "韩国女足",
+              "away": "乌兹别克斯坦女足",
+              "market": "crs",
+              "picks": "2-0@6.5 / 3-0@5.3 / 4-0@6.25",
+              "resultKey": "s06s03",
+              "ft": "6-3",
+              "ht": "4-1",
+              "dataStatus": "completed",
+              "matchId": "2a3c77d9-a5ee-465e-b16f-498a31eaf085"
+            },
+            {
+              "num": null,
+              "fixture": "48bf4da9-29db-4eca-b956-5e8c1304f5ea",
+              "home": "韩国亚运男足",
+              "away": "越南亚运男足",
+              "market": "crs",
+              "picks": "2-0@6 / 4-0@7.25 / 3-0@5.6",
+              "resultKey": "s04s00",
+              "ft": "4-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "48bf4da9-29db-4eca-b956-5e8c1304f5ea"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 10169.36,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "e3a937fa-d8e9-4870-beed-fc93df1f3e97",
+              "home": "亚美尼亚",
+              "away": "拉脱维亚",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@7.5 / 1-1@6.5",
+              "resultKey": "s02s00",
+              "ft": "2-0",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "e3a937fa-d8e9-4870-beed-fc93df1f3e97"
+            },
+            {
+              "num": null,
+              "fixture": "3f6fb3b0-7d03-4b96-8b2f-2b01f574d1bf",
+              "home": "格鲁吉亚",
+              "away": "北爱尔兰",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@8 / 1-1@6.5",
+              "resultKey": "s00s01",
+              "ft": "0-1",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "3f6fb3b0-7d03-4b96-8b2f-2b01f574d1bf"
+            },
+            {
+              "num": null,
+              "fixture": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+              "home": "瑞典",
+              "away": "罗马尼亚",
+              "market": "crs",
+              "picks": "2-1@6.5 / 1-1@8.25 / 2-0@6.75",
+              "resultKey": "s02s01",
+              "ft": "2-1",
+              "ht": "2-1",
+              "dataStatus": "completed",
+              "matchId": "7a49a7f9-b6a9-41e3-a720-15ca57160402"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-26": {
+      "fixtures": 25,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1809.6,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3",
+              "home": "冰岛",
+              "away": "爱沙尼亚",
+              "market": "had",
+              "picks": "胜@1.16",
+              "resultKey": "d",
+              "ft": "1:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3"
+            },
+            {
+              "num": null,
+              "fixture": "20531372-d2f0-4d26-a658-f3f904a09419",
+              "home": "加拿大",
+              "away": "智利",
+              "market": "had",
+              "picks": "胜@1.56",
+              "resultKey": "h",
+              "ft": "1:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "20531372-d2f0-4d26-a658-f3f904a09419"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 860,
+          "payout": 1860,
+          "minPayout": 1860,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "3575e04d-c81f-48b1-bda3-1b0ffc49886b",
+              "home": "纳什维尔",
+              "away": "多伦多FC",
+              "market": "hafu",
+              "picks": "胜/胜@1.86",
+              "resultKey": "hh",
+              "ft": "2:0",
+              "ht": "2:0",
+              "dataStatus": "completed",
+              "matchId": "3575e04d-c81f-48b1-bda3-1b0ffc49886b"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "658dd310-815f-449d-9adc-c5228f4bd7c0",
+              "home": "日本亚足",
+              "away": "朝鲜亚运男足",
+              "market": "ttg",
+              "picks": "2球@3.9 / 3球@3.6",
+              "resultKey": "s1",
+              "ft": "1:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "658dd310-815f-449d-9adc-c5228f4bd7c0"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3055.53,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "02e73e7b-0d90-48ab-a644-deaf64c10664",
+              "home": "保加利亚",
+              "away": "卢森堡",
+              "market": "crs",
+              "picks": "1-0@5.75 / 1-1@5 / 0-1@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "02e73e7b-0d90-48ab-a644-deaf64c10664"
+            },
+            {
+              "num": null,
+              "fixture": "ee112701-3b3e-4630-8d8e-5ca55af2d423",
+              "home": "北马其顿",
+              "away": "瑞士",
+              "market": "crs",
+              "picks": "0-2@5.5 / 0-1@5.75 / 1-2@7.5",
+              "resultKey": "s00s03",
+              "ft": "0:3",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ee112701-3b3e-4630-8d8e-5ca55af2d423"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 5347.65,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "02e73e7b-0d90-48ab-a644-deaf64c10664",
+              "home": "保加利亚",
+              "away": "卢森堡",
+              "market": "crs",
+              "picks": "1-0@5.75 / 1-1@5 / 0-1@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "02e73e7b-0d90-48ab-a644-deaf64c10664"
+            },
+            {
+              "num": null,
+              "fixture": "ee112701-3b3e-4630-8d8e-5ca55af2d423",
+              "home": "北马其顿",
+              "away": "瑞士",
+              "market": "crs",
+              "picks": "0-2@5.5 / 0-1@5.75 / 1-2@7.5",
+              "resultKey": "s00s03",
+              "ft": "0:3",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ee112701-3b3e-4630-8d8e-5ca55af2d423"
+            },
+            {
+              "num": null,
+              "fixture": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3",
+              "home": "冰岛",
+              "away": "爱沙尼亚",
+              "market": "crs",
+              "picks": "2-0@5.25 / 2-1@7.5 / 3-0@7",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-27": {
+      "fixtures": 9,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 806,
+          "payout": 1806,
+          "minPayout": 1806,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "10eb5137-032f-4dd6-9010-387b4ef4802e",
+              "home": "塞尔维亚",
+              "away": "荷兰",
+              "market": "had",
+              "picks": "负@1.29",
+              "resultKey": "a",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "10eb5137-032f-4dd6-9010-387b4ef4802e"
+            },
+            {
+              "num": null,
+              "fixture": "38c93464-de3a-4301-905e-3a417bf241b0",
+              "home": "奥地利",
+              "away": "科索沃",
+              "market": "had",
+              "picks": "胜@1.4",
+              "resultKey": "h",
+              "ft": "3:1",
+              "ht": "2:0",
+              "dataStatus": "completed",
+              "matchId": "38c93464-de3a-4301-905e-3a417bf241b0"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "c664a2ac-bdb0-4abd-9a1e-d04c67a4c57e",
+              "home": "丹麦",
+              "away": "威尔士",
+              "market": "hafu",
+              "picks": "胜/胜@1.8",
+              "resultKey": "dh",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "c664a2ac-bdb0-4abd-9a1e-d04c67a4c57e"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1850,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+              "home": "江原FC",
+              "away": "仁川联",
+              "market": "ttg",
+              "picks": "1球@3.7 / 3球@3.9",
+              "resultKey": "s0",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "bda0b40f-48d3-45b8-979d-6d70dd37e881"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3799.96,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+              "home": "江原FC",
+              "away": "仁川联",
+              "market": "crs",
+              "picks": "1-0@6.25 / 1-1@5.7 / 2-1@8",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "bda0b40f-48d3-45b8-979d-6d70dd37e881"
+            },
+            {
+              "num": null,
+              "fixture": "a5653d27-6008-4b99-b1f0-bcad905fb9b6",
+              "home": "中国",
+              "away": "新西兰",
+              "market": "crs",
+              "picks": "1-1@6 / 0-1@6.75 / 1-2@7.5",
+              "resultKey": "s00s03",
+              "ft": "0:3",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "a5653d27-6008-4b99-b1f0-bcad905fb9b6"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 8233.99,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+              "home": "江原FC",
+              "away": "仁川联",
+              "market": "crs",
+              "picks": "1-0@6.25 / 1-1@5.7 / 2-1@8",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "bda0b40f-48d3-45b8-979d-6d70dd37e881"
+            },
+            {
+              "num": null,
+              "fixture": "a5653d27-6008-4b99-b1f0-bcad905fb9b6",
+              "home": "中国",
+              "away": "新西兰",
+              "market": "crs",
+              "picks": "1-1@6 / 0-1@6.75 / 1-2@7.5",
+              "resultKey": "s00s03",
+              "ft": "0:3",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "a5653d27-6008-4b99-b1f0-bcad905fb9b6"
+            },
+            {
+              "num": null,
+              "fixture": "c664a2ac-bdb0-4abd-9a1e-d04c67a4c57e",
+              "home": "丹麦",
+              "away": "威尔士",
+              "market": "crs",
+              "picks": "1-0@7.75 / 2-0@6.5 / 2-1@7",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "c664a2ac-bdb0-4abd-9a1e-d04c67a4c57e"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-28": {
+      "fixtures": 8,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 989,
+          "payout": 1989,
+          "minPayout": 1989,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "home": "日本",
+              "away": "委内瑞拉",
+              "market": "had",
+              "picks": "胜@1.17",
+              "resultKey": "h",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce"
+            },
+            {
+              "num": null,
+              "fixture": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "home": "比利时",
+              "away": "法国",
+              "market": "had",
+              "picks": "负@1.7",
+              "resultKey": "a",
+              "ft": "0:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "b1535762-d897-4d14-a1b3-ccb52f274b06"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2720,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+              "home": "比利时",
+              "away": "法国",
+              "market": "hafu",
+              "picks": "负/负@2.72",
+              "resultKey": "da",
+              "ft": "0:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "b1535762-d897-4d14-a1b3-ccb52f274b06"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+              "home": "瑞典",
+              "away": "波兰",
+              "market": "ttg",
+              "picks": "2球@3.8 / 3球@3.6",
+              "resultKey": "s4",
+              "ft": "3:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3705.52,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "home": "日本",
+              "away": "委内瑞拉",
+              "market": "crs",
+              "picks": "2-0@5.75 / 1-0@6.75 / 3-0@7.5",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce"
+            },
+            {
+              "num": null,
+              "fixture": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+              "home": "北爱尔兰",
+              "away": "匈牙利",
+              "market": "crs",
+              "picks": "0-1@7.25 / 1-1@5.8 / 0-2@12",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "32ec4818-6816-411b-b02e-3b1aeab1b6a4"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 7411.7,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+              "home": "日本",
+              "away": "委内瑞拉",
+              "market": "crs",
+              "picks": "2-0@5.75 / 1-0@6.75 / 3-0@7.5",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce"
+            },
+            {
+              "num": null,
+              "fixture": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+              "home": "北爱尔兰",
+              "away": "匈牙利",
+              "market": "crs",
+              "picks": "0-1@7.25 / 1-1@5.8 / 0-2@12",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "32ec4818-6816-411b-b02e-3b1aeab1b6a4"
+            },
+            {
+              "num": null,
+              "fixture": "0b3b20ac-df39-481e-bae5-ca0736066e7b",
+              "home": "亚美尼亚",
+              "away": "黑山",
+              "market": "crs",
+              "picks": "0-1@7.75 / 1-1@6 / 0-2@13",
+              "resultKey": "s02s03",
+              "ft": "2:3",
+              "ht": "1:2",
+              "dataStatus": "completed",
+              "matchId": "0b3b20ac-df39-481e-bae5-ca0736066e7b"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-29": {
+      "fixtures": 15,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 812.6,
+          "payout": 1812.6,
+          "minPayout": 1812.6,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "433aa3cb-596b-409c-9d91-0e416bd4d497",
+              "home": "西班牙",
+              "away": "克罗地亚",
+              "market": "had",
+              "picks": "胜@1.14",
+              "resultKey": "h",
+              "ft": "4:1",
+              "ht": "2:1",
+              "dataStatus": "completed",
+              "matchId": "433aa3cb-596b-409c-9d91-0e416bd4d497"
+            },
+            {
+              "num": null,
+              "fixture": "f719ad19-7009-4af5-9ff3-47d176c15535",
+              "home": "富山胜利",
+              "away": "浦和红钻",
+              "market": "had",
+              "picks": "负@1.59",
+              "resultKey": "a",
+              "ft": "2:3",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "f719ad19-7009-4af5-9ff3-47d176c15535"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2030,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bd6e87ad-a58b-4f09-a49c-01cebc0d4b92",
+              "home": "美国",
+              "away": "智利",
+              "market": "hafu",
+              "picks": "胜/胜@2.03",
+              "resultKey": "dh",
+              "ft": "4:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "bd6e87ad-a58b-4f09-a49c-01cebc0d4b92"
+            }
+          ]
+        },
+        "goals": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 825,
+          "payout": 1825,
+          "minPayout": 1825,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "e8dff224-b59d-4183-ad2c-da9570b4c404",
+              "home": "藤枝MYFC",
+              "away": "大阪樱花",
+              "market": "ttg",
+              "picks": "2球@3.7 / 3球@3.65",
+              "resultKey": "s3",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "e8dff224-b59d-4183-ad2c-da9570b4c404"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3383.3,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b88b3413-c752-4f3e-9c5d-b97cdeb95699",
+              "home": "斯洛文尼亚",
+              "away": "北马其顿",
+              "market": "crs",
+              "picks": "1-0@5.25 / 1-1@7.3 / 2-0@6.25",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "b88b3413-c752-4f3e-9c5d-b97cdeb95699"
+            },
+            {
+              "num": null,
+              "fixture": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "home": "斯洛伐克",
+              "away": "哈萨克斯坦",
+              "market": "crs",
+              "picks": "1-0@6.25 / 2-0@5.8 / 3-0@7",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "e806b941-02ed-4859-8dd3-15a182c0ac38"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 6767.21,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b88b3413-c752-4f3e-9c5d-b97cdeb95699",
+              "home": "斯洛文尼亚",
+              "away": "北马其顿",
+              "market": "crs",
+              "picks": "1-0@5.25 / 1-1@7.3 / 2-0@6.25",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "b88b3413-c752-4f3e-9c5d-b97cdeb95699"
+            },
+            {
+              "num": null,
+              "fixture": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+              "home": "斯洛伐克",
+              "away": "哈萨克斯坦",
+              "market": "crs",
+              "picks": "1-0@6.25 / 2-0@5.8 / 3-0@7",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "e806b941-02ed-4859-8dd3-15a182c0ac38"
+            },
+            {
+              "num": null,
+              "fixture": "9919f313-f42f-42d3-83eb-55ba440ea6b7",
+              "home": "保加利亚",
+              "away": "爱沙尼亚",
+              "market": "crs",
+              "picks": "1-0@6 / 0-0@8.75 / 2-0@7",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9919f313-f42f-42d3-83eb-55ba440ea6b7"
+            }
+          ]
+        }
+      }
+    },
+    "2026-09-30": {
+      "fixtures": 2,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2013,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+              "home": "韩国亚运男足",
+              "away": "中国亚运男足",
+              "market": "had",
+              "picks": "胜@1.22",
+              "resultKey": "h",
+              "ft": "2-1",
+              "ht": "1-1",
+              "dataStatus": "completed",
+              "matchId": "0854dc7e-bd15-4e23-9270-e4839fb3754a"
+            },
+            {
+              "num": null,
+              "fixture": "b65e2d21-5668-4fac-b920-76725a3b036f",
+              "home": "乌兹别克亚运男足",
+              "away": "日本亚足",
+              "market": "had",
+              "picks": "负@1.65",
+              "resultKey": "d",
+              "ft": "1-1",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "b65e2d21-5668-4fac-b920-76725a3b036f"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2550,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b65e2d21-5668-4fac-b920-76725a3b036f",
+              "home": "乌兹别克亚运男足",
+              "away": "日本亚足",
+              "market": "hafu",
+              "picks": "负/负@2.55",
+              "resultKey": "hd",
+              "ft": "1-1",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "b65e2d21-5668-4fac-b920-76725a3b036f"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b65e2d21-5668-4fac-b920-76725a3b036f",
+              "home": "乌兹别克亚运男足",
+              "away": "日本亚足",
+              "market": "ttg",
+              "picks": "1球@4.4 / 3球@3.8",
+              "resultKey": "s2",
+              "ft": "1-1",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "b65e2d21-5668-4fac-b920-76725a3b036f"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3611.08,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+              "home": "韩国亚运男足",
+              "away": "中国亚运男足",
+              "market": "crs",
+              "picks": "1-0@5.3 / 2-0@5.2 / 3-0@6.5",
+              "resultKey": "s02s01",
+              "ft": "2-1",
+              "ht": "1-1",
+              "dataStatus": "completed",
+              "matchId": "0854dc7e-bd15-4e23-9270-e4839fb3754a"
+            },
+            {
+              "num": null,
+              "fixture": "b65e2d21-5668-4fac-b920-76725a3b036f",
+              "home": "乌兹别克亚运男足",
+              "away": "日本亚足",
+              "market": "crs",
+              "picks": "0-1@6.25 / 1-1@7 / 0-2@7.5",
+              "resultKey": "s01s01",
+              "ft": "1-1",
+              "ht": "1-0",
+              "dataStatus": "completed",
+              "matchId": "b65e2d21-5668-4fac-b920-76725a3b036f"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "ABSTAIN",
+          "reason": "NO_GROUP_PASSED_RETURN_AND_PREMATCH_CHECK",
+          "legacyMinPayout": null
+        }
+      }
+    },
+    "2026-10-01": {
+      "fixtures": 0,
+      "projects": {
+        "direction": {
+          "state": "NO_FIXTURES"
+        },
+        "htft": {
+          "state": "NO_FIXTURES"
+        },
+        "goals": {
+          "state": "NO_FIXTURES"
+        },
+        "score_2": {
+          "state": "NO_FIXTURES"
+        },
+        "score_3": {
+          "state": "NO_FIXTURES"
+        }
+      }
+    },
+    "2026-10-02": {
+      "fixtures": 0,
+      "projects": {
+        "direction": {
+          "state": "NO_FIXTURES"
+        },
+        "htft": {
+          "state": "NO_FIXTURES"
+        },
+        "goals": {
+          "state": "NO_FIXTURES"
+        },
+        "score_2": {
+          "state": "NO_FIXTURES"
+        },
+        "score_3": {
+          "state": "NO_FIXTURES"
+        }
+      }
+    },
+    "2026-10-03": {
+      "fixtures": 0,
+      "projects": {
+        "direction": {
+          "state": "NO_FIXTURES"
+        },
+        "htft": {
+          "state": "NO_FIXTURES"
+        },
+        "goals": {
+          "state": "NO_FIXTURES"
+        },
+        "score_2": {
+          "state": "NO_FIXTURES"
+        },
+        "score_3": {
+          "state": "NO_FIXTURES"
+        }
+      }
+    },
+    "2026-10-04": {
+      "fixtures": 0,
+      "projects": {
+        "direction": {
+          "state": "NO_FIXTURES"
+        },
+        "htft": {
+          "state": "NO_FIXTURES"
+        },
+        "goals": {
+          "state": "NO_FIXTURES"
+        },
+        "score_2": {
+          "state": "NO_FIXTURES"
+        },
+        "score_3": {
+          "state": "NO_FIXTURES"
+        }
+      }
+    },
+    "2026-10-05": {
+      "fixtures": 7,
+      "projects": {
+        "direction": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_BELOW_CURRENT_MIN_RETURN",
+          "legacyMinPayout": 1795.6
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "c215b187-ec74-4a55-bd16-473099903ff5",
+              "home": "法国",
+              "away": "比利时",
+              "market": "hafu",
+              "picks": "胜/胜@1.9",
+              "resultKey": "ah",
+              "ft": "4:1",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "c215b187-ec74-4a55-bd16-473099903ff5"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1825,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf",
+              "home": "黑山",
+              "away": "亚美尼亚",
+              "market": "ttg",
+              "picks": "2球@3.8 / 3球@3.65",
+              "resultKey": "s0",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 5055.51,
+          "legs": [
+            {
+              "num": "周一001",
+              "fixture": "2026-10-05|周一001",
+              "home": "塞浦路斯",
+              "away": "拉脱维亚",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@7 / 1-1@7",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb"
+            },
+            {
+              "num": "周一006",
+              "fixture": "2026-10-05|周一006",
+              "home": "黑山",
+              "away": "亚美尼亚",
+              "market": "crs",
+              "picks": "2-0@7.5 / 1-0@7.5 / 2-1@7",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 11291.64,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+              "home": "塞浦路斯",
+              "away": "拉脱维亚",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@7 / 1-1@7",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb"
+            },
+            {
+              "num": null,
+              "fixture": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf",
+              "home": "黑山",
+              "away": "亚美尼亚",
+              "market": "crs",
+              "picks": "2-0@7.5 / 1-0@7.5 / 2-1@7",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf"
+            },
+            {
+              "num": null,
+              "fixture": "ef8680ff-85ff-48b3-aa05-da77f696f012",
+              "home": "波黑",
+              "away": "波兰",
+              "market": "crs",
+              "picks": "1-1@6.7 / 0-1@9 / 1-2@7.5",
+              "resultKey": "s01s00",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "ef8680ff-85ff-48b3-aa05-da77f696f012"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-06": {
+      "fixtures": 12,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 950,
+          "payout": 1950,
+          "minPayout": 1950,
+          "legs": [
+            {
+              "num": "周二010",
+              "fixture": "2026-10-06|周二010",
+              "home": "摩尔多瓦",
+              "away": "斯洛伐克",
+              "market": "had",
+              "picks": "普通客胜@1.3",
+              "resultKey": "a",
+              "ft": "0:4",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ac3f00a2-b20a-4650-8d97-751cc2676c58"
+            },
+            {
+              "num": "周二001",
+              "fixture": "2026-10-06|周二001",
+              "home": "韩国",
+              "away": "乌兹别克斯坦",
+              "market": "had",
+              "picks": "普通主胜@1.5",
+              "resultKey": "h",
+              "ft": "2:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "9d37d8d5-c016-461b-86ac-f745602003a0"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 950,
+          "payout": 1950,
+          "minPayout": 1950,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+              "home": "摩尔多瓦",
+              "away": "斯洛伐克",
+              "market": "hafu",
+              "picks": "负/负@1.95",
+              "resultKey": "aa",
+              "ft": "0:4",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ac3f00a2-b20a-4650-8d97-751cc2676c58"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1875,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "f4295f54-9705-4457-bedb-a097e50e0d9b",
+              "home": "卢森堡",
+              "away": "保加利亚",
+              "market": "ttg",
+              "picks": "1球@3.75 / 3球@3.85",
+              "resultKey": "s2",
+              "ft": "0:2",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "f4295f54-9705-4457-bedb-a097e50e0d9b"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4152.74,
+          "legs": [
+            {
+              "num": "周二010",
+              "fixture": "2026-10-06|周二010",
+              "home": "摩尔多瓦",
+              "away": "斯洛伐克",
+              "market": "crs",
+              "picks": "0-1@6.75 / 0-2@5.75 / 1-2@7.25",
+              "resultKey": "s00s04",
+              "ft": "0:4",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ac3f00a2-b20a-4650-8d97-751cc2676c58"
+            },
+            {
+              "num": "周二002",
+              "fixture": "2026-10-06|周二002",
+              "home": "中国",
+              "away": "塔吉克斯坦",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@6.5 / 2-1@7.25",
+              "resultKey": "s00s01",
+              "ft": "0:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "6d840f6a-43d0-4dc9-b061-d0951605c058"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 8306.22,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+              "home": "摩尔多瓦",
+              "away": "斯洛伐克",
+              "market": "crs",
+              "picks": "0-1@6.75 / 0-2@5.75 / 1-2@7.25",
+              "resultKey": "s00s04",
+              "ft": "0:4",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "ac3f00a2-b20a-4650-8d97-751cc2676c58"
+            },
+            {
+              "num": null,
+              "fixture": "f4295f54-9705-4457-bedb-a097e50e0d9b",
+              "home": "卢森堡",
+              "away": "保加利亚",
+              "market": "crs",
+              "picks": "1-0@6 / 1-1@6.5 / 2-1@7.75",
+              "resultKey": "s00s02",
+              "ft": "0:2",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "f4295f54-9705-4457-bedb-a097e50e0d9b"
+            },
+            {
+              "num": null,
+              "fixture": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+              "home": "中国",
+              "away": "塔吉克斯坦",
+              "market": "crs",
+              "picks": "1-0@6.5 / 2-0@6.5 / 2-1@7.25",
+              "resultKey": "s00s01",
+              "ft": "0:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "6d840f6a-43d0-4dc9-b061-d0951605c058"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-07": {
+      "fixtures": 6,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2205,
+          "legs": [
+            {
+              "num": "周三005",
+              "fixture": "2026-10-07|周三005",
+              "home": "维多利亚",
+              "away": "沙佩科恩斯",
+              "market": "had",
+              "picks": "普通主胜@1.47",
+              "resultKey": "h",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56"
+            },
+            {
+              "num": "周三006",
+              "fixture": "2026-10-07|周三006",
+              "home": "博塔弗戈",
+              "away": "瓦斯科达伽马",
+              "market": "hhad",
+              "picks": "让胜（+1）@1.5",
+              "resultKey": "d",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "d4a2da22-5491-4499-93b6-1432bf145896"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1200,
+          "payout": 2200,
+          "minPayout": 2200,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "home": "维多利亚",
+              "away": "沙佩科恩斯",
+              "market": "hafu",
+              "picks": "胜/胜@2.2",
+              "resultKey": "hh",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56"
+            }
+          ]
+        },
+        "goals": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 800,
+          "payout": 1800,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "1d62dd29-cbda-43c4-ab21-98de8c533f97",
+              "home": "布拉干蒂诺RB",
+              "away": "米拉索尔",
+              "market": "ttg",
+              "picks": "2球@3.6 / 3球@3.6",
+              "resultKey": "s2",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "1d62dd29-cbda-43c4-ab21-98de8c533f97"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 4333.28,
+          "payout": 5333.28,
+          "minPayout": 3666.63,
+          "legs": [
+            {
+              "num": "周三002",
+              "fixture": "2026-10-07|周三002",
+              "home": "巴西国际",
+              "away": "科林蒂安",
+              "market": "crs",
+              "picks": "1-0@7 / 1-1@5.5 / 2-1@8",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "0c26a489-270d-41e4-a104-e4566bbe0c10"
+            },
+            {
+              "num": "周三003",
+              "fixture": "2026-10-07|周三003",
+              "home": "里莫",
+              "away": "格雷米奥",
+              "market": "crs",
+              "picks": "2-1@7.75 / 1-0@8 / 1-1@6",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "774621d5-4c89-4175-b727-7ade2c4beb61"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 8556.24,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+              "home": "巴西国际",
+              "away": "科林蒂安",
+              "market": "crs",
+              "picks": "1-0@7 / 1-1@5.5 / 2-1@8",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "0c26a489-270d-41e4-a104-e4566bbe0c10"
+            },
+            {
+              "num": null,
+              "fixture": "774621d5-4c89-4175-b727-7ade2c4beb61",
+              "home": "里莫",
+              "away": "格雷米奥",
+              "market": "crs",
+              "picks": "2-1@7.75 / 1-0@8 / 1-1@6",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "774621d5-4c89-4175-b727-7ade2c4beb61"
+            },
+            {
+              "num": null,
+              "fixture": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+              "home": "维多利亚",
+              "away": "沙佩科恩斯",
+              "market": "crs",
+              "picks": "2-0@7 / 1-0@7 / 1-1@8",
+              "resultKey": "s04s00",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-08": {
+      "fixtures": 6,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1807.8,
+          "legs": [
+            {
+              "num": "周四005",
+              "fixture": "2026-10-08|周四005",
+              "home": "弗鲁米嫩塞",
+              "away": "科里蒂巴",
+              "market": "had",
+              "picks": "普通主胜@1.31",
+              "resultKey": "h",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "81d8e49a-23ea-49b8-9513-900514566f39"
+            },
+            {
+              "num": "周四002",
+              "fixture": "2026-10-08|周四002",
+              "home": "库奥皮奥",
+              "away": "AC奥卢",
+              "market": "had",
+              "picks": "普通主胜@1.38",
+              "resultKey": "a",
+              "ft": "0-1",
+              "ht": "0-1",
+              "dataStatus": "completed",
+              "matchId": "623434ca-bf21-49c0-86a9-bf0de8519479"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 970,
+          "payout": 1970,
+          "minPayout": 1970,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "81d8e49a-23ea-49b8-9513-900514566f39",
+              "home": "弗鲁米嫩塞",
+              "away": "科里蒂巴",
+              "market": "hafu",
+              "picks": "胜/胜@1.97",
+              "resultKey": "hh",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "81d8e49a-23ea-49b8-9513-900514566f39"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "377a1a95-4107-4ce4-ba12-56149582f83a",
+              "home": "桑托斯",
+              "away": "弗拉门戈",
+              "market": "ttg",
+              "picks": "2球@3.7 / 3球@3.6",
+              "resultKey": "s4",
+              "ft": "2:2",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "377a1a95-4107-4ce4-ba12-56149582f83a"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4333.29,
+          "legs": [
+            {
+              "num": "周四005",
+              "fixture": "2026-10-08|周四005",
+              "home": "弗鲁米嫩塞",
+              "away": "科里蒂巴",
+              "market": "crs",
+              "picks": "2-1@7 / 2-0@6.5 / 1-0@6.5",
+              "resultKey": "s04s00",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "81d8e49a-23ea-49b8-9513-900514566f39"
+            },
+            {
+              "num": "周四002",
+              "fixture": "2026-10-08|周四002",
+              "home": "库奥皮奥",
+              "away": "AC奥卢",
+              "market": "crs",
+              "picks": "1-0@6.75 / 2-0@6 / 1-1@8.25",
+              "resultKey": "s00s01",
+              "ft": "0-1",
+              "ht": "0-1",
+              "dataStatus": "completed",
+              "matchId": "623434ca-bf21-49c0-86a9-bf0de8519479"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 9748.15,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "81d8e49a-23ea-49b8-9513-900514566f39",
+              "home": "弗鲁米嫩塞",
+              "away": "科里蒂巴",
+              "market": "crs",
+              "picks": "2-1@7 / 2-0@6.5 / 1-0@6.5",
+              "resultKey": "s04s00",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "81d8e49a-23ea-49b8-9513-900514566f39"
+            },
+            {
+              "num": null,
+              "fixture": "623434ca-bf21-49c0-86a9-bf0de8519479",
+              "home": "库奥皮奥",
+              "away": "AC奥卢",
+              "market": "crs",
+              "picks": "1-0@6.75 / 2-0@6 / 1-1@8.25",
+              "resultKey": "s00s01",
+              "ft": "0-1",
+              "ht": "0-1",
+              "dataStatus": "completed",
+              "matchId": "623434ca-bf21-49c0-86a9-bf0de8519479"
+            },
+            {
+              "num": null,
+              "fixture": "377a1a95-4107-4ce4-ba12-56149582f83a",
+              "home": "桑托斯",
+              "away": "弗拉门戈",
+              "market": "crs",
+              "picks": "1-2@6.75 / 0-1@8.25 / 1-1@7.5",
+              "resultKey": "s02s02",
+              "ft": "2:2",
+              "ht": "0:2",
+              "dataStatus": "completed",
+              "matchId": "377a1a95-4107-4ce4-ba12-56149582f83a"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-09": {
+      "fixtures": 12,
+      "projects": {
+        "direction": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_BELOW_CURRENT_MIN_RETURN",
+          "legacyMinPayout": 1633.5
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1950,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "3c47f796-2e53-4bc8-9dac-6156082bfc9c",
+              "home": "赫拉克勒斯",
+              "away": "瓦尔韦克",
+              "market": "hafu",
+              "picks": "胜/胜@1.95",
+              "resultKey": "dh",
+              "ft": "3:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "3c47f796-2e53-4bc8-9dac-6156082bfc9c"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "c0747279-8f46-4f76-83fe-35960fd45969",
+              "home": "柏太阳神",
+              "away": "神户胜利船",
+              "market": "ttg",
+              "picks": "2球@3.6 / 3球@3.7",
+              "resultKey": "s6",
+              "ft": "4:2",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "c0747279-8f46-4f76-83fe-35960fd45969"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4188.85,
+          "legs": [
+            {
+              "num": "周五001",
+              "fixture": "2026-10-09|周五001",
+              "home": "仁川联",
+              "away": "浦项制铁",
+              "market": "crs",
+              "picks": "1-1@5.8 / 1-0@6.4 / 2-0@10",
+              "resultKey": "s03s00",
+              "ft": "3-0",
+              "ht": "3-0",
+              "dataStatus": "completed",
+              "matchId": "b7f603b3-6d65-41e3-8f2f-83676fb439e4"
+            },
+            {
+              "num": "周五012",
+              "fixture": "2026-10-09|周五012",
+              "home": "布拉加",
+              "away": "里斯本竞技",
+              "market": "crs",
+              "picks": "1-2@7.5 / 1-1@6.5 / 0-1@7.5",
+              "resultKey": "s01s03",
+              "ft": "1:3",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "2752029f-df4a-456e-b297-6f657a69e1e8"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 9774.86,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+              "home": "仁川联",
+              "away": "浦项制铁",
+              "market": "crs",
+              "picks": "1-1@5.8 / 1-0@6.4 / 2-0@10",
+              "resultKey": "s03s00",
+              "ft": "3-0",
+              "ht": "3-0",
+              "dataStatus": "completed",
+              "matchId": "b7f603b3-6d65-41e3-8f2f-83676fb439e4"
+            },
+            {
+              "num": null,
+              "fixture": "2752029f-df4a-456e-b297-6f657a69e1e8",
+              "home": "布拉加",
+              "away": "里斯本竞技",
+              "market": "crs",
+              "picks": "1-2@7.5 / 1-1@6.5 / 0-1@7.5",
+              "resultKey": "s01s03",
+              "ft": "1:3",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "2752029f-df4a-456e-b297-6f657a69e1e8"
+            },
+            {
+              "num": null,
+              "fixture": "1a2d0230-0a25-4a35-bcb5-c7c21a2361fd",
+              "home": "IFK哥德堡",
+              "away": "韦斯特罗斯",
+              "market": "crs",
+              "picks": "2-1@7 / 1-1@8 / 1-0@8.75",
+              "resultKey": "s01s00",
+              "ft": "1:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "1a2d0230-0a25-4a35-bcb5-c7c21a2361fd"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-10": {
+      "fixtures": 30,
+      "projects": {
+        "direction": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_BELOW_CURRENT_MIN_RETURN",
+          "legacyMinPayout": 1500.6
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "649fda2b-183e-4457-9d37-937cf509f6ea",
+              "home": "马里迪莫",
+              "away": "波尔图",
+              "market": "hafu",
+              "picks": "负/负@1.8",
+              "resultKey": "da",
+              "ft": "1:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "649fda2b-183e-4457-9d37-937cf509f6ea"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "31ed42cc-a649-4c51-a39e-5684500fcbbd",
+              "home": "金泉尚武",
+              "away": "安养FC",
+              "market": "ttg",
+              "picks": "2球@3.6 / 3球@3.6",
+              "resultKey": "s1",
+              "ft": "0-1",
+              "ht": "0-1",
+              "dataStatus": "completed",
+              "matchId": "31ed42cc-a649-4c51-a39e-5684500fcbbd"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4133.29,
+          "legs": [
+            {
+              "num": "周六024",
+              "fixture": "2026-10-10|周六024",
+              "home": "马里迪莫",
+              "away": "波尔图",
+              "market": "crs",
+              "picks": "0-2@6.2 / 0-1@6.5 / 1-2@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "649fda2b-183e-4457-9d37-937cf509f6ea"
+            },
+            {
+              "num": "周六005",
+              "fixture": "2026-10-10|周六005",
+              "home": "阿森纳",
+              "away": "利兹联",
+              "market": "crs",
+              "picks": "1-0@6.25 / 1-1@8.5 / 2-0@6",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 8956.27,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "649fda2b-183e-4457-9d37-937cf509f6ea",
+              "home": "马里迪莫",
+              "away": "波尔图",
+              "market": "crs",
+              "picks": "0-2@6.2 / 0-1@6.5 / 1-2@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "649fda2b-183e-4457-9d37-937cf509f6ea"
+            },
+            {
+              "num": null,
+              "fixture": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+              "home": "阿森纳",
+              "away": "利兹联",
+              "market": "crs",
+              "picks": "1-0@6.25 / 1-1@8.5 / 2-0@6",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6"
+            },
+            {
+              "num": null,
+              "fixture": "d2743971-65f9-430b-a429-e931a2efcd3a",
+              "home": "京都不死鸟",
+              "away": "町田泽维亚",
+              "market": "crs",
+              "picks": "1-2@6.5 / 1-1@7 / 0-1@7.25",
+              "resultKey": "s00s01",
+              "ft": "0:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "d2743971-65f9-430b-a429-e931a2efcd3a"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-11": {
+      "fixtures": 28,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 932,
+          "payout": 1932,
+          "minPayout": 1932,
+          "legs": [
+            {
+              "num": "周日021",
+              "fixture": "2026-10-11|周日021",
+              "home": "皇家贝蒂斯",
+              "away": "奥萨苏纳",
+              "market": "had",
+              "picks": "普通主胜@1.38",
+              "resultKey": "h",
+              "ft": "5:2",
+              "ht": "2:0",
+              "dataStatus": "completed",
+              "matchId": "f77bd564-70a1-4649-9d7e-988358f04269"
+            },
+            {
+              "num": "周日004",
+              "fixture": "2026-10-11|周日004",
+              "home": "乌德勒支",
+              "away": "威廉二世",
+              "market": "had",
+              "picks": "普通主胜@1.4",
+              "resultKey": "h",
+              "ft": "3:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2020,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+              "home": "乌德勒支",
+              "away": "威廉二世",
+              "market": "hafu",
+              "picks": "胜/胜@2.02",
+              "resultKey": "dh",
+              "ft": "3:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "5d61e5db-6896-48e2-b97b-75846964c1a4",
+              "home": "拉齐奥",
+              "away": "蒙扎",
+              "market": "ttg",
+              "picks": "2球@3.6 / 3球@3.6",
+              "resultKey": "s4",
+              "ft": "3:1",
+              "ht": "2:0",
+              "dataStatus": "completed",
+              "matchId": "5d61e5db-6896-48e2-b97b-75846964c1a4"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 4638.83,
+          "payout": 5638.83,
+          "minPayout": 4166.63,
+          "legs": [
+            {
+              "num": "周日024",
+              "fixture": "2026-10-11|周日024",
+              "home": "卡利亚里",
+              "away": "尤文图斯",
+              "market": "crs",
+              "picks": "0-2@6.75 / 1-1@7.25 / 0-1@6.25",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59"
+            },
+            {
+              "num": "周日008",
+              "fixture": "2026-10-11|周日008",
+              "home": "国际图尔库",
+              "away": "库奥皮奥",
+              "market": "crs",
+              "picks": "1-1@6 / 1-0@7 / 2-1@7.5",
+              "resultKey": "s01s00",
+              "ft": "1-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "dd199533-1e99-4cd3-a3c1-9649c376dbc6"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 9028.5,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+              "home": "卡利亚里",
+              "away": "尤文图斯",
+              "market": "crs",
+              "picks": "0-2@6.75 / 1-1@7.25 / 0-1@6.25",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59"
+            },
+            {
+              "num": null,
+              "fixture": "dd199533-1e99-4cd3-a3c1-9649c376dbc6",
+              "home": "国际图尔库",
+              "away": "库奥皮奥",
+              "market": "crs",
+              "picks": "1-1@6 / 1-0@7 / 2-1@7.5",
+              "resultKey": "s01s00",
+              "ft": "1-0",
+              "ht": "0-0",
+              "dataStatus": "completed",
+              "matchId": "dd199533-1e99-4cd3-a3c1-9649c376dbc6"
+            },
+            {
+              "num": null,
+              "fixture": "246978e8-ed01-4bd5-9e8e-7084e0cfdb8a",
+              "home": "赫尔城",
+              "away": "埃弗顿",
+              "market": "crs",
+              "picks": "1-1@6.5 / 0-1@7.25 / 1-2@7",
+              "resultKey": "s02s02",
+              "ft": "2:2",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "246978e8-ed01-4bd5-9e8e-7084e0cfdb8a"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-12": {
+      "fixtures": 10,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 931.7,
+          "payout": 1931.7,
+          "minPayout": 1931.7,
+          "legs": [
+            {
+              "num": "周一002",
+              "fixture": "2026-10-12|周一002",
+              "home": "亚特兰大",
+              "away": "威尼斯",
+              "market": "had",
+              "picks": "普通主胜@1.37",
+              "resultKey": "h",
+              "ft": "3:1",
+              "ht": "3:1",
+              "dataStatus": "completed",
+              "matchId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a"
+            },
+            {
+              "num": "周一008",
+              "fixture": "2026-10-12|周一008",
+              "home": "莱万特",
+              "away": "塞维利亚",
+              "market": "hhad",
+              "picks": "让胜（+1）@1.41",
+              "resultKey": "h",
+              "ft": "3:3",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "bf2cc441-12d5-4c64-a2bc-7ff1362cf854"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2600,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+              "home": "马尔默",
+              "away": "卡尔马",
+              "market": "hafu",
+              "picks": "胜/胜@2.6",
+              "resultKey": "dh",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9a0d1f18-5212-4725-88e0-76178d09b0fb"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1825,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+              "home": "马尔默",
+              "away": "卡尔马",
+              "market": "ttg",
+              "picks": "2球@3.75 / 3球@3.65",
+              "resultKey": "s1",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "9a0d1f18-5212-4725-88e0-76178d09b0fb"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4694.82,
+          "legs": [
+            {
+              "num": "周一010",
+              "fixture": "2026-10-12|周一010",
+              "home": "法马利康",
+              "away": "阿尔维卡",
+              "market": "crs",
+              "picks": "1-1@6.5 / 2-0@8 / 2-1@7",
+              "resultKey": "s01s04",
+              "ft": "1:4",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "632a7d86-6c36-477c-b18c-ca76a7b73748"
+            },
+            {
+              "num": "周一006",
+              "fixture": "2026-10-12|周一006",
+              "home": "第戎",
+              "away": "梅斯",
+              "market": "crs",
+              "picks": "1-1@6.5 / 1-2@7.75 / 2-1@9",
+              "resultKey": "s04s02",
+              "ft": "4:2",
+              "ht": "3:1",
+              "dataStatus": "completed",
+              "matchId": "e93bda64-6369-4aea-922f-7a8f75f602a8"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 9780.88,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+              "home": "法马利康",
+              "away": "阿尔维卡",
+              "market": "crs",
+              "picks": "1-1@6.5 / 2-0@8 / 2-1@7",
+              "resultKey": "s01s04",
+              "ft": "1:4",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "632a7d86-6c36-477c-b18c-ca76a7b73748"
+            },
+            {
+              "num": null,
+              "fixture": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+              "home": "第戎",
+              "away": "梅斯",
+              "market": "crs",
+              "picks": "1-1@6.5 / 1-2@7.75 / 2-1@9",
+              "resultKey": "s04s02",
+              "ft": "4:2",
+              "ht": "3:1",
+              "dataStatus": "completed",
+              "matchId": "e93bda64-6369-4aea-922f-7a8f75f602a8"
+            },
+            {
+              "num": null,
+              "fixture": "743c6df8-10c8-4d70-a211-935fd2858db1",
+              "home": "都灵",
+              "away": "乌迪内斯",
+              "market": "crs",
+              "picks": "1-1@6.25 / 2-1@8 / 1-2@9.5",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "743c6df8-10c8-4d70-a211-935fd2858db1"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-13": {
+      "fixtures": 12,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 1562.8,
+          "payout": 2562.8,
+          "minPayout": 2562.8,
+          "legs": [
+            {
+              "num": "周二009",
+              "fixture": "2026-10-13|周二009",
+              "home": "莱比锡红牛",
+              "away": "PSV埃因霍温",
+              "market": "had",
+              "picks": "普通主胜@1.49",
+              "resultKey": "h",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "2b2444cf-3b7a-480c-87fc-3d5d918f5d25"
+            },
+            {
+              "num": "周二011",
+              "fixture": "2026-10-13|周二011",
+              "home": "马德里竞技",
+              "away": "曼彻斯特联",
+              "market": "had",
+              "picks": "普通主胜@1.72",
+              "resultKey": "h",
+              "ft": "2:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "983caa4e-aae7-4707-a44e-9f47bfcbd288"
+            }
+          ]
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2300,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "2b2444cf-3b7a-480c-87fc-3d5d918f5d25",
+              "home": "莱比锡红牛",
+              "away": "PSV埃因霍温",
+              "market": "hafu",
+              "picks": "胜/胜@2.3",
+              "resultKey": "dh",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "2b2444cf-3b7a-480c-87fc-3d5d918f5d25"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "3b8a81ad-0644-4335-ac20-f4f3cc26a52f",
+              "home": "斯托克城",
+              "away": "米德尔斯堡",
+              "market": "ttg",
+              "picks": "2球@3.75 / 3球@3.6",
+              "resultKey": "s5",
+              "ft": "2:3",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "3b8a81ad-0644-4335-ac20-f4f3cc26a52f"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 5055.96,
+          "legs": [
+            {
+              "num": "周二006",
+              "fixture": "2026-10-13|周二006",
+              "home": "阿森纳",
+              "away": "里尔",
+              "market": "crs",
+              "picks": "2-0@6.5 / 1-0@8 / 2-1@8.5",
+              "resultKey": "s03s00",
+              "ft": "3:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "fff5c1c8-f2af-4a6a-b4e6-6fc96738e9c9"
+            },
+            {
+              "num": "周二002",
+              "fixture": "2026-10-13|周二002",
+              "home": "上海海港",
+              "away": "大田市民",
+              "market": "crs",
+              "picks": "1-1@7 / 1-2@9 / 2-1@7.5",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "740daf71-40ca-4ae4-b36a-232e33939e64"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 11797.24,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "fff5c1c8-f2af-4a6a-b4e6-6fc96738e9c9",
+              "home": "阿森纳",
+              "away": "里尔",
+              "market": "crs",
+              "picks": "2-0@6.5 / 1-0@8 / 2-1@8.5",
+              "resultKey": "s03s00",
+              "ft": "3:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "fff5c1c8-f2af-4a6a-b4e6-6fc96738e9c9"
+            },
+            {
+              "num": null,
+              "fixture": "740daf71-40ca-4ae4-b36a-232e33939e64",
+              "home": "上海海港",
+              "away": "大田市民",
+              "market": "crs",
+              "picks": "1-1@7 / 1-2@9 / 2-1@7.5",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "740daf71-40ca-4ae4-b36a-232e33939e64"
+            },
+            {
+              "num": null,
+              "fixture": "3b8a81ad-0644-4335-ac20-f4f3cc26a52f",
+              "home": "斯托克城",
+              "away": "米德尔斯堡",
+              "market": "crs",
+              "picks": "1-1@7 / 1-2@7.25 / 0-2@10",
+              "resultKey": "s02s03",
+              "ft": "2:3",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "3b8a81ad-0644-4335-ac20-f4f3cc26a52f"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-14": {
+      "fixtures": 14,
+      "projects": {
+        "direction": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 2329,
+          "legs": [
+            {
+              "num": "周三013",
+              "fixture": "2026-10-14|周三013",
+              "home": "弗鲁米嫩塞",
+              "away": "帕尔梅拉斯",
+              "market": "hhad",
+              "picks": "让胜（+1）@1.37",
+              "resultKey": "d",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "4daabd1f-5280-4d14-bb5f-da4a39fa0824"
+            },
+            {
+              "num": "周三008",
+              "fixture": "2026-10-14|周三008",
+              "home": "罗马",
+              "away": "皇家马德里",
+              "market": "had",
+              "picks": "普通客胜@1.7",
+              "resultKey": "a",
+              "ft": "3:4",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "d4dcfeaf-9f50-4600-860f-00678f2fa819"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 1270,
+          "payout": 2270,
+          "minPayout": 2270,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "891f40a7-eb09-480f-9694-059bcc228147",
+              "home": "阿斯顿维拉",
+              "away": "费内巴切",
+              "market": "hafu",
+              "picks": "胜/胜@2.27",
+              "resultKey": "hh",
+              "ft": "6:0",
+              "ht": "3:0",
+              "dataStatus": "completed",
+              "matchId": "891f40a7-eb09-480f-9694-059bcc228147"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1825,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "5594f113-ac58-46da-870a-f476b0569166",
+              "home": "皇家贝蒂斯",
+              "away": "波尔图",
+              "market": "ttg",
+              "picks": "2球@3.95 / 3球@3.65",
+              "resultKey": "s5",
+              "ft": "3:2",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "5594f113-ac58-46da-870a-f476b0569166"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 4374.96,
+          "legs": [
+            {
+              "num": "周三013",
+              "fixture": "2026-10-14|周三013",
+              "home": "弗鲁米嫩塞",
+              "away": "帕尔梅拉斯",
+              "market": "crs",
+              "picks": "2-0@13 / 1-0@7 / 1-1@5.25",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "4daabd1f-5280-4d14-bb5f-da4a39fa0824"
+            },
+            {
+              "num": "周三006",
+              "fixture": "2026-10-14|周三006",
+              "home": "LASK林茨",
+              "away": "利物浦",
+              "market": "crs",
+              "picks": "1-2@7.5 / 0-2@7.5 / 0-3@8.75",
+              "resultKey": "s03s06",
+              "ft": "3:6",
+              "ht": "0:3",
+              "dataStatus": "completed",
+              "matchId": "071444c8-cbd3-49bf-819d-e274e8aef8bb"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 11664.45,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+              "home": "弗鲁米嫩塞",
+              "away": "帕尔梅拉斯",
+              "market": "crs",
+              "picks": "2-0@13 / 1-0@7 / 1-1@5.25",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "4daabd1f-5280-4d14-bb5f-da4a39fa0824"
+            },
+            {
+              "num": null,
+              "fixture": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+              "home": "LASK林茨",
+              "away": "利物浦",
+              "market": "crs",
+              "picks": "1-2@7.5 / 0-2@7.5 / 0-3@8.75",
+              "resultKey": "s03s06",
+              "ft": "3:6",
+              "ht": "0:3",
+              "dataStatus": "completed",
+              "matchId": "071444c8-cbd3-49bf-819d-e274e8aef8bb"
+            },
+            {
+              "num": null,
+              "fixture": "ed2c7c15-472d-4bf8-bcab-aba23848fcd5",
+              "home": "曼彻斯特城",
+              "away": "巴黎圣日尔曼",
+              "market": "crs",
+              "picks": "2-1@8 / 1-1@8.25 / 2-2@10",
+              "resultKey": "s02s04",
+              "ft": "2:4",
+              "ht": "0:3",
+              "dataStatus": "completed",
+              "matchId": "ed2c7c15-472d-4bf8-bcab-aba23848fcd5"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-15": {
+      "fixtures": 14,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 931.7,
+          "payout": 1931.7,
+          "minPayout": 1931.7,
+          "legs": [
+            {
+              "num": "周四003",
+              "fixture": "2026-10-15|周四003",
+              "home": "波兹南莱赫",
+              "away": "勒沃库森",
+              "market": "had",
+              "picks": "普通客胜@1.37",
+              "resultKey": "a",
+              "ft": "0:4",
+              "ht": "0:3",
+              "dataStatus": "completed",
+              "matchId": "b0e09e24-2073-410d-865b-3e2c8ffb1fa1"
+            },
+            {
+              "num": "周四006",
+              "fixture": "2026-10-15|周四006",
+              "home": "克拉约瓦大学",
+              "away": "赫塔费",
+              "market": "hhad",
+              "picks": "让胜（+1）@1.41",
+              "resultKey": "h",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "c4f5cb11-5bfd-4916-9250-096a35d53caf"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 900,
+          "payout": 1900,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "b0e09e24-2073-410d-865b-3e2c8ffb1fa1",
+              "home": "波兹南莱赫",
+              "away": "勒沃库森",
+              "market": "hafu",
+              "picks": "负/负@1.9",
+              "resultKey": "aa",
+              "ft": "0:4",
+              "ht": "0:3",
+              "dataStatus": "completed",
+              "matchId": "b0e09e24-2073-410d-865b-3e2c8ffb1fa1"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "15e1774c-d7fb-4e9d-8e60-4040236ccff3",
+              "home": "本菲卡",
+              "away": "凯尔特人",
+              "market": "ttg",
+              "picks": "3球@3.6 / 4球@3.9",
+              "resultKey": "s5",
+              "ft": "4:1",
+              "ht": "3:0",
+              "dataStatus": "completed",
+              "matchId": "15e1774c-d7fb-4e9d-8e60-4040236ccff3"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3972.54,
+          "legs": [
+            {
+              "num": "周四014",
+              "fixture": "2026-10-15|周四014",
+              "home": "拉普拉塔大学生",
+              "away": "弗拉门戈",
+              "market": "crs",
+              "picks": "1-1@5.5 / 0-2@8.25 / 1-2@7.75",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "5c19ed55-b7f7-4942-aa74-f53d98904fff"
+            },
+            {
+              "num": "周四002",
+              "fixture": "2026-10-15|周四002",
+              "home": "托林斯",
+              "away": "桑德兰",
+              "market": "crs",
+              "picks": "0-2@6.5 / 1-3@9.25 / 1-2@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "336c578c-effe-4dbd-9b77-7ef87021ff04"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 9269.26,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "5c19ed55-b7f7-4942-aa74-f53d98904fff",
+              "home": "拉普拉塔大学生",
+              "away": "弗拉门戈",
+              "market": "crs",
+              "picks": "1-1@5.5 / 0-2@8.25 / 1-2@7.75",
+              "resultKey": "s00s00",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "5c19ed55-b7f7-4942-aa74-f53d98904fff"
+            },
+            {
+              "num": null,
+              "fixture": "336c578c-effe-4dbd-9b77-7ef87021ff04",
+              "home": "托林斯",
+              "away": "桑德兰",
+              "market": "crs",
+              "picks": "0-2@6.5 / 1-3@9.25 / 1-2@7.5",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "336c578c-effe-4dbd-9b77-7ef87021ff04"
+            },
+            {
+              "num": null,
+              "fixture": "7137abd3-5d15-4e3d-9238-4f8a0972424f",
+              "home": "维戈塞尔塔",
+              "away": "尤文图斯",
+              "market": "crs",
+              "picks": "0-1@7 / 0-2@9 / 1-2@7.25",
+              "resultKey": "s01s02",
+              "ft": "1:2",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "7137abd3-5d15-4e3d-9238-4f8a0972424f"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-16": {
+      "fixtures": 11,
+      "projects": {
+        "direction": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 807.8,
+          "payout": 1807.8,
+          "minPayout": 1807.8,
+          "legs": [
+            {
+              "num": "周五003",
+              "fixture": "2026-10-16|周五003",
+              "home": "布鲁马波卡纳",
+              "away": "佐加顿斯",
+              "market": "had",
+              "picks": "普通客胜@1.31",
+              "resultKey": "a",
+              "ft": "0:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb"
+            },
+            {
+              "num": "周五004",
+              "fixture": "2026-10-16|周五004",
+              "home": "海伦芬",
+              "away": "SBV精英",
+              "market": "had",
+              "picks": "普通主胜@1.38",
+              "resultKey": "h",
+              "ft": "4:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "a9d9927b-0e9e-4105-864c-ef31537f95d4"
+            }
+          ]
+        },
+        "htft": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 800,
+          "payout": 1800,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb",
+              "home": "布鲁马波卡纳",
+              "away": "佐加顿斯",
+              "market": "hafu",
+              "picks": "负/负@1.8",
+              "resultKey": "aa",
+              "ft": "0:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1850,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "7ef61067-f87c-42c5-8363-488345475930",
+              "home": "悉尼FC",
+              "away": "西悉尼漫步者",
+              "market": "ttg",
+              "picks": "2球@3.75 / 3球@3.7",
+              "resultKey": "s0",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "7ef61067-f87c-42c5-8363-488345475930"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "MISS",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 3544.41,
+          "legs": [
+            {
+              "num": "周五011",
+              "fixture": "2026-10-16|周五011",
+              "home": "米拉索尔",
+              "away": "巴西国际",
+              "market": "crs",
+              "picks": "2-1@6.75 / 1-1@5.5 / 1-0@7.75",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4"
+            },
+            {
+              "num": "周五010",
+              "fixture": "2026-10-16|周五010",
+              "home": "拉科鲁尼亚",
+              "away": "莱万特",
+              "market": "crs",
+              "picks": "1-0@7 / 2-0@9 / 1-1@5.8",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 7975.64,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+              "home": "米拉索尔",
+              "away": "巴西国际",
+              "market": "crs",
+              "picks": "2-1@6.75 / 1-1@5.5 / 1-0@7.75",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4"
+            },
+            {
+              "num": null,
+              "fixture": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+              "home": "拉科鲁尼亚",
+              "away": "莱万特",
+              "market": "crs",
+              "picks": "1-0@7 / 2-0@9 / 1-1@5.8",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6"
+            },
+            {
+              "num": null,
+              "fixture": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb",
+              "home": "布鲁马波卡纳",
+              "away": "佐加顿斯",
+              "market": "crs",
+              "picks": "0-2@8 / 1-2@6.75 / 0-3@10.5",
+              "resultKey": "s00s02",
+              "ft": "0:2",
+              "ht": "0:1",
+              "dataStatus": "completed",
+              "matchId": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-17": {
+      "fixtures": 30,
+      "projects": {
+        "direction": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_BELOW_CURRENT_MIN_RETURN",
+          "legacyMinPayout": 1524.6
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1840,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+              "home": "比利亚雷亚尔",
+              "away": "埃尔切",
+              "market": "hafu",
+              "picks": "胜/胜@1.84",
+              "resultKey": "dd",
+              "ft": "0:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "ed0ac8ab-1533-496b-a371-70a0980f00a5"
+            }
+          ]
+        },
+        "goals": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1800,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "4a11d7ca-0ef8-4b05-9b5f-27da0cf89e0f",
+              "home": "汉堡",
+              "away": "斯图加特",
+              "market": "ttg",
+              "picks": "3球@3.6 / 4球@4",
+              "resultKey": "s1",
+              "ft": "1:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "4a11d7ca-0ef8-4b05-9b5f-27da0cf89e0f"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "HIT",
+          "mode": "ORIGINAL_V1_FROZEN",
+          "budget": 1000,
+          "net": 2972.18,
+          "payout": 3972.18,
+          "minPayout": 3819.41,
+          "legs": [
+            {
+              "num": "周六020",
+              "fixture": "2026-10-17|周六020",
+              "home": "富勒姆",
+              "away": "赫尔城",
+              "market": "crs",
+              "picks": "2-1@6.25 / 1-1@7 / 1-0@6.5",
+              "resultKey": "s01s00",
+              "ft": "1:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05"
+            },
+            {
+              "num": "周六006",
+              "fixture": "2026-10-17|周六006",
+              "home": "宫崎惊奇牛鸟",
+              "away": "磐田喜悦",
+              "market": "crs",
+              "picks": "0-1@8 / 1-1@5.5 / 1-0@7.5",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "26ed93d9-52ed-4a36-9271-7cdd94fbd62e"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 6942.94,
+          "payout": 7942.94,
+          "minPayout": 7639.5,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+              "home": "富勒姆",
+              "away": "赫尔城",
+              "market": "crs",
+              "picks": "2-1@6.25 / 1-1@7 / 1-0@6.5",
+              "resultKey": "s01s00",
+              "ft": "1:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05"
+            },
+            {
+              "num": null,
+              "fixture": "26ed93d9-52ed-4a36-9271-7cdd94fbd62e",
+              "home": "宫崎惊奇牛鸟",
+              "away": "磐田喜悦",
+              "market": "crs",
+              "picks": "0-1@8 / 1-1@5.5 / 1-0@7.5",
+              "resultKey": "s01s01",
+              "ft": "1:1",
+              "ht": "1:1",
+              "dataStatus": "completed",
+              "matchId": "26ed93d9-52ed-4a36-9271-7cdd94fbd62e"
+            },
+            {
+              "num": null,
+              "fixture": "73ddaa41-aba3-4e32-8217-54eae8b4dd7a",
+              "home": "罗马",
+              "away": "热那亚",
+              "market": "crs",
+              "picks": "2-0@6 / 1-0@6.5 / 3-0@8.5",
+              "resultKey": "s02s00",
+              "ft": "2:0",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "73ddaa41-aba3-4e32-8217-54eae8b4dd7a"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-18": {
+      "fixtures": 25,
+      "projects": {
+        "direction": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_NON_PREMATCH_COMBINATION_OR_INVALID",
+          "legacyMinPayout": null
+        },
+        "htft": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "20aceaf6-69b8-42b4-9bd7-a63244d4a802",
+              "home": "首尔FC",
+              "away": "金泉尚武",
+              "market": "hafu",
+              "picks": "胜/胜@1.9",
+              "resultKey": "dd",
+              "ft": "2-2",
+              "ht": "1-1",
+              "dataStatus": "completed",
+              "matchId": "20aceaf6-69b8-42b4-9bd7-a63244d4a802"
+            }
+          ]
+        },
+        "goals": {
+          "state": "HIT",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": 950,
+          "payout": 1950,
+          "minPayout": 1825,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "44406d65-5652-4351-9f55-c7f88b914976",
+              "home": "维戈塞尔塔",
+              "away": "阿拉维斯",
+              "market": "ttg",
+              "picks": "1球@3.65 / 3球@3.9",
+              "resultKey": "s3",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "44406d65-5652-4351-9f55-c7f88b914976"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "ABSTAIN",
+          "reason": "ORIGINAL_V1_NON_PREMATCH_COMBINATION_OR_INVALID",
+          "legacyMinPayout": null
+        },
+        "score_3": {
+          "state": "MISS",
+          "mode": "R1_ASOF_HEURISTIC",
+          "budget": 1000,
+          "net": -1000,
+          "payout": 0,
+          "minPayout": 6089.58,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67",
+              "home": "江原FC",
+              "away": "仁川联",
+              "market": "crs",
+              "picks": "1-0@5.8 / 2-0@8.5 / 1-1@5.2",
+              "resultKey": "s01s01",
+              "ft": "1-1",
+              "ht": "1-1",
+              "dataStatus": "completed",
+              "matchId": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67"
+            },
+            {
+              "num": null,
+              "fixture": "44406d65-5652-4351-9f55-c7f88b914976",
+              "home": "维戈塞尔塔",
+              "away": "阿拉维斯",
+              "market": "crs",
+              "picks": "1-0@5.9 / 2-0@8.5 / 1-1@5.5",
+              "resultKey": "s02s01",
+              "ft": "2:1",
+              "ht": "0:0",
+              "dataStatus": "completed",
+              "matchId": "44406d65-5652-4351-9f55-c7f88b914976"
+            },
+            {
+              "num": null,
+              "fixture": "474674ef-1119-4e50-9921-f31e3d1aea03",
+              "home": "町田泽维亚",
+              "away": "福冈黄蜂",
+              "market": "crs",
+              "picks": "2-1@6.25 / 1-0@5.75 / 2-0@7.5",
+              "resultKey": "s03s00",
+              "ft": "3:0",
+              "ht": "1:0",
+              "dataStatus": "completed",
+              "matchId": "474674ef-1119-4e50-9921-f31e3d1aea03"
+            }
+          ]
+        }
+      }
+    },
+    "2026-10-19": {
+      "fixtures": 8,
+      "projects": {
+        "direction": {
+          "state": "PENDING",
+          "mode": "R1_ASOF_HEURISTIC",
+          "nominalBudget": 1000,
+          "minPayout": 1808.8,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bccdda38-144e-41e4-8bc8-aed93fcb6275",
+              "home": "托特纳姆热刺",
+              "away": "考文垂",
+              "market": "had",
+              "picks": "胜@1.33",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "bccdda38-144e-41e4-8bc8-aed93fcb6275"
+            },
+            {
+              "num": null,
+              "fixture": "f1dfc598-04ea-47a0-9d98-dee35545c5d3",
+              "home": "布拉加",
+              "away": "吉维森特",
+              "market": "had",
+              "picks": "胜@1.36",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "f1dfc598-04ea-47a0-9d98-dee35545c5d3"
+            }
+          ]
+        },
+        "htft": {
+          "state": "PENDING",
+          "mode": "R1_ASOF_HEURISTIC",
+          "nominalBudget": 1000,
+          "minPayout": 1920,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "bccdda38-144e-41e4-8bc8-aed93fcb6275",
+              "home": "托特纳姆热刺",
+              "away": "考文垂",
+              "market": "hafu",
+              "picks": "胜/胜@1.92",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "bccdda38-144e-41e4-8bc8-aed93fcb6275"
+            }
+          ]
+        },
+        "goals": {
+          "state": "PENDING",
+          "mode": "R1_ASOF_HEURISTIC",
+          "nominalBudget": 1000,
+          "minPayout": 1900,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+              "home": "帕尔马",
+              "away": "都灵",
+              "market": "ttg",
+              "picks": "1球@3.9 / 3球@3.8",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec"
+            }
+          ]
+        },
+        "score_2": {
+          "state": "PENDING",
+          "mode": "R1_ASOF_HEURISTIC",
+          "nominalBudget": 1000,
+          "minPayout": 3179.13,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+              "home": "帕尔马",
+              "away": "都灵",
+              "market": "crs",
+              "picks": "1-2@8 / 0-2@9 / 1-1@5.25",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec"
+            },
+            {
+              "num": null,
+              "fixture": "0c078537-c74f-4442-8b14-ad13707cc621",
+              "home": "蒙扎",
+              "away": "卡利亚里",
+              "market": "crs",
+              "picks": "2-1@8 / 1-1@5.45 / 2-0@10",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "0c078537-c74f-4442-8b14-ad13707cc621"
+            }
+          ]
+        },
+        "score_3": {
+          "state": "PENDING",
+          "mode": "R1_ASOF_HEURISTIC",
+          "nominalBudget": 1000,
+          "minPayout": 6251.17,
+          "legs": [
+            {
+              "num": null,
+              "fixture": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+              "home": "帕尔马",
+              "away": "都灵",
+              "market": "crs",
+              "picks": "1-2@8 / 0-2@9 / 1-1@5.25",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec"
+            },
+            {
+              "num": null,
+              "fixture": "0c078537-c74f-4442-8b14-ad13707cc621",
+              "home": "蒙扎",
+              "away": "卡利亚里",
+              "market": "crs",
+              "picks": "2-1@8 / 1-1@5.45 / 2-0@10",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "0c078537-c74f-4442-8b14-ad13707cc621"
+            },
+            {
+              "num": null,
+              "fixture": "f1dfc598-04ea-47a0-9d98-dee35545c5d3",
+              "home": "布拉加",
+              "away": "吉维森特",
+              "market": "crs",
+              "picks": "2-0@5.9 / 3-1@12 / 2-1@6.5",
+              "resultKey": null,
+              "ft": null,
+              "ht": null,
+              "dataStatus": "watching",
+              "matchId": "f1dfc598-04ea-47a0-9d98-dee35545c5d3"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
