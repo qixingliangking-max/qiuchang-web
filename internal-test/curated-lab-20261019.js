@@ -141,6 +141,22 @@ function allocation(plan,budget,mode){
 function readableDay(v){var d=new Date(v+'T12:00:00');return (d.getMonth()+1)+'月'+d.getDate()+'日 '+['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]}
 function idNum(row){return String(row.num||'').slice(-3)}
 function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'}
+function renderTabs(){
+ document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
+ var selected=!!(db.selectedPlans&&db.selectedPlans[state.day]),backtest=!!(blind&&blind.days&&blind.days[state.day]);
+ $('infoBand').textContent=selected?'10月19日双版本对照 · 原方案与AI精选师V1影子测试并排展示，赔率来自赛前快照，均未结算。':backtest?'历史赛果遮挡回测 · 四类精选方案先冻结、后揭晓，非比赛当日真实发布。':'历史演示 · 组合为事后回溯生成，并非当时赛前发布。';
+ $('revealRow').hidden=!backtest;
+ $('revealBlind').textContent=state.reveal?'隐藏回测赛果':'揭晓回测赛果';
+ $('revealBlind').setAttribute('aria-pressed',String(state.reveal));
+}
+function renderDate(){
+ $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
+ var idx=dates.indexOf(state.day);
+ $('prevDate').disabled=idx===dates.length-1;
+ $('nextDate').disabled=idx===0;
+ $('budget').value=String(state.budget);
+ document.querySelectorAll('[data-budget]').forEach(function(el){el.classList.toggle('selected',+el.dataset.budget===state.budget)});
+}
 function miniLeg(leg){
  var row=leg.row,pending=!score(row.ft)||!score(row.ht);
  var html='<div class="leg"><div class="leg-top"><b>'+esc(row.num)+'　'+esc(row.h)+' <span style="color:#a5adba;font-weight:500">vs</span> '+esc(row.a)+'</b><em>'+esc(row.league||'')+'</em></div>';
