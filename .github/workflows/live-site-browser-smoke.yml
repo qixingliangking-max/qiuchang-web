@@ -70,15 +70,15 @@ jobs:
                 // Verify guest CTA and today's restricted prediction shell,
                 // not merely yesterday's public archive fallback.
                 await page.waitForFunction(()=>{
-                  const login=document.querySelector('#qcOverviewLoginBar');
                   const today=document.querySelector('#jcLiveCards');
                   const meta=document.querySelector('#jcPredictionMeta');
-                  return login && getComputedStyle(login).display!=='none'
-                    && today && /登录后查看/.test(today.textContent||'')
+                  const gate=today?.querySelector('.qc-premium-gate');
+                  const link=gate?.querySelector('a.qc-premium-primary[href*="login.html"]');
+                  return gate && link && /登录后查看今日预测/.test(gate.textContent||'')
                     && meta && !/正在加载中/.test(meta.textContent||'');
                 },null,{timeout:20000});
                 console.log('QCDA_HOME_GUEST_LOGIN_PASS='+JSON.stringify(await page.evaluate(()=>({
-                  prompt:document.querySelector('#qcOverviewLoginBar')?.textContent.trim(),
+                  prompt:document.querySelector('#jcLiveCards .qc-premium-gate')?.textContent.trim(),
                   current:document.querySelector('#jcLiveCards')?.textContent.trim().slice(0,140),
                   meta:document.querySelector('#jcPredictionMeta')?.textContent.trim()
                 }))));
