@@ -77,6 +77,18 @@ async function measure(browser,engine,target,repeat){
       if(name==='register')return {form:!!document.querySelector('#registerForm'),fields:document.querySelectorAll('#registerForm input').length,newCss:[...document.styleSheets].some(x=>x.href&&x.href.includes('register-page.css')),benefit:!!document.querySelector('.qc-register-benefit'),layoutWidth:document.querySelector('.auth-card')?.getBoundingClientRect().width,overflow:document.documentElement.scrollWidth>innerWidth+1};
       return {cards:document.querySelectorAll(name==='overview-reference'?'#jcYesterdayCards .jc-overview-row':'#jcFootballCards .jc-football-card').length};
     },target.name);
+    if(target.name==='register'){
+      const layout=await page.evaluate(()=>{
+        const brand=document.querySelector('.qc-register-brand');
+        const footer=document.querySelector('.qc-register-footer');
+        const size=parseFloat(getComputedStyle(brand).fontSize);
+        const links=[...document.querySelectorAll('a[href="index.html"]')];
+        return {brandFontSizePx:size,homeLinks:links.length,footerOnlyLogin:/已有账号/.test(footer?.innerText||'')&&/立即登录/.test(footer?.innerText||'')&&!/返回首页/.test(footer?.innerText||''),pageHorizontalOverflow:document.documentElement.scrollWidth>innerWidth+1};
+      });
+      row.registerLayout=layout;
+      if(!(layout.brandFontSizePx>=20 && layout.homeLinks===1 && layout.footerOnlyLogin && !layout.pageHorizontalOverflow))
+        row.readyError='Unexpected live registration layout: '+JSON.stringify(layout);
+    }
     row.performance=await page.evaluate(()=>{
       const n=performance.getEntriesByType('navigation').at(-1);
       const e=performance.getEntriesByType('resource');
