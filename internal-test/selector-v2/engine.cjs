@@ -1,31 +1,39 @@
-/* QCDA AI Curator V2.0 — independent pre-match probabilities and portfolio gate.
- * Research-only until prospective calibration; no network/DB access or settlement imports.
- * Inputs must be point-in-time frozen before an actual selection decision.
+/* QCDA AI Curator V2.0 — two-leg combination selector.
+ * Research-only. Uses only pre-decision inputs; never reads outcomes.
+ * All probabilities are an uncalibrated independent Poisson baseline until forward-validated.
  */
 "use strict";
-const PAIRS=[["direction",2,1],["htft",2,1],["goals",2,2],["score2x2",2,2],["score2x3",2,3],["score3x3",3,3]];
-const POOL={direction:["had","hhad"],htft:["hafu"],goals:["ttg"],score2x2:["crs"],score2x3:["crs"],score3x3:["crs"]};
-const MAX=12;
+const BANKROLL=1000, MIN_RETURN=1800, MIN_RETURN_RATIO=MIN_RETURN/BANKROLL, SINGLE_DIRECTION_ODDS_FLOOR=2.0, MAX_GOALS=12;
+const STRUCTURES=[
+ {id:"direction_1x1",type:"direction",legs:[1,1],singleOddsFloor:2.0},
+ {id:"direction_1x2",type:"direction",legs:[1,2],singleOddsFloor:2.0,reverse:true},
+ {id:"direction_2x2",type:"direction",legs:[2,2]},
+ {id:"htft_1x1",type:"htft",legs:[1,1]},
+ {id:"goals_2x2",type:"goals",legs:[2,2]},
+ {id:"score_2x2",type:"score",legs:[2,2]},
+ {id:"score_3x3",type:"score",legs:[3,3]}
+];
 function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
 function numeric(x){if(x===null||x===undefined||x==="")return null;const n=Number(x);return Number.isFinite(n)?n:null}
 function utc(t){const v=Date.parse(t||"");return Number.isFinite(v)?v:null}
-function poisson(lambda){let values=[Math.exp(-lambda)];for(let i=1;i<=MAX;i++)values.push(values[i-1]*lambda/i);
- const sum=values.reduce((a,b)=>a+b,0);return values.map(x=>x/sum);}
+function poisson(lambda){let p=[Math.exp(-lambda)];for(let i=1;i<=MAX_GOALS;i++)p.push(p[i-1]*lambda/i);const sum=p.reduce((a,b)=>a+b,0);return p.map(x=>x/sum)}
 function side(a,b){return a>b?"h":a<b?"a":"d"}
-function scoreMarketKey(a,b){return "s"+String(a).padStart(2,"0")+"s"+String(b).padStart(2,"0")}
-function targetKeys(text){const m=String(text||"").match(/(\d+)\+?\s*球/g)||[];const n=m.map(t=>Math.min(7,Number(t.match(/\d+/)[0])));
- if(n.length<2){const r=String(text||"").match(/^(\d+)\s*[—–-]\s*(\d+)\s*球$/);if(r)for(let i=+r[1];i<=Math.min(+r[2],7);i++)n.push(i)}
- return [...new Set(n)].map(v=>"s"+v);
+function scoreKey(a,b){return "s"+String(a).padStart(2,"0")+"s"+String(b).padStart(2,"0")}
+const LABELS={h:"主胜",d:"平局",a:"客胜"};
+function labelFor(pool,key){
+ if(pool==="had")return LABELS[key]||key;
+ if(pool==="hhad")return ({h:"让胜",d:"让平",a:"让负"})[key]||key;
+ if(pool==="hafu"){const m={h:"胜",d:"平",a:"负"};return m[key[0]]+m[key[1]]}
+ if(pool==="ttg")return key==="s7"?"7+球":key.slice(1)+"球";
+ if(pool==="crs"){const m=key.match(/^s(\d{2})s(\d{2})$/);return m?String(Number(m[1]))+"-"+String(Number(m[2])):key}
+ return key;
 }
-function pathKey(s){const [a,b]=String(s||"").split("/");const map={"胜":"h","平":"d","负":"a"};return map[a]&&map[b]?map[a]+map[b]:null}
 function asOfEvidence(fixture){
  if(!fixture||typeof fixture!=="object")return {ok:false,code:"INPUT_MISSING"};
- // Outcome and settlement fields are not even permitted in the selection input.
- for(const key of ["ft","ht","finalScore","halfScore","settlement","isHit","actualResult","completedAt"]){
+ for(const key of ["ft","ht","finalScore","halfScore","settlement","isHit","actualResult","completedAt","ftScore","htScore"]){
   if(Object.prototype.hasOwnProperty.call(fixture,key))return {ok:false,code:"OUTCOME_FIELD_FORBIDDEN",field:key};
  }
- const start=utc(fixture.kickoffAt),at=utc(fixture.decisionAt),lock=utc(fixture.model?.lockedAt),edit=utc(fixture.model?.updatedAt);
- const captured=utc(fixture.features?.capturedAt);
+ const start=utc(fixture.kickoffAt),at=utc(fixture.decisionAt),lock=utc(fixture.model?.lockedAt),edit=utc(fixture.model?.updatedAt),captured=utc(fixture.features?.capturedAt);
  if([start,at,lock,edit,captured].some(x=>x===null))return {ok:false,code:"TIMESTAMP_MISSING"};
  if(!(lock<=at&&edit<=at&&captured<=at&&at<start))return {ok:false,code:"ASOF_LEAK_OR_UNLOCKED"};
  for(const [key,market] of Object.entries(fixture.markets||{})){
@@ -33,8 +41,7 @@ function asOfEvidence(fixture){
   if(d===null||d>at)return {ok:false,code:"MARKET_AFTER_DECISION",market:key};
  }
  if(!fixture.model?.isLocked)return {ok:false,code:"MODEL_NOT_LOCKED"};
- const st=fixture.features;
- const required=["homeGoalsFor","homeGoalsAgainst","awayGoalsFor","awayGoalsAgainst","homeSample","awaySample"];
+ const st=fixture.features,required=["homeGoalsFor","homeGoalsAgainst","awayGoalsFor","awayGoalsAgainst","homeSample","awaySample"];
  if(required.some(k=>numeric(st[k])===null))return {ok:false,code:"STAT_REQUIRED"};
  if(st.homeSample<6||st.awaySample<6)return {ok:false,code:"SAMPLE_TOO_SMALL"};
  if(required.slice(0,4).some(k=>numeric(st[k])<0))return {ok:false,code:"INVALID_GOAL_RATE"};
@@ -43,109 +50,110 @@ function asOfEvidence(fixture){
 function baseProbabilities(fixture){
  const gate=asOfEvidence(fixture);if(!gate.ok)return {ready:false,reason:gate.code};
  const f=fixture.features;
- // Independent geometric scoring rates; deliberately does not invert the price of any target market.
  const lh=clamp(Math.sqrt(Math.max(.05,f.homeGoalsFor)*Math.max(.05,f.awayGoalsAgainst)),.15,3.5);
  const la=clamp(Math.sqrt(Math.max(.05,f.awayGoalsFor)*Math.max(.05,f.homeGoalsAgainst)),.15,3.5);
  if(lh+la>6.3)return {ready:false,reason:"EXTREME_TOTAL_RATE"};
- const a=poisson(lh),b=poisson(la),distributions={had:{h:0,d:0,a:0},hhad:{h:0,d:0,a:0},ttg:{},crs:{}};
- for(let h=0;h<=MAX;h++)for(let away=0;away<=MAX;away++){
-  const prob=a[h]*b[away],ft=side(h,away),goals=Math.min(7,h+away),key=scoreMarketKey(h,away);
-  distributions.had[ft]+=prob;
-  distributions.ttg["s"+goals]=(distributions.ttg["s"+goals]||0)+prob;
-  distributions.crs[key]=prob;
-  const hcap=numeric(fixture.markets.hhad?.line);
-  if(hcap!==null)distributions.hhad[side(h+hcap,away)]+=prob;
+ const home=poisson(lh),away=poisson(la),dist={had:{h:0,d:0,a:0},hhad:null,ttg:{},crs:{}};
+ const line=numeric(fixture.markets?.hhad?.line);
+ if(line!==null)dist.hhad={h:0,d:0,a:0};
+ for(let h=0;h<=MAX_GOALS;h++)for(let a=0;a<=MAX_GOALS;a++){
+  const p=home[h]*away[a],total=Math.min(7,h+a),key=scoreKey(h,a);
+  dist.had[side(h,a)]+=p;dist.ttg["s"+total]=(dist.ttg["s"+total]||0)+p;dist.crs[key]=p;
+  if(dist.hhad)dist.hhad[side(h+line,a)]+=p;
  }
  const phase=f.firstHalfFraction;
  if(phase&&numeric(phase.home)!==null&&numeric(phase.away)!==null&&phase.home>.20&&phase.home<.65&&phase.away>.20&&phase.away<.65){
   const hh=poisson(lh*phase.home),ha=poisson(la*phase.away),sh=poisson(lh*(1-phase.home)),sa=poisson(la*(1-phase.away));
-  distributions.hafu={};
-  // Joint HT / FT pathways, distinct from multiplying marginal HTFT odds.
-  for(let x=0;x<=MAX;x++)for(let y=0;y<=MAX;y++)for(let z=0;z<=MAX;z++)for(let w=0;w<=MAX;w++){
-   const k=side(x,y)+side(x+z,y+w),p=hh[x]*ha[y]*sh[z]*sa[w];
-   distributions.hafu[k]=(distributions.hafu[k]||0)+p;
+  dist.hafu={};for(let x=0;x<=MAX_GOALS;x++)for(let y=0;y<=MAX_GOALS;y++)for(let z=0;z<=MAX_GOALS;z++)for(let w=0;w<=MAX_GOALS;w++){
+   const k=side(x,y)+side(x+z,y+w);dist.hafu[k]=(dist.hafu[k]||0)+hh[x]*ha[y]*sh[z]*sa[w];
   }
- }else distributions.hafu=null;
+ }else dist.hafu=null;
  return {ready:true,modelVersion:"V2-UNCALIBRATED-INDEPENDENT-POISSON",lambda:{home:+lh.toFixed(4),away:+la.toFixed(4)},
-  distributions,quality:{homeSample:f.homeSample,awaySample:f.awaySample,calibrated:false},
-  note:"Independent baseline only; probabilities not historically calibrated. No automatic recommendation."};
+  distributions:dist,quality:{homeSample:f.homeSample,awaySample:f.awaySample,calibrated:false},
+  note:"Research baseline only; not historically calibrated and not publishable."};
 }
-function allowedKeys(f,type,pool){
- const m=f.model||{},key=String(m.singlePick||"").trim();
- if(type==="direction"){
-  const map={胜:"h",平:"d",负:"a",让胜:"h",让平:"d",让负:"a"};
-  if(pool==="had"&&["胜","平","负"].includes(key))return [map[key]];
-  if(pool==="hhad"&&["让胜","让平","让负"].includes(key))return [map[key]];
-  return [];
- }
- if(type==="htft")return [pathKey(m.htftTop1)].filter(Boolean);
- if(type==="goals")return targetKeys(m.goalCandidates||m.goalRange||"");
- const scores=m.topScores||[];
- return scores.map(s=>{const p=String(s).match(/^(\d+)-(\d+)$/);return p?scoreMarketKey(Number(p[1]),Number(p[2])):null}).filter(Boolean);
+function choose(n,k,out=[],start=0,buf=[]){
+ if(buf.length===k){out.push(buf.slice());return out}
+ for(let i=start;i<=n-(k-buf.length);i++){buf.push(i);choose(n,k,out,i+1,buf);buf.pop()}
+ return out;
 }
-function marketImplied(m,k){
- if(!m||!m.odds)return null;
- const odds=Number(m.odds[k]);
- return Number.isFinite(odds)&&odds>1?{odds,breakEven:1/odds}:null;
+function marketOptions(f,prob,type,pool){
+ const market=f.markets?.[pool],d=prob.distributions[pool];if(!market||!d||!market.odds)return [];
+ let opts=Object.entries(market.odds).map(([key,value])=>({key,odds:numeric(value),p:numeric(d[key])}))
+  .filter(x=>x.odds!==null&&x.odds>1&&x.p!==null&&x.p>0);
+ if(type==="score"){opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));opts=opts.slice(0,10)}
+ else opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));
+ return opts;
 }
-function perFixtureCandidates(f,type){
- const prob=baseProbabilities(f);if(!prob.ready)return {eligible:false,reason:prob.reason,variants:[]};
- const len=type==="direction"||type==="htft"?1:type==="goals"||type==="score2x2"?2:3;
- const pools=POOL[type]||[],variants=[];
+function selectionSets(f,type,k,{singleOddsFloor=0}={}){
+ const p=baseProbabilities(f);if(!p.ready)return [];
+ const pools=type==="direction"?["had","hhad"]:type==="htft"?["hafu"]:type==="goals"?["ttg"]:["crs"];
+ const all=[];
  for(const pool of pools){
-  const odds=f.markets[pool],ps=prob.distributions[pool];if(!odds||!ps)continue;
-  const keys=allowedKeys(f,type,pool);
-  const uniq=[...new Set(keys)].filter(k=>marketImplied(odds,k)&&Number.isFinite(ps[k])&&ps[k]>0);
-  if(uniq.length<len)continue;
-  // Ranking is by independent model probability, not lowest odds.
-  uniq.sort((a,b)=>ps[b]-ps[a]||a.localeCompare(b));
-  const picks=uniq.slice(0,len);
-  if(type==="direction"&&Number(odds.odds[picks[0]])<2)continue;
-  const sumP=picks.reduce((s,k)=>s+ps[k],0);
-  const returnFactor=picks.reduce((s,k)=>s+ps[k]*Number(odds.odds[k]),0)/picks.length;
-  const netExpectation=returnFactor-1;
-  variants.push({matchId:f.id,num:f.num,league:f.league,model:prob.modelVersion,market:pool,picks,
-   probabilities:picks.map(k=>+ps[k].toFixed(6)),prices:picks.map(k=>Number(odds.odds[k])),
-   coverage:+sumP.toFixed(6),expectedReturn:+returnFactor.toFixed(6),edge:+netExpectation.toFixed(6),
-   asOf:f.decisionAt,options:picks.length,calibrated:false});
- }
- return {eligible:variants.length>0,reason:variants.length?"RESEARCH_CANDIDATE":"NO_QUALIFIED_MARKET",variants};
-}
-function evaluatePortfolio(legs){
- const lineCount=legs.reduce((s,l)=>s*l.options,1);
- const pCover=legs.reduce((s,l)=>s*l.coverage,1);
- const returnRatio=legs.reduce((s,l)=>s*l.expectedReturn,1);
- let priceLines=[1];for(const l of legs)priceLines=priceLines.flatMap(z=>l.prices.map(p=>z*p));
- const min=Math.min(...priceLines),max=Math.max(...priceLines);
- const winningLowerThanStake=priceLines.filter(x=>x<lineCount).length;
- return {lines:lineCount,coverage:+pCover.toFixed(6),expectedGross:+returnRatio.toFixed(6),edge:+(returnRatio-1).toFixed(6),
-  minOdds:+min.toFixed(4),maxOdds:+max.toFixed(4),negativeReturnBranches:winningLowerThanStake,
-  status:"RESEARCH_ONLY_UNCALIBRATED"};
-}
-function selectDay(fixtures,{minExpectedEdge=.08,maxPairsPerType=1,requireCalibration=true}={}){
- const bad=fixtures.filter(f=>!asOfEvidence(f).ok).map(f=>({num:f.num||null,gate:asOfEvidence(f)}));
- const types=PAIRS.map(([type,n])=>{
-  const all=fixtures.flatMap(f=>perFixtureCandidates(f,type).variants);
-  all.sort((a,b)=>b.edge-a.edge||b.coverage-a.coverage||String(a.num).localeCompare(String(b.num)));
-  const best=[],top=all.slice(0,18);
-  function collect(chosen,index){
-   if(chosen.length===n){
-    const ids=chosen.map(x=>x.matchId);
-    if(new Set(ids).size!==n)return;
-    const metrics=evaluatePortfolio(chosen);
-    if(metrics.edge>=minExpectedEdge)best.push({type,legs:chosen,metrics});
-    return;
-   }
-   for(let i=index;i<top.length;i++)collect([...chosen,top[i]],i+1);
+  const opts=marketOptions(f,p,type,pool).filter(x=>k!==1||x.odds>=singleOddsFloor);
+  if(opts.length<k)continue;
+  for(const indices of choose(opts.length,k)){
+   const picks=indices.map(i=>opts[i]),coverage=picks.reduce((s,x)=>s+x.p,0),weightedOdds=picks.reduce((s,x)=>s+x.p*x.odds,0);
+   all.push({fixtureId:f.id,num:f.num,league:f.league,type,pool,
+    picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),odds:x.odds})),
+    options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),
+    minOdds:Math.min(...picks.map(x=>x.odds)),maxOdds:Math.max(...picks.map(x=>x.odds)),
+    asOf:f.decisionAt,calibrated:false});
   }
-  collect([],0);
-  best.sort((a,b)=>b.metrics.edge-a.metrics.edge||b.metrics.coverage-a.metrics.coverage);
-  const shortlist=best.slice(0,maxPairsPerType);
-  return {type,eligibleSingleLegs:all.length,candidatePortfolios:best.length,abstained:!shortlist.length,
-    proposals:shortlist.map(v=>({...v,publishable:false}))};
- });
- return {version:"V2-CLEAN-SHADOW-0.1",published:false,asOfOnly:true,
-  dataRejected:bad,types,warnings:["No settlement inputs accepted","All calculated probabilities are uncalibrated",
-   "Historic discovery date is not out-of-sample","No candidate is automatically publishable"]};
+ }
+ return all;
 }
-module.exports={asOfEvidence,baseProbabilities,perFixtureCandidates,evaluatePortfolio,selectDay};
+function evaluatePortfolio(legA,legB,{bankroll=BANKROLL,minReturn=MIN_RETURN}={}){
+ const lines=legA.options*legB.options,stakePerLine=bankroll/lines;
+ const minOdds=legA.minOdds*legB.minOdds,maxOdds=legA.maxOdds*legB.maxOdds;
+ const minPayout=stakePerLine*minOdds,maxPayout=stakePerLine*maxOdds;
+ const hitProbability=legA.coverage*legB.coverage,expectedGrossRatio=(legA.weightedOdds*legB.weightedOdds)/lines;
+ return {bankroll,lines,stakePerLine:+stakePerLine.toFixed(4),minReturnRequired:minReturn,
+  minPayout:+minPayout.toFixed(2),maxPayout:+maxPayout.toFixed(2),
+  minCombinedOdds:+minOdds.toFixed(4),maxCombinedOdds:+maxOdds.toFixed(4),
+  minReturnRatio:+(minPayout/bankroll).toFixed(6),returnFloorPass:minPayout+1e-8>=minReturn,
+  hitProbability:+hitProbability.toFixed(6),expectedGross:+expectedGrossRatio.toFixed(6),
+  estimatedEdge:+(expectedGrossRatio-1).toFixed(6),probabilityCalibrated:false,status:"RESEARCH_ONLY_UNCALIBRATED"};
+}
+function topInsert(arr,item,limit,rank){arr.push(item);arr.sort(rank);if(arr.length>limit)arr.length=limit}
+function rankCandidates(a,b){return b.metrics.expectedGross-a.metrics.expectedGross||b.metrics.hitProbability-a.metrics.hitProbability||b.metrics.minPayout-a.metrics.minPayout||String(a.legs[0].num).localeCompare(String(b.legs[0].num))}
+function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=5}={}){
+ const cache=fixtures.map(f=>({f,prob:baseProbabilities(f)})),eligible=cache.filter(x=>x.prob.ready);
+ const rejected=cache.filter(x=>!x.prob.ready).map(x=>({num:x.f.num,reason:x.prob.reason}));
+ const pools=eligible.map(x=>({f:x.f,setsByK:{}}));
+ const getSets=(entry,k,oddsFloor=0)=>{
+  const key=structure.type+":"+k+":"+oddsFloor;
+  if(!entry.setsByK[key])entry.setsByK[key]=selectionSets(entry.f,structure.type,k,{singleOddsFloor:oddsFloor});
+  return entry.setsByK[key];
+ };
+ let combosSeen=0,passedFloor=0,top=[];
+ for(let i=0;i<pools.length;i++)for(let j=i+1;j<pools.length;j++){
+  const A=pools[i],B=pools[j];
+  const orientations=structure.reverse?[[structure.legs[0],structure.legs[1]],[structure.legs[1],structure.legs[0]]]:[structure.legs];
+  for(const ks of orientations){
+   const floorA=ks[0]===1?structure.singleOddsFloor||0:0,floorB=ks[1]===1?structure.singleOddsFloor||0:0;
+   const left=getSets(A,ks[0],floorA),right=getSets(B,ks[1],floorB);
+   if(!left.length||!right.length)continue;
+   for(const a of left)for(const b of right){
+    combosSeen++;const metrics=evaluatePortfolio(a,b,{bankroll,minReturn});
+    if(!metrics.returnFloorPass)continue;passedFloor++;
+    const candidate={structure:structure.id,type:structure.type,legs:[a,b],metrics,publishable:false,
+     note:"Uncalibrated shadow candidate; return floor passed, profitability not established."};
+    topInsert(top,candidate,topK,rankCandidates);
+   }
+  }
+ }
+ return {structure:structure.id,totalFixtures:fixtures.length,dataEligible:eligible.length,dataRejected:rejected.length,
+  rejected,combinationsChecked:combosSeen,returnFloorPassed:passedFloor,abstained:top.length===0,proposals:top};
+}
+function selectDay(fixtures,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=3,structures=STRUCTURES}={}){
+ const seen=new Set();for(const f of fixtures){if(seen.has(f.id))throw Error("DUPLICATE_FIXTURE_ID");seen.add(f.id)}
+ const types=structures.map(s=>buildPairCandidates(fixtures,s,{bankroll,minReturn,topK}));
+ return {version:"V2-CLEAN-SHADOW-0.2",bankroll,minReturn,minReturnRatio:MIN_RETURN_RATIO,
+  requiredMinCombinedOddsByLines:Object.fromEntries([1,2,4,6,9].map(n=>[n,+(MIN_RETURN_RATIO*n).toFixed(4)])),
+  onlyTwoLegs:true,published:false,asOfOnly:true,types,
+  warnings:["Every candidate is two distinct fixtures only","Each possible winning branch must return at least the configured minimum",
+   "Probabilities remain uncalibrated; estimated EV is research-only","No candidate auto-publishes; no outcomes are read by this module"]};
+}
+module.exports={BANKROLL,MIN_RETURN,MIN_RETURN_RATIO,SINGLE_DIRECTION_ODDS_FLOOR,STRUCTURES,
+ asOfEvidence,baseProbabilities,selectionSets,evaluatePortfolio,buildPairCandidates,selectDay};
