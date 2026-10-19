@@ -6,6 +6,7 @@ on:
       - 'app.js'
       - 'football-mobile-compact.css'
       - 'football.html'
+      - 'jc-match.html'
       - '.github/workflows/football-mobile-compact-production-qa.yml'
 permissions:
   contents: read
@@ -151,6 +152,29 @@ jobs:
                 }
                 await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'.png',fullPage:false});
                 console.log('QCDA_MOBILE_COMPACT_PASS '+item.name+' '+JSON.stringify(measurements));
+                // Regression: restored detail-page 赔率变化 must list earlier
+                // immutable public pre-kickoff captures, not just latest rows.
+                // 2026-10-18 周日018 has 14 HAD snapshots in the real database.
+                if(item.name!=='desktop'){
+                  const detail=await page.goto('https://qcda.cn/jc-match.html?id=2d1dcabd-2a9a-40f3-9f56-5b5f37472f8f',
+                    {waitUntil:'domcontentloaded',timeout:50000});
+                  if(detail.status()!==200)throw Error(item.name+' detail HTTP '+detail.status());
+                  await page.locator('.jc-main-tabs button[data-main-tab="odds"]').waitFor({timeout:30000});
+                  await page.locator('.jc-main-tabs button[data-main-tab="odds"]').click();
+                  await page.waitForFunction(()=>{
+                    return document.querySelectorAll('.jc-history-row').length>=10;
+                  },null,{timeout:25000});
+                  const history=await page.evaluate(()=>({
+                    count:document.querySelectorAll('.jc-history-row').length,
+                    uniqueTimes:new Set([...document.querySelectorAll('.jc-history-row')].map(x=>x.querySelector('span')?.textContent)).size,
+                    title:document.querySelector('.jc-odds-section h2')?.textContent||'',
+                    cells:[...document.querySelectorAll('.jc-history-row')].slice(0,2).map(x=>x.textContent)
+                  }));
+                  if(history.count!==12 || history.uniqueTimes<2)
+                    throw Error(item.name+' odds history still truncated '+JSON.stringify(history));
+                  console.log('QCDA_ODDS_HISTORY_RESTORED '+item.name+' '+JSON.stringify(history));
+                  await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'-odds-history.png',fullPage:false});
+                }
                 await ctx.close();
               } finally{await browser.close()}
             }
