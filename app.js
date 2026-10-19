@@ -1368,7 +1368,7 @@ function qcPrepareFrozenOverviewRows(rows){
       const original=String(m['_'+side+'LogoUrl']||'');
       const local=archiveCatalog.by_team?.[teamName] ||
         archiveCatalog.by_source?.[original] ||
-        (/^assets\\/team-logos\\/[a-z0-9-]+\\.(?:png|jpg|webp)$/i.test(original)?original:'');
+        (original.startsWith('assets/team-logos/') && /\.(png|jpg|webp)$/i.test(original)?original:'');
       if(local) m['_'+side+'LogoUrl']=local;
     }
     m.jc_model_outputs=Array.isArray(m.jc_model_outputs)?m.jc_model_outputs:[];
