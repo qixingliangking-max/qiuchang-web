@@ -77,10 +77,15 @@ function choose(n,k,out=[],start=0,buf=[]){
  for(let i=start;i<=n-(k-buf.length);i++){buf.push(i);choose(n,k,out,i+1,buf);buf.pop()}
  return out;
 }
+const MARKET_PRIOR_WEIGHT={had:0.25,hhad:0.25,hafu:0.25,ttg:0.35,crs:0.35};
 function marketOptions(f,prob,type,pool){
  const market=f.markets?.[pool],d=prob.distributions[pool];if(!market||!d||!market.odds)return [];
  let opts=Object.entries(market.odds).map(([key,value])=>({key,odds:numeric(value),p:numeric(d[key])}))
   .filter(x=>x.odds!==null&&x.odds>1&&x.p!==null&&x.p>0);
+ const statSum=opts.reduce((n,x)=>n+x.p,0),marketSum=opts.reduce((n,x)=>n+1/x.odds,0),weight=MARKET_PRIOR_WEIGHT[pool]??0.25;
+ if(statSum<=0||marketSum<=0)return [];
+ opts=opts.map(x=>({...x,statProbability:x.p,marketProbability:(1/x.odds)/marketSum,
+  p:(1-weight)*(x.p/statSum)+weight*((1/x.odds)/marketSum),marketPriorWeight:weight}));
  if(type==="score"){opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));opts=opts.slice(0,10)}
  else opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));
  return opts;
@@ -95,8 +100,8 @@ function selectionSets(f,type,k,{singleOddsFloor=0}={}){
   for(const indices of choose(opts.length,k)){
    const picks=indices.map(i=>opts[i]),coverage=picks.reduce((s,x)=>s+x.p,0),weightedOdds=picks.reduce((s,x)=>s+x.p*x.odds,0);
    all.push({fixtureId:f.id,num:f.num,league:f.league,type,pool,line:numeric(f.markets?.[pool]?.line),
-    picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),odds:x.odds})),
-    options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),
+    picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),statProbability:+x.statProbability.toFixed(8),marketProbability:+x.marketProbability.toFixed(8),odds:x.odds})),
+    options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),probabilitySource:"75% statistical baseline + market prior (25% or 35%)",
     minOdds:Math.min(...picks.map(x=>x.odds)),maxOdds:Math.max(...picks.map(x=>x.odds)),
     asOf:f.decisionAt,calibrated:false});
   }
@@ -116,7 +121,7 @@ function evaluatePortfolio(legA,legB,{bankroll=BANKROLL,minReturn=MIN_RETURN}={}
   estimatedEdge:+(expectedGrossRatio-1).toFixed(6),probabilityCalibrated:false,status:"RESEARCH_ONLY_UNCALIBRATED"};
 }
 function topInsert(arr,item,limit,rank){arr.push(item);arr.sort(rank);if(arr.length>limit)arr.length=limit}
-function rankCandidates(a,b){return b.metrics.expectedGross-a.metrics.expectedGross||b.metrics.hitProbability-a.metrics.hitProbability||b.metrics.minPayout-a.metrics.minPayout||String(a.legs[0].num).localeCompare(String(b.legs[0].num))}
+function rankCandidates(a,b){return b.metrics.hitProbability-a.metrics.hitProbability||b.metrics.expectedGross-a.metrics.expectedGross||b.metrics.minPayout-a.metrics.minPayout||String(a.legs[0].num).localeCompare(String(b.legs[0].num))}
 function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=5}={}){
  const cache=fixtures.map(f=>({f,prob:baseProbabilities(f)})),eligible=cache.filter(x=>x.prob.ready);
  const rejected=cache.filter(x=>!x.prob.ready).map(x=>({num:x.f.num,reason:x.prob.reason}));
@@ -149,7 +154,7 @@ function buildPairCandidates(fixtures,structure,{bankroll=BANKROLL,minReturn=MIN
 function selectDay(fixtures,{bankroll=BANKROLL,minReturn=MIN_RETURN,topK=3,structures=STRUCTURES}={}){
  const seen=new Set();for(const f of fixtures){if(seen.has(f.id))throw Error("DUPLICATE_FIXTURE_ID");seen.add(f.id)}
  const types=structures.map(s=>buildPairCandidates(fixtures,s,{bankroll,minReturn,topK}));
- return {version:"V2-CLEAN-SHADOW-0.2",bankroll,minReturn,minReturnRatio:+(minReturn/bankroll).toFixed(6),
+ return {version:"V2-HYBRID-SHADOW-0.3",bankroll,minReturn,minReturnRatio:+(minReturn/bankroll).toFixed(6),
   requiredMinCombinedOddsByLines:Object.fromEntries([1,2,4,6,9].map(n=>[n,+(minReturn/bankroll*n).toFixed(4)])),
   onlyTwoLegs:true,published:false,asOfOnly:true,types,
   warnings:["Every candidate is two distinct fixtures only","Each possible winning branch must return at least the configured minimum",
