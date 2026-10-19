@@ -1,0 +1,120 @@
+name: Football mobile compact production QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app.js'
+      - 'football-mobile-compact.css'
+      - 'football.html'
+      - '.github/workflows/football-mobile-compact-production-qa.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install mobile and desktop browser engines
+        run: |
+          mkdir -p /tmp/qc-prod-mobile
+          cd /tmp/qc-prod-mobile
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Check actual production football mobile layout, original settlement and desktop odds
+        env:
+          NODE_PATH: /tmp/qc-prod-mobile/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          const fs=require('fs');
+          const BASE='https://qcda.cn/football.html?date=';
+          (async()=>{
+            const runners=[
+              {name:'android',engine:chromium,device:devices['Pixel 7']},
+              {name:'iphone',engine:webkit,device:devices['iPhone 13']},
+              {name:'desktop',engine:chromium,device:{viewport:{width:1366,height:900}}}
+            ];
+            fs.mkdirSync('/tmp/qc-prod-mobile/shots',{recursive:true});
+            for(const item of runners){
+              const browser=await item.engine.launch({headless:true});
+              try{
+                const ctx=await browser.newContext({...item.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                const page=await ctx.newPage(),errors=[];
+                page.on('pageerror',err=>errors.push(String(err)));
+                const navigation=await page.goto(BASE+'2026-10-18',{waitUntil:'domcontentloaded',timeout:50000});
+                if(navigation.status()!==200)throw Error(item.name+' bad status '+navigation.status());
+                await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===25,null,{timeout:35000});
+                const measurements=await page.evaluate(()=>{
+                  const cards=[...document.querySelectorAll('.jc-football-card')];
+                  const vis=e=>e && getComputedStyle(e).display!=='none' && e.getBoundingClientRect().height>0;
+                  const first=cards[0],second=cards[1];
+                  const rows=x=>[...x.querySelectorAll('.jc-card-hit-chip')];
+                  const logo=[...first.querySelectorAll('img.jc-team-logo')];
+                  const hitCount=x=>x.querySelectorAll('.jc-card-hit-chip').length;
+                  const priced=[...document.querySelectorAll('.jc-card-hit-chip em')];
+                  return {
+                    cardCount:cards.length,
+                    minColumns:Math.round(first.getBoundingClientRect().width),
+                    firstHeight:Math.round(first.getBoundingClientRect().height),
+                    secondHeight:Math.round(second.getBoundingClientRect().height),
+                    firstHitCount:hitCount(first),secondHitCount:hitCount(second),
+                    firstPrice:priced[0]?.textContent?.trim(),
+                    firstPricePrefix:priced[0]?getComputedStyle(priced[0],'::before').content:null,
+                    priceCount:priced.length,
+                    missingPrices:priced.filter(el=>!el.textContent?.trim()).length,
+                    oddsVisible:vis(first.querySelector('.jc-mini-odds')),
+                    reportVisible:vis(first.querySelector('.qc-mobile-report-link')),
+                    linkText:first.querySelector('.qc-mobile-report-link')?.textContent?.trim(),
+                    logoCount:logo.length,
+                    chipTopPositions:[...new Set(rows(second).map(x=>Math.round(x.getBoundingClientRect().top)))].length,
+                    chipClipped:rows(second).filter(x=>x.scrollWidth>x.clientWidth+2).length,
+                    cardOverflow:cards.filter(x=>x.scrollWidth>x.clientWidth+3).length,
+                    desktopOriginalCta:vis(first.querySelector('.jc-card-detail-btn')),
+                    dateToolbarFilterText:document.querySelector('#jcFootballLeagueToggle')?.textContent||''
+                  };
+                });
+                if(errors.length)throw Error(item.name+' JS '+errors.join(' | '));
+                if(measurements.cardCount!==25 || measurements.missingPrices || measurements.logoCount<2)
+                  throw Error(item.name+' missing match data '+JSON.stringify(measurements));
+                const mobile=item.name!=='desktop';
+                if(mobile){
+                  if(measurements.oddsVisible || !measurements.reportVisible ||
+                    !measurements.linkText.includes('玩法分析报告') ||
+                    measurements.firstHitCount!==4 || measurements.secondHitCount!==5 ||
+                    measurements.chipTopPositions!==2 ||
+                    Math.abs(measurements.firstHeight-measurements.secondHeight)>3 ||
+                    measurements.chipClipped || measurements.cardOverflow ||
+                    measurements.firstPricePrefix!=='"@"')
+                    throw Error(item.name+' compact layout failed '+JSON.stringify(measurements));
+                  await page.locator('#jcFootballLeagueToggle').click();
+                  await page.locator('#jcFootballLeagueMenu button[data-status="pending"]').click();
+                  await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===0,null,{timeout:12000});
+                  await page.locator('#jcFootballLeagueToggle').click();
+                  await page.locator('#jcFootballLeagueMenu button[data-status="all"]').click();
+                  await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===25,null,{timeout:12000});
+                  await page.locator('#jcFootballDateLabel').click();
+                  if(!await page.locator('#jcDatePopover .qc-football-calendar-today').isVisible())
+                    throw Error('Missing return-to-today calendar action on '+item.name);
+                }else if(!measurements.oddsVisible || measurements.reportVisible || !measurements.desktopOriginalCta){
+                  throw Error('Desktop odds/cards changed '+JSON.stringify(measurements));
+                }
+                await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'.png',fullPage:false});
+                console.log('QCDA_MOBILE_COMPACT_PASS '+item.name+' '+JSON.stringify(measurements));
+                await ctx.close();
+              } finally{await browser.close()}
+            }
+          })().catch(e=>{console.error(e.stack||String(e));process.exitCode=1});
+          JS
+      - name: Keep browser screenshots for visual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: football-mobile-compact-production-screenshots
+          path: /tmp/qc-prod-mobile/shots/
+          if-no-files-found: warn
+          retention-days: 7
