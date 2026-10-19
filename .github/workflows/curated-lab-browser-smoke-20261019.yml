@@ -45,7 +45,7 @@ jobs:
             const initialDay=await page.locator('#dateLabel').innerText();
             if(!initialDay.includes('10月19日'))throw Error(name+': selected day should open first '+initialDay);
             if(await page.locator('#plans .plan').count()!==2)throw Error(name+': expected two independently selected pairs');
-            const intro=await page.locator('#plans .plan').innerText();
+            const intro=await page.locator('#plans .plan').first().innerText();
             for(const word of ['周一002','让胜（+1）','1.50','周一007','普通主胜','1.36','2.04','待赛']){
               if(!intro.includes(word))throw Error(name+': missing official selection '+word);
             }
