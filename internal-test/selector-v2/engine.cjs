@@ -33,28 +33,27 @@ function asOfEvidence(fixture){
  for(const key of ["ft","ht","finalScore","halfScore","settlement","isHit","actualResult","completedAt","ftScore","htScore"]){
   if(Object.prototype.hasOwnProperty.call(fixture,key))return {ok:false,code:"OUTCOME_FIELD_FORBIDDEN",field:key};
  }
- const start=utc(fixture.kickoffAt),at=utc(fixture.decisionAt),lock=utc(fixture.model?.lockedAt),edit=utc(fixture.model?.updatedAt),captured=utc(fixture.features?.capturedAt);
- if([start,at,lock,edit,captured].some(x=>x===null))return {ok:false,code:"TIMESTAMP_MISSING"};
- if(!(lock<=at&&edit<=at&&captured<=at&&at<start))return {ok:false,code:"ASOF_LEAK_OR_UNLOCKED"};
+ const start=utc(fixture.kickoffAt),at=utc(fixture.decisionAt),lock=utc(fixture.model?.lockedAt),edit=utc(fixture.model?.updatedAt);
+ if([start,at,lock,edit].some(x=>x===null))return {ok:false,code:"TIMESTAMP_MISSING"};
+ if(!(lock<=at&&edit<=at&&at<start))return {ok:false,code:"ASOF_LEAK_OR_UNLOCKED"};
+ if(!fixture.model?.isLocked)return {ok:false,code:"MODEL_NOT_LOCKED"};
  for(const [key,market] of Object.entries(fixture.markets||{})){
   const d=utc(market.capturedAt);
   if(d===null||d>at)return {ok:false,code:"MARKET_AFTER_DECISION",market:key};
  }
- if(!fixture.model?.isLocked)return {ok:false,code:"MODEL_NOT_LOCKED"};
- const st=fixture.features,required=["homeGoalsFor","homeGoalsAgainst","awayGoalsFor","awayGoalsAgainst","homeSample","awaySample"];
- if(required.some(k=>numeric(st[k])===null))return {ok:false,code:"STAT_REQUIRED"};
- if(st.homeSample<6||st.awaySample<6)return {ok:false,code:"SAMPLE_TOO_SMALL"};
- if(required.slice(0,4).some(k=>numeric(st[k])<0))return {ok:false,code:"INVALID_GOAL_RATE"};
- return {ok:true};
+ const st=fixture.features||{},captured=utc(st.capturedAt);
+ if(st.capturedAt&&(!captured||captured>at))return {ok:false,code:"FEATURE_AFTER_DECISION"};
+ const required=["homeGoalsFor","homeGoalsAgainst","awayGoalsFor","awayGoalsAgainst","homeSample","awaySample"];
+ const statsAvailable=required.every(k=>numeric(st[k])!==null)&&st.homeSample>=6&&st.awaySample>=6&&required.slice(0,4).every(k=>numeric(st[k])>=0);
+ return {ok:true,statsAvailable};
 }
 function baseProbabilities(fixture){
  const gate=asOfEvidence(fixture);if(!gate.ok)return {ready:false,reason:gate.code};
- const f=fixture.features;
- const lh=clamp(Math.sqrt(Math.max(.05,f.homeGoalsFor)*Math.max(.05,f.awayGoalsAgainst)),.15,3.5);
- const la=clamp(Math.sqrt(Math.max(.05,f.awayGoalsFor)*Math.max(.05,f.homeGoalsAgainst)),.15,3.5);
+ if(!gate.statsAvailable)return {ready:true,modelVersion:"V2.2-MARKET-PRIOR-ONLY",distributions:{had:null,hhad:null,hafu:null,ttg:null,crs:null},quality:{statsAvailable:false,calibrated:false}};
+ const f=fixture.features,lh=clamp(Math.sqrt(Math.max(.05,f.homeGoalsFor)*Math.max(.05,f.awayGoalsAgainst)),.15,3.5),
+  la=clamp(Math.sqrt(Math.max(.05,f.awayGoalsFor)*Math.max(.05,f.homeGoalsAgainst)),.15,3.5);
  if(lh+la>6.3)return {ready:false,reason:"EXTREME_TOTAL_RATE"};
- const home=poisson(lh),away=poisson(la),dist={had:{h:0,d:0,a:0},hhad:null,ttg:{},crs:{}};
- const line=numeric(fixture.markets?.hhad?.line);
+ const home=poisson(lh),away=poisson(la),dist={had:{h:0,d:0,a:0},hhad:null,hafu:null,ttg:{},crs:{}},line=numeric(fixture.markets?.hhad?.line);
  if(line!==null)dist.hhad={h:0,d:0,a:0};
  for(let h=0;h<=MAX_GOALS;h++)for(let a=0;a<=MAX_GOALS;a++){
   const p=home[h]*away[a],total=Math.min(7,h+a),key=scoreKey(h,a);
@@ -65,12 +64,11 @@ function baseProbabilities(fixture){
  if(phase&&numeric(phase.home)!==null&&numeric(phase.away)!==null&&phase.home>.20&&phase.home<.65&&phase.away>.20&&phase.away<.65){
   const hh=poisson(lh*phase.home),ha=poisson(la*phase.away),sh=poisson(lh*(1-phase.home)),sa=poisson(la*(1-phase.away));
   dist.hafu={};for(let x=0;x<=MAX_GOALS;x++)for(let y=0;y<=MAX_GOALS;y++)for(let z=0;z<=MAX_GOALS;z++)for(let w=0;w<=MAX_GOALS;w++){
-   const k=side(x,y)+side(x+z,y+w);dist.hafu[k]=(dist.hafu[k]||0)+hh[x]*ha[y]*sh[z]*sa[w];
+   const key=side(x,y)+side(x+z,y+w);dist.hafu[key]=(dist.hafu[key]||0)+hh[x]*ha[y]*sh[z]*sa[w];
   }
- }else dist.hafu=null;
- return {ready:true,modelVersion:"V2-UNCALIBRATED-INDEPENDENT-POISSON",lambda:{home:+lh.toFixed(4),away:+la.toFixed(4)},
-  distributions:dist,quality:{homeSample:f.homeSample,awaySample:f.awaySample,calibrated:false},
-  note:"Research baseline only; not historically calibrated and not publishable."};
+ }
+ return {ready:true,modelVersion:"V2.2-STAT-MARKET-HYBRID",lambda:{home:+lh.toFixed(4),away:+la.toFixed(4)},
+  distributions:dist,quality:{statsAvailable:true,calibrated:false}};
 }
 function choose(n,k,out=[],start=0,buf=[]){
  if(buf.length===k){out.push(buf.slice());return out}
