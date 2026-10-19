@@ -170,6 +170,11 @@ jobs:
                   for(const day of ['2026-10-17','2026-10-16','2026-10-10','2026-09-27']){
                     await page.goto(BASE+day,{waitUntil:'domcontentloaded',timeout:50000});
                     await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length>0,null,{timeout:35000});
+                    await page.waitForFunction(()=>{
+                      const first=document.querySelector('.jc-football-card');
+                      const icons=[...first?.querySelectorAll('img.jc-team-logo')||[]];
+                      return icons.length===2 && icons.every(img=>img.complete&&img.naturalWidth>0);
+                    },null,{timeout:18000});
                     const historic=await page.evaluate(()=>{
                       const cards=[...document.querySelectorAll('.jc-football-card')];
                       const imgs=[...document.querySelectorAll('.jc-football-card img.jc-team-logo')];
@@ -180,6 +185,10 @@ jobs:
                         rowsWithImage:[...cards].filter(c=>c.querySelectorAll('img.jc-team-logo').length===2).length};
                     });
                     console.log('QCDA_HISTORIC_LOGO_DIAG '+item.name+' '+day+' '+JSON.stringify(historic));
+                    if(historic.firstImgs.length!==2 ||
+                      historic.firstImgs.some(img=>img.naturalWidth===0||!img.loaded||!img.src.startsWith('assets/team-logos/'))||
+                      historic.rowsWithImage!==historic.count)
+                      throw Error(item.name+' historical frozen crests not truly static '+day+' '+JSON.stringify(historic));
                     await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'-'+day+'.png',fullPage:false});
                   }
                 }
