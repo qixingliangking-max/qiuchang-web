@@ -33,6 +33,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify odds are mutable before kickoff only
+        run: python3 scripts/cache_static_team_logos.py --self-test
+
       - name: Cache newly discovered team logos from public schedules
         run: python3 scripts/cache_static_team_logos.py
 
