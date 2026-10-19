@@ -757,8 +757,10 @@ function jcFootballHitOddsHtml(m,model,score){
 
   if(!hits.length) return '';
   return '<div class="jc-card-hit-play">'+
-    '<div class="jc-card-hit-title">赛前预测命中</div>'+
-    '<div class="jc-card-hit-items">'+hits.map(x=>
+    '<div class="jc-card-hit-title">赛前预测命中'+
+      '<span class="qc-mobile-hit-count"> · '+hits.length+'项</span>'+
+      '<span class="qc-mobile-report-link">玩法分析报告 <span aria-hidden="true">›</span></span></div>'+
+    '<div class="jc-card-hit-items qc-hit-count-'+hits.length+'">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="赛前预测命中｜'+qcEscape(x.kind)+'">'+
         '<small>'+qcEscape(x.kind)+'</small><b>'+qcEscape(x.label)+'</b><em>'+qcEscape(x.odds)+'</em>'+
       '</span>'
@@ -1084,14 +1086,19 @@ function jcFootballHitBlock(m,access){
     ? '<div class="jc-card-prematch-lock" role="link" tabindex="0" data-qc-login-cta="1"><span>🔒 登录查看 AI 推荐玩法</span></div>'
     : '';
 
-  // 完赛后的“赛前预测命中”公开展示；游客卡片最后仍保留统一登录入口。
+  // All odds and settlements continue using the original locked-market source.
+  // Added mobile-only markup is entirely hidden on desktop.
   if(score.finished){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
-    return '<div class="jc-card-after-odds">'+guestLock+hit+'</div>';
+    const emptyMobile=hit?'':'<div class="qc-mobile-report-empty">'+
+      '<span>暂无命中</span><span class="qc-mobile-report-link">玩法分析报告 <span aria-hidden="true">›</span></span></div>';
+    return '<div class="jc-card-after-odds">'+guestLock+hit+emptyMobile+'</div>';
   }
 
-  return '<div class="jc-card-after-odds">'+guestLock+'</div>';
+  return '<div class="jc-card-after-odds">'+guestLock+
+    '<div class="qc-mobile-report-pending"><span class="qc-mobile-report-link">玩法分析报告 <span aria-hidden="true">›</span></span></div>'+
+    '</div>';
 }
 
 // Team crests are captured ONCE when fixtures are first collected.
@@ -1889,6 +1896,8 @@ async function loadJcFootball(){
     (access.loggedIn || ds<=today || publishedPublicDates.has(ds));
   let selectedDate=initialDate;
   let activeLeague='全部';
+  let activeStatus='all'; // Mobile-only public fixture status filter.
+  const isCompactMobile=()=>window.matchMedia('(max-width:760px)').matches;
   let availableDates=[selectedDate];
   let loadToken=0;
   const warmHistoryRequested=new Set();
@@ -1916,6 +1925,23 @@ async function loadJcFootball(){
   const leagueMenu=$('#jcFootballLeagueMenu');
   const inlineLeagueTabs=$('#jcFootballInlineLeagues');
   const fixtureCount=$('#jcFootballFixtureCount');
+
+  function renderFootballCalendar(ds,dates,callback,note){
+    qcRenderDateCalendar(ds,dates,callback,note);
+    if(!datePop) return;
+    const mobileToday=document.createElement('button');
+    mobileToday.type='button';
+    mobileToday.className='qc-football-calendar-today';
+    mobileToday.textContent='回到今天';
+    mobileToday.disabled=selectedDate===today;
+    mobileToday.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      datePop.hidden=true;
+      closeLeague();
+      loadFootballDate(today);
+    });
+    datePop.appendChild(mobileToday);
+  }
 
   // Same-origin one-click handoff avoids re-fetching a match and its daily
   // navigation immediately after the user opens it from this page. Only
@@ -1967,7 +1993,7 @@ async function loadJcFootball(){
         prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
         prev.setAttribute('aria-disabled',String(prev.disabled));
       }
-      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+      renderFootballCalendar(selectedDate,availableDates,ds=>{
         if(!isAllowedDate(ds)) return;
         closeLeague();
         loadFootballDate(ds);
@@ -1983,7 +2009,7 @@ async function loadJcFootball(){
     const eligible=archiveDates.filter(ds=>ds<=today);
     availableDates=[...new Set([...availableDates,...eligible,today])].sort();
     if(!access.loggedIn){
-      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+      renderFootballCalendar(selectedDate,availableDates,ds=>{
         if(!isAllowedDate(ds)) return;
         closeLeague();loadFootballDate(ds);
       },'已结算历史为固定静态快照');
@@ -1994,7 +2020,7 @@ async function loadJcFootball(){
     jcFetchAvailableDates().then(dates=>{
       if(Array.isArray(dates) && dates.length){
         availableDates=[...new Set([...availableDates,...dates])].sort();
-        qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+        renderFootballCalendar(selectedDate,availableDates,ds=>{
           closeLeague();loadFootballDate(ds);
         });
       }
@@ -2024,18 +2050,39 @@ async function loadJcFootball(){
       {key:'全部',label:'全部赛事',count:rows.length},
       ...Object.keys(counts).sort((x,y)=>x.localeCompare(y,'zh-CN')).map(k=>({key:k,label:k,count:counts[k]}))
     ];
-    leagueMenu.innerHTML=items.map(item=>
+    const mobileStatuses=[
+      {key:'all',label:'全部赛事',count:rows.length},
+      {key:'finished',label:'已完赛',count:rows.filter(qcIsConfirmedFinal).length},
+      {key:'pending',label:'未开赛',count:rows.filter(m=>jcMatchStatusLabel(m,calendarToday)==='未开赛').length}
+    ];
+    const statuses='<div class="qc-mobile-filter-group">'+
+      '<div class="qc-mobile-filter-heading">比赛状态</div>'+
+      '<div class="qc-mobile-filter-status">'+mobileStatuses.map(item=>
+        '<button type="button" class="'+(activeStatus===item.key?'active':'')+
+        '" data-status="'+item.key+'" aria-pressed="'+(activeStatus===item.key)+'">'+
+        qcEscape(item.label)+' <small>'+item.count+'</small></button>'
+      ).join('')+'</div><div class="qc-mobile-filter-heading">选择联赛</div></div>';
+    leagueMenu.innerHTML=statuses+items.map(item=>
       '<button type="button" class="'+(activeLeague===item.key?'active':'')+'" data-league="'+qcEscape(item.key)+'">'+
         '<span class="jc-football-league-check">'+(activeLeague===item.key?'✓':'')+'</span>'+
         '<span class="jc-football-league-name">'+qcEscape(item.label)+'</span>'+
         '<b>'+item.count+'</b>'+
       '</button>'
     ).join('');
-    $$('button',leagueMenu).forEach(btn=>{
+    $('button[data-league]',leagueMenu).forEach(btn=>{
       btn.onclick=e=>{
         e.preventDefault();
         e.stopPropagation();
         activeLeague=btn.dataset.league||'全部';
+        closeLeague();
+        render();
+      };
+    });
+    $('button[data-status]',leagueMenu).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        activeStatus=btn.dataset.status||'all';
         closeLeague();
         render();
       };
@@ -2150,6 +2197,7 @@ async function loadJcFootball(){
     allRows=(result.data||[]).filter(m=>m.match_date);
     selectedDate=ds;
     activeLeague='全部';
+    activeStatus='all';
     if(result.fromHistorySnapshot){
       // Archived records already include locked model and market snapshots.
       // Render immediately: logos and exceptional unfinished fixtures must not
@@ -2170,20 +2218,29 @@ async function loadJcFootball(){
   function render(){
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate && qcJcIsVisibleMatch(m));
     if(activeLeague!=='全部' && !dateRows.some(m=>leagueKey(m)===activeLeague)) activeLeague='全部';
-    const filtered=activeLeague==='全部'?dateRows:dateRows.filter(m=>leagueKey(m)===activeLeague);
+    const leagueRows=activeLeague==='全部'?dateRows:dateRows.filter(m=>leagueKey(m)===activeLeague);
+    const filtered=isCompactMobile() && activeStatus!=='all'
+      ? leagueRows.filter(m=>activeStatus==='finished'
+        ? qcIsConfirmedFinal(m)
+        : jcMatchStatusLabel(m,calendarToday)==='未开赛')
+      : leagueRows;
 
     if(label){
       const d=new Date(selectedDate+'T12:00:00+08:00');
       label.textContent=selectedDate.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
     }
     if(leagueToggle){
-      leagueToggle.textContent=activeLeague==='全部'?'赛事':activeLeague;
+      leagueToggle.textContent=isCompactMobile()?'☷ 筛选':(activeLeague==='全部'?'赛事':activeLeague);
+      leagueToggle.classList.toggle('qc-mobile-filter-active',activeStatus!=='all'||activeLeague!=='全部');
       leagueToggle.title=activeLeague==='全部'?'选择赛事':'当前：'+activeLeague;
     }
 
     renderLeagueMenu(dateRows);
     renderInlineLeagueTabs(dateRows);
-    if(fixtureCount) fixtureCount.textContent='共'+filtered.length+'场';
+    if(fixtureCount) fixtureCount.textContent=isCompactMobile()
+      ? dateRows.length+'场比赛 · '+dateRows.filter(qcIsConfirmedFinal).length+'场完赛'+
+        ((activeStatus!=='all'||activeLeague!=='全部')?' · 筛选'+filtered.length+'场':'')
+      : '共'+filtered.length+'场';
     if(prev){
       prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
       prev.setAttribute('aria-disabled',String(prev.disabled));
@@ -2198,7 +2255,7 @@ async function loadJcFootball(){
     setUrlDate(selectedDate);
     warmHistoryNeighbors(selectedDate);
     if(!dateLocked){
-      qcRenderDateCalendar(selectedDate,availableDates,ds=>{
+      renderFootballCalendar(selectedDate,availableDates,ds=>{
         if(!isAllowedDate(ds)) return;
         closeLeague();
         loadFootballDate(ds);
@@ -2225,7 +2282,7 @@ async function loadJcFootball(){
     if(label) label.onclick=e=>{
       e.preventDefault();
       e.stopPropagation();
-      qcRenderDateCalendar(selectedDate,availableDates,ds=>loadFootballDate(ds));
+      renderFootballCalendar(selectedDate,availableDates,ds=>loadFootballDate(ds));
       if(datePop) datePop.hidden=!datePop.hidden;
       closeLeague();
     };
