@@ -1,0 +1,6338 @@
+{
+  "version": "V2-2LEG-1800-FLOOR-FROZEN-CANDIDATES-20261019",
+  "range": "2026-09-23..2026-10-18",
+  "bankroll": 1000,
+  "minReturn": 1800,
+  "records": 284,
+  "days": 22,
+  "dataEligibleTotal": 170,
+  "sourceSha": {
+    "sql": "a84ef3179a2a47d910e4943d2989810c2fc8aadb",
+    "adapter": "b770adae2d461621a259ee2e5c57850b32b72e69",
+    "engine": "30400a76ca62e19cc0ec31dacdecffb6f7108477"
+  },
+  "structures": [
+    {
+      "structure": "direction_1x1",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 29282
+    },
+    {
+      "structure": "direction_1x2",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 70887
+    },
+    {
+      "structure": "direction_2x2",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 10296
+    },
+    {
+      "structure": "htft_1x1",
+      "daysWithCandidate": 0,
+      "daysAbstained": 22,
+      "qualifiedCombos": 0
+    },
+    {
+      "structure": "goals_2x2",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 1112496
+    },
+    {
+      "structure": "score_2x2",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 2873475
+    },
+    {
+      "structure": "score_3x3",
+      "daysWithCandidate": 13,
+      "daysAbstained": 9,
+      "qualifiedCombos": 20433600
+    }
+  ],
+  "elapsedMs": 59827,
+  "byDay": [
+    {
+      "day": "2026-09-23",
+      "fixtures": 1,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 1,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-09-24",
+      "fixtures": 8,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 47,
+          "returnFloorPassed": 47,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 3.35,
+                    "probability": 0.33623129
+                  }
+                ]
+              },
+              {
+                "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+                "num": "周四003",
+                "league": "国际赛",
+                "pool": "hhad",
+                "line": -4,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 2.06,
+                    "probability": 0.99220094
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 6901,
+              "maxPayout": 6901,
+              "minCombinedOdds": 6.901,
+              "maxCombinedOdds": 6.901,
+              "minReturnRatio": 6.901,
+              "returnFloorPass": true,
+              "hitProbability": 0.333609,
+              "expectedGross": 2.302236,
+              "estimatedEdge": 1.302236,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 117,
+          "returnFloorPassed": 111,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 3.35,
+                    "probability": 0.33623129
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 2.94,
+                    "probability": 0.31904239
+                  }
+                ]
+              },
+              {
+                "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+                "num": "周四003",
+                "league": "国际赛",
+                "pool": "hhad",
+                "line": -4,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 2.06,
+                    "probability": 0.99220094
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 3028.2,
+              "maxPayout": 3450.5,
+              "minCombinedOdds": 6.0564,
+              "maxCombinedOdds": 6.901,
+              "minReturnRatio": 3.0282,
+              "returnFloorPass": true,
+              "hitProbability": 0.650163,
+              "expectedGross": 2.109707,
+              "estimatedEdge": 1.109707,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 72,
+          "returnFloorPassed": 9,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+                "num": "周四001",
+                "league": "国际赛",
+                "pool": "hhad",
+                "line": -1,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "让胜",
+                    "odds": 3.32,
+                    "probability": 0.27181492
+                  },
+                  {
+                    "key": "d",
+                    "label": "让平",
+                    "odds": 3.28,
+                    "probability": 0.26553061
+                  }
+                ]
+              },
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 3.35,
+                    "probability": 0.33623129
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 2.94,
+                    "probability": 0.31904239
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 2410.8,
+              "maxPayout": 2780.5,
+              "minCombinedOdds": 9.6432,
+              "maxCombinedOdds": 11.122,
+              "minReturnRatio": 2.4108,
+              "returnFloorPass": true,
+              "hitProbability": 0.352108,
+              "expectedGross": 0.915216,
+              "estimatedEdge": -0.084784,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 2352,
+          "returnFloorPassed": 2352,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 4,
+                    "probability": 0.28525377
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 8.5,
+                    "probability": 0.1507666
+                  }
+                ]
+              },
+              {
+                "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+                "num": "周四003",
+                "league": "国际赛",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 20,
+                    "probability": 0.29406527
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 80,
+                    "probability": 0.16102756
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 20000,
+              "maxPayout": 170000,
+              "minCombinedOdds": 80,
+              "maxCombinedOdds": 680,
+              "minReturnRatio": 20,
+              "returnFloorPass": true,
+              "hitProbability": 0.19843,
+              "expectedGross": 11.363797,
+              "estimatedEdge": 10.363797,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 6075,
+          "returnFloorPassed": 6075,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 8.5,
+                    "probability": 0.1507666
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 8.25,
+                    "probability": 0.1414316
+                  }
+                ]
+              },
+              {
+                "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+                "num": "周四003",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 80,
+                    "probability": 0.16102756
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 100,
+                    "probability": 0.14130111
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 165000,
+              "maxPayout": 212500,
+              "minCombinedOdds": 660,
+              "maxCombinedOdds": 850,
+              "minReturnRatio": 165,
+              "returnFloorPass": true,
+              "hitProbability": 0.08834,
+              "expectedGross": 16.533744,
+              "estimatedEdge": 15.533744,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 3,
+          "dataRejected": 5,
+          "combinationsChecked": 43200,
+          "returnFloorPassed": 43200,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+                "num": "周四002",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 8.5,
+                    "probability": 0.1507666
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 8.25,
+                    "probability": 0.1414316
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 17,
+                    "probability": 0.0663373
+                  }
+                ]
+              },
+              {
+                "fixtureId": "c7a97bc4-b077-48cd-ae07-67fef74875e9",
+                "num": "周四003",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 80,
+                    "probability": 0.16102756
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 100,
+                    "probability": 0.14130111
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 200,
+                    "probability": 0.06199561
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 73333.33,
+              "maxPayout": 377777.78,
+              "minCombinedOdds": 660,
+              "maxCombinedOdds": 3400,
+              "minReturnRatio": 73.333333,
+              "returnFloorPass": true,
+              "hitProbability": 0.130623,
+              "expectedGross": 15.659745,
+              "estimatedEdge": 14.659745,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-09-25",
+      "fixtures": 13,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 535,
+          "returnFloorPassed": 535,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 8.75,
+                    "probability": 0.40187957
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.6,
+                    "probability": 0.44649989
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 57750,
+              "maxPayout": 57750,
+              "minCombinedOdds": 57.75,
+              "maxCombinedOdds": 57.75,
+              "minReturnRatio": 57.75,
+              "returnFloorPass": true,
+              "hitProbability": 0.179439,
+              "expectedGross": 10.362613,
+              "estimatedEdge": 9.362613,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 1470,
+          "returnFloorPassed": 1426,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 8.75,
+                    "probability": 0.40187957
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.5,
+                    "probability": 0.24078046
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.6,
+                    "probability": 0.44649989
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 18150,
+              "maxPayout": 28875,
+              "minCombinedOdds": 36.3,
+              "maxCombinedOdds": 57.75,
+              "minReturnRatio": 18.15,
+              "returnFloorPass": true,
+              "hitProbability": 0.286948,
+              "expectedGross": 7.132585,
+              "estimatedEdge": 6.132585,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 1008,
+          "returnFloorPassed": 201,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 8.75,
+                    "probability": 0.40187957
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.5,
+                    "probability": 0.24078046
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.6,
+                    "probability": 0.44649989
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.65,
+                    "probability": 0.21868364
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 6393.75,
+              "maxPayout": 14437.5,
+              "minCombinedOdds": 25.575,
+              "maxCombinedOdds": 57.75,
+              "minReturnRatio": 6.39375,
+              "returnFloorPass": true,
+              "hitProbability": 0.427487,
+              "expectedGross": 4.796904,
+              "estimatedEdge": 3.796904,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 21952,
+          "returnFloorPassed": 21952,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 10.25,
+                    "probability": 0.14528957
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 33,
+                    "probability": 0.04777192
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s6",
+                    "label": "6球",
+                    "odds": 16,
+                    "probability": 0.08048696
+                  },
+                  {
+                    "key": "s7",
+                    "label": "7+球",
+                    "odds": 23,
+                    "probability": 0.07013371
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 41000,
+              "maxPayout": 189750,
+              "minCombinedOdds": 164,
+              "maxCombinedOdds": 759,
+              "minReturnRatio": 41,
+              "returnFloorPass": true,
+              "hitProbability": 0.029079,
+              "expectedGross": 2.223291,
+              "estimatedEdge": 1.223291,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 56700,
+          "returnFloorPassed": 56700,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 60,
+                    "probability": 0.05899833
+                  },
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 80,
+                    "probability": 0.04542488
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 60,
+                    "probability": 0.05489876
+                  },
+                  {
+                    "key": "s02s03",
+                    "label": "2-3",
+                    "odds": 55,
+                    "probability": 0.04510393
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 825000,
+              "maxPayout": 1200000,
+              "minCombinedOdds": 3300,
+              "maxCombinedOdds": 4800,
+              "minReturnRatio": 825,
+              "returnFloorPass": true,
+              "hitProbability": 0.010443,
+              "expectedGross": 10.356661,
+              "estimatedEdge": 9.356661,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 8,
+          "dataRejected": 5,
+          "combinationsChecked": 403200,
+          "returnFloorPassed": 403200,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c47ceeae-0c8a-428c-842e-8a5c2076076a",
+                "num": "周五011",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 30,
+                    "probability": 0.07507947
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 60,
+                    "probability": 0.05899833
+                  },
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 80,
+                    "probability": 0.04542488
+                  }
+                ]
+              },
+              {
+                "fixtureId": "7a49a7f9-b6a9-41e3-a720-15ca57160402",
+                "num": "周五012",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 60,
+                    "probability": 0.05489876
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 45,
+                    "probability": 0.052249
+                  },
+                  {
+                    "key": "s02s03",
+                    "label": "2-3",
+                    "odds": 55,
+                    "probability": 0.04510393
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 150000,
+              "maxPayout": 533333.33,
+              "minCombinedOdds": 1350,
+              "maxCombinedOdds": 4800,
+              "minReturnRatio": 150,
+              "returnFloorPass": true,
+              "hitProbability": 0.02733,
+              "expectedGross": 8.510717,
+              "estimatedEdge": 7.510717,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-09-26",
+      "fixtures": 17,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 17,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-09-27",
+      "fixtures": 9,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 9,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-09-28",
+      "fixtures": 8,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 566,
+          "returnFloorPassed": 566,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+                "num": "周一001",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 12.5,
+                    "probability": 0.16531377
+                  }
+                ]
+              },
+              {
+                "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+                "num": "周一007",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 3.5,
+                    "probability": 0.44457081
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 43750,
+              "maxPayout": 43750,
+              "minCombinedOdds": 43.75,
+              "maxCombinedOdds": 43.75,
+              "minReturnRatio": 43.75,
+              "returnFloorPass": true,
+              "hitProbability": 0.073494,
+              "expectedGross": 3.215348,
+              "estimatedEdge": 2.215348,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 1512,
+          "returnFloorPassed": 1464,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+                "num": "周一001",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 12.5,
+                    "probability": 0.16531377
+                  }
+                ]
+              },
+              {
+                "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+                "num": "周一005",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 3.65,
+                    "probability": 0.42380116
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 3.75,
+                    "probability": 0.24271563
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 22812.5,
+              "maxPayout": 23437.5,
+              "minCombinedOdds": 45.625,
+              "maxCombinedOdds": 46.875,
+              "minReturnRatio": 22.8125,
+              "returnFloorPass": true,
+              "hitProbability": 0.110184,
+              "expectedGross": 2.538659,
+              "estimatedEdge": 1.538659,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 1008,
+          "returnFloorPassed": 230,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+                "num": "周一001",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.15,
+                    "probability": 0.22714898
+                  },
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 12.5,
+                    "probability": 0.16531377
+                  }
+                ]
+              },
+              {
+                "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+                "num": "周一005",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 3.65,
+                    "probability": 0.42380116
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 3.75,
+                    "probability": 0.24271563
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 4699.38,
+              "maxPayout": 11718.75,
+              "minCombinedOdds": 18.7975,
+              "maxCombinedOdds": 46.875,
+              "minReturnRatio": 4.699375,
+              "returnFloorPass": true,
+              "hitProbability": 0.261583,
+              "expectedGross": 1.987907,
+              "estimatedEdge": 0.987907,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 21952,
+          "returnFloorPassed": 21952,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "0b3b20ac-df39-481e-bae5-ca0736066e7b",
+                "num": "周一003",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s5",
+                    "label": "5球",
+                    "odds": 13,
+                    "probability": 0.10683704
+                  },
+                  {
+                    "key": "s7",
+                    "label": "7+球",
+                    "odds": 35,
+                    "probability": 0.03826794
+                  }
+                ]
+              },
+              {
+                "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+                "num": "周一007",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s5",
+                    "label": "5球",
+                    "odds": 9.25,
+                    "probability": 0.12021339
+                  },
+                  {
+                    "key": "s7",
+                    "label": "7+球",
+                    "odds": 23,
+                    "probability": 0.05088764
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 30062.5,
+              "maxPayout": 201250,
+              "minCombinedOdds": 120.25,
+              "maxCombinedOdds": 805,
+              "minReturnRatio": 30.0625,
+              "returnFloorPass": true,
+              "hitProbability": 0.024828,
+              "expectedGross": 1.556738,
+              "estimatedEdge": 0.556738,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 56700,
+          "returnFloorPassed": 56700,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+                "num": "周一005",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 16,
+                    "probability": 0.08109546
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 25,
+                    "probability": 0.06449511
+                  }
+                ]
+              },
+              {
+                "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+                "num": "周一007",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 28,
+                    "probability": 0.05319628
+                  },
+                  {
+                    "key": "s02s03",
+                    "label": "2-3",
+                    "odds": 34,
+                    "probability": 0.04016231
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 112000,
+              "maxPayout": 212500,
+              "minCombinedOdds": 448,
+              "maxCombinedOdds": 850,
+              "minReturnRatio": 112,
+              "returnFloorPass": true,
+              "hitProbability": 0.013592,
+              "expectedGross": 2.076955,
+              "estimatedEdge": 1.076955,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 8,
+          "dataRejected": 0,
+          "combinationsChecked": 403200,
+          "returnFloorPassed": 403200,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+                "num": "周一005",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 16,
+                    "probability": 0.08109546
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 25,
+                    "probability": 0.06449511
+                  },
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 27,
+                    "probability": 0.04738233
+                  }
+                ]
+              },
+              {
+                "fixtureId": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+                "num": "周一007",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 21,
+                    "probability": 0.05908267
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 28,
+                    "probability": 0.05319628
+                  },
+                  {
+                    "key": "s02s03",
+                    "label": "2-3",
+                    "odds": 34,
+                    "probability": 0.04016231
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 37333.33,
+              "maxPayout": 102000,
+              "minCombinedOdds": 336,
+              "maxCombinedOdds": 918,
+              "minReturnRatio": 37.333333,
+              "returnFloorPass": true,
+              "hitProbability": 0.029417,
+              "expectedGross": 1.906448,
+              "estimatedEdge": 0.906448,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-09-29",
+      "fixtures": 14,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 2021,
+          "returnFloorPassed": 2021,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.45,
+                    "probability": 0.36161612
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+                "num": "周二011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11.5,
+                    "probability": 0.349163
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 108675,
+              "maxPayout": 108675,
+              "minCombinedOdds": 108.675,
+              "maxCombinedOdds": 108.675,
+              "minReturnRatio": 108.675,
+              "returnFloorPass": true,
+              "hitProbability": 0.126263,
+              "expectedGross": 13.721628,
+              "estimatedEdge": 12.721628,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 5148,
+          "returnFloorPassed": 4740,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.45,
+                    "probability": 0.36161612
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.45,
+                    "probability": 0.22565769
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+                "num": "周二011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11.5,
+                    "probability": 0.349163
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 31337.5,
+              "maxPayout": 54337.5,
+              "minCombinedOdds": 62.675,
+              "maxCombinedOdds": 108.675,
+              "minReturnRatio": 31.3375,
+              "returnFloorPass": true,
+              "hitProbability": 0.205054,
+              "expectedGross": 9.329937,
+              "estimatedEdge": 8.329937,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 3276,
+          "returnFloorPassed": 807,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.45,
+                    "probability": 0.36161612
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.45,
+                    "probability": 0.22565769
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+                "num": "周二011",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11.5,
+                    "probability": 0.349163
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.15,
+                    "probability": 0.25287134
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 7016.88,
+              "maxPayout": 27168.75,
+              "minCombinedOdds": 28.0675,
+              "maxCombinedOdds": 108.675,
+              "minReturnRatio": 7.016875,
+              "returnFloorPass": true,
+              "hitProbability": 0.353559,
+              "expectedGross": 6.177936,
+              "estimatedEdge": 5.177936,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 71344,
+          "returnFloorPassed": 71344,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "433aa3cb-596b-409c-9d91-0e416bd4d497",
+                "num": "周二013",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 7.75,
+                    "probability": 0.19344185
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 23,
+                    "probability": 0.07448035
+                  }
+                ]
+              },
+              {
+                "fixtureId": "9919f313-f42f-42d3-83eb-55ba440ea6b7",
+                "num": "周二014",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s5",
+                    "label": "5球",
+                    "odds": 14,
+                    "probability": 0.10966285
+                  },
+                  {
+                    "key": "s7",
+                    "label": "7+球",
+                    "odds": 40,
+                    "probability": 0.04068348
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 27125,
+              "maxPayout": 230000,
+              "minCombinedOdds": 108.5,
+              "maxCombinedOdds": 920,
+              "minReturnRatio": 27.125,
+              "returnFloorPass": true,
+              "hitProbability": 0.040281,
+              "expectedGross": 2.539759,
+              "estimatedEdge": 1.539759,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 184275,
+          "returnFloorPassed": 184275,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 60,
+                    "probability": 0.04462705
+                  },
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 65,
+                    "probability": 0.04317537
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+                "num": "周二011",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 30,
+                    "probability": 0.08004468
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 70,
+                    "probability": 0.05523608
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 450000,
+              "maxPayout": 1137500,
+              "minCombinedOdds": 1800,
+              "maxCombinedOdds": 4550,
+              "minReturnRatio": 450,
+              "returnFloorPass": true,
+              "hitProbability": 0.011878,
+              "expectedGross": 8.593278,
+              "estimatedEdge": 7.593278,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 14,
+          "dataRejected": 0,
+          "combinationsChecked": 1310400,
+          "returnFloorPassed": 1310400,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "75832107-4af3-476d-a202-4fee4b5d394f",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s01",
+                    "label": "2-1",
+                    "odds": 23,
+                    "probability": 0.07882708
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 60,
+                    "probability": 0.04462705
+                  },
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 65,
+                    "probability": 0.04317537
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e806b941-02ed-4859-8dd3-15a182c0ac38",
+                "num": "周二011",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 24,
+                    "probability": 0.08234108
+                  },
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 30,
+                    "probability": 0.08004468
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 70,
+                    "probability": 0.05523608
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 61333.33,
+              "maxPayout": 505555.56,
+              "minCombinedOdds": 552,
+              "maxCombinedOdds": 4550,
+              "minReturnRatio": 61.333333,
+              "returnFloorPass": true,
+              "hitProbability": 0.036262,
+              "expectedGross": 6.684135,
+              "estimatedEdge": 5.684135,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-09-30",
+      "fixtures": 2,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 2,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-10-05",
+      "fixtures": 7,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 495,
+          "returnFloorPassed": 495,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.2,
+                    "probability": 0.43134371
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.26293695
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 37200,
+              "maxPayout": 37200,
+              "minCombinedOdds": 37.2,
+              "maxCombinedOdds": 37.2,
+              "minReturnRatio": 37.2,
+              "returnFloorPass": true,
+              "hitProbability": 0.113416,
+              "expectedGross": 4.219083,
+              "estimatedEdge": 3.219083,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 1224,
+          "returnFloorPassed": 1154,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.2,
+                    "probability": 0.43134371
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.26293695
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.62,
+                    "probability": 0.25939151
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 14322,
+              "maxPayout": 18600,
+              "minCombinedOdds": 28.644,
+              "maxCombinedOdds": 37.2,
+              "minReturnRatio": 14.322,
+              "returnFloorPass": true,
+              "hitProbability": 0.225303,
+              "expectedGross": 3.711985,
+              "estimatedEdge": 2.711985,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 756,
+          "returnFloorPassed": 167,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.2,
+                    "probability": 0.43134371
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.5,
+                    "probability": 0.25149263
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.26293695
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.62,
+                    "probability": 0.25939151
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 5197.5,
+              "maxPayout": 9300,
+              "minCombinedOdds": 20.79,
+              "maxCombinedOdds": 37.2,
+              "minReturnRatio": 5.1975,
+              "returnFloorPass": true,
+              "hitProbability": 0.356665,
+              "expectedGross": 2.641407,
+              "estimatedEdge": 1.641407,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 16464,
+          "returnFloorPassed": 16464,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 7.5,
+                    "probability": 0.17230299
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 25,
+                    "probability": 0.06194638
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 8,
+                    "probability": 0.20081977
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 26,
+                    "probability": 0.07919094
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 15000,
+              "maxPayout": 162500,
+              "minCombinedOdds": 60,
+              "maxCombinedOdds": 650,
+              "minReturnRatio": 15,
+              "returnFloorPass": true,
+              "hitProbability": 0.065592,
+              "expectedGross": 2.603375,
+              "estimatedEdge": 1.603375,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 42525,
+          "returnFloorPassed": 42525,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 23,
+                    "probability": 0.09394633
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 38,
+                    "probability": 0.07123833
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 23,
+                    "probability": 0.08229763
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 26,
+                    "probability": 0.07919094
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 132250,
+              "maxPayout": 247000,
+              "minCombinedOdds": 529,
+              "maxCombinedOdds": 988,
+              "minReturnRatio": 132.25,
+              "returnFloorPass": true,
+              "hitProbability": 0.026675,
+              "expectedGross": 4.809177,
+              "estimatedEdge": 3.809177,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 7,
+          "dataRejected": 0,
+          "combinationsChecked": 302400,
+          "returnFloorPassed": 302400,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c215b187-ec74-4a55-bd16-473099903ff5",
+                "num": "周一002",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 23,
+                    "probability": 0.09394633
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 38,
+                    "probability": 0.07123833
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 40,
+                    "probability": 0.04555294
+                  }
+                ]
+              },
+              {
+                "fixtureId": "341c880b-75f4-448c-9527-f3032487d3fa",
+                "num": "周一004",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 10.5,
+                    "probability": 0.11852214
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 23,
+                    "probability": 0.08229763
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 26,
+                    "probability": 0.07919094
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 26833.33,
+              "maxPayout": 115555.56,
+              "minCombinedOdds": 241.5,
+              "maxCombinedOdds": 1040,
+              "minReturnRatio": 26.833333,
+              "returnFloorPass": true,
+              "hitProbability": 0.059009,
+              "expectedGross": 3.862543,
+              "estimatedEdge": 2.862543,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-06",
+      "fixtures": 12,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 1185,
+          "returnFloorPassed": 1185,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+                "num": "周二002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.35,
+                    "probability": 0.58415851
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+                "num": "周二010",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 7.5,
+                    "probability": 0.26034458
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 32625,
+              "maxPayout": 32625,
+              "minCombinedOdds": 32.625,
+              "maxCombinedOdds": 32.625,
+              "minReturnRatio": 32.625,
+              "returnFloorPass": true,
+              "hitProbability": 0.152083,
+              "expectedGross": 4.961692,
+              "estimatedEdge": 3.961692,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 3072,
+          "returnFloorPassed": 2936,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+                "num": "周二002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.35,
+                    "probability": 0.58415851
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+                "num": "周二010",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 7.5,
+                    "probability": 0.26034458
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.4,
+                    "probability": 0.23150631
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 9570,
+              "maxPayout": 16312.5,
+              "minCombinedOdds": 19.14,
+              "maxCombinedOdds": 32.625,
+              "minReturnRatio": 9.57,
+              "returnFloorPass": true,
+              "hitProbability": 0.287319,
+              "expectedGross": 3.775058,
+              "estimatedEdge": 2.775058,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 1989,
+          "returnFloorPassed": 392,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+                "num": "周二002",
+                "league": "国际赛",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.35,
+                    "probability": 0.58415851
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 3.6,
+                    "probability": 0.22634869
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ac3f00a2-b20a-4650-8d97-751cc2676c58",
+                "num": "周二010",
+                "league": "欧国联",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 7.5,
+                    "probability": 0.26034458
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.4,
+                    "probability": 0.23150631
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 3960,
+              "maxPayout": 8156.25,
+              "minCombinedOdds": 15.84,
+              "maxCombinedOdds": 32.625,
+              "minReturnRatio": 3.96,
+              "returnFloorPass": true,
+              "hitProbability": 0.398649,
+              "expectedGross": 2.492806,
+              "estimatedEdge": 1.492806,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 51744,
+          "returnFloorPassed": 51744,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+                "num": "周二006",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 4.3,
+                    "probability": 0.26408454
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 10,
+                    "probability": 0.12890452
+                  }
+                ]
+              },
+              {
+                "fixtureId": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+                "num": "周二009",
+                "league": "欧国联",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 8.25,
+                    "probability": 0.21306626
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 31,
+                    "probability": 0.08743459
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 8868.75,
+              "maxPayout": 77500,
+              "minCombinedOdds": 35.475,
+              "maxCombinedOdds": 310,
+              "minReturnRatio": 8.86875,
+              "returnFloorPass": true,
+              "hitProbability": 0.118094,
+              "expectedGross": 2.708451,
+              "estimatedEdge": 1.708451,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 133650,
+          "returnFloorPassed": 133650,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+                "num": "周二002",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 75,
+                    "probability": 0.06425078
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 55,
+                    "probability": 0.06027258
+                  }
+                ]
+              },
+              {
+                "fixtureId": "6714b9e6-eeb9-4f00-95e9-5bfec8d243d5",
+                "num": "周二007",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 45,
+                    "probability": 0.05562391
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 47,
+                    "probability": 0.04117241
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 618750,
+              "maxPayout": 881250,
+              "minCombinedOdds": 2475,
+              "maxCombinedOdds": 3525,
+              "minReturnRatio": 618.75,
+              "returnFloorPass": true,
+              "hitProbability": 0.012053,
+              "expectedGross": 9.024816,
+              "estimatedEdge": 8.024816,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 950400,
+          "returnFloorPassed": 950400,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+                "num": "周二002",
+                "league": "国际赛",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 30,
+                    "probability": 0.10515503
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 75,
+                    "probability": 0.06425078
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 55,
+                    "probability": 0.06027258
+                  }
+                ]
+              },
+              {
+                "fixtureId": "6714b9e6-eeb9-4f00-95e9-5bfec8d243d5",
+                "num": "周二007",
+                "league": "欧国联",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s02",
+                    "label": "2-2",
+                    "odds": 30,
+                    "probability": 0.06016646
+                  },
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 45,
+                    "probability": 0.05562391
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 47,
+                    "probability": 0.04117241
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 100000,
+              "maxPayout": 391666.67,
+              "minCombinedOdds": 900,
+              "maxCombinedOdds": 3525,
+              "minReturnRatio": 100,
+              "returnFloorPass": true,
+              "hitProbability": 0.036051,
+              "expectedGross": 7.830639,
+              "estimatedEdge": 6.830639,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-07",
+      "fixtures": 6,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 350,
+          "returnFloorPassed": 350,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+                "num": "周三005",
+                "league": "巴甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.3,
+                    "probability": 0.37425975
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+                "num": "周三006",
+                "league": "巴甲",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.7,
+                    "probability": 0.38364131
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 24910,
+              "maxPayout": 24910,
+              "minCombinedOdds": 24.91,
+              "maxCombinedOdds": 24.91,
+              "minReturnRatio": 24.91,
+              "returnFloorPass": true,
+              "hitProbability": 0.143582,
+              "expectedGross": 3.576615,
+              "estimatedEdge": 2.576615,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 870,
+          "returnFloorPassed": 828,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+                "num": "周三005",
+                "league": "巴甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.3,
+                    "probability": 0.37425975
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+                "num": "周三006",
+                "league": "巴甲",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.7,
+                    "probability": 0.38364131
+                  },
+                  {
+                    "key": "d",
+                    "label": "让平",
+                    "odds": 4,
+                    "probability": 0.24818122
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 10600,
+              "maxPayout": 12455,
+              "minCombinedOdds": 21.2,
+              "maxCombinedOdds": 24.91,
+              "minReturnRatio": 10.6,
+              "returnFloorPass": true,
+              "hitProbability": 0.236466,
+              "expectedGross": 2.772881,
+              "estimatedEdge": 1.772881,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 540,
+          "returnFloorPassed": 111,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+                "num": "周三005",
+                "league": "巴甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.3,
+                    "probability": 0.37425975
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 3.85,
+                    "probability": 0.26621317
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+                "num": "周三006",
+                "league": "巴甲",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.7,
+                    "probability": 0.38364131
+                  },
+                  {
+                    "key": "d",
+                    "label": "让平",
+                    "odds": 4,
+                    "probability": 0.24818122
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 3850,
+              "maxPayout": 6227.5,
+              "minCombinedOdds": 15.4,
+              "maxCombinedOdds": 24.91,
+              "minReturnRatio": 3.85,
+              "returnFloorPass": true,
+              "hitProbability": 0.404665,
+              "expectedGross": 2.102819,
+              "estimatedEdge": 1.102819,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 11760,
+          "returnFloorPassed": 11760,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+                "num": "周三001",
+                "league": "芬超",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 5.75,
+                    "probability": 0.21107496
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 16,
+                    "probability": 0.08605635
+                  }
+                ]
+              },
+              {
+                "fixtureId": "1d62dd29-cbda-43c4-ab21-98de8c533f97",
+                "num": "周三004",
+                "league": "巴甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 5.2,
+                    "probability": 0.207123
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 14,
+                    "probability": 0.08336529
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 7475,
+              "maxPayout": 56000,
+              "minCombinedOdds": 29.9,
+              "maxCombinedOdds": 224,
+              "minReturnRatio": 7.475,
+              "returnFloorPass": true,
+              "hitProbability": 0.086313,
+              "expectedGross": 1.453416,
+              "estimatedEdge": 0.453416,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 30375,
+          "returnFloorPassed": 30375,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+                "num": "周三005",
+                "league": "巴甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 30,
+                    "probability": 0.06486724
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 45,
+                    "probability": 0.03545021
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d4a2da22-5491-4499-93b6-1432bf145896",
+                "num": "周三006",
+                "league": "巴甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 12.5,
+                    "probability": 0.11578353
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 26,
+                    "probability": 0.07523455
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 93750,
+              "maxPayout": 292500,
+              "minCombinedOdds": 375,
+              "maxCombinedOdds": 1170,
+              "minReturnRatio": 93.75,
+              "returnFloorPass": true,
+              "hitProbability": 0.019162,
+              "expectedGross": 3.013088,
+              "estimatedEdge": 2.013088,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 6,
+          "dataRejected": 0,
+          "combinationsChecked": 216000,
+          "returnFloorPassed": 216000,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+                "num": "周三001",
+                "league": "芬超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 14,
+                    "probability": 0.11220375
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 16,
+                    "probability": 0.08605635
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 24,
+                    "probability": 0.07314789
+                  }
+                ]
+              },
+              {
+                "fixtureId": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+                "num": "周三005",
+                "league": "巴甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 14,
+                    "probability": 0.10009232
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 30,
+                    "probability": 0.06486724
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 45,
+                    "probability": 0.03545021
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 21777.78,
+              "maxPayout": 120000,
+              "minCombinedOdds": 196,
+              "maxCombinedOdds": 1080,
+              "minReturnRatio": 21.777778,
+              "returnFloorPass": true,
+              "hitProbability": 0.054393,
+              "expectedGross": 2.582934,
+              "estimatedEdge": 1.582934,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-08",
+      "fixtures": 6,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-10-09",
+      "fixtures": 12,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 1334,
+          "returnFloorPassed": 1334,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "3c47f796-2e53-4bc8-9dac-6156082bfc9c",
+                "num": "周五007",
+                "league": "荷乙",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.75,
+                    "probability": 0.33437579
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+                "num": "周五008",
+                "league": "德甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8.25,
+                    "probability": 0.28995423
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 47437.5,
+              "maxPayout": 47437.5,
+              "minCombinedOdds": 47.4375,
+              "maxCombinedOdds": 47.4375,
+              "minReturnRatio": 47.4375,
+              "returnFloorPass": true,
+              "hitProbability": 0.096954,
+              "expectedGross": 4.59924,
+              "estimatedEdge": 3.59924,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 3411,
+          "returnFloorPassed": 3245,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+                "num": "周五008",
+                "league": "德甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8.25,
+                    "probability": 0.28995423
+                  }
+                ]
+              },
+              {
+                "fixtureId": "80688b0b-4598-40d4-b2b2-4be8a005dee8",
+                "num": "周五010",
+                "league": "英冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.75,
+                    "probability": 0.3336801
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.45,
+                    "probability": 0.23597779
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 18356.25,
+              "maxPayout": 23718.75,
+              "minCombinedOdds": 36.7125,
+              "maxCombinedOdds": 47.4375,
+              "minReturnRatio": 18.35625,
+              "returnFloorPass": true,
+              "hitProbability": 0.165175,
+              "expectedGross": 3.550821,
+              "estimatedEdge": 2.550821,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 2178,
+          "returnFloorPassed": 488,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+                "num": "周五008",
+                "league": "德甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8.25,
+                    "probability": 0.28995423
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.5,
+                    "probability": 0.22765381
+                  }
+                ]
+              },
+              {
+                "fixtureId": "80688b0b-4598-40d4-b2b2-4be8a005dee8",
+                "num": "周五010",
+                "league": "英冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.75,
+                    "probability": 0.3336801
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.45,
+                    "probability": 0.23597779
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 6118.75,
+              "maxPayout": 11859.38,
+              "minCombinedOdds": 24.475,
+              "maxCombinedOdds": 47.4375,
+              "minReturnRatio": 6.11875,
+              "returnFloorPass": true,
+              "hitProbability": 0.29486,
+              "expectedGross": 2.704704,
+              "estimatedEdge": 1.704704,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 51744,
+          "returnFloorPassed": 51744,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+                "num": "周五003",
+                "league": "德乙",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 6.65,
+                    "probability": 0.21100053
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 18,
+                    "probability": 0.08600512
+                  }
+                ]
+              },
+              {
+                "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+                "num": "周五006",
+                "league": "荷甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 18,
+                    "probability": 0.0745336
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 80,
+                    "probability": 0.01874095
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 29925,
+              "maxPayout": 360000,
+              "minCombinedOdds": 119.7,
+              "maxCombinedOdds": 1440,
+              "minReturnRatio": 29.925,
+              "returnFloorPass": true,
+              "hitProbability": 0.027703,
+              "expectedGross": 2.096034,
+              "estimatedEdge": 1.096034,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 133650,
+          "returnFloorPassed": 133650,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+                "num": "周五003",
+                "league": "德乙",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 16,
+                    "probability": 0.11917219
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 23,
+                    "probability": 0.08256491
+                  }
+                ]
+              },
+              {
+                "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+                "num": "周五006",
+                "league": "荷甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 24,
+                    "probability": 0.06310998
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 65,
+                    "probability": 0.03643657
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 96000,
+              "maxPayout": 373750,
+              "minCombinedOdds": 384,
+              "maxCombinedOdds": 1495,
+              "minReturnRatio": 96,
+              "returnFloorPass": true,
+              "hitProbability": 0.020082,
+              "expectedGross": 3.694445,
+              "estimatedEdge": 2.694445,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 12,
+          "dataRejected": 0,
+          "combinationsChecked": 950400,
+          "returnFloorPassed": 950400,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+                "num": "周五003",
+                "league": "德乙",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 16,
+                    "probability": 0.11917219
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 18,
+                    "probability": 0.08600512
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 23,
+                    "probability": 0.08256491
+                  }
+                ]
+              },
+              {
+                "fixtureId": "28edef7e-81c3-4447-ada1-0d5908026441",
+                "num": "周五006",
+                "league": "荷甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 24,
+                    "probability": 0.06310998
+                  },
+                  {
+                    "key": "s02s03",
+                    "label": "2-3",
+                    "odds": 36,
+                    "probability": 0.04089994
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 65,
+                    "probability": 0.03643657
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 42666.67,
+              "maxPayout": 166111.11,
+              "minCombinedOdds": 384,
+              "maxCombinedOdds": 1495,
+              "minReturnRatio": 42.666667,
+              "returnFloorPass": true,
+              "hitProbability": 0.040412,
+              "expectedGross": 3.185781,
+              "estimatedEdge": 2.185781,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-10",
+      "fixtures": 30,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 5171,
+          "returnFloorPassed": 5171,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+                "num": "周六005",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8,
+                    "probability": 0.36304367
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+                "num": "周六025",
+                "league": "沙职",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 9.3,
+                    "probability": 0.27300352
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 74400,
+              "maxPayout": 74400,
+              "minCombinedOdds": 74.4,
+              "maxCombinedOdds": 74.4,
+              "minReturnRatio": 74.4,
+              "returnFloorPass": true,
+              "hitProbability": 0.099112,
+              "expectedGross": 7.373948,
+              "estimatedEdge": 6.373948,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 13434,
+          "returnFloorPassed": 12716,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+                "num": "周六005",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8,
+                    "probability": 0.36304367
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+                "num": "周六025",
+                "league": "沙职",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 9.3,
+                    "probability": 0.27300352
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.8,
+                    "probability": 0.25574759
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 23200,
+              "maxPayout": 37200,
+              "minCombinedOdds": 46.4,
+              "maxCombinedOdds": 74.4,
+              "minReturnRatio": 23.2,
+              "returnFloorPass": true,
+              "hitProbability": 0.19196,
+              "expectedGross": 5.841037,
+              "estimatedEdge": 4.841037,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 8721,
+          "returnFloorPassed": 1885,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "505b000e-e0b4-410b-b7ef-83af9cb86ca6",
+                "num": "周六005",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 8,
+                    "probability": 0.36304367
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.5,
+                    "probability": 0.25702487
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+                "num": "周六025",
+                "league": "沙职",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 9.3,
+                    "probability": 0.27300352
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.8,
+                    "probability": 0.25574759
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 6525,
+              "maxPayout": 18600,
+              "minCombinedOdds": 26.1,
+              "maxCombinedOdds": 74.4,
+              "minReturnRatio": 6.525,
+              "returnFloorPass": true,
+              "hitProbability": 0.327862,
+              "expectedGross": 4.083569,
+              "estimatedEdge": 3.083569,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 216384,
+          "returnFloorPassed": 216384,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "aea9fe56-b16b-457a-aa07-21ce893c36ff",
+                "num": "周六011",
+                "league": "德甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 9.65,
+                    "probability": 0.18167137
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 32,
+                    "probability": 0.06733293
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ccebeb17-a23f-4196-a717-5d29bd90c8f5",
+                "num": "周六025",
+                "league": "沙职",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 9,
+                    "probability": 0.19090869
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 31,
+                    "probability": 0.07290488
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 21712.5,
+              "maxPayout": 248000,
+              "minCombinedOdds": 86.85,
+              "maxCombinedOdds": 992,
+              "minReturnRatio": 21.7125,
+              "returnFloorPass": true,
+              "hitProbability": 0.065691,
+              "expectedGross": 3.886514,
+              "estimatedEdge": 2.886514,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 558900,
+          "returnFloorPassed": 558900,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+                "num": "周六018",
+                "league": "瑞超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 22,
+                    "probability": 0.10608119
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 65,
+                    "probability": 0.06114384
+                  }
+                ]
+              },
+              {
+                "fixtureId": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+                "num": "周六022",
+                "league": "西甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 60,
+                    "probability": 0.04720243
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 70,
+                    "probability": 0.04176879
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 330000,
+              "maxPayout": 1137500,
+              "minCombinedOdds": 1320,
+              "maxCombinedOdds": 4550,
+              "minReturnRatio": 330,
+              "returnFloorPass": true,
+              "hitProbability": 0.014878,
+              "expectedGross": 9.077347,
+              "estimatedEdge": 8.077347,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 24,
+          "dataRejected": 6,
+          "combinationsChecked": 3974400,
+          "returnFloorPassed": 3974400,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+                "num": "周六018",
+                "league": "瑞超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 22,
+                    "probability": 0.10608119
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 65,
+                    "probability": 0.06114384
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 35,
+                    "probability": 0.05603926
+                  }
+                ]
+              },
+              {
+                "fixtureId": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+                "num": "周六022",
+                "league": "西甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 60,
+                    "probability": 0.04720243
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 70,
+                    "probability": 0.04176879
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 50,
+                    "probability": 0.04019204
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 122222.22,
+              "maxPayout": 505555.56,
+              "minCombinedOdds": 1100,
+              "maxCombinedOdds": 4550,
+              "minReturnRatio": 122.222222,
+              "returnFloorPass": true,
+              "hitProbability": 0.028838,
+              "expectedGross": 7.135267,
+              "estimatedEdge": 6.135267,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-11",
+      "fixtures": 28,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 6344,
+          "returnFloorPassed": 6344,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+                "num": "周日004",
+                "league": "荷甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.4,
+                    "probability": 0.39214116
+                  }
+                ]
+              },
+              {
+                "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+                "num": "周日017",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.15,
+                    "probability": 0.47787841
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 27810,
+              "maxPayout": 27810,
+              "minCombinedOdds": 27.81,
+              "maxCombinedOdds": 27.81,
+              "minReturnRatio": 27.81,
+              "returnFloorPass": true,
+              "hitProbability": 0.187396,
+              "expectedGross": 5.211477,
+              "estimatedEdge": 4.211477,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 16224,
+          "returnFloorPassed": 15642,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+                "num": "周日004",
+                "league": "荷甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.4,
+                    "probability": 0.39214116
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.35,
+                    "probability": 0.22819552
+                  }
+                ]
+              },
+              {
+                "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+                "num": "周日017",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.15,
+                    "probability": 0.47787841
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 11201.25,
+              "maxPayout": 13905,
+              "minCombinedOdds": 22.4025,
+              "maxCombinedOdds": 27.81,
+              "minReturnRatio": 11.20125,
+              "returnFloorPass": true,
+              "hitProbability": 0.296446,
+              "expectedGross": 3.827232,
+              "estimatedEdge": 2.827232,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 10368,
+          "returnFloorPassed": 2109,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+                "num": "周日004",
+                "league": "荷甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.4,
+                    "probability": 0.39214116
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.35,
+                    "probability": 0.22819552
+                  }
+                ]
+              },
+              {
+                "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+                "num": "周日017",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 5.15,
+                    "probability": 0.47787841
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 3.85,
+                    "probability": 0.25345619
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 4186.88,
+              "maxPayout": 6952.5,
+              "minCombinedOdds": 16.7475,
+              "maxCombinedOdds": 27.81,
+              "minReturnRatio": 4.186875,
+              "returnFloorPass": true,
+              "hitProbability": 0.453674,
+              "expectedGross": 2.672357,
+              "estimatedEdge": 1.672357,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 235200,
+          "returnFloorPassed": 235200,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+                "num": "周日022",
+                "league": "葡超",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 7.45,
+                    "probability": 0.20398615
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 25,
+                    "probability": 0.08127014
+                  }
+                ]
+              },
+              {
+                "fixtureId": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+                "num": "周日024",
+                "league": "意甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 4.7,
+                    "probability": 0.29134163
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 11,
+                    "probability": 0.15777102
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 8753.75,
+              "maxPayout": 68750,
+              "minCombinedOdds": 35.015,
+              "maxCombinedOdds": 275,
+              "minReturnRatio": 8.75375,
+              "returnFloorPass": true,
+              "hitProbability": 0.128112,
+              "expectedGross": 2.756624,
+              "estimatedEdge": 1.756624,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 607500,
+          "returnFloorPassed": 607500,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+                "num": "周日017",
+                "league": "西甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 50,
+                    "probability": 0.04821746
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 75,
+                    "probability": 0.04401632
+                  }
+                ]
+              },
+              {
+                "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+                "num": "周日022",
+                "league": "葡超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 25,
+                    "probability": 0.08127014
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 32,
+                    "probability": 0.07269022
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 312500,
+              "maxPayout": 600000,
+              "minCombinedOdds": 1250,
+              "maxCombinedOdds": 2400,
+              "minReturnRatio": 312.5,
+              "returnFloorPass": true,
+              "hitProbability": 0.0142,
+              "expectedGross": 6.223102,
+              "estimatedEdge": 5.223102,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 25,
+          "dataRejected": 3,
+          "combinationsChecked": 4320000,
+          "returnFloorPassed": 4320000,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "1d45ce7a-a356-4c2b-a6f0-bbee672b8702",
+                "num": "周日017",
+                "league": "西甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 27,
+                    "probability": 0.08523724
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 50,
+                    "probability": 0.04821746
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 75,
+                    "probability": 0.04401632
+                  }
+                ]
+              },
+              {
+                "fixtureId": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+                "num": "周日022",
+                "league": "葡超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s01",
+                    "label": "1-1",
+                    "odds": 12.5,
+                    "probability": 0.11743465
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 25,
+                    "probability": 0.08127014
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 32,
+                    "probability": 0.07269022
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 37500,
+              "maxPayout": 266666.67,
+              "minCombinedOdds": 337.5,
+              "maxCombinedOdds": 2400,
+              "minReturnRatio": 37.5,
+              "returnFloorPass": true,
+              "hitProbability": 0.048165,
+              "expectedGross": 5.187206,
+              "estimatedEdge": 4.187206,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-12",
+      "fixtures": 10,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 993,
+          "returnFloorPassed": 993,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.28791911
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+                "num": "周一006",
+                "league": "法乙",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.75,
+                    "probability": 0.33991303
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 28500,
+              "maxPayout": 28500,
+              "minCombinedOdds": 28.5,
+              "maxCombinedOdds": 28.5,
+              "minReturnRatio": 28.5,
+              "returnFloorPass": true,
+              "hitProbability": 0.097867,
+              "expectedGross": 2.789223,
+              "estimatedEdge": 1.789223,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 2538,
+          "returnFloorPassed": 2462,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.28791911
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.3,
+                    "probability": 0.24784488
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+                "num": "周一006",
+                "league": "法乙",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.75,
+                    "probability": 0.33991303
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 10212.5,
+              "maxPayout": 14250,
+              "minCombinedOdds": 20.425,
+              "maxCombinedOdds": 28.5,
+              "minReturnRatio": 10.2125,
+              "returnFloorPass": true,
+              "hitProbability": 0.182113,
+              "expectedGross": 2.254971,
+              "estimatedEdge": 1.254971,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 1620,
+          "returnFloorPassed": 344,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6,
+                    "probability": 0.28791911
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.3,
+                    "probability": 0.24784488
+                  }
+                ]
+              },
+              {
+                "fixtureId": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+                "num": "周一006",
+                "league": "法乙",
+                "pool": "hhad",
+                "line": 1,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "让负",
+                    "odds": 4.75,
+                    "probability": 0.33991303
+                  },
+                  {
+                    "key": "d",
+                    "label": "让平",
+                    "odds": 3.9,
+                    "probability": 0.23211428
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 4192.5,
+              "maxPayout": 7125,
+              "minCombinedOdds": 16.77,
+              "maxCombinedOdds": 28.5,
+              "minReturnRatio": 4.1925,
+              "returnFloorPass": true,
+              "hitProbability": 0.306472,
+              "expectedGross": 1.759629,
+              "estimatedEdge": 0.759629,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 35280,
+          "returnFloorPassed": 35280,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 7,
+                    "probability": 0.17129952
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 21,
+                    "probability": 0.06138453
+                  }
+                ]
+              },
+              {
+                "fixtureId": "77bb33de-56b2-4770-8b09-544065b0b37a",
+                "num": "周一004",
+                "league": "挪超",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s7",
+                    "label": "7+球",
+                    "odds": 15.5,
+                    "probability": 0.10925507
+                  },
+                  {
+                    "key": "s6",
+                    "label": "6球",
+                    "odds": 12.5,
+                    "probability": 0.10348279
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 21875,
+              "maxPayout": 81375,
+              "minCombinedOdds": 87.5,
+              "maxCombinedOdds": 325.5,
+              "minReturnRatio": 21.875,
+              "returnFloorPass": true,
+              "hitProbability": 0.049501,
+              "expectedGross": 1.858035,
+              "estimatedEdge": 0.858035,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 91125,
+          "returnFloorPassed": 91125,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "4ac25754-1494-487a-ad16-7e30b570c527",
+                "num": "周一001",
+                "league": "亚冠精英",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 25,
+                    "probability": 0.05386616
+                  },
+                  {
+                    "key": "s03s02",
+                    "label": "3-2",
+                    "odds": 29,
+                    "probability": 0.04376107
+                  }
+                ]
+              },
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 20,
+                    "probability": 0.07366144
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 34,
+                    "probability": 0.04419686
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 125000,
+              "maxPayout": 246500,
+              "minCombinedOdds": 500,
+              "maxCombinedOdds": 986,
+              "minReturnRatio": 125,
+              "returnFloorPass": true,
+              "hitProbability": 0.011506,
+              "expectedGross": 1.946049,
+              "estimatedEdge": 0.946049,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 648000,
+          "returnFloorPassed": 648000,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "4ac25754-1494-487a-ad16-7e30b570c527",
+                "num": "周一001",
+                "league": "亚冠精英",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s03s01",
+                    "label": "3-1",
+                    "odds": 25,
+                    "probability": 0.05386616
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 22,
+                    "probability": 0.05308621
+                  },
+                  {
+                    "key": "s03s02",
+                    "label": "3-2",
+                    "odds": 29,
+                    "probability": 0.04376107
+                  }
+                ]
+              },
+              {
+                "fixtureId": "8f00522b-ba28-49be-af32-f9e0c3bf8d0a",
+                "num": "周一002",
+                "league": "意甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 20,
+                    "probability": 0.07366144
+                  },
+                  {
+                    "key": "s00s00",
+                    "label": "0-0",
+                    "odds": 21,
+                    "probability": 0.06138453
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 34,
+                    "probability": 0.04419686
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 48888.89,
+              "maxPayout": 109555.56,
+              "minCombinedOdds": 440,
+              "maxCombinedOdds": 986,
+              "minReturnRatio": 48.888889,
+              "returnFloorPass": true,
+              "hitProbability": 0.027014,
+              "expectedGross": 1.793015,
+              "estimatedEdge": 0.793015,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-13",
+      "fixtures": 12,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 12,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-10-14",
+      "fixtures": 10,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 910,
+          "returnFloorPassed": 910,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.1,
+                    "probability": 0.3656246
+                  }
+                ]
+              },
+              {
+                "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+                "num": "周三012",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.8,
+                    "probability": 0.59611633
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 43680,
+              "maxPayout": 43680,
+              "minCombinedOdds": 43.68,
+              "maxCombinedOdds": 43.68,
+              "minReturnRatio": 43.68,
+              "returnFloorPass": true,
+              "hitProbability": 0.217955,
+              "expectedGross": 9.520265,
+              "estimatedEdge": 8.520265,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 2430,
+          "returnFloorPassed": 2352,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.1,
+                    "probability": 0.3656246
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.6,
+                    "probability": 0.24986479
+                  }
+                ]
+              },
+              {
+                "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+                "num": "周三012",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.8,
+                    "probability": 0.59611633
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 13440,
+              "maxPayout": 21840,
+              "minCombinedOdds": 26.88,
+              "maxCombinedOdds": 43.68,
+              "minReturnRatio": 13.44,
+              "returnFloorPass": true,
+              "hitProbability": 0.366903,
+              "expectedGross": 6.762,
+              "estimatedEdge": 5.762,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 1620,
+          "returnFloorPassed": 338,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "h",
+                    "label": "主胜",
+                    "odds": 9.1,
+                    "probability": 0.3656246
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 5.6,
+                    "probability": 0.24986479
+                  }
+                ]
+              },
+              {
+                "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+                "num": "周三012",
+                "league": "欧冠",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 4.8,
+                    "probability": 0.59611633
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4,
+                    "probability": 0.21137639
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 5600,
+              "maxPayout": 10920,
+              "minCombinedOdds": 22.4,
+              "maxCombinedOdds": 43.68,
+              "minReturnRatio": 5.6,
+              "returnFloorPass": true,
+              "hitProbability": 0.497003,
+              "expectedGross": 4.380055,
+              "estimatedEdge": 3.380055,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 35280,
+          "returnFloorPassed": 35280,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 8.65,
+                    "probability": 0.16418713
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 29,
+                    "probability": 0.05748321
+                  }
+                ]
+              },
+              {
+                "fixtureId": "d4dcfeaf-9f50-4600-860f-00678f2fa819",
+                "num": "周三008",
+                "league": "欧冠",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 8.5,
+                    "probability": 0.15707606
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 27,
+                    "probability": 0.05372021
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 18381.25,
+              "maxPayout": 195750,
+              "minCombinedOdds": 73.525,
+              "maxCombinedOdds": 783,
+              "minReturnRatio": 18.38125,
+              "returnFloorPass": true,
+              "hitProbability": 0.046727,
+              "expectedGross": 2.149942,
+              "estimatedEdge": 1.149942,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 91125,
+          "returnFloorPassed": 91125,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 31,
+                    "probability": 0.08088604
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 65,
+                    "probability": 0.05690838
+                  }
+                ]
+              },
+              {
+                "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+                "num": "周三012",
+                "league": "欧冠",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 30,
+                    "probability": 0.09392568
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 80,
+                    "probability": 0.06324019
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 232500,
+              "maxPayout": 1300000,
+              "minCombinedOdds": 930,
+              "maxCombinedOdds": 5200,
+              "minReturnRatio": 232.5,
+              "returnFloorPass": true,
+              "hitProbability": 0.021657,
+              "expectedGross": 12.222151,
+              "estimatedEdge": 11.222151,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 10,
+          "dataRejected": 0,
+          "combinationsChecked": 648000,
+          "returnFloorPassed": 648000,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+                "num": "周三006",
+                "league": "欧冠",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s01",
+                    "label": "2-1",
+                    "odds": 25,
+                    "probability": 0.08246807
+                  },
+                  {
+                    "key": "s01s00",
+                    "label": "1-0",
+                    "odds": 31,
+                    "probability": 0.08088604
+                  },
+                  {
+                    "key": "s02s00",
+                    "label": "2-0",
+                    "odds": 65,
+                    "probability": 0.05690838
+                  }
+                ]
+              },
+              {
+                "fixtureId": "891f40a7-eb09-480f-9694-059bcc228147",
+                "num": "周三012",
+                "league": "欧冠",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 30,
+                    "probability": 0.09392568
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 38,
+                    "probability": 0.06692713
+                  },
+                  {
+                    "key": "s00s03",
+                    "label": "0-3",
+                    "odds": 80,
+                    "probability": 0.06324019
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 83333.33,
+              "maxPayout": 577777.78,
+              "minCombinedOdds": 750,
+              "maxCombinedOdds": 5200,
+              "minReturnRatio": 83.333333,
+              "returnFloorPass": true,
+              "hitProbability": 0.049359,
+              "expectedGross": 9.572953,
+              "estimatedEdge": 8.572953,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-15",
+      "fixtures": 13,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 13,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-10-16",
+      "fixtures": 11,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 11,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "day": "2026-10-17",
+      "fixtures": 30,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 9331,
+          "returnFloorPassed": 9331,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+                "num": "周六019",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11,
+                    "probability": 0.2811925
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+                "num": "周六021",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.35,
+                    "probability": 0.34812167
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 1,
+              "stakePerLine": 1000,
+              "minReturnRequired": 1800,
+              "minPayout": 69850,
+              "maxPayout": 69850,
+              "minCombinedOdds": 69.85,
+              "maxCombinedOdds": 69.85,
+              "minReturnRatio": 69.85,
+              "returnFloorPass": true,
+              "hitProbability": 0.097889,
+              "expectedGross": 6.837561,
+              "estimatedEdge": 5.837561,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 23367,
+          "returnFloorPassed": 21811,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+                "num": "周六019",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11,
+                    "probability": 0.2811925
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+                "num": "周六021",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.35,
+                    "probability": 0.34812167
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.8,
+                    "probability": 0.2217828
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 2,
+              "stakePerLine": 500,
+              "minReturnRequired": 1800,
+              "minPayout": 26400,
+              "maxPayout": 34925,
+              "minCombinedOdds": 52.8,
+              "maxCombinedOdds": 69.85,
+              "minReturnRatio": 26.4,
+              "returnFloorPass": true,
+              "hitProbability": 0.160253,
+              "expectedGross": 5.065181,
+              "estimatedEdge": 4.065181,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 14625,
+          "returnFloorPassed": 3215,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "5428bab0-af99-4998-ac52-94343b2aca9f",
+                "num": "周六019",
+                "league": "英超",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 11,
+                    "probability": 0.2811925
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 6.9,
+                    "probability": 0.20555469
+                  }
+                ]
+              },
+              {
+                "fixtureId": "ed0ac8ab-1533-496b-a371-70a0980f00a5",
+                "num": "周六021",
+                "league": "西甲",
+                "pool": "had",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "a",
+                    "label": "客胜",
+                    "odds": 6.35,
+                    "probability": 0.34812167
+                  },
+                  {
+                    "key": "d",
+                    "label": "平局",
+                    "odds": 4.8,
+                    "probability": 0.2217828
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 8280,
+              "maxPayout": 17462.5,
+              "minCombinedOdds": 33.12,
+              "maxCombinedOdds": 69.85,
+              "minReturnRatio": 8.28,
+              "returnFloorPass": true,
+              "hitProbability": 0.277399,
+              "expectedGross": 3.693892,
+              "estimatedEdge": 2.693892,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 341040,
+          "returnFloorPassed": 341040,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "c832d804-4b97-4333-bf27-61b11de6b195",
+                "num": "周六012",
+                "league": "芬超",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 8.4,
+                    "probability": 0.17046605
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 31,
+                    "probability": 0.06092005
+                  }
+                ]
+              },
+              {
+                "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+                "num": "周六025",
+                "league": "德甲",
+                "pool": "ttg",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s1",
+                    "label": "1球",
+                    "odds": 20,
+                    "probability": 0.08967771
+                  },
+                  {
+                    "key": "s0",
+                    "label": "0球",
+                    "odds": 70,
+                    "probability": 0.02406043
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 42000,
+              "maxPayout": 542500,
+              "minCombinedOdds": 168,
+              "maxCombinedOdds": 2170,
+              "minReturnRatio": 42,
+              "returnFloorPass": true,
+              "hitProbability": 0.026317,
+              "expectedGross": 2.88694,
+              "estimatedEdge": 1.88694,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 880875,
+          "returnFloorPassed": 880875,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "1fc36327-eeb4-4d97-84cb-511f2da406dd",
+                "num": "周六010",
+                "league": "挪超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s02s01",
+                    "label": "2-1",
+                    "odds": 30,
+                    "probability": 0.05891657
+                  },
+                  {
+                    "key": "s03s02",
+                    "label": "3-2",
+                    "odds": 55,
+                    "probability": 0.04024768
+                  }
+                ]
+              },
+              {
+                "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+                "num": "周六025",
+                "league": "德甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 30,
+                    "probability": 0.06677107
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 70,
+                    "probability": 0.03909356
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 4,
+              "stakePerLine": 250,
+              "minReturnRequired": 1800,
+              "minPayout": 225000,
+              "maxPayout": 962500,
+              "minCombinedOdds": 900,
+              "maxCombinedOdds": 3850,
+              "minReturnRatio": 225,
+              "returnFloorPass": true,
+              "hitProbability": 0.010498,
+              "expectedGross": 4.717309,
+              "estimatedEdge": 3.717309,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 30,
+          "dataRejected": 0,
+          "combinationsChecked": 6264000,
+          "returnFloorPassed": 6264000,
+          "abstained": false,
+          "selected": {
+            "legs": [
+              {
+                "fixtureId": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+                "num": "周六020",
+                "league": "英超",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 15,
+                    "probability": 0.11339536
+                  },
+                  {
+                    "key": "s00s02",
+                    "label": "0-2",
+                    "odds": 33,
+                    "probability": 0.0670856
+                  },
+                  {
+                    "key": "s01s03",
+                    "label": "1-3",
+                    "odds": 55,
+                    "probability": 0.03074248
+                  }
+                ]
+              },
+              {
+                "fixtureId": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+                "num": "周六025",
+                "league": "德甲",
+                "pool": "crs",
+                "line": null,
+                "picks": [
+                  {
+                    "key": "s01s01",
+                    "label": "1-1",
+                    "odds": 18,
+                    "probability": 0.08218951
+                  },
+                  {
+                    "key": "s01s02",
+                    "label": "1-2",
+                    "odds": 30,
+                    "probability": 0.06677107
+                  },
+                  {
+                    "key": "s00s01",
+                    "label": "0-1",
+                    "odds": 70,
+                    "probability": 0.03909356
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "bankroll": 1000,
+              "lines": 9,
+              "stakePerLine": 111.1111,
+              "minReturnRequired": 1800,
+              "minPayout": 30000,
+              "maxPayout": 427777.78,
+              "minCombinedOdds": 270,
+              "maxCombinedOdds": 3850,
+              "minReturnRatio": 30,
+              "returnFloorPass": true,
+              "hitProbability": 0.039721,
+              "expectedGross": 3.873522,
+              "estimatedEdge": 2.873522,
+              "probabilityCalibrated": false,
+              "status": "RESEARCH_ONLY_UNCALIBRATED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2026-10-18",
+      "fixtures": 25,
+      "types": [
+        {
+          "structure": "direction_1x1",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_1x2",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "direction_2x2",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "htft_1x1",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "goals_2x2",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_2x2",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        },
+        {
+          "structure": "score_3x3",
+          "dataEligible": 0,
+          "dataRejected": 25,
+          "combinationsChecked": 0,
+          "returnFloorPassed": 0,
+          "abstained": true,
+          "selected": null
+        }
+      ]
+    }
+  ],
+  "warning": "Selection file is frozen before settlement. Only as-of prematch data entered the selector; no actual scores were loaded. Probabilities remain uncalibrated; candidates are research-only."
+}
