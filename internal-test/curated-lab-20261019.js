@@ -145,13 +145,24 @@ function miniLeg(leg){
  var row=leg.row,pending=!score(row.ft)||!score(row.ht);
  var html='<div class="leg"><div class="leg-top"><b>'+esc(row.num)+'　'+esc(row.h)+' <span style="color:#a5adba;font-weight:500">vs</span> '+esc(row.a)+'</b><em>'+esc(row.league||'')+'</em></div>';
  html+='<div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' <i>×'+money(o.odds)+'</i>'+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div>';
- html+='<div class="leg-result">'+(pending?'官方赛前赔率 · 待赛':'赛果 '+esc(parseScoreText(row))+' <span style="color:#97a4b4">｜</span> 半场 '+esc(String(row.ht||'—').replace(':','-')))+'</div></div>';
+ var pendingLabel=row.blindMasked?'赛果已遮挡':row.blindPending?'比赛中断 · 待结算':'官方赛前赔率 · 待赛';
+ html+='<div class="leg-result">'+(pending?pendingLabel:'赛果 '+esc(parseScoreText(row))+' <span style="color:#97a4b4">｜</span> 半场 '+esc(String(row.ht||'—').replace(':','-')))+'</div></div>';
  return html;
 }
 function renderMetrics(){ /* 样本数与技术指标不在用户首屏展示 */ }
 function rowStatus(sim){return sim.covered?'命中':'未命中'}
 function planCard(plan){
  var calc=allocation(plan,state.budget,state.mode);
+ if(plan.blind){
+   var oddsList=calc.list.map(function(c){return c.odds}),minOdds=Math.min.apply(null,oddsList),maxOdds=Math.max.apply(null,oddsList);
+   var masked=!state.reveal,status=masked?'赛果遮挡':plan.unsettled?'待结算':calc.covered?'命中':'未命中';
+   var tag=masked||plan.unsettled?'pending':calc.covered?'hit':'miss';
+   var showReturn=!masked&&!plan.unsettled;
+   var note='<p class="version-note">历史赛果遮挡回放（非当日真实发布）；先冻结方案，后读取比赛结果。</p>';
+   return '<article class="plan variant-shadow"><div class="plan-head"><span class="plan-id">'+esc(plan.versionLabel)+'</span><span class="flag '+tag+'">'+status+'</span></div><div class="legs">'+miniLeg(plan.a)+miniLeg(plan.b)+'</div>'+note+
+   '<div class="plan-foot"><div class="plan-return"><small>'+(showReturn?'模拟返还 · '+money(state.budget)+'点':'组合赔率 · '+calc.list.length+'种')+'</small><strong>'+
+   (showReturn?money(calc.returns)+' <span style="font-size:12px">点</span>':'×'+money(minOdds)+(Math.abs(minOdds-maxOdds)>0.0001?'—'+money(maxOdds):''))+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="1">方案详情 →</button></div></article>';
+ }
  if(plan.prematch){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
@@ -181,7 +192,11 @@ function renderHistory(){
 }
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
- $('infoBand').textContent=(db.selectedPlans&&db.selectedPlans[state.day])?'10月19日双版本对照 · 原方案与AI精选师V1影子测试并排展示，赔率来自赛前快照，均未结算。':'历史模拟 · 组合为事后回溯生成，并非当时赛前发布。';
+ var selected=!!(db.selectedPlans&&db.selectedPlans[state.day]),backtest=!!(blind&&blind.days&&blind.days[state.day]);
+ $('infoBand').textContent=selected?'10月19日双版本对照 · 原方案与AI精选师V1影子测试并排展示，赔率来自赛前快照，均未结算。':backtest?'历史赛果遮挡回测 · 四类精选方案先冻结、后揭晓，非比赛当日真实发布。':'历史演示 · 组合为事后回溯生成，并非当时赛前发布。';
+ $('revealRow').hidden=!backtest;
+ $('revealBlind').textContent=state.reveal?'隐藏回测赛果':'揭晓回测赛果';
+ $('revealBlind').setAttribute('aria-pressed',String(state.reveal));
 }
 function renderDate(){
  $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
