@@ -100,6 +100,7 @@ function evaluate(legs,conf){
    modeledHitProbability:+coverage.toFixed(6),eligible:lowest+1e-8>=conf.minReturn};
 }
 function selectRole(fixtures,conf){
+ throw new Error('SIX_MATCH_ANALYSTS_OFFLINE_BY_USER: six analyst roles retired; do not screen further matches.');
  // Six independent streams; no scores and no locked-model picks used.
  const legs=[];
  for(const fixture of fixtures){const model=pDist(fixture);if(!model)continue;
@@ -136,6 +137,7 @@ function selectRole(fixtures,conf){
   optionsConsidered:considered,passesReturn:eligible,selected:best||null};
 }
 function selectDays(fixtures){
+ throw new Error('SIX_MATCH_ANALYSTS_OFFLINE_BY_USER: six analyst roles retired; do not freeze any further selections.');
  const ds=[...new Set(fixtures.map(x=>x.date))].sort(),out={};
  for(const d of ds){const group=fixtures.filter(f=>f.date===d);out[d]={
   totalFixtures:group.length,modelEligible:group.filter(f=>!!pDist(f)).length,
