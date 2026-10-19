@@ -1,0 +1,230 @@
+/* Register page only — isolated from login, overview, football and account pages. */
+.auth-register-page {
+  color: #1b2941;
+  background: #f3f6fb;
+}
+.auth-register-page .auth-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 30px 18px;
+  background:
+    radial-gradient(ellipse 65% 35% at 50% 0%, #e8efff 0%, transparent 100%),
+    #f3f6fb;
+}
+.auth-register-page .auth-card {
+  width: min(454px, 100%);
+  padding: 24px 34px 28px;
+  border: 1px solid #e6eaf1;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 16px 46px rgba(31, 49, 91, .075);
+}
+.auth-register-page .qc-register-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #758299;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 24px;
+}
+.auth-register-page .qc-register-back:hover,
+.auth-register-page .qc-register-back:focus-visible {
+  color: #315cce;
+}
+.auth-register-page .qc-register-heading {
+  text-align: center;
+  padding-top: 4px;
+}
+.auth-register-page .qc-register-brand {
+  color: #637593;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: .13em;
+}
+.auth-register-page .auth-card h1 {
+  margin: 11px 0 6px;
+  color: #17243d;
+  font-size: 27px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+.auth-register-page .auth-card .subtitle {
+  margin: 0;
+  color: #8995a8;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.auth-register-page .qc-register-benefit {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 21px 0 20px;
+  padding: 13px 14px;
+  color: #355480;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.55;
+  background: #f0f5ff;
+  border: 1px solid #e3ecff;
+  border-radius: 12px;
+}
+.auth-register-page .qc-register-benefit-tag {
+  flex: none;
+  padding: 3px 7px;
+  color: #315fce;
+  background: #ddeaff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.auth-register-page .field {
+  margin: 0 0 15px;
+}
+.auth-register-page .field label {
+  margin-bottom: 7px;
+  color: #364258;
+  font-size: 13px;
+  font-weight: 750;
+}
+.auth-register-page .field input {
+  display: block;
+  height: 49px;
+  min-width: 0;
+  border: 1px solid #dce4f0;
+  border-radius: 11px;
+  padding: 0 14px;
+  background: #fff;
+  color: #1c2a43;
+  font-size: 16px;
+}
+.auth-register-page .field input::placeholder {
+  color: #a4afbf;
+}
+.auth-register-page .field input:hover {
+  border-color: #bfcbdd;
+}
+.auth-register-page .field input:focus {
+  border-color: #4978e7;
+  box-shadow: 0 0 0 3px rgba(65, 114, 227, .12);
+}
+.auth-register-page .qc-register-agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 3px 0 17px;
+  color: #7a879b;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.auth-register-page .qc-register-agreement input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: #416ee2;
+}
+.auth-register-page .qc-register-agreement span {
+  min-width: 0;
+}
+.auth-register-page .qc-register-agreement .legal-link {
+  color: #426dd4;
+  font-weight: 700;
+  text-decoration: none;
+}
+.auth-register-page .primary-btn {
+  height: 50px;
+  border-radius: 11px;
+  background: #376be6;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 5px 12px rgba(55, 107, 230, .16);
+}
+.auth-register-page .primary-btn:focus-visible {
+  outline: 3px solid #b4c8ff;
+  outline-offset: 3px;
+}
+.auth-register-page .primary-btn:hover:not(:disabled) {
+  background: #2f60d1;
+}
+.auth-register-page #registerHint:empty {
+  display: none;
+}
+.auth-register-page #registerHint:not(:empty) {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.auth-register-page .qc-register-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 19px;
+  font-size: 13px;
+  color: #7d899b;
+}
+.auth-register-page .qc-register-footer a {
+  color: #315fd0;
+  font-weight: 800;
+  text-decoration: none;
+}
+.auth-register-page .qc-register-footer a:hover {
+  text-decoration: underline;
+}
+.auth-register-page .qc-register-footer-divider {
+  width: 1px;
+  height: 13px;
+  margin: 0 5px;
+  background: #d8dfeb;
+}
+.auth-register-page .qc-register-footer-home {
+  color: #8994a6 !important;
+  font-weight: 650 !important;
+}
+@media (max-width: 480px) {
+  .auth-register-page .auth-wrap {
+    align-items: center;
+    padding: 14px 14px;
+  }
+  .auth-register-page .auth-card {
+    padding: 19px 22px 23px;
+    border-radius: 19px;
+  }
+  .auth-register-page .auth-card h1 {
+    font-size: 25px;
+    margin-top: 9px;
+  }
+  .auth-register-page .qc-register-benefit {
+    margin: 18px 0 18px;
+    padding: 11px 12px;
+  }
+  .auth-register-page .field {
+    margin-bottom: 13px;
+  }
+  .auth-register-page .field input {
+    height: 48px;
+  }
+  .auth-register-page .qc-register-agreement {
+    margin-bottom: 16px;
+  }
+}
+@media (max-width: 360px) {
+  .auth-register-page .auth-card {
+    padding: 16px 17px 19px;
+  }
+  .auth-register-page .qc-register-benefit {
+    gap: 7px;
+    font-size: 12px;
+  }
+  .auth-register-page .qc-register-footer {
+    font-size: 12px;
+    gap: 5px;
+  }
+}
