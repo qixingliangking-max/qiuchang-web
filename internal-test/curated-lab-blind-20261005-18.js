@@ -25,7 +25,7 @@ function legs(e){return e.legs.map((l,i)=>{
  return '<div class="leg"><div class="leg-top"><span class="num">'+esc(r.num)+'</span><span>'+esc(r.league)+'</span><time>'+esc(ko(r))+'</time></div><div class="fixture">'+esc(r.h)+' <small>vs</small> '+esc(r.a)+'</div><div class="picks">'+opts+'</div><div class="market">官方赛前赔率 · '+esc(l.market.toUpperCase())+' '+old+'</div>'+result+'</div>';
 }).join('<div class="times" aria-hidden="true">×</div>')}
 function combos(e){let a=e.legs[0],b=e.legs[1],list=[];for(const l of a.picks)for(const r of b.picks)list.push({a:l.name,b:r.name,odds:oddsFor(a,l)*oddsFor(b,r)});
- const weights=list.map(c=>state.mode==='balanced'?1/c.odds:state.mode==='hot'?Math.pow(1/c.odds,1.55):state.mode==='cold'?Math.pow(c.odds,.7):.55/c.odds+.45*Math.pow(1/c.odds,1.55));
+ const weights=list.map(c=>state.mode==='balanced'?1:state.mode==='hot'?Math.pow(1/c.odds,1.55):state.mode==='cold'?Math.pow(c.odds,.7):.55/c.odds+.45*Math.pow(1/c.odds,1.55));
  const cents=Math.round(state.budget*100),sum=weights.reduce((s,w)=>s+w,0);
  const raw=weights.map(w=>cents*w/sum),unit=raw.map(Math.floor);
  const gaps=cents-unit.reduce((s,n)=>s+n,0);

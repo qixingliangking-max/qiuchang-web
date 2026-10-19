@@ -7,6 +7,7 @@ on:
       - 'internal-test/curated-lab-blind-20261005-18.js'
       - 'internal-test/curated-lab-blind-selection-20261005-18.js'
       - 'internal-test/curated-lab-blind-settlement-20261005-18.js'
+      - 'internal-test/curated-selector-v11-review-20261019.html'
       - '.github/workflows/curated-blind-replay-20261019.yml'
 permissions:
   contents: read
@@ -72,6 +73,7 @@ jobs:
            const amountRaw=+(amount||'').replaceAll(',','');
            console.log('ALLOCATION_DIAG='+JSON.stringify({name,amount,amountRaw,detailOpen,budget:await page.locator('#budget').inputValue()}));
            if(!detailOpen||!Number.isFinite(amountRaw)||amountRaw<=0)throw Error(name+': no 500-point allocation '+JSON.stringify({amount,amountRaw,detailOpen}));
+           if(Math.abs(amountRaw-500/9)>0.03)throw Error(name+': displayed equal split must be 500/9, got '+amountRaw);
            await page.locator('#revealer').click();
            for(const [type,n,hit] of [['direction',14,9],['htft',14,8],['goals',13,3],['score',14,4]]){
              const summary=await page.locator('#summary .summary-card').nth(Object.keys(expected).indexOf(type)).innerText();
@@ -100,6 +102,11 @@ jobs:
              const ctx=await b.newContext();const p=await ctx.newPage();await p.goto(origin);
              const link=p.locator('a[href="curated-lab-blind-20261005-18.html"]');
              if(await link.count()!==1)throw Error('Parent research lab missing blind replay entry');
+             const auditLink=p.locator('a[href="curated-selector-v11-review-20261019.html"]');
+             await p.goto(u);
+             if(await auditLink.count()!==1)throw Error('Blind replay missing V1.1 audit link');
+             await p.goto('file://'+path.resolve('internal-test/curated-selector-v11-review-20261019.html'));
+             if(!(await p.locator('h1').innerText()).includes('复盘与升级'))throw Error('V1.1 audit document unreadable');
              await ctx.close();
              console.log('QCDA_BLIND_REPLAY_QA='+JSON.stringify({status:'PASS',tests}));
              fs.writeFileSync('/tmp/qcda-blind/report.json',JSON.stringify({status:'PASS',tests},null,2));
