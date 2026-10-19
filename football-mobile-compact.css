@@ -1,0 +1,288 @@
+/*
+ * QCDA football mobile compact layout.
+ * Desktop/large tablet intentionally untouched. Public odds + verified
+ * locked prediction remain in existing app.js; this file changes display only.
+ */
+.qc-football-page .qc-mobile-hit-count,
+.qc-football-page .qc-mobile-report-link,
+.qc-football-page .qc-mobile-report-empty,
+.qc-football-page .qc-mobile-report-pending,
+.qc-football-page .qc-football-calendar-today,
+.qc-football-page .qc-mobile-filter-group,
+.qc-football-page .qc-football-mobile-title { display:none; }
+@media(max-width:760px){
+  body.qc-football-page { background:#f3f6fb!important; }
+  .qc-football-page .content { padding:0 0 72px!important; }
+  .qc-football-page .jc-football-toolbar {
+    margin:0!important;padding:10px 12px 7px!important;
+    background:#f3f6fb!important;box-shadow:none!important;
+    border:0!important;border-radius:0!important;
+  }
+  .qc-football-page .jc-football-date-zone {
+    display:grid!important;
+    grid-template-columns:40px minmax(0,1fr) 40px minmax(62px,auto)!important;
+    grid-template-rows:42px auto!important;
+    align-items:center!important;gap:7px!important;
+    overflow:visible!important;width:100%!important;padding:0!important;
+  }
+  .qc-football-page #jcFootballPrevDate { grid-column:1!important;grid-row:1!important; }
+  .qc-football-page #jcFootballDateLabel { grid-column:2!important;grid-row:1!important; }
+  .qc-football-page #jcFootballNextDate { grid-column:3!important;grid-row:1!important; }
+  .qc-football-page #jcFootballLeagueToggle { grid-column:4!important;grid-row:1!important; }
+  .qc-football-page .jc-football-date-zone>button:not(#jcFootballTodayBtn){
+    min-height:42px!important;height:42px!important;
+    border:1px solid #dce4f1!important;border-radius:12px!important;
+    background:#fff!important;color:#465671!important;
+    box-shadow:none!important;padding:0 7px!important;
+  }
+  .qc-football-page .jc-football-date-zone .jc-football-arrow { font-size:22px!important;padding:0!important; }
+  .qc-football-page #jcFootballDateLabel { min-width:0!important;font-size:15px!important; }
+  .qc-football-page #jcFootballLeagueToggle {
+    min-width:62px!important;max-width:none!important;
+    font-size:12px!important;color:#3764ed!important;
+    font-weight:800!important;overflow:visible!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballLeagueToggle.qc-mobile-filter-active {
+    background:#eaf3ff!important;border-color:#94b7ed!important;
+  }
+  .qc-football-page #jcFootballTodayBtn { display:none!important; }
+  .qc-football-page #jcFootballFixtureCount {
+    grid-column:1 / -1!important;grid-row:2!important;
+    display:block!important;background:none!important;border:0!important;
+    height:auto!important;width:auto!important;min-height:0!important;
+    padding:0 2px!important;margin:1px auto 0!important;
+    color:#8491aa!important;font-size:11px!important;font-weight:650!important;
+    text-align:center!important;
+  }
+  .qc-football-page #jcFootballInlineLeagues { display:none!important; }
+  .qc-football-page #jcDatePopover {
+    position:absolute!important;top:49px!important;left:0!important;
+    right:auto!important;transform:none!important;
+    width:min(360px,calc(100vw - 24px))!important;
+    max-width:100%!important;z-index:70!important;
+  }
+  .qc-football-page #jcDatePopover[hidden],
+  .qc-football-page #jcFootballLeaguePopover[hidden]{display:none!important;}
+  .qc-football-page .qc-football-calendar-today{
+    display:block!important;width:calc(100% - 22px)!important;min-height:37px!important;
+    margin:10px 11px 12px!important;padding:6px 10px!important;
+    border:1px solid #c9daf5!important;background:#edf5ff!important;
+    border-radius:10px!important;color:#3978d5!important;
+    font-size:12px!important;font-weight:850!important;
+    cursor:pointer!important;
+  }
+  .qc-football-page .qc-football-calendar-today:disabled{opacity:.45!important;cursor:default!important}
+  .qc-football-page #jcFootballLeaguePopover{
+    position:absolute!important;top:49px!important;right:0!important;left:auto!important;
+    width:min(335px,calc(100vw - 24px))!important;
+    max-height:68vh!important;z-index:75!important;
+  }
+  .qc-football-page .qc-football-desktop-title{display:none!important}
+  .qc-football-page .qc-football-mobile-title{display:inline!important}
+  .qc-football-page .qc-mobile-filter-group{display:block!important;padding:11px 12px 3px!important}
+  .qc-football-page .qc-mobile-filter-heading{
+    margin:0 0 8px!important;color:#8390a7!important;
+    font-size:11px!important;font-weight:800!important;
+  }
+  .qc-football-page .qc-mobile-filter-heading:not(:first-child){margin-top:12px!important}
+  .qc-football-page .qc-mobile-filter-status{display:flex!important;align-items:center!important;gap:6px!important;flex-wrap:wrap!important;}
+  .qc-football-page .jc-football-league-menu .qc-mobile-filter-status button{
+    display:flex!important;width:auto!important;min-height:34px!important;
+    height:34px!important;padding:0 11px!important;
+    border:1px solid #e0e7f2!important;border-radius:10px!important;
+    color:#56647a!important;background:#fff!important;
+    font-size:12px!important;font-weight:800!important;gap:5px!important;
+  }
+  .qc-football-page .jc-football-league-menu .qc-mobile-filter-status button.active{
+    background:#eaf3ff!important;border-color:#93b9ec!important;color:#3764ed!important;
+  }
+  .qc-football-page .qc-mobile-filter-status small{font-size:10px!important;color:#9aa5b8!important}
+  .qc-football-page .jc-football-league-menu{max-height:calc(68vh - 53px)!important}
+  .qc-football-page #jcFootballCards {background:#fff!important;}
+  .qc-football-page #jcFootballCards .jc-football-grid{
+    display:block!important;grid-template-columns:1fr!important;
+    gap:0!important;width:100%!important;background:#fff!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card,
+  .qc-football-page #jcFootballCards .jc-football-card-final {
+    display:block!important;box-sizing:border-box!important;
+    width:100%!important;min-height:0!important;max-width:none!important;
+    margin:0!important;padding:0!important;
+    border:0!important;border-bottom:1px solid #e4e9f1!important;
+    border-radius:0!important;box-shadow:none!important;
+    background:#fff!important;transform:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-card-link{
+    display:block!important;width:100%!important;max-width:none!important;
+    min-height:0!important;height:auto!important;
+    padding:13px 16px 0!important;margin:0!important;
+    box-sizing:border-box!important;text-decoration:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-card-top {
+    display:flex!important;justify-content:space-between!important;
+    align-items:center!important;gap:8px!important;
+    min-height:0!important;margin:0!important;padding:0!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-top-left,
+  .qc-football-page #jcFootballCards .jc-card-top-meta{gap:7px!important;}
+  .qc-football-page #jcFootballCards .jc-card-top-meta em{
+    background:#edf1f7!important;color:#68788f!important;
+    border-radius:5px!important;padding:3px 6px!important;
+    font-size:11px!important;font-weight:750!important;
+    font-style:normal!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-top-meta b{
+    color:#49546b!important;font-size:12px!important;font-weight:850!important;
+    white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-top time{
+    color:#98a3b4!important;font-size:12px!important;
+    font-weight:650!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-score-axis {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr)!important;
+    gap:5px!important;align-items:center!important;
+    min-height:45px!important;height:auto!important;
+    margin:11px 0 0!important;padding:0!important;
+    border:0!important;border-radius:0!important;
+    background:none!important;box-shadow:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team {
+    display:flex!important;flex-direction:row!important;
+    justify-content:flex-start!important;align-items:center!important;
+    min-width:0!important;max-width:none!important;min-height:0!important;
+    padding:0!important;margin:0!important;gap:5px!important;
+    font-size:14px!important;line-height:1.25!important;
+    font-weight:790!important;color:#1f2a44!important;
+    text-align:left!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team.away-team{
+    flex-direction:row-reverse!important;justify-content:flex-start!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team-logo{
+    display:block!important;object-fit:contain!important;
+    flex:0 0 29px!important;width:29px!important;height:29px!important;
+    margin:0!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team-name{
+    min-width:0!important;max-width:100%!important;flex:0 1 auto!important;
+    font-size:14px!important;font-weight:790!important;
+    line-height:1.25!important;color:#1f2a44!important;
+    text-align:left!important;overflow-wrap:anywhere!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .away-team .jc-team-name{text-align:right!important;}
+  .qc-football-page #jcFootballCards .jc-football-card .jc-score-center{
+    display:flex!important;flex-direction:column!important;
+    justify-content:center!important;align-items:center!important;
+    min-height:43px!important;height:auto!important;
+    gap:3px!important;margin:0!important;padding:0!important;
+    border:0!important;border-radius:0!important;background:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-score-main {
+    display:block!important;min-height:0!important;
+    margin:0!important;padding:0!important;
+    font-size:26px!important;line-height:1.05!important;
+    font-weight:900!important;color:#478fe5!important;
+    white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-score-main.is-finished{
+    color:#e14f51!important;font-size:29px!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-score-meta{
+    margin:0!important;padding:0!important;background:none!important;
+    color:#78a8e5!important;font-size:11px!important;font-weight:700!important;
+    line-height:1.3!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-score-meta.is-finished{color:#cc7980!important}
+  .qc-football-page #jcFootballCards .jc-mini-odds,
+  .qc-football-page #jcFootballCards .jc-card-detail-btn,
+  .qc-football-page #jcFootballCards .jc-card-prematch-lock {display:none!important;}
+  .qc-football-page #jcFootballCards .jc-card-after-odds {
+    display:block!important;margin:0!important;padding:0!important;
+    gap:0!important;border:0!important;background:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-play{
+    display:block!important;margin:0!important;
+    padding:7px 0 10px!important;background:none!important;
+    border:0!important;border-radius:0!important;box-shadow:none!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-title {
+    display:flex!important;align-items:center!important;justify-content:space-between!important;
+    margin:0 0 5px!important;padding:0!important;
+    gap:5px!important;min-height:23px!important;
+    font-size:11px!important;font-weight:850!important;line-height:1.2!important;
+    color:#d34c55!important;
+  }
+  .qc-football-page #jcFootballCards .qc-mobile-hit-heading {
+    display:inline-flex!important;gap:3px!important;align-items:center!important;
+    min-width:0!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .qc-mobile-hit-count {
+    display:inline!important;color:#a2aabb!important;
+    font-size:10px!important;font-weight:650!important;white-space:nowrap!important;
+  }
+  .qc-football-page #jcFootballCards .qc-mobile-report-link {
+    display:inline-flex!important;align-items:center!important;gap:3px!important;
+    color:#478fe5!important;font-size:11.5px!important;
+    font-weight:750!important;line-height:1.2!important;
+    white-space:nowrap!important;flex:none!important;
+  }
+  .qc-football-page #jcFootballCards .qc-mobile-report-link span{font-size:16px!important;line-height:1!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-items{
+    display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,27px)!important;
+    gap:5px!important;align-content:start!important;min-height:59px!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-chip{
+    display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+    align-items:center!important;justify-content:center!important;
+    box-sizing:border-box!important;grid-column:span 3!important;
+    width:100%!important;min-width:0!important;
+    height:27px!important;min-height:27px!important;max-height:27px!important;
+    padding:3px 5px!important;margin:0!important;
+    border:1px solid #edbdc0!important;border-radius:18px!important;
+    background:#fff8f8!important;color:#cc4b55!important;gap:3px!important;
+    overflow:hidden!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-chip small,
+  .qc-football-page #jcFootballCards .jc-card-hit-chip b,
+  .qc-football-page #jcFootballCards .jc-card-hit-chip em{
+    display:inline!important;width:auto!important;max-width:none!important;
+    font-size:10.5px!important;font-weight:750!important;
+    line-height:1.2!important;white-space:nowrap!important;
+    letter-spacing:0!important;margin:0!important;padding:0!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-chip em{
+    color:#d36f30!important;font-weight:850!important;font-style:normal!important;
+  }
+  .qc-football-page #jcFootballCards .jc-card-hit-chip em::before{content:"@"!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-items.qc-hit-count-3 .jc-card-hit-chip{grid-column:span 2!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-items.qc-hit-count-5 .jc-card-hit-chip:nth-child(-n+3){grid-column:span 2!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-items.qc-hit-count-5 .jc-card-hit-chip:nth-child(n+4){grid-column:span 3!important}
+  .qc-football-page #jcFootballCards .qc-mobile-report-empty,
+  .qc-football-page #jcFootballCards .qc-mobile-report-pending{
+    display:flex!important;align-items:center!important;justify-content:space-between!important;
+    padding:8px 0 10px!important;min-height:26px!important;
+    background:none!important;border:0!important;
+  }
+  .qc-football-page #jcFootballCards .qc-mobile-report-pending{justify-content:flex-end!important}
+  .qc-football-page #jcFootballCards .qc-mobile-report-empty>span:first-child {
+    font-size:11px!important;font-weight:750!important;color:#a0a9b9!important;
+  }
+}
+@media(max-width:380px){
+  .qc-football-page .jc-football-toolbar{padding:9px 9px 6px!important}
+  .qc-football-page .jc-football-date-zone{
+    grid-template-columns:37px minmax(0,1fr) 37px minmax(56px,auto)!important;
+    gap:5px!important;
+  }
+  .qc-football-page #jcFootballCards .jc-football-card .jc-card-link{padding:12px 11px 0!important}
+  .qc-football-page #jcFootballCards .jc-card-score-axis{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr)!important;gap:3px!important}
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team-logo{width:25px!important;height:25px!important;flex-basis:25px!important}
+  .qc-football-page #jcFootballCards .jc-football-card .jc-team-name{font-size:12.5px!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-chip{padding-left:3px!important;padding-right:3px!important}
+  .qc-football-page #jcFootballCards .jc-card-hit-chip small,
+  .qc-football-page #jcFootballCards .jc-card-hit-chip b,
+  .qc-football-page #jcFootballCards .jc-card-hit-chip em{font-size:10px!important}
+}
