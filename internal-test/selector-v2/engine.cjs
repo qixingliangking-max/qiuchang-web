@@ -139,13 +139,13 @@ function selectionSets(f,type,k,{singleOddsFloor=0}={}){
  const pools=type==="direction"?["had","hhad"]:type==="htft"?["hafu"]:type==="goals"?["ttg"]:["crs"];
  const all=[];
  for(const pool of pools){
-  const opts=marketOptions(f,p,type,pool).filter(x=>k!==1||x.odds>=singleOddsFloor);
+  const opts=marketOptions(f,p,type,pool,k).filter(x=>k!==1||x.odds>=singleOddsFloor);
   if(opts.length<k)continue;
   for(const indices of choose(opts.length,k)){
    const picks=indices.map(i=>opts[i]),coverage=picks.reduce((s,x)=>s+x.p,0),weightedOdds=picks.reduce((s,x)=>s+x.p*x.odds,0);
    all.push({fixtureId:f.id,num:f.num,league:f.league,type,pool,line:numeric(f.markets?.[pool]?.line),
-    picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),statProbability:+x.statProbability.toFixed(8),marketProbability:+x.marketProbability.toFixed(8),odds:x.odds})),
-    options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),probabilitySource:"75% statistical baseline + market prior (25% or 35%)",
+    picks:picks.map(x=>({key:x.key,label:labelFor(pool,x.key),probability:+x.p.toFixed(8),statProbability:x.statProbability===null?null:+x.statProbability.toFixed(8),marketProbability:+x.marketProbability.toFixed(8),odds:x.odds})),
+    options:k,coverage:+coverage.toFixed(8),weightedOdds:+weightedOdds.toFixed(8),probabilitySource:picks.every(x=>x.statProbability!==null)?"statistical baseline + market prior":"locked model pick + market prior",
     minOdds:Math.min(...picks.map(x=>x.odds)),maxOdds:Math.max(...picks.map(x=>x.odds)),
     asOf:f.decisionAt,calibrated:false});
   }
