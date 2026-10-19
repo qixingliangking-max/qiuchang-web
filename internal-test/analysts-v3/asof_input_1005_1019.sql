@@ -1,7 +1,7 @@
 -- Six independent match analysts: hypothetical cutoff = min(now, kickoff-30m).
 -- This query deliberately excludes outcomes, scoring tables, and main-model selections.
 WITH matches AS (
- SELECT m.id,m.business_date::text day,m.match_num num,m.league_name league,
+ SELECT m.id,m.business_date::text AS business_day,m.match_num num,m.league_name league,
  m.home_team_name home,m.away_team_name away,m.kickoff_at,
  LEAST(now(),m.kickoff_at-interval '30 minutes') cutoff
  FROM public.jc_matches m WHERE m.business_date BETWEEN '2026-10-05' AND '2026-10-19'
@@ -17,7 +17,7 @@ WITH matches AS (
    ORDER BY a.pool_code,a.captured_at DESC,a.id DESC)s) markets
  FROM matches m
 )
-SELECT id::text, day,num,league,home,away,kickoff_at,cutoff,
+SELECT id::text, business_day AS "day",num,league,home,away,kickoff_at,cutoff,
  feature->>'time' AS feature_time,
  jsonb_build_object(
  'homeGoalsFor',feature->'payload'->'value'->'goalAvg'->>'homeGoalAvgCnt',
@@ -27,4 +27,4 @@ SELECT id::text, day,num,league,home,away,kickoff_at,cutoff,
  'samples',feature->'payload'->'value'->'goalAvg'->>'totalLegCnt'
  ) features,
  COALESCE(markets,'{}'::jsonb) markets
-FROM source ORDER BY day,num;
+FROM source ORDER BY business_day,num;
