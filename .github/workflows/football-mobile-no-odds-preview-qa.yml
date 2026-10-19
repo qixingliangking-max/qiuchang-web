@@ -66,6 +66,13 @@ jobs:
                     firstChipsCount:first.querySelectorAll('.qc-demo-chip').length,
                     secondChipsCount:cards[1].querySelectorAll('.qc-demo-chip').length,
                     ctaInTitle:Boolean(first.querySelector('.qc-demo-hits-head .qc-demo-cta')),
+                    unifiedLabels:cards.every(x=>x.querySelector('.qc-demo-cta')?.textContent?.includes('玩法分析报告')),
+                    ctaSingleLine:cards.every(x=>x.querySelector('.qc-demo-cta')?.getClientRects().length===1),
+                    titleSingleLine:cards.every(x=>{
+                      const h=x.querySelector('.qc-demo-hits-head');
+                      const t=h?.querySelector('.qc-demo-hit-title'),a=h?.querySelector('.qc-demo-cta');
+                      return !h || !t || !a || Math.abs(t.getBoundingClientRect().top-a.getBoundingClientRect().top)<7;
+                    }),
                     duplicateBottomCta:Boolean(first.querySelector('.qc-demo-all > .qc-demo-cta')),
                     chipRows:[...new Set([...cards[1].querySelectorAll('.qc-demo-chip')].map(x=>Math.round(x.getBoundingClientRect().top)))].length,
                     clipped:[...document.querySelectorAll('.qc-demo-chip')].filter(x=>x.scrollWidth>x.clientWidth+2).length,
@@ -74,7 +81,8 @@ jobs:
                 });
                 if(d.rows!==25 || d.complete<21 || d.hits<20 || d.odds!==0 || d.linked!==25 ||
                    !d.priceTags || d.missingHitPrice || d.forbiddenTerms ||
-                   !d.ctaInTitle || d.duplicateBottomCta || d.chipRows!==2 ||
+                   !d.ctaInTitle || !d.unifiedLabels || !d.ctaSingleLine || !d.titleSingleLine ||
+                   d.duplicateBottomCta || d.chipRows!==2 ||
                    d.firstChipsCount!==4 || d.secondChipsCount!==5 ||
                    d.firstHeight>205 || Math.abs(d.firstHeight-d.secondHeight)>2 ||
                    d.clipped || d.widthOverflows ||
