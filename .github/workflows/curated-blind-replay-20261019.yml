@@ -52,7 +52,7 @@ jobs:
               privateNoIndex:document.querySelector('meta[name="robots"]')?.content.includes('noindex')};
            });
            if(!a.noResultsInFrozen||!a.goalsTwo||!a.validFreeze||!a.privateNoIndex||a.dates!==14||a.entries!==56||a.rows!==212)throw Error(name+' freeze integrity '+JSON.stringify(a));
-           if(!await page.locator('#dateChooser option').count()===14)throw Error(name+': dates missing');
+           if((await page.locator('#dateChooser option').count())!==14)throw Error(name+': dates missing');
            if((await page.locator('#dateChooser').inputValue())!=='2026-10-18')throw Error(name+': not latest day');
            if((await page.locator('#plans .outcome-line').count())!==0)throw Error(name+': real outcomes leaked before reveal');
            if(!(await page.locator('#plans').innerText()).includes('赛果已遮挡'))throw Error(name+': no masked marker');
@@ -66,6 +66,7 @@ jobs:
            }
            await page.locator('#budget').fill('500');
            await page.locator('#budget').dispatchEvent('change');
+           await page.locator('#plans .plan details.detail summary').click();
            const amount=await page.locator('#plans .table-wrap tbody tr:first-child td:nth-child(4)').innerText();
            if(+amount.replaceAll(',','')<=0)throw Error(name+': no 500-point allocation');
            await page.locator('#revealer').click();
