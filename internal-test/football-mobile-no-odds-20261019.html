@@ -378,7 +378,13 @@ body.qc-demo{background:#f3f6fb}
  });
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePanels();});
  document.addEventListener('click',function(e){
-   if(activePanel && !e.target.closest('.qc-demo-panel,.qc-demo-toolbar'))closePanels();
+   // Filter options are re-rendered during clicks. Use the ORIGINAL event
+   // propagation path, not a detached button's current parent chain.
+   var inside=e.composedPath().some(function(node){
+     return node && node.classList &&
+       (node.classList.contains('qc-demo-panel')||node.classList.contains('qc-demo-toolbar'));
+   });
+   if(activePanel && !inside)closePanels();
  });
  async function show(ds){
    if(!dates.includes(ds))return;
