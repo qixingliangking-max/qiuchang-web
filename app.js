@@ -757,8 +757,8 @@ function jcFootballHitOddsHtml(m,model,score){
 
   if(!hits.length) return '';
   return '<div class="jc-card-hit-play">'+
-    '<div class="jc-card-hit-title">赛前预测命中'+
-      '<span class="qc-mobile-hit-count"> · '+hits.length+'项</span>'+
+    '<div class="jc-card-hit-title"><span class="qc-mobile-hit-heading">赛前预测命中'+
+      '<span class="qc-mobile-hit-count"> · '+hits.length+'项</span></span>'+
       '<span class="qc-mobile-report-link">玩法分析报告 <span aria-hidden="true">›</span></span></div>'+
     '<div class="jc-card-hit-items qc-hit-count-'+hits.length+'">'+hits.map(x=>
       '<span class="jc-card-hit-chip" title="赛前预测命中｜'+qcEscape(x.kind)+'">'+
