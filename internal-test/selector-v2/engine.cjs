@@ -108,7 +108,7 @@ function modelKeys(f,type,pool,k){
  }
  if(type==="htft")return k===1?[htftTextKey(m.htftTop1)].filter(Boolean):[];
  if(type==="goals"){
-  const values=[...String(m.goalCandidates||"").matchAll(/(\d+)\s*\\+?\s*球/g)].map(x=>Math.min(7,Number(x[1])));
+  const values=[...String(m.goalCandidates||"").matchAll(/(\d+)\s*[+＋]?\s*球/g)].map(x=>Math.min(7,Number(x[1])));
   return [...new Set(values)].map(x=>"s"+x);
  }
  if(type==="score"){
