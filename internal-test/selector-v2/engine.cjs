@@ -76,17 +76,63 @@ function choose(n,k,out=[],start=0,buf=[]){
  return out;
 }
 const MARKET_PRIOR_WEIGHT={had:0.25,hhad:0.25,hafu:0.25,ttg:0.35,crs:0.35};
-function marketOptions(f,prob,type,pool){
- const market=f.markets?.[pool],d=prob.distributions[pool];if(!market||!d||!market.odds)return [];
- let opts=Object.entries(market.odds).map(([key,value])=>({key,odds:numeric(value),p:numeric(d[key])}))
-  .filter(x=>x.odds!==null&&x.odds>1&&x.p!==null&&x.p>0);
- const statSum=opts.reduce((n,x)=>n+x.p,0),marketSum=opts.reduce((n,x)=>n+1/x.odds,0),weight=MARKET_PRIOR_WEIGHT[pool]??0.25;
- if(statSum<=0||marketSum<=0)return [];
- opts=opts.map(x=>({...x,statProbability:x.p,marketProbability:(1/x.odds)/marketSum,
-  p:(1-weight)*(x.p/statSum)+weight*((1/x.odds)/marketSum),marketPriorWeight:weight}));
- if(type==="score"){opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));opts=opts.slice(0,10)}
- else opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));
- return opts;
+function splitModelLabels(value){
+ if(Array.isArray(value))return value.map(x=>String(x).trim()).filter(Boolean);
+ return String(value||"").split(/[\/｜|、,，\\s]+/).map(x=>x.trim()).filter(Boolean);
+}
+function directionKey(token,pool){
+ const t=String(token||"").replace(/[（(].*?[）)]/g,"").replace(/\\s/g,"");
+ if(pool==="hhad"){if(t==="让胜")return "h";if(t==="让平")return "d";if(t==="让负")return "a";return null}
+ if(t==="胜"||t==="主胜"||t==="主队胜")return "h";
+ if(t==="平"||t==="平局")return "d";
+ if(t==="负"||t==="客胜"||t==="客队胜")return "a";
+ return null;
+}
+function scoreTextKey(value){
+ const m=String(value||"").match(/^\\s*(\\d+)\\s*[-:：]\\s*(\\d+)\\s*$/);
+ return m?"s"+String(Number(m[1])).padStart(2,"0")+"s"+String(Number(m[2])).padStart(2,"0"):null;
+}
+function htftTextKey(value){
+ const t=String(value||"").replace(/[\/｜|、\\s]/g,"");if(t.length<2)return null;
+ const m={胜:"h",平:"d",负:"a"};return m[t[0]]&&m[t[1]]?m[t[0]]+m[t[1]]:null;
+}
+function modelKeys(f,type,pool,k){
+ const m=f.model||{};
+ if(type==="direction"){
+  if(pool==="had"){
+   if(k===1){const key=directionKey(m.singlePick,"had");return key?[key]:[]}
+   return [...new Set(splitModelLabels(m.direction).map(x=>directionKey(x,"had")).filter(Boolean))];
+  }
+  if(pool==="hhad"&&k===2)return [...new Set(splitModelLabels(m.handicapDirection).map(x=>directionKey(x,"hhad")).filter(Boolean))];
+  return [];
+ }
+ if(type==="htft")return k===1?[htftTextKey(m.htftTop1)].filter(Boolean):[];
+ if(type==="goals"){
+  const values=[...String(m.goalCandidates||"").matchAll(/(\\d+)\\s*\\+?\\s*球/g)].map(x=>Math.min(7,Number(x[1])));
+  return [...new Set(values)].map(x=>"s"+x);
+ }
+ if(type==="score"){
+  const values=Array.isArray(m.topScores)?m.topScores:splitModelLabels(m.topScores);
+  return [...new Set(values.map(scoreTextKey).filter(Boolean))];
+ }
+ return [];
+}
+function marketOptions(f,prob,type,pool,k){
+ const market=f.markets?.[pool],d=prob.distributions?.[pool];
+ if(!market||!market.odds||(pool==="hhad"&&numeric(market.line)===null))return [];
+ const allowed=modelKeys(f,type,pool,k);if(!allowed.length)return [];
+ const raw=Object.entries(market.odds).map(([key,value])=>({key,odds:numeric(value),stat:numeric(d?.[key])}))
+  .filter(x=>x.odds!==null&&x.odds>1);
+ const marketSum=raw.reduce((n,x)=>n+1/x.odds,0),statSum=raw.reduce((n,x)=>n+(x.stat!==null&&x.stat>0?x.stat:0),0);
+ if(marketSum<=0)return [];
+ const weight=({had:0.25,hhad:0.25,hafu:0.25,ttg:0.35,crs:0.35})[pool]??0.25;
+ const opts=raw.filter(x=>allowed.includes(x.key)).map(x=>{
+  const marketProbability=(1/x.odds)/marketSum,hasStat=x.stat!==null&&x.stat>0&&statSum>0,
+   statProbability=hasStat?x.stat/statSum:null,
+   p=hasStat?(1-weight)*statProbability+weight*marketProbability:marketProbability;
+  return {...x,p,statProbability,marketProbability};
+ }).filter(x=>x.p>0);
+ opts.sort((a,b)=>b.p-a.p||a.key.localeCompare(b.key));return opts;
 }
 function selectionSets(f,type,k,{singleOddsFloor=0}={}){
  const p=baseProbabilities(f);if(!p.ready)return [];
