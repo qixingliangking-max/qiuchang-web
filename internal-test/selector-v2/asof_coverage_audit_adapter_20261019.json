@@ -1,0 +1,1130 @@
+{
+  "version": "V2-ASOF-ELIGIBILITY-ADAPTER-CHECK-20261019",
+  "sourceRange": "2026-09-23..2026-10-18",
+  "sqlBlob": "a84ef3179a2a47d910e4943d2989810c2fc8aadb",
+  "adapterBlob": "b770adae2d461621a259ee2e5c57850b32b72e69",
+  "engineBlob": "4511212e78cfee7f2dc02d1e181e3f668f9f5d6e",
+  "records": 284,
+  "strictFeatureEligible": 170,
+  "failClosed": 114,
+  "dates": 22,
+  "types": [
+    {
+      "type": "direction",
+      "daysWithNonPublishedShadow": 7,
+      "daysAbstained": 15,
+      "legs": 56
+    },
+    {
+      "type": "htft",
+      "daysWithNonPublishedShadow": 0,
+      "daysAbstained": 22,
+      "legs": 0
+    },
+    {
+      "type": "goals",
+      "daysWithNonPublishedShadow": 1,
+      "daysAbstained": 21,
+      "legs": 170
+    },
+    {
+      "type": "score2x2",
+      "daysWithNonPublishedShadow": 2,
+      "daysAbstained": 20,
+      "legs": 170
+    },
+    {
+      "type": "score2x3",
+      "daysWithNonPublishedShadow": 0,
+      "daysAbstained": 22,
+      "legs": 170
+    },
+    {
+      "type": "score3x3",
+      "daysWithNonPublishedShadow": 0,
+      "daysAbstained": 22,
+      "legs": 170
+    }
+  ],
+  "byDay": [
+    {
+      "date": "2026-09-23",
+      "fixtures": 1,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-24",
+      "fixtures": 8,
+      "rejected": 5,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 3,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 3,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 3,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 3,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "fixtures": 13,
+      "rejected": 5,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "fixtures": 17,
+      "rejected": 17,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "fixtures": 9,
+      "rejected": 9,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "fixtures": 8,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 4,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 8,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "fixtures": 14,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 1,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 14,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 14,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 14,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 14,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "fixtures": 2,
+      "rejected": 2,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "fixtures": 7,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 2,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 7,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 7,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 7,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 7,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "fixtures": 12,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 2,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "fixtures": 6,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 3,
+          "candidateCombos": 1,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 6,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 6,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 6,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 6,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "fixtures": 6,
+      "rejected": 6,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "fixtures": 12,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 5,
+          "candidateCombos": 1,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 12,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-10",
+      "fixtures": 30,
+      "rejected": 6,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 8,
+          "candidateCombos": 18,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 24,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 24,
+          "candidateCombos": 5,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 24,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 24,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-11",
+      "fixtures": 28,
+      "rejected": 3,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 9,
+          "candidateCombos": 12,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 25,
+          "candidateCombos": 1,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 25,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 25,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 25,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-12",
+      "fixtures": 10,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 5,
+          "candidateCombos": 1,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-13",
+      "fixtures": 12,
+      "rejected": 12,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-14",
+      "fixtures": 10,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 7,
+          "candidateCombos": 15,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 10,
+          "candidateCombos": 2,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 10,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "fixtures": 13,
+      "rejected": 13,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "fixtures": 11,
+      "rejected": 11,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-17",
+      "fixtures": 30,
+      "rejected": 0,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 8,
+          "candidateCombos": 25,
+          "shadowProposals": 1,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 30,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 30,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 30,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 30,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "fixtures": 25,
+      "rejected": 25,
+      "types": [
+        {
+          "type": "direction",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "htft",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "goals",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x2",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score2x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        },
+        {
+          "type": "score3x3",
+          "legs": 0,
+          "candidateCombos": 0,
+          "shadowProposals": 0,
+          "alwaysUnpublishable": true
+        }
+      ]
+    }
+  ],
+  "warning": "Pre-result input feasibility only. Source has no complete frozen H/D/A probabilities and half-time fractions are unavailable. All shadow candidates uncalibrated and not publishable; no outcomes were queried."
+}
