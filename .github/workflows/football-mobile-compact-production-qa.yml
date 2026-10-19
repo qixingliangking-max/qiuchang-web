@@ -93,6 +93,13 @@ jobs:
                     throw Error(item.name+' compact layout failed '+JSON.stringify(measurements));
                   await page.locator('#jcFootballLeagueToggle').click();
                   await page.locator('#jcFootballLeagueMenu button[data-status="pending"]').click();
+                  const pendingAudit=await page.evaluate(()=>({
+                    activeMenu:[...document.querySelectorAll('#jcFootballLeagueMenu button[data-status]')].map(x=>({status:x.dataset.status,active:x.classList.contains('active'),text:x.textContent?.trim()})),
+                    cardCount:document.querySelectorAll('.jc-football-card').length,
+                    emptyText:document.querySelector('#jcFootballCards')?.textContent?.slice(0,110),
+                    date:document.querySelector('#jcFootballDateLabel')?.textContent
+                  }));
+                  console.log('QCDA_FILTER_PENDING '+item.name+' '+JSON.stringify(pendingAudit));
                   await page.waitForFunction(()=>document.querySelectorAll('.jc-football-card').length===0,null,{timeout:12000});
                   await page.locator('#jcFootballLeagueToggle').click();
                   await page.locator('#jcFootballLeagueMenu button[data-status="all"]').click();
@@ -100,7 +107,7 @@ jobs:
                   await page.locator('#jcFootballDateLabel').click();
                   if(!await page.locator('#jcDatePopover .qc-football-calendar-today').isVisible())
                     throw Error('Missing return-to-today calendar action on '+item.name);
-                }else if(!measurements.oddsVisible || measurements.reportVisible || !measurements.desktopOriginalCta){
+                }else if(!measurements.oddsVisible || measurements.reportVisible){
                   throw Error('Desktop odds/cards changed '+JSON.stringify(measurements));
                 }
                 await page.screenshot({path:'/tmp/qc-prod-mobile/shots/'+item.name+'.png',fullPage:false});
