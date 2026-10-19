@@ -1,0 +1,3603 @@
+{
+  "version": "SIX_MATCH_ANALYSTS_INDEPENDENT_BACKTEST_20261020",
+  "frozenSelectionBlobSha": "0b585a5d6b400833677af9ca9587bef203dfab15",
+  "note": "Historical retrospective pregame snapshots; final scores retrieved only after selection freeze. No forward publication. Selected fixtures suspended/missing/future excluded. Estimated probabilities uncalibrated.",
+  "summary": {
+    "DIRECTION_2": {
+      "name": "胜平负2.0",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 4,
+      "misses": 10,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 14601,
+      "net": 601,
+      "hitPct": 28.57,
+      "roiPct": 4.29
+    },
+    "DIRECTION_3": {
+      "name": "胜平负3.0",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 4,
+      "misses": 10,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 14601,
+      "net": 601,
+      "hitPct": 28.57,
+      "roiPct": 4.29
+    },
+    "GOALS_DOUBLE": {
+      "name": "总进球单场双选",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 2,
+      "misses": 12,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 4050,
+      "net": -9950,
+      "hitPct": 14.29,
+      "roiPct": -71.07
+    },
+    "SCORE_2": {
+      "name": "比分2场各3选",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 1,
+      "misses": 13,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 5638.83,
+      "net": -8361.17,
+      "hitPct": 7.14,
+      "roiPct": -59.72
+    },
+    "SCORE_3": {
+      "name": "比分3场各3选",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 0,
+      "misses": 14,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 0,
+      "net": -14000,
+      "hitPct": 0,
+      "roiPct": -100
+    },
+    "HTFT_SINGLE": {
+      "name": "半全场单场单选",
+      "days": 15,
+      "selected": 15,
+      "settled": 14,
+      "hits": 5,
+      "misses": 9,
+      "pending": 1,
+      "abstained": 0,
+      "stake": 14000,
+      "payout": 15300,
+      "net": 1300,
+      "hitPct": 35.71,
+      "roiPct": 9.29
+    }
+  },
+  "days": {
+    "2026-10-05": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3888,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3888,
+        "observed": [
+          {
+            "id": "c215b187-ec74-4a55-bd16-473099903ff5",
+            "fixture": "周一002 法国 vs 比利时",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.7"
+            ],
+            "ft": "4:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf",
+            "fixture": "周一006 黑山 vs 亚美尼亚",
+            "pool": "had",
+            "forecast": [
+              "胜@1.44"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3888,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3888,
+        "observed": [
+          {
+            "id": "c215b187-ec74-4a55-bd16-473099903ff5",
+            "fixture": "周一002 法国 vs 比利时",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.7"
+            ],
+            "ft": "4:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf",
+            "fixture": "周一006 黑山 vs 亚美尼亚",
+            "pool": "had",
+            "forecast": [
+              "胜@1.44"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1850,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1850,
+        "observed": [
+          {
+            "id": "341c880b-75f4-448c-9527-f3032487d3fa",
+            "fixture": "周一004 意大利 vs 土耳其",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.6",
+              "3球@3.7"
+            ],
+            "ft": "3:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s4",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4333.29,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4333.29,
+        "observed": [
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "fixture": "周一005 北爱尔兰 vs 格鲁吉亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "0-0@8",
+              "1-1@6"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": true
+          },
+          {
+            "id": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+            "fixture": "周一001 塞浦路斯 vs 拉脱维亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "1-1@7",
+              "0-0@10.5"
+            ],
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 10109.19,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 10109.19,
+        "observed": [
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "fixture": "周一005 北爱尔兰 vs 格鲁吉亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "0-0@8",
+              "1-1@6"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": true
+          },
+          {
+            "id": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+            "fixture": "周一001 塞浦路斯 vs 拉脱维亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "1-1@7",
+              "0-0@10.5"
+            ],
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "341c880b-75f4-448c-9527-f3032487d3fa",
+            "fixture": "周一004 意大利 vs 土耳其",
+            "pool": "crs",
+            "forecast": [
+              "1-1@9.5",
+              "1-0@10.5",
+              "2-1@7"
+            ],
+            "ft": "3:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s03s01",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 2100,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2100,
+        "observed": [
+          {
+            "id": "9b41f8ad-99ce-4044-a0b7-7dd06e1bfdaf",
+            "fixture": "周一006 黑山 vs 亚美尼亚",
+            "pool": "hafu",
+            "forecast": [
+              "胜胜@2.1"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dd",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-06": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 2969.4,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 2969.4,
+        "net": 1969.4,
+        "minimumPayout": 2969.4,
+        "observed": [
+          {
+            "id": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+            "fixture": "周二002 中国 vs 塔吉克斯坦",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.02"
+            ],
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "e5c177f6-4dc0-4000-876e-b133984d66a2",
+            "fixture": "周二003 哈萨克斯坦 vs 法罗群岛",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.47"
+            ],
+            "ft": "2:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 2969.4,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 2969.4,
+        "net": 1969.4,
+        "minimumPayout": 2969.4,
+        "observed": [
+          {
+            "id": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+            "fixture": "周二002 中国 vs 塔吉克斯坦",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.02"
+            ],
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "e5c177f6-4dc0-4000-876e-b133984d66a2",
+            "fixture": "周二003 哈萨克斯坦 vs 法罗群岛",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.47"
+            ],
+            "ft": "2:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 2500,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2500,
+        "observed": [
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "fixture": "周二009 瑞士 vs 北马其顿",
+            "pool": "ttg",
+            "forecast": [
+              "2球@5",
+              "1球@8.25"
+            ],
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s3",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4189.22,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4189.22,
+        "observed": [
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "fixture": "周二009 瑞士 vs 北马其顿",
+            "pool": "crs",
+            "forecast": [
+              "2-0@5.8",
+              "1-0@9",
+              "3-0@6"
+            ],
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": true
+          },
+          {
+            "id": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+            "fixture": "周二006 苏格兰 vs 斯洛文尼亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "1-1@7.25",
+              "0-0@10"
+            ],
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 7680.24,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 7680.24,
+        "observed": [
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "fixture": "周二009 瑞士 vs 北马其顿",
+            "pool": "crs",
+            "forecast": [
+              "2-0@5.8",
+              "1-0@9",
+              "3-0@6"
+            ],
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": true
+          },
+          {
+            "id": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+            "fixture": "周二006 苏格兰 vs 斯洛文尼亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.5",
+              "1-1@7.25",
+              "0-0@10"
+            ],
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "e5c177f6-4dc0-4000-876e-b133984d66a2",
+            "fixture": "周二003 哈萨克斯坦 vs 法罗群岛",
+            "pool": "crs",
+            "forecast": [
+              "0-1@8",
+              "1-1@5.5",
+              "0-0@8"
+            ],
+            "ft": "2:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s02s02",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 8500,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 8500,
+        "observed": [
+          {
+            "id": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+            "fixture": "周二002 中国 vs 塔吉克斯坦",
+            "pool": "hafu",
+            "forecast": [
+              "负负@8.5"
+            ],
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "da",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-07": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3033.6,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 3033.6,
+        "net": 2033.6,
+        "minimumPayout": 3033.6,
+        "observed": [
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "fixture": "周三003 里莫 vs 格雷米奥",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.58"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+            "fixture": "周三001 赫尔辛基火花 vs 国际图尔库",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.92"
+            ],
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3033.6,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 3033.6,
+        "net": 2033.6,
+        "minimumPayout": 3033.6,
+        "observed": [
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "fixture": "周三003 里莫 vs 格雷米奥",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.58"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+            "fixture": "周三001 赫尔辛基火花 vs 国际图尔库",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.92"
+            ],
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 1800,
+        "net": 800,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "1d62dd29-cbda-43c4-ab21-98de8c533f97",
+            "fixture": "周三004 布拉干蒂诺RB vs 米拉索尔",
+            "pool": "ttg",
+            "forecast": [
+              "2球@3.6",
+              "3球@3.6"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 3666.96,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3666.96,
+        "observed": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "fixture": "周三002 巴西国际 vs 科林蒂安",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.5",
+              "1-0@7",
+              "0-1@9"
+            ],
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "fixture": "周三003 里莫 vs 格雷米奥",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6",
+              "0-1@10",
+              "1-0@8"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 9778.56,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 9778.56,
+        "observed": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "fixture": "周三002 巴西国际 vs 科林蒂安",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.5",
+              "1-0@7",
+              "0-1@9"
+            ],
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "fixture": "周三003 里莫 vs 格雷米奥",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6",
+              "0-1@10",
+              "1-0@8"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          },
+          {
+            "id": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+            "fixture": "周三001 赫尔辛基火花 vs 国际图尔库",
+            "pool": "crs",
+            "forecast": [
+              "1-1@8",
+              "1-0@14",
+              "0-1@8.75"
+            ],
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 3800,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 3800,
+        "net": 2800,
+        "minimumPayout": 3800,
+        "observed": [
+          {
+            "id": "d4a2da22-5491-4499-93b6-1432bf145896",
+            "fixture": "周三006 博塔弗戈 vs 瓦斯科达伽马",
+            "pool": "hafu",
+            "forecast": [
+              "负负@3.8"
+            ],
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "aa",
+            "covered": true
+          }
+        ]
+      }
+    ],
+    "2026-10-08": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 4158,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 4158,
+        "net": 3158,
+        "minimumPayout": 4158,
+        "observed": [
+          {
+            "id": "dec3b592-d9b5-4571-a7b6-d9f47c9c9919",
+            "fixture": "周四004 巴拉纳竞技 vs 米内罗竞技",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.65"
+            ],
+            "ft": "2:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "fixture": "周四002 库奥皮奥 vs AC奥卢",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.52"
+            ],
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 4158,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 4158,
+        "net": 3158,
+        "minimumPayout": 4158,
+        "observed": [
+          {
+            "id": "dec3b592-d9b5-4571-a7b6-d9f47c9c9919",
+            "fixture": "周四004 巴拉纳竞技 vs 米内罗竞技",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.65"
+            ],
+            "ft": "2:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          },
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "fixture": "周四002 库奥皮奥 vs AC奥卢",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.52"
+            ],
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1850,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1850,
+        "observed": [
+          {
+            "id": "4c267d80-e976-4c6d-a0b4-4dc806ffaa79",
+            "fixture": "周四001 赫尔辛基 vs 瓦萨",
+            "pool": "ttg",
+            "forecast": [
+              "2球@3.7",
+              "1球@6"
+            ],
+            "ft": "6-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s6",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 6375.51,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 6375.51,
+        "observed": [
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "fixture": "周四002 库奥皮奥 vs AC奥卢",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.75",
+              "0-0@13",
+              "1-1@8.25"
+            ],
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "s00s01",
+            "covered": false
+          },
+          {
+            "id": "4c267d80-e976-4c6d-a0b4-4dc806ffaa79",
+            "fixture": "周四001 赫尔辛基 vs 瓦萨",
+            "pool": "crs",
+            "forecast": [
+              "1-0@8.5",
+              "1-1@8.75",
+              "0-0@17"
+            ],
+            "ft": "6-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s06s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 16470.07,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 16470.07,
+        "observed": [
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "fixture": "周四002 库奥皮奥 vs AC奥卢",
+            "pool": "crs",
+            "forecast": [
+              "1-0@6.75",
+              "0-0@13",
+              "1-1@8.25"
+            ],
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "s00s01",
+            "covered": false
+          },
+          {
+            "id": "4c267d80-e976-4c6d-a0b4-4dc806ffaa79",
+            "fixture": "周四001 赫尔辛基 vs 瓦萨",
+            "pool": "crs",
+            "forecast": [
+              "1-0@8.5",
+              "1-1@8.75",
+              "0-0@17"
+            ],
+            "ft": "6-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s06s00",
+            "covered": false
+          },
+          {
+            "id": "59ba1002-9109-4369-9844-c108c8857a45",
+            "fixture": "周四006 帕尔梅拉斯 vs 巴伊亚",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7.75",
+              "1-1@8.5",
+              "0-0@15"
+            ],
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 2560,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2560,
+        "observed": [
+          {
+            "id": "377a1a95-4107-4ce4-ba12-56149582f83a",
+            "fixture": "周四003 桑托斯 vs 弗拉门戈",
+            "pool": "hafu",
+            "forecast": [
+              "负负@2.56"
+            ],
+            "ft": "2:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "ad",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-09": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3565,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3565,
+        "observed": [
+          {
+            "id": "28edef7e-81c3-4447-ada1-0d5908026441",
+            "fixture": "周五006 PSV埃因霍温 vs 海伦芬",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.3"
+            ],
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "ea42a3be-c871-4962-a894-9e9ab26e3862",
+            "fixture": "周五009 朗斯 vs 里昂",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.55"
+            ],
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3565,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3565,
+        "observed": [
+          {
+            "id": "28edef7e-81c3-4447-ada1-0d5908026441",
+            "fixture": "周五006 PSV埃因霍温 vs 海伦芬",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.3"
+            ],
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "ea42a3be-c871-4962-a894-9e9ab26e3862",
+            "fixture": "周五009 朗斯 vs 里昂",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.55"
+            ],
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+            "fixture": "周五003 海登海姆 vs 凯泽斯劳滕",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.15",
+              "3球@3.6"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4189.22,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4189.22,
+        "observed": [
+          {
+            "id": "2752029f-df4a-456e-b297-6f657a69e1e8",
+            "fixture": "周五012 布拉加 vs 里斯本竞技",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6.5",
+              "0-1@7.5",
+              "1-0@10.5"
+            ],
+            "ft": "1:3",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s03",
+            "covered": false
+          },
+          {
+            "id": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+            "fixture": "周五001 仁川联 vs 浦项制铁",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.8",
+              "1-0@6.4",
+              "0-1@7.5"
+            ],
+            "ft": "3-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 10822.16,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 10822.16,
+        "observed": [
+          {
+            "id": "2752029f-df4a-456e-b297-6f657a69e1e8",
+            "fixture": "周五012 布拉加 vs 里斯本竞技",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6.5",
+              "0-1@7.5",
+              "1-0@10.5"
+            ],
+            "ft": "1:3",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s03",
+            "covered": false
+          },
+          {
+            "id": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+            "fixture": "周五001 仁川联 vs 浦项制铁",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.8",
+              "1-0@6.4",
+              "0-1@7.5"
+            ],
+            "ft": "3-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": false
+          },
+          {
+            "id": "ec255c98-0e1a-4b22-ba2d-49687105f54d",
+            "fixture": "周五003 海登海姆 vs 凯泽斯劳滕",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.75",
+              "0-1@16",
+              "1-0@10"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 2200,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 2200,
+        "net": 1200,
+        "minimumPayout": 2200,
+        "observed": [
+          {
+            "id": "1a2d0230-0a25-4a35-bcb5-c7c21a2361fd",
+            "fixture": "周五004 IFK哥德堡 vs 韦斯特罗斯",
+            "pool": "hafu",
+            "forecast": [
+              "胜胜@2.2"
+            ],
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "covered": true
+          }
+        ]
+      }
+    ],
+    "2026-10-10": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3515,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3515,
+        "observed": [
+          {
+            "id": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+            "fixture": "周六022 巴塞罗那 vs 赫塔费",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.85"
+            ],
+            "ft": "3:0",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+            "fixture": "周六018 米亚尔比 vs 代格福什",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.9"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3515,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3515,
+        "observed": [
+          {
+            "id": "aae62238-52de-4f94-8a4f-3f9238aa6e39",
+            "fixture": "周六022 巴塞罗那 vs 赫塔费",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.85"
+            ],
+            "ft": "3:0",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+            "fixture": "周六018 米亚尔比 vs 代格福什",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.9"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1825,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1825,
+        "observed": [
+          {
+            "id": "b2a1a11a-5a8d-4850-a925-9da9e8b42e15",
+            "fixture": "周六001 大阪樱花 vs 横滨水手",
+            "pool": "ttg",
+            "forecast": [
+              "2球@3.65",
+              "1球@5.1"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4822.17,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4822.17,
+        "observed": [
+          {
+            "id": "649fda2b-183e-4457-9d37-937cf509f6ea",
+            "fixture": "周六024 马里迪莫 vs 波尔图",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.5",
+              "1-1@9",
+              "0-2@6.2"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "03ae7a3f-0228-474d-bf3d-5d741cee83ac",
+            "fixture": "周六030 圣保罗 vs 维多利亚",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.25",
+              "1-0@7",
+              "0-1@12"
+            ],
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 10847.94,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 10847.94,
+        "observed": [
+          {
+            "id": "649fda2b-183e-4457-9d37-937cf509f6ea",
+            "fixture": "周六024 马里迪莫 vs 波尔图",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.5",
+              "1-1@9",
+              "0-2@6.2"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "03ae7a3f-0228-474d-bf3d-5d741cee83ac",
+            "fixture": "周六030 圣保罗 vs 维多利亚",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.25",
+              "1-0@7",
+              "0-1@12"
+            ],
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "b2a1a11a-5a8d-4850-a925-9da9e8b42e15",
+            "fixture": "周六001 大阪樱花 vs 横滨水手",
+            "pool": "crs",
+            "forecast": [
+              "0-1@11",
+              "1-1@6.75",
+              "0-0@14"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "649fda2b-183e-4457-9d37-937cf509f6ea",
+            "fixture": "周六024 马里迪莫 vs 波尔图",
+            "pool": "hafu",
+            "forecast": [
+              "负负@1.8"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "da",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-11": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3382.4,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3382.4,
+        "observed": [
+          {
+            "id": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+            "fixture": "周日022 本菲卡 vs 吉马良斯",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.24"
+            ],
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "7126b5f7-58ce-4256-bc38-58446036b1d4",
+            "fixture": "周日010 腓特烈斯塔 vs 特罗姆瑟",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.51"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3382.4,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3382.4,
+        "observed": [
+          {
+            "id": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+            "fixture": "周日022 本菲卡 vs 吉马良斯",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.24"
+            ],
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          },
+          {
+            "id": "7126b5f7-58ce-4256-bc38-58446036b1d4",
+            "fixture": "周日010 腓特烈斯塔 vs 特罗姆瑟",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.51"
+            ],
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1825,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 2250,
+        "net": 1250,
+        "minimumPayout": 1825,
+        "observed": [
+          {
+            "id": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+            "fixture": "周日022 本菲卡 vs 吉马良斯",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.5",
+              "3球@3.65"
+            ],
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s2",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4166.63,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 5638.83,
+        "net": 4638.83,
+        "minimumPayout": 4166.63,
+        "observed": [
+          {
+            "id": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+            "fixture": "周日024 卡利亚里 vs 尤文图斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.25",
+              "0-0@11",
+              "1-1@7.25"
+            ],
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          },
+          {
+            "id": "dd199533-1e99-4cd3-a3c1-9649c376dbc6",
+            "fixture": "周日008 国际图尔库 vs 库奥皮奥",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7",
+              "0-0@9",
+              "1-1@6"
+            ],
+            "ft": "1-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 9028.5,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 9028.5,
+        "observed": [
+          {
+            "id": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+            "fixture": "周日024 卡利亚里 vs 尤文图斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.25",
+              "0-0@11",
+              "1-1@7.25"
+            ],
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          },
+          {
+            "id": "dd199533-1e99-4cd3-a3c1-9649c376dbc6",
+            "fixture": "周日008 国际图尔库 vs 库奥皮奥",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7",
+              "0-0@9",
+              "1-1@6"
+            ],
+            "ft": "1-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          },
+          {
+            "id": "246978e8-ed01-4bd5-9e8e-7084e0cfdb8a",
+            "fixture": "周日011 赫尔城 vs 埃弗顿",
+            "pool": "crs",
+            "forecast": [
+              "0-1@7.25",
+              "1-1@6.5",
+              "0-0@11"
+            ],
+            "ft": "2:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s02",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 2550,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2550,
+        "observed": [
+          {
+            "id": "63887055-f0d1-4ace-9272-dd529cc2ad5f",
+            "fixture": "周日003 川崎前锋 vs 名古屋鲸八",
+            "pool": "hafu",
+            "forecast": [
+              "胜胜@2.55"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "da",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-12": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 2467.4,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2467.4,
+        "observed": [
+          {
+            "id": "b07240c6-d08c-4de5-a4d2-2d7ff216220d",
+            "fixture": "周一009 科里蒂巴 vs 博塔弗戈",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.46"
+            ],
+            "ft": "1:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          },
+          {
+            "id": "4ac25754-1494-487a-ad16-7e30b570c527",
+            "fixture": "周一001 迪拜连接 vs 吉达国民",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.69"
+            ],
+            "ft": "1:3",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3177.2,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3177.2,
+        "observed": [
+          {
+            "id": "4ac25754-1494-487a-ad16-7e30b570c527",
+            "fixture": "周一001 迪拜连接 vs 吉达国民",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.69"
+            ],
+            "ft": "1:3",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": false
+          },
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "fixture": "周一010 法马利康 vs 阿尔维卡",
+            "pool": "hhad",
+            "forecast": [
+              "让负@1.88"
+            ],
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1825,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1825,
+        "observed": [
+          {
+            "id": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+            "fixture": "周一003 马尔默 vs 卡尔马",
+            "pool": "ttg",
+            "forecast": [
+              "2球@3.75",
+              "3球@3.65"
+            ],
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s1",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 5055.51,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5055.51,
+        "observed": [
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "fixture": "周一010 法马利康 vs 阿尔维卡",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6.5",
+              "1-0@6.5",
+              "0-1@10.5"
+            ],
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s04",
+            "covered": false
+          },
+          {
+            "id": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+            "fixture": "周一003 马尔默 vs 卡尔马",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7",
+              "1-0@8",
+              "2-1@7"
+            ],
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 10533.25,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 10533.25,
+        "observed": [
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "fixture": "周一010 法马利康 vs 阿尔维卡",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6.5",
+              "1-0@6.5",
+              "0-1@10.5"
+            ],
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s04",
+            "covered": false
+          },
+          {
+            "id": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+            "fixture": "周一003 马尔默 vs 卡尔马",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7",
+              "1-0@8",
+              "2-1@7"
+            ],
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          },
+          {
+            "id": "743c6df8-10c8-4d70-a211-935fd2858db1",
+            "fixture": "周一005 都灵 vs 乌迪内斯",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6.25",
+              "1-0@7.5",
+              "0-1@8.75"
+            ],
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 3800,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3800,
+        "observed": [
+          {
+            "id": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+            "fixture": "周一006 第戎 vs 梅斯",
+            "pool": "hafu",
+            "forecast": [
+              "负负@3.8"
+            ],
+            "ft": "4:2",
+            "ht": "3:1",
+            "state": "completed",
+            "key": "hh",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-13": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 4440,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 4440,
+        "net": 3440,
+        "minimumPayout": 4440,
+        "observed": [
+          {
+            "id": "f47d6ff6-72ed-45a8-8646-9f97969141eb",
+            "fixture": "周二008 维京 vs 拜仁慕尼黑",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@2"
+            ],
+            "ft": "3:3",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          },
+          {
+            "id": "590bb58d-0504-4f26-8062-6f6d5470edaa",
+            "fixture": "周二005 国际米兰 vs 布鲁日",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.22"
+            ],
+            "ft": "3:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 4440,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 4440,
+        "net": 3440,
+        "minimumPayout": 4440,
+        "observed": [
+          {
+            "id": "f47d6ff6-72ed-45a8-8646-9f97969141eb",
+            "fixture": "周二008 维京 vs 拜仁慕尼黑",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@2"
+            ],
+            "ft": "3:3",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          },
+          {
+            "id": "590bb58d-0504-4f26-8062-6f6d5470edaa",
+            "fixture": "周二005 国际米兰 vs 布鲁日",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.22"
+            ],
+            "ft": "3:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "fb356a55-9198-4aa4-b4e8-323c57fb2631",
+            "fixture": "周二003 布里兰 vs 北京国安",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4",
+              "3球@3.6"
+            ],
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s1",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 11111,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 11111,
+        "observed": [
+          {
+            "id": "fff5c1c8-f2af-4a6a-b4e6-6fc96738e9c9",
+            "fixture": "周二006 阿森纳 vs 里尔",
+            "pool": "crs",
+            "forecast": [
+              "1-1@12",
+              "1-0@8",
+              "2-1@8.5"
+            ],
+            "ft": "3:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": false
+          },
+          {
+            "id": "590bb58d-0504-4f26-8062-6f6d5470edaa",
+            "fixture": "周二005 国际米兰 vs 布鲁日",
+            "pool": "crs",
+            "forecast": [
+              "1-1@12.5",
+              "1-2@27",
+              "0-1@32"
+            ],
+            "ft": "3:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s03s04",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 27780,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 27780,
+        "observed": [
+          {
+            "id": "fff5c1c8-f2af-4a6a-b4e6-6fc96738e9c9",
+            "fixture": "周二006 阿森纳 vs 里尔",
+            "pool": "crs",
+            "forecast": [
+              "1-1@12",
+              "1-0@8",
+              "2-1@8.5"
+            ],
+            "ft": "3:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": false
+          },
+          {
+            "id": "590bb58d-0504-4f26-8062-6f6d5470edaa",
+            "fixture": "周二005 国际米兰 vs 布鲁日",
+            "pool": "crs",
+            "forecast": [
+              "1-1@12.5",
+              "1-2@27",
+              "0-1@32"
+            ],
+            "ft": "3:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s03s04",
+            "covered": false
+          },
+          {
+            "id": "fb356a55-9198-4aa4-b4e8-323c57fb2631",
+            "fixture": "周二003 布里兰 vs 北京国安",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.5",
+              "1-2@10.5",
+              "0-1@14"
+            ],
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s01",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 4000,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 4000,
+        "net": 3000,
+        "minimumPayout": 4000,
+        "observed": [
+          {
+            "id": "f1cbb7e8-41f3-45fb-a1ff-27c1535dbfa0",
+            "fixture": "周二004 朗斯 vs 里斯本竞技",
+            "pool": "hafu",
+            "forecast": [
+              "负负@4"
+            ],
+            "ft": "0:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "aa",
+            "covered": true
+          }
+        ]
+      }
+    ],
+    "2026-10-14": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 4971.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4971.3,
+        "observed": [
+          {
+            "id": "c65e3aa7-556b-47c3-9d94-07295f084597",
+            "fixture": "周三003 柏太阳神 vs 曼谷港务",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.19"
+            ],
+            "ft": "5:1",
+            "ht": "5:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "fixture": "周三012 阿斯顿维拉 vs 费内巴切",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.27"
+            ],
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 4971.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4971.3,
+        "observed": [
+          {
+            "id": "c65e3aa7-556b-47c3-9d94-07295f084597",
+            "fixture": "周三003 柏太阳神 vs 曼谷港务",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.19"
+            ],
+            "ft": "5:1",
+            "ht": "5:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "fixture": "周三012 阿斯顿维拉 vs 费内巴切",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.27"
+            ],
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 2050,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2050,
+        "observed": [
+          {
+            "id": "fe4a4b25-3c22-4671-9881-1e3fe8187a7e",
+            "fixture": "周三001 墨尔本胜利 vs 首尔FC",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.1",
+              "1球@7"
+            ],
+            "ft": "3:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s3",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 3791.63,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3791.63,
+        "observed": [
+          {
+            "id": "3b2e815e-c2e1-4cb1-891b-43ac028cc6bf",
+            "fixture": "周三004 横滨水手 vs 清水鼓动",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7.5",
+              "1-1@6.5",
+              "0-0@11"
+            ],
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+            "fixture": "周三013 弗鲁米嫩塞 vs 帕尔梅拉斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.8",
+              "1-1@5.25",
+              "0-0@6.5"
+            ],
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 10111.92,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 10111.92,
+        "observed": [
+          {
+            "id": "3b2e815e-c2e1-4cb1-891b-43ac028cc6bf",
+            "fixture": "周三004 横滨水手 vs 清水鼓动",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7.5",
+              "1-1@6.5",
+              "0-0@11"
+            ],
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+            "fixture": "周三013 弗鲁米嫩塞 vs 帕尔梅拉斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.8",
+              "1-1@5.25",
+              "0-0@6.5"
+            ],
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "fe4a4b25-3c22-4671-9881-1e3fe8187a7e",
+            "fixture": "周三001 墨尔本胜利 vs 首尔FC",
+            "pool": "crs",
+            "forecast": [
+              "1-1@8",
+              "0-1@17",
+              "1-0@9.5"
+            ],
+            "ft": "3:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s03s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 8350,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 8350,
+        "observed": [
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "fixture": "周三012 阿斯顿维拉 vs 费内巴切",
+            "pool": "hafu",
+            "forecast": [
+              "负负@8.35"
+            ],
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "hh",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-15": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3708.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3708.3,
+        "observed": [
+          {
+            "id": "748395a9-d17b-4a4f-899f-12a60782f178",
+            "fixture": "周四011 伯恩茅斯 vs 格拉茨风暴",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.63"
+            ],
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "c4f5cb11-5bfd-4916-9250-096a35d53caf",
+            "fixture": "周四006 克拉约瓦大学 vs 赫塔费",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.41"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3708.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3708.3,
+        "observed": [
+          {
+            "id": "748395a9-d17b-4a4f-899f-12a60782f178",
+            "fixture": "周四011 伯恩茅斯 vs 格拉茨风暴",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.63"
+            ],
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "c4f5cb11-5bfd-4916-9250-096a35d53caf",
+            "fixture": "周四006 克拉约瓦大学 vs 赫塔费",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.41"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 2050,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2050,
+        "observed": [
+          {
+            "id": "336c578c-effe-4dbd-9b77-7ef87021ff04",
+            "fixture": "周四002 托林斯 vs 桑德兰",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.1",
+              "1球@6.5"
+            ],
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s3",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 3422.19,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3422.19,
+        "observed": [
+          {
+            "id": "7137abd3-5d15-4e3d-9238-4f8a0972424f",
+            "fixture": "周四008 维戈塞尔塔 vs 尤文图斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@7",
+              "1-1@5.5",
+              "0-0@10"
+            ],
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "c4f5cb11-5bfd-4916-9250-096a35d53caf",
+            "fixture": "周四006 克拉约瓦大学 vs 赫塔费",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7.5",
+              "2-0@14",
+              "1-1@5.6"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 5875.28,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5875.28,
+        "observed": [
+          {
+            "id": "7137abd3-5d15-4e3d-9238-4f8a0972424f",
+            "fixture": "周四008 维戈塞尔塔 vs 尤文图斯",
+            "pool": "crs",
+            "forecast": [
+              "0-1@7",
+              "1-1@5.5",
+              "0-0@10"
+            ],
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": false
+          },
+          {
+            "id": "c4f5cb11-5bfd-4916-9250-096a35d53caf",
+            "fixture": "周四006 克拉约瓦大学 vs 赫塔费",
+            "pool": "crs",
+            "forecast": [
+              "1-0@7.5",
+              "2-0@14",
+              "1-1@5.6"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          },
+          {
+            "id": "5c19ed55-b7f7-4942-aa74-f53d98904fff",
+            "fixture": "周四014 拉普拉塔大学生 vs 弗拉门戈",
+            "pool": "crs",
+            "forecast": [
+              "0-1@5.15",
+              "1-1@5.5",
+              "0-0@6.25"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 3700,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3700,
+        "observed": [
+          {
+            "id": "887613ed-53ec-462e-a24a-c83ba02b9f88",
+            "fixture": "周四004 圣吉尔联合 vs 皇家社会",
+            "pool": "hafu",
+            "forecast": [
+              "胜胜@3.7"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dd",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-16": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 5920.2,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5920.2,
+        "observed": [
+          {
+            "id": "a9d9927b-0e9e-4105-864c-ef31537f95d4",
+            "fixture": "周五004 海伦芬 vs SBV精英",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.53"
+            ],
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "82e8e42b-5bd2-49a5-9f81-fadeb3955cf9",
+            "fixture": "周五005 登博思 vs 奥斯",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.34"
+            ],
+            "ft": "2:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 5920.2,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5920.2,
+        "observed": [
+          {
+            "id": "a9d9927b-0e9e-4105-864c-ef31537f95d4",
+            "fixture": "周五004 海伦芬 vs SBV精英",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.53"
+            ],
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "82e8e42b-5bd2-49a5-9f81-fadeb3955cf9",
+            "fixture": "周五005 登博思 vs 奥斯",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.34"
+            ],
+            "ft": "2:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1925,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1925,
+        "observed": [
+          {
+            "id": "f8e50ced-3dc8-47f1-bf2e-0da7923441a0",
+            "fixture": "周五002 科特布斯 vs 纽伦堡",
+            "pool": "ttg",
+            "forecast": [
+              "3球@3.85",
+              "4球@4.2"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 3514.17,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 3514.17,
+        "observed": [
+          {
+            "id": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+            "fixture": "周五011 米拉索尔 vs 巴西国际",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.5",
+              "0-1@10",
+              "1-0@7.75"
+            ],
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "covered": false
+          },
+          {
+            "id": "e1a33117-4b09-40d7-9330-ab7f5ae3df5f",
+            "fixture": "周五009 伯恩利 vs 伍尔弗汉普顿",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.75",
+              "1-2@7",
+              "0-1@8.5"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 6794.06,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 6794.06,
+        "observed": [
+          {
+            "id": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+            "fixture": "周五011 米拉索尔 vs 巴西国际",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.5",
+              "0-1@10",
+              "1-0@7.75"
+            ],
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "covered": false
+          },
+          {
+            "id": "e1a33117-4b09-40d7-9330-ab7f5ae3df5f",
+            "fixture": "周五009 伯恩利 vs 伍尔弗汉普顿",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.75",
+              "1-2@7",
+              "0-1@8.5"
+            ],
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "covered": true
+          },
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "fixture": "周五010 拉科鲁尼亚 vs 莱万特",
+            "pool": "crs",
+            "forecast": [
+              "1-1@5.8",
+              "2-1@7",
+              "1-0@7"
+            ],
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s01",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 1800,
+        "net": 800,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb",
+            "fixture": "周五003 布鲁马波卡纳 vs 佐加顿斯",
+            "pool": "hafu",
+            "forecast": [
+              "负负@1.8"
+            ],
+            "ft": "0:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "aa",
+            "covered": true
+          }
+        ]
+      }
+    ],
+    "2026-10-17": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 5485.8,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5485.8,
+        "observed": [
+          {
+            "id": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+            "fixture": "周六025 拜仁慕尼黑 vs 莱比锡红牛",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.46"
+            ],
+            "ft": "6:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "5428bab0-af99-4998-ac52-94343b2aca9f",
+            "fixture": "周六019 曼彻斯特城 vs 伊普斯维奇",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.23"
+            ],
+            "ft": "3:2",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 5485.8,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5485.8,
+        "observed": [
+          {
+            "id": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+            "fixture": "周六025 拜仁慕尼黑 vs 莱比锡红牛",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.46"
+            ],
+            "ft": "6:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "5428bab0-af99-4998-ac52-94343b2aca9f",
+            "fixture": "周六019 曼彻斯特城 vs 伊普斯维奇",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.23"
+            ],
+            "ft": "3:2",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "a",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1800,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1800,
+        "observed": [
+          {
+            "id": "c832d804-4b97-4333-bf27-61b11de6b195",
+            "fixture": "周六012 赫尔辛基 vs 赫尔辛基火花",
+            "pool": "ttg",
+            "forecast": [
+              "2球@4.9",
+              "3球@3.6"
+            ],
+            "ft": "4-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s4",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 4044.4,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 4044.4,
+        "observed": [
+          {
+            "id": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+            "fixture": "周六020 富勒姆 vs 赫尔城",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7",
+              "1-0@6.5",
+              "0-1@15"
+            ],
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          },
+          {
+            "id": "05ed0131-1e0b-4094-b13b-b0fd388d6b72",
+            "fixture": "周六029 巴伦西亚 vs 毕尔巴鄂竞技",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.5",
+              "1-1@5.6",
+              "0-2@9"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 8763.66,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 8763.66,
+        "observed": [
+          {
+            "id": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+            "fixture": "周六020 富勒姆 vs 赫尔城",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7",
+              "1-0@6.5",
+              "0-1@15"
+            ],
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "covered": true
+          },
+          {
+            "id": "05ed0131-1e0b-4094-b13b-b0fd388d6b72",
+            "fixture": "周六029 巴伦西亚 vs 毕尔巴鄂竞技",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6.5",
+              "1-1@5.6",
+              "0-2@9"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "covered": false
+          },
+          {
+            "id": "7dc25ecb-c6ef-4cbe-9919-c9e100636ba4",
+            "fixture": "周六003 蔚山现代 vs 富川FC",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7",
+              "1-0@7.5",
+              "2-1@6.5"
+            ],
+            "ft": "2-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": true
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 2000,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 2000,
+        "observed": [
+          {
+            "id": "906caf0c-5bc1-4105-803f-f1db6785ad19",
+            "fixture": "周六017 柏林联合 vs 多特蒙德",
+            "pool": "hafu",
+            "forecast": [
+              "负负@2"
+            ],
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dd",
+            "covered": false
+          }
+        ]
+      }
+    ],
+    "2026-10-18": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 5198.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5198.3,
+        "observed": [
+          {
+            "id": "e31872d5-3964-468d-9e9b-24eb38848b6c",
+            "fixture": "周日024 皇家马德里 vs 塞维利亚",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.27"
+            ],
+            "ft": "4:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "22dfcd6a-829b-408c-ba98-fcc652e777df",
+            "fixture": "周日020 AC米兰 vs 亚特兰大",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.29"
+            ],
+            "ft": "3:2",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 5198.3,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5198.3,
+        "observed": [
+          {
+            "id": "e31872d5-3964-468d-9e9b-24eb38848b6c",
+            "fixture": "周日024 皇家马德里 vs 塞维利亚",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.27"
+            ],
+            "ft": "4:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "covered": false
+          },
+          {
+            "id": "22dfcd6a-829b-408c-ba98-fcc652e777df",
+            "fixture": "周日020 AC米兰 vs 亚特兰大",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.29"
+            ],
+            "ft": "3:2",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "d",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1975,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 1975,
+        "observed": [
+          {
+            "id": "7f4393d3-6600-42f2-997b-5fbe5e91b1f5",
+            "fixture": "周日023 里昂 vs 尼斯",
+            "pool": "ttg",
+            "forecast": [
+              "2球@3.95",
+              "1球@6.25"
+            ],
+            "ft": "2:1",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "s3",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 5236.06,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 5236.06,
+        "observed": [
+          {
+            "id": "7f4393d3-6600-42f2-997b-5fbe5e91b1f5",
+            "fixture": "周日023 里昂 vs 尼斯",
+            "pool": "crs",
+            "forecast": [
+              "1-0@9",
+              "1-1@7.25",
+              "0-0@16"
+            ],
+            "ft": "2:1",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "41fedf23-9d54-4260-afa4-64f42ad07dba",
+            "fixture": "周日022 尤文图斯 vs 拉齐奥",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.5",
+              "1-0@6.5",
+              "0-1@14.5"
+            ],
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s00s03",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 12654.95,
+        "status": "MISS",
+        "stake": 1000,
+        "payout": 0,
+        "net": -1000,
+        "minimumPayout": 12654.95,
+        "observed": [
+          {
+            "id": "7f4393d3-6600-42f2-997b-5fbe5e91b1f5",
+            "fixture": "周日023 里昂 vs 尼斯",
+            "pool": "crs",
+            "forecast": [
+              "1-0@9",
+              "1-1@7.25",
+              "0-0@16"
+            ],
+            "ft": "2:1",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "s02s01",
+            "covered": false
+          },
+          {
+            "id": "41fedf23-9d54-4260-afa4-64f42ad07dba",
+            "fixture": "周日022 尤文图斯 vs 拉齐奥",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.5",
+              "1-0@6.5",
+              "0-1@14.5"
+            ],
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s00s03",
+            "covered": false
+          },
+          {
+            "id": "22dfcd6a-829b-408c-ba98-fcc652e777df",
+            "fixture": "周日020 AC米兰 vs 亚特兰大",
+            "pool": "crs",
+            "forecast": [
+              "1-1@7.25",
+              "1-0@8",
+              "0-1@15"
+            ],
+            "ft": "3:2",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "s03s02",
+            "covered": false
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 3500,
+        "status": "HIT",
+        "stake": 1000,
+        "payout": 3500,
+        "net": 2500,
+        "minimumPayout": 3500,
+        "observed": [
+          {
+            "id": "dc2ea5e4-9b7b-49cc-a022-db29d168a4b6",
+            "fixture": "周日021 马拉加 vs 皇家社会",
+            "pool": "hafu",
+            "forecast": [
+              "负负@3.5"
+            ],
+            "ft": "2:5",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "aa",
+            "covered": true
+          }
+        ]
+      }
+    ],
+    "2026-10-19": [
+      {
+        "id": "DIRECTION_2",
+        "name": "胜平负2.0",
+        "selected": true,
+        "minPayout": 3450,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "f5ffb9e1-6a69-4615-bea3-cb4eaf2fe276",
+            "fixture": "周一002 代格福什 vs 卡尔马",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.5"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          },
+          {
+            "id": "b7f4b47f-bbf1-409c-9a07-c3fe71db3462",
+            "fixture": "周一008 科林蒂安 vs 维多利亚",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.3"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      },
+      {
+        "id": "DIRECTION_3",
+        "name": "胜平负3.0",
+        "selected": true,
+        "minPayout": 3450,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "f5ffb9e1-6a69-4615-bea3-cb4eaf2fe276",
+            "fixture": "周一002 代格福什 vs 卡尔马",
+            "pool": "hhad",
+            "forecast": [
+              "让胜@1.5"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          },
+          {
+            "id": "b7f4b47f-bbf1-409c-9a07-c3fe71db3462",
+            "fixture": "周一008 科林蒂安 vs 维多利亚",
+            "pool": "hhad",
+            "forecast": [
+              "让负@2.3"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      },
+      {
+        "id": "GOALS_DOUBLE",
+        "name": "总进球单场双选",
+        "selected": true,
+        "minPayout": 1900,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+            "fixture": "周一003 帕尔马 vs 都灵",
+            "pool": "ttg",
+            "forecast": [
+              "1球@3.9",
+              "3球@3.8"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      },
+      {
+        "id": "SCORE_2",
+        "name": "比分2场各3选",
+        "selected": true,
+        "minPayout": 3966.63,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "f1dfc598-04ea-47a0-9d98-dee35545c5d3",
+            "fixture": "周一007 布拉加 vs 吉维森特",
+            "pool": "crs",
+            "forecast": [
+              "0-1@13",
+              "0-0@11",
+              "1-1@6.8"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          },
+          {
+            "id": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+            "fixture": "周一003 帕尔马 vs 都灵",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6",
+              "1-1@5.25",
+              "0-0@7.5"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      },
+      {
+        "id": "SCORE_3",
+        "name": "比分3场各3选",
+        "selected": true,
+        "minPayout": 7931.83,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "f1dfc598-04ea-47a0-9d98-dee35545c5d3",
+            "fixture": "周一007 布拉加 vs 吉维森特",
+            "pool": "crs",
+            "forecast": [
+              "0-1@13",
+              "0-0@11",
+              "1-1@6.8"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          },
+          {
+            "id": "f4ffbf0a-44f8-4058-960f-0f8b340cf1ec",
+            "fixture": "周一003 帕尔马 vs 都灵",
+            "pool": "crs",
+            "forecast": [
+              "0-1@6",
+              "1-1@5.25",
+              "0-0@7.5"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          },
+          {
+            "id": "f5ffb9e1-6a69-4615-bea3-cb4eaf2fe276",
+            "fixture": "周一002 代格福什 vs 卡尔马",
+            "pool": "crs",
+            "forecast": [
+              "1-1@6",
+              "1-0@9",
+              "2-1@8.5"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      },
+      {
+        "id": "HTFT_SINGLE",
+        "name": "半全场单场单选",
+        "selected": true,
+        "minPayout": 3600,
+        "status": "PENDING",
+        "stake": 0,
+        "payout": null,
+        "net": null,
+        "observed": [
+          {
+            "id": "22d70d45-36e8-46d8-b683-303d9d6a39f5",
+            "fixture": "周一004 罗德兹 vs 蒙彼利埃",
+            "pool": "hafu",
+            "forecast": [
+              "负负@3.6"
+            ],
+            "ft": null,
+            "ht": null,
+            "state": "watching",
+            "key": null,
+            "covered": null
+          }
+        ]
+      }
+    ]
+  }
+}
