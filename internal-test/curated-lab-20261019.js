@@ -66,15 +66,22 @@ function makeLeg(row,type){
 function plansFor(day,type){
  var pack=db.selectedPlans&&db.selectedPlans[day];
  if(pack){
-   var record=(pack.entries||[]).find(function(e){return e.type===type});
-   if(!record||record.legs.length!==2)return [];
-   var legs=record.legs.map(function(leg){
-     var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
-     if(opts.some(function(o){return !o}))return null;
-     return {row:leg.row,market:leg.market,options:opts};
-   });
-   if(legs.some(function(l){return !l}))return [];
-   return [{day:day,type:type,index:1,a:legs[0],b:legs[1],prematch:true}];
+   var versions=[
+     {entries:pack.entries||[],label:pack.originalLabel||'原方案',note:pack.originalNote||'',id:'original',shadow:false},
+     pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:pack.aiSelector.label||'AI精选师 V1',note:pack.aiSelector.note||'',id:'shadow-v1',shadow:true}
+   ].filter(Boolean);
+   return versions.map(function(version){
+     var record=version.entries.find(function(e){return e.type===type});
+     if(!record||!record.legs||record.legs.length!==2)return null;
+     var legs=record.legs.map(function(leg){
+       var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
+       if(opts.some(function(o){return !o}))return null;
+       return {row:leg.row,market:leg.market,options:opts};
+     });
+     if(legs.some(function(l){return !l}))return null;
+     return {day:day,type:type,index:version.shadow?2:1,a:legs[0],b:legs[1],prematch:true,
+       variant:version.id,versionLabel:version.label,versionNote:record.note||version.note||'',versionGate:record.gate||'',shadow:version.shadow};
+   }).filter(Boolean);
  }
  var items=all.filter(function(r){return r.d===day}).map(function(row){return makeLeg(row,type)}).filter(Boolean);
  items.sort(function(a,b){return String(a.row.num).localeCompare(String(b.row.num),'zh-Hans-CN',{numeric:true})});
@@ -124,7 +131,9 @@ function planCard(plan){
  if(plan.prematch){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
-   return '<article class="plan"><div class="plan-head"><span class="plan-id">方案 '+String(plan.index).padStart(2,'0')+'</span><span class="flag pending">待赛 · 赛前赔率</span></div><div class="legs">'+miniLeg(plan.a)+miniLeg(plan.b)+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   var title=esc(plan.versionLabel||'赛前精选'),note=plan.versionNote?'<p class="version-note">'+esc(plan.versionNote)+'</p>':'';
+   var risk=plan.shadow?(plan.versionGate==='高风险观察'?' · 高风险':plan.versionGate==='赔率时效复核'?' · 赔率待核':' · 影子研究'):'';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span><span class="flag pending">待赛'+esc(risk)+'</span></div><div class="legs">'+miniLeg(plan.a)+miniLeg(plan.b)+'</div>'+note+'<div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
  return '<article class="plan"><div class="plan-head"><span class="plan-id">方案 '+String(plan.index).padStart(2,'0')+'</span><span class="flag '+(calc.covered?'hit':'miss')+'">'+rowStatus(calc)+'</span></div><div class="legs">'+miniLeg(plan.a)+miniLeg(plan.b)+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
 }
@@ -148,7 +157,7 @@ function renderHistory(){
 }
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
- $('infoBand').textContent=(db.selectedPlans&&db.selectedPlans[state.day])?'10月19日精选方案 · 官方赛前赔率已匹配，尚未结算。':'历史模拟 · 组合为事后回溯生成，并非当时赛前发布。';
+ $('infoBand').textContent=(db.selectedPlans&&db.selectedPlans[state.day])?'10月19日双版本对照 · 原方案与AI精选师V1影子测试并排展示，赔率来自赛前快照，均未结算。':'历史模拟 · 组合为事后回溯生成，并非当时赛前发布。';
 }
 function renderDate(){
  $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
@@ -191,12 +200,12 @@ function renderDialog(){
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch;
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
  $('dialogTitle').textContent=displayType+'双场 · 方案'+String(plan.index).padStart(2,'0');
- $('dialogSub').textContent=readableDay(plan.day)+(pending?' · 赛前精选 · 官方赔率':' · 历史模拟');
+ $('dialogSub').textContent=readableDay(plan.day)+(pending?' · '+(plan.versionLabel||'赛前精选')+' · 官方赛前赔率':' · 历史模拟');
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=money(sim.grossMin)+'–'+money(sim.grossMax);
  var summary='<div class="summary"><div class="summary-item"><small>模拟金额</small><strong>'+money(state.budget)+'点</strong></div><div class="summary-item"><small>组合选项</small><strong>'+sim.list.length+'种</strong></div><div class="summary-item"><small>'+(pending?'情景返还范围':'模拟返还')+'</small><strong>'+(pending?range:money(sim.returns)+'点')+'</strong></div></div>';
  var rows=sim.list.map(function(c,i){return '<tr class="'+(!pending&&c.hit?'winner':'')+'"><td>'+String(i+1).padStart(2,'0')+'</td><td>'+esc(c.a.name)+' × '+esc(c.b.name)+'</td><td>'+money(c.odds)+'</td><td>'+money(c.stake)+'</td><td>'+money(c.projected)+'</td><td>'+(pending?'待赛':c.hit?'✓':'—')+'</td></tr>'}).join('');
- $('dialogBody').innerHTML='<div class="dialog-tip">'+esc(strategyDescription(state.mode))+'</div><div class="dialog-legs">'+dialogLeg(plan.a)+dialogLeg(plan.b)+'</div>'+summary+'<div class="alloc-title">组合分配</div><div class="alloc"><table><thead><tr><th>#</th><th>组合</th><th>赔率</th><th>份额</th><th>理论返还</th><th>'+(pending?'状态':'命中')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="disclaimer">'+(pending?'仅为赛前赔率及分配情景模拟。理论返还是假定单一组合满足条件时的计算结果，尚未结算，不代表实际收益，也不构成投注建议。':'历史回溯计算，仅供数据研究。并非赛前实际发布记录，也不代表真实收益。')+'</div>';
+ $('dialogBody').innerHTML='<div class="dialog-tip">'+esc(strategyDescription(state.mode))+(pending&&plan.versionNote?'｜'+esc(plan.versionNote):'')+'</div><div class="dialog-legs">'+dialogLeg(plan.a)+dialogLeg(plan.b)+'</div>'+summary+'<div class="alloc-title">组合分配</div><div class="alloc"><table><thead><tr><th>#</th><th>组合</th><th>赔率</th><th>份额</th><th>理论返还</th><th>'+(pending?'状态':'命中')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="disclaimer">'+(pending?'仅为赛前赔率及分配情景模拟。理论返还是假定单一组合满足条件时的计算结果，尚未结算，不代表实际收益，也不构成投注建议。':'历史回溯计算，仅供数据研究。并非赛前实际发布记录，也不代表真实收益。')+'</div>';
 }
 function openDetail(day,index){
  var plan=plansFor(day,state.type).find(function(p){return p.index===index});if(!plan)return;
@@ -210,7 +219,7 @@ function copyText(){
  if(!state.open)return;
  var q=state.open,p=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!p)return;
  var sim=allocation(p,state.budget,state.mode),pending=!!p.prematch;
- var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' 方案'+p.index,
+ var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+(p.versionLabel||'方案'+p.index),
  '1. '+p.a.row.num+' '+p.a.row.h+' vs '+p.a.row.a+'：'+p.a.options.map(function(o){return o.name+' @'+money(o.odds)}).join(' / '),
  '2. '+p.b.row.num+' '+p.b.row.h+' vs '+p.b.row.a+'：'+p.b.options.map(function(o){return o.name+' @'+money(o.odds)}).join(' / '),
  modes[state.mode]+'｜模拟预算'+money(state.budget)+'点｜组合'+sim.list.length+'种',

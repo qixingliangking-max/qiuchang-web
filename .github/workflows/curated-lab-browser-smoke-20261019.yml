@@ -44,12 +44,16 @@ jobs:
             if(await page.locator('#manualPlans').count())throw Error(name+': separate manual panel must be removed');
             const initialDay=await page.locator('#dateLabel').innerText();
             if(!initialDay.includes('10月19日'))throw Error(name+': selected day should open first '+initialDay);
-            if(await page.locator('#plans .plan').count()!==1)throw Error(name+': expected one selected pair');
-            const intro=await page.locator('#plans .plan').innerText();
+            if(await page.locator('#plans .plan').count()!==2)throw Error(name+': expected two independently selected pairs');
+            const intro=await page.locator('#plans .plan').first().innerText();
             for(const word of ['周一002','让胜（+1）','1.50','周一007','普通主胜','1.36','2.04','待赛']){
               if(!intro.includes(word))throw Error(name+': missing official selection '+word);
             }
             if(/人工录入|未命中|模拟返还/.test(intro))throw Error(name+': inappropriate text on pending pair');
+            const labels=await page.locator('#plans .plan .plan-id').allInnerTexts();
+            if(!labels[0].includes('原方案')||!labels[1].includes('AI精选师 V1'))throw Error(name+': dual version titles missing '+JSON.stringify(labels));
+            const aiDirection=await page.locator('#plans .plan').nth(1).innerText();
+            if(!aiDirection.includes('周一002')||!aiDirection.includes('周一007')||!aiDirection.includes('2.04'))throw Error(name+': shadow direction odds mismatch');
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
@@ -58,7 +62,7 @@ jobs:
             const dayBefore=await page.locator('#dateLabel').innerText();
             if(!dayBefore.includes('10月19日'))throw Error(name+': default date incorrect: '+dayBefore);
             const firstPlan=await page.locator('#plans .plan').count();
-            if(firstPlan!==1)throw Error(name+': selected day should have one plan');
+            if(firstPlan!==2)throw Error(name+': selected day should have two versioned plans');
             await page.locator('#budget').fill('1000');
             if(!(await page.locator('#budget').inputValue()).includes('1000'))throw Error(name+': budget input incorrect');
             await page.locator('#plans .plan .inspect').first().click();
@@ -77,22 +81,26 @@ jobs:
             if(modalRows>1&&firstShare===secondShare)throw Error(name+': strategy does not change stake');
             await page.screenshot({path:'/tmp/curated-test/'+name+'-modal.png',fullPage:true});
             await page.locator('#closeDialog').click();
-            for(const [type,count,picks] of [
-              ['htft',4,['1.92','4.00','2.05','3.80']],
-              ['goals',9,['3.80','2.95','3.90','4.35','4.00','3.20']],
-              ['score',9,['14.00','6.00','9.00','8.00','9.00','5.25']],
-              ['direction',1,['1.50','1.36']]
+            for(const [type,originalCount,shadowCount,originalOdds,shadowOdds,shadowTeams] of [
+              ['htft',4,4,['1.92','4.00','2.05','3.80'],['2.05','3.80','2.20','3.80'],['周一007','周一008']],
+              ['goals',9,4,['3.80','2.95','3.90','4.35','4.00','3.20'],['2.95','3.90','3.30','3.25'],['周一003','周一007']],
+              ['score',9,9,['14.00','6.00','9.00','8.00','9.00','5.25'],['8.00','9.00','5.25','9.50','4.80','11.50'],['周一003','周一006']],
+              ['direction',1,1,['1.50','1.36'],['1.50','1.36'],['周一002','周一007']]
             ]){
               await page.locator('#tabs button[data-type="'+type+'"]').click();
               if((await page.locator('#tabs button[data-type="'+type+'"]').getAttribute('aria-selected'))!=='true')throw Error(name+': tab not active');
-              if(await page.locator('#plans .plan').count()!==1)throw Error(name+': selected plan count must be one for '+type);
-              const legText=await page.locator('#plans .plan').innerText();
-              for(const pick of picks)if(!legText.includes(pick))throw Error(name+': missing selected price '+pick+' for '+type);
-              await page.locator('#plans .plan .inspect').click();
-              const n=await page.locator('.alloc tbody tr').count();
-              if(n!==count)throw Error(name+': expected '+count+' combination branches for '+type+', found '+n);
-              if((await page.locator('#dialogBody').innerText()).includes('未命中'))throw Error(name+': pre-match should not show failure');
-              await page.locator('#closeDialog').click();
+              if(await page.locator('#plans .plan').count()!==2)throw Error(name+': selected plan count must be two for '+type);
+              for(const [index,count,odds] of [[0,originalCount,originalOdds],[1,shadowCount,shadowOdds]]){
+                const legText=await page.locator('#plans .plan').nth(index).innerText();
+                for(const odd of odds)if(!legText.includes(odd))throw Error(name+': missing '+(index?'AI':'original')+' odds '+odd+' in '+type);
+                if(index===1)for(const team of shadowTeams)if(!legText.includes(team))throw Error(name+': wrong shadow fixture in '+type+' '+team);
+                await page.locator('#plans .plan').nth(index).locator('.inspect').click();
+                if((await page.locator('#dialogSub').innerText()).includes(index?'原方案':'AI精选师'))throw Error(name+': variant dialog not separated');
+                const n=await page.locator('.alloc tbody tr').count();
+                if(n!==count)throw Error(name+': expected '+count+' combos in '+type+' variant '+index+', got '+n);
+                if((await page.locator('#dialogBody').innerText()).includes('未命中'))throw Error(name+': unplayed version shows settlement');
+                await page.locator('#closeDialog').click();
+              }
             }
             await page.locator('#dateLabel').click();
             await page.locator('#calDays button[data-date="2026-10-17"]').click();
