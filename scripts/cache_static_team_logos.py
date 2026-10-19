@@ -255,6 +255,90 @@ def public_prekick_markets(base_rows):
             for mid, items in by_id.items() if items}
 
 
+def prekick_is_open(row, now):
+    """The ONLY moment official odds may change on an existing static card."""
+    if not isinstance(row, dict):
+        return False
+    try:
+        kickoff = datetime.fromisoformat(str(row.get("kickoff_at") or "").replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return False
+    if kickoff.tzinfo is None or now >= kickoff:
+        return False
+    raw = row.get("raw") if isinstance(row.get("raw"), dict) else {}
+    state = str(row.get("match_status") or "") + " " + str(raw.get("matchStatusName") or "")
+    if re.search(r"已结束|完赛|已完成|已开始|比赛中|进行中|中场|上半场|下半场|加时|点球|中断|延期|取消|finished|final|live|started|postponed|cancelled", state, re.I):
+        return False
+    return True
+
+
+def merged_prekick_markets(old_items, new_items):
+    """Never delete market pools or roll odds backwards on partial collection."""
+    current = {str(item.get("pool_code")): item for item in (old_items or [])
+               if isinstance(item, dict) and item.get("pool_code") in
+               ("had", "hhad", "crs", "ttg", "hafu")}
+    for item in new_items or []:
+        if not isinstance(item, dict):
+            continue
+        pool = str(item.get("pool_code") or "")
+        if pool not in ("had", "hhad", "crs", "ttg", "hafu"):
+            continue
+        previous = current.get(pool)
+        if previous:
+            try:
+                prev_time = datetime.fromisoformat(str(previous["captured_at"]).replace("Z", "+00:00"))
+                new_time = datetime.fromisoformat(str(item["captured_at"]).replace("Z", "+00:00"))
+                if new_time < prev_time:
+                    continue
+            except (TypeError, ValueError, KeyError):
+                # Never degrade a previously recorded market when metadata is invalid.
+                continue
+        current[pool] = item
+    return [current[key] for key in sorted(current)]
+
+
+def update_existing_static_row(old_row, incoming_markets, now):
+    """Preserve identities, FT/HT, predictions and ALL content after kickoff."""
+    if not prekick_is_open(old_row, now):
+        return old_row
+    merged = merged_prekick_markets(old_row.get("jc_market_snapshots"), incoming_markets)
+    if not merged:
+        return old_row
+    updated = dict(old_row)
+    updated["jc_market_snapshots"] = merged
+    updated["_jcMarketsComplete"] = True
+    return updated
+
+
+def static_odds_self_test():
+    from copy import deepcopy
+    now = datetime(2026, 10, 19, 2, tzinfo=timezone.utc)
+    old = {"id": "fixed-001", "kickoff_at": "2026-10-19T17:00:00+00:00",
+           "home_team_name": "fixed", "match_status": "3",
+           "raw": {"sectionsNo999": "", "sectionsNo1": ""},
+           "jc_market_snapshots": [
+               {"pool_code": "had", "captured_at": "2026-10-18T02:00:00+00:00", "outcomes": {"h": 1.7}},
+               {"pool_code": "ttg", "captured_at": "2026-10-18T02:00:00+00:00", "outcomes": {"2": 3.2}}]}
+    newer = [{"pool_code": "had", "captured_at": "2026-10-19T01:00:00+00:00",
+              "outcomes": {"h": 1.65}}]
+    fresh = update_existing_static_row(old, newer, now)
+    assert old["jc_market_snapshots"][0]["outcomes"]["h"] == 1.7
+    assert len(fresh["jc_market_snapshots"]) == 2
+    assert fresh["jc_market_snapshots"][0]["outcomes"]["h"] == 1.65
+    assert fresh["jc_market_snapshots"][1]["outcomes"]["2"] == 3.2
+    assert update_existing_static_row(fresh, old["jc_market_snapshots"], now) == fresh
+    assert update_existing_static_row(fresh, [], now) == fresh
+    in_play = deepcopy(fresh)
+    in_play["raw"]["matchStatusName"] = "比赛中"
+    assert update_existing_static_row(in_play, newer, now) == in_play
+    assert update_existing_static_row(fresh, newer, datetime(2026, 10, 19, 17, tzinfo=timezone.utc)) is fresh
+    finished = deepcopy(fresh)
+    finished["raw"] = {"matchStatusName": "已结束", "sectionsNo999": "3-0", "sectionsNo1": "1-0"}
+    assert update_existing_static_row(finished, newer, now) is finished
+    assert finished["raw"]["sectionsNo999"] == "3-0"
+    print("PASS: odds update only prekick; in-play and FT static immutable")
+
+
 def publish_live_schedules(by_team):
     """Publish public-only current schedule snapshots so first paint never needs Supabase."""
     LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
@@ -279,6 +363,7 @@ def publish_live_schedules(by_team):
             old_manifest = {}
     dates = {}
     changed = False
+    now = datetime.now(timezone.utc)
     allowed_fields = (
         "id", "match_num", "business_date", "league_name", "league_short_name",
         "home_team_name", "away_team_name", "match_date", "match_time",
@@ -297,8 +382,32 @@ def publish_live_schedules(by_team):
                   "rows=", len(base_rows) if isinstance(base_rows, list) else "invalid")
             continue
 
-        # Same public intake event freezes both fixtures and official odds.
-        # An unavailable public market reader never blocks fixed schedules.
+        # Static fixture identities are sealed on first publication.
+        # A collector run may replace odds for NOT-STARTED matches only.
+        # In-progress scores and official FT are owned by publish_final_scores.py.
+        relative = "data/overview/live/" + ds + ".json"
+        destination = ROOT / relative
+        existing = None
+        old_by_id = {}
+        if destination.exists():
+            existing = json.loads(destination.read_text(encoding="utf-8"))
+            old_rows = existing.get("rows") or []
+            if (existing.get("business_date") != ds or
+                    len(old_rows) != int(existing.get("match_count") or 0) or
+                    len({str(r.get("id")) for r in old_rows}) != len(old_rows)):
+                raise RuntimeError("Existing immutable fixture failed integrity check: " + ds)
+            old_by_id = {str(r["id"]): r for r in old_rows}
+            incoming_ids = {str(r.get("id")) for r in base_rows if isinstance(r, dict)}
+            if len(incoming_ids) != count or incoming_ids != set(old_by_id):
+                print("WARNING immutable fixture IDs/count differ; manual review required:", ds)
+                # Do not replace an existing roster or delete published settlements.
+                old_digest = hashlib.sha256(json.dumps(existing, ensure_ascii=False,
+                    separators=(",", ":")).encode("utf-8")).hexdigest()[:16]
+                dates[ds] = {"file": relative, "version": old_digest,
+                             "match_count": len(old_rows)}
+                continue
+
+        # Public official market data only, never model or Pro data.
         public_markets = public_prekick_markets(base_rows)
         rows = []
         valid = True
@@ -306,22 +415,28 @@ def publish_live_schedules(by_team):
             if not isinstance(source_row, dict) or str(source_row.get("business_date") or ds) != ds or not source_row.get("id"):
                 valid = False
                 break
-            row = {k: source_row.get(k) for k in allowed_fields if k in source_row}
-            raw = source_row.get("raw") if isinstance(source_row.get("raw"), dict) else {}
-            row["raw"] = {
-                "matchStatusName": raw.get("matchStatusName"),
-                "sectionsNo999": raw.get("sectionsNo999"),
-                "sectionsNo1": raw.get("sectionsNo1")
-            }
-            home = str(row.get("home_team_name") or "").strip()
-            away = str(row.get("away_team_name") or "").strip()
-            row["_homeLogoUrl"] = by_team.get(home, "")
-            row["_awayLogoUrl"] = by_team.get(away, "")
-            match_markets = public_markets.get(str(row.get("id") or ""), [])
-            if match_markets:
-                row["jc_market_snapshots"] = match_markets
-                row["_jcMarketsComplete"] = True
-            row["_jcScheduleSnapshot"] = True
+            match_id = str(source_row["id"])
+            match_markets = public_markets.get(match_id, [])
+            if match_id in old_by_id:
+                # This also preserves a score published by another workflow.
+                # Once kickoff has passed this returns EXACTLY the old object.
+                row = update_existing_static_row(old_by_id[match_id], match_markets, now)
+            else:
+                row = {k: source_row.get(k) for k in allowed_fields if k in source_row}
+                raw = source_row.get("raw") if isinstance(source_row.get("raw"), dict) else {}
+                row["raw"] = {
+                    "matchStatusName": raw.get("matchStatusName"),
+                    "sectionsNo999": raw.get("sectionsNo999"),
+                    "sectionsNo1": raw.get("sectionsNo1")
+                }
+                home = str(row.get("home_team_name") or "").strip()
+                away = str(row.get("away_team_name") or "").strip()
+                row["_homeLogoUrl"] = by_team.get(home, "")
+                row["_awayLogoUrl"] = by_team.get(away, "")
+                if prekick_is_open(row, now) and match_markets:
+                    row["jc_market_snapshots"] = match_markets
+                    row["_jcMarketsComplete"] = True
+                row["_jcScheduleSnapshot"] = True
             rows.append(row)
         if not valid or len(rows) != count:
             print("WARNING invalid live schedule rows; skipped:", ds)
@@ -335,8 +450,6 @@ def publish_live_schedules(by_team):
         }
         compact = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
         digest = hashlib.sha256(compact.encode("utf-8")).hexdigest()[:16]
-        relative = "data/overview/live/" + ds + ".json"
-        destination = ROOT / relative
         if not destination.exists() or destination.read_text(encoding="utf-8") != json.dumps(payload, ensure_ascii=False, indent=2) + "\n":
             destination.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             changed = True
@@ -410,4 +523,7 @@ def publish():
 
 
 if __name__ == "__main__":
-    publish()
+    if "--self-test" in __import__("sys").argv:
+        static_odds_self_test()
+    else:
+        publish()
