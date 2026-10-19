@@ -218,12 +218,25 @@ function attach(){
  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(state.open)closeDetail();else $('calendar').hidden=true}});
  $('copyPlan').addEventListener('click',copyText);
 }
+function renderManualPlans(){
+ var root=$('manualPlans');if(!root)return;
+ var pack=db&&db.manualPlans&&db.manualPlans['2026-10-19'];
+ if(!pack||!Array.isArray(pack.entries)){root.innerHTML='<div class="empty">暂无人工录入的赛前方案。</div>';return;}
+ root.innerHTML=pack.entries.map(function(entry){
+   var legs=(entry.legs||[]).map(function(leg,index){
+     var picks=(leg.picks||[]).map(function(pick){return '<span class="manual-pick">'+esc(pick)+'</span>'}).join('');
+     return '<div class="manual-leg"><div class="manual-leg-meta"><span class="manual-match-num">'+esc(leg.num)+'</span><span class="manual-league">'+esc(leg.league)+'</span><span class="manual-kickoff">'+esc(leg.kickoff)+'</span></div><div class="manual-fixture"><strong>'+esc(leg.home)+'</strong><span>vs</span><strong>'+esc(leg.away)+'</strong></div><div class="manual-market">'+esc(leg.market||'指定选项')+'</div><div class="manual-picks">'+picks+'</div></div>';
+   }).join(entry.type==='direction'?'<div class="manual-join" aria-label="串联">×</div>':'<div class="manual-leg-sep" aria-hidden="true"></div>');
+   return '<article class="manual-card" data-manual-type="'+esc(entry.type)+'"><div class="manual-card-head"><h3>'+esc(entry.title)+'</h3><span class="manual-card-status">人工录入</span></div><div class="manual-card-legs">'+legs+'</div><p class="manual-card-note">'+esc(entry.note||'按原始顺序展示。')+'</p></article>';
+ }).join('');
+}
+
 function init(){
  if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
  all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Array.from(new Set(all.map(function(r){return r.d}))).sort().reverse();
  if(!dates.length){$('plans').innerHTML='<div class="empty">暂无可核验的完赛样本。</div>';return}
- state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
+ state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();renderManualPlans();attach();renderAll();
 }
 init();
 })();
