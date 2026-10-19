@@ -1168,13 +1168,19 @@ function jcLogoDisplayUrl(rawUrl){
 }
 
 function jcLogoImgHtml(rawUrl,className,loading='lazy'){
-  const mode=loading==='eager-normal'?'eager':loading;
+  const mode=loading==='eager-normal'?'lazy':loading;
   const raw=String(rawUrl||'').trim();
   if(!raw) return '';
   const display=jcLogoDisplayUrl(raw);
-  const fallbackAttr=display!==raw
-    ? ' data-qc-logo-raw="'+qcEscape(raw)+'" onerror="if(!this.dataset.qcLogoFallback){this.dataset.qcLogoFallback=\'1\';this.src=this.dataset.qcLogoRaw;}else{this.style.display=\'none\'}"'
-    : ' onerror="this.style.display=\'none\'"';
+  // Offline/local logo files are immutable. Retry a temporarily failed
+  // request once with a cache-busted URL before hiding the icon. This handles
+  // stale/error-cached logo loads on mobile without touching frozen match data.
+  const isLocal=/^assets\\/team-logos\\/[a-z0-9-]+\\.(png|jpg|webp)$/i.test(display);
+  const fallbackAttr=isLocal
+    ? ' onerror="if(!this.dataset.qcLogoRetry){this.dataset.qcLogoRetry=\'1\';this.src=this.src.split(\'?\')[0]+\'?v=20261019histlogo1\';}else{this.style.display=\'none\'}"'
+    : display!==raw
+      ? ' data-qc-logo-raw="'+qcEscape(raw)+'" onerror="if(!this.dataset.qcLogoFallback){this.dataset.qcLogoFallback=\'1\';this.src=this.dataset.qcLogoRaw;}else{this.style.display=\'none\'}"'
+      : ' onerror="this.style.display=\'none\'"';
   return '<img class="'+qcEscape(className)+'" src="'+qcEscape(display)+'" alt="" loading="'+qcEscape(mode)+'"'+
     (loading==='eager'?' fetchpriority="high"':'')+
     ' decoding="async" referrerpolicy="no-referrer"'+fallbackAttr+'>';
