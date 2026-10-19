@@ -4,10 +4,12 @@
 (function(){
 'use strict';
 var db=window.QC_CURATED_LAB_DATA;
+var blind=window.QC_CURATED_BLIND_SELECTION_V1;
+var settled=window.QC_CURATED_BLIND_SETTLEMENT_V1;
 var $=function(id){return document.getElementById(id)};
 var types={direction:{label:'方向 · 双场',desc:'赛前模型方向与同一官方玩法赔率；无胜平负的比赛使用让球方向。',color:'#315db3'},htft:{label:'半全场 · 双场',desc:'两场各取赛前锁定的半全场TOP2，分别与官方半全场赔率匹配。',color:'#8660b0'},goals:{label:'总进球 · 双场',desc:'从赛前锁板的独立进球区间读取选项，再匹配总进球官方赔率。',color:'#218a71'},score:{label:'比分 · 双场',desc:'每场最多使用锁定TOP3比分，两场形成最多9种精确比分组合。',color:'#b86670'}};
 var modes={balanced:'平均覆盖',hot:'常规优先',cold:'逆向观察',hybrid:'攻防平衡'};
-var state={day:null,type:'direction',budget:100,mode:'balanced',month:null,open:null,origin:null};
+var state={day:null,type:'direction',budget:100,mode:'balanced',month:null,open:null,origin:null,reveal:false};
 var dates=[];
 var all=[];
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -83,6 +85,28 @@ function plansFor(day,type){
        variant:version.id,versionLabel:version.label,versionNote:record.note||version.note||'',versionGate:record.gate||'',shadow:version.shadow};
    }).filter(Boolean);
  }
+ var pack2=blind&&blind.days&&blind.days[day];
+ if(pack2){
+   var entry=(pack2.entries||[]).find(function(e){return e.type===type});
+   if(!entry)return [];
+   var check=settled&&settled.dates&&settled.dates[day]&&settled.dates[day].items.find(function(e){return e.type===type});
+   var unresolved=!!(check&&check.legResults.some(function(x){return !score(x.ft)||!score(x.ht)}));
+   var legs=entry.legs.map(function(l,index){
+     var row=Object.assign({},l.row,{mk:l.row.mk,blindMasked:!state.reveal,blindPending:unresolved});
+     if(state.reveal&&check&&check.legResults[index]){
+       row.ft=check.legResults[index].ft;
+       row.ht=check.legResults[index].ht;
+     }
+     var opts=l.picks.map(function(p){return option(row,l.market,p.key,p.name,type)});
+     if(opts.some(function(o){return !o}))return null;
+     return {row:row,market:l.market,options:opts,blind:true};
+   });
+   if(legs.some(function(x){return !x}))return [];
+   return [{day:day,type:type,index:1,a:legs[0],b:legs[1],blind:true,
+       prematch:!state.reveal||unresolved,unsettled:unresolved,shadow:true,
+       versionLabel:'AI精选师V1.0 · 遮挡回测',versionNote:'历史遮挡回放（非当日真实发布）；仅使用赛前锁板和官方赔率。',
+       versionGate:unresolved?'待结算':''}];
+ }
  var items=all.filter(function(r){return r.d===day}).map(function(row){return makeLeg(row,type)}).filter(Boolean);
  items.sort(function(a,b){return String(a.row.num).localeCompare(String(b.row.num),'zh-Hans-CN',{numeric:true})});
  var pairs=[];for(var i=0;i+1<Math.min(items.length,6);i+=2) pairs.push({day:day,type:type,index:pairs.length+1,a:items[i],b:items[i+1]});
@@ -100,7 +124,7 @@ function allocation(plan,budget,mode){
  var list=combosFor(plan);if(!list.length)return {list:[],returns:0,grossMin:0,grossMax:0,covered:false};
  var total=Math.round(Math.max(10,Math.min(100000,budget))*100);
  var weights=list.map(function(s){
-   if(mode==='balanced')return 1/s.odds;
+   if(mode==='balanced')return 1; // True equal allocation; prior weighted formula mislabeled.
    if(mode==='hot')return Math.pow(1/s.odds,1.55);
    if(mode==='cold')return Math.pow(s.odds,.7);
    // Defensive half equal-result allocation, half price-implied.
@@ -253,7 +277,7 @@ function attach(){
 function init(){
  if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
  all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
- dates=Array.from(new Set(all.map(function(r){return r.d}).concat(Object.keys(db.selectedPlans||{})))).sort().reverse();
+ dates=Array.from(new Set(all.map(function(r){return r.d}).concat(Object.keys(db.selectedPlans||{})).concat(Object.keys(blind&&blind.days||{})))).sort().reverse();
  if(!dates.length){$('plans').innerHTML='<div class="empty">暂无可核验的完赛样本。</div>';return}
  state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
