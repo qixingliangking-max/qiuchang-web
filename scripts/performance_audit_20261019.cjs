@@ -62,11 +62,11 @@ for(const dev of devicesToRun){
     const cssLoaded=[...document.styleSheets].some(s=>s.href?.includes('admin-subpages.css'));
     return {
      width:viewWidth,docWidth:document.documentElement.scrollWidth,bodyWidth:body.scrollWidth,
-     height:headBox?.height,headerBrandSize:parseFloat(getComputedStyle(document.querySelector('.qc-admin-header .brand')).fontSize),
-     introTitle:h1?.textContent?.trim(),introWhite:getComputedStyle(intro).backgroundColor,
+     height:headBox?.height,headerBrandSize:document.querySelector('.qc-admin-header .brand')?parseFloat(getComputedStyle(document.querySelector('.qc-admin-header .brand')).fontSize):null,
+     introTitle:h1?.textContent?.trim(),introWhite:intro?getComputedStyle(intro).backgroundColor:null,
      introTop:Math.round(intro?.getBoundingClientRect().y||0),
-     returnButtonText:returnLink?.textContent?.trim(),returnButtonBackground:getComputedStyle(returnLink).backgroundColor,
-     hasBrand:!!document.querySelector('.qc-admin-header .brand'),hasCss:cssLoaded,
+     returnButtonText:returnLink?.textContent?.trim(),returnButtonBackground:returnLink?getComputedStyle(returnLink).backgroundColor:null,
+     hasBrand:!!document.querySelector('.qc-admin-header .brand'),hasCss:cssLoaded,htmlDiagnostic:document.body.outerHTML.slice(0,500),
      contentsWidth:Math.round(contentBox?.width||0),introCount:document.querySelectorAll('main .qc-admin-intro').length,
      cards,metrics,buttons:primaryButtons,tabs,
      missingIds:required.filter(i=>!allIds.includes(i)),
