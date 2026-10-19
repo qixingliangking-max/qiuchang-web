@@ -41,6 +41,24 @@ jobs:
             page.on('pageerror',e=>errors.push(String(e)));
             await page.goto(url,{waitUntil:'load'});
             await page.waitForSelector('#plans .plan',{timeout:15000});
+            await page.waitForSelector('#manualPlans .manual-card',{timeout:15000});
+            const manualCards=page.locator('#manualPlans .manual-card');
+            if(await manualCards.count()!==4)throw Error(name+': manual plan cards must be 4');
+            const manualTitles=await page.locator('#manualPlans .manual-card h3').allTextContents();
+            const expectedTitles=['① 方向 2串1','② 半全场','③ 总进球','④ 比分'];
+            if(JSON.stringify(manualTitles)!==JSON.stringify(expectedTitles))throw Error(name+': manual category/order mismatch '+JSON.stringify(manualTitles));
+            const manualTexts=[];
+            for(let i=0;i<4;i++)manualTexts.push(await manualCards.nth(i).innerText());
+            const requiredPicks=[
+              ['周一002','让胜（+1）','周一007','普通主胜'],
+              ['周一005','胜胜','平胜','周一007'],
+              ['周一003','3球','2球','1球','周一005','4球'],
+              ['周一002','2-0','1-1','1-0','周一003','1-2','0-2']
+            ];
+            requiredPicks.forEach((list,i)=>{let previous=-1;list.forEach(value=>{const pos=manualTexts[i].indexOf(value);if(pos<0||pos<=previous)throw Error(name+': selection missing or order changed in '+expectedTitles[i]+': '+value);previous=pos;});});
+            if(manualTexts.some(t=>/模拟返还|命中|未命中/.test(t)))throw Error(name+': manual pre-match cards contain simulated settlement fields');
+            const manualWidth=await page.locator('.manual-set').evaluate(el=>({scroll:el.scrollWidth,client:el.clientWidth}));
+            if(manualWidth.scroll>manualWidth.client+1)throw Error(name+': manual section overflows viewport '+JSON.stringify(manualWidth));
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
