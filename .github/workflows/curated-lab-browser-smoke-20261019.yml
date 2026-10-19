@@ -113,7 +113,7 @@ jobs:
             if(await page.locator('#history .hist-row').count()!==14)throw Error(name+': 14-day frozen history count incorrect');
             if(!(await page.locator('#revealRow').isVisible()))throw Error(name+': reveal control missing');
             const histBefore=await page.locator('#history').innerText();
-            if(!histBefore.includes('遮挡')||histBefore.includes('未命中'))throw Error(name+': result leaked before reveal');
+            if(!histBefore.includes('遮挡')||histBefore.includes('未命中'))throw Error(name+': result leaked before reveal '+JSON.stringify({hist:histBefore.slice(0,1500),reveal:await page.locator('#revealBlind').innerText()}));
             if(!(await page.locator('#compareSection').isVisible()))throw Error(name+': combo comparison missing');
             if((await page.locator('#compareBody').innerText()).includes('净+'))throw Error(name+': simulated returns leaked before reveal');
             await page.locator('#revealBlind').click();
