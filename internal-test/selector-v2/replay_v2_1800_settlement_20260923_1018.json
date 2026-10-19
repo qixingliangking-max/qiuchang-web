@@ -1,0 +1,3681 @@
+{
+  "version": "V2-1800-REPLAY-SETTLEMENT-20260923-1018",
+  "freezeBlobSha": "0ead6b32d1bc9f834812ca53faba838359fc4899",
+  "selectionPath": "internal-test/selector-v2/replay_v2_1800_selection_20260923_1018.json",
+  "notes": "For retrospective auditing only. Selections fixed before scores query. Not prospective. Missing score results pending. Equal allocation 1000 yuan points per group.",
+  "summary": {
+    "direction_1x1": {
+      "selected": 15,
+      "settled": 15,
+      "pending": 0,
+      "hits": 4,
+      "coveredButLoss": 0,
+      "stake": 15000,
+      "gross": 19883.9,
+      "minFloorFailures": 0,
+      "legN": 30,
+      "legHits": 15,
+      "negativeEV": 9,
+      "net": 4883.9,
+      "roi": 32.56,
+      "coverRate": 26.67,
+      "legRate": 50
+    },
+    "direction_1x2": {
+      "selected": 17,
+      "settled": 17,
+      "pending": 0,
+      "hits": 6,
+      "coveredButLoss": 0,
+      "stake": 17000,
+      "gross": 13925.05,
+      "minFloorFailures": 0,
+      "legN": 34,
+      "legHits": 21,
+      "negativeEV": 13,
+      "net": -3074.95,
+      "roi": -18.09,
+      "coverRate": 35.29,
+      "legRate": 61.76
+    },
+    "direction_2x2": {
+      "selected": 6,
+      "settled": 6,
+      "pending": 0,
+      "hits": 1,
+      "coveredButLoss": 0,
+      "stake": 6000,
+      "gross": 1811.25,
+      "minFloorFailures": 0,
+      "legN": 12,
+      "legHits": 4,
+      "negativeEV": 3,
+      "net": -4188.75,
+      "roi": -69.81,
+      "coverRate": 16.67,
+      "legRate": 33.33
+    },
+    "htft_1x1": {
+      "selected": 20,
+      "settled": 20,
+      "pending": 0,
+      "hits": 4,
+      "coveredButLoss": 0,
+      "stake": 20000,
+      "gross": 11976.4,
+      "minFloorFailures": 0,
+      "legN": 40,
+      "legHits": 21,
+      "negativeEV": 20,
+      "net": -8023.6,
+      "roi": -40.12,
+      "coverRate": 20,
+      "legRate": 52.5
+    },
+    "score_2x2": {
+      "selected": 20,
+      "settled": 20,
+      "pending": 0,
+      "hits": 1,
+      "coveredButLoss": 0,
+      "stake": 20000,
+      "gross": 12687.5,
+      "minFloorFailures": 0,
+      "legN": 40,
+      "legHits": 11,
+      "negativeEV": 20,
+      "net": -7312.5,
+      "roi": -36.56,
+      "coverRate": 5,
+      "legRate": 27.5
+    },
+    "score_3x3": {
+      "selected": 20,
+      "settled": 20,
+      "pending": 0,
+      "hits": 3,
+      "coveredButLoss": 0,
+      "stake": 20000,
+      "gross": 19791.47,
+      "minFloorFailures": 0,
+      "legN": 40,
+      "legHits": 15,
+      "negativeEV": 20,
+      "net": -208.53,
+      "roi": -1.04,
+      "coverRate": 15,
+      "legRate": 37.5
+    },
+    "goals_2x2": {
+      "selected": 19,
+      "settled": 19,
+      "pending": 0,
+      "hits": 3,
+      "coveredButLoss": 0,
+      "stake": 19000,
+      "gross": 8522.5,
+      "minFloorFailures": 0,
+      "legN": 38,
+      "legHits": 15,
+      "negativeEV": 19,
+      "net": -10477.5,
+      "roi": -55.14,
+      "coverRate": 15.79,
+      "legRate": 39.47
+    }
+  },
+  "byDate": {
+    "2026-09-23": [],
+    "2026-09-24": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 5359,
+        "legs": [
+          {
+            "id": "21a58867-6ced-41b6-a1b4-b555fd52e013",
+            "num": "周四004",
+            "ft": "1-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "bc7dd022-eb10-48a5-9cc3-b1d1ff77aa08",
+            "num": "周四006",
+            "ft": "1-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1955,
+        "legs": [
+          {
+            "id": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+            "num": "周四001",
+            "ft": "3-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "bc7dd022-eb10-48a5-9cc3-b1d1ff77aa08",
+            "num": "周四006",
+            "ft": "1-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 1955.1,
+        "legs": [
+          {
+            "id": "645c919a-9ed2-4ea3-a2f8-03706c55b866",
+            "num": "周四002",
+            "ft": "3-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "68737706-42ce-490d-8cf9-acdf1e8e3492",
+            "num": "周四007",
+            "ft": "1-2",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 3700,
+        "net": 2700,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 3.7,
+        "minimumPayout": 3700,
+        "legs": [
+          {
+            "id": "448513e4-4c2c-4f6e-8047-a0550ed59c4d",
+            "num": "周四005",
+            "ft": "1-0",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "e111698b-06fa-427f-8de5-e40eba0cc8f0",
+            "num": "周四008",
+            "ft": "3-2",
+            "ht": "2-1",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10156.25,
+        "legs": [
+          {
+            "id": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+            "num": "周四001",
+            "ft": "3-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s03s01",
+            "hit": false
+          },
+          {
+            "id": "448513e4-4c2c-4f6e-8047-a0550ed59c4d",
+            "num": "周四005",
+            "ft": "1-0",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4513.8438,
+        "legs": [
+          {
+            "id": "4e3e2b4d-e6b3-418a-9e36-f86fb81f1a91",
+            "num": "周四001",
+            "ft": "3-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s03s01",
+            "hit": false
+          },
+          {
+            "id": "448513e4-4c2c-4f6e-8047-a0550ed59c4d",
+            "num": "周四005",
+            "ft": "1-0",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-09-25": [
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 1996.5,
+        "legs": [
+          {
+            "id": "44b45c05-c772-4cab-b22f-0bd5c96263ea",
+            "num": "周五002",
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "dd",
+            "hit": false
+          },
+          {
+            "id": "48bf4da9-29db-4eca-b956-5e8c1304f5ea",
+            "num": "周五004",
+            "ft": "4-0",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2680,
+        "legs": [
+          {
+            "id": "e3a937fa-d8e9-4870-beed-fc93df1f3e97",
+            "num": "周五007",
+            "ft": "2-0",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          },
+          {
+            "id": "99f9666f-f7b1-4a73-9e0a-9b7897511a3f",
+            "num": "周五010",
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s0",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 7012.5,
+        "legs": [
+          {
+            "id": "44b45c05-c772-4cab-b22f-0bd5c96263ea",
+            "num": "周五002",
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          },
+          {
+            "id": "2a3c77d9-a5ee-465e-b16f-498a31eaf085",
+            "num": "周五005",
+            "ft": "6-3",
+            "ht": "4-1",
+            "state": "completed",
+            "key": "s06s03",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3116.916,
+        "legs": [
+          {
+            "id": "44b45c05-c772-4cab-b22f-0bd5c96263ea",
+            "num": "周五002",
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          },
+          {
+            "id": "2a3c77d9-a5ee-465e-b16f-498a31eaf085",
+            "num": "周五005",
+            "ft": "6-3",
+            "ht": "4-1",
+            "state": "completed",
+            "key": "s06s03",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-09-26": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 5886,
+        "legs": [
+          {
+            "id": "939ed2d7-903e-4e0f-b610-37bf7962e38e",
+            "num": "周六013",
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "07b04a32-60cb-4f0b-9c15-d4cd3f7a9eab",
+            "num": "周六016",
+            "ft": "2:3",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 2343.5,
+        "net": 1343.5,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 4.687,
+        "minimumPayout": 2343.5,
+        "legs": [
+          {
+            "id": "939ed2d7-903e-4e0f-b610-37bf7962e38e",
+            "num": "周六013",
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "07b04a32-60cb-4f0b-9c15-d4cd3f7a9eab",
+            "num": "周六016",
+            "ft": "2:3",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 3400,
+        "legs": [
+          {
+            "id": "5f225698-b60b-4107-bf52-99fb11c28c89",
+            "num": "周六009",
+            "ft": "2:0",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3",
+            "num": "周六011",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hd",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2560,
+        "legs": [
+          {
+            "id": "d7bbe0af-5473-45e2-87fa-456f59756098",
+            "num": "周六010",
+            "ft": "1:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          },
+          {
+            "id": "02e73e7b-0d90-48ab-a644-deaf64c10664",
+            "num": "周六012",
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 9000,
+        "legs": [
+          {
+            "id": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3",
+            "num": "周六011",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": false
+          },
+          {
+            "id": "02e73e7b-0d90-48ab-a644-deaf64c10664",
+            "num": "周六012",
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4000.32,
+        "legs": [
+          {
+            "id": "d38420c7-1fcb-4aa4-93f2-ab03659d56b3",
+            "num": "周六011",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": false
+          },
+          {
+            "id": "02e73e7b-0d90-48ab-a644-deaf64c10664",
+            "num": "周六012",
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-09-27": [
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 2585,
+        "net": 1585,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 5.17,
+        "minimumPayout": 2585,
+        "legs": [
+          {
+            "id": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+            "num": "周日001",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": true
+          },
+          {
+            "id": "67a4e6e6-a855-47e2-abca-e3625433a282",
+            "num": "周日003",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 9750,
+        "legs": [
+          {
+            "id": "67a4e6e6-a855-47e2-abca-e3625433a282",
+            "num": "周日003",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "4f7531b9-b55d-468c-add4-21bad98384fc",
+            "num": "周日009",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 3061.25,
+        "legs": [
+          {
+            "id": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+            "num": "周日001",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "hit": false
+          },
+          {
+            "id": "4f7531b9-b55d-468c-add4-21bad98384fc",
+            "num": "周日009",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 13537.5,
+        "legs": [
+          {
+            "id": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+            "num": "周日001",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          },
+          {
+            "id": "67a4e6e6-a855-47e2-abca-e3625433a282",
+            "num": "周日003",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 6017.148,
+        "legs": [
+          {
+            "id": "bda0b40f-48d3-45b8-979d-6d70dd37e881",
+            "num": "周日001",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          },
+          {
+            "id": "67a4e6e6-a855-47e2-abca-e3625433a282",
+            "num": "周日003",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-09-28": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 6543.6,
+        "net": 5543.6,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 6.5436,
+        "minimumPayout": 6543.6,
+        "legs": [
+          {
+            "id": "51cc865b-a60c-48ae-a275-505728a49872",
+            "num": "周一004",
+            "ft": "1:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+            "num": "周一008",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1983.6,
+        "legs": [
+          {
+            "id": "51cc865b-a60c-48ae-a275-505728a49872",
+            "num": "周一004",
+            "ft": "1:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "35d6d601-0faa-4f16-ae05-b7662b0fa1f1",
+            "num": "周一007",
+            "ft": "3:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4515.2,
+        "legs": [
+          {
+            "id": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          },
+          {
+            "id": "b1535762-d897-4d14-a1b3-ccb52f274b06",
+            "num": "周一005",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "da",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2560,
+        "legs": [
+          {
+            "id": "6b7d8bb9-1db9-40ee-8ca3-bb10776defd5",
+            "num": "周一002",
+            "ft": "1:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "s5",
+            "hit": false
+          },
+          {
+            "id": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+            "num": "周一008",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8337.5,
+        "legs": [
+          {
+            "id": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+            "num": "周一008",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3705.5185,
+        "legs": [
+          {
+            "id": "a07d7d0d-6a62-45b2-a098-42d5112e43ce",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "32ec4818-6816-411b-b02e-3b1aeab1b6a4",
+            "num": "周一008",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-09-29": [
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 2354,
+        "legs": [
+          {
+            "id": "ae0b0d25-1ea5-4eaf-80df-ae6f176969dc",
+            "num": "周二004",
+            "ft": "0:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          },
+          {
+            "id": "0c9d71b3-b17e-4e92-b72f-f3b6a2a5ba93",
+            "num": "周二012",
+            "ft": "0:3",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 2219.7,
+        "legs": [
+          {
+            "id": "ae0b0d25-1ea5-4eaf-80df-ae6f176969dc",
+            "num": "周二004",
+            "ft": "0:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "aa",
+            "hit": true
+          },
+          {
+            "id": "ffd9707c-8c9f-4593-b596-c36ecd44a34d",
+            "num": "周二007",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2520,
+        "legs": [
+          {
+            "id": "b6b2892b-e212-424d-bcf7-3d50e6cfc6dc",
+            "num": "周二008",
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          },
+          {
+            "id": "b88b3413-c752-4f3e-9c5d-b97cdeb95699",
+            "num": "周二010",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8531.25,
+        "legs": [
+          {
+            "id": "b6b2892b-e212-424d-bcf7-3d50e6cfc6dc",
+            "num": "周二008",
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s00s03",
+            "hit": false
+          },
+          {
+            "id": "b88b3413-c752-4f3e-9c5d-b97cdeb95699",
+            "num": "周二010",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3791.6287,
+        "legs": [
+          {
+            "id": "b6b2892b-e212-424d-bcf7-3d50e6cfc6dc",
+            "num": "周二008",
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s00s03",
+            "hit": false
+          },
+          {
+            "id": "b88b3413-c752-4f3e-9c5d-b97cdeb95699",
+            "num": "周二010",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-09-30": [
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4335,
+        "legs": [
+          {
+            "id": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+            "num": "周三001",
+            "ft": "2-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          },
+          {
+            "id": "b65e2d21-5668-4fac-b920-76725a3b036f",
+            "num": "周三002",
+            "ft": "1-1",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "hd",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 3093.75,
+        "net": 2093.75,
+        "status": "covered",
+        "lines": 4,
+        "winningOdds": 12.375,
+        "minimumPayout": 2805,
+        "legs": [
+          {
+            "id": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+            "num": "周三001",
+            "ft": "2-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s3",
+            "hit": true
+          },
+          {
+            "id": "b65e2d21-5668-4fac-b920-76725a3b036f",
+            "num": "周三002",
+            "ft": "1-1",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8125,
+        "legs": [
+          {
+            "id": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+            "num": "周三001",
+            "ft": "2-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "b65e2d21-5668-4fac-b920-76725a3b036f",
+            "num": "周三002",
+            "ft": "1-1",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3611.4,
+        "legs": [
+          {
+            "id": "0854dc7e-bd15-4e23-9270-e4839fb3754a",
+            "num": "周三001",
+            "ft": "2-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "b65e2d21-5668-4fac-b920-76725a3b036f",
+            "num": "周三002",
+            "ft": "1-1",
+            "ht": "1-0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-05": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4825.6,
+        "legs": [
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "num": "周一005",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          },
+          {
+            "id": "ef8680ff-85ff-48b3-aa05-da77f696f012",
+            "num": "周一007",
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1934.4,
+        "legs": [
+          {
+            "id": "6d5262e4-754a-4839-a0f9-5013db22aee6",
+            "num": "周一003",
+            "ft": "0:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "d",
+            "hit": true
+          },
+          {
+            "id": "ef8680ff-85ff-48b3-aa05-da77f696f012",
+            "num": "周一007",
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 3705,
+        "legs": [
+          {
+            "id": "c215b187-ec74-4a55-bd16-473099903ff5",
+            "num": "周一002",
+            "ft": "4:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "ah",
+            "hit": false
+          },
+          {
+            "id": "341c880b-75f4-448c-9527-f3032487d3fa",
+            "num": "周一004",
+            "ft": "3:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2638.125,
+        "legs": [
+          {
+            "id": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          },
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "num": "周一005",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10562.5,
+        "legs": [
+          {
+            "id": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "num": "周一005",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4694.82,
+        "legs": [
+          {
+            "id": "49026c8e-5f32-4c1a-9e23-33e0c96e5fcb",
+            "num": "周一001",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "089a4a08-a8c8-4067-b5a7-ec020d6de780",
+            "num": "周一005",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-06": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4988,
+        "legs": [
+          {
+            "id": "e5c177f6-4dc0-4000-876e-b133984d66a2",
+            "num": "周二003",
+            "ft": "2:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          },
+          {
+            "id": "a915c5ba-7814-4c6f-a9a3-2a58b5516540",
+            "num": "周二012",
+            "ft": "3:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1859.75,
+        "legs": [
+          {
+            "id": "f4295f54-9705-4457-bedb-a097e50e0d9b",
+            "num": "周二005",
+            "ft": "0:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "a915c5ba-7814-4c6f-a9a3-2a58b5516540",
+            "num": "周二012",
+            "ft": "3:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2171.4,
+        "legs": [
+          {
+            "id": "6d840f6a-43d0-4dc9-b061-d0951605c058",
+            "num": "周二002",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": false
+          },
+          {
+            "id": "a9d1d786-329a-4680-a289-b68cf454e6c4",
+            "num": "周二004",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 2112,
+        "legs": [
+          {
+            "id": "702526b8-324f-4fc5-8658-63936a819a31",
+            "num": "周二008",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "ha",
+            "hit": false
+          },
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "num": "周二009",
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2680,
+        "legs": [
+          {
+            "id": "a9d1d786-329a-4680-a289-b68cf454e6c4",
+            "num": "周二004",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s0",
+            "hit": false
+          },
+          {
+            "id": "f4295f54-9705-4457-bedb-a097e50e0d9b",
+            "num": "周二005",
+            "ft": "0:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 9425,
+        "legs": [
+          {
+            "id": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+            "num": "周二006",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          },
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "num": "周二009",
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s03s00",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4189.224,
+        "legs": [
+          {
+            "id": "c578b313-5474-46c6-9135-a8fcca6ba0e4",
+            "num": "周二006",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          },
+          {
+            "id": "dbfd0038-1ef8-4bbf-8007-9befda4d44d7",
+            "num": "周二009",
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s03s00",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-07": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 4707.3,
+        "net": 3707.3,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 4.7073,
+        "minimumPayout": 4707.3,
+        "legs": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "num": "周三002",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "d4a2da22-5491-4499-93b6-1432bf145896",
+            "num": "周三006",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 2121.6,
+        "net": 1121.6,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 4.2432,
+        "minimumPayout": 2121.6,
+        "legs": [
+          {
+            "id": "f31c1f3e-edc5-4bda-b8d7-5668be122e18",
+            "num": "周三001",
+            "ft": "0-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "d4a2da22-5491-4499-93b6-1432bf145896",
+            "num": "周三006",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 5764,
+        "legs": [
+          {
+            "id": "1d62dd29-cbda-43c4-ab21-98de8c533f97",
+            "num": "周三004",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dd",
+            "hit": false
+          },
+          {
+            "id": "bd673f1c-26f0-4bea-a95a-ebbce6d3cb56",
+            "num": "周三005",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2720,
+        "legs": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "num": "周三002",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          },
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "num": "周三003",
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8250,
+        "legs": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "num": "周三002",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          },
+          {
+            "id": "774621d5-4c89-4175-b727-7ade2c4beb61",
+            "num": "周三003",
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 6888.82,
+        "net": 5888.82,
+        "status": "covered",
+        "lines": 9,
+        "winningOdds": 62,
+        "minimumPayout": 3666.96,
+        "legs": [
+          {
+            "id": "0c26a489-270d-41e4-a104-e4566bbe0c10",
+            "num": "周三002",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": true
+          },
+          {
+            "id": "d4a2da22-5491-4499-93b6-1432bf145896",
+            "num": "周三006",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-08": [
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4137,
+        "legs": [
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "num": "周四002",
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "aa",
+            "hit": false
+          },
+          {
+            "id": "81d8e49a-23ea-49b8-9513-900514566f39",
+            "num": "周四005",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 3195,
+        "legs": [
+          {
+            "id": "377a1a95-4107-4ce4-ba12-56149582f83a",
+            "num": "周四003",
+            "ft": "2:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "s4",
+            "hit": false
+          },
+          {
+            "id": "59ba1002-9109-4369-9844-c108c8857a45",
+            "num": "周四006",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s1",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10156.25,
+        "legs": [
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "num": "周四002",
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "s00s01",
+            "hit": false
+          },
+          {
+            "id": "81d8e49a-23ea-49b8-9513-900514566f39",
+            "num": "周四005",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s04s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4513.8438,
+        "legs": [
+          {
+            "id": "623434ca-bf21-49c0-86a9-bf0de8519479",
+            "num": "周四002",
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "s00s01",
+            "hit": false
+          },
+          {
+            "id": "81d8e49a-23ea-49b8-9513-900514566f39",
+            "num": "周四005",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s04s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-09": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 6251,
+        "legs": [
+          {
+            "id": "ea42a3be-c871-4962-a894-9e9ab26e3862",
+            "num": "周五009",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "2d5d474a-0fb1-459b-9ded-8ec2096f88ca",
+            "num": "周五011",
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1821.25,
+        "legs": [
+          {
+            "id": "c0747279-8f46-4f76-83fe-35960fd45969",
+            "num": "周五002",
+            "ft": "4:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "2d5d474a-0fb1-459b-9ded-8ec2096f88ca",
+            "num": "周五011",
+            "ft": "1:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 1915.2,
+        "legs": [
+          {
+            "id": "c0747279-8f46-4f76-83fe-35960fd45969",
+            "num": "周五002",
+            "ft": "4:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "ea42a3be-c871-4962-a894-9e9ab26e3862",
+            "num": "周五009",
+            "ft": "2:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 2392.5,
+        "legs": [
+          {
+            "id": "28edef7e-81c3-4447-ada1-0d5908026441",
+            "num": "周五006",
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "d49fa85b-0fdb-49dc-ab78-a12bfc93ba77",
+            "num": "周五008",
+            "ft": "2:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dd",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2800,
+        "legs": [
+          {
+            "id": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+            "num": "周五001",
+            "ft": "3-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          },
+          {
+            "id": "2752029f-df4a-456e-b297-6f657a69e1e8",
+            "num": "周五012",
+            "ft": "1:3",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s4",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 9425,
+        "legs": [
+          {
+            "id": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+            "num": "周五001",
+            "ft": "3-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s03s00",
+            "hit": false
+          },
+          {
+            "id": "2752029f-df4a-456e-b297-6f657a69e1e8",
+            "num": "周五012",
+            "ft": "1:3",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s03",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4189.224,
+        "legs": [
+          {
+            "id": "b7f603b3-6d65-41e3-8f2f-83676fb439e4",
+            "num": "周五001",
+            "ft": "3-0",
+            "ht": "3-0",
+            "state": "completed",
+            "key": "s03s00",
+            "hit": false
+          },
+          {
+            "id": "2752029f-df4a-456e-b297-6f657a69e1e8",
+            "num": "周五012",
+            "ft": "1:3",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s03",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-10": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 5386.8,
+        "legs": [
+          {
+            "id": "b2a1a11a-5a8d-4850-a925-9da9e8b42e15",
+            "num": "周六001",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          },
+          {
+            "id": "31ed42cc-a649-4c51-a39e-5684500fcbbd",
+            "num": "周六003",
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "a",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1909.5,
+        "legs": [
+          {
+            "id": "31ed42cc-a649-4c51-a39e-5684500fcbbd",
+            "num": "周六003",
+            "ft": "0-1",
+            "ht": "0-1",
+            "state": "completed",
+            "key": "a",
+            "hit": false
+          },
+          {
+            "id": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+            "num": "周六018",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2137.5,
+        "legs": [
+          {
+            "id": "aea9fe56-b16b-457a-aa07-21ce893c36ff",
+            "num": "周六011",
+            "ft": "0:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": false
+          },
+          {
+            "id": "9201ef43-0008-4d57-a47d-2bdf283b296d",
+            "num": "周六018",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 1932,
+        "legs": [
+          {
+            "id": "fd360feb-f474-459d-bb1a-1ec02f925ada",
+            "num": "周六009",
+            "ft": "2:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hd",
+            "hit": false
+          },
+          {
+            "id": "f5b4fbaa-757d-49d8-b252-0fb726cc7c11",
+            "num": "周六019",
+            "ft": "3:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2973.125,
+        "legs": [
+          {
+            "id": "d2743971-65f9-430b-a429-e931a2efcd3a",
+            "num": "周六004",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s1",
+            "hit": false
+          },
+          {
+            "id": "03ae7a3f-0228-474d-bf3d-5d741cee83ac",
+            "num": "周六030",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10850,
+        "legs": [
+          {
+            "id": "649fda2b-183e-4457-9d37-937cf509f6ea",
+            "num": "周六024",
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          },
+          {
+            "id": "03ae7a3f-0228-474d-bf3d-5d741cee83ac",
+            "num": "周六030",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 6041.61,
+        "net": 5041.61,
+        "status": "covered",
+        "lines": 9,
+        "winningOdds": 54.375,
+        "minimumPayout": 4477.733,
+        "legs": [
+          {
+            "id": "d2743971-65f9-430b-a429-e931a2efcd3a",
+            "num": "周六004",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s01",
+            "hit": true
+          },
+          {
+            "id": "649fda2b-183e-4457-9d37-937cf509f6ea",
+            "num": "周六024",
+            "ft": "1:2",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-11": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4264.2,
+        "legs": [
+          {
+            "id": "4c77ef3e-7449-4af7-9bbd-e30e82afc131",
+            "num": "周日015",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "a04d871a-8d07-4de8-91da-95af9b3ce345",
+            "num": "周日023",
+            "ft": "2:2",
+            "ht": "1:2",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1854,
+        "legs": [
+          {
+            "id": "55602c49-34ca-44e7-b63f-de3f73be1141",
+            "num": "周日009",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "a04d871a-8d07-4de8-91da-95af9b3ce345",
+            "num": "周日023",
+            "ft": "2:2",
+            "ht": "1:2",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 3030,
+        "legs": [
+          {
+            "id": "440e9c5b-f8f9-4bf2-aacc-61f9b8e64212",
+            "num": "周日004",
+            "ft": "3:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          },
+          {
+            "id": "cb96142c-17aa-4df7-b7f1-4342bb0f2830",
+            "num": "周日022",
+            "ft": "2:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2846.25,
+        "legs": [
+          {
+            "id": "d26ef6de-f517-43df-b6b0-1f357d1f54c7",
+            "num": "周日002",
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s1",
+            "hit": false
+          },
+          {
+            "id": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+            "num": "周日024",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 12687.5,
+        "net": 11687.5,
+        "status": "covered",
+        "lines": 4,
+        "winningOdds": 50.75,
+        "minimumPayout": 9375,
+        "legs": [
+          {
+            "id": "dd199533-1e99-4cd3-a3c1-9649c376dbc6",
+            "num": "周日008",
+            "ft": "1-0",
+            "ht": "0-0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": true
+          },
+          {
+            "id": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+            "num": "周日024",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4513.8438,
+        "legs": [
+          {
+            "id": "246978e8-ed01-4bd5-9e8e-7084e0cfdb8a",
+            "num": "周日011",
+            "ft": "2:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s02",
+            "hit": false
+          },
+          {
+            "id": "4f9cf63a-9acc-4106-8568-2a5f46f3ec59",
+            "num": "周日024",
+            "ft": "1:1",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-12": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4794.5,
+        "legs": [
+          {
+            "id": "743c6df8-10c8-4d70-a211-935fd2858db1",
+            "num": "周一005",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+            "num": "周一006",
+            "ft": "4:2",
+            "ht": "3:1",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 1884.35,
+        "legs": [
+          {
+            "id": "4ac25754-1494-487a-ad16-7e30b570c527",
+            "num": "周一001",
+            "ft": "1:3",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "a",
+            "hit": false
+          },
+          {
+            "id": "e93bda64-6369-4aea-922f-7a8f75f602a8",
+            "num": "周一006",
+            "ft": "4:2",
+            "ht": "3:1",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 7280,
+        "legs": [
+          {
+            "id": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+            "num": "周一003",
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "dh",
+            "hit": false
+          },
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "num": "周一010",
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "da",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2805.625,
+        "legs": [
+          {
+            "id": "743c6df8-10c8-4d70-a211-935fd2858db1",
+            "num": "周一005",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": true
+          },
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "num": "周一010",
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s5",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10156.25,
+        "legs": [
+          {
+            "id": "743c6df8-10c8-4d70-a211-935fd2858db1",
+            "num": "周一005",
+            "ft": "2:1",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": true
+          },
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "num": "周一010",
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s04",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 5055.505,
+        "legs": [
+          {
+            "id": "9a0d1f18-5212-4725-88e0-76178d09b0fb",
+            "num": "周一003",
+            "ft": "1:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": true
+          },
+          {
+            "id": "632a7d86-6c36-477c-b18c-ca76a7b73748",
+            "num": "周一010",
+            "ft": "1:4",
+            "ht": "1:1",
+            "state": "completed",
+            "key": "s01s04",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-13": [],
+    "2026-10-14": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 12240,
+        "legs": [
+          {
+            "id": "c860baf6-fc47-47d3-8ac2-0935ef483283",
+            "num": "周三007",
+            "ft": "0:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "num": "周三012",
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 4200,
+        "legs": [
+          {
+            "id": "5594f113-ac58-46da-870a-f476b0569166",
+            "num": "周三010",
+            "ft": "3:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": true
+          },
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "num": "周三012",
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 1906.8,
+        "legs": [
+          {
+            "id": "5594f113-ac58-46da-870a-f476b0569166",
+            "num": "周三010",
+            "ft": "3:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          },
+          {
+            "id": "891f40a7-eb09-480f-9694-059bcc228147",
+            "num": "周三012",
+            "ft": "6:0",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 5362.5,
+        "legs": [
+          {
+            "id": "071444c8-cbd3-49bf-819d-e274e8aef8bb",
+            "num": "周三006",
+            "ft": "3:6",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "aa",
+            "hit": true
+          },
+          {
+            "id": "ed2c7c15-472d-4bf8-bcab-aba23848fcd5",
+            "num": "周三011",
+            "ft": "2:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "aa",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2920,
+        "legs": [
+          {
+            "id": "5594f113-ac58-46da-870a-f476b0569166",
+            "num": "周三010",
+            "ft": "3:2",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s5",
+            "hit": false
+          },
+          {
+            "id": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+            "num": "周三013",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10500,
+        "legs": [
+          {
+            "id": "ed2c7c15-472d-4bf8-bcab-aba23848fcd5",
+            "num": "周三011",
+            "ft": "2:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "s02s04",
+            "hit": false
+          },
+          {
+            "id": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+            "num": "周三013",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 4666.62,
+        "legs": [
+          {
+            "id": "ed2c7c15-472d-4bf8-bcab-aba23848fcd5",
+            "num": "周三011",
+            "ft": "2:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "s02s04",
+            "hit": false
+          },
+          {
+            "id": "4daabd1f-5280-4d14-bb5f-da4a39fa0824",
+            "num": "周三013",
+            "ft": "1:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-15": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 4552.6,
+        "net": 3552.6,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 4.5526,
+        "minimumPayout": 4552.6,
+        "legs": [
+          {
+            "id": "e13d466e-ebaf-4925-a79b-65e639a4cf13",
+            "num": "周四001",
+            "ft": "3:2",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "7b61edcd-d4c2-4864-bc58-7aec0beae97e",
+            "num": "周四013",
+            "ft": "3:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 2492.6,
+        "net": 1492.6,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 4.9852,
+        "minimumPayout": 2224.8,
+        "legs": [
+          {
+            "id": "e13d466e-ebaf-4925-a79b-65e639a4cf13",
+            "num": "周四001",
+            "ft": "3:2",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "15e1774c-d7fb-4e9d-8e60-4040236ccff3",
+            "num": "周四012",
+            "ft": "4:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_2x2",
+        "amount": 1000,
+        "gross": 1811.25,
+        "net": 811.25,
+        "status": "covered",
+        "lines": 4,
+        "winningOdds": 7.245,
+        "minimumPayout": 1811.25,
+        "legs": [
+          {
+            "id": "b0e09e24-2073-410d-865b-3e2c8ffb1fa1",
+            "num": "周四003",
+            "ft": "0:4",
+            "ht": "0:3",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "54cd75e3-cd32-4394-9650-cacbe44fdde2",
+            "num": "周四010",
+            "ft": "0:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 2026.4,
+        "net": 1026.4,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 2.0264,
+        "minimumPayout": 2026.4,
+        "legs": [
+          {
+            "id": "748395a9-d17b-4a4f-899f-12a60782f178",
+            "num": "周四011",
+            "ft": "3:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "15e1774c-d7fb-4e9d-8e60-4040236ccff3",
+            "num": "周四012",
+            "ft": "4:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 2706.87,
+        "net": 1706.87,
+        "status": "covered",
+        "lines": 4,
+        "winningOdds": 10.8275,
+        "minimumPayout": 2478.125,
+        "legs": [
+          {
+            "id": "c4f5cb11-5bfd-4916-9250-096a35d53caf",
+            "num": "周四006",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          },
+          {
+            "id": "7137abd3-5d15-4e3d-9238-4f8a0972424f",
+            "num": "周四008",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s3",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8937.5,
+        "legs": [
+          {
+            "id": "336c578c-effe-4dbd-9b77-7ef87021ff04",
+            "num": "周四002",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": true
+          },
+          {
+            "id": "5c19ed55-b7f7-4942-aa74-f53d98904fff",
+            "num": "周四014",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3972.54,
+        "legs": [
+          {
+            "id": "336c578c-effe-4dbd-9b77-7ef87021ff04",
+            "num": "周四002",
+            "ft": "1:2",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s02",
+            "hit": true
+          },
+          {
+            "id": "5c19ed55-b7f7-4942-aa74-f53d98904fff",
+            "num": "周四014",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-16": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4140.6,
+        "legs": [
+          {
+            "id": "520027c6-8f11-4bf2-a11a-4e58ab1d06b8",
+            "num": "周五008",
+            "ft": "0:3",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "num": "周五010",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 2,
+        "winningOdds": null,
+        "minimumPayout": 2211,
+        "legs": [
+          {
+            "id": "a9d9927b-0e9e-4105-864c-ef31537f95d4",
+            "num": "周五004",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "num": "周五010",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 4290,
+        "net": 3290,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 4.29,
+        "minimumPayout": 4290,
+        "legs": [
+          {
+            "id": "1419e239-9a1c-4ee6-af68-68cab1e2f4eb",
+            "num": "周五003",
+            "ft": "0:2",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "aa",
+            "hit": true
+          },
+          {
+            "id": "a9d9927b-0e9e-4105-864c-ef31537f95d4",
+            "num": "周五004",
+            "ft": "4:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 2721.88,
+        "net": 1721.88,
+        "status": "covered",
+        "lines": 4,
+        "winningOdds": 10.8875,
+        "minimumPayout": 2721.875,
+        "legs": [
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "num": "周五010",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          },
+          {
+            "id": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+            "num": "周五011",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 8775,
+        "legs": [
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "num": "周五010",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          },
+          {
+            "id": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+            "num": "周五011",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3900.312,
+        "legs": [
+          {
+            "id": "32acab01-4d9f-4c2e-90b0-d490a1dfc3c6",
+            "num": "周五010",
+            "ft": "1:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          },
+          {
+            "id": "8ea688c0-32c2-436d-a9bb-2fa054dd97b4",
+            "num": "周五011",
+            "ft": "2:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s00",
+            "hit": false
+          }
+        ]
+      }
+    ],
+    "2026-10-17": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 4161.5,
+        "legs": [
+          {
+            "id": "2643d561-4a96-412f-9bac-466e7a674c84",
+            "num": "周六015",
+            "ft": "0:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "05ed0131-1e0b-4094-b13b-b0fd388d6b72",
+            "num": "周六029",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "d",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 1998.75,
+        "net": 998.75,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 3.9975,
+        "minimumPayout": 1998.75,
+        "legs": [
+          {
+            "id": "2643d561-4a96-412f-9bac-466e7a674c84",
+            "num": "周六015",
+            "ft": "0:1",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+            "num": "周六025",
+            "ft": "6:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 1960,
+        "net": 960,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 1.96,
+        "minimumPayout": 1960,
+        "legs": [
+          {
+            "id": "5428bab0-af99-4998-ac52-94343b2aca9f",
+            "num": "周六019",
+            "ft": "3:2",
+            "ht": "2:1",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          },
+          {
+            "id": "16e5b6fc-23da-4e71-a365-6313ade35fd9",
+            "num": "周六025",
+            "ft": "6:1",
+            "ht": "3:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2890,
+        "legs": [
+          {
+            "id": "912d4c13-747c-4334-a6f4-b2f61c3497b6",
+            "num": "周六008",
+            "ft": "2:2",
+            "ht": "0:2",
+            "state": "completed",
+            "key": "s4",
+            "hit": false
+          },
+          {
+            "id": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+            "num": "周六020",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s1",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 10562.5,
+        "legs": [
+          {
+            "id": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+            "num": "周六020",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": true
+          },
+          {
+            "id": "05ed0131-1e0b-4094-b13b-b0fd388d6b72",
+            "num": "周六029",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 6861.04,
+        "net": 5861.04,
+        "status": "covered",
+        "lines": 9,
+        "winningOdds": 61.75,
+        "minimumPayout": 4513.8438,
+        "legs": [
+          {
+            "id": "afd52cdd-bb79-4b8c-9e78-8bf97fb0ec05",
+            "num": "周六020",
+            "ft": "1:0",
+            "ht": "1:0",
+            "state": "completed",
+            "key": "s01s00",
+            "hit": true
+          },
+          {
+            "id": "05ed0131-1e0b-4094-b13b-b0fd388d6b72",
+            "num": "周六029",
+            "ft": "0:0",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s00s00",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "2026-10-18": [
+      {
+        "structure": "direction_1x1",
+        "amount": 1000,
+        "gross": 4080.4,
+        "net": 3080.4,
+        "status": "covered",
+        "lines": 1,
+        "winningOdds": 4.0804,
+        "minimumPayout": 4080.4,
+        "legs": [
+          {
+            "id": "2f5bd91b-4252-418d-8434-61e6a08cd1fe",
+            "num": "周日013",
+            "ft": "2:5",
+            "ht": "1:2",
+            "state": "completed",
+            "key": "a",
+            "hit": true
+          },
+          {
+            "id": "44406d65-5652-4351-9f55-c7f88b914976",
+            "num": "周日015",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "direction_1x2",
+        "amount": 1000,
+        "gross": 2383.6,
+        "net": 1383.6,
+        "status": "covered",
+        "lines": 2,
+        "winningOdds": 4.7672,
+        "minimumPayout": 2201.8,
+        "legs": [
+          {
+            "id": "44406d65-5652-4351-9f55-c7f88b914976",
+            "num": "周日015",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          },
+          {
+            "id": "e31872d5-3964-468d-9e9b-24eb38848b6c",
+            "num": "周日024",
+            "ft": "4:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "h",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "htft_1x1",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 1,
+        "winningOdds": null,
+        "minimumPayout": 2736,
+        "legs": [
+          {
+            "id": "20aceaf6-69b8-42b4-9bd7-a63244d4a802",
+            "num": "周日003",
+            "ft": "2-2",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "dd",
+            "hit": false
+          },
+          {
+            "id": "e31872d5-3964-468d-9e9b-24eb38848b6c",
+            "num": "周日024",
+            "ft": "4:1",
+            "ht": "2:0",
+            "state": "completed",
+            "key": "hh",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "structure": "goals_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 2287.5,
+        "legs": [
+          {
+            "id": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67",
+            "num": "周日002",
+            "ft": "1-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s2",
+            "hit": true
+          },
+          {
+            "id": "44406d65-5652-4351-9f55-c7f88b914976",
+            "num": "周日015",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s3",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_2x2",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 4,
+        "winningOdds": null,
+        "minimumPayout": 7150,
+        "legs": [
+          {
+            "id": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67",
+            "num": "周日002",
+            "ft": "1-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          },
+          {
+            "id": "44406d65-5652-4351-9f55-c7f88b914976",
+            "num": "周日015",
+            "ft": "2:1",
+            "ht": "0:0",
+            "state": "completed",
+            "key": "s02s01",
+            "hit": false
+          }
+        ]
+      },
+      {
+        "structure": "score_3x3",
+        "amount": 1000,
+        "gross": 0,
+        "net": -1000,
+        "status": "miss",
+        "lines": 9,
+        "winningOdds": null,
+        "minimumPayout": 3466.944,
+        "legs": [
+          {
+            "id": "fd720007-3e78-4176-8e9a-1fb6f3d7dc67",
+            "num": "周日002",
+            "ft": "1-1",
+            "ht": "1-1",
+            "state": "completed",
+            "key": "s01s01",
+            "hit": true
+          },
+          {
+            "id": "41fedf23-9d54-4260-afa4-64f42ad07dba",
+            "num": "周日022",
+            "ft": "0:3",
+            "ht": "0:1",
+            "state": "completed",
+            "key": "s00s03",
+            "hit": false
+          }
+        ]
+      }
+    ]
+  }
+}
