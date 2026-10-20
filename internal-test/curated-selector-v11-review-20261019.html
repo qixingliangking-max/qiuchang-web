@@ -1,62 +1,13 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-<title>AI精选师｜V1.0复盘与V1.1升级标准｜球场档案</title>
-<style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#26384f;background:#f1f5fb}
-*{box-sizing:border-box}body{margin:0}header{background:#fff;border-bottom:1px solid #dfe8f4}
-nav{max-width:1000px;margin:auto;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{font-weight:900;color:#28589e;text-decoration:none;font-size:16px}nav a:last-child{color:#617d9e;font-size:12px;text-decoration:none}
-main{max-width:1000px;margin:auto;padding:22px 15px 55px}
-.card{background:#fff;border:1px solid #e0e7f2;border-radius:17px;padding:21px;margin-bottom:15px;box-shadow:0 4px 18px #28466506}
-h1{font-size:25px;margin:8px 0 10px}h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:16px 0 9px}
-p,li{font-size:13px;line-height:1.9;color:#63758f}.intro{max-width:770px}.tag{display:inline-block;font-size:11px;font-weight:900;border-radius:999px;background:#edf3ff;color:#3c62af;padding:5px 10px}
-table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;padding:12px 11px;border-bottom:1px solid #eaf0f6}th{color:#71849d;font-size:11px;font-weight:900;background:#f8faff}td{color:#3c506e}tr:last-child td{border:0}
-.positive{color:#227a5a;font-weight:850}.negative{color:#b3595b;font-weight:850}
-.small{font-size:11px;color:#8b9aaf;line-height:1.8}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.module{border:1px solid #e3eaf4;border-radius:13px;padding:15px;background:#fcfdff}
-.module strong{font-size:13px;color:#334965}.module p{margin:7px 0 0;font-size:12px}
-.info{background:#f0f5ff;border:1px solid #d9e6ff;padding:12px 14px;border-radius:12px;color:#466391;font-size:12px;line-height:1.85}
-.line{border-left:3px solid #8da9d8;padding:8px 12px;margin:13px 0;color:#546981;font-size:12px;line-height:1.8}
-ul{margin:5px 0 0;padding-left:20px}li{margin:6px 0}
-.footer{font-size:11px;color:#91a0af;line-height:1.8;text-align:center;padding:8px 0 18px}
-@media(max-width:650px){main{padding:13px 10px 40px}.card{padding:15px;border-radius:14px}.grid{grid-template-columns:1fr}h1{font-size:22px}th,td{padding:10px 5px;font-size:11px}}
-</style></head>
-<body><header><nav><a class="brand" href="../index.html">⚽ 球场档案 · Research</a><a href="curated-lab-blind-20261005-18.html">← 返回遮挡回测</a></nav></header>
-<main>
-<section class="card"><span class="tag">V1.0 验证完成 · V1.1 规则设计</span><h1>四位AI精选师｜复盘与升级方案</h1>
-<p class="intro">研究范围：2026年10月5—18日；14个业务日、212场合格赛前FINAL、56组双场方案。先冻结选场档，再独立读取完赛比分。V1.0是四套固定规则，不是四个会自主学习、独立运行的大模型。</p>
-<div class="info">必须区分：本轮为10月19日组织的历史遮挡回放，并非10月5—18日实际提前发布；看过这14天的结果后，不能再将同一14天的“规则升级命中率”称为独立验证。</div>
-</section>
-<section class="card"><h2>一、V1.0真实诊断</h2>
-<div style="overflow-x:auto"><table>
-<thead><tr><th>精选师</th><th>双场命中</th><th>等额模拟回报率</th><th>主要问题</th></tr></thead>
-<tbody><tr><td>① 方向</td><td>9/14 · 64.3%</td><td class="positive">+20.98%</td><td>样本小；单选与官方让球的准入还需细化</td></tr>
-<tr><td>② 半全场</td><td>8/14 · 57.1%</td><td class="negative">−43.14%</td><td>四种组合导致命中不等于有效返还</td></tr>
-<tr><td>③ 总进球</td><td>3/13 · 23.1%</td><td class="negative">−45.31%</td><td>单场候选范围漏掉实际尾部，Gate过松</td></tr>
-<tr><td>④ 比分</td><td>4/14 · 28.6%</td><td class="positive">+33.57%</td><td>胜场极少、赔率高，结果方差很大</td></tr></tbody></table></div>
-<p class="small">模拟口径：每组100点，所有已选双场组合等额分配；如其中一组满足赛果，该组按官方历史赛前赔率计算条件返还。总进球1组涉及10月10日中断比赛，剔除结算分母。模拟结果非真实投入或可实现收益。</p>
-<h3>总进球单场失误归因（27场有效比分）</h3>
-<p>两球数覆盖 <b>10场</b>；未覆盖的17场中，仅 <b>2场</b> 属于主模型原⑤候选里的第三个球数被删掉；另外 <b>15场</b> 连主模型原始总进球候选都没有覆盖。故恢复“三球数”解决不了主要问题，重点是淘汰分布过散的比赛。</p>
-<div class="line">半全场的8/14不代表有效收益；比分的4/14也不能直接定性失败。双方玩法包含4种与9种组合，必须同时评估单场覆盖、双场覆盖、平均赔率和模拟回报率。</div>
-</section>
-<section class="card"><h2>二、V1.1四位精选师的升级标准</h2>
-<div class="grid">
-<div class="module"><strong>① 方向精选师｜保留主干、严审双选</strong><p>先核对锁板单选与方向是否一致，再看主客场差异、市场归一化概率及官方让球线。普通胜平负与让球不得混淆；单选缺失或概率未校准时不冒充“高确定性”。单场不过Gate时允许弃选。</p></div>
-<div class="module"><strong>② 半全场精选师｜从覆盖率转向组合质量</strong><p>分别计算两条半全场路径的赛前证据和覆盖，再按实际4种组合检查赔率结构。不能因为两场TOP2都覆盖就给高评级；若缺乏可信的上下半场数据或组合风险过高，直接空缺。</p></div>
-<div class="module"><strong>③ 总进球精选师｜坚决保持每场2球数</strong><p>从有效赛前μ、进球分布、球队近期攻防和官方总进球盘筛选。新增0—1球低尾与4球以上高尾风险检查、进球路径冲突阻断。不提供可信全分布时不强制两场配对，不能靠恢复3球数掩盖选场问题。</p></div>
-<div class="module"><strong>④ 比分精选师｜独立TOP3选择与高波动门槛</strong><p>Raw TOP10、比赛路径、联赛与主客比分频率独立审核；检查三低结构、1-1集中、高尾与路径合法性。对TOP3集中度过低或比分赔率分布过散的场次降低准入，避免用方向评分直接替代比分判断。</p></div>
-</div>
-<h3>共同门槛：数据Gate → 单场Gate → 双场Gate → 审核</h3>
-<ul><li>输入必须来自冻结的赛前FINAL和截止时点前的赔率快照。对锁板后更新的记录保留版本审计，不使用后验球队数据。</li>
-<li>先独立形成3—5场合格候选，再双场配对；不够两场时保留空缺。筛选得分只用于排序，不把官方赔率的隐含概率冒充模型真实概率。</li>
-<li>半全场与比分必须有各自独立的路径质量评价；总进球每场最多两项，双场最多4种组合。</li>
-<li>评价同时报告：单场命中、组合命中、弃选率、选项数、历史模拟回报、赔率风险与最大连续未命中。</li>
-<li>任何V1.1结果不得覆盖V1.0冻结记录、历史回放或用户已确认的10月19日双版本方案。</li></ul>
-</section>
-<section class="card"><h2>三、下一步验证纪律</h2>
-<p><b>V1.1目前是审核通过的设计规范，不是已经证明更优的新模型。</b> 应使用此前未参与复盘的未来赛前锁板批次，V1.0与V1.1同时影子筛选并冻结，赛后才评估真实差异。训练与验证不能混用；14天仅56组、小样本高方差，不能宣称长期优势。</p>
-<p>如果新规则在未来连续多批中提高了质量且没有显著增加弃选、赔率来源风险，再考虑升级为自动推荐；在此之前V1.0维持归档、V1.1独立运行，不自动覆盖正式方案。</p>
-<div class="info">当前阶段：复盘审计完成 ✅　V1.1规则设计完成 ✅　V1.1独立引擎实现及新赛前样本验证：尚待执行。</div></section>
-<div class="footer">球场档案 · 内部研究资料｜所有成绩均为历史回放或模拟口径，不构成任何投注建议。</div>
-</main></body></html>
+<meta http-equiv="refresh" content="0;url=./curated-lab-20261019.html?v=20261020settled1">
+<link rel="canonical" href="https://qcda.cn/internal-test/curated-lab-20261019.html">
+<title>球场档案｜精选研究页面已统一</title>
+<style>body{font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fa;color:#24334b;margin:0;padding:12vh 24px;text-align:center}a{color:#2356b8}main{max-width:540px;margin:auto}</style>
+</head>
+<body><main><h1>精选研究测试页已统一</h1><p>该旧测试页面已停用，正在前往10月19日第一版精选研究测试页。</p><p><a href="./curated-lab-20261019.html?v=20261020settled1">点击进入唯一主测试页</a></p></main></body>
+</html>
