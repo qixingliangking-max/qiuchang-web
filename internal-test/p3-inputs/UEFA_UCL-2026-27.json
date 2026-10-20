@@ -290,6 +290,22 @@
       "away_team": "斯图加特",
       "match_date": "2026-10-14",
       "kickoff_at": "2026-10-14T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106333",
+      "match_id": "fotmob:6106333",
+      "home_team": "费内巴切",
+      "away_team": "布拉格斯拉维亚",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T16:45:00.000Z"
+    },
+    {
+      "source_match_id": "6106422",
+      "match_id": "fotmob:6106422",
+      "home_team": "萨巴赫",
+      "away_team": "多特蒙德",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T16:45:00.000Z"
     }
   ]
 }

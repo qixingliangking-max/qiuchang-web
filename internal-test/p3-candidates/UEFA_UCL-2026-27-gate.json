@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 36,
-  "collected_matches": 36,
+  "input_matches": 38,
+  "collected_matches": 38,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 879,
+  "aggregate_players": 882,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "多特蒙德",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉格斯拉维亚",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -141,7 +141,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨巴赫",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -151,7 +151,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费内巴切",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
