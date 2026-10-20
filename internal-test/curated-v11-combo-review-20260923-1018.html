@@ -1,63 +1,13 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-<title>精选研究实验室｜V1.1组合优化回测</title>
-<style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--bg:#f3f6fb;--ink:#263753;--sub:#7b8ca5;--line:#dfe7f3;--primary:#315eac}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,select,input{font:inherit}button{cursor:pointer}
-header.top{background:#fff;border-bottom:1px solid var(--line)}header.top>div{max-width:1120px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 17px}
-.brand{text-decoration:none;font-size:16px;font-weight:900;color:#20436c}.back{text-decoration:none;font-size:12px;color:#52719a;font-weight:750}
-main{max-width:1120px;margin:auto;padding:19px 15px 60px}
-.hero,.control,.plan,.section{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:0 4px 20px rgba(35,65,99,.025)}
-.hero{padding:22px 24px}.hero h1{font-size:25px;font-weight:900;margin:9px 0}.hero p{font-size:12px;line-height:1.8;color:var(--sub);margin:6px 0}
-.pill{display:inline-flex;color:#4367a1;background:#edf3fe;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:900}
-.control{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:13px;padding:13px 16px}
-.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.controls button,.controls select,.controls input{min-height:38px;border:1px solid #dae4f1;border-radius:9px;background:#fff;padding:8px 10px;font-size:12px;color:#405e86;font-weight:800}
-.controls #revealer{background:#3667b8;color:#fff;border-color:#3667b8}#budget{width:105px}#daySelect{min-width:137px}
-.control label{font-size:11px;color:#7f8da1;font-weight:850}
-.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:16px 0}
-.tabs button{border:1px solid var(--line);border-radius:11px;background:#fff;color:#687d9b;padding:12px 7px;font-size:12px;font-weight:900;min-height:45px}
-.tabs button.active{border-color:#a8c3f0;background:#ecf3ff;color:#315eb1}
-.heading{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:14px 0 10px}.heading h2{font-size:17px;margin:0}.heading small{font-size:11px;color:var(--sub)}
-.plan{overflow:hidden}.plan-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:15px 18px;background:#f8faff}
-.plan-head strong{font-size:14px}.plan-head small{display:block;margin-top:5px;font-size:10px;color:#8d9aaf}.status{color:#456fbc;border:1px solid #dbe6fa;border-radius:99px;padding:6px 9px;font-size:10px;font-weight:900}
-.net{font-size:13px;font-weight:900;white-space:nowrap}.plus{color:#14835e!important}.minus{color:#b95057!important}
-.legs{display:flex;gap:11px;align-items:stretch;padding:15px 18px}.leg{flex:1;min-width:0;padding:8px 3px}.join{display:flex;justify-content:center;align-items:center;color:#9bb0cf;font-size:22px;font-weight:900;flex:0 0 25px}
-.leg-small{display:flex;flex-wrap:wrap;gap:6px;color:#8898af;font-size:10px;align-items:center}.num{font-weight:900;color:#3461aa;background:#edf3fc;border-radius:6px;padding:5px 7px}
-.fixture{font-size:14px;font-weight:900;line-height:1.55;margin:11px 0 9px}.fixture small{font-size:11px;color:#a1acbc;font-weight:500}
-.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font-size:11px;background:#eff5ff;border:1px solid #dce8fc;padding:7px 8px;border-radius:8px;color:#365da5;font-weight:780}.chip b{font-weight:900}
-.leg-foot{font-size:10px;color:#9ca9ba;margin-top:12px;line-height:1.5}
-.resultbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;background:#f8faff;padding:15px 18px;border-top:1px solid #e9edf5}
-.resultbar div{display:flex;flex-direction:column;gap:6px}.resultbar small{font-size:10px;color:#7f91aa}.resultbar b{font-size:15px;color:#365c9c}
-.risk{font-size:11px;color:#8b7493;padding:0 18px;line-height:1.8}
-.details{border-top:1px solid var(--line)}.details summary{cursor:pointer;list-style:none;font-size:12px;color:#3b6ab0;padding:14px 18px;font-weight:900;display:flex;justify-content:space-between;gap:5px}.details summary::-webkit-details-marker{display:none}
-.scroll{width:100%;overflow-x:auto}.details .scroll{padding:0 14px 14px}table{border-collapse:collapse;min-width:590px;width:100%;font-size:11px}th,td{padding:10px;border-bottom:1px solid #e8edf5;text-align:left}th{background:#f5f8fe;color:#768ca7;font-weight:900}td{color:#405675}
-.section{padding:17px;margin-top:16px}.section h3{margin:0 0 12px;font-size:15px}.muted{font-size:11px;color:#7e8da4;line-height:1.75}.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.history-list{display:flex;flex-direction:column;border:1px solid #edf1f7;border-radius:10px;overflow:hidden}
-.historyrow{border:0;background:#fff;display:grid;grid-template-columns:95px 1fr 95px;align-items:center;gap:10px;text-align:left;font-size:11px;color:#58708f;padding:12px 14px;border-bottom:1px solid #ecf0f6}
-.historyrow.active{background:#f0f5ff;color:#2e5bab}.historyname{min-width:0;overflow-wrap:anywhere}.historyname small{font-size:10px;color:#8c9cb0}.historyresult{font-weight:900;text-align:right}.empty{background:#fff;border:1px solid var(--line);padding:26px;border-radius:15px;text-align:center;color:#8295ac;font-size:13px}
-footer{text-align:center;padding:25px 10px;color:#9aa9bb;font-size:11px;line-height:1.8}
-@media(max-width:730px){main{padding:12px 10px 45px}.hero{padding:18px 15px}.hero h1{font-size:21px}.control{padding:12px}.tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.tabs button{font-size:11px;padding:9px 5px;min-height:39px}.legs{flex-direction:column;gap:2px;padding:9px 14px}.leg{padding:10px 0}.join{font-size:18px;height:14px;flex:none}.fixture{font-size:14px}.resultbar{padding:12px;gap:7px}.resultbar b{font-size:13px}.historyrow{grid-template-columns:63px 1fr 73px;gap:7px;padding:10px 8px}.section{padding:13px}.summary-grid{grid-template-columns:1fr}}
-@media(max-width:365px){.controls{gap:5px}.controls button,.controls select,.controls input{padding:7px;font-size:11px}#daySelect{min-width:115px}.resultbar small{font-size:9px}.chip{font-size:10px}}
-</style></head><body>
-<header class="top"><div><a class="brand" href="../index.html">⚽ 球场档案 · Research</a><a class="back" href="curated-lab-20261019.html">← 精选研究实验室</a></div></header>
-<main>
-<section class="hero"><span class="pill">V1.1 · 组合结构影子回测</span><h1>AI精选师｜9月23日—10月18日</h1>
-<p>保留原研究实验室的日期切换、玩法标签、方案卡片和历史列表。方向可单×单、单×双、双×双；半全场及进球双选；比分除两场各3个比分，再增加3场各3比分的独立实验。</p>
-<p><b>审计说明：</b>先冻结284条合格赛前模型输入对应的103组研究方案，再读取比赛结果。所有历史组合都是后来制作的赛果遮挡回放，不是当日实际提前发布；过去样本已参与升级设计，不能当作独立未来验证。</p>
-</section>
-<section class="control"><div class="controls"><button id="prevDay" type="button" aria-label="上一日期">◀</button><select id="daySelect" aria-label="选择回测日期"></select><button id="nextDay" type="button" aria-label="下一日期">▶</button><button id="revealer" type="button" aria-pressed="false">揭晓回测赛果</button></div><div class="controls"><label for="budget">每组模拟点数</label><input id="budget" type="number" min="10" max="100000" value="1000" step="10"></div></section>
-<nav id="tabs" class="tabs" role="tablist" aria-label="专项精选类别">
-<button type="button" class="active" data-type="direction" aria-selected="true">① 方向</button><button type="button" data-type="htft" aria-selected="false">② 半全场</button><button type="button" data-type="goals" aria-selected="false">③ 总进球</button><button type="button" data-type="score" aria-selected="false">④ 比分2串1</button><button type="button" data-type="scoreThreeLegExperiment" aria-selected="false">⑤ 比分3串1</button>
-</nav>
-<div class="heading"><h2 id="dayTitle">当天精选方案</h2><small id="dayMeta">赛前冻结记录</small></div>
-<section id="cards" aria-live="polite"><div class="empty">正在读取组合档案…</div></section>
-<div class="summary-grid"><section class="section"><h3>历史日期与方案</h3><div id="history" class="history-list"></div></section>
-<section class="section"><h3>独立回测对照｜1000点</h3><div id="aggregate"><p class="muted">数据默认遮挡，点击上方揭晓赛果。</p></div></section></div>
-<section class="section"><h3>新组合优化师下一轮约束</h3><p class="muted">只看命中率会误判。方向2×2如果包含大量低于4.00的命中组合，即使覆盖率高也可能净亏。下一版将增加对每条组合的盈亏平衡审核，并让不合格的方向组合退回单×双或单×单，而不是一味追求双选覆盖。总进球仍然每场2球数，比分3串1只做实验并单独计数。</p></section>
-<footer>球场档案 · AI精选师组合回测资料｜非真实投注结果，不构成投注建议</footer>
-</main>
-<script src="curated-v11-combo-blind-20260923-1018.js?v=1"></script>
-<script src="curated-v11-combo-settlement-20260923-1018.js?v=1"></script>
-<script src="curated-v11-combo-review-20260923-1018.js?v=1"></script>
-</body></html>
+<meta http-equiv="refresh" content="0;url=./curated-lab-20261019.html?v=20261020settled1">
+<link rel="canonical" href="https://qcda.cn/internal-test/curated-lab-20261019.html">
+<title>球场档案｜精选研究页面已统一</title>
+<style>body{font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fa;color:#24334b;margin:0;padding:12vh 24px;text-align:center}a{color:#2356b8}main{max-width:540px;margin:auto}</style>
+</head>
+<body><main><h1>精选研究测试页已统一</h1><p>该旧测试页面已停用，正在前往10月19日第一版精选研究测试页。</p><p><a href="./curated-lab-20261019.html?v=20261020settled1">点击进入唯一主测试页</a></p></main></body>
+</html>
