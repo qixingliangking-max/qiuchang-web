@@ -48,14 +48,14 @@ jobs:
             if(!initialDay.includes('10月19日'))throw Error(name+': selected day should open first '+initialDay);
             if(await page.locator('#plans .plan').count()!==2)throw Error(name+': expected two independently selected pairs');
             const intro=await page.locator('#plans .plan').first().innerText();
-            for(const word of ['周一002','让胜（+1）','1.50','周一007','普通主胜','1.36','2.04','待赛']){
+            for(const word of ['周一002','让胜（+1）','1.50','周一007','普通主胜','1.36','未命中','赛后模拟返还']){
               if(!intro.includes(word))throw Error(name+': missing official selection '+word);
             }
-            if(/人工录入|未命中|模拟返还/.test(intro))throw Error(name+': inappropriate text on pending pair');
+            if(/人工录入|待赛|待结算/.test(intro))throw Error(name+': completed pair still looks pending');
             const labels=await page.locator('#plans .plan .plan-id').allInnerTexts();
             if(!labels[0].includes('原方案')||!labels[1].includes('AI精选师 V1'))throw Error(name+': dual version titles missing '+JSON.stringify(labels));
             const aiDirection=await page.locator('#plans .plan').nth(1).innerText();
-            if(!aiDirection.includes('周一002')||!aiDirection.includes('周一007')||!aiDirection.includes('2.04'))throw Error(name+': shadow direction odds mismatch');
+            if(!aiDirection.includes('周一002')||!aiDirection.includes('周一007')||!aiDirection.includes('未命中'))throw Error(name+': settled shadow direction mismatch');
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
@@ -76,7 +76,7 @@ jobs:
             const modalRows=await page.locator('.alloc tbody tr').count();
             if(modalRows!==1)throw Error(name+': direction must have one priced branch');
             if(!(await page.locator('.alloc tbody').innerText()).includes('2.04'))throw Error(name+': direction combined odds missing');
-            if(!(await page.locator('#dialogBody').innerText()).includes('待赛'))throw Error(name+': pending modal must not settle');
+            if(!(await page.locator('#dialogBody').innerText()).includes('模拟返还')||(await page.locator('#dialogBody').innerText()).includes('待赛'))throw Error(name+': settled modal did not show payout');
             const firstShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
             await page.locator('#modeTabs button[data-mode="cold"]').click();
             const secondShare=await page.locator('.alloc tbody tr:first-child td:nth-child(4)').textContent();
@@ -100,7 +100,7 @@ jobs:
                 if((await page.locator('#dialogSub').innerText()).includes(index?'原方案':'AI精选师'))throw Error(name+': variant dialog not separated');
                 const n=await page.locator('.alloc tbody tr').count();
                 if(n!==count)throw Error(name+': expected '+count+' combos in '+type+' variant '+index+', got '+n);
-                if((await page.locator('#dialogBody').innerText()).includes('未命中'))throw Error(name+': unplayed version shows settlement');
+                if(!(await page.locator('#dialogBody').innerText()).includes('模拟返还'))throw Error(name+': completed version is missing settlement in '+type);
                 await page.locator('#closeDialog').click();
               }
             }
