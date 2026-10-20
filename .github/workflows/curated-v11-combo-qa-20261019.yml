@@ -1,4 +1,4 @@
-name: [ARCHIVED] Curated V1.1 combo offline QA
+name: "ARCHIVED - Curated V1.1 combo offline QA"
 on:
   workflow_dispatch:
 permissions:
