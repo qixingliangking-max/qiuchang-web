@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/curated-canonical-live-qa.yml"
+      - "internal-test/curated-lab-20261019.html"
 permissions:
   contents: read
 jobs:
@@ -59,6 +60,14 @@ jobs:
                 if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('未命中'))throw Error(name+' LIVE_RENDER_FAIL');
                 await context.close();
               }
+              const noScript=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844},locale:'zh-CN'});
+              const fallbackPage=await noScript.newPage();
+              await fallbackPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?static_fallback_20261020=1',{waitUntil:'load',timeout:35000});
+              const fallback=await fallbackPage.evaluate(()=>({plans:document.querySelectorAll('#plans .plan').length,settlementRows:document.querySelectorAll('#plans details tbody tr').length,text:document.querySelector('#plans')?.innerText?.slice(0,600)}));
+              console.log('LIVE_NO_JS_FALLBACK',JSON.stringify(fallback));
+              if(fallback.plans!==2||fallback.settlementRows!==8)throw Error('STATIC_FALLBACK_INCOMPLETE');
+              await noScript.close();
+              // Mobile and desktop passed; static backup passed.
             }finally{await browser.close()}
           })().catch(e=>{console.error(e.stack);process.exitCode=1});
           JS
