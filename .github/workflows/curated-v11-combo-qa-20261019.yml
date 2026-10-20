@@ -1,10 +1,5 @@
-name: Curated V1.1 combo 22-day browser QA
+name: [ARCHIVED] Curated V1.1 combo offline QA
 on:
-  push:
-    paths:
-      - 'internal-test/curated-v11-combo-*.js'
-      - 'internal-test/curated-v11-combo-review-20260923-1018.html'
-      - '.github/workflows/curated-v11-combo-qa-20261019.yml'
   workflow_dispatch:
 permissions:
   contents: read
