@@ -1,14 +1,6 @@
-name: Curated blind replay 14-day offline QA
+name: [ARCHIVED] Curated V1 blind replay offline QA
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'internal-test/curated-lab-blind-20261005-18.html'
-      - 'internal-test/curated-lab-blind-20261005-18.js'
-      - 'internal-test/curated-lab-blind-selection-20261005-18.js'
-      - 'internal-test/curated-lab-blind-settlement-20261005-18.js'
-      - 'internal-test/curated-selector-v11-review-20261019.html'
-      - '.github/workflows/curated-blind-replay-20261019.yml'
 permissions:
   contents: read
 jobs:
