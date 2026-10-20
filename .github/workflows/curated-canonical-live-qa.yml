@@ -1,0 +1,66 @@
+name: "Curated canonical live page diagnostic"
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/curated-canonical-live-qa.yml"
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Verify HTTPS and static file delivery
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in curated-lab-20261019.html curated-lab-20261019.js curated-lab-data-20261019.js curated-lab-blind-selection-20261005-18.js curated-lab-blind-settlement-20261005-18.js; do
+            code=$(curl --location --silent --show-error --max-time 30 --output /tmp/curated-live-output --write-out '%{http_code}' "https://qcda.cn/internal-test/$name?live_check=20261020")
+            echo "LIVE_FILE $name HTTP=$code bytes=$(wc -c </tmp/curated-live-output) first=$(head -c 60 /tmp/curated-live-output | tr '\n' ' ')"
+            test "$code" = 200
+          done
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Chromium and Playwright
+        run: |
+          mkdir -p /tmp/qcda-live
+          cd /tmp/qcda-live
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test live page on mobile and desktop
+        shell: bash
+        run: |
+          cat >/tmp/qcda-live/check.cjs <<'JS'
+          const { chromium,devices }=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try {
+              for(const [name,profile] of [['mobile',devices['iPhone 13']],['desktop',{viewport:{width:1280,height:860}}]]) {
+                const context=await browser.newContext({...profile,ignoreHTTPSErrors:false,locale:'zh-CN'});
+                const page=await context.newPage();const errors=[],failures=[],responses=[];
+                page.on('pageerror',e=>errors.push(String(e)));
+                page.on('requestfailed',r=>failures.push(r.url()+':'+r.failure()?.errorText));
+                page.on('response',r=>{if(r.url().includes('curated-lab')||r.url().includes('blind'))responses.push({url:r.url(),status:r.status(),bytes:r.headers()['content-length']})});
+                await page.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?live_browser_20261020=1',{waitUntil:'networkidle',timeout:35000});
+                const outcome=await page.evaluate(()=>({
+                   title:document.title,url:location.href,planCount:document.querySelectorAll('#plans .plan').length,
+                   planText:document.querySelector('#plans')?.innerText?.slice(0,700),
+                   hasData:!!window.QC_CURATED_LAB_DATA,firstVersion:window.QC_CURATED_LAB_DATA?.version,
+                   date:document.querySelector('#dateLabel')?.innerText,
+                   selectedState:window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-19']?.status,
+                   scripts:[...document.querySelectorAll('script[src]')].map(s=>s.src),
+                   historyCount:document.querySelectorAll('#history .hist-row').length
+                 }));
+                console.log('LIVE_BROWSER',JSON.stringify({name,outcome,errors,failures,responses},null,2));
+                if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('未命中'))throw Error(name+' LIVE_RENDER_FAIL');
+                await context.close();
+              }
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e.stack);process.exitCode=1});
+          JS
+          cd /tmp/qcda-live
+          node check.cjs
