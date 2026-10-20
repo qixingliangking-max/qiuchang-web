@@ -706,6 +706,14 @@
       "away_team": "塞维利亚",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868095",
+      "match_id": "fotmob:5868095",
+      "home_team": "赫塔费",
+      "away_team": "巴列卡诺",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T19:00:00Z"
     }
   ]
 }

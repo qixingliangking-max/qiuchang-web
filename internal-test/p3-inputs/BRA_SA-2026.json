@@ -2466,6 +2466,14 @@
       "away_team": "布拉干蒂诺RB",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103667",
+      "match_id": "fotmob:5103667",
+      "home_team": "科林蒂安",
+      "away_team": "维多利亚",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T23:00:00Z"
     }
   ]
 }

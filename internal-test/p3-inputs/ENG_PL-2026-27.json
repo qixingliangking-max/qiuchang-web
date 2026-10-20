@@ -529,7 +529,7 @@
       "home_team": "伯恩茅斯",
       "away_team": "桑德兰",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:00:00.000Z"
+      "kickoff_at": "2026-10-18T13:00:00Z"
     },
     {
       "source_match_id": "5795477",
@@ -537,7 +537,7 @@
       "home_team": "布莱顿",
       "away_team": "水晶宫",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:00:00.000Z"
+      "kickoff_at": "2026-10-18T13:00:00Z"
     },
     {
       "source_match_id": "5795480",
@@ -545,7 +545,7 @@
       "home_team": "利兹联",
       "away_team": "曼联",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:00:00.000Z"
+      "kickoff_at": "2026-10-18T13:00:00Z"
     },
     {
       "source_match_id": "5795483",
@@ -553,7 +553,15 @@
       "home_team": "诺丁汉森林",
       "away_team": "阿森纳",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T15:30:00.000Z"
+      "kickoff_at": "2026-10-18T15:30:00Z"
+    },
+    {
+      "source_match_id": "5795484",
+      "match_id": "fotmob:5795484",
+      "home_team": "热刺",
+      "away_team": "考文垂",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T19:00:00Z"
     }
   ]
 }

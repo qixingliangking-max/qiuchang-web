@@ -569,7 +569,15 @@
       "home_team": "法马利康",
       "away_team": "阿尔维卡",
       "match_date": "2026-10-12",
-      "kickoff_at": "2026-10-12T19:15:00.000Z"
+      "kickoff_at": "2026-10-12T19:15:00Z"
+    },
+    {
+      "source_match_id": "5887594",
+      "match_id": "fotmob:5887594",
+      "home_team": "布拉加",
+      "away_team": "吉维森特",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T19:15:00Z"
     }
   ]
 }
