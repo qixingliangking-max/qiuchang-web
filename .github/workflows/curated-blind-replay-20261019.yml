@@ -1,4 +1,4 @@
-name: [ARCHIVED] Curated V1 blind replay offline QA
+name: "ARCHIVED - Curated V1 blind replay offline QA"
 on:
   workflow_dispatch:
 permissions:
