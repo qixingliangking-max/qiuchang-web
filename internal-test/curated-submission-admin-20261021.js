@@ -6,58 +6,45 @@
 var targetDay='2026-10-21', archive=null;
 var root=document.createElement('section');root.id='qc-submitted-archive';root.hidden=true;
 root.setAttribute('aria-label','中央每日精选测试档案');
-var style=document.createElement('style');
-style.textContent=[
-'#qc-submitted-archive{margin-top:14px}',
-'.qca-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}',
-'.qca-card{min-width:0;padding:19px 17px;background:#fff;border:1px solid #dfe6f2;border-radius:16px;box-shadow:0 7px 24px rgba(32,53,96,.04)}',
-'.qca-head{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;margin-bottom:13px}',
-'.qca-head strong{font-size:16px;color:#253c68}',
-'.qca-tag{padding:5px 9px;border-radius:7px;font-size:11px;background:#edf3ff;color:#355ba5;font-weight:850}',
-'.qca-ai{border-top:3px solid #7757b5}.qca-ai .qca-head strong{color:#7154ab}',
-'.qca-leg{padding:13px 0;border-top:1px solid #ecf0f5}',
-'.qca-leg b{display:block;font-size:13px;line-height:1.6}',
-'.qca-picks{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}',
-'.qca-pick{font-size:12px;padding:5px 10px;border-radius:8px;background:#f1f5fe;color:#2f5cb3;font-weight:800}',
-'.qca-diff{font-size:11px;color:#a66d28;margin-top:7px}',
-'.qca-foot{color:#78869b;font-size:11px;line-height:1.8;margin-top:11px}',
-'.qca-description{margin:0 0 13px;color:#61718c;font-size:12px;line-height:1.7}',
-'.qca-title{font-size:19px;font-weight:900;margin:14px 0 5px}',
-'.qca-alert{background:#fff9eb;color:#916522;border:1px solid #f0dbaa;padding:10px 13px;border-radius:10px;margin-bottom:13px;font-size:12px;line-height:1.7}',
-'.qca-hist{display:grid;grid-template-columns:minmax(0,100px) 1fr minmax(0,112px);gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid #e8edf5;font-size:12px;align-items:center}',
-'.qca-hist b{color:#314d7d}.qca-hist small{display:block;color:#8490a3;margin-top:4px;font-size:10px}',
-'@media(max-width:650px){.qca-grid{grid-template-columns:1fr}.qca-hist{grid-template-columns:74px 1fr 62px;font-size:11px;gap:5px;padding:10px}}'
-].join('\n');
-document.head.appendChild(style);
+/* Use original .plan/.plan-head/.legs/.chip/.plan-foot styles unchanged. */
 var plans=document.getElementById('plans'),history=document.getElementById('history');
 plans?.parentNode?.insertBefore(root,plans);
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
 function dayIsCurrent(){return (document.getElementById('dateLabel')?.textContent||'').includes('10月21日')}
 function project(){return document.querySelector('#tabs button.active')?.dataset.type||'direction'}
+
 function readableMarket(kind){return ({had:'普通胜平负',hhad:'官方让球',hafu:'半全场',ttg:'总进球',crs:'比分'})[kind]||kind}
-function pickLabel(leg){return (leg.selections||[]).map(function(s){return '<span class="qca-pick">'+esc(s)+'</span>'}).join('')}
-function hitStatus(row){return row.settlement_status==='settled'?(row.group_hit?'已命中':'未命中'):'待结算'}
-function name(track){return track==='baseline'?'基准测试':'AI分析师精选'}
+function hitStatus(row){return row.settlement_status==='settled'?(row.group_hit?'命中':'未中'):'待结算'}
+function name(track){return track==='baseline'?'基准版':'AI精选版'}
+function countCombos(legs,addon){
+ return (legs||[]).reduce(function(n,l){return n*(addon?(l.options||[]).length:(l.selections||[]).length)},1);
+}
+function legMarkup(l,addon){
+ var title='<div class="leg-top"><b>'+esc(l.match_num)+'　'+esc(l.home)+' vs '+esc(l.away)+'</b></div>';
+ var market=addon?l.market:l.market_kind;
+ var line=l.handicap;
+ var meta='<div class="leg-meta">'+esc(readableMarket(market))+(line!==null&&line!==undefined?'（'+esc(line)+'）':'')+'</div>';
+ var options=addon
+  ?(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>'}).join('')
+  :(l.selections||[]).map(function(o){return '<span class="chip">'+esc(o)+'</span>'}).join('');
+ var result=(!addon&&l.ft&&l.ht)
+   ?'<div class="leg-result">赛果 '+esc(l.ft)+' ｜ 半场 '+esc(l.ht)+'</div>':'';
+ return '<div class="leg">'+title+meta+'<div class="chips">'+options+'</div>'+result+'</div>';
+}
+function consistentCard(label,legs,tag,variant,addon,format){
+ var count=(legs||[]).length,combos=countCombos(legs,addon);
+ var head='<div class="plan-head"><span class="plan-id">'+esc(label)+'</span><span class="flag '+(tag==='命中'?'hit':tag==='未中'?'miss':'pending')+'">'+esc(tag)+'</span></div>';
+ var body='<div class="legs">'+(legs||[]).map(function(l){return legMarkup(l,addon)}).join('')+'</div>';
+ var summary='<div class="plan-foot"><div class="plan-return"><small>'+esc(format||'双场方案')+' · 完整选项</small><strong>'+count+'场 · '+combos+'种组合</strong></div><span class="leg-meta">仅供看球讨论</span></div>';
+ return '<article class="plan '+esc(variant)+'">'+head+body+summary+'</article>';
+}
 function card(row){
-var details=(row.legs||[]).map(function(l){
-var note='';
-var result=l.ft&&l.ht?'<div class="qca-foot">全场 '+esc(l.ft)+' · 半场 '+esc(l.ht)+' · '+(l.leg_hit===true?'已中':l.leg_hit===false?'未中':'待核')+'</div>':'';
-return '<div class="qca-leg"><b>'+esc(l.match_num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b>'+
-'<div class="qca-foot">'+esc(readableMarket(l.market_kind))+(l.handicap!==null&&l.handicap!==undefined?'（'+esc(l.handicap)+'）':'')+'</div>'+
-'<div class="qca-picks">'+pickLabel(l)+'</div>'+note+result+'</div>';
-}).join('');
-var status=row.settlement_status==='settled'?hitStatus(row):'赛后待核';
-return '<article class="qca-card '+(row.track==='ai_analyst'?'qca-ai':'')+'"><div class="qca-head"><strong>'+esc(name(row.track))+'</strong><span class="qca-tag">'+esc(status)+'</span></div>'+details+
-'<div class="qca-foot">本页仅供赛事研究与看球讨论。</div></article>';
+ return consistentCard(name(row.track),row.legs,hitStatus(row),row.track==='baseline'?'variant-original':'variant-shadow',false,'双场方案');
 }
 function addonCard(row){
  if(!row)return '';
- var d=(row.legs||[]).map(function(l){
- var picks=(l.options||[]).map(function(o){return '<span class="qca-pick">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>';}).join('');
- return '<div class="qca-leg"><b>'+esc(l.match_num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b><div class="qca-picks">'+picks+'</div></div>';
- }).join('');
- var tag=row.settlement_status==='settled'?(row.group_hit?'已命中':'未命中'):'待结算';
- return '<article class="qca-card qca-ai"><div class="qca-head"><strong>分析师加选 · '+esc(row.format)+'</strong><span class="qca-tag">'+esc(tag)+'</span></div>'+d+'</article>';
+ var title='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[row.project]||row.format);
+ return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format);
 }
 function draw(){
 if(!archive)return;
@@ -65,9 +52,7 @@ var currently=dayIsCurrent();root.hidden=!currently;root.style.display=currently
 if(currently){
  var sub=archive.groups.filter(g=>g.project===project());
  var addon=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
- root.innerHTML='<h3 class="qca-title">10月21日｜精选方案</h3>'+
- '<p class="qca-description">每类包含基准版、AI精选版与分析师加选；点击上方栏目切换。</p>'+
- '<div class="qca-grid">'+sub.map(card).join('')+addonCard(addon)+'</div>';
+ root.innerHTML='<div class="panels">'+sub.map(card).join('')+addonCard(addon)+'</div>';
  var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
  if(t)t.textContent='10月21日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
  if(meta)meta.textContent=(sub.length+(addon?1:0))+'组方案';
