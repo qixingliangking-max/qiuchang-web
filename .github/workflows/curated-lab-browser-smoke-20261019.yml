@@ -46,6 +46,18 @@ jobs:
             await page.goto(url,{waitUntil:'load'});
             await page.waitForSelector('#plans .plan',{timeout:15000});
             if(await page.locator('#manualPlans').count())throw Error(name+': separate manual panel must be removed');
+            // Oct20 manual historical selection sync: two variants across four tabs.
+            const oct20=await page.locator('#dateLabel').innerText();
+            if(!oct20.includes('10月20日'))throw Error(name+': Oct20 historical sync not selected by default');
+            for(const [type,expectedHit] of [['direction',true],['htft',true],['goals',false],['score',false]]){
+              await page.locator('#tabs button[data-type="'+type+'"]').click();
+              if(await page.locator('#plans .plan').count()!==2)throw Error(name+': Oct20 two versions missing '+type);
+              const txt=await page.locator('#plans').innerText();
+              if(!txt.includes('昨日补录')||!txt.includes('赛后模拟返还')||!txt.includes(expectedHit?'命中':'未命中'))throw Error(name+': Oct20 results/provenance missing '+type);
+            }
+            await page.locator('#tabs button[data-type="direction"]').click();
+            await page.locator('#dateLabel').click();
+            await page.locator('#calDays button[data-date="2026-10-19"]').click();
             const initialDay=await page.locator('#dateLabel').innerText();
             if(!initialDay.includes('10月19日'))throw Error(name+': selected day should open first '+initialDay);
             if(await page.locator('#plans .plan').count()!==2)throw Error(name+': expected two independently selected pairs');
@@ -61,7 +73,7 @@ jobs:
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
-            if((await page.locator('#history .hist-row').count())!==2)throw Error(name+': active direction tab should have only two frozen history records');
+            if((await page.locator('#history .hist-row').count())!==4)throw Error(name+': active direction tab should have only two frozen history records');
             if(await page.locator('.method').evaluate(el=>el.open))throw Error(name+': method text not collapsed');
             const dayBefore=await page.locator('#dateLabel').innerText();
             if(!dayBefore.includes('10月19日'))throw Error(name+': default date incorrect: '+dayBefore);
@@ -109,7 +121,7 @@ jobs:
             // Actual frozen-selection history begins on 19 Oct. It is not the
             // separate Oct 05–18 masked retrospective experiment.
             if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+': retired backtest promo still visible');
-            if(await page.locator('#history .hist-row').count()!==2)throw Error(name+': direction history should show two Oct19 frozen variants');
+            if(await page.locator('#history .hist-row').count()!==4)throw Error(name+': direction history should show two Oct19 frozen variants');
             const historyText=await page.locator('#history').innerText();
             if(historyText.includes('10月18日')||historyText.includes('赛果遮挡')||!historyText.includes('原方案')||!historyText.includes('AI精选师 V1'))throw Error(name+': historical data includes retired retrospective choices');
             await page.locator('#dateLabel').click();
@@ -119,7 +131,7 @@ jobs:
             for(const [category,label] of [['direction','胜平负'],['htft','半全场'],['goals','总进球'],['score','比分']]){
               await page.locator('#tabs button[data-type="'+category+'"]').click();
               const records=page.locator('#history .hist-row');
-              if(await records.count()!==2)throw Error(name+': '+category+' must show only its two real Oct19 variants');
+              if(await records.count()!==4)throw Error(name+': '+category+' must show only its two real Oct19 variants');
               if(await page.locator('#history .hist-row:not([data-open-type="'+category+'"])').count()!==0)throw Error(name+': cross-category history leaked into '+category);
               if(!(await page.locator('.section-bar h2').last().innerText()).includes(label))throw Error(name+': history title not bound to '+category);
             }
