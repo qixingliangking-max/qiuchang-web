@@ -1,0 +1,56 @@
+name: Verify J2 003 displayed score on website
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/j2-003-public-score-qa.yml"
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/qc003-browser
+          cd /tmp/qc003-browser
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify public fixture and score on desktop and mobile
+        shell: bash
+        run: |
+          cat > /tmp/qc003-browser/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          (async()=>{
+            const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try {
+              for(const [name,device] of [['desktop',{viewport:{width:1200,height:850}}],['mobile',devices['iPhone 13']]]){
+                const ctx=await b.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                const page=await ctx.newPage(),errors=[];
+                page.on('pageerror',e=>errors.push(String(e)));
+                const url='https://qcda.cn/football.html?date=2026-10-21&j2_003_qa=1';
+                await page.goto(url,{waitUntil:'networkidle',timeout:45000});
+                const selector='#jcFootballCards article[data-match-id="1d55f2b0-5fcc-4ecc-9966-97cecfb6a442"]';
+                await page.locator(selector).waitFor({timeout:22000});
+                const card=page.locator(selector);
+                await page.waitForFunction(sel=>{
+                  const x=document.querySelector(sel);
+                  return x && /0[-:]3/.test(x.innerText) && /0[-:]0/.test(x.innerText);
+                },selector,{timeout:18000});
+                const text=await card.innerText(),count=await page.locator('#jcFootballCards .jc-football-card').count();
+                console.log('J2_003_LIVE',{device:name,fixtureCount:count,text:text.slice(0,600)});
+                if(!/周三003/.test(text)||!/0[-:]3/.test(text)||!/0[-:]0/.test(text)||!text.includes('富山'))throw Error(name+' SCORE_NOT_SHOWN');
+                if(errors.length)throw Error(name+' JS_ERRORS '+errors.join(';'));
+                await ctx.close();
+              }
+            }finally{await b.close();}
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+          cd /tmp/qc003-browser
+          node check.cjs
