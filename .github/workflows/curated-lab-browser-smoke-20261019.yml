@@ -39,6 +39,8 @@ jobs:
           async function check(browser,device,name){
             const context=await browser.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
             const page=await context.newPage();
+            // Isolate frozen 10/19 legacy regression from the newer auto daily feed.
+            await page.route('**/rest/v1/qc_curated_live_days**',route=>route.fulfill({status:200,body:'[]',headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'apikey,authorization'}}));
             const errors=[];
             page.on('pageerror',e=>errors.push(String(e)));
             await page.goto(url,{waitUntil:'load'});
