@@ -7,7 +7,7 @@ root.id='qc-curated-extra';
 root.style.margin='14px 0 18px';
 var plans=document.getElementById('plans');
 if(!plans)return;
-plans.parentNode.insertBefore(root,plans);
+plans.parentNode.insertBefore(root,plans.nextSibling);
 /* Cards reuse original .plan, .plan-head, .legs, .chip and .plan-foot styles. */
 root.classList.add('panels');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
