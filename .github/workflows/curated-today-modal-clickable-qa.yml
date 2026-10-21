@@ -1,0 +1,74 @@
+name: Curated submitted plan clickable modal QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/curated-today-modal-clickable-qa.yml"
+      - "internal-test/curated-shared-details-20261021.js"
+      - "internal-test/curated-addons-public-20261021.js"
+      - "internal-test/curated-submission-admin-20261021.js"
+      - "internal-test/curated-lab-20261019.html"
+permissions:
+  contents: read
+jobs:
+  clickable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/curated-click
+          cd /tmp/curated-click
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Click and validate live public add-on cards on desktop and mobile
+        shell: bash
+        run: |
+          cat > /tmp/curated-click/test.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              for(const [name,device] of [['desktop',{viewport:{width:1250,height:900}}],['mobile',devices['iPhone 13']]]){
+                const context=await browser.newContext({...device,locale:'zh-CN'});
+                const page=await context.newPage();
+                const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+                await page.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?modalqa_20261021_click1=1',{waitUntil:'networkidle',timeout:45000});
+                await page.waitForFunction(()=>window.QC_CURATED_EXTRA?.groups?.length===4,{timeout:20000});
+                await page.locator('#dateLabel').click();
+                await page.locator('#calDays button[data-date="2026-10-21"]').click();
+                for(const [type,count] of [['direction',1],['htft',1],['goals',4],['score',27]]){
+                  await page.locator('#tabs button[data-type="'+type+'"]').click();
+                  const card=page.locator('#qc-curated-extra .plan').first();
+                  await card.waitFor({timeout:8000,state:'visible'});
+                  if((await card.innerText()).includes('×2.11'))throw Error(name+' odds visible on new card');
+                  await card.locator('.inspect').click();
+                  if(await page.locator('#overlay').evaluate(x=>x.hidden))throw Error(name+' '+type+' dialog did not open');
+                  const n=await page.locator('#dialogBody .alloc tbody tr').count();
+                  if(n!==count)throw Error(name+' '+type+' rows '+n+' expected '+count);
+                  if(!(await page.locator('#dialogBody').innerText()).includes('组合分配'))throw Error(name+' missing allocation');
+                  if(type==='direction'&&!(await page.locator('#dialogBody').innerText()).includes('2.11'))throw Error(name+' priced details missing');
+                  if(type==='score'&&!(await page.locator('#dialogTitle').innerText()).includes('三场'))throw Error(name+' score three-match heading missing');
+                  if(type==='goals'){
+                    const old=await page.locator('#dialogBody .alloc tbody tr:first-child td:nth-child(4)').innerText();
+                    await page.locator('#modeTabs button[data-mode="cold"]').click();
+                    const next=await page.locator('#dialogBody .alloc tbody tr:first-child td:nth-child(4)').innerText();
+                    if(old===next)throw Error(name+' allocation switching ineffective');
+                  }
+                  await page.locator('#closeDialog').click();
+                  if(!(await page.locator('#overlay').evaluate(x=>x.hidden)))throw Error(name+' dialog not closed');
+                }
+                if(errors.length)throw Error(name+' JS errors '+errors.join(' / '));
+                console.log('CURATED_MODAL_QA_PASS',name,'4 project dialogs, 1/1/4/27 rows, strategy mode, close, no card odds');
+                await context.close();
+              }
+            }finally{await browser.close();}
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+          cd /tmp/curated-click
+          node test.cjs
