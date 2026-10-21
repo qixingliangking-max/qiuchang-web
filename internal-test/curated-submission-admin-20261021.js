@@ -67,20 +67,20 @@ if(history){
   var teams=(g.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
   var picks=(g.legs||[]).map(function(l){return (l.selections||[]).join(' / ')}).join(' · ');
   var amount='—';
-  return '<div class="hist-row" data-qc-submitted-row="1">'+
+  return '<button type="button" class="hist-row" data-qc-submitted-row="1" data-qc-detail-kind="admin" data-qc-detail-code="'+esc(g.group_code)+'">'+
    '<span class="hist-day">10/21</span>'+
    '<span class="hist-leg"><b>'+teams+'</b><small>'+esc(name(g.track))+' · '+esc(picks)+'</small></span>'+
    '<span class="hist-amount">'+amount+'</span>'+
-   '<span class="hist-status">'+esc(hitStatus(g))+'</span></div>';
+   '<span class="hist-status">'+esc(hitStatus(g))+'</span></button>';
  }).join('');
  var extra=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
  if(extra){
   var teams=(extra.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
-  rows+='<div class="hist-row" data-qc-submitted-row="1">'+
+  rows+='<button type="button" class="hist-row" data-qc-submitted-row="1" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(extra.project)+'">'+
    '<span class="hist-day">10/21</span>'+
    '<span class="hist-leg"><b>'+teams+'</b><small>分析师加选 · '+esc(extra.format)+'</small></span>'+
    '<span class="hist-amount">—</span>'+
-   '<span class="hist-status">'+esc(extra.settlement_status==='settled'?(extra.group_hit?'命中':'未中'):'待结算')+'</span></div>';
+   '<span class="hist-status">'+esc(extra.settlement_status==='settled'?(extra.group_hit?'命中':'未中'):'待结算')+'</span></button>';
  }
  if(rows)history.insertAdjacentHTML('afterbegin',rows);
 }
