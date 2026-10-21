@@ -39,6 +39,13 @@ jobs:
                 const selector='#jcFootballCards article[data-match-id="1d55f2b0-5fcc-4ecc-9966-97cecfb6a442"]';
                 await page.locator(selector).waitFor({timeout:22000});
                 const card=page.locator(selector);
+                console.log('J2_003_BEFORE_WAIT',name,JSON.stringify(await page.evaluate(sel=>({
+                  date:document.getElementById('jcFootballDateLabel')?.innerText,
+                  card:document.querySelector(sel)?.innerText?.slice(0,1000),
+                  fullCount:document.querySelectorAll('#jcFootballCards article').length,
+                  total:document.getElementById('jcFootballCards')?.innerText?.slice(0,500),
+                  scripts:[...document.querySelectorAll('script[src]')].map(x=>x.src).filter(x=>/overview|app\.js/.test(x))
+                }),selector)));
                 await page.waitForFunction(sel=>{
                   const x=document.querySelector(sel);
                   return x && /0[-:]3/.test(x.innerText) && /0[-:]0/.test(x.innerText);
