@@ -12,6 +12,8 @@ var modes={balanced:'平均分配',hot:'常规优先',cold:'逆向观察',hybrid
 var state={day:null,type:'direction',budget:100,mode:'balanced',month:null,open:null,origin:null,reveal:false};
 var dates=[];
 var all=[];
+var liveAutoFollow=true;
+var liveFetchPending=false;
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -144,8 +146,9 @@ function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
  var selected=!!(db.selectedPlans&&db.selectedPlans[state.day]),backtest=!!(blind&&blind.days&&blind.days[state.day]);
+ var autoPack=selected&&db.selectedPlans[state.day]&&db.selectedPlans[state.day].rule==='QCDA_AUTO_CURATED_FROZEN_V1';
  var completed=selected&&plansFor(state.day,state.type).length>0&&plansFor(state.day,state.type).every(function(p){return !p.prematch});
- $('infoBand').textContent=selected?(completed?'10月19日双版本对照 · 已回收8场赛后比分，保持原赛前选项与赔率不变，已完成结算。':'10月19日双版本对照 · 按原赛前选项与赔率展示，待比赛结束再结算。'):backtest?'历史赛果遮挡回测 · 四类精选方案先冻结、后揭晓，非比赛当日真实发布。':'历史演示 · 组合为事后回溯生成，并非当时赛前发布。';
+ $('infoBand').textContent=autoPack?('每日自动精选 · '+(completed?'赛前冻结方案已按正式FT/HT结算。':'只使用开赛前锁定FINAL与当时有效官方赔率；已有方案不再更换，完赛后自动结算。')):selected?(completed?'10月19日双版本对照 · 已回收8场赛后比分，保持原赛前选项与赔率不变，已完成结算。':'10月19日双版本对照 · 按原赛前选项与赔率展示，待比赛结束再结算。'):backtest?'历史赛果遮挡回测 · 四类精选方案先冻结、后揭晓，非比赛当日真实发布。':'历史演示 · 组合为事后回溯生成，并非当时赛前发布。';
  $('revealRow').hidden=!backtest;
  $('revealBlind').textContent=state.reveal?'隐藏回测赛果':'揭晓回测赛果';
  $('revealBlind').setAttribute('aria-pressed',String(state.reveal));
@@ -202,13 +205,13 @@ function renderPlans(){
 function renderHistory(){
  var html=[],n=0;
  for(var d=0;d<dates.length;d++){
-   var day=dates[d];if(db.selectedPlans&&db.selectedPlans[day])continue;
+   var day=dates[d];if(day===state.day)continue;
    plansFor(day,state.type).forEach(function(plan){
      n++;var sim=allocation(plan,state.budget,state.mode);
-     var hidden=plan.blind&&!state.reveal,unsettled=plan.blind&&plan.unsettled;
+     var hidden=plan.blind&&!state.reveal,unsettled=!!plan.prematch||!!plan.unsettled;
      var status=hidden?'遮挡':unsettled?'待结算':rowStatus(sim);
      var amount=hidden?'—':unsettled?'待结算':money(sim.returns);
-     var title=plan.blind?'冻结精选V1':'方案'+String(plan.index).padStart(2,'0');
+     var title=plan.versionLabel||(plan.blind?'冻结精选V1':'方案'+String(plan.index).padStart(2,'0'));
      html.push('<button class="hist-row" data-open-date="'+esc(day)+'" data-open-index="'+plan.index+'"><span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'</span><span class="hist-leg"><b>'+esc(idNum(plan.a.row))+' '+esc(plan.a.row.h)+' / '+esc(idNum(plan.b.row))+' '+esc(plan.b.row.h)+'</b><small>'+esc(title)+' · '+esc(plan.a.options.map(function(o){return o.name}).join('+'))+' / '+esc(plan.b.options.map(function(o){return o.name}).join('+'))+'</small></span><span class="hist-amount">'+amount+'</span><span class="hist-status '+(!hidden&&!unsettled&&sim.covered?'hit':'')+'">'+status+'</span></button>');
    });
  }
@@ -273,7 +276,7 @@ function calendar(){
  $('prevMonth').disabled=current<=monthPresent[monthPresent.length-1];
  $('nextMonth').disabled=current>=monthPresent[0];
 }
-function selectDay(v){if(!dates.includes(v))return;state.day=v;state.month=new Date(v+'T12:00:00');$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');renderAll()}
+function selectDay(v){if(!dates.includes(v))return;liveAutoFollow=false;state.day=v;state.month=new Date(v+'T12:00:00');$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');renderAll()}
 function strategyDescription(mode){
  if(mode==='balanced')return '所有组合等额分配，方便比较不同选项数量与赔率结构。';
  if(mode==='hot')return '更侧重较低赔率的常规结果。';
@@ -348,4 +351,45 @@ function init(){
  state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 init();
+
+/* Independent daily test lab: only read the narrowly-scoped, publicly
+   approved FROZEN selections, never access the protected FINAL model tables.
+   All picks and pregame prices were frozen by a privileged DB schedule first.
+   No selection logic or odds backfilling runs in a browser. */
+async function refreshCuratedLive(){
+ if(liveFetchPending||!window.QC_SUPABASE_URL||!window.QC_SUPABASE_PUBLISHABLE_KEY)return;
+ liveFetchPending=true;
+ try{
+  var path=window.QC_SUPABASE_URL.replace(/\/$/,'')+
+    '/rest/v1/qc_curated_live_days?select=business_date,payload&business_date=gte.2026-10-20&order=business_date.desc&limit=90';
+  var resp=await fetch(path,{cache:'no-store',headers:{
+   'apikey':window.QC_SUPABASE_PUBLISHABLE_KEY,
+   'Authorization':'Bearer '+window.QC_SUPABASE_PUBLISHABLE_KEY,
+   'Accept':'application/json'
+  }});
+  if(!resp.ok)throw Error('精选同步 HTTP '+resp.status);
+  var rows=await resp.json();
+  if(!Array.isArray(rows))throw Error('精选同步格式异常');
+  var changed=false,previous=dates[0];
+  rows.forEach(function(record){
+   if(!record||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(record.business_date))return;
+   var day=record.business_date,p=record.payload;
+   if(day<'2026-10-20'||!p||!Array.isArray(p.entries))return;
+   // Deliberately never overwrite the 10/19 original or historical freezes.
+   var local=JSON.stringify(db.selectedPlans[day]||null);
+   if(local!==JSON.stringify(p)){db.selectedPlans[day]=p;changed=true}
+  });
+  if(changed){
+   dates=Array.from(new Set(dates.concat(Object.keys(db.selectedPlans||{})))).sort().reverse();
+   if(liveAutoFollow && dates[0]!==state.day) {
+    state.day=dates[0];state.month=new Date(state.day+'T12:00:00');
+   }
+   renderAll();
+  }
+ }catch(err){console.warn('每日精选暂时未同步，保留既有冻结方案：',String(err))}
+ finally{liveFetchPending=false}
+}
+
+refreshCuratedLive();
+setInterval(refreshCuratedLive,120000);
 })();
