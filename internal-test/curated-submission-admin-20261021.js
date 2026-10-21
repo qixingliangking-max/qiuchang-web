@@ -65,11 +65,12 @@ if(currently){
  var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
  if(t)t.textContent='10月21日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
  if(meta)meta.textContent=sub.length+'组（基准＋AI）';
+ var band=document.getElementById('infoBand');if(band)band.textContent='中央已提交8组研究测试档案（4组基准＋4组AI），当前候选未发布；下方两组对应本栏目，等待审核后按后台状态结算。';
 }
 if(history){
  history.querySelectorAll('[data-qc-submitted-row]').forEach(e=>e.remove());
  // Keep original 10/19 and 10/20 history; do not mix today's legacy auto pairs with central submitted records.
- if(currently)history.querySelectorAll('[data-open-date="2026-10-21"]').forEach(e=>e.remove());
+ history.querySelectorAll('[data-open-date="2026-10-21"]').forEach(e=>e.remove());
  var related=archive.groups.filter(g=>g.project===project());
  var rows=related.map(g=>{
   var opponents=(g.legs||[]).map(l=>esc(l.match_num+' '+l.home)).join(' / ');
