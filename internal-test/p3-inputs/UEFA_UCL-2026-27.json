@@ -362,6 +362,22 @@
       "away_team": "马德里竞技",
       "match_date": "2026-10-20",
       "kickoff_at": "2026-10-20T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106312",
+      "match_id": "fotmob:6106312",
+      "home_team": "里尔",
+      "away_team": "加拉塔萨雷",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T16:45:00.000Z"
+    },
+    {
+      "source_match_id": "6106410",
+      "match_id": "fotmob:6106410",
+      "home_team": "科莫",
+      "away_team": "曼联",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T16:45:00.000Z"
     }
   ]
 }
