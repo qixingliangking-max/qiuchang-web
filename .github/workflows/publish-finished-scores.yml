@@ -2,6 +2,12 @@ name: Publish confirmed final scores into static fixture file
 
 on:
   workflow_dispatch:
+  # The history publisher runs independently and frequently; its completion
+  # gives score publication a second trigger when GitHub delays cron events.
+  workflow_run:
+    workflows: ["Publish finalized public football history"]
+    types: [completed]
+    branches: [main]
   schedule:
     # Silent checks. Git commits/deployments happen ONLY for newly confirmed FT.
     # GH scheduled jobs are best effort and may start a few minutes late.
@@ -21,6 +27,7 @@ concurrency:
 
 jobs:
   publish-confirmed-final:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 7
     steps:
