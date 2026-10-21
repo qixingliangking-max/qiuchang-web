@@ -2349,11 +2349,32 @@ async function loadJcFootball(){
     })) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
-    // The server publishes each confirmed FT into immutable public JSON.
-    // Every visitor reads that one snapshot instead of polling jc_matches.
-    const published=typeof window.qcFetchLiveScheduleDate==='function'
-      ? await window.qcFetchLiveScheduleDate(refreshDate,true).catch(()=>null) : null;
-    const result=published?.data?.length?published:await jcFetchDateRows(refreshDate,false,true);
+    // A database-confirmed PUBLIC score snapshot may be fresher than GitHub Pages.
+    // Never request live/in-play scores or protected model data. Only FT+HT
+    // from the same exact published fixture set can be applied once.
+    let result=null;
+    if(window.qcSupabase){
+      try{
+        const {data:official,error}=await window.qcSupabase
+          .from('jc_overview_schedule_snapshots')
+          .select('payload,match_count')
+          .eq('business_date',refreshDate).maybeSingle();
+        const fresh=official?.payload?.rows;
+        const ids=new Set(candidates.filter(m=>m?.id).map(m=>String(m.id)));
+        if(!error && ids.size>0 && Array.isArray(fresh) &&
+           fresh.length===Number(official?.match_count) &&
+           fresh.length===ids.size &&
+           fresh.every(m=>m?.id && m?.business_date===refreshDate && ids.has(String(m.id))) &&
+           new Set(fresh.map(m=>String(m.id))).size===ids.size){
+          result={data:fresh,error:null,fromOfficialPublicSnapshot:true};
+        }
+      }catch(error){ console.warn('公开赛果快照暂不可用，继续读取固定赛程',error); }
+    }
+    if(!result){
+      const published=typeof window.qcFetchLiveScheduleDate==='function'
+        ? await window.qcFetchLiveScheduleDate(refreshDate,true).catch(()=>null) : null;
+      result=published?.data?.length?published:await jcFetchDateRows(refreshDate,false,true);
+    }
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     if(result?.error || !Array.isArray(result?.data)) return;
 
