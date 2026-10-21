@@ -8,27 +8,36 @@ root.style.margin='14px 0 18px';
 var plans=document.getElementById('plans');
 if(!plans)return;
 plans.parentNode.insertBefore(root,plans);
-var h=document.createElement('style');
-h.textContent='#qc-curated-extra[hidden]{display:none!important}.qc-addon-title{font-weight:850;font-size:17px;margin:10px 0}.qc-addon-card{background:white;border:1px solid #e1e8f3;border-left:3px solid #6b62b9;border-radius:14px;padding:15px 18px}.qc-addon-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.qc-addon-top strong{color:#263c64;font-size:15px}.qc-addon-tag{background:#f1f0ff;color:#6457a9;border-radius:9px;font-size:11px;padding:6px 9px;font-weight:850}.qc-addon-leg{padding:11px 0;border-top:1px solid #ebeff5}.qc-addon-leg:first-child{margin-top:12px}.qc-addon-leg b{display:block;line-height:1.6;font-size:13px}.qc-addon-choice{display:inline-flex;background:#edf3ff;color:#2f579e;padding:5px 9px;border-radius:8px;margin:5px 7px 0 0;font-size:12px;font-weight:780}.qc-addon-note{font-size:11px;color:#7c8aa0;line-height:1.7;margin-top:10px}';
-document.head.appendChild(h);
+/* Cards reuse original .plan, .plan-head, .legs, .chip and .plan-foot styles. */
+root.classList.add('panels');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
 function current(){return (document.getElementById('dateLabel')?.textContent||'').includes('10月21日')}
 function project(){return document.querySelector('#tabs button.active')?.dataset.type||'direction'}
 function status(g){return g.settlement_status==='settled'?(g.group_hit?'已命中':'未命中'):'待结算'}
 function draw(){
- var view=data&&Array.isArray(data.groups)&&current()&&
-   !(document.getElementById('qc-submitted-archive')?.hidden===false&&document.getElementById('qc-submitted-archive')?.style.display!=='none');
+ var admin=document.getElementById('qc-submitted-archive');
+ var hasAdmin=Boolean(admin&&!admin.hidden&&admin.style.display!=='none');
+ var view=data&&Array.isArray(data.groups)&&current()&&!hasAdmin;
  var item=view&&data.groups.find(function(x){return x.project===project()});
- root.hidden=!item;if(!item)return;
- var names={direction:'胜平负 · 2串1',htft:'半全场 · 2串1',goals:'总进球 · 2串1',score:'比分 · 3串1'};
+ root.hidden=!item;
+ root.style.display=item?'grid':'none';
+ if(!item)return;
+ var label='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[item.project]||item.format);
+ var count=(item.legs||[]).length;
+ var combo=(item.legs||[]).reduce(function(n,l){return n*(l.options||[]).length},1);
  var legs=(item.legs||[]).map(function(l){
- var choices=(l.options||[]).map(function(o){return '<span class="qc-addon-choice">'+esc(o.label)+' <i>&nbsp;×'+esc(o.odd)+'</i></span>'}).join('');
- return '<div class="qc-addon-leg"><b>'+esc(l.match_num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b><div>'+choices+'</div></div>';
+ var choices=(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>'}).join('');
+ return '<div class="leg"><div class="leg-top"><b>'+esc(l.match_num)+'　'+esc(l.home)+' vs '+esc(l.away)+'</b></div>'+
+ '<div class="leg-meta">'+esc(({had:'普通胜平负',hhad:'官方让球',hafu:'半全场',ttg:'总进球',crs:'比分'})[l.market]||l.market)+'</div>'+
+ '<div class="chips">'+choices+'</div></div>';
  }).join('');
- var combos=(item.legs||[]).reduce(function(acc,l){return acc*(l.options||[]).length},1);
- root.innerHTML='<div class="qc-addon-title">分析师加选方案</div><article class="qc-addon-card">'+
- '<div class="qc-addon-top"><strong>'+esc(names[item.project]||item.format)+'</strong><span class="qc-addon-tag">'+esc(status(item))+'</span></div>'+
- legs+'<div class="qc-addon-note">'+esc(item.format)+'｜共'+combos+'种组合。仅供赛事研究和看球讨论。</div></article>';
+ var state=status(item);
+ root.innerHTML='<article class="plan variant-shadow">'+
+ '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span>'+
+ '<span class="flag '+(state==='已命中'?'hit':state==='未命中'?'miss':'pending')+'">'+esc(state)+'</span></div>'+
+ '<div class="legs">'+legs+'</div>'+
+ '<div class="plan-foot"><div class="plan-return"><small>'+esc(item.format)+' · 完整选项</small>'+
+ '<strong>'+count+'场 · '+combo+'种组合</strong></div><span class="leg-meta">仅供看球讨论</span></div></article>';
 }
 var q=false;
 function schedule(){if(q)return;q=true;queueMicrotask(function(){q=false;draw()})}
