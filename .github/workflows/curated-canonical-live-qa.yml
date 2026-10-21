@@ -62,11 +62,11 @@ jobs:
                  }));
                 console.log('LIVE_BROWSER',JSON.stringify({name,outcome,errors,failures,responses},null,2));
                 if(!originalFrozenFixture)originalFrozenFixture=await page.evaluate(()=>window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-19']);
-                if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('未命中'))throw Error(name+' LIVE_RENDER_FAIL');
+                if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('昨日补录')||!outcome.date.includes('10月20日'))throw Error(name+' LIVE_RENDER_FAIL');
                 if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+' REMOVED_CARDS_VISIBLE');
                 for(const category of ['direction','htft','goals','score']){
                   await page.locator('#tabs button[data-type="'+category+'"]').click();
-                  if(await page.locator('#history .hist-row').count()!==2)throw Error(name+' OCT19_CATEGORY_HISTORY_COUNT_'+category);
+                  if(await page.locator('#history .hist-row').count()!==4)throw Error(name+' OCT19_CATEGORY_HISTORY_COUNT_'+category);
                   if(await page.locator('#history .hist-row:not([data-open-type="'+category+'"])').count()!==0)throw Error(name+' HISTORY_CROSS_CATEGORY_'+category);
                 }
                 await context.close();
@@ -74,6 +74,7 @@ jobs:
               // Simulate future frozen/settled daily payloads in the browser ONLY.
               // This does NOT write any historic or future production records.
               if(!originalFrozenFixture||originalFrozenFixture.entries?.length!==4)throw Error('ORIGINAL_FROZEN_FIXTURE_MISSING');
+              // Current Oct20 eight-group sync is separate from the old Oct19 fixture used in this test.
               const noScores=JSON.parse(JSON.stringify(originalFrozenFixture));
               for(const e of noScores.entries)for(const l of e.legs){l.row.ft=null;l.row.ht=null}
               const dailyBase={rule:'QCDA_AUTO_CURATED_FROZEN_V1',
@@ -92,7 +93,7 @@ jobs:
               await mockPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?mock_auto_20261021=1',{waitUntil:'networkidle',timeout:35000});
               await mockPage.waitForFunction(()=>!!window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-22'],{timeout:15000});
               if(!(await mockPage.locator('#dateLabel').innerText()).includes('10月22日'))throw Error('DAILY_NEWEST_DATE_MISSING');
-              if(await mockPage.locator('#history .hist-row').count()!==4)throw Error('DAILY_DIRECTION_HISTORY_NOT_ACCUMULATING');
+              if(await mockPage.locator('#history .hist-row').count()!==6)throw Error('DAILY_DIRECTION_HISTORY_NOT_ACCUMULATING');
               if(await mockPage.locator('#history .hist-row:not([data-open-type="direction"])').count()!==0)throw Error('MOCK_HISTORY_CATEGORY_LEAK');
               if(await mockPage.locator('#plans .plan').count()!==1 || !(await mockPage.locator('#plans').innerText()).includes('赛后模拟返还'))throw Error('DAILY_SETTLEMENT_DISPLAY_FAILED');
               await mockPage.locator('#dateLabel').click();
@@ -103,7 +104,7 @@ jobs:
               if(await mockPage.locator('#plans .plan').count()!==2)throw Error('HISTORICAL_DUAL_VERSION_CHANGED');
               for(const type of ['htft','goals','score']){
                 await mockPage.locator('#tabs button[data-type="'+type+'"]').click();
-                if(await mockPage.locator('#history .hist-row').count()!==4)throw Error('DAILY_HISTORY_WRONG_COUNT_'+type);
+                if(await mockPage.locator('#history .hist-row').count()!==6)throw Error('DAILY_HISTORY_WRONG_COUNT_'+type);
                 if(await mockPage.locator('#history .hist-row:not([data-open-type="'+type+'"])').count()!==0)throw Error('DAILY_HISTORY_WRONG_CATEGORY_'+type);
               }
               console.log('LIVE_DAILY_AUTOMATION_MOCK_PASS',JSON.stringify({dailySelected:'10/22 settled',dailyPrematch:'10/21 frozen',original:'10/19 intact'}));
