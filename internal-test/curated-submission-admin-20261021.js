@@ -54,7 +54,7 @@ return '<article class="qca-card '+(row.track==='ai_analyst'?'qca-ai':'')+'"><di
 }
 function draw(){
 if(!archive)return;
-var currently=dayIsCurrent();root.hidden=!currently;plans.hidden=currently;
+var currently=dayIsCurrent();root.hidden=!currently;root.style.display=currently?'':'none';plans.hidden=currently;plans.style.display=currently?'none':'';
 if(currently){
  var sub=archive.groups.filter(g=>g.project===project());
  root.innerHTML='<h3 class="qca-title">中央精选测试档案｜10月21日</h3>'+
