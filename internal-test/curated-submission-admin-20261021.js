@@ -63,16 +63,26 @@ if(history){
  // Keep original 10/19 and 10/20 history; do not mix today's legacy auto pairs with central submitted records.
  history.querySelectorAll('[data-open-date="2026-10-21"]').forEach(e=>e.remove());
  var related=archive.groups.filter(g=>g.project===project());
- var rows=related.map(g=>{
-  var opponents=(g.legs||[]).map(l=>esc(l.match_num+' '+l.home)).join(' / ');
-  return '<div class="qca-hist" data-qc-submitted-row="1"><span><b>10/21</b><small>'+esc(name(g.track))+'</small></span>'+
-   '<span><b>'+opponents+'</b><small>'+esc((g.legs||[]).map(l=>(l.selections||[]).join(' / ')).join(' · '))+'</small></span>'+
-   '<span>'+esc(hitStatus(g))+'</span></div>';
+ var rows=related.map(function(g){
+  var teams=(g.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
+  var picks=(g.legs||[]).map(function(l){return (l.selections||[]).join(' / ')}).join(' · ');
+  var amount='—';
+  return '<div class="hist-row" data-qc-submitted-row="1">'+
+   '<span class="hist-day">10/21</span>'+
+   '<span class="hist-leg"><b>'+teams+'</b><small>'+esc(name(g.track))+' · '+esc(picks)+'</small></span>'+
+   '<span class="hist-amount">'+amount+'</span>'+
+   '<span class="hist-status">'+esc(hitStatus(g))+'</span></div>';
  }).join('');
- if(rows)history.insertAdjacentHTML('afterbegin',rows);
  var extra=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
- if(extra){var teams=(extra.legs||[]).map(l=>esc(l.match_num+' '+l.home)).join(' / ');
- history.insertAdjacentHTML('afterbegin','<div class="qca-hist" data-qc-submitted-row="1"><span><b>10/21</b><small>分析师加选</small></span><span><b>'+teams+'</b><small>'+esc(extra.format)+'</small></span><span>'+esc(extra.settlement_status==='settled'?(extra.group_hit?'已命中':'未命中'):'待结算')+'</span></div>');}
+ if(extra){
+  var teams=(extra.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
+  rows+='<div class="hist-row" data-qc-submitted-row="1">'+
+   '<span class="hist-day">10/21</span>'+
+   '<span class="hist-leg"><b>'+teams+'</b><small>分析师加选 · '+esc(extra.format)+'</small></span>'+
+   '<span class="hist-amount">—</span>'+
+   '<span class="hist-status">'+esc(extra.settlement_status==='settled'?(extra.group_hit?'命中':'未中'):'待结算')+'</span></div>';
+ }
+ if(rows)history.insertAdjacentHTML('afterbegin',rows);
 }
 }
 var queued=false;
