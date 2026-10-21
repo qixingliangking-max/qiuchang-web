@@ -39,6 +39,7 @@ jobs:
           const { chromium,devices }=require('playwright');
           (async()=>{
             const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            let originalFrozenFixture=null;
             try {
               for(const [name,profile] of [['mobile',devices['iPhone 13']],['desktop',{viewport:{width:1280,height:860}}]]) {
                 const context=await browser.newContext({...profile,ignoreHTTPSErrors:false,locale:'zh-CN'});
@@ -59,9 +60,41 @@ jobs:
                    historyCount:document.querySelectorAll('#history .hist-row').length
                  }));
                 console.log('LIVE_BROWSER',JSON.stringify({name,outcome,errors,failures,responses},null,2));
+                if(!originalFrozenFixture)originalFrozenFixture=await page.evaluate(()=>window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-19']);
                 if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('未命中'))throw Error(name+' LIVE_RENDER_FAIL');
                 await context.close();
               }
+              // Simulate future frozen/settled daily payloads in the browser ONLY.
+              // This does NOT write any historic or future production records.
+              if(!originalFrozenFixture||originalFrozenFixture.entries?.length!==4)throw Error('ORIGINAL_FROZEN_FIXTURE_MISSING');
+              const noScores=JSON.parse(JSON.stringify(originalFrozenFixture));
+              for(const e of noScores.entries)for(const l of e.legs){l.row.ft=null;l.row.ht=null}
+              const dailyBase={rule:'QCDA_AUTO_CURATED_FROZEN_V1',
+                status:'frozen',originalLabel:'每日自动精选 V1 · 赛前冻结',
+                entries:noScores.entries};
+              const dailySettled={...dailyBase,status:'settled',entries:originalFrozenFixture.entries};
+              const mocked=[{business_date:'2026-10-21',payload:dailyBase},
+                            {business_date:'2026-10-22',payload:dailySettled}];
+              const mockCtx=await browser.newContext({viewport:{width:390,height:844},locale:'zh-CN'});
+              const mockPage=await mockCtx.newPage();
+              await mockPage.route('**/rest/v1/qc_curated_live_days**',route=>{
+                const cors={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'apikey,authorization,content-type','Access-Control-Allow-Methods':'GET,OPTIONS'};
+                if(route.request().method()==='OPTIONS')return route.fulfill({status:204,headers:cors});
+                return route.fulfill({status:200,headers:{...cors,'Content-Type':'application/json'},body:JSON.stringify(mocked)});
+              });
+              await mockPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?mock_auto_20261021=1',{waitUntil:'networkidle',timeout:35000});
+              await mockPage.waitForFunction(()=>!!window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-22'],{timeout:15000});
+              if(!(await mockPage.locator('#dateLabel').innerText()).includes('10月22日'))throw Error('DAILY_NEWEST_DATE_MISSING');
+              if(await mockPage.locator('#plans .plan').count()!==1 || !(await mockPage.locator('#plans').innerText()).includes('赛后模拟返还'))throw Error('DAILY_SETTLEMENT_DISPLAY_FAILED');
+              await mockPage.locator('#dateLabel').click();
+              await mockPage.locator('#calDays button[data-date="2026-10-21"]').click();
+              if(await mockPage.locator('#plans .plan').count()!==1 || !(await mockPage.locator('#plans').innerText()).includes('待赛'))throw Error('DAILY_PREMATCH_DISPLAY_FAILED');
+              await mockPage.locator('#dateLabel').click();
+              await mockPage.locator('#calDays button[data-date="2026-10-19"]').click();
+              if(await mockPage.locator('#plans .plan').count()!==2)throw Error('HISTORICAL_DUAL_VERSION_CHANGED');
+              console.log('LIVE_DAILY_AUTOMATION_MOCK_PASS',JSON.stringify({dailySelected:'10/22 settled',dailyPrematch:'10/21 frozen',original:'10/19 intact'}));
+              await mockCtx.close();
+
               const noScript=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844},locale:'zh-CN'});
               const fallbackPage=await noScript.newPage();
               await fallbackPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?static_fallback_20261020=1',{waitUntil:'load',timeout:35000});
