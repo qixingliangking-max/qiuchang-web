@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 38,
-  "collected_matches": 38,
+  "input_matches": 45,
+  "collected_matches": 45,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 882,
+  "aggregate_players": 894,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利物浦",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "博德闪耀",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃因霍温",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,12 +51,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴塞罗那",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴黎圣日耳曼",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉迪斯拉发",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,12 +81,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯图加特",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼城",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,12 +101,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "比利亚雷亚尔",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "波尔图",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -131,7 +131,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "罗马",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -161,7 +161,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "那不勒斯",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -181,7 +181,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "雅典AEK",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -191,7 +191,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马德里竞技",
-      "matches": 2
+      "matches": 3
     }
   ],
   "gate_status": "PASS",

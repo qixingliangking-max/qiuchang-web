@@ -114,14 +114,14 @@
       "quality_tier": "LIMITED",
       "teams": 36,
       "published_path": "internal-test/p3-data/UEFA_UCL-2026-27.json",
-      "blob_sha": "67fa0db847d1041e1fe2200eda4591dcd1ef86f2",
+      "blob_sha": "a7ef046bad6f82ebe97c72875b3a08950c34bfe7",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UCL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-20T19:29:52.839Z",
-      "finished_matches": 38
+      "last_incremental_refresh_at": "2026-10-21T05:09:12.286Z",
+      "finished_matches": 45
     },
     {
       "league_code": "UEFA_UEL",
@@ -294,14 +294,14 @@
       "quality_tier": "LIMITED",
       "teams": 24,
       "published_path": "internal-test/p3-data/ENG_CH-2026-27.json",
-      "blob_sha": "ad04231fd11aa9d9aa54b61a41bc6c2aa9c5a2a7",
+      "blob_sha": "572ef4e046e958e51ffc0f38319746a5dc64cf41",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 26.5,
+      "avg_team_depth_coverage_pct": 28,
       "gate_report": "internal-test/p3-candidates/ENG_CH-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-17T17:54:16.344Z",
-      "finished_matches": 131
+      "last_incremental_refresh_at": "2026-10-21T05:08:34.406Z",
+      "finished_matches": 132
     },
     {
       "league_code": "ESP_L2",

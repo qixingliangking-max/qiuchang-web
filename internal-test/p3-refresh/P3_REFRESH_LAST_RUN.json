@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-20T19:30:04.619Z",
+  "run_at": "2026-10-21T05:09:20.697Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 23,
+  "promoted_leagues": 2,
+  "noop_leagues": 22,
   "blocked_leagues": 0,
   "results": [
     {
@@ -37,15 +37,15 @@
     {
       "league_code": "ENG_CH",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 131,
+      "status": "PROMOTED",
+      "discovered_finished": 132,
       "baseline_finished_matches": 131,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -290,9 +290,9 @@
       "league_code": "UEFA_UCL",
       "season": "2026/27",
       "status": "PROMOTED",
-      "discovered_finished": 38,
-      "baseline_finished_matches": 36,
-      "new_finished_matches": 2,
+      "discovered_finished": 45,
+      "baseline_finished_matches": 38,
+      "new_finished_matches": 7,
       "gate_status": "PASS",
       "collection_coverage_pct": 100,
       "unmapped_count": 0,
