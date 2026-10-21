@@ -40,32 +40,38 @@ function hitStatus(row){return row.settlement_status==='settled'?(row.group_hit?
 function name(track){return track==='baseline'?'基准测试':'AI分析师精选'}
 function card(row){
 var details=(row.legs||[]).map(function(l){
-var note=l.selection_source==='manual'
-?'<div class="qca-diff">人工调整 · 原FINAL单选 '+esc(l.final_single||'—')+'；官方让球 '+esc(l.handicap??'—')+'</div>':'';
+var note='';
 var result=l.ft&&l.ht?'<div class="qca-foot">全场 '+esc(l.ft)+' · 半场 '+esc(l.ht)+' · '+(l.leg_hit===true?'已中':l.leg_hit===false?'未中':'待核')+'</div>':'';
 return '<div class="qca-leg"><b>'+esc(l.match_num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b>'+
 '<div class="qca-foot">'+esc(readableMarket(l.market_kind))+(l.handicap!==null&&l.handicap!==undefined?'（'+esc(l.handicap)+'）':'')+'</div>'+
 '<div class="qca-picks">'+pickLabel(l)+'</div>'+note+result+'</div>';
 }).join('');
-var status=row.status==='candidate'?'研究候选 · 未发布':hitStatus(row);
+var status=row.settlement_status==='settled'?hitStatus(row):'赛后待核';
 return '<article class="qca-card '+(row.track==='ai_analyst'?'qca-ai':'')+'"><div class="qca-head"><strong>'+esc(name(row.track))+'</strong><span class="qca-tag">'+esc(status)+'</span></div>'+details+
-'<div class="qca-foot">双场联合覆盖估计：'+esc(row.joint_coverage??'—')+'%'+
-(row.rationale?'<div>'+esc(row.rationale)+'</div>':'')+'</div></article>';
+'<div class="qca-foot">本页仅供赛事研究与看球讨论。</div></article>';
+}
+function addonCard(row){
+ if(!row)return '';
+ var d=(row.legs||[]).map(function(l){
+ var picks=(l.options||[]).map(function(o){return '<span class="qca-pick">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>';}).join('');
+ return '<div class="qca-leg"><b>'+esc(l.match_num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b><div class="qca-picks">'+picks+'</div></div>';
+ }).join('');
+ var tag=row.settlement_status==='settled'?(row.group_hit?'已命中':'未命中'):'待结算';
+ return '<article class="qca-card qca-ai"><div class="qca-head"><strong>分析师加选 · '+esc(row.format)+'</strong><span class="qca-tag">'+esc(tag)+'</span></div>'+d+'</article>';
 }
 function draw(){
 if(!archive)return;
 var currently=dayIsCurrent();root.hidden=!currently;root.style.display=currently?'':'none';plans.hidden=currently;plans.style.display=currently?'none':'';
 if(currently){
  var sub=archive.groups.filter(g=>g.project===project());
- root.innerHTML='<h3 class="qca-title">中央精选测试档案｜10月21日</h3>'+
- '<p class="qca-description">主模型已提交 · 独立后台档案｜'+esc(archive.submission_version)+
- '｜4组基准＋4组AI分析师｜只读研究记录</p>'+
- (archive.batch_status==='candidate'?'<div class="qca-alert">本批次仍处于研究候选状态，没有正式发布或赛后结算。仅网站管理员可查看，不计入公开命中率。</div>':'')+
- '<div class="qca-grid">'+sub.map(card).join('')+'</div>';
+ var addon=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
+ root.innerHTML='<h3 class="qca-title">10月21日｜精选方案</h3>'+
+ '<p class="qca-description">每类包含基准版、AI精选版与分析师加选；点击上方栏目切换。</p>'+
+ '<div class="qca-grid">'+sub.map(card).join('')+addonCard(addon)+'</div>';
  var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
  if(t)t.textContent='10月21日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
- if(meta)meta.textContent=sub.length+'组（基准＋AI）';
- var band=document.getElementById('infoBand');if(band)band.textContent='中央已提交8组研究测试档案（4组基准＋4组AI），当前候选未发布；下方两组对应本栏目，等待审核后按后台状态结算。';
+ if(meta)meta.textContent=(sub.length+(addon?1:0))+'组方案';
+ var band=document.getElementById('infoBand');if(band)band.textContent='精选方案仅用于赛事研究；未结束的比赛暂不显示结算结果。';
 }
 if(history){
  history.querySelectorAll('[data-qc-submitted-row]').forEach(e=>e.remove());
@@ -79,6 +85,9 @@ if(history){
    '<span>'+esc(hitStatus(g))+'</span></div>';
  }).join('');
  if(rows)history.insertAdjacentHTML('afterbegin',rows);
+ var extra=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
+ if(extra){var teams=(extra.legs||[]).map(l=>esc(l.match_num+' '+l.home)).join(' / ');
+ history.insertAdjacentHTML('afterbegin','<div class="qca-hist" data-qc-submitted-row="1"><span><b>10/21</b><small>分析师加选</small></span><span><b>'+teams+'</b><small>'+esc(extra.format)+'</small></span><span>'+esc(extra.settlement_status==='settled'?(extra.group_hit?'已命中':'未命中'):'待结算')+'</span></div>');}
 }
 }
 var queued=false;
@@ -102,5 +111,6 @@ try{
  });
 }catch(e){console.warn('精选测试档案读取异常',String(e))}
 }
+window.addEventListener('qc-curated-addons-ready',queueDraw);
 start();
 })();
