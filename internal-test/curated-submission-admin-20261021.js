@@ -84,7 +84,9 @@ var queued=false;
 function queueDraw(){if(queued)return;queued=true;queueMicrotask(function(){queued=false;draw();});}
 new MutationObserver(queueDraw).observe(document.getElementById('dateLabel'),{subtree:true,childList:true,characterData:true});
 new MutationObserver(queueDraw).observe(document.getElementById('tabs'),{subtree:true,attributes:true,attributeFilter:['class']});
-new MutationObserver(queueDraw).observe(history,{childList:true});
+// History redraw is owned by the legacy page; avoid observing our own insertions.
+document.getElementById('budget')?.addEventListener('input',queueDraw);
+document.getElementById('modeTabs')?.addEventListener('click',queueDraw);
 async function start(){
 if(!window.qcSupabase){return;}
 try{
