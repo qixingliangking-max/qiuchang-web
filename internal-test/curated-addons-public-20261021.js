@@ -26,18 +26,18 @@ function draw(){
  var count=(item.legs||[]).length;
  var combo=(item.legs||[]).reduce(function(n,l){return n*(l.options||[]).length},1);
  var legs=(item.legs||[]).map(function(l){
- var choices=(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>'}).join('');
+ var choices=(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+'</span>'}).join('');
  return '<div class="leg"><div class="leg-top"><b>'+esc(l.match_num)+'　'+esc(l.home)+' vs '+esc(l.away)+'</b></div>'+
  '<div class="leg-meta">'+esc(({had:'普通胜平负',hhad:'官方让球',hafu:'半全场',ttg:'总进球',crs:'比分'})[l.market]||l.market)+'</div>'+
  '<div class="chips">'+choices+'</div></div>';
  }).join('');
  var state=status(item);
- root.innerHTML='<article class="plan variant-shadow">'+
+ root.innerHTML='<article class="plan variant-shadow" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(item.project)+'" style="cursor:pointer">'+
  '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span>'+
  '<span class="flag '+(state==='已命中'?'hit':state==='未命中'?'miss':'pending')+'">'+esc(state)+'</span></div>'+
  '<div class="legs">'+legs+'</div>'+
  '<div class="plan-foot"><div class="plan-return"><small>'+esc(item.format)+' · 完整选项</small>'+
- '<strong>'+count+'场 · '+combo+'种组合</strong></div><span class="leg-meta">仅供看球讨论</span></div></article>';
+ '<strong>'+count+'场 · '+combo+'种组合</strong></div><button type="button" class="inspect">方案详情 →</button></div></article>';
 }
 var q=false;
 function schedule(){if(q)return;q=true;queueMicrotask(function(){q=false;draw()})}
