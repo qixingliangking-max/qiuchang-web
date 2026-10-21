@@ -53,7 +53,7 @@ jobs:
               await page.locator('#tabs button[data-type="'+type+'"]').click();
               if(await page.locator('#plans .plan').count()!==2)throw Error(name+': Oct20 two versions missing '+type);
               const txt=await page.locator('#plans').innerText();
-              if(!txt.includes('昨日补录')||!txt.includes('赛后模拟返还')||!txt.includes(expectedHit?'命中':'未命中'))throw Error(name+': Oct20 results/provenance missing '+type);
+              if(!txt.includes('基准版')||!txt.includes('AI精选版')||!txt.includes('赛后模拟返还')||!txt.includes(expectedHit?'命中':'未命中')||/昨日补录|原始取价|影子测试/.test(txt))throw Error(name+': Oct20 public-cleanup or result mismatch '+type);
             }
             await page.locator('#tabs button[data-type="direction"]').click();
             await page.locator('#dateLabel').click();
@@ -67,7 +67,7 @@ jobs:
             }
             if(/人工录入|待赛|待结算/.test(intro))throw Error(name+': completed pair still looks pending');
             const labels=await page.locator('#plans .plan .plan-id').allInnerTexts();
-            if(!labels[0].includes('原方案')||!labels[1].includes('AI精选师 V1'))throw Error(name+': dual version titles missing '+JSON.stringify(labels));
+            if(labels[0]!=='基准版'||labels[1]!=='AI精选版')throw Error(name+': expected concise public version titles '+JSON.stringify(labels));
             const aiDirection=await page.locator('#plans .plan').nth(1).innerText();
             if(!aiDirection.includes('周一002')||!aiDirection.includes('周一007')||!aiDirection.includes('未命中'))throw Error(name+': settled shadow direction mismatch');
             const title=await page.locator('.hero h1').innerText();
@@ -111,7 +111,7 @@ jobs:
                 for(const odd of odds)if(!legText.includes(odd))throw Error(name+': missing '+(index?'AI':'original')+' odds '+odd+' in '+type);
                 if(index===1)for(const team of shadowTeams)if(!legText.includes(team))throw Error(name+': wrong shadow fixture in '+type+' '+team);
                 await page.locator('#plans .plan').nth(index).locator('.inspect').click();
-                if((await page.locator('#dialogSub').innerText()).includes(index?'原方案':'AI精选师'))throw Error(name+': variant dialog not separated');
+                if((await page.locator('#dialogSub').innerText()).includes(index?'基准版':'AI精选版'))throw Error(name+': variant dialog not separated');
                 const n=await page.locator('.alloc tbody tr').count();
                 if(n!==count)throw Error(name+': expected '+count+' combos in '+type+' variant '+index+', got '+n);
                 if(!(await page.locator('#dialogBody').innerText()).includes('模拟返还'))throw Error(name+': completed version is missing settlement in '+type);
@@ -123,7 +123,7 @@ jobs:
             if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+': retired backtest promo still visible');
             if(await page.locator('#history .hist-row').count()!==4)throw Error(name+': direction history should show two Oct19 frozen variants');
             const historyText=await page.locator('#history').innerText();
-            if(historyText.includes('10月18日')||historyText.includes('赛果遮挡')||!historyText.includes('原方案')||!historyText.includes('AI精选师 V1'))throw Error(name+': historical data includes retired retrospective choices');
+            if(historyText.includes('10月18日')||/昨日补录|影子测试|原方案 · 已确认/.test(historyText)||!historyText.includes('基准版')||!historyText.includes('AI精选版'))throw Error(name+': history not cleaned or includes backtests');
             await page.locator('#dateLabel').click();
             if(!(await page.locator('#calDays button[data-date="2026-10-18"]').isDisabled()))throw Error(name+': historical backtest date must be disabled');
             await page.locator('#calDays button[data-date="2026-10-19"]').click();
