@@ -105,9 +105,9 @@ try{
  const r=await window.qcSupabase.rpc('qc_curated_admin_preview',{p_business_date:targetDay});
  if(r.error){if(!/ADMIN_REQUIRED/i.test(r.error.message||''))console.warn('精选测试后台读取失败',r.error.message);return;}
  if(!r.data||!Array.isArray(r.data.groups)||r.data.groups.length!==8)return;
- archive=r.data;queueDraw();
+ archive=r.data;queueDraw();window.dispatchEvent(new Event('qc-curated-admin-ready'));
  window.qcSupabase.auth.onAuthStateChange(function(ev,session){
-  if(!session){archive=null;root.hidden=true;plans.hidden=false;}
+  if(!session){archive=null;root.hidden=true;root.style.display='none';plans.hidden=false;plans.style.display='';window.dispatchEvent(new Event('qc-curated-admin-ready'));}
  });
 }catch(e){console.warn('精选测试档案读取异常',String(e))}
 }
