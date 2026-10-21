@@ -62,8 +62,9 @@ jobs:
                  }));
                 console.log('LIVE_BROWSER',JSON.stringify({name,outcome,errors,failures,responses},null,2));
                 if(!originalFrozenFixture)originalFrozenFixture=await page.evaluate(()=>window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-19']);
-                if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('昨日补录')||!outcome.date.includes('10月20日'))throw Error(name+' LIVE_RENDER_FAIL');
+                if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('基准版')||!outcome.planText.includes('AI精选版')||!outcome.date.includes('10月20日')||/昨日补录|原始取价|影子测试|用户10月21/.test(outcome.planText))throw Error(name+' LIVE_RENDER_FAIL');
                 if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+' REMOVED_CARDS_VISIBLE');
+                if(/昨日补录|原始取价|影子测试|用户10月21|原方案 · 已确认/.test(await page.locator('body').innerText()))throw Error(name+' BACKEND_NOTES_VISIBLE');
                 for(const category of ['direction','htft','goals','score']){
                   await page.locator('#tabs button[data-type="'+category+'"]').click();
                   if(await page.locator('#history .hist-row').count()!==4)throw Error(name+' OCT19_CATEGORY_HISTORY_COUNT_'+category);
