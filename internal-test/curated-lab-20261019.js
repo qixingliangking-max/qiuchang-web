@@ -205,7 +205,7 @@ function renderPlans(){
 function renderHistory(){
  var html=[],n=0;
  for(var d=0;d<dates.length;d++){
-   var day=dates[d];if(day===state.day)continue;
+   var day=dates[d];if(day===state.day&&db.selectedPlans&&db.selectedPlans[day])continue;
    // Retain the original 10/19 fixed A/B comparison in the date selector;
    // only newly automated days join the ongoing history list.
    if(db.selectedPlans&&db.selectedPlans[day]&&db.selectedPlans[day].rule!=='QCDA_AUTO_CURATED_FROZEN_V1')continue;
