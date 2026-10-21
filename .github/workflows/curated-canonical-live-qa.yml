@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/curated-canonical-live-qa.yml"
       - "internal-test/curated-lab-20261019.html"
+      - "internal-test/curated-lab-20261019.js"
 permissions:
   contents: read
 jobs:
@@ -62,6 +63,8 @@ jobs:
                 console.log('LIVE_BROWSER',JSON.stringify({name,outcome,errors,failures,responses},null,2));
                 if(!originalFrozenFixture)originalFrozenFixture=await page.evaluate(()=>window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-19']);
                 if(errors.length||failures.length||outcome.planCount!==2||!outcome.planText.includes('模拟返还')||!outcome.planText.includes('未命中'))throw Error(name+' LIVE_RENDER_FAIL');
+                if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+' REMOVED_CARDS_VISIBLE');
+                if(await page.locator('#history .hist-row').count()!==8)throw Error(name+' EXPECT_REAL_OCT19_EIGHT_RECORDS');
                 await context.close();
               }
               // Simulate future frozen/settled daily payloads in the browser ONLY.
@@ -85,6 +88,7 @@ jobs:
               await mockPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?mock_auto_20261021=1',{waitUntil:'networkidle',timeout:35000});
               await mockPage.waitForFunction(()=>!!window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-22'],{timeout:15000});
               if(!(await mockPage.locator('#dateLabel').innerText()).includes('10月22日'))throw Error('DAILY_NEWEST_DATE_MISSING');
+              if(await mockPage.locator('#history .hist-row').count()!==16)throw Error('DAILY_REAL_HISTORY_NOT_ACCUMULATING');
               if(await mockPage.locator('#plans .plan').count()!==1 || !(await mockPage.locator('#plans').innerText()).includes('赛后模拟返还'))throw Error('DAILY_SETTLEMENT_DISPLAY_FAILED');
               await mockPage.locator('#dateLabel').click();
               await mockPage.locator('#calDays button[data-date="2026-10-21"]').click();
