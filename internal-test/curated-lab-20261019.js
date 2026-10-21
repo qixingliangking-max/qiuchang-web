@@ -206,8 +206,16 @@ function renderPlans(){
  $('plans').innerHTML=plans.map(planCard).join('')||'<div class="empty">当日暂无该类组合<br>可切换其他日期或类别查看。</div>';
 }
 function renderHistory(){
- var html=[],typesInOrder=['direction','htft','goals','score'];
+ var html=[],typesInOrder=[state.type];
  var labels={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
+ // History follows the active category tab, not a global all-category ledger.
+ document.querySelectorAll('.section-bar').forEach(function(bar){
+  var h=bar.querySelector('h2'),subtitle=bar.querySelector('span');
+  if(h&&h.textContent.indexOf('历史回看')===0){
+   h.textContent='历史回看 · '+labels[state.type];
+   if(subtitle)subtitle.textContent='10月19日起 · '+labels[state.type]+'真实筛选';
+  }
+ });
  // Only genuine contemporaneous frozen selections from Oct 19 onward.
  // The old Oct 05–18 reconstructed/blind experiment is NOT historical proof.
  dates.filter(function(day){return day>='2026-10-19'&&!!db.selectedPlans[day]})
@@ -230,7 +238,7 @@ function renderHistory(){
     });
    });
  });
- $('history').innerHTML=html.join('')||'<div class="empty">10月19日起暂时没有已冻结的精选组合；后续赛前自动选场后会在这里出现。</div>';
+ $('history').innerHTML=html.join('')||'<div class="empty">10月19日起暂无'+esc(labels[state.type])+'真实冻结记录；后续赛前自动选场后会在这里出现。</div>';
 }
 
 function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
@@ -342,7 +350,7 @@ function showRealFrozenHistoryOnly(){
   method.textContent='';
   [
    '只展示10月19日起在赛前冻结的精选研究。10月19日保留原方案及AI精选师V1独立影子方案；后续日期由自动任务根据当时已锁定的模型与官方赛前价格择优选场。',
-   '下方历史按日期倒序保留四个项目的真实选场、选项和价格。确认全场与半场比分后才结算；尚未完赛的组合显示待结算。旧遮挡与事后回测不计入真实筛选记录，模拟返还不代表实际收益。仅供看球讨论。'
+   '下方历史回看与上面的四个项目一一关联：选胜平负只看胜平负，选半全场只看半全场，选总进球或比分亦然。每项按日期倒序保留真实赛前冻结的两场、选项和价格；确认全场与半场比分后才结算。旧遮挡与事后回测不计入真实记录。仅供看球讨论。'
   ].forEach(function(text){var p=document.createElement('p');p.textContent=text;method.appendChild(p)});
  }
 }
