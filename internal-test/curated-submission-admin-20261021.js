@@ -25,26 +25,26 @@ function legMarkup(l,addon){
  var line=l.handicap;
  var meta='<div class="leg-meta">'+esc(readableMarket(market))+(line!==null&&line!==undefined?'（'+esc(line)+'）':'')+'</div>';
  var options=addon
-  ?(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+' <i>×'+esc(o.odd)+'</i></span>'}).join('')
+  ?(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+'</span>'}).join('')
   :(l.selections||[]).map(function(o){return '<span class="chip">'+esc(o)+'</span>'}).join('');
  var result=(!addon&&l.ft&&l.ht)
    ?'<div class="leg-result">赛果 '+esc(l.ft)+' ｜ 半场 '+esc(l.ht)+'</div>':'';
  return '<div class="leg">'+title+meta+'<div class="chips">'+options+'</div>'+result+'</div>';
 }
-function consistentCard(label,legs,tag,variant,addon,format){
+function consistentCard(label,legs,tag,variant,addon,format,detailKind,detailCode){
  var count=(legs||[]).length,combos=countCombos(legs,addon);
  var head='<div class="plan-head"><span class="plan-id">'+esc(label)+'</span><span class="flag '+(tag==='命中'?'hit':tag==='未中'?'miss':'pending')+'">'+esc(tag)+'</span></div>';
  var body='<div class="legs">'+(legs||[]).map(function(l){return legMarkup(l,addon)}).join('')+'</div>';
- var summary='<div class="plan-foot"><div class="plan-return"><small>'+esc(format||'双场方案')+' · 完整选项</small><strong>'+count+'场 · '+combos+'种组合</strong></div><span class="leg-meta">仅供看球讨论</span></div>';
- return '<article class="plan '+esc(variant)+'">'+head+body+summary+'</article>';
+ var summary='<div class="plan-foot"><div class="plan-return"><small>'+esc(format||'双场方案')+' · 完整选项</small><strong>'+count+'场 · '+combos+'种组合</strong></div><button type="button" class="inspect">方案详情 →</button></div>';
+ return '<article class="plan '+esc(variant)+'" data-qc-detail-kind="'+esc(detailKind)+'" data-qc-detail-code="'+esc(detailCode)+'" style="cursor:pointer">'+head+body+summary+'</article>';
 }
 function card(row){
- return consistentCard(name(row.track),row.legs,hitStatus(row),row.track==='baseline'?'variant-original':'variant-shadow',false,'双场方案');
+ return consistentCard(name(row.track),row.legs,hitStatus(row),row.track==='baseline'?'variant-original':'variant-shadow',false,'双场方案','admin',row.group_code);
 }
 function addonCard(row){
  if(!row)return '';
  var title='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[row.project]||row.format);
- return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format);
+ return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format,'addon',row.project);
 }
 function draw(){
 if(!archive)return;
@@ -97,12 +97,13 @@ if(!window.qcSupabase){return;}
 try{
  const a=await window.qcSupabase.auth.getSession();
  if(!a.data?.session){return;}
- const r=await window.qcSupabase.rpc('qc_curated_admin_preview',{p_business_date:targetDay});
+ const [r,q]=await Promise.all([window.qcSupabase.rpc('qc_curated_admin_preview',{p_business_date:targetDay}),window.qcSupabase.rpc('qc_curated_admin_prematch_odds',{p_business_date:targetDay})]);
+ window.QC_CURATED_ADMIN_ODDS=Array.isArray(q.data)?q.data:[];
  if(r.error){if(!/ADMIN_REQUIRED/i.test(r.error.message||''))console.warn('精选测试后台读取失败',r.error.message);return;}
  if(!r.data||!Array.isArray(r.data.groups)||r.data.groups.length!==8)return;
- archive=r.data;queueDraw();window.dispatchEvent(new Event('qc-curated-admin-ready'));
+ archive=r.data;window.QC_CURATED_ADMIN_ARCHIVE=archive;queueDraw();window.dispatchEvent(new Event('qc-curated-admin-ready'));
  window.qcSupabase.auth.onAuthStateChange(function(ev,session){
-  if(!session){archive=null;root.hidden=true;root.style.display='none';plans.hidden=false;plans.style.display='';window.dispatchEvent(new Event('qc-curated-admin-ready'));}
+  if(!session){archive=null;window.QC_CURATED_ADMIN_ARCHIVE=null;window.QC_CURATED_ADMIN_ODDS=[];root.hidden=true;root.style.display='none';plans.hidden=false;plans.style.display='';window.dispatchEvent(new Event('qc-curated-admin-ready'));}
  });
 }catch(e){console.warn('精选测试档案读取异常',String(e))}
 }
