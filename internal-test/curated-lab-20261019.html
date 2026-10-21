@@ -277,13 +277,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 </section>
 <div class="section-bar"><h2>历史回看</h2><span>点击查看详情</span></div>
 <section class="history"><div class="hist-top"><span>日期</span><span>比赛组合</span><span style="text-align:right">模拟返还</span><span style="text-align:right">结果</span></div><div id="history"><div class="empty">正在读取记录…</div></div></section>
-<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月19日并排展示两版：原方案完整保持已确认的选场和选项；AI精选师V1为独立影子测试候选，其中比分属于高风险观察。两版均逐项匹配开赛前留存的官方赔率，组合赔率等于两场赔率相乘。赛前只展示赔率、组合结构和情景计算，不提前计算赛果。</p><p>10月5—18日按日期展示四套赛果遮挡回测中已经冻结的AI精选方案；默认隐藏比分、模拟返还和结果，选择后才揭晓。研究方案并非当时真实公开发布，且分别模拟双场与两场单场的组合差异（单场仅为假设独立结算的演示）。原始104场历史回溯底层样本保留，不覆盖赛前锁板与历史数据。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；“平均分配”按组合等额拆分，其他模式改变组合权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
+<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月20日之后的日期由数据库每10分钟尝试从未开赛、已正式锁板的场次中独立筛选四类精选双场方案；开赛前冻结场次与官方赔率，完赛后只补官方FT/HT进行模拟结算。数据不足两场的类别保持空缺，不允许比赛结束后补选。10月19日仍并排展示原版与AI精选师V1：原方案完整保持已确认的选场和选项；AI精选师V1为独立影子测试候选，其中比分属于高风险观察。两版均逐项匹配开赛前留存的官方赔率，组合赔率等于两场赔率相乘。赛前只展示赔率、组合结构和情景计算，不提前计算赛果。</p><p>10月5—18日按日期展示四套赛果遮挡回测中已经冻结的AI精选方案；默认隐藏比分、模拟返还和结果，选择后才揭晓。研究方案并非当时真实公开发布，且分别模拟双场与两场单场的组合差异（单场仅为假设独立结算的演示）。原始104场历史回溯底层样本保留，不覆盖赛前锁板与历史数据。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；“平均分配”按组合等额拆分，其他模式改变组合权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
 <footer class="footer">球场档案 · 数据研究演示｜不构成投注建议</footer>
 </main>
 <div class="overlay" id="overlay" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" tabindex="-1" id="dialog"><div class="dialog-header"><div><small id="dialogSub">历史回溯演示</small><h2 id="dialogTitle">方案详情</h2></div><button class="close" id="closeDialog" aria-label="关闭弹窗">×</button></div><div class="mode-tabs" id="modeTabs" role="tablist" aria-label="分配方式"><button data-mode="balanced" class="active" aria-selected="true">平均分配</button><button data-mode="hot" aria-selected="false">常规优先</button><button data-mode="cold" aria-selected="false">冷门优先</button><button data-mode="hybrid" aria-selected="false">均衡策略</button></div><div class="dialog-body" id="dialogBody"></div><div class="dialog-actions"><button id="copyPlan" type="button">复制方案</button><button id="dialogCloseBottom" class="primary-action" type="button">关闭</button></div></div></div>
 <script src="curated-lab-data-20261019.js?v=20261020final6"></script>
 <script src="curated-lab-blind-selection-20261005-18.js?v=20261020final2"></script>
 <script src="curated-lab-blind-settlement-20261005-18.js?v=20261020final2"></script>
-<script src="curated-lab-20261019.js?v=20261020final9"></script>
+<script src="../supabase-config.js"></script>
+<script src="curated-lab-20261019.js?v=20261021daily1"></script>
 </body>
 </html>
