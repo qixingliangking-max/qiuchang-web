@@ -106,33 +106,22 @@ jobs:
                 await page.locator('#closeDialog').click();
               }
             }
+            // Actual frozen-selection history begins on 19 Oct. It is not the
+            // separate Oct 05–18 masked retrospective experiment.
+            if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+': retired backtest promo still visible');
+            if(await page.locator('#history .hist-row').count()!==8)throw Error(name+': Oct19 genuine 4-category x 2-variant history must have eight entries');
+            const historyText=await page.locator('#history').innerText();
+            if(historyText.includes('10月18日')||historyText.includes('赛果遮挡')||!historyText.includes('原方案')||!historyText.includes('AI精选师 V1'))throw Error(name+': historical data includes retired retrospective choices');
             await page.locator('#dateLabel').click();
-            await page.locator('#calDays button[data-date="2026-10-17"]').click();
+            if(!(await page.locator('#calDays button[data-date="2026-10-18"]').isDisabled()))throw Error(name+': historical backtest date must be disabled');
+            await page.locator('#calDays button[data-date="2026-10-19"]').click();
+            await page.locator('#tabs button[data-type="direction"]').click();
+            const scoreRow=page.locator('#history .hist-row[data-open-type="score"]').first();
+            if(await scoreRow.count()!==1)throw Error(name+': score category missing from real history');
+            await scoreRow.click();
+            if(!(await page.locator('#dialogTitle').innerText()).includes('比分双场'))throw Error(name+': history detail not opening correct category');
+            await page.locator('#closeDialog').click();
             const dayAfter=await page.locator('#dateLabel').innerText();
-            if(!dayAfter.includes('10月17日'))throw Error(name+': calendar failed: '+dayAfter);
-            if(await page.locator('#plans .plan').count()!==1)throw Error(name+': frozen blind day should show exactly one historic plan per category');
-            if(!(await page.locator('#plans').innerText()).includes('赛果遮挡'))throw Error(name+': blind result label missing');
-            if(await page.locator('#history .hist-row').count()!==14)throw Error(name+': 14-day frozen history count incorrect');
-            if(!(await page.locator('#revealRow').isVisible()))throw Error(name+': reveal control missing');
-            const histBefore=await page.locator('#history').textContent();
-            if(!histBefore.includes('遮挡')||histBefore.includes('未命中'))throw Error(name+': result leaked before reveal '+JSON.stringify({hist:histBefore.slice(0,1500),reveal:await page.locator('#revealBlind').innerText()}));
-            if(!(await page.locator('#compareSection').isVisible()))throw Error(name+': combo comparison missing');
-            if((await page.locator('#compareBody').innerText()).includes('净+'))throw Error(name+': simulated returns leaked before reveal');
-            await page.locator('#revealBlind').click();
-            if(await page.locator('#compareBody .compare-cell').count()!==2)throw Error(name+': pair/single comparison missing');
-            await page.locator('#dailyReviewDetails summary').click();
-            if(await page.locator('#dailyReview tbody tr').count()!==14)throw Error(name+': daily profit rows must be 14');
-            const sum=await page.locator('#dailyReview .compare-total').innerText();
-            if(!sum.includes('55,000.00')||!sum.includes('50,706.76')||!sum.includes('4,293.24'))throw Error(name+': 1000-point settlement mismatch '+sum);
-            await page.locator('#tabs button[data-type="goals"]').click();
-            await page.locator('#dateLabel').click();
-            await page.locator('#calDays button[data-date="2026-10-10"]').click();
-            if(!(await page.locator('#plans').innerText()).includes('待结算'))throw Error(name+': cancelled goals pair must be unsettled');
-            await page.locator('#revealBlind').click();
-            if(!(await page.locator('#plans').innerText()).includes('赛果遮挡'))throw Error(name+': re-mask not applied');
-            if((await page.locator('#dailyReview').innerText()).includes('55,000.00'))throw Error(name+': cumulative payouts leaked while masked');
-            await page.locator('#dateLabel').click();
-            await page.locator('#calDays button[data-date="2026-10-17"]').click();
             await page.screenshot({path:'/tmp/curated-test/'+name+'-page.png',fullPage:true});
             if(errors.length)throw Error(name+': JS errors '+JSON.stringify(errors));
             const details={engine:name,samples:104,firstPlan,dayBefore,dayAfter,modalRows,budgetInput:1000,firstShare,secondShare,errors};
