@@ -45,5 +45,7 @@ async function init(){
   draw();
  }catch(e){console.warn('精选方案暂时无法同步',String(e&&e.message||e))}
 }
+window.addEventListener('qc-curated-admin-ready',draw);
 init();
+setInterval(init,120000);
 })();
