@@ -317,7 +317,37 @@ function attach(){
  $('copyPlan').addEventListener('click',copyText);
 }
 
+/* Canonical lab presentation from 19 Oct onward. Preserve all archived
+   source assets but remove outdated links/controls from the rendered page. */
+function showRealFrozenHistoryOnly(){
+ document.querySelectorAll('a.blind-replay-link').forEach(function(node){node.remove()});
+ ['revealRow','compareSection'].forEach(function(id){var node=$(id);if(node)node.remove()});
+ var intro=document.querySelector('.hero p');
+ if(intro)intro.textContent='10月19日起的真实赛前精选记录；每日自动选场与冻结，完赛后按官方比分自动结算。';
+ document.querySelectorAll('.section-bar').forEach(function(bar){
+  var h=bar.querySelector('h2'),span=bar.querySelector('span');
+  if(h&&h.textContent.trim()==='历史回看'&&span)span.textContent='10月19日起 · 真实冻结记录';
+ });
+ var tableHeader=document.querySelector('.history .hist-top');
+ if(tableHeader){
+  var heads=tableHeader.querySelectorAll('span');
+  if(heads.length>=4){
+   heads[0].textContent='日期 / 项目';
+   heads[1].textContent='赛前冻结双场组合';
+   heads[3].textContent='结算';
+  }
+ }
+ var method=document.querySelector('details.method .method-inner');
+ if(method){
+  method.textContent='';
+  [
+   '只展示10月19日起在赛前冻结的精选研究。10月19日保留原方案及AI精选师V1独立影子方案；后续日期由自动任务根据当时已锁定的模型与官方赛前价格择优选场。',
+   '下方历史按日期倒序保留四个项目的真实选场、选项和价格。确认全场与半场比分后才结算；尚未完赛的组合显示待结算。旧遮挡与事后回测不计入真实筛选记录，模拟返还不代表实际收益。仅供看球讨论。'
+  ].forEach(function(text){var p=document.createElement('p');p.textContent=text;method.appendChild(p)});
+ }
+}
 function init(){
+ showRealFrozenHistoryOnly();
  if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
  all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).sort().reverse();
