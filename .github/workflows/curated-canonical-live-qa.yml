@@ -43,6 +43,8 @@ jobs:
               for(const [name,profile] of [['mobile',devices['iPhone 13']],['desktop',{viewport:{width:1280,height:860}}]]) {
                 const context=await browser.newContext({...profile,ignoreHTTPSErrors:false,locale:'zh-CN'});
                 const page=await context.newPage();const errors=[],failures=[],responses=[];
+                // Regression checks target the original 10/19 page only. Daily feed is checked separately.
+                await page.route('**/rest/v1/qc_curated_live_days**',route=>route.fulfill({status:200,body:'[]',headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'apikey,authorization'}}));
                 page.on('pageerror',e=>errors.push(String(e)));
                 page.on('requestfailed',r=>failures.push(r.url()+':'+r.failure()?.errorText));
                 page.on('response',r=>{if(r.url().includes('curated-lab')||r.url().includes('blind'))responses.push({url:r.url(),status:r.status(),bytes:r.headers()['content-length']})});
