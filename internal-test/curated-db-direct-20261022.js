@@ -58,7 +58,7 @@ async function rpc(name,args){
  var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},7000);
  try{
   var r=await fetch(url,{method:'POST',cache:'no-store',signal:controller.signal,headers:{
-   'apikey':key,'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json'
+   'apikey':key,'Content-Type':'application/json','Accept':'application/json'
   },body:JSON.stringify(args||{})});
   if(!r.ok)throw Error(name+' HTTP '+r.status);
   return await r.json();
@@ -77,6 +77,31 @@ function buildV2Entry(day,p){
       odds_captured_at:leg.odds_captured_at
     },true,result);
  })};
+}
+async function loadReplayDay(day){
+ var raw=await rpc('qc_v2_replay_public',{p_business_date:day});
+ if(!raw||!raw.replay)throw Error('Missing replay marker for '+day);
+ var byId={};
+ (Array.isArray(raw.analysts)?raw.analysts:[]).forEach(function(a){byId[a.id]=a});
+ var g=byId.guheng||{plans:[]},s=byId.shence||{plans:[]},l=byId.luye||{plans:[]};
+ function replayEntries(a){
+  return (a.plans||[]).map(function(p){
+   var record=buildV2Entry(day,p);
+   record.replay=true;
+   record.note='10月22日赛前数据回放｜事后建立的回测，不计入真实连红';
+   return record;
+  });
+ }
+ db.selectedPlans=db.selectedPlans||{};
+ db.selectedPlans[day]={
+  rule:'QCDA_ASOF_REPLAY_EXCLUDED_FROM_STREAK',
+  isReplay:true,
+  entries:replayEntries(g),
+  aiSelector:{entries:replayEntries(s)},
+  analystSelector:{entries:replayEntries(l)},
+  streaks:{1:0,2:0,3:0}
+ };
+ return true;
 }
 async function loadIndependentDay(day){
  var raw=await rpc('qc_v2_public',{p_business_date:day});
@@ -97,6 +122,7 @@ async function loadIndependentDay(day){
 
 var daySnapshot=Object.create(null);
 async function loadDay(day){
+ if(day==='2026-10-22')return loadReplayDay(day);
  if(day>='2026-10-23')return loadIndependentDay(day);
  var pair=await Promise.allSettled([
   rpc('qc_selection_display_public',{p_business_date:day}),
@@ -144,6 +170,7 @@ async function refresh(){
     if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
    }).catch(function(e){
     console.warn('精选数据读取失败，可在下次刷新重试',day,String(e));
+    if(day>='2026-10-22')window.dispatchEvent(new CustomEvent('qc-curated-db-error',{detail:{date:day,message:String(e)}}));
    });
   }));
  }finally{refreshActive=false}
