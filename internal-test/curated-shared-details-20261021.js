@@ -27,7 +27,8 @@ function actual(m,ft,ht,line){
  return null;
 }
 function readAdmin(day){
- return (window.QC_CURATED_ADMIN_ARCHIVES?.[day]||window.QC_CURATED_ADMIN_ARCHIVE)?.groups||[];
+ return (window.QC_CURATED_ADMIN_ARCHIVES?.[day]||window.QC_CURATED_MAIN_PUBLISHED_BY_DAY?.[day]||
+  (window.QC_CURATED_ADMIN_ARCHIVE?.date===day?window.QC_CURATED_ADMIN_ARCHIVE:null))?.groups||[];
 }
 function readOdds(code,num,day){
  var rows=window.QC_CURATED_ADMIN_ODDS_BY_DAY?.[day]||window.QC_CURATED_ADMIN_ODDS||[];
