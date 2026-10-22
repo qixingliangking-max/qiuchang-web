@@ -1,0 +1,53 @@
+name: Login page availability QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/login-page-availability-qa.yml"
+      - "login.html"
+permissions:
+  contents: read
+jobs:
+  public-login-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Setup Chrome
+        run: |
+          mkdir -p /tmp/qc-login-ui && cd /tmp/qc-login-ui
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check login page scripts and interactive controls
+        run: |
+          cat >/tmp/qc-login-ui/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              for(const [device,settings] of [['desktop',{viewport:{width:1200,height:900}}],['mobile',devices['iPhone 13']]]){
+                const ctx=await browser.newContext({...settings,locale:'zh-CN'});
+                const page=await ctx.newPage(),errors=[];
+                page.on('pageerror',e=>errors.push(String(e)));
+                await page.goto('https://qcda.cn/login.html?qa=auth-restore-20261022',{waitUntil:'domcontentloaded',timeout:45000});
+                await page.waitForFunction(()=>!!window.qcSupabase&&typeof document.querySelector('#loginForm')?.onsubmit==='function',{timeout:15000});
+                const result=await page.evaluate(()=>({
+                  client:!!window.qcSupabase,
+                  loginForm:typeof document.querySelector('#loginForm').onsubmit,
+                  signIn:typeof window.qcSupabase.auth.signInWithPassword,
+                  script:[...document.scripts].find(s=>s.src.includes('app.js'))?.src,
+                  email:!!document.querySelector('#loginEmail'),
+                  password:!!document.querySelector('#loginPassword')
+                }));
+                console.log('LOGIN_UI',device,JSON.stringify(result),JSON.stringify(errors));
+                if(!result.client||result.loginForm!=='function'||result.signIn!=='function'||!result.script.includes('20261022loginrestore1')||!result.email||!result.password||errors.length)throw Error(device+' auth script unavailable');
+                await ctx.close();
+              }
+            }finally{await browser.close()}
+          })().catch(err=>{console.error(err);process.exitCode=1});
+          JS
+          cd /tmp/qc-login-ui && node check.cjs
