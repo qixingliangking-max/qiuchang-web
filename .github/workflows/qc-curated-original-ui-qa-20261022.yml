@@ -1,0 +1,144 @@
+name: Original Curated UI Restoration QA
+on:
+  push:
+    branches: [qcda-restore-original-curated-ui-20261022]
+    paths:
+      - .github/workflows/qc-curated-original-ui-qa-20261022.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium:
+    if: github.ref == 'refs/heads/qcda-restore-original-curated-ui-20261022'
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-restore-original-curated-ui-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Original code safety
+        run: |
+          node --check internal-test/curated-lab-20261019.js
+          node - <<'NODE'
+          const fs=require('fs'),assert=require('assert/strict');
+          const h=fs.readFileSync('internal-test/curated-lab-20261019.html','utf8');
+          const js=fs.readFileSync('internal-test/curated-lab-20261019.js','utf8');
+          assert(h.includes('modeTabs')&&h.includes('budget')&&h.includes('data-mode="balanced"'));
+          assert(!h.includes('src="curated-addons-public-20261021.js'));
+          assert(!h.includes('src="curated-submission-admin-20261021.js'));
+          assert(!h.includes('src="curated-shared-details-20261021.js'));
+          assert(js.includes("if(mode==='balanced')return 1"));
+          assert(js.includes('function allocation(')&&js.includes('function renderDialog('));
+          console.log('Original UI DOM and allocation preserved');
+          NODE
+      - name: Install browser
+        run: |
+          mkdir -p /tmp/qc-original-ui
+          cd /tmp/qc-original-ui
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Original cards, real DB-price conversion, click, 4 strategies, 27-score combos
+        env:
+          NODE_PATH: /tmp/qc-original-ui/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('fs');
+          const html=fs.readFileSync('internal-test/curated-lab-20261019.html','utf8').replace(/<script\b[^>]*src="[^"]*"[^>]*><\/script>/g,'');
+          const basic=['direction','htft','goals','score'];
+          function legs(kind,project,three){
+            return Array.from({length:three?3:2},(_,i)=>{
+              const market=project==='direction'?'had':project==='htft'?'hafu':project==='goals'?'ttg':'crs';
+              const options=project==='direction'?[{label:'胜',odd:2.25}]:
+                project==='htft'?[{label:'胜/胜',odd:3.1}]:
+                project==='goals'?[{label:'2球',odd:3.2},{label:'3球',odd:3.45}]:
+                [{label:'2-1',odd:8.2},{label:'2-0',odd:9.4},{label:'3-1',odd:11.2}];
+              return {match_num:'周四00'+(i+1),home:'主队'+i,away:'客队'+i,
+                market_kind:market,market:market,options,odds_captured_at:'2026-10-22T07:00:00Z',
+                selections:options.map(x=>x.label),ft:null,ht:null,
+                kickoff_at:'2026-10-23T10:00:00Z'};
+            });
+          }
+          (async()=>{
+            const b=await chromium.launch();
+            try{
+              for(const pubMain of [false,true]){
+                const p=await b.newPage({viewport:{width:390,height:844}});
+                const errors=[];p.on('pageerror',e=>errors.push(e.message));
+                await p.clock.install({time:new Date('2026-10-22T12:00:00Z')});
+                await p.setContent(html);
+                await p.evaluate(({pubMain,basic})=>{
+                  window.qcSupabase={rpc:async(name,arg)=>{
+                    const day=arg.p_business_date||arg.p_date;
+                    if(name==='qc_selection_published_public'){
+                      const groups=pubMain&&day==='2026-10-22'?
+                        ['baseline','ai_analyst'].flatMap(track=>basic.map(project=>({
+                          track,project,settlement_status:'unsettled',legs:Array.from({length:2},(_,i)=>{
+                            const market=project==='direction'?'had':project==='htft'?'hafu':project==='goals'?'ttg':'crs';
+                            const opts=project==='direction'?[{label:'胜',odd:2.25}]:
+                              project==='htft'?[{label:'胜/胜',odd:3.1}]:
+                              project==='goals'?[{label:'2球',odd:3.2},{label:'3球',odd:3.45}]:
+                              [{label:'2-1',odd:8.2},{label:'2-0',odd:9.4},{label:'3-1',odd:11.2}];
+                            return {match_num:'周四00'+(i+1),home:'主队'+i,away:'客队'+i,
+                              market_kind:market,options:opts,selections:opts.map(x=>x.label),ft:null,ht:null};
+                          })
+                        })):[];
+                      return {data:{date:day,batch_status:groups.length?'published':'missing',groups}};
+                    }
+                    if(name==='qc_curated_addons_public'){
+                      const groups=day==='2026-10-22'?basic.map(project=>({
+                        project,settlement_status:'unsettled',legs:Array.from({length:project==='score'?3:2},(_,i)=>{
+                          const market=project==='direction'?'had':project==='htft'?'hafu':project==='goals'?'ttg':'crs';
+                          const opts=project==='direction'?[{label:'胜',odd:2.25}]:
+                            project==='htft'?[{label:'胜/胜',odd:3.1}]:
+                            project==='goals'?[{label:'2球',odd:3.2},{label:'3球',odd:3.45}]:
+                            [{label:'2-1',odd:8.2},{label:'2-0',odd:9.4},{label:'3-1',odd:11.2}];
+                          return {match_num:'周四00'+(i+1),home:'主队'+i,away:'客队'+i,market,options:opts};
+                        })
+                      })):[];
+                      return {data:{date:day,groups}};
+                    }
+                    throw Error('unexpected rpc '+name);
+                  }};
+                },{pubMain,basic});
+                await p.addScriptTag({path:'internal-test/curated-lab-data-20261019.js'});
+                await p.addScriptTag({path:'internal-test/curated-lab-20261019.js'});
+                await p.waitForFunction(()=>document.getElementById('dateLabel')?.dataset.businessDate==='2026-10-22',{timeout:5000});
+                await p.waitForFunction(()=>document.querySelectorAll('#plans .plan').length===3);
+                let cards=await p.locator('#plans .plan').allInnerTexts();
+                assert(cards[0].includes('基准版')&&cards[1].includes('AI精选版')&&cards[2].includes('赛事分析师'));
+                assert(cards[0].includes(pubMain?'主队':'待同步'));
+                assert(cards[2].includes('×2.25'));
+                assert.equal(await p.locator('#plans [data-open-index="3"]').count(),1);
+                await p.locator('#plans [data-open-index="3"]').click();
+                await p.waitForFunction(()=>document.getElementById('overlay').hidden===false);
+                assert((await p.locator('#dialogBody').innerText()).includes('组合分配'));
+                let stages=[];
+                for(const mode of ['balanced','hot','cold','hybrid']){
+                  await p.locator('#modeTabs [data-mode="'+mode+'"]').click();
+                  stages.push({mode,rows:await p.locator('#dialogBody tbody tr').count()});
+                }
+                await p.locator('#closeDialog').click();
+                await p.locator('#budget').fill('1000');
+                await p.locator('#tabs [data-type="score"]').click();
+                await p.locator('#plans [data-open-index="3"]').click();
+                await p.waitForFunction(()=>document.querySelectorAll('#dialogBody tbody tr').length===27);
+                assert.equal(await p.locator('#dialogBody .detail-leg').count(),3,'original modal must support three-score analyst');
+                const body=await p.locator('#dialogBody').innerText();
+                assert(body.includes('1,000.00'),'budget optimisation not reflecting 1000 points');
+                assert(!errors.length,'browser errors: '+errors.join('; '));
+                await p.locator('#closeDialog').click();
+                await p.evaluate(()=>{document.getElementById('dateLabel').click()});
+                await p.locator('#calDays [data-date="2026-10-19"]').click();
+                assert.equal(await p.locator('#plans .plan').count(),2,'original 10/19 cards must remain');
+                await p.locator('#plans [data-open-index="1"]').click();
+                await p.waitForFunction(()=>document.getElementById('overlay').hidden===false);
+                console.log('Original UI QA', {pubMain,stages,scoreRows:27,historyRestored:true,errors});
+                await p.close();
+              }
+            }finally{await b.close()}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
