@@ -2826,7 +2826,7 @@ async function loadJcFrontend(){
           _qcPendingHistoryFixture:true
         };
       });
-      return {...history,data:rows,fromHistorySnapshot:true,
+      return {...history,data:rows,error:null,fromHistorySnapshot:true,
         fromCompletePublicSchedule:true};
     };
     if(!access.isPro) return access.loggedIn ? ensureCompletePublicReview() : history;
@@ -2989,13 +2989,19 @@ async function loadJcFrontend(){
       fetchHistoryReviewDateReady(dsPrev)
     ]);
     if(token!==loadToken) return;
-    if(nextCurrent.error||nextPrevious.error){
+    if(nextCurrent.error||(nextPrevious.error && ds<=today)){
       if(label) label.textContent=qcDateLabel(selectedDate);
       return;
     }
 
-    allRows=[...(nextCurrent.data||[]),...(nextPrevious.data||[])].filter(m=>m.match_date);
-    previousHistoryFinal=Boolean(nextPrevious?.historyFinal);
+    // If tomorrow has no published fixtures yet, a temporary previous-day
+    // history API failure must not cancel navigation. Reuse the day already
+    // displayed on this page; role-specific FT filtering remains in render().
+    const previousForDisplay=nextPrevious.error
+      ? {data:allRows.filter(m=>jcBusinessDate(m)===dsPrev),historyFinal:false}
+      : nextPrevious;
+    allRows=[...(nextCurrent.data||[]),...(previousForDisplay.data||[])].filter(m=>m.match_date);
+    previousHistoryFinal=Boolean(previousForDisplay?.historyFinal);
     previousLoading=false;
     selectedDate=ds;
     modelsLoaded=false;
