@@ -3065,17 +3065,9 @@ async function loadJcFrontend(){
     try{
       if(predictionShell) predictionShell.hidden=false;
       if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
-        // Public fixture identities are already available from static JSON.
-        // Render them immediately, even if an auth request is slow/failed.
-        // Never include private FINAL/odds while entitlement is unresolved.
-        const publicRows=dateRows.map(m=>({
-          ...m,jc_model_outputs:[],jc_market_snapshots:[],
-          _jcModelsLoaded:false,_jcModelsLoading:false,_jcModelLoadFailed:false
-        }));
-        qcReconcileOverviewTable(cards,publicRows.length
-          ? jcRenderOverviewTable(publicRows,calendarToday,'today')
-          : '<div class="profile-card" role="status">正在加载中…</div>');
-        jcBindOverviewRows(cards);
+        // Fail closed: authentication not resolved is NEVER permission to
+        // display today's prediction/fixture table in the protected panel.
+        qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else if(predictionRestricted){
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else{
