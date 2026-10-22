@@ -101,7 +101,7 @@ new MutationObserver(queueDraw).observe(document.getElementById('tabs'),{subtree
 document.getElementById('budget')?.addEventListener('input',queueDraw);
 document.getElementById('modeTabs')?.addEventListener('click',queueDraw);
 async function ensureArchive(day){
- if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(day||''))return;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day||''))return;
  if(archives[day])return archives[day];
  if(inFlight[day])return inFlight[day];
  var task=(async function(){
