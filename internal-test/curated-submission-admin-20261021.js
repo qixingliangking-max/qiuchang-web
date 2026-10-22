@@ -49,7 +49,9 @@ function card(row,source,day){
  return consistentCard(name(row.track),row.legs,hitStatus(row,source?.batch_status),row.track==='baseline'?'variant-original':'variant-shadow',false,'双场方案','admin',row.group_code,day);
 }
 function addonCard(row,day){
- if(!row)return '';
+ if(!row)return '<article class="plan variant-shadow" data-qc-placeholder="analyst">'+
+ '<div class="plan-head"><span class="plan-id">赛事分析师加选</span><span class="flag pending">待发布</span></div>'+
+ '<div class="legs"><div class="leg">分析师方案尚未正式发布，保留第三组位置。</div></div></article>';
  var title='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[row.project]||row.format);
  return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format,'addon',row.project,day);
 }
@@ -61,15 +63,17 @@ function draw(){
  root.hidden=!currently;root.style.display=currently?'':'none';plans.hidden=currently;plans.style.display=currently?'none':'';
  if(currently){
   var sub=active.groups.filter(function(g){return g.project===project()});
-  var addon=(window.QC_CURATED_EXTRA?.date===day ? window.QC_CURATED_EXTRA.groups||[] : []).find(function(g){return g.project===project()});
+  var addon=((window.QC_CURATED_EXTRA_BY_DAY?.[day]?.groups)||(window.QC_CURATED_EXTRA?.date===day?window.QC_CURATED_EXTRA.groups:[])||[]).find(function(g){return g.project===project()});
   root.innerHTML='<div class="panels">'+sub.map(function(g){return card(g,active,day)}).join('')+addonCard(addon,day)+'</div>';
   var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
   if(t)t.textContent=Number(day.slice(5,7))+'月'+Number(day.slice(8,10))+'日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
-  if(meta)meta.textContent=(sub.length+(addon?1:0))+'组方案';
+  if(meta)meta.textContent='共3组 · 基准版 / AI精选版 / 赛事分析师加选';
   var band=document.getElementById('infoBand');
   if(band)band.textContent=active.batch_status==='candidate'
-    ?'赛前提交记录已作赛后补核；该批次此前未正式发布，不计作赛前发布成绩。'
-    :'精选方案仅用于赛事研究；未结束的比赛暂不显示结算结果。';
+    ?(sub.every(function(g){return g.settlement_status==='settled'})
+      ?'主模型两组为赛后补核记录（赛前未发布）；第三组独立显示已发布的分析师方案。'
+      :'主模型两组为候选记录，尚未确认发布；分析师第三组只显示其真实发布状态。')
+    :'每个玩法固定3组：主模型基准版、主模型AI精选版、赛事分析师加选。';
  }else if(day>targetDay && archives[day]?.batch_status==='missing'){
   var band=document.getElementById('infoBand');
   if(band)band.textContent='当前展示每日自动精选；主模型八组测试档案尚未进入网站生产提交批次。';
