@@ -447,22 +447,18 @@
     const root=$('#leagueRecordRoot');
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
-      // A slow auth/session query must never trap this page forever.
-      const withDeadline=(promise,ms,label)=>Promise.race([
-        Promise.resolve(promise),
-        new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+'连接超时，请重试')),ms))
+      const authPromise=window.qcSupabase.auth.getSession();
+      const authRace=await Promise.race([
+        authPromise,
+        new Promise(resolve=>setTimeout(()=>resolve({__qcAuthTimeout:true}),450))
       ]);
-      const showRetry=(message)=>{
-        root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂时无法加载</h2><p>'+esc(message)+'</p><button type="button" id="qcLeagueRetry" class="qc-league-retry">重新加载</button></div>';
-        const btn=$('#qcLeagueRetry',root);
-        if(btn) btn.onclick=()=>{root.innerHTML='<div class="qc-league-loading">正在重新连接…</div>';setup();};
-      };
-      let authResult;
-      try{
-        authResult=await withDeadline(window.qcSupabase.auth.getSession(),6500,'登录状态');
-      }catch(err){
-        showRetry(err?.message||'登录验证暂不可用');
-        return;
+      let authResult=authRace;
+      if(authRace?.__qcAuthTimeout){
+        // Never leave an anonymous visitor staring at an indefinite loader.
+        // The real session check continues; a valid Pro session replaces this
+        // temporary public-safe prompt when it resolves.
+        root.innerHTML='<div class="qc-league-gate"><h2>正在确认访问权限</h2><p>联赛档案需要登录并通过会员权限验证。若尚未登录，可先登录后返回。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
+        authResult=await authPromise;
       }
       const {data:authData,error:authError}=authResult;
       if(authError) throw authError;
@@ -474,21 +470,15 @@
       // The league index is small and RLS restricts it to Pro members.
       // Start the permission RPC and index read together; the user sees
       // neither the index nor any Pro data until the RPC confirms access.
-      let proRes,snapRes;
-      try{
-        [proRes,snapRes]=await withDeadline(Promise.all([
-          window.qcSupabase.rpc('has_active_pro_access'),
-          window.qcSupabase
-            .from('league_archive_snapshots')
-            .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-            .eq('is_current',true)
-            .order('priority',{ascending:true})
-            .order('name_cn',{ascending:true})
-        ]),8500,'会员权限或联赛目录');
-      }catch(err){
-        showRetry(err?.message||'数据连接暂不可用');
-        return;
-      }
+      const [proRes,snapRes]=await Promise.all([
+        window.qcSupabase.rpc('has_active_pro_access'),
+        window.qcSupabase
+          .from('league_archive_snapshots')
+          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+          .eq('is_current',true)
+          .order('priority',{ascending:true})
+          .order('name_cn',{ascending:true})
+      ]);
       if(proRes.error) throw proRes.error;
       if(proRes.data!==true){
         root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂未开放</h2><p>当前账号没有联赛档案访问权限。</p></div>';
