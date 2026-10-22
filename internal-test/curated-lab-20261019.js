@@ -7,16 +7,19 @@ var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selec
 var blind=null; // Historical pre-19 backtest intentionally excluded from canonical display.
 var settled=null;
 var $=function(id){return document.getElementById(id)};
-var types={direction:{label:'方向 · 双场',desc:'赛前模型方向与同一官方玩法赔率；无胜平负的比赛使用让球方向。',color:'#315db3'},htft:{label:'半全场 · 双场',desc:'两场各取赛前锁定的半全场TOP2，分别与官方半全场赔率匹配。',color:'#8660b0'},goals:{label:'总进球 · 双场',desc:'从赛前锁板的独立进球区间读取选项，再匹配总进球官方赔率。',color:'#218a71'},score:{label:'比分 · 双场',desc:'每场最多使用锁定TOP3比分，两场形成最多9种精确比分组合。',color:'#b86670'}};
+var types={direction:{label:'方向 · 双场',desc:'赛前模型方向与同一官方玩法赔率；无胜平负的比赛使用让球方向。',color:'#315db3'},htft:{label:'半全场 · 组合',desc:'两场各取赛前锁定的半全场TOP2，分别与官方半全场赔率匹配。',color:'#8660b0'},goals:{label:'总进球 · 组合',desc:'从赛前锁板的独立进球区间读取选项，再匹配总进球官方赔率。',color:'#218a71'},score:{label:'比分 · 组合',desc:'每场最多使用锁定TOP3比分，两场形成最多9种精确比分组合。',color:'#b86670'}};
 var modes={balanced:'平均分配',hot:'常规优先',cold:'逆向观察',hybrid:'攻防平衡'};
-var state={day:null,type:'direction',budget:100,mode:'balanced',month:null,open:null,origin:null,reveal:false};
+var state={day:null,type:'direction',budget:1000,mode:'balanced',month:null,open:null,origin:null,reveal:false};
 var dates=[];
 var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
 function personaPlan(index){return (personaNames[index]||'')+'方案'}
-function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(streak>=2?' · '+streak+'连红':'')}
+function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
+function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(streak>=2?' · '+streak+'连红':'')}
+function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
+function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -78,18 +81,21 @@ function plansFor(day,type){
      pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:'沈策方案',id:'shadow-v1',shadow:true,index:2},
      pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野方案',id:'analyst',shadow:true,index:3}
    ].filter(Boolean);
-   return versions.map(function(version){
-     var record=version.entries.find(function(e){return e.type===type});
-     if(!record||!record.legs||record.legs.length<1||record.legs.length>3)return null;
-     var legs=record.legs.map(function(leg){
-       var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
-       if(opts.some(function(o){return !o}))return null;
-       return {row:leg.row,market:leg.market,options:opts};
-     });
-     if(legs.some(function(l){return !l}))return null;
-     return {day:day,type:type,index:version.index,a:legs[0],b:legs[1],legs:legs,prematch:legs.some(function(l){return !score(l.row.ft)||!score(l.row.ht)}),
-       variant:version.id,versionLabel:version.label,versionNote:record.note||'',versionGate:record.gate||'',shadow:version.shadow};
-   }).filter(Boolean);
+   return versions.flatMap(function(version){
+     return version.entries.filter(function(e){return e.type===type}).map(function(record){
+       if(!record||!record.legs||record.legs.length<1||record.legs.length>3)return null;
+       var legs=record.legs.map(function(leg){
+         var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
+         if(opts.some(function(o){return !o}))return null;
+         return {row:leg.row,market:leg.market,options:opts};
+       });
+       if(legs.some(function(l){return !l}))return null;
+       return {day:day,type:type,index:version.index,detailId:record.id||null,format:record.format||null,
+         a:legs[0],b:legs[1],legs:legs,prematch:legs.some(function(l){return !score(l.row.ft)||!score(l.row.ht)}),
+         variant:version.id,versionLabel:version.label,versionNote:record.note||'',
+         versionGate:record.gate||'',shadow:version.shadow};
+     }).filter(Boolean);
+   });
  }
  var pack2=blind&&blind.days&&blind.days[day];
  if(pack2){
@@ -200,13 +206,13 @@ function planCard(plan){
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
    var title=esc(personaPlanLive(plan));
    var risk='';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
  }
  if(plan.variant){
    var status=calc.covered?'命中':'未命中',cls=calc.covered?'hit':'miss';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
  }
- return '<article class="plan"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+ return '<article class="plan"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
 }
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
@@ -226,12 +232,12 @@ function renderHistory(){
   plansFor(day,type).forEach(function(p){
     var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
       pending=p.prematch||p.unsettled,
-      name=personaPlan(p.index),
+      name=personaPlanLive(p),
       status=pending?'待结算':res.covered?'命中':'未中',
       amount=pending?'—':money(res.returns),
       legs=planLegs(p),teams=legs.map(function(l){return idNum(l.row)+' '+l.row.h}).join(' / '),
       options=legs.map(function(l){return l.options.map(function(o){return o.name}).join(' / ')}).join(' · ');
-    rows.push('<button type="button" class="hist-row" data-open-date="'+esc(day)+'" data-open-type="'+esc(type)+'" data-open-index="'+p.index+'">'+
+    rows.push('<button type="button" class="hist-row" data-open-date="'+esc(day)+'" data-open-type="'+esc(type)+'" data-open-index="'+p.index+'"'+detailAttr(p)+'>'+
       '<span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'<small>'+esc(labels[type])+'</small></span>'+
       '<span class="hist-leg"><b>'+esc(teams)+'</b><small>'+esc(name)+' · '+esc(options)+'</small></span>'+
       '<span class="hist-amount">'+esc(amount)+'</span>'+
@@ -271,10 +277,10 @@ function dialogLeg(leg){
  return '<div class="detail-leg"><b>'+esc(r.num)+'｜'+esc(r.h)+' vs '+esc(r.a)+'</b><small>'+esc(r.league)+'　'+(pending?(r.blindMasked?'历史赛果遮挡':r.blindPending?'比赛中断待结算':'赛前赔率')+(captured?' · 采集于 '+esc(captured.slice(0,10)):''):'FT '+esc(parseScoreText(r))+'　HT '+esc(String(r.ht||'').replace(':','-')))+'</small><div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' @'+money(o.odds)+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div></div>';
 }
 function renderDialog(){
- var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
+ var q=state.open;if(!q)return;var plan=findPlan(q.day,q.type,q.index,q.key);if(!plan)return;
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel='—';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
- $('dialogTitle').textContent=personaPlan(plan.index)+' · '+displayType+(planLegs(plan).length===3?'三场':planLegs(plan).length===2?'双场':'单场');
+ $('dialogTitle').textContent=personaPlanLive(plan)+' · '+displayType+(planLegs(plan).length===3?'三场':planLegs(plan).length===2?'双场':'单场');
  $('dialogSub').textContent=readableDay(plan.day);
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=money(sim.grossMin)+'–'+money(sim.grossMax);
@@ -282,10 +288,10 @@ function renderDialog(){
  var rows=sim.list.map(function(c,i){return '<tr class="'+(!pending&&c.hit?'winner':'')+'"><td>'+String(i+1).padStart(2,'0')+'</td><td>'+esc(c.options.map(function(o){return o.name}).join(' × '))+'</td><td>'+money(c.odds)+'</td><td>'+money(c.stake)+'</td><td>'+money(c.projected)+'</td><td>'+(pending?pendingLabel:c.hit?'✓':'—')+'</td></tr>'}).join('');
  $('dialogBody').innerHTML='<div class="dialog-tip">'+esc(strategyDescription(state.mode))+'</div><div class="dialog-legs">'+planLegs(plan).map(dialogLeg).join('')+'</div>'+summary+'<div class="alloc-title">组合分配</div><div class="alloc"><table><thead><tr><th>#</th><th>组合</th><th>赔率</th><th>份额</th><th>理论返还</th><th>'+(pending?'状态':'命中')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="disclaimer">'+(pending?'仅为赛前赔率及分配情景模拟。理论返还是假定单一组合满足条件时的计算结果，尚未结算，不代表实际收益，也不构成投注建议。':'模拟结算仅供数据研究，不代表实际收益。')+'</div>';
 }
-function openDetail(day,index,type){
+function openDetail(day,index,type,key){
  type=type||state.type;
- var plan=plansFor(day,type).find(function(p){return p.index===index});if(!plan)return;
- state.origin=document.activeElement;state.open={day:day,index:index,type:type};
+ var plan=findPlan(day,type,index,key);if(!plan)return;
+ state.origin=document.activeElement;state.open={day:day,index:index,type:type,key:key||null};
  $('overlay').hidden=false;document.body.style.overflow='hidden';renderDialog();$('dialog').focus();
 }
 function closeDetail(){
@@ -293,9 +299,9 @@ function closeDetail(){
 }
 function copyText(){
  if(!state.open)return;
- var q=state.open,p=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!p)return;
+ var q=state.open,p=findPlan(q.day,q.type,q.index,q.key);if(!p)return;
  var sim=allocation(p,state.budget,state.mode),pending=!!p.prematch;
- var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+personaPlan(p.index)];
+ var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+personaPlanLive(p)];
  planLegs(p).forEach(function(l,i){
   t.push((i+1)+'. '+l.row.num+' '+l.row.h+' vs '+l.row.a+'：'+l.options.map(function(o){return o.name+' @'+money(o.odds)}).join(' / '));
  });
@@ -318,9 +324,9 @@ function attach(){
  $('budget').addEventListener('input',function(e){var n=Number(e.target.value);if(Number.isFinite(n)&&n>=10&&n<=100000){state.budget=Math.round(n*100)/100;renderPlans();renderHistory();if(state.open)renderDialog();document.querySelectorAll('[data-budget]').forEach(function(b){b.classList.toggle('selected',+b.dataset.budget===state.budget)})}});
  // Never replace the cards on input blur: clicking "查看" after editing would
  // otherwise remove the target between pointerdown and click.
- $('budget').addEventListener('blur',function(){var n=Number(this.value),before=state.budget;state.budget=Math.round(Math.min(100000,Math.max(10,Number.isFinite(n)?n:100))*100)/100;this.value=String(state.budget);if(state.budget!==before){renderPlans();renderHistory();if(state.open)renderDialog()}});
+ $('budget').addEventListener('blur',function(){var n=Number(this.value),before=state.budget;state.budget=Math.round(Math.min(100000,Math.max(10,Number.isFinite(n)?n:1000))*100)/100;this.value=String(state.budget);if(state.budget!==before){renderPlans();renderHistory();if(state.open)renderDialog()}});
  document.querySelectorAll('[data-budget]').forEach(function(b){b.addEventListener('click',function(){state.budget=+b.dataset.budget;renderAll()})});
- document.addEventListener('click',function(e){var b=e.target.closest('[data-open-date][data-open-index]');if(b)openDetail(b.dataset.openDate,+b.dataset.openIndex,b.dataset.openType||state.type)});
+ document.addEventListener('click',function(e){var b=e.target.closest('[data-open-date][data-open-index]');if(b)openDetail(b.dataset.openDate,+b.dataset.openIndex,b.dataset.openType||state.type,b.dataset.openKey||null)});
  $('modeTabs').addEventListener('click',function(e){var b=e.target.closest('button[data-mode]');if(!b)return;state.mode=b.dataset.mode;renderDialog();renderPlans();renderHistory()});
  $('closeDialog').addEventListener('click',closeDetail);$('dialogCloseBottom').addEventListener('click',closeDetail);
  $('overlay').addEventListener('click',function(e){if(e.target===$('overlay'))closeDetail()});
