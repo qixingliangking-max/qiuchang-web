@@ -42,29 +42,25 @@ jobs:
                 await page.waitForFunction(()=>window.QC_CURATED_EXTRA?.groups?.length===4,{timeout:20000});
                 await page.locator('#dateLabel').click();
                 await page.locator('#calDays button[data-date="2026-10-21"]').click();
-                for(const [type,count] of [['direction',1],['htft',1],['goals',4],['score',27]]){
+                for(const [type,legs] of [['direction',2],['htft',2],['goals',2],['score',3]]){
                   await page.locator('#tabs button[data-type="'+type+'"]').click();
                   const card=page.locator('#qc-curated-extra .plan').first();
                   await card.waitFor({timeout:8000,state:'visible'});
-                  if((await card.innerText()).includes('×2.11'))throw Error(name+' odds visible on new card');
+                  if((await card.innerText()).includes('2.11')||(await card.innerText()).includes('赔率'))throw Error(name+' odds displayed on new card');
                   await card.locator('.inspect').click();
                   if(await page.locator('#overlay').evaluate(x=>x.hidden))throw Error(name+' '+type+' dialog did not open');
-                  const n=await page.locator('#dialogBody .alloc tbody tr').count();
-                  if(n!==count)throw Error(name+' '+type+' rows '+n+' expected '+count);
-                  if(!(await page.locator('#dialogBody').innerText()).includes('组合分配'))throw Error(name+' missing allocation');
-                  if(type==='direction'&&!(await page.locator('#dialogBody').innerText()).includes('2.11'))throw Error(name+' priced details missing');
+                  const body=await page.locator('#dialogBody').innerText();
+                  const n=await page.locator('#dialogBody .detail-leg').count();
+                  if(n!==legs)throw Error(name+' '+type+' detail legs '+n+' expected '+legs);
+                  if(!body.includes('不显示赔率')||body.includes('2.11'))throw Error(name+' '+type+' details should not expose odds');
+                  if(await page.locator('#modeTabs').isVisible())throw Error(name+' add-on unexpectedly shows allocation/odds controls');
                   if(type==='score'&&!(await page.locator('#dialogTitle').innerText()).includes('三场'))throw Error(name+' score three-match heading missing');
-                  if(type==='goals'){
-                    const old=await page.locator('#dialogBody .alloc tbody tr:first-child td:nth-child(4)').innerText();
-                    await page.locator('#modeTabs button[data-mode="cold"]').click();
-                    const next=await page.locator('#dialogBody .alloc tbody tr:first-child td:nth-child(4)').innerText();
-                    if(old===next)throw Error(name+' allocation switching ineffective');
-                  }
+                  await page.locator('#copyPlan').click();
                   await page.locator('#closeDialog').click();
                   if(!(await page.locator('#overlay').evaluate(x=>x.hidden)))throw Error(name+' dialog not closed');
                 }
                 if(errors.length)throw Error(name+' JS errors '+errors.join(' / '));
-                console.log('CURATED_MODAL_QA_PASS',name,'4 project dialogs, 1/1/4/27 rows, strategy mode, close, no card odds');
+                console.log('CURATED_MODAL_QA_PASS',name,'4 project dialogs, 2/2/2/3 match legs, no odds, copy and close');
                 await context.close();
               }
             }finally{await browser.close();}
