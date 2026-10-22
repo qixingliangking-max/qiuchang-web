@@ -37,11 +37,11 @@ function build(kind,code){
  if(kind==='addon'){
   var x=(window.QC_CURATED_EXTRA?.groups||[]).find(function(v){return v.project===code});
   if(!x)return null;
-  return {type:x.project,label:'分析师加选',settled:x.settlement_status==='settled',
+  return {type:x.project,label:'分析师加选',isAddon:true,businessDate:window.QC_CURATED_EXTRA?.date||'2026-10-21',groupHit:x.group_hit===true,settled:x.settlement_status==='settled',
    legs:(x.legs||[]).map(function(l,i){
     var r=(x.leg_results||[]).find(function(k){return k.match_num===l.match_num})||{};
     return {num:l.match_num,home:l.home,away:l.away,market:l.market,line:l.line,
-     ft:r.ft||null,ht:r.ht||null,options:(l.options||[]).map(function(o){return {name:o.label,odd:price(o.odd)}})};
+     ft:r.ft||null,ht:r.ht||null,hit:typeof r.hit==='boolean'?r.hit:null,options:(l.options||[]).map(function(o){return {name:o.label,odd:price(o.odd)}})};
    })};
  }
  var x=readAdmin().find(function(v){return v.group_code===code});
@@ -87,7 +87,33 @@ function calculate(plan,mode,budget){
 function budget(){var v=Number($('budget')?.value);return Number.isFinite(v)?Math.min(100000,Math.max(10,v)):100}
 function render(){
  if(!current)return;
- var plan=current,calc=calculate(plan,selectedMode,budget());
+ var plan=current;
+ if(plan.isAddon){
+  var dateParts=String(plan.businessDate||'').split('-');
+  var dayLabel=dateParts.length===3?Number(dateParts[1])+'月'+Number(dateParts[2])+'日':'方案日期';
+  $('dialogTitle').textContent=({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'精选')+(plan.legs.length===3?'三场':'双场')+' · '+plan.label;
+  $('dialogSub').textContent=dayLabel+' · '+(plan.settled?'赛后回看':'待结算')+' · 已发布方案';
+  $('modeTabs').style.display='none';
+  var optionCount=plan.legs.reduce(function(n,l){return n+(l.options||[]).length},0);
+  var addonLegHtml=plan.legs.map(function(l){
+   var known=plan.settled&&(l.ft||l.ht);
+   var meta=known?'FT '+esc(l.ft||'—')+'　HT '+esc(l.ht||'—')+'　'+(l.hit===true?'本场命中':l.hit===false?'本场未中':'已回收赛果'):'赛前记录 · 待结算';
+   var choices=(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.name)+'</span>'}).join('');
+   return '<div class="detail-leg"><b>'+esc(l.num)+'｜'+esc(l.home)+' vs '+esc(l.away)+'</b><small>'+meta+'</small><div class="chips">'+choices+'</div></div>';
+  }).join('');
+  var addonStatus=plan.settled?(plan.groupHit?'组合命中':'组合未命中'):'待结算';
+  var addonSummary='<div class="summary">'+
+   '<div class="summary-item"><small>比赛场次</small><strong>'+plan.legs.length+'场</strong></div>'+
+   '<div class="summary-item"><small>选项数量</small><strong>'+optionCount+'项</strong></div>'+
+   '<div class="summary-item"><small>组合状态</small><strong>'+addonStatus+'</strong></div></div>';
+  $('dialogBody').innerHTML='<div class="dialog-tip">以下为已发布方案的完整选项与赛后记录，不显示赔率。</div>'+
+   '<div class="dialog-legs">'+addonLegHtml+'</div>'+addonSummary+
+   '<div class="disclaimer">赛后回看仅供赛事研究；仅供看球讨论。</div>';
+  $('copyPlan').textContent='复制方案';
+  return;
+ }
+ $('modeTabs').style.display='';
+ var calc=calculate(plan,selectedMode,budget());
  var d={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
  $('dialogTitle').textContent=(d[plan.type]||'精选')+(plan.legs.length===3?'三场':'双场')+' · '+plan.label;
  $('dialogSub').textContent='10月21日 周三 · '+plan.label+' · '+(plan.settled?'赛后回看':'待结算');
@@ -129,8 +155,8 @@ function close(){if(!current)return;current=null;$('overlay').hidden=true;docume
 function copy(){
  if(!current)return;
  var x=current,b=calculate(x,selectedMode,budget());
- var txt=['球场档案｜'+x.label,x.legs.map(function(l){return l.num+' '+l.home+' vs '+l.away+': '+l.options.map(function(o){return o.name+(o.odd!==null?' @'+money(o.odd):'')}).join(' / ')}).join('\n'),
- '组合'+b.rows.length+'种｜模拟金额'+money(budget())+'点','仅供看球讨论。'].join('\n');
+ var txt=['球场档案｜'+x.label,x.legs.map(function(l){return l.num+' '+l.home+' vs '+l.away+': '+l.options.map(function(o){return o.name+(!x.isAddon&&o.odd!==null?' @'+money(o.odd):'')}).join(' / ')}).join('\n'),
+ x.isAddon?'完整选项 · 不显示赔率':'组合'+b.rows.length+'种｜模拟金额'+money(budget())+'点','仅供看球讨论。'].join('\n');
  if(navigator.clipboard?.writeText)navigator.clipboard.writeText(txt).then(function(){$('copyPlan').textContent='已复制';setTimeout(function(){$('copyPlan').textContent='复制方案'},1600)}).catch(function(){window.prompt('复制方案摘要',txt)});
  else window.prompt('复制方案摘要',txt);
 }
