@@ -59,9 +59,21 @@ for(const leagueId of cfg.fotmob_league_ids||[]){
 }
 
 const finished=[...all.values()].filter(m=>m?.status?.finished===true);
+// Only these specifically audited fixture IDs are out of scope for the 36-team
+// league-stage archive. An unknown unmapped fixture MUST still block publication.
+const excludedIds=new Set((cfg.excluded_source_match_ids||[]).map(String));
+const excluded=[];
+const scopedFinished=[];
+for(const m of finished){
+  if(!excludedIds.has(String(m.id))){scopedFinished.push(m);continue;}
+  const h=cfg.team_map?.[m?.home?.name];
+  const a=cfg.team_map?.[m?.away?.name];
+  if(h&&a) throw new Error('AUDIT_EXCLUSION_CONFLICT:'+m.id);
+  excluded.push(String(m.id));
+}
 const unmapped=[];
 const matches=[];
-for(const m of finished){
+for(const m of scopedFinished){
   const homeSource=m?.home?.name;
   const awaySource=m?.away?.name;
   const home=cfg.team_map?.[homeSource];
@@ -101,6 +113,9 @@ const report={
   run_at:new Date().toISOString(),
   discovered_fixtures:all.size,
   discovered_finished:finished.length,
+  in_scope_finished:scopedFinished.length,
+  excluded_out_of_scope_count:excluded.length,
+  excluded_out_of_scope_source_match_ids:excluded,
   baseline_finished_matches:baseline,
   new_finished_matches:addedIds.length,
   added_source_match_ids:addedIds,
@@ -171,7 +186,7 @@ const sha=blobSha(candidate);
 report.published_blob_sha=sha;
 report.status='PROMOTED';
 
-cfg.baseline_finished_matches=finished.length;
+cfg.baseline_finished_matches=matches.length;
 cfg.last_successful_refresh_at=report.run_at;
 cfg.last_published_blob_sha=sha;
 fs.writeFileSync(configPath,JSON.stringify(cfg,null,2)+'\n');
