@@ -1556,7 +1556,7 @@ function qcPrepareHistoryOverviewRows(record){
 
 // Public, finalized match history can be reused across separate page visits.
 // Do not persist incomplete dates or protected current-day predictions.
-function qcFinalHistoryKey(ds){ return 'qc-public-final-history-v1:'+ds; }
+function qcFinalHistoryKey(ds){ return 'qc-public-final-history-v2:'+ds; }
 function qcReadFinalHistoryFromStorage(ds){
   try{
     const record=JSON.parse(localStorage.getItem(qcFinalHistoryKey(ds))||'null');
