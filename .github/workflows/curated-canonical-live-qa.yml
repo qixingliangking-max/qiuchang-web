@@ -67,8 +67,10 @@ jobs:
                 if(/昨日补录|原始取价|影子测试|用户10月21|原方案 · 已确认/.test(await page.locator('body').innerText()))throw Error(name+' BACKEND_NOTES_VISIBLE');
                 for(const category of ['direction','htft','goals','score']){
                   await page.locator('#tabs button[data-type="'+category+'"]').click();
-                  if(await page.locator('#history .hist-row').count()!==4)throw Error(name+' OCT19_CATEGORY_HISTORY_COUNT_'+category);
-                  if(await page.locator('#history .hist-row:not([data-open-type="'+category+'"])').count()!==0)throw Error(name+' HISTORY_CROSS_CATEGORY_'+category);
+                  if(await page.locator('#history .hist-row[data-open-type="'+category+'"]').count()!==4)throw Error(name+' OCT19_CATEGORY_HISTORY_COUNT_'+category);
+                  if(await page.locator('#history .hist-row:not([data-open-type="'+category+'"]):not([data-qc-addon-history])').count()!==0)throw Error(name+' HISTORY_CROSS_CATEGORY_'+category);
+                  const histAddon=page.locator('#history [data-qc-addon-history="2026-10-21"]');
+                  if(await histAddon.count()!==1 || await histAddon.getAttribute('data-qc-detail-code')!==category)throw Error(name+' 1021_ADDON_HISTORY_NOT_RESTORED_'+category);
                 }
                 await context.close();
               }
@@ -94,8 +96,8 @@ jobs:
               await mockPage.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?mock_auto_20261021=1',{waitUntil:'networkidle',timeout:35000});
               await mockPage.waitForFunction(()=>!!window.QC_CURATED_LAB_DATA?.selectedPlans?.['2026-10-22'],{timeout:15000});
               if(!(await mockPage.locator('#dateLabel').innerText()).includes('10月22日'))throw Error('DAILY_NEWEST_DATE_MISSING');
-              if(await mockPage.locator('#history .hist-row').count()!==6)throw Error('DAILY_DIRECTION_HISTORY_NOT_ACCUMULATING');
-              if(await mockPage.locator('#history .hist-row:not([data-open-type="direction"])').count()!==0)throw Error('MOCK_HISTORY_CATEGORY_LEAK');
+              if(await mockPage.locator('#history .hist-row[data-open-type="direction"]').count()!==6)throw Error('DAILY_DIRECTION_HISTORY_NOT_ACCUMULATING');
+              if(await mockPage.locator('#history .hist-row:not([data-open-type="direction"]):not([data-qc-addon-history])').count()!==0)throw Error('MOCK_HISTORY_CATEGORY_LEAK');
               if(await mockPage.locator('#plans .plan').count()!==1 || !(await mockPage.locator('#plans').innerText()).includes('赛后模拟返还'))throw Error('DAILY_SETTLEMENT_DISPLAY_FAILED');
               await mockPage.locator('#dateLabel').click();
               await mockPage.locator('#calDays button[data-date="2026-10-21"]').click();
@@ -105,8 +107,10 @@ jobs:
               if(await mockPage.locator('#plans .plan').count()!==2)throw Error('HISTORICAL_DUAL_VERSION_CHANGED');
               for(const type of ['htft','goals','score']){
                 await mockPage.locator('#tabs button[data-type="'+type+'"]').click();
-                if(await mockPage.locator('#history .hist-row').count()!==6)throw Error('DAILY_HISTORY_WRONG_COUNT_'+type);
-                if(await mockPage.locator('#history .hist-row:not([data-open-type="'+type+'"])').count()!==0)throw Error('DAILY_HISTORY_WRONG_CATEGORY_'+type);
+                if(await mockPage.locator('#history .hist-row[data-open-type="'+type+'"]').count()!==6)throw Error('DAILY_HISTORY_WRONG_COUNT_'+type);
+                if(await mockPage.locator('#history .hist-row:not([data-open-type="'+type+'"]):not([data-qc-addon-history])').count()!==0)throw Error('DAILY_HISTORY_WRONG_CATEGORY_'+type);
+                const addon=mockPage.locator('#history [data-qc-addon-history="2026-10-21"]');
+                if(await addon.count()!==1 || await addon.getAttribute('data-qc-detail-code')!==type)throw Error('DAILY_1021_ADDON_MISSING_'+type);
               }
               console.log('LIVE_DAILY_AUTOMATION_MOCK_PASS',JSON.stringify({dailySelected:'10/22 settled',dailyPrematch:'10/21 frozen',original:'10/19 intact'}));
               await mockCtx.close();
