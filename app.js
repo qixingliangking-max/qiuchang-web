@@ -719,7 +719,13 @@ function jcFootballHitOddsHtml(m,model,score){
       .split('/').map(x=>x.trim()).filter(Boolean);
     const hk={让胜:'h',让平:'d',让负:'a'}[handicapLabel];
     const ho=hk?jcPoolNumber(hhad,hk):null;
-    if(handicapChoices.includes(handicapLabel) && ho!=null){
+    // A handicap-only fixture already counts the locked main direction
+    // against HHAD. The standalone handicap field is the SAME market:
+    // display that hit once, not twice (e.g. J2-free HAD 011, 让负).
+    const mainAlreadyCountedSameHandicap=hits.some(
+      x=>x.kind==='让球方向' && x.label===handicapLabel
+    );
+    if(handicapChoices.includes(handicapLabel) && ho!=null && !mainAlreadyCountedSameHandicap){
       hits.push({kind:'让球',label:handicapLabel,odds:ho});
     }
   }
