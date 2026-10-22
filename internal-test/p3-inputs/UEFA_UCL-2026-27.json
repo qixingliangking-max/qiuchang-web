@@ -369,7 +369,7 @@
       "home_team": "里尔",
       "away_team": "加拉塔萨雷",
       "match_date": "2026-10-21",
-      "kickoff_at": "2026-10-21T16:45:00.000Z"
+      "kickoff_at": "2026-10-21T16:45:00Z"
     },
     {
       "source_match_id": "6106410",
@@ -377,7 +377,63 @@
       "home_team": "科莫",
       "away_team": "曼联",
       "match_date": "2026-10-21",
-      "kickoff_at": "2026-10-21T16:45:00.000Z"
+      "kickoff_at": "2026-10-21T16:45:00Z"
+    },
+    {
+      "source_match_id": "6106238",
+      "match_id": "fotmob:6106238",
+      "home_team": "拜仁慕尼黑",
+      "away_team": "阿森纳",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106244",
+      "match_id": "fotmob:6106244",
+      "home_team": "皇家马德里",
+      "away_team": "莱比锡",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106252",
+      "match_id": "fotmob:6106252",
+      "home_team": "国际米兰",
+      "away_team": "顿涅茨克矿工",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106281",
+      "match_id": "fotmob:6106281",
+      "home_team": "葡萄牙体育",
+      "away_team": "LASK林茨",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106285",
+      "match_id": "fotmob:6106285",
+      "home_team": "阿斯顿维拉",
+      "away_team": "维京",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106297",
+      "match_id": "fotmob:6106297",
+      "home_team": "布鲁日",
+      "away_team": "朗斯",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106300",
+      "match_id": "fotmob:6106300",
+      "home_team": "皇家贝蒂斯",
+      "away_team": "费耶诺德",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T19:00:00Z"
     }
   ]
 }
