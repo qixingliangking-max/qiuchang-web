@@ -1,0 +1,1483 @@
+{
+  "version": 1,
+  "business_date": "2026-10-23",
+  "match_count": 12,
+  "rows": [
+    {
+      "id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+      "match_num": "周五001",
+      "business_date": "2026-10-23",
+      "league_name": "澳超",
+      "league_short_name": "澳超",
+      "home_team_name": "布里斯班狮吼",
+      "away_team_name": "珀斯光荣",
+      "match_date": "2026-10-23",
+      "match_time": "17:00:00",
+      "kickoff_at": "2026-10-23T09:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-5326.png",
+      "_awayLogoUrl": "assets/team-logos/espn-soccer-5322.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 150,
+            "s-1sd": 400,
+            "s-1sh": 75,
+            "s00s00": 12,
+            "s00s01": 9.5,
+            "s00s02": 16,
+            "s00s03": 50,
+            "s00s04": 150,
+            "s00s05": 400,
+            "s01s00": 7.25,
+            "s01s01": 6,
+            "s01s02": 9.5,
+            "s01s03": 27,
+            "s01s04": 90,
+            "s01s05": 300,
+            "s02s00": 9,
+            "s02s01": 7.25,
+            "s02s02": 12.5,
+            "s02s03": 30,
+            "s02s04": 100,
+            "s02s05": 400,
+            "s03s00": 16,
+            "s03s01": 15,
+            "s03s02": 23,
+            "s03s03": 55,
+            "s04s00": 50,
+            "s04s01": 40,
+            "s04s02": 75,
+            "s05s00": 150,
+            "s05s01": 100,
+            "s05s02": 200
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.2,
+            "d": 3.25,
+            "h": 1.97
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 5.25,
+            "ad": 14,
+            "ah": 25,
+            "da": 7,
+            "dd": 5.5,
+            "dh": 5,
+            "ha": 30,
+            "hd": 14,
+            "hh": 3.1
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.65,
+            "d": 3.6,
+            "h": 4.1
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "06ce3c9d-a44a-413c-b96a-a3b28091ed21",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 12,
+            "s1": 4.65,
+            "s2": 3.4,
+            "s3": 3.5,
+            "s4": 5.6,
+            "s5": 10,
+            "s6": 17,
+            "s7": 26
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+      "match_num": "周五002",
+      "business_date": "2026-10-23",
+      "league_name": "德乙",
+      "league_short_name": "德乙",
+      "home_team_name": "波鸿",
+      "away_team_name": "沃尔夫斯堡",
+      "match_date": "2026-10-24",
+      "match_time": "00:30:00",
+      "kickoff_at": "2026-10-23T16:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9911.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8721.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 34,
+            "s-1sd": 150,
+            "s-1sh": 45,
+            "s00s00": 21,
+            "s00s01": 12,
+            "s00s02": 13.5,
+            "s00s03": 22,
+            "s00s04": 50,
+            "s00s05": 125,
+            "s01s00": 15,
+            "s01s01": 7.5,
+            "s01s02": 7.25,
+            "s01s03": 13,
+            "s01s04": 31,
+            "s01s05": 75,
+            "s02s00": 18,
+            "s02s01": 8.5,
+            "s02s02": 10,
+            "s02s03": 16,
+            "s02s04": 35,
+            "s02s05": 90,
+            "s03s00": 35,
+            "s03s01": 18,
+            "s03s02": 20,
+            "s03s03": 29,
+            "s04s00": 90,
+            "s04s01": 50,
+            "s04s02": 50,
+            "s05s00": 250,
+            "s05s01": 150,
+            "s05s02": 175
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.06,
+            "d": 3.65,
+            "h": 2.7
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.3,
+            "ad": 13,
+            "ah": 22,
+            "da": 5.75,
+            "dd": 6.5,
+            "dh": 6.75,
+            "ha": 18,
+            "hd": 13,
+            "hh": 4.55
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 4,
+            "d": 4.05,
+            "h": 1.58
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6a5ffda2-9ea9-4b19-9592-5108931217b8",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 21,
+            "s1": 7.5,
+            "s2": 4.3,
+            "s3": 3.5,
+            "s4": 4.3,
+            "s5": 6.5,
+            "s6": 10.5,
+            "s7": 13.5
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+      "match_num": "周五003",
+      "business_date": "2026-10-23",
+      "league_name": "瑞超",
+      "league_short_name": "瑞超",
+      "home_team_name": "埃尔夫斯堡",
+      "away_team_name": "马尔默",
+      "match_date": "2026-10-24",
+      "match_time": "01:00:00",
+      "kickoff_at": "2026-10-23T17:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8014.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10237.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 90,
+            "s-1sd": 300,
+            "s-1sh": 50,
+            "s00s00": 15,
+            "s00s01": 11,
+            "s00s02": 17,
+            "s00s03": 40,
+            "s00s04": 100,
+            "s00s05": 400,
+            "s01s00": 8.5,
+            "s01s01": 6.75,
+            "s01s02": 9,
+            "s01s03": 24,
+            "s01s04": 75,
+            "s01s05": 250,
+            "s02s00": 10,
+            "s02s01": 7.25,
+            "s02s02": 11.5,
+            "s02s03": 26,
+            "s02s04": 90,
+            "s02s05": 300,
+            "s03s00": 17,
+            "s03s01": 14,
+            "s03s02": 20,
+            "s03s03": 50,
+            "s04s00": 40,
+            "s04s01": 30,
+            "s04s02": 50,
+            "s05s00": 100,
+            "s05s01": 90,
+            "s05s02": 150
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.15,
+            "d": 3.5,
+            "h": 1.9
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 5.25,
+            "ad": 14,
+            "ah": 23,
+            "da": 7.5,
+            "dd": 5.75,
+            "dh": 5,
+            "ha": 28,
+            "hd": 14,
+            "hh": 3
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.69,
+            "d": 3.65,
+            "h": 3.8
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "1d9b160c-462a-477d-8753-44837c8ee50f",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 15,
+            "s1": 5.5,
+            "s2": 3.75,
+            "s3": 3.4,
+            "s4": 5,
+            "s5": 8.25,
+            "s6": 13.5,
+            "s7": 20
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+      "match_num": "周五004",
+      "business_date": "2026-10-23",
+      "league_name": "荷甲",
+      "league_short_name": "荷甲",
+      "home_team_name": "前进之鹰",
+      "away_team_name": "特尔斯达",
+      "match_date": "2026-10-24",
+      "match_time": "02:00:00",
+      "kickoff_at": "2026-10-23T18:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6433.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6414.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 110,
+            "s-1sd": 200,
+            "s-1sh": 16,
+            "s00s00": 22,
+            "s00s01": 20,
+            "s00s02": 37,
+            "s00s03": 100,
+            "s00s04": 350,
+            "s00s05": 750,
+            "s01s00": 9.5,
+            "s01s01": 9,
+            "s01s02": 15,
+            "s01s03": 48,
+            "s01s04": 150,
+            "s01s05": 550,
+            "s02s00": 8.5,
+            "s02s01": 7,
+            "s02s02": 12,
+            "s02s03": 32,
+            "s02s04": 150,
+            "s02s05": 500,
+            "s03s00": 11,
+            "s03s01": 9.6,
+            "s03s02": 16,
+            "s03s03": 42,
+            "s04s00": 18,
+            "s04s01": 17,
+            "s04s02": 30,
+            "s05s00": 40,
+            "s05s01": 35,
+            "s05s02": 60
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 5.5,
+            "d": 4.38,
+            "h": 1.39
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 8.8,
+            "ad": 17,
+            "ah": 20,
+            "da": 12.5,
+            "dd": 7.5,
+            "dh": 4.4,
+            "ha": 45,
+            "hd": 17,
+            "hh": 1.96
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.48,
+            "d": 3.75,
+            "h": 2.18
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "95c6f838-c1c8-4338-bb2d-1da7980cb8ca",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 22,
+            "s1": 7.1,
+            "s2": 4.3,
+            "s3": 3.6,
+            "s4": 4.4,
+            "s5": 6.3,
+            "s6": 10.5,
+            "s7": 13
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+      "match_num": "周五005",
+      "business_date": "2026-10-23",
+      "league_name": "荷乙",
+      "league_short_name": "荷乙",
+      "home_team_name": "布雷达",
+      "away_team_name": "赫拉克勒斯",
+      "match_date": "2026-10-24",
+      "match_time": "02:00:00",
+      "kickoff_at": "2026-10-23T18:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9761.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9791.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 31,
+            "s-1sd": 110,
+            "s-1sh": 30,
+            "s00s00": 23,
+            "s00s01": 14,
+            "s00s02": 16,
+            "s00s03": 26,
+            "s00s04": 55,
+            "s00s05": 120,
+            "s01s00": 13,
+            "s01s01": 7.75,
+            "s01s02": 8.5,
+            "s01s03": 17,
+            "s01s04": 37,
+            "s01s05": 90,
+            "s02s00": 15.5,
+            "s02s01": 8,
+            "s02s02": 10.5,
+            "s02s03": 19,
+            "s02s04": 45,
+            "s02s05": 120,
+            "s03s00": 24,
+            "s03s01": 16,
+            "s03s02": 18,
+            "s03s03": 29,
+            "s04s00": 50,
+            "s04s01": 31,
+            "s04s02": 40,
+            "s05s00": 110,
+            "s05s01": 85,
+            "s05s02": 90
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.4,
+            "d": 3.6,
+            "h": 2.3
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.95,
+            "ad": 13,
+            "ah": 19,
+            "da": 6.5,
+            "dd": 6.5,
+            "dh": 6,
+            "ha": 22,
+            "hd": 13,
+            "hh": 3.65
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.48,
+            "d": 4.25,
+            "h": 4.6
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "17a5d459-55ca-4734-b482-befa8bf46bc7",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 23,
+            "s1": 7.5,
+            "s2": 4.3,
+            "s3": 3.4,
+            "s4": 4.4,
+            "s5": 6.5,
+            "s6": 10.5,
+            "s7": 13.5
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+      "match_num": "周五006",
+      "business_date": "2026-10-23",
+      "league_name": "德甲",
+      "league_short_name": "德甲",
+      "home_team_name": "斯图加特",
+      "away_team_name": "门兴格拉德巴赫",
+      "match_date": "2026-10-24",
+      "match_time": "02:30:00",
+      "kickoff_at": "2026-10-23T18:30:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10269.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9788.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 80,
+            "s-1sd": 125,
+            "s-1sh": 10,
+            "s00s00": 38,
+            "s00s01": 31,
+            "s00s02": 50,
+            "s00s03": 110,
+            "s00s04": 400,
+            "s00s05": 750,
+            "s01s00": 14,
+            "s01s01": 11.5,
+            "s01s02": 17,
+            "s01s03": 45,
+            "s01s04": 125,
+            "s01s05": 450,
+            "s02s00": 10.5,
+            "s02s01": 7.25,
+            "s02s02": 12.5,
+            "s02s03": 31,
+            "s02s04": 100,
+            "s02s05": 350,
+            "s03s00": 12,
+            "s03s01": 8.5,
+            "s03s02": 13,
+            "s03s03": 30,
+            "s04s00": 17,
+            "s04s01": 14,
+            "s04s02": 20,
+            "s05s00": 34,
+            "s05s01": 25,
+            "s05s02": 35
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 5.95,
+            "d": 5.2,
+            "h": 1.3
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 10.5,
+            "ad": 17,
+            "ah": 17,
+            "da": 15,
+            "dd": 10,
+            "dh": 4.5,
+            "ha": 39,
+            "hd": 17,
+            "hh": 1.76
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.9,
+            "d": 4,
+            "h": 1.87
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "6912ea19-d782-4228-a921-dcf25854ab5d",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 38,
+            "s1": 11,
+            "s2": 5.65,
+            "s3": 3.9,
+            "s4": 4,
+            "s5": 5.35,
+            "s6": 7.5,
+            "s7": 7.5
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+      "match_num": "周五007",
+      "business_date": "2026-10-23",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "都灵",
+      "away_team_name": "蒙扎",
+      "match_date": "2026-10-24",
+      "match_time": "02:45:00",
+      "kickoff_at": "2026-10-23T18:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9804.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6504.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 150,
+            "s-1sd": 350,
+            "s-1sh": 60,
+            "s00s00": 12,
+            "s00s01": 10,
+            "s00s02": 18,
+            "s00s03": 50,
+            "s00s04": 150,
+            "s00s05": 500,
+            "s01s00": 7.25,
+            "s01s01": 6.2,
+            "s01s02": 9.5,
+            "s01s03": 27,
+            "s01s04": 90,
+            "s01s05": 350,
+            "s02s00": 9,
+            "s02s01": 7.25,
+            "s02s02": 12.5,
+            "s02s03": 30,
+            "s02s04": 100,
+            "s02s05": 500,
+            "s03s00": 16,
+            "s03s01": 14,
+            "s03s02": 22,
+            "s03s03": 60,
+            "s04s00": 40,
+            "s04s01": 40,
+            "s04s02": 60,
+            "s05s00": 120,
+            "s05s01": 120,
+            "s05s02": 175
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.32,
+            "d": 3.35,
+            "h": 1.89
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 5.2,
+            "ad": 14,
+            "ah": 22,
+            "da": 7.5,
+            "dd": 5.8,
+            "dh": 5,
+            "ha": 30,
+            "hd": 14,
+            "hh": 3
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.7,
+            "d": 3.6,
+            "h": 3.8
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "da4af795-6649-47f8-9d71-b52eaf438e5d",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 12,
+            "s1": 4.7,
+            "s2": 3.45,
+            "s3": 3.65,
+            "s4": 5.3,
+            "s5": 9,
+            "s6": 18,
+            "s7": 26
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+      "match_num": "周五008",
+      "business_date": "2026-10-23",
+      "league_name": "法甲",
+      "league_short_name": "法甲",
+      "home_team_name": "布雷斯特",
+      "away_team_name": "尼斯",
+      "match_date": "2026-10-24",
+      "match_time": "02:45:00",
+      "kickoff_at": "2026-10-23T18:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8521.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9831.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 75,
+            "s-1sd": 250,
+            "s-1sh": 50,
+            "s00s00": 14,
+            "s00s01": 10.5,
+            "s00s02": 15,
+            "s00s03": 30,
+            "s00s04": 90,
+            "s00s05": 300,
+            "s01s00": 9,
+            "s01s01": 7,
+            "s01s02": 9,
+            "s01s03": 21,
+            "s01s04": 60,
+            "s01s05": 200,
+            "s02s00": 11,
+            "s02s01": 7,
+            "s02s02": 11.5,
+            "s02s03": 24,
+            "s02s04": 75,
+            "s02s05": 250,
+            "s03s00": 20,
+            "s03s01": 14,
+            "s03s02": 21,
+            "s03s03": 50,
+            "s04s00": 50,
+            "s04s01": 35,
+            "s04s02": 60,
+            "s05s00": 150,
+            "s05s01": 100,
+            "s05s02": 175
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.82,
+            "d": 3.35,
+            "h": 2.1
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.5,
+            "ad": 14,
+            "ah": 22,
+            "da": 6.5,
+            "dd": 5.75,
+            "dh": 5.5,
+            "ha": 28,
+            "hd": 14,
+            "hh": 3.35
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.56,
+            "d": 3.85,
+            "h": 4.4
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c957f83f-1de1-48e1-beed-69b8819ab880",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.75,
+            "s2": 3.65,
+            "s3": 3.45,
+            "s4": 4.9,
+            "s5": 8.25,
+            "s6": 14,
+            "s7": 21
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+      "match_num": "周五009",
+      "business_date": "2026-10-23",
+      "league_name": "英超",
+      "league_short_name": "英超",
+      "home_team_name": "伊普斯维奇",
+      "away_team_name": "诺丁汉森林",
+      "match_date": "2026-10-24",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-10-23T19:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9902.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10203.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 55,
+            "s-1sd": 250,
+            "s-1sh": 80,
+            "s00s00": 14,
+            "s00s01": 9.5,
+            "s00s02": 12,
+            "s00s03": 21,
+            "s00s04": 50,
+            "s00s05": 175,
+            "s01s00": 10.5,
+            "s01s01": 6,
+            "s01s02": 7.5,
+            "s01s03": 15,
+            "s01s04": 40,
+            "s01s05": 100,
+            "s02s00": 15,
+            "s02s01": 8.5,
+            "s02s02": 10.5,
+            "s02s03": 21,
+            "s02s04": 60,
+            "s02s05": 200,
+            "s03s00": 32,
+            "s03s01": 20,
+            "s03s02": 25,
+            "s03s03": 45,
+            "s04s00": 90,
+            "s04s01": 60,
+            "s04s02": 80,
+            "s05s00": 400,
+            "s05s01": 200,
+            "s05s02": 250
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.17,
+            "d": 3.25,
+            "h": 2.8
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.55,
+            "ad": 13.5,
+            "ah": 28,
+            "da": 5.2,
+            "dd": 5.3,
+            "dh": 6.5,
+            "ha": 22,
+            "hd": 13.5,
+            "hh": 4.8
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 4.7,
+            "d": 3.9,
+            "h": 1.52
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "b56773b6-8232-492a-8b39-16e4b9c3fb79",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.5,
+            "s2": 3.45,
+            "s3": 3.4,
+            "s4": 5,
+            "s5": 8.5,
+            "s6": 17,
+            "s7": 25
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+      "match_num": "周五010",
+      "business_date": "2026-10-23",
+      "league_name": "英冠",
+      "league_short_name": "英冠",
+      "home_team_name": "博尔顿",
+      "away_team_name": "米德尔斯堡",
+      "match_date": "2026-10-24",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-10-23T19:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8559.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8549.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 19,
+            "s-1sd": 175,
+            "s-1sh": 100,
+            "s00s00": 23,
+            "s00s01": 9.75,
+            "s00s02": 8.5,
+            "s00s03": 11.5,
+            "s00s04": 20,
+            "s00s05": 50,
+            "s01s00": 19,
+            "s01s01": 8.25,
+            "s01s02": 6.75,
+            "s01s03": 9.5,
+            "s01s04": 18,
+            "s01s05": 40,
+            "s02s00": 32,
+            "s02s01": 13.5,
+            "s02s02": 12,
+            "s02s03": 16,
+            "s02s04": 32,
+            "s02s05": 75,
+            "s03s00": 90,
+            "s03s01": 38,
+            "s03s02": 35,
+            "s03s03": 40,
+            "s04s00": 300,
+            "s04s01": 150,
+            "s04s02": 100,
+            "s05s00": 700,
+            "s05s01": 500,
+            "s05s02": 500
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 1.44,
+            "d": 4.3,
+            "h": 4.95
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 2,
+            "ad": 17,
+            "ah": 38,
+            "da": 4.3,
+            "dd": 7.3,
+            "dh": 12.5,
+            "ha": 19,
+            "hd": 17,
+            "hh": 9.25
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 2.25,
+            "d": 3.72,
+            "h": 2.4
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "c96bea3d-6ef2-4795-b65d-5ffb55ea8f7f",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 23,
+            "s1": 7.4,
+            "s2": 4.3,
+            "s3": 3.5,
+            "s4": 4.25,
+            "s5": 6.65,
+            "s6": 10.5,
+            "s7": 13
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+      "match_num": "周五011",
+      "business_date": "2026-10-23",
+      "league_name": "西甲",
+      "league_short_name": "西甲",
+      "home_team_name": "阿拉维斯",
+      "away_team_name": "马拉加",
+      "match_date": "2026-10-24",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-10-23T19:00:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9866.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9864.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 300,
+            "s-1sd": 500,
+            "s-1sh": 60,
+            "s00s00": 10.5,
+            "s00s01": 10.5,
+            "s00s02": 25,
+            "s00s03": 75,
+            "s00s04": 300,
+            "s00s05": 600,
+            "s01s00": 6,
+            "s01s01": 6,
+            "s01s02": 13,
+            "s01s03": 50,
+            "s01s04": 200,
+            "s01s05": 500,
+            "s02s00": 7,
+            "s02s01": 7,
+            "s02s02": 15,
+            "s02s03": 50,
+            "s02s04": 300,
+            "s02s05": 500,
+            "s03s00": 11.5,
+            "s03s01": 13,
+            "s03s02": 27,
+            "s03s03": 80,
+            "s04s00": 28,
+            "s04s01": 30,
+            "s04s02": 75,
+            "s05s00": 90,
+            "s05s01": 90,
+            "s05s02": 200
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.68,
+            "d": 3.45,
+            "h": 1.6
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 8,
+            "ad": 16,
+            "ah": 22,
+            "da": 9.5,
+            "dd": 5,
+            "dh": 4.1,
+            "ha": 40,
+            "hd": 16,
+            "hh": 2.6
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.03,
+            "d": 3.25,
+            "h": 3.05
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f0f5267f-ac04-46f2-8271-030b871434fc",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 10.5,
+            "s1": 4.3,
+            "s2": 3.15,
+            "s3": 3.6,
+            "s4": 6,
+            "s5": 11.5,
+            "s6": 23,
+            "s7": 30
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+      "match_num": "周五012",
+      "business_date": "2026-10-23",
+      "league_name": "葡超",
+      "league_short_name": "葡超",
+      "home_team_name": "吉马良斯",
+      "away_team_name": "马里迪莫",
+      "match_date": "2026-10-24",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-23T19:45:00+00:00",
+      "match_status": "2",
+      "raw": {
+        "matchStatusName": "已开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-7844.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10212.png",
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 400,
+            "s-1sd": 550,
+            "s-1sh": 50,
+            "s00s00": 11,
+            "s00s01": 11.5,
+            "s00s02": 27,
+            "s00s03": 90,
+            "s00s04": 400,
+            "s00s05": 850,
+            "s01s00": 6,
+            "s01s01": 6.5,
+            "s01s02": 13,
+            "s01s03": 50,
+            "s01s04": 250,
+            "s01s05": 750,
+            "s02s00": 6.8,
+            "s02s01": 6.5,
+            "s02s02": 16,
+            "s02s03": 60,
+            "s02s04": 350,
+            "s02s05": 750,
+            "s03s00": 11,
+            "s03s01": 12,
+            "s03s02": 26,
+            "s03s03": 90,
+            "s04s00": 24,
+            "s04s01": 29,
+            "s04s02": 60,
+            "s05s00": 80,
+            "s05s01": 80,
+            "s05s02": 200
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 5.15,
+            "d": 3.6,
+            "h": 1.52
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 8.75,
+            "ad": 18,
+            "ah": 25,
+            "da": 11.5,
+            "dd": 5.6,
+            "dh": 4.2,
+            "ha": 50,
+            "hd": 18,
+            "hh": 2.15
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.16,
+            "d": 3.25,
+            "h": 2.8
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        },
+        {
+          "jc_match_id": "f3a8833a-caa4-4237-9b8e-635a04167dc4",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 11,
+            "s1": 4.5,
+            "s2": 3.3,
+            "s3": 3.55,
+            "s4": 5.7,
+            "s5": 10.5,
+            "s6": 19,
+            "s7": 30
+          },
+          "captured_at": "2026-10-22T07:43:55.868672+00:00",
+          "official_update_time": "2026-10-22 13:24:17"
+        }
+      ],
+      "_jcMarketsComplete": true,
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
