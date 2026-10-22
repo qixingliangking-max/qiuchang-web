@@ -5461,7 +5461,20 @@ async function setupProfile(){
   // The profile page already verifies access through RLS-protected queries.
   // Avoid an extra auth.getUser() network round-trip and load profile/member
   // records in parallel so mobile/WeChat does not feel serially blocked.
-  const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+  const qcProfileDeadline=(promise,ms)=>Promise.race([
+    Promise.resolve(promise),
+    new Promise(resolve=>setTimeout(()=>resolve({data:null,error:{message:'request_timeout'},__qcTimeout:true}),ms))
+  ]);
+  const sessionResult=await qcProfileDeadline(window.qcSupabase.auth.getSession(),6500);
+  if(sessionResult.__qcTimeout){
+    const role=$('#profileRole'),status=$('#profileStatus');
+    if(role) role.textContent='登录状态连接超时';
+    if(status) status.innerHTML='<button type="button" id="qcProfileReload">重新加载</button>';
+    const retry=$('#qcProfileReload');
+    if(retry) retry.onclick=()=>location.reload();
+    return;
+  }
+  const {data:sessionData,error:sessionError}=sessionResult;
   const user=sessionData?.session?.user||null;
 
   if(sessionError || !user){
@@ -5478,7 +5491,11 @@ async function setupProfile(){
   qcSetupProfileContactModal();
 
   if(emailEl) emailEl.textContent = user.email || '—';
-
+  if(roleEl) roleEl.textContent='正在确认…';
+  if(statusEl) statusEl.textContent='正在确认…';
+  const memberHint=$('#membershipDays');
+  if(memberHint) memberHint.textContent='正在核验会员状态';
+  
   // Start both protected queries immediately, but paint identity as soon as
   // the profile request resolves instead of holding it behind subscription.
   const profileRequest=Promise.resolve(window.qcSupabase
@@ -5499,7 +5516,7 @@ async function setupProfile(){
   // four simultaneous "loading" fields while waiting for membership data.
   if(nicknameEl) nicknameEl.textContent=(user.email||'').split('@')[0]||'用户';
 
-  const profileResult=await profileRequest;
+  const profileResult=await qcProfileDeadline(profileRequest,7500);
   const profile=profileResult.data||null;
   if(profileResult.error) console.error('读取用户资料失败',profileResult.error);
 
@@ -5509,18 +5526,23 @@ async function setupProfile(){
 
   if(nicknameEl) nicknameEl.textContent=nickname;
   if(nicknameInput) nicknameInput.value=nickname;
-  if(roleEl) roleEl.textContent=role==='admin'?'管理员':'正在核验会员状态…';
+  if(roleEl) roleEl.textContent=profileResult.__qcTimeout?'资料读取超时':(role==='admin'?'管理员':'正在核验会员状态…');
   if(statusEl){
-    statusEl.textContent=status==='active'?'正常':'已停用';
-    statusEl.style.color=status==='active'?'var(--green)':'var(--red)';
+    statusEl.textContent=profileResult.__qcTimeout?'资料暂不可用':(status==='active'?'正常':'已停用');
+    if(!profileResult.__qcTimeout)statusEl.style.color=status==='active'?'var(--green)':'var(--red)';
   }
 
-  const subscriptionResult=await subscriptionRequest;
+  const subscriptionResult=await qcProfileDeadline(subscriptionRequest,7500);
   const subscriptions=subscriptionResult.data||[];
   if(subscriptionResult.error) console.error('读取会员信息失败',subscriptionResult.error);
   const activeSubscription=subscriptions.length?subscriptions[0]:null;
-  if(roleEl) roleEl.textContent=role==='admin'?'管理员':activeSubscription?'Pro会员':'基础用户';
-  renderMembership(activeSubscription,role);
+  if(subscriptionResult.__qcTimeout){
+    if(roleEl && !profileResult.__qcTimeout) roleEl.textContent=role==='admin'?'管理员':'会员状态待确认';
+    if(memberHint)memberHint.textContent='会员状态连接超时，请刷新重试';
+  }else{
+    if(roleEl)roleEl.textContent=profileResult.__qcTimeout?'资料暂不可用':(role==='admin'?'管理员':activeSubscription?'Pro会员':'基础用户');
+    renderMembership(activeSubscription,role);
+  }
 
   // Keep private admin shortcuts in the personal-center navigation only.
   // The server-side admin RPC must succeed before either link is created;
