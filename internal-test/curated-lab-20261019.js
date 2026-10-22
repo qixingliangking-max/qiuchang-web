@@ -3,7 +3,7 @@
    Results are NEVER used to choose fixture pairs or options. */
 (function(){
 'use strict';
-var db=window.QC_CURATED_LAB_DATA;
+var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
 var blind=null; // Historical pre-19 backtest intentionally excluded from canonical display.
 var settled=null;
 var $=function(id){return document.getElementById(id)};
@@ -15,7 +15,6 @@ var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
-var personaSources={1:'主模型基准版',2:'主模型AI精选版',3:'赛事分析师加选'};
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -159,7 +158,7 @@ function renderTabs(){
  var plans=pack?plansFor(state.day,state.type):[];
  var complete=plans.length>0&&plans.every(function(p){return !p.prematch});
  var missing=pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'&&pack.sourceMeta&&pack.sourceMeta.mainStatus==='missing';
- $('infoBand').textContent=missing?'顾衡、沈策的主模型方案尚未同步；陆野的真实方案已收到。':complete?'本期精选方案已结算 · 点击方案详情查看组合明细。':'本期精选方案待结算 · 点击方案详情查看组合明细。';
+ $('infoBand').textContent=complete?'本期方案已结算 · 点击方案查看详情。':'点击方案查看详情。';
 }
 
 function renderDate(){
@@ -196,7 +195,7 @@ function planCard(plan){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
    var title=esc(plan.versionLabel||'精选方案');
-   var risk=plan.shadow?(plan.versionGate==='高风险观察'?' · 高风险':plan.versionGate==='赔率时效复核'?' · 赔率待核':' · 影子研究'):'';
+   var risk='';
    return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span><span class="flag pending">待赛'+esc(risk)+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
  if(plan.variant){
@@ -207,14 +206,14 @@ function planCard(plan){
 }
 function pendingPersonaCard(index){
  return '<article class="plan variant-'+(index===1?'original':'shadow')+'" data-qc-missing-main="'+index+'">'+
- '<div class="plan-head"><span class="plan-id">'+esc(personaNames[index])+'</span><span class="flag pending">待同步</span></div>'+
- '<div class="legs"><div class="leg"><div class="leg-result">主模型原始方案尚未到达网站接收表，不以其他方案代替。</div></div></div></article>';
+ '<div class="plan-head"><span class="plan-id">'+esc(personaNames[index])+'</span></div>'+
+ '<div class="legs"><div class="leg"><div class="leg-result">暂无方案</div></div></div></article>';
 }
 function renderPlans(){
  var plans=plansFor(state.day,state.type),pack=db.selectedPlans&&db.selectedPlans[state.day];
  $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
- if(pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'){
-  $('dailyMeta').textContent='固定3位 · 已接收'+plans.length+'组';
+ if((pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1')||(!pack&&state.day>='2026-10-21')){
+  $('dailyMeta').textContent='';
   $('plans').innerHTML=[1,2,3].map(function(i){var p=plans.find(function(x){return x.index===i});return p?planCard(p):pendingPersonaCard(i)}).join('');
  }else{
   $('dailyMeta').textContent='共'+plans.length+'组';
@@ -231,17 +230,13 @@ function renderHistory(){
     var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
       pending=p.prematch||p.unsettled,
       name=personaNames[p.index]||p.versionLabel||'历史方案',
-      source=personaSources[p.index]||p.versionLabel||'方案',
-      supplemented=planSet.sourceMeta&&planSet.sourceMeta.mainStatus==='candidate'&&p.index<3,
-      shadow=day==='2026-10-19'&&p.index===2&&/影子/.test(String(planSet.note||db.note||'')),
-      tag=supplemented?' · 赛后补核／未正式发布':shadow?' · 影子测试':'',
       status=pending?'待结算':res.covered?'命中':'未中',
       amount=pending?'—':money(res.returns),
       legs=planLegs(p),teams=legs.map(function(l){return idNum(l.row)+' '+l.row.h}).join(' / '),
       options=legs.map(function(l){return l.options.map(function(o){return o.name}).join(' / ')}).join(' · ');
     rows.push('<button type="button" class="hist-row" data-open-date="'+esc(day)+'" data-open-type="'+esc(type)+'" data-open-index="'+p.index+'">'+
       '<span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'<small>'+esc(labels[type])+'</small></span>'+
-      '<span class="hist-leg"><b>'+esc(teams)+'</b><small>'+esc(name)+' · '+esc(source+tag)+' · '+esc(options)+'</small></span>'+
+      '<span class="hist-leg"><b>'+esc(teams)+'</b><small>'+esc(name)+' · '+esc(options)+'</small></span>'+
       '<span class="hist-amount">'+esc(amount)+'</span>'+
       '<span class="hist-status '+(!pending&&res.covered?'hit':pending?'pending':'')+'">'+status+'</span></button>');
    });
@@ -342,10 +337,13 @@ function showRealFrozenHistoryOnly(){
 }
 function init(){
  showRealFrozenHistoryOnly();
- if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
- all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
+ all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).sort().reverse();
- if(!dates.length){$('plans').innerHTML='<div class="empty">10月19日起尚无已冻结精选记录。</div>';return}
+ if(!dates.length){
+  var p={};
+  new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
+  dates=[p.year+'-'+p.month+'-'+p.day];
+ }
  state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 

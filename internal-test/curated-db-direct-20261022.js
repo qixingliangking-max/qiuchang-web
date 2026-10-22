@@ -1,7 +1,6 @@
 (function(){
 'use strict';
-var db=window.QC_CURATED_LAB_DATA;
-if(!db){window.QC_CURATED_DB_READY=Promise.resolve();return}
+var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
 function keyFor(market,label){
  var map={'胜':'h','平':'d','负':'a','让胜':'h','让平':'d','让负':'a'};
  if(market==='had'||market==='hhad')return map[label]||'';
@@ -56,18 +55,27 @@ async function rpc(name,args){
  var url=(window.QC_SUPABASE_URL||'').replace(/\/$/,'')+'/rest/v1/rpc/'+name;
  var key=window.QC_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)throw Error('Supabase public config missing');
- var r=await fetch(url,{method:'POST',cache:'no-store',headers:{
-  'apikey':key,'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json'
- },body:JSON.stringify(args||{})});
- if(!r.ok)throw Error(name+' HTTP '+r.status);
- return r.json();
+ var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},7000);
+ try{
+  var r=await fetch(url,{method:'POST',cache:'no-store',signal:controller.signal,headers:{
+   'apikey':key,'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json'
+  },body:JSON.stringify(args||{})});
+  if(!r.ok)throw Error(name+' HTTP '+r.status);
+  return await r.json();
+ }finally{clearTimeout(timer)}
+
 }
+var daySnapshot=Object.create(null);
 async function loadDay(day){
- var pair=await Promise.all([
+ var pair=await Promise.allSettled([
   rpc('qc_selection_display_public',{p_business_date:day}),
   rpc('qc_curated_addons_public',{p_date:day})
  ]);
- var main=pair[0]||{groups:[]},addons=pair[1]||{groups:[]};
+ if(pair.every(function(r){return r.status==='rejected'}))throw Error('两条读取通道均不可用');
+ var cached=daySnapshot[day]||{};
+ var main=pair[0].status==='fulfilled'?(pair[0].value||{groups:[]}):(cached.main||{groups:[]});
+ var addons=pair[1].status==='fulfilled'?(pair[1].value||{groups:[]}):(cached.addons||{groups:[]});
+ daySnapshot[day]={main:main,addons:addons};
  var baseline=(main.groups||[]).filter(function(g){return g.track==='baseline'}).map(function(g){return buildMainEntry(day,g)});
  var ai=(main.groups||[]).filter(function(g){return g.track==='ai_analyst'}).map(function(g){return buildMainEntry(day,g)});
  var analyst=(addons.groups||[]).map(function(g){return buildAddonEntry(day,g)});
@@ -94,11 +102,23 @@ function recentDays(){
  }
  return days;
 }
+var refreshActive=false;
 async function refresh(){
- var days=recentDays();
- await Promise.all(days.map(function(day){return loadDay(day).catch(function(e){console.warn('精选数据读取失败',day,String(e))})}));
- window.dispatchEvent(new Event('qc-curated-db-update'));
+ if(refreshActive)return;
+ refreshActive=true;
+ try{
+  var days=recentDays();
+  await Promise.all(days.map(function(day){
+   return loadDay(day).then(function(changed){
+    if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
+   }).catch(function(e){
+    console.warn('精选数据读取失败，可在下次刷新重试',day,String(e));
+   });
+  }));
+ }finally{refreshActive=false}
 }
-window.QC_CURATED_DB_READY=refresh();
+// Never block the original page on a network round trip. Render existing data immediately.
+window.QC_CURATED_DB_READY=Promise.resolve();
+setTimeout(refresh,0);
 setInterval(refresh,120000);
 })();
