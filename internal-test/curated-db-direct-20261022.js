@@ -65,8 +65,39 @@ async function rpc(name,args){
  }finally{clearTimeout(timer)}
 
 }
+
+function buildV2Entry(day,p){
+ var results=Array.isArray(p.leg_results)?p.leg_results:[];
+ return {type:p.market_group,format:p.version,gate:'',legs:(p.legs||[]).map(function(leg){
+   var result=results.find(function(r){return r.match_num===leg.match_num})||null;
+   return buildLeg(day,{
+      market:leg.market,match_num:leg.match_num,home:leg.home,away:leg.away,
+      league:leg.league,official_handicap:leg.line,
+      options:(leg.options||[]).map(function(o){return {label:o.label,odd:o.odd}}),
+      odds_captured_at:leg.odds_captured_at
+    },true,result);
+ })};
+}
+async function loadIndependentDay(day){
+ var raw=await rpc('qc_v2_public',{p_business_date:day});
+ var sources=Array.isArray(raw&&raw.analysts)?raw.analysts:[];
+ var byId={};
+ sources.forEach(function(a){byId[a.id]=a});
+ var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0};
+ db.selectedPlans=db.selectedPlans||{};
+ db.selectedPlans[day]={
+  rule:'QCDA_INDEPENDENT_3_ANALYSTS_V2',
+  entries:(a1.plans||[]).map(function(p){return buildV2Entry(day,p)}),
+  aiSelector:{entries:(a2.plans||[]).map(function(p){return buildV2Entry(day,p)})},
+  analystSelector:{entries:(a3.plans||[]).map(function(p){return buildV2Entry(day,p)})},
+  streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0}
+ };
+ return true;
+}
+
 var daySnapshot=Object.create(null);
 async function loadDay(day){
+ if(day>='2026-10-23')return loadIndependentDay(day);
  var pair=await Promise.allSettled([
   rpc('qc_selection_display_public',{p_business_date:day}),
   rpc('qc_curated_addons_public',{p_date:day})
