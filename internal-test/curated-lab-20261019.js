@@ -223,10 +223,11 @@ function renderPlans(){
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
- var rows=[],types=['direction','htft','goals','score'],labels={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
+ var rows=[],type=state.type,labels={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
+ var heading=$('historyHeading');
+ if(heading){var title=heading.querySelector('h2');if(title)title.textContent='历史回看 · '+labels[type];}
  dates.filter(function(day){return day>='2026-10-19'&&day!==dates[0]&&db.selectedPlans&&db.selectedPlans[day]}).forEach(function(day){
-  types.forEach(function(type){
-   plansFor(day,type).forEach(function(p){
+  plansFor(day,type).forEach(function(p){
     var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
       pending=p.prematch||p.unsettled,
       name=personaNames[p.index]||p.versionLabel||'历史方案',
@@ -244,7 +245,6 @@ function renderHistory(){
       '<span class="hist-amount">'+esc(amount)+'</span>'+
       '<span class="hist-status '+(!pending&&res.covered?'hit':pending?'pending':'')+'">'+status+'</span></button>');
    });
-  });
  });
  host.innerHTML=rows.join('')||'<div class="empty">10月19日起暂无可回看的真实方案。</div>';
 }
