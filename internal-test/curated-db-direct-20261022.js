@@ -1,7 +1,6 @@
 (function(){
 'use strict';
-var db=window.QC_CURATED_LAB_DATA;
-if(!db){window.QC_CURATED_DB_READY=Promise.resolve();return}
+var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
 function keyFor(market,label){
  var map={'胜':'h','平':'d','负':'a','让胜':'h','让平':'d','让负':'a'};
  if(market==='had'||market==='hhad')return map[label]||'';
