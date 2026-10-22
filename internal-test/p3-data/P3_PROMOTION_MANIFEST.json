@@ -114,14 +114,14 @@
       "quality_tier": "LIMITED",
       "teams": 36,
       "published_path": "internal-test/p3-data/UEFA_UCL-2026-27.json",
-      "blob_sha": "eb420e99bbfc71b75685116f35a996c320dc6fae",
+      "blob_sha": "903715ef269af9a30bbe40f7a8381e68b271b666",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UCL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-21T19:28:53.044Z",
-      "finished_matches": 47
+      "last_incremental_refresh_at": "2026-10-22T10:11:31.612Z",
+      "finished_matches": 54
     },
     {
       "league_code": "UEFA_UEL",
