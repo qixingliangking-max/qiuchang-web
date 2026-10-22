@@ -17,7 +17,7 @@ var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
 function personaPlan(index){return (personaNames[index]||'')+'方案'}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
-function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(streak>=2?' · '+streak+'连红':'')}
+function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(plan.replay?' · 回测':'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
 function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
 function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -90,7 +90,7 @@ function plansFor(day,type){
          return {row:leg.row,market:leg.market,options:opts};
        });
        if(legs.some(function(l){return !l}))return null;
-       return {day:day,type:type,index:version.index,detailId:record.id||null,format:record.format||null,
+       return {day:day,type:type,index:version.index,detailId:record.id||null,format:record.format||null,replay:!!record.replay,
          a:legs[0],b:legs[1],legs:legs,prematch:legs.some(function(l){return !score(l.row.ft)||!score(l.row.ht)}),
          variant:version.id,versionLabel:version.label,versionNote:record.note||'',
          versionGate:record.gate||'',shadow:version.shadow};
@@ -349,7 +349,14 @@ function init(){
 
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
  init();
- window.addEventListener('qc-curated-db-update',function(){
+ window.addEventListener('qc-curated-db-error',function(e){
+   var band=$('infoBand');
+   if(band&&(!plansFor(state.day,state.type).length)){
+     band.style.display='';
+     band.textContent='方案数据暂未同步，正在重新连接，请稍后刷新页面。';
+   }
+  });
+  window.addEventListener('qc-curated-db-update',function(){
   var nextDates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
   if(!nextDates.length)return;
   var before=state.day;
