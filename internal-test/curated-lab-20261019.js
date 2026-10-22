@@ -3,7 +3,7 @@
    Results are NEVER used to choose fixture pairs or options. */
 (function(){
 'use strict';
-var db=window.QC_CURATED_LAB_DATA;
+var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
 var blind=null; // Historical pre-19 backtest intentionally excluded from canonical display.
 var settled=null;
 var $=function(id){return document.getElementById(id)};
@@ -212,7 +212,7 @@ function pendingPersonaCard(index){
 function renderPlans(){
  var plans=plansFor(state.day,state.type),pack=db.selectedPlans&&db.selectedPlans[state.day];
  $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
- if(pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'){
+ if((pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1')||(!pack&&state.day>='2026-10-21')){
   $('dailyMeta').textContent='';
   $('plans').innerHTML=[1,2,3].map(function(i){var p=plans.find(function(x){return x.index===i});return p?planCard(p):pendingPersonaCard(i)}).join('');
  }else{
@@ -337,10 +337,13 @@ function showRealFrozenHistoryOnly(){
 }
 function init(){
  showRealFrozenHistoryOnly();
- if(!db||!Array.isArray(db.matches)||!db.matches.length){$('plans').innerHTML='<div class="empty">数据文件未加载。请刷新测试页面。</div>';return;}
- all=db.matches.filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
+ all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).sort().reverse();
- if(!dates.length){$('plans').innerHTML='<div class="empty">10月19日起尚无已冻结精选记录。</div>';return}
+ if(!dates.length){
+  var p={};
+  new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
+  dates=[p.year+'-'+p.month+'-'+p.day];
+ }
  state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 
