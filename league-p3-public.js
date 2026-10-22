@@ -66,15 +66,25 @@
       '<div class="p3-loading">展开后读取阵容数据。</div>'+
     '</div>';
   }
-  async function fetchLeague(code,season){
-    const m=meta(code,season); if(!m) return null;
-    const key=code+'|'+season;
-    if(cache.has(key)) return cache.get(key);
-    const p=fetch(m.url,{cache:'no-cache'}).then(r=>{
-      if(!r.ok) throw new Error('P3 snapshot HTTP '+r.status);
-      return r.json();
-    }).catch(err=>{cache.delete(key);throw err});
-    cache.set(key,p); return p;
+  // Staging performance fix: P3 fetches only the selected team's already-published snapshot.
+  // Existing PRO page gate remains authoritative; never request a P3 payload anonymously.
+  const teamCache=new Map();
+  async function fetchTeam(code,season,team){
+    const key=code+'|'+season+'|'+team;
+    if(teamCache.has(key)) return teamCache.get(key);
+    const promise=(async()=>{
+      if(!window.qcSupabase) throw new Error('P3 data connection unavailable');
+      const sessionResult=await window.qcSupabase.auth.getSession();
+      if(sessionResult.error || !sessionResult.data?.session) throw new Error('P3 requires an active session');
+      const {data,error}=await window.qcSupabase.rpc('get_league_team_p3',{
+        p_team_query:team,p_league_code:code,p_season:season
+      });
+      if(error) throw error;
+      if(!data?.ok) throw new Error('P3 not ready: '+(data?.status||'unknown'));
+      return data;
+    })().catch(err=>{teamCache.delete(key);throw err});
+    teamCache.set(key,promise);
+    return promise;
   }
 
   function kpi(label,value){return '<div class="p3-kpi"><small>'+esc(label)+'</small><b>'+esc(value)+'</b></div>'}
@@ -226,9 +236,8 @@
     host.dataset.loading='1';
     host.innerHTML='<div class="p3-loading">正在读取阵容数据…</div>';
     try{
-      const league=await fetchLeague(code,season);
-      const p3=league?.teams?.[team]||null;
-      host.innerHTML=p3?.ok?render(p3,{quality:m.quality,generated_at:league?.generated_at}):'<div class="p3-loading">当前暂无可展示的阵容数据。</div>';
+      const p3=await fetchTeam(code,season,team);
+      host.innerHTML=p3?.ok?render(p3,{quality:m.quality,generated_at:p3?.generated_at}):'<div class="p3-loading">当前暂无可展示的阵容数据。</div>';
       host.dataset.loaded='1';
     }catch(err){
       console.error('P3 snapshot load failed',code,team,err);
