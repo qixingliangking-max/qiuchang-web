@@ -1,0 +1,97 @@
+name: QCDA Focused Curated Real Browser Check
+on:
+  push:
+    branches: [qcda-three-cards-real-browser-check-20261022]
+    paths: [.github/workflows/qc-curated-real-20261022.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install chromium once
+        run: |
+          mkdir -p /tmp/qcda-browser
+          cd /tmp/qcda-browser
+          npm init -y >/dev/null
+          npm i --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test actual site, database plans, four categories and original details
+        env:
+          NODE_PATH: /tmp/qcda-browser/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          const assert=require('node:assert/strict');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            let fatal=false;
+            try {
+              for(const [name,viewport] of [['desktop',{width:1280,height:900}],['mobile',{width:390,height:844}]]){
+                const p=await browser.newPage({viewport});
+                const errors=[],rpc=[],sources=[];
+                p.on('pageerror',e=>errors.push(String(e)));
+                p.on('console',e=>{if(e.type()==='warning'||e.type()==='error')errors.push('console '+e.type()+': '+e.text())});
+                p.on('response',r=>{
+                  const u=r.url();
+                  if(u.includes('/rest/v1/rpc/qc_'))rpc.push({name:u.split('/').at(-1),status:r.status()});
+                  if(u.includes('/internal-test/curated')&&u.includes('.js'))sources.push({url:u.split('/').at(-1),status:r.status()});
+                });
+                const response=await p.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?qa_focus=20261022_test_v1_'+name,{waitUntil:'domcontentloaded',timeout:45000});
+                await p.waitForTimeout(4000);
+                const scripts=await p.locator('script[src]').evaluateAll(els=>els.map(x=>x.getAttribute('src')).filter(x=>x.includes('curated')));
+                let dayText=await p.locator('#dateLabel').innerText();
+                let today=await p.locator('#plans .plan').count();
+                const firstText=(await p.locator('#plans').innerText()).slice(0,700);
+                const hasUnwanted=await p.evaluate(()=>document.body.innerText.includes('14天遮挡回测')||!!document.querySelector('.history .hist-top'));
+                console.log('LIVE_INITIAL',JSON.stringify({name,http:response.status(),scripts,rpc,sources,dayText,today,hasUnwanted,firstText,errors}));
+                if(response.status()!==200||hasUnwanted){fatal=true;await p.close();continue}
+                if(!dayText.includes('10月22日')||today!==1){fatal=true;console.error('TODAY_CARD_COUNT_OR_DATE',name,today,dayText)}
+                const combos={direction:1,htft:1,goals:4,score:27};
+                for(const type of ['direction','htft','goals','score']){
+                  await p.locator('#tabs button[data-type="'+type+'"]').click();
+                  const plans=p.locator('#plans .plan');
+                  const count=await plans.count();
+                  const label=(await p.locator('#plans .plan-id').allInnerTexts()).join('|');
+                  const button=plans.locator('.inspect');
+                  if(count!==1||await button.count()!==1){fatal=true;console.error('TODAY_MISSING',name,type,count,label);continue}
+                  await button.first().click();
+                  const opened=await p.locator('#overlay').evaluate(el=>!el.hidden);
+                  const legs=await p.locator('#dialogBody .detail-leg').count();
+                  const allocations=await p.locator('#dialogBody tbody tr').count();
+                  console.log('TODAY_DETAIL',JSON.stringify({name,type,count,opened,legs,allocations,label}));
+                  if(!opened||legs!==(type==='score'?3:2)||allocations!==combos[type])fatal=true;
+                  await p.locator('#modeTabs button[data-mode="hot"]').click();
+                  await p.locator('#modeTabs button[data-mode="balanced"]').click();
+                  await p.locator('#closeDialog').click();
+                }
+                await p.locator('#dateLabel').click();
+                const oct21=p.locator('#calDays button[data-date="2026-10-21"]');
+                let enabled=await oct21.isEnabled();
+                if(enabled)await oct21.click();else{fatal=true;console.error('YESTERDAY_NOT_AVAILABLE',name)}
+                for(const type of ['direction','htft','goals','score']){
+                  await p.locator('#tabs button[data-type="'+type+'"]').click();
+                  const count=await p.locator('#plans .plan').count();
+                  const labels=await p.locator('#plans .plan-id').allInnerTexts();
+                  console.log('YESTERDAY_GROUPS',JSON.stringify({name,type,count,labels}));
+                  if(count!==3||!labels[0]?.includes('基准')||!labels[1]?.includes('AI精选')||!labels[2]?.includes('分析师'))fatal=true;
+                  const inspect=p.locator('#plans .plan .inspect');
+                  for(let i=0;i<Math.min(count,3);i++){
+                    await inspect.nth(i).click();
+                    if(await p.locator('#overlay').getAttribute('hidden')!==null)fatal=true;
+                    await p.locator('#closeDialog').click();
+                  }
+                }
+                console.log('BROWSER_CHECK_FINISH',JSON.stringify({name,fatal,errors,rpc}));
+                await p.close();
+              }
+            }finally{await browser.close()}
+            if(fatal)process.exit(2);
+          })().catch(e=>{console.error('TEST_FATAL',e.stack||e);process.exit(1)});
+          NODE
