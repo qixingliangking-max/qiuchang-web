@@ -85,7 +85,7 @@ jobs:
                             return {match_num:'周四00'+(i+1),home:'主队'+i,away:'客队'+i,
                               market_kind:market,options:opts,selections:opts.map(x=>x.label),ft:null,ht:null};
                           })
-                        })):[];
+                        }))):[];
                       return {data:{date:day,batch_status:groups.length?'published':'missing',groups}};
                     }
                     if(name==='qc_curated_addons_public'){
