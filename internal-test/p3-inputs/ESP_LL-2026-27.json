@@ -714,6 +714,14 @@
       "away_team": "巴列卡诺",
       "match_date": "2026-10-19",
       "kickoff_at": "2026-10-19T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868067",
+      "match_id": "fotmob:5868067",
+      "home_team": "莱万特",
+      "away_team": "毕尔巴鄂竞技",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T18:00:00Z"
     }
   ]
 }

@@ -1,25 +1,654 @@
 {
   "league_code": "UEFA_UCL",
   "season": "2026/27",
-  "run_at": "2026-10-21T19:28:53.044Z",
-  "discovered_fixtures": 144,
-  "discovered_finished": 47,
-  "baseline_finished_matches": 45,
-  "new_finished_matches": 2,
+  "run_at": "2026-10-22T05:12:00.029Z",
+  "discovered_fixtures": 234,
+  "discovered_finished": 144,
+  "baseline_finished_matches": 47,
+  "new_finished_matches": 7,
   "added_source_match_ids": [
-    "6106312",
-    "6106410"
+    "6106238",
+    "6106244",
+    "6106252",
+    "6106281",
+    "6106285",
+    "6106297",
+    "6106300"
   ],
   "removed_source_match_ids": [],
-  "mapped_finished": 47,
-  "unmapped_count": 0,
-  "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0,
-  "published_blob_sha": "eb420e99bbfc71b75685116f35a996c320dc6fae"
+  "mapped_finished": 54,
+  "unmapped_count": 90,
+  "unmapped": [
+    {
+      "source_match_id": "1000022632",
+      "home_source": "Ararat Armenia",
+      "away_source": "Riga FC",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022636",
+      "home_source": "FK Kauno Žalgiris",
+      "away_source": "Drita",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022655",
+      "home_source": "Lincoln Red Imps FC",
+      "away_source": "Inter Club d'Escaldes",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022642",
+      "home_source": "Sabah FK",
+      "away_source": "The New Saints",
+      "home_mapped": "萨巴赫",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022634",
+      "home_source": "FK Vardar Skopje",
+      "away_source": "KuPS",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022649",
+      "home_source": "Floriana",
+      "away_source": "Shamrock Rovers",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022644",
+      "home_source": "Borac Banja Luka",
+      "away_source": "Levski Sofia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022629",
+      "home_source": "Tre Fiori",
+      "away_source": "Larne",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022656",
+      "home_source": "Klaksvik",
+      "away_source": "Atert Bissen",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022646",
+      "home_source": "Víkingur Reykjavík",
+      "away_source": "Györi ETO",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022652",
+      "home_source": "Kairat Almaty",
+      "away_source": "Sutjeska",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022650",
+      "home_source": "Flora Tallinn",
+      "away_source": "Iberia 1999",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022640",
+      "home_source": "CS Petrocub",
+      "away_source": "Egnatia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022638",
+      "home_source": "ML Vitebsk",
+      "away_source": "Universitatea Craiova",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022635",
+      "home_source": "KuPS",
+      "away_source": "FK Vardar Skopje",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022651",
+      "home_source": "Iberia 1999",
+      "away_source": "Flora Tallinn",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022654",
+      "home_source": "Inter Club d'Escaldes",
+      "away_source": "Lincoln Red Imps FC",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022647",
+      "home_source": "Györi ETO",
+      "away_source": "Víkingur Reykjavík",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022633",
+      "home_source": "Riga FC",
+      "away_source": "Ararat Armenia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022645",
+      "home_source": "Levski Sofia",
+      "away_source": "Borac Banja Luka",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022643",
+      "home_source": "The New Saints",
+      "away_source": "Sabah FK",
+      "home_mapped": null,
+      "away_mapped": "萨巴赫"
+    },
+    {
+      "source_match_id": "1000022637",
+      "home_source": "Drita",
+      "away_source": "FK Kauno Žalgiris",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022631",
+      "home_source": "Larne",
+      "away_source": "Tre Fiori",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022648",
+      "home_source": "Shamrock Rovers",
+      "away_source": "Floriana",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022639",
+      "home_source": "Universitatea Craiova",
+      "away_source": "ML Vitebsk",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022630",
+      "home_source": "Atert Bissen",
+      "away_source": "Klaksvik",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022641",
+      "home_source": "Egnatia",
+      "away_source": "CS Petrocub",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022653",
+      "home_source": "Sutjeska",
+      "away_source": "Kairat Almaty",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022683",
+      "home_source": "Ararat Armenia",
+      "away_source": "Shamrock Rovers",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022668",
+      "home_source": "Iberia 1999",
+      "away_source": "Slovan Bratislava",
+      "home_mapped": null,
+      "away_mapped": "布拉迪斯拉发"
+    },
+    {
+      "source_match_id": "1000022663",
+      "home_source": "Mjällby",
+      "away_source": "Lincoln Red Imps FC",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022671",
+      "home_source": "Sabah FK",
+      "away_source": "KuPS",
+      "home_mapped": "萨巴赫",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022678",
+      "home_source": "AGF",
+      "away_source": "Lech Poznań",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022676",
+      "home_source": "Fenerbahçe",
+      "away_source": "Górnik Zabrze",
+      "home_mapped": "费内巴切",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022659",
+      "home_source": "Thun",
+      "away_source": "Dinamo Zagreb",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022681",
+      "home_source": "Sturm Graz",
+      "away_source": "Heart of Midlothian",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022675",
+      "home_source": "Klaksvik",
+      "away_source": "FK Kauno Žalgiris",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022667",
+      "home_source": "Larne",
+      "away_source": "FK Crvena Zvezda",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022665",
+      "home_source": "Víkingur Reykjavík",
+      "away_source": "Hapoel Beer Sheva",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022662",
+      "home_source": "Omonia Nicosia",
+      "away_source": "Kairat Almaty",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022657",
+      "home_source": "Levski Sofia",
+      "away_source": "Universitatea Craiova",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022672",
+      "home_source": "Egnatia",
+      "away_source": "NK Celje",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022680",
+      "home_source": "KuPS",
+      "away_source": "Sabah FK",
+      "home_mapped": null,
+      "away_mapped": "萨巴赫"
+    },
+    {
+      "source_match_id": "1000022664",
+      "home_source": "Lincoln Red Imps FC",
+      "away_source": "Mjällby",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022660",
+      "home_source": "Dinamo Zagreb",
+      "away_source": "Thun",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022674",
+      "home_source": "NK Celje",
+      "away_source": "Egnatia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022682",
+      "home_source": "Heart of Midlothian",
+      "away_source": "Sturm Graz",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022673",
+      "home_source": "Shamrock Rovers",
+      "away_source": "Ararat Armenia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022661",
+      "home_source": "Kairat Almaty",
+      "away_source": "Omonia Nicosia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022669",
+      "home_source": "FK Kauno Žalgiris",
+      "away_source": "Klaksvik",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022679",
+      "home_source": "Lech Poznań",
+      "away_source": "AGF",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022666",
+      "home_source": "Hapoel Beer Sheva",
+      "away_source": "Víkingur Reykjavík",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022658",
+      "home_source": "Universitatea Craiova",
+      "away_source": "Levski Sofia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022684",
+      "home_source": "FK Crvena Zvezda",
+      "away_source": "Larne",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022677",
+      "home_source": "Górnik Zabrze",
+      "away_source": "Fenerbahçe",
+      "home_mapped": null,
+      "away_mapped": "费内巴切"
+    },
+    {
+      "source_match_id": "1000022670",
+      "home_source": "Slovan Bratislava",
+      "away_source": "Iberia 1999",
+      "home_mapped": "布拉迪斯拉发",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022688",
+      "home_source": "Ararat Armenia",
+      "away_source": "NK Celje",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022686",
+      "home_source": "Mjällby",
+      "away_source": "Slovan Bratislava",
+      "home_mapped": null,
+      "away_mapped": "布拉迪斯拉发"
+    },
+    {
+      "source_match_id": "1000022689",
+      "home_source": "Hapoel Beer Sheva",
+      "away_source": "FK Crvena Zvezda",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022704",
+      "home_source": "Levski Sofia",
+      "away_source": "Kairat Almaty",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022685",
+      "home_source": "Dinamo Zagreb",
+      "away_source": "FK Kauno Žalgiris",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022690",
+      "home_source": "Olympiacos",
+      "away_source": "NEC Nijmegen",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022693",
+      "home_source": "Sparta Prague",
+      "away_source": "Lyon",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022691",
+      "home_source": "Union St.Gilloise",
+      "away_source": "Bodø/Glimt",
+      "home_mapped": null,
+      "away_mapped": "博德闪耀"
+    },
+    {
+      "source_match_id": "1000022687",
+      "home_source": "AGF",
+      "away_source": "Sabah FK",
+      "home_mapped": null,
+      "away_mapped": "萨巴赫"
+    },
+    {
+      "source_match_id": "1000022692",
+      "home_source": "Fenerbahçe",
+      "away_source": "Sturm Graz",
+      "home_mapped": "费内巴切",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022696",
+      "home_source": "Kairat Almaty",
+      "away_source": "Levski Sofia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022701",
+      "home_source": "Bodø/Glimt",
+      "away_source": "Union St.Gilloise",
+      "home_mapped": "博德闪耀",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022697",
+      "home_source": "Sabah FK",
+      "away_source": "AGF",
+      "home_mapped": "萨巴赫",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022694",
+      "home_source": "FK Kauno Žalgiris",
+      "away_source": "Dinamo Zagreb",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022700",
+      "home_source": "NEC Nijmegen",
+      "away_source": "Olympiacos",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022699",
+      "home_source": "FK Crvena Zvezda",
+      "away_source": "Hapoel Beer Sheva",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022698",
+      "home_source": "NK Celje",
+      "away_source": "Ararat Armenia",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022695",
+      "home_source": "Slovan Bratislava",
+      "away_source": "Mjällby",
+      "home_mapped": "布拉迪斯拉发",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022702",
+      "home_source": "Sturm Graz",
+      "away_source": "Fenerbahçe",
+      "home_mapped": null,
+      "away_mapped": "费内巴切"
+    },
+    {
+      "source_match_id": "1000022703",
+      "home_source": "Lyon",
+      "away_source": "Sparta Prague",
+      "home_mapped": null,
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022711",
+      "home_source": "Dinamo Zagreb",
+      "away_source": "Viking",
+      "home_mapped": null,
+      "away_mapped": "维京"
+    },
+    {
+      "source_match_id": "1000022716",
+      "home_source": "Fenerbahçe",
+      "away_source": "Lyon",
+      "home_mapped": "费内巴切",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022705",
+      "home_source": "Levski Sofia",
+      "away_source": "AEK Athens",
+      "home_mapped": null,
+      "away_mapped": "雅典AEK"
+    },
+    {
+      "source_match_id": "1000022707",
+      "home_source": "Celtic",
+      "away_source": "LASK",
+      "home_mapped": null,
+      "away_mapped": "LASK林茨"
+    },
+    {
+      "source_match_id": "1000022715",
+      "home_source": "Hapoel Beer Sheva",
+      "away_source": "Sabah FK",
+      "home_mapped": null,
+      "away_mapped": "萨巴赫"
+    },
+    {
+      "source_match_id": "1000022717",
+      "home_source": "NEC Nijmegen",
+      "away_source": "Bodø/Glimt",
+      "home_mapped": null,
+      "away_mapped": "博德闪耀"
+    },
+    {
+      "source_match_id": "1000022713",
+      "home_source": "Slovan Bratislava",
+      "away_source": "NK Celje",
+      "home_mapped": "布拉迪斯拉发",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022712",
+      "home_source": "Sabah FK",
+      "away_source": "Hapoel Beer Sheva",
+      "home_mapped": "萨巴赫",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "5987811",
+      "home_source": "Bodø/Glimt",
+      "away_source": "NEC Nijmegen",
+      "home_mapped": "博德闪耀",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022709",
+      "home_source": "LASK",
+      "away_source": "Celtic",
+      "home_mapped": "LASK林茨",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022706",
+      "home_source": "AEK Athens",
+      "away_source": "Levski Sofia",
+      "home_mapped": "雅典AEK",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000022714",
+      "home_source": "Lyon",
+      "away_source": "Fenerbahçe",
+      "home_mapped": null,
+      "away_mapped": "费内巴切"
+    },
+    {
+      "source_match_id": "1000022710",
+      "home_source": "NK Celje",
+      "away_source": "Slovan Bratislava",
+      "home_mapped": null,
+      "away_mapped": "布拉迪斯拉发"
+    },
+    {
+      "source_match_id": "1000022708",
+      "home_source": "Viking",
+      "away_source": "Dinamo Zagreb",
+      "home_mapped": "维京",
+      "away_mapped": null
+    }
+  ],
+  "status": "BLOCKED_UNMAPPED_TEAM"
 }

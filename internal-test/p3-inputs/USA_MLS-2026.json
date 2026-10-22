@@ -3602,6 +3602,14 @@
       "away_team": "哥伦布机员",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071323",
+      "match_id": "fotmob:5071323",
+      "home_team": "辛辛那提FC",
+      "away_team": "华盛顿联",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T23:15:00Z"
     }
   ]
 }
