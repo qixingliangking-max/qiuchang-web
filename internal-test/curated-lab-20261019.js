@@ -153,7 +153,7 @@ function renderTabs(){
 }
 
 function renderDate(){
- $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
+ $('dateLabel').dataset.businessDate=state.day; $('dateLabel').innerHTML=esc(readableDay(state.day))+' <span>▾</span>';
  var idx=dates.indexOf(state.day);
  $('prevDate').disabled=idx===dates.length-1;
  $('nextDate').disabled=idx===0;
