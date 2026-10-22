@@ -339,7 +339,7 @@ function renderDialog(){
  var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel=plan.blind?plan.unsettled?'待结算':'遮挡':'待赛';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
- $('dialogTitle').textContent=displayType+' · '+(plan.versionLabel||'方案'+String(plan.index).padStart(2,'0'))+'（'+allLegs(plan).length+'场）';
+ $('dialogTitle').textContent=displayType+(allLegs(plan).length===3?'三场':'双场')+' · 方案'+String(plan.index).padStart(2,'0');
  $('dialogSub').textContent=readableDay(plan.day)+(pending?' · '+(plan.versionLabel||'赛前精选')+' · 官方赛前赔率':plan.variant?' · '+(plan.versionLabel||'赛前精选')+' · 赛后模拟结算':' · 历史模拟');
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=sim.priceMissing?'赔率待更新':money(sim.grossMin)+'–'+money(sim.grossMax);
