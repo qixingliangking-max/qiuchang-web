@@ -61,7 +61,7 @@ function draw(){
  root.hidden=!currently;root.style.display=currently?'':'none';plans.hidden=currently;plans.style.display=currently?'none':'';
  if(currently){
   var sub=active.groups.filter(function(g){return g.project===project()});
-  var addon=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
+  var addon=(window.QC_CURATED_EXTRA?.date===day ? window.QC_CURATED_EXTRA.groups||[] : []).find(function(g){return g.project===project()});
   root.innerHTML='<div class="panels">'+sub.map(function(g){return card(g,active,day)}).join('')+addonCard(addon)+'</div>';
   var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
   if(t)t.textContent=Number(day.slice(5,7))+'月'+Number(day.slice(8,10))+'日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
@@ -88,7 +88,7 @@ function draw(){
     '<span class="hist-amount">'+amount+'</span>'+
     '<span class="hist-status">'+esc(hitStatus(g,archive.batch_status))+'</span></button>';
   }).join('');
-  var extra=(window.QC_CURATED_EXTRA&&window.QC_CURATED_EXTRA.groups||[]).find(function(g){return g.project===project()});
+  var extra=(window.QC_CURATED_EXTRA?.date===targetDay ? window.QC_CURATED_EXTRA.groups||[] : []).find(function(g){return g.project===project()});
   if(extra){
    var teams=(extra.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
    rows+='<button type="button" class="hist-row" data-qc-submitted-row="1" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(extra.project)+'">'+
