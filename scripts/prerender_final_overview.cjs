@@ -55,7 +55,7 @@ const guard = [
   'var c=document.getElementById("jcYesterdayCards");if(!c)return;',
   'var p=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date()).map(function(x){return [x.type,x.value];}));',
   'var d=new Date(Date.UTC(+p.year,+p.month-1,+p.day-1)).toISOString().slice(0,10);',
-  'if(c.getAttribute("data-qc-final-date")!==d){c.innerHTML="<div class=\"jc-review-empty\">正在加载中…</div>";c.removeAttribute("data-qc-final-date");',
+  'if(c.getAttribute("data-qc-final-date")!==d){c.textContent="正在加载中…";c.removeAttribute("data-qc-final-date");',
   'var m=document.getElementById("jcYesterdayMeta");if(m)m.textContent="正在加载中…";}',
   '})();</script>'
 ].join('');
