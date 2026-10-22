@@ -17,7 +17,7 @@ var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
 function personaPlan(index){return (personaNames[index]||'')+'方案'}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
-function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(plan.replay?' · 回测':'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
+function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
 function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
 function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -216,7 +216,7 @@ function planCard(plan){
 }
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
- $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
+ $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(db.selectedPlans&&db.selectedPlans[state.day]&&db.selectedPlans[state.day].isReplay?'（赛后数据回看）':'');
  $('dailyMeta').textContent='';
  // Only genuine plan records: do not manufacture blank/missing-plan cards.
  $('plans').innerHTML=plans.map(planCard).join('');
@@ -228,7 +228,7 @@ function renderHistory(){
  var rows=[],type=state.type,labels={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
  var heading=$('historyHeading');
  if(heading){var title=heading.querySelector('h2');if(title)title.textContent='历史回看 · '+labels[type];}
- dates.filter(function(day){return day>='2026-10-19'&&day!==dates[0]&&db.selectedPlans&&db.selectedPlans[day]}).forEach(function(day){
+ dates.filter(function(day){return day>='2026-10-19'&&day<state.day&&db.selectedPlans&&db.selectedPlans[day]}).forEach(function(day){
   plansFor(day,type).forEach(function(p){
     var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
       pending=p.prematch||p.unsettled,
@@ -344,7 +344,7 @@ function init(){
  showRealFrozenHistoryOnly();
  all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
- state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
+ state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
@@ -361,7 +361,7 @@ Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
   if(!nextDates.length)return;
   var before=state.day;
   dates=nextDates;
-  if(liveAutoFollow&&dates[0]&&dates[0]!==before){state.day=dates[0];state.month=new Date(state.day+'T12:00:00')}
+  var today=currentBusinessDate();if(liveAutoFollow&&dates.includes(today)&&today!==before){state.day=today;state.month=new Date(state.day+'T12:00:00')}
   renderAll();
  });
 }).catch(function(){init()});
