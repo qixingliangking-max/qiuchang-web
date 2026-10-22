@@ -6,16 +6,17 @@ var requestSeq=0;
 var historyDate='2026-10-21';
 var addOnsByDay=Object.create(null);
 var historyRequest=null;
-var mainByDay=Object.create(null),mainRequests=Object.create(null);
+var mainByDay=Object.create(null),mainRequests=Object.create(null),lastMainFetch=Object.create(null);
 window.QC_CURATED_MAIN_PUBLISHED_BY_DAY=mainByDay;
 async function loadPublishedMain(day){
  if(!day||day<'2026-10-21'||!window.qcSupabase)return;
- if(mainByDay[day])return mainByDay[day];
+ if(mainByDay[day]&&(mainByDay[day].batch_status==='published'||Date.now()-(lastMainFetch[day]||0)<90000))return mainByDay[day];
  if(mainRequests[day])return mainRequests[day];
  mainRequests[day]=(async function(){
   var r=await window.qcSupabase.rpc('qc_selection_published_public',{p_business_date:day});
   if(r.error)throw r.error;
   mainByDay[day]=r.data&&Array.isArray(r.data.groups)?r.data:{date:day,groups:[],batch_status:'missing'};
+  lastMainFetch[day]=Date.now();
   draw();return mainByDay[day];
  })().catch(function(e){console.warn('主模型正式方案读取失败',day,String(e?.message||e))})
  .finally(function(){delete mainRequests[day]});
@@ -129,7 +130,8 @@ function draw(){
  var admin=document.getElementById('qc-submitted-archive');
  var hasAdmin=Boolean(admin&&!admin.hidden&&admin.style.display!=='none');
  var day=selectedDate();
- if(day<'2026-10-21'||hasAdmin){root.hidden=true;root.style.display='none';root.innerHTML='';return;}
+ if(day<'2026-10-21'){plans.hidden=false;plans.style.display='';root.hidden=true;root.style.display='none';root.innerHTML='';return;}
+ if(hasAdmin){root.hidden=true;root.style.display='none';root.innerHTML='';return;}
  // Existing auto-selected cards are NOT the main-model submitted baseline/AI.
  plans.hidden=true;plans.style.display='none';
  root.hidden=false;root.style.display='grid';
