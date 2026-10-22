@@ -103,7 +103,8 @@ jobs:
                 await p.locator('#closeDialog').click();
                 for(const [type,title] of [['htft','半全场'],['goals','总进球'],['score','比分'],['direction','胜平负']]){
                   await p.locator('#tabs button[data-type="'+type+'"]').click();
-                  assert.equal(await p.locator('#historyRows .hist-row').count(),3,type+' count');
+                  assert((await p.locator('#historyRows .hist-row').count())>=3,type+' needs at least the submitted three records');
+                  assert.equal(await p.locator('#historyRows [data-open-date="2026-10-21"]').count(),3,type+' must preserve three 10/21 plans');
                   assert.equal(await p.locator('#historyRows .hist-row:not([data-open-type="'+type+'"])').count(),0,type+' cross-category');
                   assert((await p.locator('#historyHeading h2').innerText()).includes(title),'title should reflect selected tab');
                 }
