@@ -14,6 +14,8 @@ var dates=[];
 var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
+var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
+var personaSources={1:'主模型基准版',2:'主模型AI精选版',3:'赛事分析师加选'};
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -71,9 +73,9 @@ function plansFor(day,type){
  var pack=db.selectedPlans&&db.selectedPlans[day];
  if(pack){
    var versions=[
-     {entries:pack.entries||[],label:pack.originalLabel||'基准版',id:'original',shadow:false,index:1},
-     pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:pack.aiSelector.label||'AI精选版',id:'shadow-v1',shadow:true,index:2},
-     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:pack.analystSelector.label||'赛事分析师加选',id:'analyst',shadow:true,index:3}
+     {entries:pack.entries||[],label:'顾衡',id:'original',shadow:false,index:1},
+     pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:'沈策',id:'shadow-v1',shadow:true,index:2},
+     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野',id:'analyst',shadow:true,index:3}
    ].filter(Boolean);
    return versions.map(function(version){
      var record=version.entries.find(function(e){return e.type===type});
@@ -85,7 +87,7 @@ function plansFor(day,type){
      });
      if(legs.some(function(l){return !l}))return null;
      return {day:day,type:type,index:version.index,a:legs[0],b:legs[1],legs:legs,prematch:legs.some(function(l){return !score(l.row.ft)||!score(l.row.ht)}),
-       variant:version.id,versionLabel:version.label,versionNote:'',versionGate:record.gate||'',shadow:version.shadow};
+       variant:version.id,versionLabel:version.label,versionNote:record.note||'',versionGate:record.gate||'',shadow:version.shadow};
    }).filter(Boolean);
  }
  var pack2=blind&&blind.days&&blind.days[day];
@@ -156,7 +158,8 @@ function renderTabs(){
  var auto=pack&&pack.rule==='QCDA_AUTO_CURATED_FROZEN_V1';
  var plans=pack?plansFor(state.day,state.type):[];
  var complete=plans.length>0&&plans.every(function(p){return !p.prematch});
- $('infoBand').textContent=complete?'本期精选方案已结算 · 点击方案详情查看组合明细。':'本期精选方案待结算 · 点击方案详情查看组合明细。';
+ var missing=pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'&&pack.sourceMeta&&pack.sourceMeta.mainStatus==='missing';
+ $('infoBand').textContent=missing?'顾衡、沈策的主模型方案尚未同步；陆野的真实方案已收到。':complete?'本期精选方案已结算 · 点击方案详情查看组合明细。':'本期精选方案待结算 · 点击方案详情查看组合明细。';
 }
 
 function renderDate(){
@@ -202,15 +205,50 @@ function planCard(plan){
  }
  return '<article class="plan"><div class="plan-head"><span class="plan-id">方案 '+String(plan.index).padStart(2,'0')+'</span><span class="flag '+(calc.covered?'hit':'miss')+'">'+rowStatus(calc)+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
 }
-function renderPlans(){
- var plans=plansFor(state.day,state.type);
- $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
- $('dailyMeta').textContent='共'+plans.length+'组';
- $('plans').innerHTML=plans.map(planCard).join('')||'<div class="empty">当日暂无该类组合<br>可切换其他日期或类别查看。</div>';
+function pendingPersonaCard(index){
+ return '<article class="plan variant-'+(index===1?'original':'shadow')+'" data-qc-missing-main="'+index+'">'+
+ '<div class="plan-head"><span class="plan-id">'+esc(personaNames[index])+'</span><span class="flag pending">待同步</span></div>'+
+ '<div class="legs"><div class="leg"><div class="leg-result">主模型原始方案尚未到达网站接收表，不以其他方案代替。</div></div></div></article>';
 }
-function renderHistory(){ /* 精简版不再展示历史长表 */ }
-
-function renderAll(){renderTabs();renderDate();renderPlans();if(state.open)renderDialog()}
+function renderPlans(){
+ var plans=plansFor(state.day,state.type),pack=db.selectedPlans&&db.selectedPlans[state.day];
+ $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
+ if(pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'){
+  $('dailyMeta').textContent='固定3位 · 已接收'+plans.length+'组';
+  $('plans').innerHTML=[1,2,3].map(function(i){var p=plans.find(function(x){return x.index===i});return p?planCard(p):pendingPersonaCard(i)}).join('');
+ }else{
+  $('dailyMeta').textContent='共'+plans.length+'组';
+  $('plans').innerHTML=plans.map(planCard).join('')||'<div class="empty">当日暂无该类组合</div>';
+ }
+}
+function renderHistory(){
+ var host=$('historyRows');if(!host)return;
+ var rows=[],types=['direction','htft','goals','score'],labels={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
+ dates.filter(function(day){return day>='2026-10-19'&&day!==dates[0]&&db.selectedPlans&&db.selectedPlans[day]}).forEach(function(day){
+  types.forEach(function(type){
+   plansFor(day,type).forEach(function(p){
+    var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
+      pending=p.prematch||p.unsettled,
+      name=personaNames[p.index]||p.versionLabel||'历史方案',
+      source=personaSources[p.index]||p.versionLabel||'方案',
+      supplemented=planSet.sourceMeta&&planSet.sourceMeta.mainStatus==='candidate'&&p.index<3,
+      shadow=day==='2026-10-19'&&p.index===2&&/影子/.test(String(planSet.note||db.note||'')),
+      tag=supplemented?' · 赛后补核／未正式发布':shadow?' · 影子测试':'',
+      status=pending?'待结算':res.covered?'命中':'未中',
+      amount=pending?'—':money(res.returns),
+      legs=planLegs(p),teams=legs.map(function(l){return idNum(l.row)+' '+l.row.h}).join(' / '),
+      options=legs.map(function(l){return l.options.map(function(o){return o.name}).join(' / ')}).join(' · ');
+    rows.push('<button type="button" class="hist-row" data-open-date="'+esc(day)+'" data-open-type="'+esc(type)+'" data-open-index="'+p.index+'">'+
+      '<span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'<small>'+esc(labels[type])+'</small></span>'+
+      '<span class="hist-leg"><b>'+esc(teams)+'</b><small>'+esc(name)+' · '+esc(source+tag)+' · '+esc(options)+'</small></span>'+
+      '<span class="hist-amount">'+esc(amount)+'</span>'+
+      '<span class="hist-status '+(!pending&&res.covered?'hit':pending?'pending':'')+'">'+status+'</span></button>');
+   });
+  });
+ });
+ host.innerHTML=rows.join('')||'<div class="empty">10月19日起暂无可回看的真实方案。</div>';
+}
+function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
 function calendar(){
  var y=state.month.getFullYear(),mo=state.month.getMonth(),first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate(),html='';
  $('monthLabel').textContent=y+'年'+(mo+1)+'月';
