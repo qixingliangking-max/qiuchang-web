@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
 <meta name="googlebot" content="noindex,nofollow">
-<title>球场档案｜精选方案</title>
+<title>球场档案｜10月19日第一版精选研究测试页</title>
+<link rel="canonical" href="https://qcda.cn/internal-test/curated-lab-20261019.html">
 <link rel="icon" href="../favicon-32.png" sizes="32x32">
 <style>
 :root{--navy:#162440;--ink:#1f2e48;--muted:#7b899e;--pale:#f4f6fa;--line:#e4eaf3;--primary:#2e58ba;--primary-fade:#edf2ff;--green:#248568;--danger:#c94e4d;--gold:#d18a33;--plum:#7856a5;--shadow:0 12px 38px rgba(37,53,87,.05)}
@@ -256,34 +257,18 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 <body>
 <header class="site-header"><a class="brand" href="../index.html"><span class="brand-icon">⚽</span><span>球场档案</span></a><div class="header-right"><a class="back-btn" href="../football.html">返回竞彩足球 ↗</a></div></header>
 <main class="container">
-<section class="hero"><div class="hero-line"><span class="pulse"></span> 赛事数据研究</div><h1>精选方案</h1><p>按不同比赛维度对照原方案与AI精选师测试版，查看赛前赔率、组合明细和历史记录。</p></section>
-<a href="curated-lab-blind-20261005-18.html" class="blind-replay-link"><span><b>AI精选师｜14天遮挡回测</b><small>10月5—18日 · 56组已冻结 · 四类双场方案逐天查看</small></span><span class="blind-arrow">查看回测 →</span></a>
-<section class="control-strip"><div class="date-control"><button class="step-btn" id="prevDate" aria-label="上一个有数据日期">◀</button><button class="date-label" id="dateLabel" aria-expanded="false" aria-controls="calendar">日期加载中… <span>▾</span></button><button class="step-btn" id="nextDate" aria-label="下一个有数据日期">▶</button><div class="cal" id="calendar" hidden><div class="cal-top"><span id="monthLabel">2026年10月</span><div><button class="cal-month-btn" id="prevMonth" aria-label="上个月">‹</button> <button class="cal-month-btn" id="nextMonth" aria-label="下个月">›</button></div></div><div class="cal-grid" id="calDays"></div><div class="cal-foot">可选择已有精选方案或历史记录的日期。</div></div></div><div class="budget-control"><label for="budget">模拟金额</label><input type="number" id="budget" value="100" min="10" max="100000" step="10" inputmode="decimal" aria-label="模拟金额"><span>点</span><div class="budget-shortcuts"><button type="button" data-budget="100" class="selected">100</button><button type="button" data-budget="500">500</button><button type="button" data-budget="1000">1000</button></div></div></section>
+<section class="hero"><div class="hero-line"><span class="pulse"></span> 赛事数据研究</div><h1>精选方案</h1><p>10月19日起的精选方案与结算记录，按日期查看各场选择、赔率和结果。</p></section>
+<section class="control-strip"><div class="date-control"><button class="step-btn" id="prevDate" aria-label="上一个有数据日期">◀</button><button class="date-label" id="dateLabel" aria-expanded="false" aria-controls="calendar">日期加载中… <span>▾</span></button><button class="step-btn" id="nextDate" aria-label="下一个有数据日期">▶</button><div class="cal" id="calendar" hidden><div class="cal-top"><span id="monthLabel">2026年10月</span><div><button class="cal-month-btn" id="prevMonth" aria-label="上个月">‹</button> <button class="cal-month-btn" id="nextMonth" aria-label="下个月">›</button></div></div><div class="cal-grid" id="calDays"></div><div class="cal-foot">可选择已有精选方案的日期。</div></div></div><div class="budget-control"><label for="budget">模拟金额</label><input type="number" id="budget" value="100" min="10" max="100000" step="10" inputmode="decimal" aria-label="模拟金额"><span>点</span><div class="budget-shortcuts"><button type="button" data-budget="100" class="selected">100</button><button type="button" data-budget="500">500</button><button type="button" data-budget="1000">1000</button></div></div></section>
 <nav class="tabs" id="tabs" role="tablist" aria-label="方案类别"><button class="tab active" role="tab" data-type="direction" aria-selected="true"><strong>胜平负</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="htft" aria-selected="false"><strong>半全场</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="goals" aria-selected="false"><strong>总进球</strong><span>双场方案</span></button><button class="tab" role="tab" data-type="score" aria-selected="false"><strong>比分</strong><span>双场方案</span></button></nav>
-<div class="info-band" id="infoBand" role="status">历史回溯演示，方案并非当时赛前发布。</div>
-<div class="reveal-row" id="revealRow" hidden><button type="button" id="revealBlind" aria-pressed="false">揭晓回测赛果</button><span>10月5—18日回测默认遮挡比分与收益</span></div>
+<div class="info-band" id="infoBand" role="status">正在读取精选方案…</div>
 <div class="section-bar"><h2 id="dailyTitle">当日方案</h2><span id="dailyMeta">—</span></div>
-<section class="panels" id="plans" aria-live="polite"><div class="empty">正在读取方案…</div></section>
-<section class="compare-section" id="compareSection" hidden aria-label="组合优化收益对照">
-  <h3>组合搭配对照｜固定1000点</h3>
-  <div id="compareBody"><p class="compare-mask">揭晓赛果后显示组合返还。</p></div>
-  <details id="dailyReviewDetails"><summary>查看14天逐日净盈亏（四位精选师）</summary>
-    <div id="dailyReview"><p class="compare-mask">揭晓后显示逐日净盈亏。</p></div>
-  </details>
-</section>
-<div class="section-bar"><h2>历史回看</h2><span>点击查看详情</span></div>
-<section class="history"><div class="hist-top"><span>日期</span><span>比赛组合</span><span style="text-align:right">模拟返还</span><span style="text-align:right">结果</span></div><div id="history"><div class="empty">正在读取记录…</div></div></section>
-<details class="method"><summary>数据说明</summary><div class="method-inner"><p>10月19日并排展示两版：原方案完整保持已确认的选场和选项；AI精选师V1为独立影子测试候选，其中比分属于高风险观察。两版均逐项匹配开赛前留存的官方赔率，组合赔率等于两场赔率相乘。赛前只展示赔率、组合结构和情景计算，不提前计算赛果。</p><p>10月5—18日按日期展示四套赛果遮挡回测中已经冻结的AI精选方案；默认隐藏比分、模拟返还和结果，选择后才揭晓。研究方案并非当时真实公开发布，且分别模拟双场与两场单场的组合差异（单场仅为假设独立结算的演示）。原始104场历史回溯底层样本保留，不覆盖赛前锁板与历史数据。<b>历史重建方案不是当时实际提前发布的方案，不能计入正式历史命中率或连续命中记录。</b></p><p>修改模拟金额只会改变计算结果；“平均分配”按组合等额拆分，其他模式改变组合权重。赛果按90分钟及补时统计，金额不是实际收益，不提供购买、支付或投注功能。</p></div></details>
+<section class="panels" id="plans" aria-live="polite"><div class="empty">正在读取数据库方案…</div></section>
 <footer class="footer">球场档案 · 数据研究演示｜不构成投注建议</footer>
 </main>
 <div class="overlay" id="overlay" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" tabindex="-1" id="dialog"><div class="dialog-header"><div><small id="dialogSub">历史回溯演示</small><h2 id="dialogTitle">方案详情</h2></div><button class="close" id="closeDialog" aria-label="关闭弹窗">×</button></div><div class="mode-tabs" id="modeTabs" role="tablist" aria-label="分配方式"><button data-mode="balanced" class="active" aria-selected="true">平均分配</button><button data-mode="hot" aria-selected="false">常规优先</button><button data-mode="cold" aria-selected="false">冷门优先</button><button data-mode="hybrid" aria-selected="false">均衡策略</button></div><div class="dialog-body" id="dialogBody"></div><div class="dialog-actions"><button id="copyPlan" type="button">复制方案</button><button id="dialogCloseBottom" class="primary-action" type="button">关闭</button></div></div></div>
 <script src="curated-lab-data-20261019.js?v=20261021publicclean1"></script>
-<script src="curated-lab-blind-selection-20261005-18.js?v=20261020final2"></script>
-<script src="curated-lab-blind-settlement-20261005-18.js?v=20261020final2"></script>
-<script src="../assets/vendor/supabase-js-2.117.3.js"></script>
 <script src="../supabase-config.js"></script>
-<script src="../supabase-client.js?v=20260927autologin1"></script>
-<script src="curated-db-adapter-20261022.js?v=20261022originaldb1"></script>
-<script src="curated-lab-20261019.js?v=20261022originalreal1"></script>
+<script src="curated-db-direct-20261022.js?v=20261022dbdirect1"></script>
+<script src="curated-lab-20261019.js?v=20261022image1db1"></script>
 </body>
 </html>
