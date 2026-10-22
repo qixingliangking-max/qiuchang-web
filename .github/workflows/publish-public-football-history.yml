@@ -44,12 +44,14 @@ jobs:
           # Push/manual and daily catch-up scan the full 35-day horizon.
           QC_ARCHIVE_RECENT_ONLY: ${{ github.event_name == 'schedule' && github.event.schedule != '20 2 * * *' && '1' || '0' }}
         run: python scripts/publish_public_overview_archives.py
+      - name: Prerender completed public yesterday without auth
+        run: node scripts/prerender_final_overview.cjs
       - name: Commit only static archive assets and manifest
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/overview/manifest.json data/overview/*.history.v*.json
+          git add data/overview/manifest.json data/overview/*.history.v*.json index.html
           if git diff --cached --quiet; then
             echo "No new public finalized history to publish"
             exit 0
