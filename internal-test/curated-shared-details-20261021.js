@@ -36,9 +36,11 @@ function readOdds(code,num,day){
 function build(kind,code,day){
  day=day||window.QC_CURATED_ADMIN_ARCHIVE?.date||'2026-10-21';
  if(kind==='addon'){
-  var x=(window.QC_CURATED_EXTRA?.groups||[]).find(function(v){return v.project===code});
+  var source=window.QC_CURATED_EXTRA_BY_DAY?.[day]||
+    (window.QC_CURATED_EXTRA?.date===day?window.QC_CURATED_EXTRA:null);
+  var x=(source?.groups||[]).find(function(v){return v.project===code});
   if(!x)return null;
-  return {type:x.project,label:'分析师加选',isAddon:true,businessDate:window.QC_CURATED_EXTRA?.date||'2026-10-21',groupHit:x.group_hit===true,settled:x.settlement_status==='settled',
+  return {type:x.project,label:'分析师加选',isAddon:true,businessDate:day,groupHit:x.group_hit===true,settled:x.settlement_status==='settled',
    legs:(x.legs||[]).map(function(l,i){
     var r=(x.leg_results||[]).find(function(k){return k.match_num===l.match_num})||{};
     return {num:l.match_num,home:l.home,away:l.away,market:l.market,line:l.line,
