@@ -4,6 +4,12 @@ on:
   push:
     paths:
       - ".github/workflows/j2-003-public-score-qa.yml"
+      - "app.js"
+      - "football.html"
+      - "index.html"
+      - "jc-match.html"
+      - "data/overview/manifest.json"
+      - "data/overview/2026-10-21.history.v5.json"
 permissions:
   contents: read
 jobs:
