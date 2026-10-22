@@ -1,9 +1,12 @@
 {
   "league_code": "UEFA_UNL",
   "season": "2026/27",
-  "run_at": "2026-10-22T05:12:03.467Z",
+  "run_at": "2026-10-22T10:25:10.568Z",
   "discovered_fixtures": 156,
   "discovered_finished": 104,
+  "in_scope_finished": 104,
+  "excluded_out_of_scope_count": 0,
+  "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 104,
   "new_finished_matches": 0,
   "added_source_match_ids": [],
