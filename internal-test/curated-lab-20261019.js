@@ -297,7 +297,7 @@ function renderHistory(){
      var choiceB='';
      html.push('<button class="hist-row" data-open-date="'+esc(day)+'" data-open-type="'+esc(type)+'" data-open-index="'+plan.index+'">'+
       '<span class="hist-day">'+esc(readableDay(day).split(' ')[0])+'<small>'+esc(labels[type])+'</small></span>'+
-      '<span class="hist-leg"><b>'+esc(idNum(plan.a.row))+' '+esc(plan.a.row.h)+' / '+esc(idNum(plan.b.row))+' '+esc(plan.b.row.h)+'</b>'+
+      '<span class="hist-leg"><b>'+esc(allLegs(plan).map(function(l){return idNum(l.row)+' '+l.row.h}).join(' / '))+'</b>'+
       '<small>'+esc(label)+' · '+esc(choiceA)+' / '+esc(choiceB)+'</small></span>'+
       '<span class="hist-amount">'+amount+'</span>'+
       '<span class="hist-status '+(!waiting&&sim.covered?'hit':waiting?'pending':'')+'">'+status+'</span></button>');
