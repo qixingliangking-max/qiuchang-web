@@ -86,6 +86,19 @@ jobs:
               const nav=await p.goto('https://qcda.cn/league.html',{waitUntil:'domcontentloaded',timeout:30000});
               console.log('Guest league page HTTP',nav?.status(),'title:',await p.title());
               assert.equal(nav?.status(),200);
+              const expected='league-p3-public.js?v=20261022p3single1';
+              const scripts=await p.evaluate(()=>Array.from(document.scripts).map(s=>s.src));
+              assert(scripts.some(src=>src.includes(expected)),'live league.html has old P3 cache reference');
+              const asset=await p.request.get('https://qcda.cn/'+expected);
+              assert.equal(asset.status(),200);
+              const assetBody=await asset.text();
+              assert(assetBody.includes("get_league_team_p3"),'live asset missing team RPC');
+              assert(!assetBody.includes("fetch(m.url,{cache:'no-cache'})"),'live asset still fetches whole-league JSON');
+              console.log('Live deployed P3 asset verified', {reference:expected,bytes:assetBody.length});
+              await p.setViewportSize({width:390,height:844});
+              const mobile=await p.reload({waitUntil:'domcontentloaded',timeout:30000});
+              assert.equal(mobile.status(),200);
+              console.log('Mobile guest league page HTTP',mobile.status());
             }finally{await b.close()}
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
