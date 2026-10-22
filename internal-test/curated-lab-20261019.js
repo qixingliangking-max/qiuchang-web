@@ -148,6 +148,14 @@ function allocation(plan,budget,mode){
  var returned=list.reduce(function(acc,c){return acc+(c.hit?c.projected:0)},0);
  return {list:list,covered:covered,returns:returned,grossMin:Math.min.apply(null,list.map(function(x){return x.projected})),grossMax:Math.max.apply(null,list.map(function(x){return x.projected})),budget:total/100,mode:mode};
 }
+function currentBusinessDate(){
+ var p={};
+ new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'})
+  .formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
+ var stamp=Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day));
+ if(Number(p.hour)<12)stamp-=86400000;
+ return new Date(stamp).toISOString().slice(0,10);
+}
 function readableDay(v){var d=new Date(v+'T12:00:00');return (d.getMonth()+1)+'月'+d.getDate()+'日 '+['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]}
 function idNum(row){return String(row.num||'').slice(-3)}
 function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'}
@@ -338,19 +346,14 @@ function showRealFrozenHistoryOnly(){
 function init(){
  showRealFrozenHistoryOnly();
  all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
- dates=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).sort().reverse();
- if(!dates.length){
-  var p={};
-  new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
-  dates=[p.year+'-'+p.month+'-'+p.day];
- }
+ dates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
  state.day=dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
 }
 
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
  init();
  window.addEventListener('qc-curated-db-update',function(){
-  var nextDates=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).sort().reverse();
+  var nextDates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
   if(!nextDates.length)return;
   var before=state.day;
   dates=nextDates;
