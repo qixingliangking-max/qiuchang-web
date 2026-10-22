@@ -2738,6 +2738,7 @@ async function loadJcFrontend(){
       if(error) return {data:[],error};
       rows=qcCompleteStaticRows(data,ds);
     }
+    if(!rows && ds>today) return {data:[],error:null,fromUnpublishedFuture:true};
     if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
     return {
       data:rows.map(m=>({
@@ -3022,9 +3023,11 @@ async function loadJcFrontend(){
 
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')){
-      $('#jcPredictionMeta').textContent=predictionRestricted
-        ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
-        : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
+      $('#jcPredictionMeta').textContent=selectedDate>today && !dateRows.length
+        ? '赛程尚未发布'
+        : predictionRestricted
+          ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
+          : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
     if($('#jcYesterdayMeta') && !previousLoading){
@@ -3032,9 +3035,11 @@ async function loadJcFrontend(){
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=predictionRestricted
-        ? '今日预测'
-        : (selectedDate===today?'今日预测':'当日赛程');
+      $('#jcPredictionTitle').textContent=selectedDate>today && !dateRows.length
+        ? '当日赛程'
+        : predictionRestricted
+          ? '今日预测'
+          : (selectedDate===today?'今日预测':'当日赛程');
     }
 
     if(prev){
@@ -3064,7 +3069,9 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
+      if(selectedDate>today && !dateRows.length){
+        qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
+      }else if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
         // Public fixture identities are already available from static JSON.
         // Render them immediately, even if an auth request is slow/failed.
         // Never include private FINAL/odds while entitlement is unresolved.
