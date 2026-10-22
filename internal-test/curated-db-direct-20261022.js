@@ -66,12 +66,17 @@ async function rpc(name,args){
  }finally{clearTimeout(timer)}
 
 }
+var daySnapshot=Object.create(null);
 async function loadDay(day){
- var pair=await Promise.all([
+ var pair=await Promise.allSettled([
   rpc('qc_selection_display_public',{p_business_date:day}),
   rpc('qc_curated_addons_public',{p_date:day})
  ]);
- var main=pair[0]||{groups:[]},addons=pair[1]||{groups:[]};
+ if(pair.every(function(r){return r.status==='rejected'}))throw Error('两条读取通道均不可用');
+ var cached=daySnapshot[day]||{};
+ var main=pair[0].status==='fulfilled'?(pair[0].value||{groups:[]}):(cached.main||{groups:[]});
+ var addons=pair[1].status==='fulfilled'?(pair[1].value||{groups:[]}):(cached.addons||{groups:[]});
+ daySnapshot[day]={main:main,addons:addons};
  var baseline=(main.groups||[]).filter(function(g){return g.track==='baseline'}).map(function(g){return buildMainEntry(day,g)});
  var ai=(main.groups||[]).filter(function(g){return g.track==='ai_analyst'}).map(function(g){return buildMainEntry(day,g)});
  var analyst=(addons.groups||[]).map(function(g){return buildAddonEntry(day,g)});
