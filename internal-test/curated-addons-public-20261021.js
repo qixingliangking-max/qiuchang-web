@@ -3,6 +3,68 @@
 'use strict';
 var data=null;
 var requestSeq=0;
+var historyDate='2026-10-21';
+var addOnsByDay=Object.create(null);
+var historyRequest=null;
+function remember(day,pack){
+ if(!pack||!Array.isArray(pack.groups))return;
+ pack.date=pack.date||day;
+ addOnsByDay[day]=pack;
+ window.QC_CURATED_EXTRA_BY_DAY=addOnsByDay;
+}
+function historicalGroup(){
+ return (addOnsByDay[historyDate]?.groups||[]).find(function(g){return g.project===project()})||null;
+}
+function historyMarkup(g){
+ var label='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[g.project]||g.format);
+ var teams=(g.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
+ var choices=(g.legs||[]).map(function(l){return (l.options||[]).map(function(o){return o.label}).join(' / ')}).join(' · ');
+ var outcome=status(g);
+ return '<span class="hist-day">10/21</span>'+
+   '<span class="hist-leg"><b>'+teams+'</b><small>'+esc(label)+' · '+esc(choices)+'</small></span>'+
+   '<span class="hist-amount">—</span>'+
+   '<span class="hist-status '+(outcome==='已命中'?'hit':outcome==='待结算'?'pending':'')+'">'+esc(outcome)+'</span>';
+}
+function drawHistoric(){
+ var host=document.getElementById('history');
+ if(!host)return;
+ var g=historicalGroup(),old=host.querySelector('[data-qc-addon-history="2026-10-21"]');
+ if(!g){if(old)old.remove();return;}
+ var state=g.project+'|'+g.settlement_status+'|'+g.group_hit;
+ // Keep this independent of the admin archive: only one public history row.
+ if(old&&old.dataset.qcAddonState===state)return;
+ if(old)old.remove();
+ var el=document.createElement('button');el.type='button';el.className='hist-row';
+ el.dataset.qcAddonHistory=historyDate;el.dataset.qcAddonState=state;
+ el.dataset.qcDetailKind='addon';el.dataset.qcDetailCode=g.project;el.dataset.qcDetailDay=historyDate;
+ el.innerHTML=historyMarkup(g);
+ host.insertBefore(el,host.firstChild);
+}
+var historicQueued=false;
+function scheduleHistoric(){
+ if(historicQueued)return;
+ historicQueued=true;queueMicrotask(function(){historicQueued=false;drawHistoric()});
+}
+async function loadHistoric(){
+ if(addOnsByDay[historyDate]?.groups?.length)return addOnsByDay[historyDate];
+ if(historyRequest)return historyRequest;
+ if(!window.qcSupabase)return;
+ historyRequest=(async function(){
+  var response=await window.qcSupabase.rpc('qc_curated_addons_public',{p_date:historyDate});
+  if(response.error)throw response.error;
+  var pack=response.data;
+  if(!pack||!Array.isArray(pack.groups))throw new Error('历史加选数据格式异常');
+  remember(historyDate,pack);
+  if(pack.groups.length && (!window.QC_CURATED_EXTRA?.groups?.length)){
+   window.QC_CURATED_EXTRA=pack;
+  }
+  scheduleHistoric();
+  window.dispatchEvent(new Event('qc-curated-addons-ready'));
+  return pack;
+ })().catch(function(err){console.warn('10月21日加选历史读取异常',String(err?.message||err));return null})
+ .finally(function(){historyRequest=null});
+ return historyRequest;
+}
 var root=document.createElement('section');
 root.id='qc-curated-extra';
 root.style.margin='0 0 18px';
@@ -23,6 +85,7 @@ function selectedDate(){
 function project(){return document.querySelector('#tabs button.active')?.dataset.type||'direction'}
 function status(g){return g.settlement_status==='settled'?(g.group_hit?'已命中':'未命中'):'待结算'}
 function draw(){
+ scheduleHistoric();
  var admin=document.getElementById('qc-submitted-archive');
  var hasAdmin=Boolean(admin&&!admin.hidden&&admin.style.display!=='none');
  var date=selectedDate();
@@ -41,7 +104,7 @@ function draw(){
    '<div class="chips">'+choices+'</div></div>';
  }).join('');
  var state=status(item);
- root.innerHTML='<article class="plan variant-shadow" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(item.project)+'" style="cursor:pointer">'+
+ root.innerHTML='<article class="plan variant-shadow" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(item.project)+'" data-qc-detail-day="'+esc(date)+'" style="cursor:pointer">'+
   '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span>'+
   '<span class="flag '+(state==='已命中'?'hit':state==='未命中'?'miss':'pending')+'">'+esc(state)+'</span></div>'+
   '<div class="legs">'+legs+'</div>'+
@@ -61,18 +124,14 @@ async function loadDate(force){
   if(!reply.data||!Array.isArray(reply.data.groups))throw new Error('精选加选数据格式异常');
   data=reply.data;
   data.date=data.date||date;
+  remember(date,data);
   if(data.groups.length){
    window.QC_CURATED_EXTRA=data;
    window.dispatchEvent(new Event('qc-curated-addons-ready'));
-  }else if(!Array.isArray(window.QC_CURATED_EXTRA?.groups)||!window.QC_CURATED_EXTRA.groups.length){
-   /* Keep the latest already-published historical set available for history/admin details;
-      an empty current day must not erase it or make the page look as if records vanished. */
-   var fallback=await window.qcSupabase.rpc('qc_curated_addons_public',{p_date:'2026-10-21'});
+  }else{
+   // An empty current day never clears already-published historical extras.
+   await loadHistoric();
    if(seq!==requestSeq||date!==selectedDate())return;
-   if(!fallback.error&&fallback.data&&Array.isArray(fallback.data.groups)&&fallback.data.groups.length){
-    window.QC_CURATED_EXTRA=fallback.data;
-    window.dispatchEvent(new Event('qc-curated-addons-ready'));
-   }
   }
   draw();
  }catch(e){
@@ -90,10 +149,13 @@ function schedule(){
  queueMicrotask(function(){queued=false;loadDate(true)});
 }
 var dateLabel=document.getElementById('dateLabel');
-if(dateLabel)new MutationObserver(schedule).observe(dateLabel,{childList:true,characterData:true,subtree:true});
+if(dateLabel)new MutationObserver(function(){schedule();scheduleHistoric()}).observe(dateLabel,{childList:true,characterData:true,subtree:true});
 var tabs=document.getElementById('tabs');
-if(tabs)new MutationObserver(draw).observe(tabs,{attributes:true,attributeFilter:['class'],subtree:true});
-window.addEventListener('qc-curated-admin-ready',draw);
+if(tabs)new MutationObserver(function(){draw();scheduleHistoric()}).observe(tabs,{attributes:true,attributeFilter:['class'],subtree:true});
+window.addEventListener('qc-curated-admin-ready',function(){draw();scheduleHistoric()});
+var historyContainer=document.getElementById('history');
+if(historyContainer)new MutationObserver(scheduleHistoric).observe(historyContainer,{childList:true});
+loadHistoric();
 loadDate(true);
 setInterval(function(){loadDate(true)},120000);
 })();
