@@ -37,9 +37,11 @@ jobs:
                 const errors=[];p.on('pageerror',e=>errors.push(String(e)));
                 let updated=false;
                 for(let attempt=0;attempt<12;attempt++){
-                  const r=await p.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?origqa=20261022restored',{waitUntil:'domcontentloaded',timeout:30000});
+                  const r=await p.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?origqa=20261022restored_v2_'+attempt,{waitUntil:'domcontentloaded',timeout:30000});
                   assert.equal(r.status(),200);
                   updated=await p.locator('script[src*="curated-lab-20261019.js?v=20261022originalrestored1"]').count()===1;
+                  const sources=await p.locator('script[src]').evaluateAll(nodes=>nodes.map(x=>x.getAttribute('src')));
+                  console.log('LIVE_HTML_CHECK',name,'attempt',attempt,'HTTP',r.status(),'scriptSources',sources.filter(x=>/curated-lab|curated-addons-public/.test(x)).slice(-7),'cache',r.headers()['cf-cache-status']||'none');
                   if(updated)break;
                   await p.waitForTimeout(5000);
                 }
