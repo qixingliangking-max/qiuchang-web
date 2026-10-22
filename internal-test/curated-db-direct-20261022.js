@@ -68,7 +68,7 @@ async function rpc(name,args){
 
 function buildV2Entry(day,p){
  var results=Array.isArray(p.leg_results)?p.leg_results:[];
- return {type:p.market_group,format:p.version,gate:'',legs:(p.legs||[]).map(function(leg){
+ return {id:p.id,type:p.market_group,format:p.version,gate:'',legs:(p.legs||[]).map(function(leg){
    var result=results.find(function(r){return r.match_num===leg.match_num})||null;
    return buildLeg(day,{
       market:leg.market,match_num:leg.match_num,home:leg.home,away:leg.away,
