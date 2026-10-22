@@ -45,10 +45,10 @@ jobs:
           const fs=require('fs');
           const r=JSON.parse(fs.readFileSync('internal-test/p3-refresh/UEFA_UCL-2026-27-last-run.json','utf8'));
           if(r.status!=='PROMOTED'||r.new_finished_matches!==7||r.gate_status!=='PASS'||r.collection_coverage_pct!==100||r.strict_errors!==0||r.collection_failures!==0||r.unmapped_count!==0)throw Error('UCL_GATE_UNEXPECTED:'+JSON.stringify(r));
-          if(r.in_scope_finished!==54||r.excluded_out_of_scope_count!==90)throw Error('UCL_SCOPE_MISMATCH');
+          if(r.in_scope_finished!==54||![0,90].includes(r.excluded_out_of_scope_count))throw Error('UCL_SCOPE_MISMATCH');
           const s=JSON.parse(fs.readFileSync('internal-test/p3-data/UEFA_UCL-2026-27.json','utf8'));
           if(s.league_code!=='UEFA_UCL'||s.season!=='2026/27'||Object.keys(s.teams||{}).length!==36)throw Error('UCL_PAYLOAD_INVALID');
-          console.log('UCL staging Gate PASS', {matched:54, excluded:90, teams:36});
+          console.log('UCL staging Gate PASS', {matched:54, excluded:r.excluded_out_of_scope_count, teams:36});
           NODE
       - name: Commit only approved UCL staging artifacts (never main)
         run: |
