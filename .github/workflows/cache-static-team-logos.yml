@@ -2,6 +2,12 @@ name: Cache immutable fixture team logos
 
 on:
   workflow_dispatch:
+  # Fallback publication trigger when GitHub delays this workflow's cron.
+  # The completed score workflow runs frequently and never depends on this one.
+  workflow_run:
+    workflows: ["Publish confirmed final scores into static fixture file"]
+    types: [completed]
+    branches: [main]
   schedule:
     # Static fixture/crest publication is independent of dynamic live scores.
     # Beijing daytime: ingest newly discovered fixture identities and crests.
@@ -25,6 +31,7 @@ concurrency:
 
 jobs:
   cache-crests:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
