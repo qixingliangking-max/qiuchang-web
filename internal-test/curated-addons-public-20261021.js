@@ -61,14 +61,23 @@ async function loadDate(force){
   if(!reply.data||!Array.isArray(reply.data.groups))throw new Error('精选加选数据格式异常');
   data=reply.data;
   data.date=data.date||date;
-  window.QC_CURATED_EXTRA=data;
-  window.dispatchEvent(new Event('qc-curated-addons-ready'));
+  if(data.groups.length){
+   window.QC_CURATED_EXTRA=data;
+   window.dispatchEvent(new Event('qc-curated-addons-ready'));
+  }else if(!Array.isArray(window.QC_CURATED_EXTRA?.groups)||!window.QC_CURATED_EXTRA.groups.length){
+   /* Keep the latest already-published historical set available for history/admin details;
+      an empty current day must not erase it or make the page look as if records vanished. */
+   var fallback=await window.qcSupabase.rpc('qc_curated_addons_public',{p_date:'2026-10-21'});
+   if(seq!==requestSeq||date!==selectedDate())return;
+   if(!fallback.error&&fallback.data&&Array.isArray(fallback.data.groups)&&fallback.data.groups.length){
+    window.QC_CURATED_EXTRA=fallback.data;
+    window.dispatchEvent(new Event('qc-curated-addons-ready'));
+   }
+  }
   draw();
  }catch(e){
   if(seq===requestSeq&&date===selectedDate()){
    data={date:date,groups:[]};
-   window.QC_CURATED_EXTRA=data;
-   window.dispatchEvent(new Event('qc-curated-addons-ready'));
    draw();
   }
   console.warn('精选方案暂时无法同步',String(e&&e.message||e));
