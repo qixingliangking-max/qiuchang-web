@@ -719,13 +719,7 @@ function jcFootballHitOddsHtml(m,model,score){
       .split('/').map(x=>x.trim()).filter(Boolean);
     const hk={让胜:'h',让平:'d',让负:'a'}[handicapLabel];
     const ho=hk?jcPoolNumber(hhad,hk):null;
-    // A handicap-only fixture already counts the locked main direction
-    // against HHAD. The standalone handicap field is the SAME market:
-    // display that hit once, not twice (e.g. J2-free HAD 011, 让负).
-    const mainAlreadyCountedSameHandicap=hits.some(
-      x=>x.kind==='让球方向' && x.label===handicapLabel
-    );
-    if(handicapChoices.includes(handicapLabel) && ho!=null && !mainAlreadyCountedSameHandicap){
+    if(handicapChoices.includes(handicapLabel) && ho!=null){
       hits.push({kind:'让球',label:handicapLabel,odds:ho});
     }
   }
@@ -2355,32 +2349,11 @@ async function loadJcFootball(){
     })) return;
     const refreshDate=selectedDate;
     const refreshToken=loadToken;
-    // A database-confirmed PUBLIC score snapshot may be fresher than GitHub Pages.
-    // Never request live/in-play scores or protected model data. Only FT+HT
-    // from the same exact published fixture set can be applied once.
-    let result=null;
-    if(window.qcSupabase){
-      try{
-        const {data:official,error}=await window.qcSupabase
-          .from('jc_overview_schedule_snapshots')
-          .select('payload,match_count')
-          .eq('business_date',refreshDate).maybeSingle();
-        const fresh=official?.payload?.rows;
-        const ids=new Set(candidates.filter(m=>m?.id).map(m=>String(m.id)));
-        if(!error && ids.size>0 && Array.isArray(fresh) &&
-           fresh.length===Number(official?.match_count) &&
-           fresh.length===ids.size &&
-           fresh.every(m=>m?.id && m?.business_date===refreshDate && ids.has(String(m.id))) &&
-           new Set(fresh.map(m=>String(m.id))).size===ids.size){
-          result={data:fresh,error:null,fromOfficialPublicSnapshot:true};
-        }
-      }catch(error){ console.warn('公开赛果快照暂不可用，继续读取固定赛程',error); }
-    }
-    if(!result){
-      const published=typeof window.qcFetchLiveScheduleDate==='function'
-        ? await window.qcFetchLiveScheduleDate(refreshDate,true).catch(()=>null) : null;
-      result=published?.data?.length?published:await jcFetchDateRows(refreshDate,false,true);
-    }
+    // The server publishes each confirmed FT into immutable public JSON.
+    // Every visitor reads that one snapshot instead of polling jc_matches.
+    const published=typeof window.qcFetchLiveScheduleDate==='function'
+      ? await window.qcFetchLiveScheduleDate(refreshDate,true).catch(()=>null) : null;
+    const result=published?.data?.length?published:await jcFetchDateRows(refreshDate,false,true);
     if(refreshToken!==loadToken || refreshDate!==selectedDate) return;
     if(result?.error || !Array.isArray(result?.data)) return;
 

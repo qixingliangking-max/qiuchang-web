@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 47,
-  "collected_matches": 47,
+  "input_matches": 45,
+  "collected_matches": 45,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 901,
+  "aggregate_players": 894,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "加拉塔萨雷",
-      "matches": 3
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼联",
-      "matches": 3
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -121,7 +121,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科莫",
-      "matches": 3
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -166,7 +166,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "里尔",
-      "matches": 3
+      "matches": 2
     },
     {
       "type": "LIMITED_SAMPLE",
