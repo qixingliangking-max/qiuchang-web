@@ -1,0 +1,29 @@
+name: QCDA Published Page Asset Check
+on:
+  push:
+    branches: [qcda-curated-live-probe-20261023]
+    paths: [.github/workflows/qc-curated-live-probe-20261023.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify live HTML and exact current JS URLs
+        run: |
+          set -e
+          curl -fLSs --retry 2 --max-time 25 "https://qcda.cn/internal-test/curated-lab-20261019.html?assetprobe=20261023_2" -o /tmp/qcda.html
+          echo "LIVE_HTML_BYTES=$(wc -c </tmp/qcda.html)"
+          grep -E "curated-db-direct-20261022.js|curated-lab-20261019.js" /tmp/qcda.html | tail -4
+          grep -q 'curated-db-direct-20261022.js?v=20261023nonblocking1' /tmp/qcda.html
+          grep -q 'curated-lab-20261019.js?v=20261023personaclean2' /tmp/qcda.html
+          curl -fLSs --retry 2 --max-time 25 'https://qcda.cn/internal-test/curated-db-direct-20261022.js?v=20261023nonblocking1' -o /tmp/qcda-adapter.js
+          curl -fLSs --retry 2 --max-time 25 'https://qcda.cn/internal-test/curated-lab-20261019.js?v=20261023personaclean2' -o /tmp/qcda-app.js
+          node --check /tmp/qcda-adapter.js
+          node --check /tmp/qcda-app.js
+          grep -q 'var personaNames={1:' /tmp/qcda-app.js
+          grep -q 'function currentBusinessDate()' /tmp/qcda-app.js
+          grep -q 'window.QC_CURATED_DB_READY=Promise.resolve()' /tmp/qcda-adapter.js
+          echo LIVE_ASSETS_MATCH_LATEST_COMMIT
