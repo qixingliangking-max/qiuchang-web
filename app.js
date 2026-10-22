@@ -621,10 +621,10 @@ function jcHasOrdinaryResult(m){
 function jcDisplayModelDirection(model,m){
   // Locked direction stays the source of truth.
   // When ordinary HAD is unavailable, the locked direction already uses
-  // the handicap-result vocabulary; add only the public-facing label.
+  // the handicap-result vocabulary; show the actual protected choices directly.
   if(!jcHasOrdinaryResult(m)){
     const pick=jcCompactHandicapPick(model?.direction);
-    if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) return '让球双选｜'+pick;
+    if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) return pick;
   }
   return jcCompactResultPick(model?.direction,m);
 }
