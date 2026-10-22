@@ -1,0 +1,68 @@
+name: P3 UCL Isolated Staging Gate 20261022
+on:
+  push:
+    branches:
+      - qcda-p3-audit-speed-20261022
+    paths:
+      - .github/workflows/p3-ucl-staging-gate-20261022.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: qcda-p3-ucl-isolated-staging
+  cancel-in-progress: false
+jobs:
+  stage-ucl:
+    if: github.ref == 'refs/heads/qcda-p3-audit-speed-20261022'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-p3-audit-speed-20261022
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify safety and syntax
+        run: |
+          test "$(git branch --show-current)" = "qcda-p3-audit-speed-20261022"
+          node --check scripts/p3-offline-refresh-one.mjs
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/p3-promotion-gate.mjs
+          node --check league-p3-public.js
+          node - <<'NODE'
+          const c=require('./internal-test/p3-refresh/UEFA_UCL-2026-27.json');
+          if(c.league_code!=='UEFA_UCL'||c.baseline_finished_matches!==47||!Array.isArray(c.excluded_source_match_ids)||c.excluded_source_match_ids.length!==90)throw Error('STAGING_SCOPE_INVALID');
+          console.log({scope:c.league_code,baseline:c.baseline_finished_matches,excluded:c.excluded_source_match_ids.length});
+          NODE
+      - name: Execute UCL scoped incremental build and Gate
+        run: node scripts/p3-offline-refresh-one.mjs internal-test/p3-refresh/UEFA_UCL-2026-27.json
+      - name: Assert exactly seven new matches and strict Gate before staging commit
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const r=JSON.parse(fs.readFileSync('internal-test/p3-refresh/UEFA_UCL-2026-27-last-run.json','utf8'));
+          if(r.status!=='PROMOTED'||r.new_finished_matches!==7||r.gate_status!=='PASS'||r.collection_coverage_pct!==100||r.strict_errors!==0||r.collection_failures!==0||r.unmapped_count!==0)throw Error('UCL_GATE_UNEXPECTED:'+JSON.stringify(r));
+          if(r.in_scope_finished!==54||r.excluded_out_of_scope_count!==90)throw Error('UCL_SCOPE_MISMATCH');
+          const s=JSON.parse(fs.readFileSync('internal-test/p3-data/UEFA_UCL-2026-27.json','utf8'));
+          if(s.league_code!=='UEFA_UCL'||s.season!=='2026/27'||Object.keys(s.teams||{}).length!==36)throw Error('UCL_PAYLOAD_INVALID');
+          console.log('UCL staging Gate PASS', {matched:54, excluded:90, teams:36});
+          NODE
+      - name: Commit only approved UCL staging artifacts (never main)
+        run: |
+          git config user.name "qcda-staging-p3-gate"
+          git config user.email "actions@users.noreply.github.com"
+          git add internal-test/p3-refresh/UEFA_UCL-2026-27.json
+          git add internal-test/p3-refresh/UEFA_UCL-2026-27-last-run.json
+          git add internal-test/p3-inputs/UEFA_UCL-2026-27.json
+          git add internal-test/p3-candidates/UEFA_UCL-2026-27.json
+          git add internal-test/p3-candidates/UEFA_UCL-2026-27-gate.json
+          git add internal-test/p3-data/UEFA_UCL-2026-27.json
+          git add internal-test/p3-data/P3_PROMOTION_MANIFEST.json
+          if ! git diff --cached --quiet; then
+            git commit -m "stage(p3): audited UCL 54-match promotion gate"
+            test "$(git branch --show-current)" = "qcda-p3-audit-speed-20261022"
+            git push origin HEAD:refs/heads/qcda-p3-audit-speed-20261022
+          fi
