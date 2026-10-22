@@ -66,17 +66,26 @@
     const ds=String(dateStr||'');
     if(!/^\d{4}-\d{2}-\d{2}$/.test(ds)) return null;
     const cached=memory.get(ds);
-    if(!force && cached?.result) return cached.result;
     const local=readJson(localKey(ds));
-    // Paint a previously validated static copy immediately. Check the manifest
-    // and refresh its cache in the background so page entry never waits on network.
-    if(!force && local?.payload){
+    // Active/future official odds change before kickoff. Verify the tiny
+    // public version index before accepting a previously cached roster.
+    // Completed history retains its original instant cache path.
+    const beijingToday=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
+    let freshManifest=null;
+    if(!force && ds>=beijingToday){
+      try{ freshManifest=await loadManifest(true); }
+      catch(error){ console.warn('公开赛程索引暂不可用，保留已验证缓存',error); }
+    }
+    const currentVersion=freshManifest?.dates?.[ds]?.version;
+    if(!force && cached?.result && (!freshManifest || currentVersion===cached.version))
+      return cached.result;
+    if(!force && local?.payload && (!freshManifest || currentVersion===local.version)){
       const localRows=normalizeRows(local.payload,ds);
       if(localRows){
         const localResult={data:localRows,error:null,fromScheduleSnapshot:true,
           fromLiveStaticSchedule:true,fromLocalCache:true};
         memory.set(ds,{version:local.version,result:localResult});
-        loadManifest(true).then(async manifest=>{
+        if(!freshManifest) loadManifest(true).then(async manifest=>{
           const entry=manifest.dates?.[ds];
           if(!entry || entry.version===local.version) return;
           const response=await fetch(entry.file+'?v='+encodeURIComponent(entry.version),{cache:'force-cache'});
