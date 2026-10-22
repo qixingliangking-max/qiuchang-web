@@ -83,7 +83,7 @@ jobs:
                             return {match_num:'周三00'+(i+1),home:'主队'+i,away:'客队'+i,
                               market_kind:market,options:opts,selections:opts.map(x=>x.label),ft:'2-1',ht:'1-0'};
                           })
-                        })):[];
+                        }))):[];
                         result={date:day,groups,batch_status:groups.length?'candidate':'missing'};
                       }else{
                         const groups=['2026-10-21','2026-10-22'].includes(day)?markets.map(project=>({
