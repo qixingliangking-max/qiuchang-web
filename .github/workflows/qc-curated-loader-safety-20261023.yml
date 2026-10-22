@@ -35,7 +35,7 @@ jobs:
           node - <<'NODE'
           const fs=require('fs'),assert=require('node:assert/strict');
           const {chromium}=require('playwright');
-          const html=fs.readFileSync('internal-test/curated-lab-20261019.html','utf8').replace(/<script\\b[^>]*src="[^"]+"[^>]*><\\/script>/g,'');
+          const html=fs.readFileSync('internal-test/curated-lab-20261019.html','utf8').replace(new RegExp('<script[^>]*src=[^>]*></script>','g'),'');
           const markets=['direction','htft','goals','score'];
           function options(type){
             return type==='direction'?[{label:'胜',odd:2.2}]:
