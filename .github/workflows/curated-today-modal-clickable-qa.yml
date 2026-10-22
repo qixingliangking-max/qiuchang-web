@@ -44,7 +44,9 @@ jobs:
                 await page.locator('#calDays button[data-date="2026-10-21"]').click();
                 for(const [type,legs] of [['direction',2],['htft',2],['goals',2],['score',3]]){
                   await page.locator('#tabs button[data-type="'+type+'"]').click();
-                  const card=page.locator('#qc-curated-extra .plan').first();
+                  const slots=page.locator('#qc-curated-extra .plan');
+                  if(await slots.count()!==3)throw Error(name+' '+type+' should have three fixed plans per market');
+                  const card=page.locator('#qc-curated-extra [data-qc-detail-kind="addon"][data-qc-detail-day="2026-10-21"]').first();
                   await card.waitFor({timeout:8000,state:'visible'});
                   if((await card.innerText()).includes('2.11')||(await card.innerText()).includes('赔率'))throw Error(name+' odds displayed on new card');
                   await card.locator('.inspect').click();
