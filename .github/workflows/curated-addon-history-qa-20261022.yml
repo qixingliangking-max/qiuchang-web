@@ -1,3 +1,4 @@
+# Checks the corrected business date guard and both guest/admin history flows.
 name: Curated 1021 Published Addon History Browser QA
 on:
   push:
