@@ -132,7 +132,9 @@
     }
     // Give normal initialization first chance; rescue only placeholders.
     setTimeout(function(){
-      if(pending(cards)) rescueLive(ds);
+      // Today's prediction is protected. Do not paint today's public
+      // fixture list into the prediction panel before entitlement settles.
+      // Only yesterday's completed public history may use this fallback.
       var review=document.getElementById('jcYesterdayCards');
       if(pending(review)) rescueHistory(addDays(ds,-1));
     },700);
