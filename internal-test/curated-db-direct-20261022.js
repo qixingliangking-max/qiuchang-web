@@ -56,11 +56,15 @@ async function rpc(name,args){
  var url=(window.QC_SUPABASE_URL||'').replace(/\/$/,'')+'/rest/v1/rpc/'+name;
  var key=window.QC_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)throw Error('Supabase public config missing');
- var r=await fetch(url,{method:'POST',cache:'no-store',headers:{
-  'apikey':key,'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json'
- },body:JSON.stringify(args||{})});
- if(!r.ok)throw Error(name+' HTTP '+r.status);
- return r.json();
+ var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},7000);
+ try{
+  var r=await fetch(url,{method:'POST',cache:'no-store',signal:controller.signal,headers:{
+   'apikey':key,'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json'
+  },body:JSON.stringify(args||{})});
+  if(!r.ok)throw Error(name+' HTTP '+r.status);
+  return await r.json();
+ }finally{clearTimeout(timer)}
+
 }
 async function loadDay(day){
  var pair=await Promise.all([
@@ -94,11 +98,23 @@ function recentDays(){
  }
  return days;
 }
+var refreshActive=false;
 async function refresh(){
- var days=recentDays();
- await Promise.all(days.map(function(day){return loadDay(day).catch(function(e){console.warn('精选数据读取失败',day,String(e))})}));
- window.dispatchEvent(new Event('qc-curated-db-update'));
+ if(refreshActive)return;
+ refreshActive=true;
+ try{
+  var days=recentDays();
+  await Promise.all(days.map(function(day){
+   return loadDay(day).then(function(changed){
+    if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
+   }).catch(function(e){
+    console.warn('精选数据读取失败，可在下次刷新重试',day,String(e));
+   });
+  }));
+ }finally{refreshActive=false}
 }
-window.QC_CURATED_DB_READY=refresh();
+// Never block the original page on a network round trip. Render existing data immediately.
+window.QC_CURATED_DB_READY=Promise.resolve();
+setTimeout(refresh,0);
 setInterval(refresh,120000);
 })();
