@@ -1,0 +1,134 @@
+name: Curated 1021 Published Addon History Browser QA
+on:
+  push:
+    branches: [ qcda-curated-1021-addon-history-20261022 ]
+    paths:
+      - ".github/workflows/curated-addon-history-qa-20261022.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    if: github.ref == 'refs/heads/qcda-curated-1021-addon-history-20261022'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-curated-1021-addon-history-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Confirm three scripts parse
+        run: |
+          node --check internal-test/curated-addons-public-20261021.js
+          node --check internal-test/curated-submission-admin-20261021.js
+          node --check internal-test/curated-shared-details-20261021.js
+      - name: Install isolated browser test tools
+        run: |
+          mkdir -p /tmp/qcda-addon-hist
+          cd /tmp/qcda-addon-hist
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify published addon history, admin separation, modal and guest access
+        env:
+          NODE_PATH: /tmp/qcda-addon-hist/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright');
+          const assert=require('node:assert/strict');
+          const paths=[
+            'internal-test/curated-submission-admin-20261021.js',
+            'internal-test/curated-addons-public-20261021.js',
+            'internal-test/curated-shared-details-20261021.js'
+          ];
+          (async()=>{
+            const browser=await chromium.launch();
+            try{
+              async function scenario(isAdmin){
+                const p=await browser.newPage();
+                await p.setContent(`<!doctype html><html><body>
+                  <div id="dateLabel" data-business-date="2026-10-22">10月22日</div>
+                  <div id="tabs"><button class="active" data-type="direction">方向</button>
+                  <button data-type="htft">半全场</button><button data-type="goals">总进球</button>
+                  <button data-type="score">比分</button></div>
+                  <div id="dailyTitle"></div><div id="dailyMeta"></div><div id="infoBand"></div>
+                  <div id="plans">自动精选</div><div id="history"><button>昨日常规历史</button></div>
+                  <input id="budget" value="1000"><div id="modeTabs"><button data-mode="balanced">均分</button></div>
+                  <div id="overlay" hidden><div id="dialog" tabindex="-1">
+                    <div id="dialogTitle"></div><div id="dialogSub"></div>
+                    <div id="dialogBody"></div><button id="copyPlan"></button></div></div>
+                  </body></html>`);
+                await p.evaluate(({isAdmin})=>{
+                  window.__rpc=[];
+                  const projects=['direction','htft','goals','score'];
+                  const g=projects.map((project,i)=>({
+                    project,format:project==='score'?'3场9个比分':'2场方案',
+                    settlement_status:'settled',group_hit:false,
+                    legs:Array.from({length:project==='score'?3:2},(_,j)=>({
+                      match_num:'周三00'+(j+1),home:'历史主队'+j,away:'历史客队'+j,
+                      market:project==='direction'?'had':project==='goals'?'ttg':project==='score'?'crs':'hafu',
+                      line:null, options:[{label:project==='score'?'2-1':'胜'}]
+                    })),
+                    leg_results:[]
+                  }));
+                  window.__groups=g;
+                  const main=['baseline','ai_analyst'].flatMap(track=>projects.map(project=>({
+                    track,project,group_code:(track==='baseline'?'B':'AI')+'-'+project.toUpperCase(),
+                    settlement_status:'settled',group_hit:true,
+                    legs:[{match_num:'周三001',home:'主',away:'客',market_kind:'had',selections:['胜']},
+                          {match_num:'周三002',home:'主',away:'客',market_kind:'had',selections:['负']}]
+                  })));
+                  window.qcSupabase={
+                    auth:{getSession:async()=>({data:{session:isAdmin?{access_token:'fixture'}:null}}),
+                          onAuthStateChange:()=>{}},
+                    rpc:async(name,args)=>{
+                      window.__rpc.push(name+' '+(args.p_date||args.p_business_date));
+                      if(name==='qc_curated_addons_public')return {data:{date:args.p_date,groups:args.p_date==='2026-10-21'?g:[]}};
+                      if(!isAdmin)throw Error('guest used admin RPC '+name);
+                      if(name==='qc_curated_admin_prematch_odds')return {data:[]};
+                      if(name==='qc_curated_admin_preview')return {data:args.p_business_date==='2026-10-21'
+                        ?{date:'2026-10-21',batch_status:'candidate',groups:main}
+                        :{date:'2026-10-22',batch_status:'missing',groups:[]}};
+                      throw Error('unexpected rpc '+name);
+                    }
+                  };
+                },{isAdmin});
+                for(const path of paths)await p.addScriptTag({path});
+                await p.waitForFunction(()=>window.QC_CURATED_EXTRA_BY_DAY?.['2026-10-21']?.groups?.length===4);
+                await p.waitForFunction(()=>document.querySelectorAll('[data-qc-addon-history="2026-10-21"]').length===1);
+                assert.equal(await p.locator('[data-qc-addon-history="2026-10-21"]').count(),1);
+                assert((await p.locator('[data-qc-addon-history="2026-10-21"]').innerText()).includes('未命中'));
+                assert.equal(await p.locator('#qc-curated-extra [data-qc-detail-kind="addon"]').count(),0,'current date should not show yesterday addon in top');
+                const calls=await p.evaluate(()=>window.__rpc);
+                if(!isAdmin)assert(!calls.some(x=>x.includes('qc_curated_admin_')),'guest made admin read');
+                if(isAdmin){
+                  await p.waitForFunction(()=>window.QC_CURATED_ADMIN_ARCHIVES?.['2026-10-21']?.groups?.length===8);
+                  assert.equal(await p.locator('[data-qc-submitted-row="1"]').count(),2,'baseline and ai historical');
+                }
+                await p.evaluate(()=>{
+                  const hist=document.getElementById('history');
+                  hist.innerHTML='<button>常规方案历史恢复后</button>';
+                });
+                await p.waitForFunction(()=>document.querySelectorAll('[data-qc-addon-history="2026-10-21"]').length===1);
+                const source=await p.locator('[data-qc-addon-history="2026-10-21"]').getAttribute('data-qc-detail-day');
+                assert.equal(source,'2026-10-21');
+                await p.locator('[data-qc-addon-history="2026-10-21"]').click();
+                assert.equal(await p.locator('#overlay').getAttribute('hidden'),null);
+                assert((await p.locator('#dialogSub').innerText()).includes('10月21日'));
+                assert((await p.locator('#dialogBody').innerText()).includes('历史主队0'));
+                await p.evaluate(()=>{
+                  const tabs=document.querySelectorAll('#tabs button');
+                  tabs[0].classList.remove('active');tabs[3].classList.add('active');
+                });
+                await p.waitForFunction(()=>document.querySelector('[data-qc-addon-history="2026-10-21"]')?.dataset.qcDetailCode==='score');
+                assert.equal(await p.locator('[data-qc-addon-history="2026-10-21"]').count(),1);
+                await p.close();
+                return {role:isAdmin?'admin':'guest',history:'restored',modal:'opens archived day',tabs:'per-project'};
+              }
+              console.log(await scenario(false));
+              console.log(await scenario(true));
+            }finally{await browser.close();}
+          })().catch(err=>{console.error(err);process.exit(1)});
+          NODE
