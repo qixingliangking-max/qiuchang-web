@@ -1,7 +1,7 @@
 {
   "league_code": "FRA_L1",
   "season": "2026/27",
-  "generated_at": "2026-10-19T05:05:29.963Z",
+  "generated_at": "2026-10-22T04:12:27.955Z",
   "teams": {
     "勒芒": {
       "ok": true,
@@ -38368,7 +38368,7 @@
           "avg_rating": 6.92,
           "goals": 0,
           "assists": 0,
-          "xg": 0.32,
+          "xg": 0.33,
           "xa": 0.2,
           "shots": 5,
           "shots_on_target": 0,
@@ -38389,7 +38389,7 @@
           "per90": {
             "goals": 0,
             "assists": 0,
-            "xg": 0.054,
+            "xg": 0.056,
             "xa": 0.034,
             "shots": 0.843,
             "defensive_actions": 6.573
