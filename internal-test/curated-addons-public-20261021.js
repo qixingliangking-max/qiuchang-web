@@ -149,6 +149,7 @@ function draw(){
 async function loadDate(force){
  var date=selectedDate();
  if(!date||!window.qcSupabase)return;
+ loadPublishedMain(date);
  if(!force&&data&&data.date===date){draw();return;}
  var seq=++requestSeq;
  root.hidden=true;root.style.display='none';
