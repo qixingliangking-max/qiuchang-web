@@ -1,0 +1,99 @@
+name: Curated Three Cards Per Market Stage QA
+on:
+  push:
+    branches: [qcda-curated-three-per-market-20261022]
+    paths: [.github/workflows/qc-curated-three-card-stage-qa.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-curated-three-per-market-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax check
+        run: |
+          node --check internal-test/curated-addons-public-20261021.js
+          node --check internal-test/curated-submission-admin-20261021.js
+          node --check internal-test/curated-shared-details-20261021.js
+      - name: Isolated browser
+        run: |
+          mkdir -p /tmp/qc-3card
+          cd /tmp/qc-3card
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check missing, published and admin with legacy-date restoration
+        env:
+          NODE_PATH: /tmp/qc-3card/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright'),assert=require('node:assert/strict');
+          const paths=['internal-test/curated-submission-admin-20261021.js','internal-test/curated-addons-public-20261021.js','internal-test/curated-shared-details-20261021.js'];
+          const mkAdd=project=>({project,format:project==='score'?'3场9个比分':'2场方案',settlement_status:'unsettled',group_hit:null,legs:[{match_num:'周四007',home:'主队',away:'客队',market:'had',options:[{label:'胜',odd:2.38}]},{match_num:'周四012',home:'主队二',away:'客队二',market:'had',options:[{label:'负',odd:2.1}]}]});
+          const mkMain=()=>['baseline','ai_analyst'].flatMap(track=>['direction','htft','goals','score'].map(project=>({track,project,group_code:track+'-'+project,settlement_status:'unsettled',group_hit:null,legs:[{match_num:'周四001',home:'一号主队',away:'一号客队',market_kind:'had',selections:['负']},{match_num:'周四002',home:'二号主队',away:'二号客队',market_kind:'had',selections:['胜']}]})));
+          (async()=>{
+            const b=await chromium.launch();
+            try{
+              for(const scenario of [
+                {name:'guest-only-analyst',admin:false,main:false},
+                {name:'guest-published-main',admin:false,main:true},
+                {name:'admin-candidate-main',admin:true,main:false}
+              ]){
+                const p=await b.newPage();
+                await p.setContent('<div id="dateLabel" data-business-date="2026-10-22">10月22日</div><div id="tabs"><button class="active" data-type="direction">胜平负</button><button data-type="htft">半全场</button><button data-type="goals">总进球</button><button data-type="score">比分</button></div><div id="dailyTitle"></div><div id="dailyMeta"></div><div id="infoBand"></div><section id="plans">历史自动方案</section><section id="history"></section><input id="budget" value="1000"><div id="modeTabs"></div><div id="overlay" hidden><div id="dialog" tabindex="-1"></div><div id="dialogTitle"></div><div id="dialogSub"></div><div id="dialogBody"></div><button id="copyPlan"></button></div>');
+                await p.evaluate(({scenario})=>{
+                  const dirs=['direction','htft','goals','score'];
+                  const gs=dirs.map(project=>({project,format:'2场方案',settlement_status:'unsettled',group_hit:null,legs:[{match_num:'周四007',home:'主队',away:'客队',market:'had',options:[{label:'胜',odd:2.38}]},{match_num:'周四012',home:'主队二',away:'客队二',market:'had',options:[{label:'负',odd:2.1}]}]}));
+                  const main=['baseline','ai_analyst'].flatMap(track=>dirs.map(project=>({track,project,group_code:track+'-'+project,settlement_status:'unsettled',group_hit:null,legs:[{match_num:'周四001',home:'一号主队',away:'一号客队',market_kind:'had',selections:['负']},{match_num:'周四002',home:'二号主队',away:'二号客队',market_kind:'had',selections:['胜']}]})));
+                  window.__rpcCalls=[];
+                  window.qcSupabase={
+                    auth:{getSession:async()=>({data:{session:scenario.admin?{access_token:'fixture'}:null}}),onAuthStateChange:()=>{}},
+                    rpc:async(name,args)=>{
+                      window.__rpcCalls.push(name);
+                      const day=args.p_date||args.p_business_date;
+                      if(name==='qc_curated_addons_public')return {data:{date:day,groups:day==='2026-10-22'||day==='2026-10-21'?gs:[]}};
+                      if(name==='qc_selection_published_public')return {data:{date:day,batch_status:scenario.main?'published':'missing',groups:scenario.main?main:[]}};
+                      if(!scenario.admin)throw Error('guest accessed admin data');
+                      if(name==='qc_curated_admin_prematch_odds')return {data:[]};
+                      if(name==='qc_curated_admin_preview')return {data:day==='2026-10-22'?{date:day,batch_status:'candidate',groups:main}:{date:day,batch_status:'missing',groups:[]}};
+                      throw Error('Unknown '+name);
+                    }
+                  };
+                },{scenario});
+                for(const file of paths)await p.addScriptTag({path:file});
+                await p.waitForFunction(()=>document.querySelectorAll('#qc-curated-extra .plan, #qc-submitted-archive .plan').length>=3);
+                if(scenario.admin)await p.waitForFunction(()=>document.querySelector('#qc-submitted-archive')&&!document.querySelector('#qc-submitted-archive').hidden);
+                else await p.waitForFunction(()=>document.querySelector('#qc-curated-extra .plan')&&document.querySelector('#qc-curated-extra').style.display==='grid');
+                const visible=await p.evaluate(()=>{
+                  const roots=['qc-submitted-archive','qc-curated-extra'];
+                  return roots.filter(id=>{const x=document.getElementById(id);return x&&!x.hidden&&x.style.display!=='none';}).flatMap(id=>[...document.querySelectorAll('#'+id+' .plan')].map(x=>({title:x.querySelector('.plan-id')?.textContent,placeholder:x.dataset.qcPlaceholder||''})));
+                });
+                console.log(scenario.name,visible);
+                assert.equal(visible.length,3,scenario.name+' must have exactly three cards');
+                assert(visible[0].title.includes('基准版')&&visible[1].title.includes('AI精选版')&&visible[2].title.includes('分析师'),scenario.name+' order incorrect');
+                if(!scenario.admin){
+                  assert.equal(visible[0].placeholder,scenario.main?'':'main');
+                  assert.equal(visible[1].placeholder,scenario.main?'':'main');
+                  assert.equal(visible[2].placeholder,'');
+                  assert.equal(await p.locator('#plans').isVisible(),false,'old auto cards should be hidden');
+                }
+                if(scenario.admin)assert.equal(await p.locator('#qc-curated-extra').isVisible(),false,'admin must not duplicate public analyst');
+                if(!scenario.admin){
+                  await p.evaluate(()=>{
+                    const el=document.getElementById('dateLabel');el.dataset.businessDate='2026-10-20';el.textContent='10月20日';
+                  });
+                  await p.waitForFunction(()=>document.querySelector('#plans')?.style.display!=='none');
+                  assert(await p.locator('#plans').isVisible(),'legacy history should restore');
+                }
+                await p.close();
+              }
+            }finally{await b.close();}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
