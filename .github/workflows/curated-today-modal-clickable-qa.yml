@@ -1,72 +1,85 @@
-name: Curated submitted plan clickable modal QA
+name: Original Curated Plan Detail and Allocation Live QA
 on:
   workflow_dispatch:
   push:
     paths:
       - ".github/workflows/curated-today-modal-clickable-qa.yml"
-      - "internal-test/curated-shared-details-20261021.js"
-      - "internal-test/curated-addons-public-20261021.js"
-      - "internal-test/curated-submission-admin-20261021.js"
       - "internal-test/curated-lab-20261019.html"
 permissions:
   contents: read
 jobs:
-  clickable:
+  live-original:
     runs-on: ubuntu-latest
-    timeout-minutes: 9
+    timeout-minutes: 11
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install Chromium
+      - name: Install chromium
         run: |
-          mkdir -p /tmp/curated-click
-          cd /tmp/curated-click
+          mkdir -p /tmp/qc-original-live
+          cd /tmp/qc-original-live
           npm init -y >/dev/null
           npm install --no-audit --no-fund playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Click and validate live public add-on cards on desktop and mobile
-        shell: bash
+      - name: Real website must show original optimized modal and three category plans
+        env:
+          NODE_PATH: /tmp/qc-original-live/node_modules
         run: |
-          cat > /tmp/curated-click/test.cjs <<'JS'
-          const {chromium,devices}=require('playwright');
+          node - <<'NODE'
+          const {chromium,devices}=require('playwright'),assert=require('node:assert/strict');
           (async()=>{
-            const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+            const browser=await chromium.launch({headless:true});
             try{
-              for(const [name,device] of [['desktop',{viewport:{width:1250,height:900}}],['mobile',devices['iPhone 13']]]){
-                const context=await browser.newContext({...device,locale:'zh-CN'});
-                const page=await context.newPage();
-                const errors=[];page.on('pageerror',e=>errors.push(String(e)));
-                await page.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?modalqa_20261021_click1=1',{waitUntil:'networkidle',timeout:45000});
-                await page.waitForFunction(()=>window.QC_CURATED_EXTRA?.groups?.length===4,{timeout:20000});
-                await page.locator('#dateLabel').click();
-                await page.locator('#calDays button[data-date="2026-10-21"]').click();
-                for(const [type,legs] of [['direction',2],['htft',2],['goals',2],['score',3]]){
-                  await page.locator('#tabs button[data-type="'+type+'"]').click();
-                  const slots=page.locator('#qc-curated-extra .plan');
-                  if(await slots.count()!==3)throw Error(name+' '+type+' should have three fixed plans per market');
-                  const card=page.locator('#qc-curated-extra [data-qc-detail-kind="addon"][data-qc-detail-day="2026-10-21"]').first();
-                  await card.waitFor({timeout:8000,state:'visible'});
-                  if((await card.innerText()).includes('2.11')||(await card.innerText()).includes('赔率'))throw Error(name+' odds displayed on new card');
-                  await card.locator('.inspect').click();
-                  if(await page.locator('#overlay').evaluate(x=>x.hidden))throw Error(name+' '+type+' dialog did not open');
-                  const body=await page.locator('#dialogBody').innerText();
-                  const n=await page.locator('#dialogBody .detail-leg').count();
-                  if(n!==legs)throw Error(name+' '+type+' detail legs '+n+' expected '+legs);
-                  if(!body.includes('不显示赔率')||body.includes('2.11'))throw Error(name+' '+type+' details should not expose odds');
-                  if(await page.locator('#modeTabs').isVisible())throw Error(name+' add-on unexpectedly shows allocation/odds controls');
-                  if(type==='score'&&!(await page.locator('#dialogTitle').innerText()).includes('三场'))throw Error(name+' score three-match heading missing');
-                  await page.locator('#copyPlan').click();
-                  await page.locator('#closeDialog').click();
-                  if(!(await page.locator('#overlay').evaluate(x=>x.hidden)))throw Error(name+' dialog not closed');
+              for(const [name,settings] of [['desktop',{viewport:{width:1280,height:900}}],['mobile',devices['iPhone 13']]]){
+                const p=await browser.newPage(settings);
+                const errors=[];p.on('pageerror',e=>errors.push(String(e)));
+                let updated=false;
+                for(let attempt=0;attempt<12;attempt++){
+                  const r=await p.goto('https://qcda.cn/internal-test/curated-lab-20261019.html?origqa=20261022restored',{waitUntil:'domcontentloaded',timeout:30000});
+                  assert.equal(r.status(),200);
+                  updated=await p.locator('script[src*="curated-lab-20261019.js?v=20261022originalrestored1"]').count()===1;
+                  if(updated)break;
+                  await p.waitForTimeout(5000);
                 }
-                if(errors.length)throw Error(name+' JS errors '+errors.join(' / '));
-                console.log('CURATED_MODAL_QA_PASS',name,'4 project dialogs, 2/2/2/3 match legs, no odds, copy and close');
-                await context.close();
+                assert(updated,'original UI asset is not deployed');
+                await p.locator('#dateLabel').click();
+                await p.locator('#calDays button[data-date="2026-10-22"]').click();
+                await p.waitForFunction(()=>document.querySelectorAll('#plans .plan').length===3,{timeout:15000});
+                for(const [type,legCount,combos] of [['direction',2,1],['htft',2,1],['goals',2,4],['score',3,27]]){
+                  await p.locator('#tabs button[data-type="'+type+'"]').click();
+                  const cards=p.locator('#plans .plan');assert.equal(await cards.count(),3);
+                  const labels=await p.locator('#plans .plan-id').allInnerTexts();
+                  assert(labels[0].includes('基准版')&&labels[1].includes('AI精选版')&&labels[2].includes('分析师'));
+                  const third=cards.nth(2).locator('.inspect');
+                  assert.equal(await third.count(),1);
+                  await third.click();
+                  await p.locator('#overlay:not([hidden]) .dialog').waitFor({timeout:7000});
+                  assert.equal(await p.locator('#dialogBody .detail-leg').count(),legCount);
+                  assert.equal(await p.locator('.alloc tbody tr').count(),combos);
+                  assert(await p.locator('#modeTabs').isVisible(),'original four allocation controls missing');
+                  for(const mode of ['balanced','hot','cold','hybrid']){
+                    await p.locator('#modeTabs button[data-mode="'+mode+'"]').click();
+                    assert.equal(await p.locator('.alloc tbody tr').count(),combos);
+                  }
+                  await p.locator('#closeDialog').click();
+                }
+                await p.locator('#budget').fill('1000');
+                await p.locator('#tabs button[data-type="score"]').click();
+                await p.locator('#plans .plan').nth(2).locator('.inspect').click();
+                assert((await p.locator('#dialogBody').innerText()).includes('1,000.00'));
+                await p.locator('#closeDialog').click();
+                await p.locator('#dateLabel').click();
+                await p.locator('#calDays button[data-date="2026-10-19"]').click();
+                assert.equal(await p.locator('#plans .plan').count(),2);
+                await p.locator('#plans .plan').first().locator('.inspect').click();
+                await p.locator('#overlay:not([hidden]) .dialog').waitFor();
+                assert((await p.locator('#dialogTitle').innerText()).includes('双场'));
+                if(errors.length)throw Error('page errors: '+errors.join('; '));
+                console.log('RESTORED_ORIGINAL_UI_LIVE_PASS',name,'4 modes, 4 projects, 27 score combinations, original history preserved');
+                await p.close();
               }
-            }finally{await browser.close();}
-          })().catch(e=>{console.error(e);process.exitCode=1});
-          JS
-          cd /tmp/curated-click
-          node test.cjs
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
