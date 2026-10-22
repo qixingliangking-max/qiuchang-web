@@ -6,6 +6,23 @@ var requestSeq=0;
 var historyDate='2026-10-21';
 var addOnsByDay=Object.create(null);
 var historyRequest=null;
+var mainByDay=Object.create(null),mainRequests=Object.create(null),lastMainFetch=Object.create(null);
+window.QC_CURATED_MAIN_PUBLISHED_BY_DAY=mainByDay;
+async function loadPublishedMain(day){
+ if(!day||day<'2026-10-21'||!window.qcSupabase)return;
+ if(mainByDay[day]&&(mainByDay[day].batch_status==='published'||Date.now()-(lastMainFetch[day]||0)<90000))return mainByDay[day];
+ if(mainRequests[day])return mainRequests[day];
+ mainRequests[day]=(async function(){
+  var r=await window.qcSupabase.rpc('qc_selection_published_public',{p_business_date:day});
+  if(r.error)throw r.error;
+  mainByDay[day]=r.data&&Array.isArray(r.data.groups)?r.data:{date:day,groups:[],batch_status:'missing'};
+  lastMainFetch[day]=Date.now();
+  draw();return mainByDay[day];
+ })().catch(function(e){console.warn('主模型正式方案读取失败',day,String(e?.message||e))})
+ .finally(function(){delete mainRequests[day]});
+ return mainRequests[day];
+}
+
 function remember(day,pack){
  if(!pack||!Array.isArray(pack.groups))return;
  pack.date=pack.date||day;
@@ -84,36 +101,55 @@ function selectedDate(){
 }
 function project(){return document.querySelector('#tabs button.active')?.dataset.type||'direction'}
 function status(g){return g.settlement_status==='settled'?(g.group_hit?'已命中':'未命中'):'待结算'}
+function placeholder(label,reason,kind){
+ return '<article class="plan '+(kind==='analyst'?'variant-shadow':'')+'" data-qc-placeholder="'+esc(kind)+'">'+
+ '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span><span class="flag pending">待同步</span></div>'+
+ '<div class="legs"><div class="leg">'+esc(reason)+'</div></div></article>';
+}
+function makeCard(label,g,day,isAddon){
+ if(!g)return placeholder(label,isAddon?'赛事分析师方案尚未发布。':'主模型该方案尚未正式提交。',isAddon?'analyst':'main');
+ var statusText=status(g),count=(g.legs||[]).length;
+ var combos=(g.legs||[]).reduce(function(n,l){return n*(isAddon?(l.options||[]).length:(l.selections||[]).length)},1);
+ var legs=(g.legs||[]).map(function(l){
+  var opts=isAddon?(l.options||[]).map(function(x){return x.label}):l.selections||[];
+  return '<div class="leg"><div class="leg-top"><b>'+esc(l.match_num)+'　'+esc(l.home)+' vs '+esc(l.away)+'</b></div>'+
+   '<div class="leg-meta">'+esc(({had:'普通胜平负',hhad:'官方让球',hafu:'半全场',ttg:'总进球',crs:'比分'})[isAddon?l.market:l.market_kind]||'')+'</div>'+
+   '<div class="chips">'+opts.map(function(x){return '<span class="chip">'+esc(x)+'</span>'}).join('')+'</div></div>';
+ }).join('');
+ return '<article class="plan '+(!isAddon&&g.track==='baseline'?'variant-original':'variant-shadow')+
+   '" data-qc-detail-kind="'+(isAddon?'addon':'admin')+'" data-qc-detail-code="'+esc(isAddon?g.project:g.group_code)+
+   '" data-qc-detail-day="'+esc(day)+'" style="cursor:pointer">'+
+   '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span><span class="flag '+
+   (statusText==='已命中'?'hit':statusText==='未命中'?'miss':'pending')+'">'+esc(statusText)+'</span></div>'+
+   '<div class="legs">'+legs+'</div><div class="plan-foot"><div class="plan-return"><small>'+
+   esc(isAddon?g.format:'主模型已发布方案')+' · 完整选项</small><strong>'+count+'场 · '+combos+
+   '种组合</strong></div><button type="button" class="inspect">方案详情 →</button></div></article>';
+}
 function draw(){
  scheduleHistoric();
  var admin=document.getElementById('qc-submitted-archive');
  var hasAdmin=Boolean(admin&&!admin.hidden&&admin.style.display!=='none');
- var date=selectedDate();
- var view=data&&data.date===date&&Array.isArray(data.groups)&&!hasAdmin;
- var item=view&&data.groups.find(function(x){return x.project===project()});
- root.hidden=!item;
- root.style.display=item?'grid':'none';
- if(!item){root.innerHTML='';return;}
- var label='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[item.project]||item.format);
- var count=(item.legs||[]).length;
- var combo=(item.legs||[]).reduce(function(n,l){return n*(l.options||[]).length},1);
- var legs=(item.legs||[]).map(function(l){
-  var choices=(l.options||[]).map(function(o){return '<span class="chip">'+esc(o.label)+'</span>'}).join('');
-  return '<div class="leg"><div class="leg-top"><b>'+esc(l.match_num)+'　'+esc(l.home)+' vs '+esc(l.away)+'</b></div>'+
-   '<div class="leg-meta">'+esc(({had:'普通胜平负',hhad:'官方让球',hafu:'半全场',ttg:'总进球',crs:'比分'})[l.market]||l.market)+'</div>'+
-   '<div class="chips">'+choices+'</div></div>';
- }).join('');
- var state=status(item);
- root.innerHTML='<article class="plan variant-shadow" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(item.project)+'" data-qc-detail-day="'+esc(date)+'" style="cursor:pointer">'+
-  '<div class="plan-head"><span class="plan-id">'+esc(label)+'</span>'+
-  '<span class="flag '+(state==='已命中'?'hit':state==='未命中'?'miss':'pending')+'">'+esc(state)+'</span></div>'+
-  '<div class="legs">'+legs+'</div>'+
-  '<div class="plan-foot"><div class="plan-return"><small>'+esc(item.format)+' · 完整选项</small>'+
-  '<strong>'+count+'场 · '+combo+'种组合</strong></div><button type="button" class="inspect">方案详情 →</button></div></article>';
+ var day=selectedDate();
+ if(day<'2026-10-21'){plans.hidden=false;plans.style.display='';root.hidden=true;root.style.display='none';root.innerHTML='';return;}
+ if(hasAdmin){root.hidden=true;root.style.display='none';root.innerHTML='';return;}
+ // Existing auto-selected cards are NOT the main-model submitted baseline/AI.
+ plans.hidden=true;plans.style.display='none';
+ root.hidden=false;root.style.display='grid';
+ var main=mainByDay[day],projectKey=project(),groups=main?.batch_status==='published'?(main.groups||[]).filter(function(g){return g.project===projectKey}):[];
+ var base=groups.find(function(g){return g.track==='baseline'});
+ var ai=groups.find(function(g){return g.track==='ai_analyst'});
+ var addon=data?.date===day?(data.groups||[]).find(function(g){return g.project===projectKey}):null;
+ root.innerHTML=makeCard('主模型 · 基准版',base,day,false)+makeCard('主模型 · AI精选版',ai,day,false)+
+  makeCard('赛事分析师加选',addon,day,true);
+ var meta=document.getElementById('dailyMeta'),band=document.getElementById('infoBand');
+ if(meta)meta.textContent='共3组 · 基准版 / AI精选版 / 赛事分析师加选';
+ if(band)band.textContent=groups.length===2?'每个玩法固定三组：主模型基准版、AI精选版和赛事分析师加选。':
+ '主模型两组尚未正式提交或发布，不能用每日自动精选代替；已发布的分析师加选单列第三组。';
 }
 async function loadDate(force){
  var date=selectedDate();
  if(!date||!window.qcSupabase)return;
+ loadPublishedMain(date);
  if(!force&&data&&data.date===date){draw();return;}
  var seq=++requestSeq;
  root.hidden=true;root.style.display='none';
@@ -124,6 +160,7 @@ async function loadDate(force){
   if(!reply.data||!Array.isArray(reply.data.groups))throw new Error('精选加选数据格式异常');
   data=reply.data;
   data.date=data.date||date;
+  loadPublishedMain(date);
   remember(date,data);
   if(data.groups.length){
    window.QC_CURATED_EXTRA=data;
