@@ -1,9 +1,12 @@
 {
   "league_code": "NED_ED",
   "season": "2026/27",
-  "run_at": "2026-10-22T05:11:52.455Z",
+  "run_at": "2026-10-22T19:21:46.564Z",
   "discovered_fixtures": 306,
   "discovered_finished": 81,
+  "in_scope_finished": 81,
+  "excluded_out_of_scope_count": 0,
+  "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 81,
   "new_finished_matches": 0,
   "added_source_match_ids": [],

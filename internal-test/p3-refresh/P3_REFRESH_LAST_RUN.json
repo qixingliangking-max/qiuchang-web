@@ -1,10 +1,10 @@
 {
-  "run_at": "2026-10-22T05:12:13.505Z",
+  "run_at": "2026-10-22T19:22:03.295Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 2,
-  "noop_leagues": 21,
-  "blocked_leagues": 1,
+  "promoted_leagues": 1,
+  "noop_leagues": 23,
+  "blocked_leagues": 0,
   "results": [
     {
       "league_code": "AFC_ACLE",
@@ -79,15 +79,15 @@
     {
       "league_code": "ESP_LL",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 90,
-      "baseline_finished_matches": 89,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 90,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -289,29 +289,29 @@
     {
       "league_code": "UEFA_UCL",
       "season": "2026/27",
-      "status": "BLOCKED_UNMAPPED_TEAM",
-      "discovered_finished": 144,
-      "baseline_finished_matches": 47,
-      "new_finished_matches": 7,
-      "gate_status": null,
-      "collection_coverage_pct": null,
-      "unmapped_count": 90,
-      "strict_errors": null,
-      "collection_failures": null,
-      "exit_code": 3
-    },
-    {
-      "league_code": "UEFA_UEL",
-      "season": "2026/27",
       "status": "NO_NEW_FINISHED",
-      "discovered_finished": 36,
-      "baseline_finished_matches": 36,
+      "discovered_finished": 54,
+      "baseline_finished_matches": 54,
       "new_finished_matches": 0,
       "gate_status": null,
       "collection_coverage_pct": null,
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
+      "exit_code": 0
+    },
+    {
+      "league_code": "UEFA_UEL",
+      "season": "2026/27",
+      "status": "PROMOTED",
+      "discovered_finished": 44,
+      "baseline_finished_matches": 36,
+      "new_finished_matches": 8,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -331,15 +331,15 @@
     {
       "league_code": "USA_MLS",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 451,
-      "baseline_finished_matches": 450,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 451,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     }
   ]

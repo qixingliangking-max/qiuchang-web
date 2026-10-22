@@ -1,9 +1,12 @@
 {
   "league_code": "ESP_L2",
   "season": "2026/27",
-  "run_at": "2026-10-22T05:11:31.764Z",
+  "run_at": "2026-10-22T19:21:29.188Z",
   "discovered_fixtures": 462,
   "discovered_finished": 110,
+  "in_scope_finished": 110,
+  "excluded_out_of_scope_count": 0,
+  "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 110,
   "new_finished_matches": 0,
   "added_source_match_ids": [],

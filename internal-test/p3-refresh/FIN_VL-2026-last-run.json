@@ -1,9 +1,12 @@
 {
   "league_code": "FIN_VL",
   "season": "2026",
-  "run_at": "2026-10-22T05:11:37.699Z",
+  "run_at": "2026-10-22T19:21:32.402Z",
   "discovered_fixtures": 177,
   "discovered_finished": 165,
+  "in_scope_finished": 165,
+  "excluded_out_of_scope_count": 0,
+  "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 165,
   "new_finished_matches": 0,
   "added_source_match_ids": [],
