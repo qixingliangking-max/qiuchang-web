@@ -112,10 +112,8 @@ function plansFor(day,type){
        versionLabel:'AI精选师V1.0 · 遮挡回测',versionNote:'历史遮挡回放（非当日真实发布）；仅使用赛前锁板和官方赔率。',
        versionGate:unresolved?'待结算':''}];
  }
- var items=all.filter(function(r){return r.d===day}).map(function(row){return makeLeg(row,type)}).filter(Boolean);
- items.sort(function(a,b){return String(a.row.num).localeCompare(String(b.row.num),'zh-Hans-CN',{numeric:true})});
- var pairs=[];for(var i=0;i+1<Math.min(items.length,6);i+=2) pairs.push({day:day,type:type,index:pairs.length+1,a:items[i],b:items[i+1]});
- return pairs;
+ // No anonymous or generated pairs: only saved submitted plans are shown.
+ return [];
 }
 function planLegs(plan){return plan.legs||[plan.a,plan.b].filter(Boolean)}
 function combosFor(plan){
@@ -273,7 +271,7 @@ function dialogLeg(leg){
 }
 function renderDialog(){
  var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
- var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel=plan.blind?plan.unsettled?'待结算':'遮挡':'待赛';
+ var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel='—';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
  $('dialogTitle').textContent=personaPlan(plan.index)+' · '+displayType+(planLegs(plan).length===3?'三场':'双场');
  $('dialogSub').textContent=readableDay(plan.day);
