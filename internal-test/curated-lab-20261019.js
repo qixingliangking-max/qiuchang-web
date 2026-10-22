@@ -205,7 +205,7 @@ function renderDate(){
 function miniLeg(leg){
  var row=leg.row,pending=!score(row.ft)||!score(row.ht);
  var html='<div class="leg"><div class="leg-top"><b>'+esc(row.num)+'　'+esc(row.h)+' <span style="color:#a5adba;font-weight:500">vs</span> '+esc(row.a)+'</b><em>'+esc(row.league||'')+'</em></div>';
- html+='<div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' <i>×'+money(o.odds)+'</i>'+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div>';
+ html+='<div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' <i>×'+(o.odds==null?'待更新':money(o.odds))+'</i>'+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div>';
  var pendingLabel=row.blindMasked?'赛果已遮挡':row.blindPending?'比赛中断 · 待结算':'官方赛前赔率 · 待赛';
  html+='<div class="leg-result">'+(pending?pendingLabel:'赛果 '+esc(parseScoreText(row))+' <span style="color:#97a4b4">｜</span> 半场 '+esc(String(row.ht||'—').replace(':','-')))+'</div></div>';
  return html;
@@ -289,7 +289,7 @@ function renderHistory(){
    typesInOrder.forEach(function(type){
     plansFor(day,type).forEach(function(plan){
      var sim=allocation(plan,state.budget,state.mode);
-     var waiting=!!plan.prematch||!!plan.unsettled;
+     var waiting=!!plan.prematch||!!plan.unsettled||sim.priceMissing;
      var status=waiting?'待结算':sim.covered?'命中':'未命中';
      var amount=waiting?'—':money(sim.returns);
      var label=plan.versionLabel||(plan.shadow?'AI精选研究':'每日自动精选');
@@ -333,7 +333,7 @@ function strategyDescription(mode){
 }
 function dialogLeg(leg){
  var r=leg.row,pending=!score(r.ft)||!score(r.ht),captured=(mkt(r,leg.market)||{}).captured;
- return '<div class="detail-leg"><b>'+esc(r.num)+'｜'+esc(r.h)+' vs '+esc(r.a)+'</b><small>'+esc(r.league)+'　'+(pending?(r.blindMasked?'历史赛果遮挡':r.blindPending?'比赛中断待结算':'赛前赔率')+(captured?' · 采集于 '+esc(captured.slice(0,10)):''):'FT '+esc(parseScoreText(r))+'　HT '+esc(String(r.ht||'').replace(':','-')))+'</small><div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' @'+money(o.odds)+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div></div>';
+ return '<div class="detail-leg"><b>'+esc(r.num)+'｜'+esc(r.h)+' vs '+esc(r.a)+'</b><small>'+esc(r.league)+'　'+(pending?(r.blindMasked?'历史赛果遮挡':r.blindPending?'比赛中断待结算':'赛前赔率')+(captured?' · 采集于 '+esc(captured.slice(0,10)):''):'FT '+esc(parseScoreText(r))+'　HT '+esc(String(r.ht||'').replace(':','-')))+'</small><div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' @'+(o.odds==null?'待更新':money(o.odds))+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div></div>';
 }
 function renderDialog(){
  var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
@@ -344,7 +344,7 @@ function renderDialog(){
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=sim.priceMissing?'赔率待更新':money(sim.grossMin)+'–'+money(sim.grossMax);
  var summary='<div class="summary"><div class="summary-item"><small>模拟金额</small><strong>'+money(state.budget)+'点</strong></div><div class="summary-item"><small>组合选项</small><strong>'+sim.list.length+'种</strong></div><div class="summary-item"><small>'+(pending?'情景返还范围':'模拟返还')+'</small><strong>'+(pending?range:money(sim.returns)+'点')+'</strong></div></div>';
- var rows=sim.list.map(function(c,i){return '<tr class="'+(!pending&&c.hit?'winner':'')+'"><td>'+String(i+1).padStart(2,'0')+'</td><td>'+esc(c.options.map(function(o){return o.name}).join(' × '))+'</td><td>'+money(c.odds)+'</td><td>'+money(c.stake)+'</td><td>'+money(c.projected)+'</td><td>'+(pending?pendingLabel:c.hit?'✓':'—')+'</td></tr>'}).join('');
+ var rows=sim.list.map(function(c,i){return '<tr class="'+(!pending&&c.hit?'winner':'')+'"><td>'+String(i+1).padStart(2,'0')+'</td><td>'+esc(c.options.map(function(o){return o.name}).join(' × '))+'</td><td>'+(c.odds==null?'—':money(c.odds))+'</td><td>'+money(c.stake)+'</td><td>'+money(c.projected)+'</td><td>'+(pending?pendingLabel:c.hit?'✓':'—')+'</td></tr>'}).join('');
  $('dialogBody').innerHTML='<div class="dialog-tip">'+esc(strategyDescription(state.mode))+'</div><div class="dialog-legs">'+allLegs(plan).map(dialogLeg).join('')+'</div>'+summary+'<div class="alloc-title">组合分配</div><div class="alloc"><table><thead><tr><th>#</th><th>组合</th><th>赔率</th><th>份额</th><th>理论返还</th><th>'+(pending?'状态':'命中')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="disclaimer">'+(pending?'仅为赛前赔率及分配情景模拟。理论返还是假定单一组合满足条件时的计算结果，尚未结算，数据仅供看球讨论。':'赛后回看仅供赛事研究，不代表实际收益。')+'</div>';
 }
 function openDetail(day,index,type){
@@ -362,7 +362,7 @@ function copyText(){
  var sim=allocation(p,state.budget,state.mode);
  var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+(p.versionLabel||'方案'+p.index)];
  allLegs(p).forEach(function(l,i){
-  t.push((i+1)+'. '+l.row.num+' '+l.row.h+' vs '+l.row.a+'：'+l.options.map(function(o){return o.name+' @'+money(o.odds)}).join(' / '));
+  t.push((i+1)+'. '+l.row.num+' '+l.row.h+' vs '+l.row.a+'：'+l.options.map(function(o){return o.name+' @'+(o.odds==null?'待更新':money(o.odds))}).join(' / '));
  });
  t.push(modes[state.mode]+'｜模拟金额'+money(state.budget)+'点｜组合'+sim.list.length+'种');
  t.push(p.prematch?'组合待结算。':('模拟返还'+money(sim.returns)+'点'));
