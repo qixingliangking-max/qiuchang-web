@@ -16,6 +16,7 @@ var liveAutoFollow=true;
 var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
 function personaPlan(index){return (personaNames[index]||'')+'方案'}
+function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(streak>=2?' · '+streak+'连红':'')}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -79,7 +80,7 @@ function plansFor(day,type){
    ].filter(Boolean);
    return versions.map(function(version){
      var record=version.entries.find(function(e){return e.type===type});
-     if(!record||!record.legs||record.legs.length<2||record.legs.length>3)return null;
+     if(!record||!record.legs||record.legs.length<1||record.legs.length>3)return null;
      var legs=record.legs.map(function(leg){
        var opts=leg.picks.map(function(p){return option(leg.row,leg.market,p.key,p.name,type)});
        if(opts.some(function(o){return !o}))return null;
@@ -190,22 +191,22 @@ function planCard(plan){
    var tag=masked||plan.unsettled?'pending':calc.covered?'hit':'miss';
    var showReturn=!masked&&!plan.unsettled;
    var note='';
-   return '<article class="plan variant-shadow"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div>'+note+
+   return '<article class="plan variant-shadow"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div>'+note+
    '<div class="plan-foot"><div class="plan-return"><small>'+(showReturn?'模拟返还 · '+money(state.budget)+'点':'组合赔率 · '+calc.list.length+'种')+'</small><strong>'+
    (showReturn?money(calc.returns)+' <span style="font-size:12px">点</span>':'×'+money(minOdds)+(Math.abs(minOdds-maxOdds)>0.0001?'—'+money(maxOdds):''))+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="1">方案详情 →</button></div></article>';
  }
  if(plan.prematch){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
-   var title=esc(personaPlan(plan.index));
+   var title=esc(personaPlanLive(plan));
    var risk='';
    return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
  if(plan.variant){
    var status=calc.covered?'命中':'未命中',cls=calc.covered?'hit':'miss';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
- return '<article class="plan"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+ return '<article class="plan"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
 }
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
@@ -273,7 +274,7 @@ function renderDialog(){
  var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel='—';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
- $('dialogTitle').textContent=personaPlan(plan.index)+' · '+displayType+(planLegs(plan).length===3?'三场':'双场');
+ $('dialogTitle').textContent=personaPlan(plan.index)+' · '+displayType+(planLegs(plan).length===3?'三场':planLegs(plan).length===2?'双场':'单场');
  $('dialogSub').textContent=readableDay(plan.day);
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=money(sim.grossMin)+'–'+money(sim.grossMax);
