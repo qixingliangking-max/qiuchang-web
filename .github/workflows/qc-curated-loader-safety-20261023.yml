@@ -1,0 +1,132 @@
+name: QC Curated Nonblocking Load and Persona QA
+on:
+  push:
+    branches: [qcda-curated-loader-persona-clean-20261023]
+    paths: [.github/workflows/qc-curated-loader-safety-20261023.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-curated-loader-persona-clean-20261023
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Static checks
+        run: |
+          node --check internal-test/curated-db-direct-20261022.js
+          node --check internal-test/curated-lab-20261019.js
+      - name: Install browser
+        run: |
+          mkdir -p /tmp/qc-browser
+          cd /tmp/qc-browser
+          npm init -y >/dev/null
+          npm i --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Browser checks with stalled and successful data connections
+        env:
+          NODE_PATH: /tmp/qc-browser/node_modules
+        run: |
+          node - <<'NODE'
+          const fs=require('fs'),assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          const html=fs.readFileSync('internal-test/curated-lab-20261019.html','utf8').replace(/<script\\b[^>]*src="[^"]+"[^>]*><\\/script>/g,'');
+          const markets=['direction','htft','goals','score'];
+          function options(type){
+            return type==='direction'?[{label:'胜',odd:2.2}]:
+              type==='htft'?[{label:'胜/胜',odd:4.1}]:
+              type==='goals'?[{label:'2球',odd:3.4},{label:'3球',odd:3.8}]:
+              [{label:'2-1',odd:8.2},{label:'2-0',odd:9.5},{label:'3-1',odd:11.5}];
+          }
+          function legs(type,extra){
+            const market={direction:'had',htft:'hafu',goals:'ttg',score:'crs'}[type];
+            return Array.from({length:extra&&type==='score'?3:2},(_,i)=>({
+              match_num:'周三00'+(i+1),home:'主队'+i,away:'客队'+i,market_kind:market,
+              market,options:options(type),selections:options(type).map(x=>x.label),
+              ft:'2-1',ht:'1-0'
+            }));
+          }
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try{
+              for(const screen of [{name:'mobile',w:390,h:844},{name:'desktop',w:1280,h:900}]){
+                for(const scenario of ['network_hangs','network_ok']){
+                  const p=await browser.newPage({viewport:{width:screen.w,height:screen.h}});
+                  const errors=[];p.on('pageerror',e=>errors.push(String(e)));
+                  await p.clock.install({time:new Date('2026-10-23T00:13:00+08:00')});
+                  await p.setContent(html);
+                  await p.evaluate(({scenario,markets})=>{
+                    window.QC_SUPABASE_URL='https://fixture.invalid';
+                    window.QC_SUPABASE_PUBLISHABLE_KEY='test-key';
+                    window.fetch=async function(url,opts){
+                      if(scenario==='network_hangs'){
+                        return new Promise((resolve,reject)=>{
+                          opts.signal.addEventListener('abort',()=>reject(new Error('fixture timeout')),{once:true});
+                        });
+                      }
+                      const body=JSON.parse(opts.body);
+                      const day=body.p_date||body.p_business_date;
+                      let result;
+                      if(String(url).includes('qc_selection_display_public')){
+                        let groups=day==='2026-10-21'?['baseline','ai_analyst'].flatMap(track=>markets.map(project=>({
+                          track,project,settlement_status:'settled',legs:Array.from({length:2},(_,i)=>{
+                            const market={direction:'had',htft:'hafu',goals:'ttg',score:'crs'}[project];
+                            const opts=project==='direction'?[{label:'胜',odd:2.2}]:
+                              project==='htft'?[{label:'胜/胜',odd:4.1}]:
+                              project==='goals'?[{label:'2球',odd:3.4},{label:'3球',odd:3.8}]:
+                              [{label:'2-1',odd:8.2},{label:'2-0',odd:9.5},{label:'3-1',odd:11.5}];
+                            return {match_num:'周三00'+(i+1),home:'主队'+i,away:'客队'+i,
+                              market_kind:market,options:opts,selections:opts.map(x=>x.label),ft:'2-1',ht:'1-0'};
+                          })
+                        })):[];
+                        result={date:day,groups,batch_status:groups.length?'candidate':'missing'};
+                      }else{
+                        const groups=['2026-10-21','2026-10-22'].includes(day)?markets.map(project=>({
+                          project,settlement_status:'unsettled',
+                          legs:Array.from({length:project==='score'?3:2},(_,i)=>{
+                            const market={direction:'had',htft:'hafu',goals:'ttg',score:'crs'}[project];
+                            const opts=project==='direction'?[{label:'胜',odd:2.2}]:
+                              project==='htft'?[{label:'胜/胜',odd:4.1}]:
+                              project==='goals'?[{label:'2球',odd:3.4},{label:'3球',odd:3.8}]:
+                              [{label:'2-1',odd:8.2},{label:'2-0',odd:9.5},{label:'3-1',odd:11.5}];
+                            return {match_num:'周三00'+(i+1),home:'主队'+i,away:'客队'+i,
+                              market,options:opts};
+                          })
+                        })):[];
+                        result={date:day,groups};
+                      }
+                      return {ok:true,json:async()=>result};
+                    }
+                  },{scenario,markets});
+                  await p.addScriptTag({path:'internal-test/curated-lab-data-20261019.js'});
+                  await p.addScriptTag({path:'internal-test/curated-db-direct-20261022.js'});
+                  await p.addScriptTag({path:'internal-test/curated-lab-20261019.js'});
+                  await p.waitForFunction(()=>!document.getElementById('dateLabel').textContent.includes('加载中'),{timeout:3000});
+                  if(scenario==='network_ok'){
+                    await p.waitForFunction(()=>document.querySelectorAll('#historyRows .hist-row[data-open-date="2026-10-21"]').length===3,{timeout:3000});
+                    const titles=await p.locator('#plans .plan-id').allInnerTexts();
+                    assert.deepEqual(titles,['顾衡','沈策','陆野']);
+                    const hist=await p.locator('#historyRows').innerText();
+                    assert(!/主模型基准版|主模型AI精选版|赛事分析师加选|赛后补核/.test(hist));
+                    const cards=await p.locator('#plans').innerText();
+                    assert(!cards.includes('主模型原始方案尚未'));
+                    await p.locator('#historyRows [data-open-date="2026-10-21"][data-open-index="1"]').first().click();
+                    assert.equal(await p.locator('#overlay').getAttribute('hidden'),null);
+                    await p.locator('#closeDialog').click();
+                  }else{
+                    assert(!((await p.locator('#plans').innerText()).includes('正在读取数据库方案')));
+                    assert(!((await p.locator('#historyRows').innerText()).includes('正在读取历史方案')));
+                  }
+                  assert.equal(errors.length,0,errors.join(';'));
+                  console.log('PASS',screen.name,scenario);
+                  await p.close();
+                }
+              }
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
