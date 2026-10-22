@@ -26,14 +26,15 @@ function actual(m,ft,ht,line){
  if(m==='crs')return f.h+'-'+f.a;
  return null;
 }
-function readAdmin(){
- return window.QC_CURATED_ADMIN_ARCHIVE?.groups||[];
+function readAdmin(day){
+ return (window.QC_CURATED_ADMIN_ARCHIVES?.[day]||window.QC_CURATED_ADMIN_ARCHIVE)?.groups||[];
 }
-function readOdds(code,num){
- var rows=window.QC_CURATED_ADMIN_ODDS||[];
+function readOdds(code,num,day){
+ var rows=window.QC_CURATED_ADMIN_ODDS_BY_DAY?.[day]||window.QC_CURATED_ADMIN_ODDS||[];
  return rows.find(function(x){return x.group_code===code&&x.match_num===num})?.outcomes||{};
 }
-function build(kind,code){
+function build(kind,code,day){
+ day=day||window.QC_CURATED_ADMIN_ARCHIVE?.date||'2026-10-21';
  if(kind==='addon'){
   var x=(window.QC_CURATED_EXTRA?.groups||[]).find(function(v){return v.project===code});
   if(!x)return null;
@@ -44,11 +45,12 @@ function build(kind,code){
      ft:r.ft||null,ht:r.ht||null,hit:typeof r.hit==='boolean'?r.hit:null,options:(l.options||[]).map(function(o){return {name:o.label,odd:price(o.odd)}})};
    })};
  }
- var x=readAdmin().find(function(v){return v.group_code===code});
+ var x=readAdmin(day).find(function(v){return v.group_code===code});
  if(!x)return null;
  return {type:x.project,label:x.track==='baseline'?'基准版':'AI精选版',settled:x.settlement_status==='settled',
+  businessDate:day,backfilled:window.QC_CURATED_ADMIN_ARCHIVES?.[day]?.batch_status==='candidate'&&x.settlement_status==='settled',
   legs:(x.legs||[]).map(function(l){
-   var odds=readOdds(code,l.match_num);
+   var odds=readOdds(code,l.match_num,day);
    return {num:l.match_num,home:l.home,away:l.away,market:l.market_kind,line:l.handicap,
     ft:l.ft||null,ht:l.ht||null,
     options:(l.selections||[]).map(function(name){return {name:name,odd:price(odds[key(l.market_kind,name)])}})};
@@ -116,7 +118,8 @@ function render(){
  var calc=calculate(plan,selectedMode,budget());
  var d={direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'};
  $('dialogTitle').textContent=(d[plan.type]||'精选')+(plan.legs.length===3?'三场':'双场')+' · '+plan.label;
- $('dialogSub').textContent='10月21日 周三 · '+plan.label+' · '+(plan.settled?'赛后回看':'待结算');
+ var parts=String(plan.businessDate||'2026-10-21').split('-');
+ $('dialogSub').textContent=Number(parts[1])+'月'+Number(parts[2])+'日 · '+plan.label+' · '+(plan.backfilled?'赛后补核（赛前未发布）':plan.settled?'赛后回看':'待结算');
  document.querySelectorAll('#modeTabs button').forEach(function(b){var active=b.dataset.mode===selectedMode;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
  var legHtml=plan.legs.map(function(l){
   var known=plan.settled&&parseScore(l.ft)&&parseScore(l.ht);
@@ -141,13 +144,13 @@ function render(){
  }).join('');
  var notes=calc.complete?'所有组合等额分配或按所选策略调整，方便对比不同赔率结构。':
   '部分选项尚无可核验的赛前赔率，仅展示真实选项，不计算对应返还。';
- $('dialogBody').innerHTML='<div class="dialog-tip">'+notes+'</div>'+
+ $('dialogBody').innerHTML='<div class="dialog-tip">'+(plan.backfilled?'原选项在开赛前已有留存，本次仅按官方赛果补核；该批次未于赛前正式发布。 ': '')+notes+'</div>'+
  '<div class="dialog-legs">'+legHtml+'</div>'+summary+
  '<div class="alloc-title">组合分配</div><div class="alloc"><table><thead><tr><th>#</th><th>组合</th><th>赔率</th><th>份额</th><th>理论返还</th><th>'+(plan.settled?'命中':'状态')+'</th></tr></thead><tbody>'+
  tableRows+'</tbody></table></div><div class="disclaimer">赛后回看仅供赛事研究，不代表实际收益；仅供看球讨论。</div>';
 }
-function open(kind,code){
- var plan=build(kind,code);if(!plan||!plan.legs.length)return;
+function open(kind,code,day){
+ var plan=build(kind,code,day);if(!plan||!plan.legs.length)return;
  current=plan;selectedMode='balanced';origin=document.activeElement;
  $('overlay').hidden=false;document.body.style.overflow='hidden';render();$('dialog').focus();
 }
@@ -162,7 +165,7 @@ function copy(){
 }
 document.addEventListener('click',function(e){
  var el=e.target.closest('[data-qc-detail-kind]');
- if(el){e.preventDefault();open(el.dataset.qcDetailKind,el.dataset.qcDetailCode);return;}
+ if(el){e.preventDefault();open(el.dataset.qcDetailKind,el.dataset.qcDetailCode,el.dataset.qcDetailDay);return;}
  if(!current)return;
  if(e.target.closest('#closeDialog')||e.target.closest('#dialogCloseBottom')||(e.target.id==='overlay')){close();return;}
 });
