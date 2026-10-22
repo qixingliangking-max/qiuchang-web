@@ -1,0 +1,91 @@
+name: P3 Single-Team Runtime Staging QA 20261022
+on:
+  push:
+    branches: [ qcda-p3-audit-speed-20261022 ]
+    paths:
+      - ".github/workflows/p3-runtime-client-qa-20261022.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-qa:
+    if: github.ref == 'refs/heads/qcda-p3-audit-speed-20261022'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-p3-audit-speed-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install isolated Playwright Chromium
+        run: |
+          mkdir -p /tmp/qcda-p3qa
+          cd /tmp/qcda-p3qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify session gate, per-team fetch, cache and 3-card render
+        env:
+          NODE_PATH: /tmp/qcda-p3qa/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright'),fs=require('fs'),assert=require('assert/strict');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try{
+              const p=await browser.newPage();
+              await p.goto('about:blank');
+              const content=fs.readFileSync('league-p3-public.js','utf8');
+              await p.addInitScript(()=>{});
+              await p.evaluate(()=>{
+                window.__qa={rpcCount:0,staticFetchCount:0,hasSession:true};
+                window.fetch=()=>{window.__qa.staticFetchCount++;throw Error('bulk static fetch forbidden')};
+                window.qcSupabase={
+                  auth:{getSession:async()=>({data:{session:window.__qa.hasSession?{access_token:'synthetic'}:null},error:null})},
+                  rpc:async(name,args)=>{
+                    if(name!=='get_league_team_p3')throw Error('unexpected rpc '+name);
+                    if(args.p_league_code!=='UEFA_UCL'||args.p_season!=='2026/27')throw Error('args mismatch');
+                    window.__qa.rpcCount++;
+                    return {data:{ok:true,status:'P3_VALID',identity:{season:args.p_season,team_name:args.p_team_query},
+                      C_lineup_structure:{squad_matches:3,formation_samples:[{formation:'4-3-3',matches:3,share_pct:100}]},
+                      A_player_base:[{player_name:'测试门将',primary_position:'GK',secondary_positions:[],starts:3,minutes:270,importance_score:88}],
+                      B_player_performance:[],D_squad_depth:[]},error:null};
+                  }
+                };
+              });
+              await p.addScriptTag({content});
+              const v=await p.evaluate(async()=>{
+                const make=(name)=>{const el=document.createElement('div');el.dataset.leagueCode='UEFA_UCL';el.dataset.season='2026/27';el.dataset.teamName=name;document.body.append(el);return el};
+                const a=make('皇家马德里');await window.QCP3.load(a);
+                const validA=a.innerHTML.includes('测试门将')&&a.innerHTML.includes('皇家马德里')&&a.dataset.loaded==='1';
+                const a2=make('皇家马德里');await window.QCP3.load(a2);
+                const shared=window.__qa.rpcCount===1&&a2.dataset.loaded==='1';
+                const b=make('阿森纳');await window.QCP3.load(b);
+                const twoTeams=window.__qa.rpcCount===2&&b.innerHTML.includes('阿森纳');
+                window.__qa.hasSession=false;
+                const blocked=make('曼城');await window.QCP3.load(blocked);
+                return {validA,shared,twoTeams,noStatic:window.__qa.staticFetchCount===0,anonymousBlocked:window.__qa.rpcCount===2&&!blocked.dataset.loaded&&blocked.innerHTML.includes('加载失败'),calls:window.__qa.rpcCount};
+              });
+              console.log('P3 isolated real Chromium checks',v);
+              assert(v.validA&&v.shared&&v.twoTeams&&v.noStatic&&v.anonymousBlocked,'P3_RUNTIME_QA_FAILED');
+            }finally{await browser.close();}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Live guest smoke test (read-only, no credentials)
+        env:
+          NODE_PATH: /tmp/qcda-p3qa/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright'),assert=require('assert/strict');
+          (async()=>{
+            const b=await chromium.launch({headless:true});
+            try{
+              const p=await b.newPage();
+              const nav=await p.goto('https://qcda.cn/league.html',{waitUntil:'domcontentloaded',timeout:30000});
+              console.log('Guest league page HTTP',nav?.status(),'title:',await p.title());
+              assert.equal(nav?.status(),200);
+            }finally{await b.close()}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
