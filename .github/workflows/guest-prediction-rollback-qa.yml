@@ -1,0 +1,56 @@
+name: Guest prediction gate rollback QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/guest-prediction-rollback-qa.yml'
+permissions:
+  contents: read
+jobs:
+  guest-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          mkdir -p /tmp/qc-guest-lock
+          cd /tmp/qc-guest-lock
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify anonymous prediction is locked and yesterday is public
+        shell: bash
+        run: |
+          cat > /tmp/qc-guest-lock/check.cjs <<'JS'
+          const {chromium,devices}=require('playwright');
+          (async()=>{
+            const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+            try{
+              for(const [name,device] of [['desktop',{viewport:{width:1200,height:850}}],['mobile',devices['iPhone 13']]]){
+                const context=await b.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                const page=await context.newPage();
+                const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+                await page.goto('https://qcda.cn/?rollback_guest_gate=20261022v1',{waitUntil:'domcontentloaded',timeout:45000});
+                const yesterday=page.locator('#jcYesterdayCards');
+                await page.waitForFunction(()=>{
+                  const el=document.querySelector('#jcLiveCards');
+                  return el && /登录后查看|订阅后查看/.test(el.textContent||'');
+                },{timeout:30000});
+                await page.waitForTimeout(1800);
+                const cards=page.locator('#jcLiveCards');
+                if(await cards.locator('.jc-overview-table').count()) throw Error(name+' GUEST_TODAY_TABLE_VISIBLE');
+                if(!/登录后查看|订阅后查看/.test(await cards.innerText()))throw Error(name+' GATE_MISSING');
+                await page.waitForFunction(()=>document.querySelectorAll('#jcYesterdayCards tbody tr.jc-overview-row').length>=13,{timeout:30000});
+                const ycount=await yesterday.locator('tbody tr.jc-overview-row').count();
+                if(ycount!==13)throw Error(name+' YESTERDAY_COUNT='+ycount);
+                console.log(JSON.stringify({device:name,locked:true,publicYesterdayRows:ycount,errors}));
+                await context.close();
+              }
+            }finally{await b.close()}
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+          cd /tmp/qc-guest-lock && node check.cjs
