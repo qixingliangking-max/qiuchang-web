@@ -1,0 +1,111 @@
+name: Curated Admin Date and Retrospective QA 20261022
+on:
+  push:
+    branches: [ qcda-selection-archive-sync-20261022 ]
+    paths:
+      - ".github/workflows/curated-admin-day-qa-20261022.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/qcda-selection-archive-sync-20261022'
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qcda-selection-archive-sync-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax safety
+        run: |
+          node --check internal-test/curated-submission-admin-20261021.js
+          node --check internal-test/curated-shared-details-20261021.js
+      - name: Install isolated chromium
+        run: |
+          mkdir -p /tmp/qcda-selectionqa
+          cd /tmp/qcda-selectionqa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test admin missing day, submitted day, archived results and guest isolation
+        env:
+          NODE_PATH: /tmp/qcda-selectionqa/node_modules
+        run: |
+          node - <<'NODE'
+          const {chromium}=require('playwright'), assert=require('node:assert/strict');
+          const path=require('node:path');
+          const src=path.resolve('internal-test/curated-submission-admin-20261021.js');
+          const makeGroups=(settled)=>['baseline','ai_analyst'].flatMap((track)=>['direction','htft','goals','score'].map(project=>({
+            track,project,group_code:(track==='baseline'?'B':'AI')+'-'+project.toUpperCase(),
+            settlement_status:settled?'settled':'unsettled',group_hit:settled,legs:[
+            {match_num:'周三001',home:'测试主队',away:'测试客队',market_kind:'had',selections:['胜']},
+            {match_num:'周三002',home:'测试主队2',away:'测试客队2',market_kind:'had',selections:['负']}]})));
+          (async()=>{
+            const browser=await chromium.launch();
+            try{
+              async function runScenario(hasToday,session){
+                const p=await browser.newPage();
+                await p.setContent('<div id="dateLabel" data-business-date="2026-10-22">10月22日</div><div id="tabs"><button class="active" data-type="direction">方向</button></div><div id="plans">自动精选</div><div id="history"></div><div id="infoBand"></div><div id="dailyTitle"></div><div id="dailyMeta"></div><input id="budget"><div id="modeTabs"></div>');
+                await p.evaluate(({hasToday,session})=>{
+                  window.__calls=[];
+                  const groups=(settled)=>['baseline','ai_analyst'].flatMap(track=>['direction','htft','goals','score'].map(project=>({
+                    track,project,group_code:(track==='baseline'?'B':'AI')+'-'+project.toUpperCase(),
+                    settlement_status:settled?'settled':'unsettled',group_hit:settled,legs:[
+                      {match_num:'周三001',home:'测试主队',away:'测试客队',market_kind:'had',selections:['胜']},
+                      {match_num:'周三002',home:'测试主队2',away:'测试客队2',market_kind:'had',selections:['负']}
+                    ]
+                  })));
+                  window.QC_CURATED_EXTRA={groups:[]};
+                  window.qcSupabase={
+                    auth:{getSession:async()=>({data:{session:session?{access_token:'fake'}:null}}),onAuthStateChange:()=>{}},
+                    rpc:async(name,args)=>{
+                      window.__calls.push(name+'|'+args.p_business_date);
+                      if(name==='qc_curated_admin_prematch_odds')return {data:[]};
+                      if(name!=='qc_curated_admin_preview')throw Error('unexpected RPC '+name);
+                      if(args.p_business_date==='2026-10-21')return {data:{date:'2026-10-21',batch_status:'candidate',groups:groups(true)}};
+                      return {data:hasToday?{date:'2026-10-22',batch_status:'published',groups:groups(false)}:{date:'2026-10-22',batch_status:'missing',groups:[]}};
+                    }
+                  };
+                },{hasToday,session});
+                await p.addScriptTag({path:src});
+                if(session){
+                  await p.waitForFunction(()=>!!window.QC_CURATED_ADMIN_ARCHIVES?.['2026-10-21'] && !!window.QC_CURATED_ADMIN_ARCHIVES?.['2026-10-22'],null,{timeout:6000});
+                  await p.waitForTimeout(130);
+                }else await p.waitForTimeout(130);
+                const out=await p.evaluate(()=>{
+                  const get=id=>document.getElementById(id);
+                  return {guestHidden:get('qc-submitted-archive').hidden,
+                    autoShown:!get('plans').hidden,
+                    todayShown:!get('qc-submitted-archive').hidden,
+                    todayCardCount:get('qc-submitted-archive').querySelectorAll('[data-qc-detail-kind="admin"]').length,
+                    hasRetrospective:get('history').textContent.includes('赛后补核·命中'),
+                    historyDetailDay:get('history').querySelector('[data-qc-detail-kind="admin"]')?.dataset.qcDetailDay,
+                    warning:get('infoBand').textContent,
+                    calls:window.__calls};
+                });
+                if(session){
+                  assert(out.hasRetrospective,'historic settled results must be visible');
+                  assert.equal(out.historyDetailDay,'2026-10-21');
+                  if(hasToday){assert(out.todayShown&&!out.autoShown&&out.todayCardCount===2);}
+                  else {assert(out.autoShown&&!out.todayShown&&out.warning.includes('尚未进入网站生产提交批次'));}
+                } else {assert(out.guestHidden&&out.autoShown&&out.calls.length===0);}
+                if(session&&hasToday){
+                  await p.evaluate(()=>{
+                    const el=document.getElementById('dateLabel');
+                    el.dataset.businessDate='2026-10-21';el.textContent='10月21日';
+                  });
+                  await p.waitForFunction(()=>document.getElementById('qc-submitted-archive').textContent.includes('赛后补核·命中'));
+                  assert.equal(await p.locator('#qc-submitted-archive [data-qc-detail-day="2026-10-21"]').count(),2);
+                }
+                await p.close();
+                return out;
+              }
+              console.log('missing live submission',await runScenario(false,true));
+              console.log('published live submission',await runScenario(true,true));
+              console.log('guest',await runScenario(false,false));
+            }finally{await browser.close();}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
