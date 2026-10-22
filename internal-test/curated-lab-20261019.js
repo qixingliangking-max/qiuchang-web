@@ -15,6 +15,7 @@ var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
 var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
+function personaPlan(index){return (personaNames[index]||'')+'方案'}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
 function money(v){var n=Number(v);if(!Number.isFinite(n))return '—';return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function num(v){var n=Number(v);return Number.isFinite(n)?n:null}
@@ -72,9 +73,9 @@ function plansFor(day,type){
  var pack=db.selectedPlans&&db.selectedPlans[day];
  if(pack){
    var versions=[
-     {entries:pack.entries||[],label:'顾衡',id:'original',shadow:false,index:1},
-     pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:'沈策',id:'shadow-v1',shadow:true,index:2},
-     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野',id:'analyst',shadow:true,index:3}
+     {entries:pack.entries||[],label:'顾衡方案',id:'original',shadow:false,index:1},
+     pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:'沈策方案',id:'shadow-v1',shadow:true,index:2},
+     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野方案',id:'analyst',shadow:true,index:3}
    ].filter(Boolean);
    return versions.map(function(version){
      var record=version.entries.find(function(e){return e.type===type});
@@ -161,12 +162,8 @@ function idNum(row){return String(row.num||'').slice(-3)}
 function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'}
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
- var pack=db.selectedPlans&&db.selectedPlans[state.day];
- var auto=pack&&pack.rule==='QCDA_AUTO_CURATED_FROZEN_V1';
- var plans=pack?plansFor(state.day,state.type):[];
- var complete=plans.length>0&&plans.every(function(p){return !p.prematch});
- var missing=pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1'&&pack.sourceMeta&&pack.sourceMeta.mainStatus==='missing';
- $('infoBand').textContent=complete?'本期方案已结算 · 点击方案查看详情。':'点击方案查看详情。';
+ var plans=plansFor(state.day,state.type);
+ $('infoBand').textContent=plans.length?'点击方案查看详情。':'';
 }
 
 function renderDate(){
@@ -181,7 +178,7 @@ function miniLeg(leg){
  var row=leg.row,pending=!score(row.ft)||!score(row.ht);
  var html='<div class="leg"><div class="leg-top"><b>'+esc(row.num)+'　'+esc(row.h)+' <span style="color:#a5adba;font-weight:500">vs</span> '+esc(row.a)+'</b><em>'+esc(row.league||'')+'</em></div>';
  html+='<div class="chips">'+leg.options.map(function(o){return '<span class="chip '+(pending?'':o.hit?'ok':'no')+'">'+esc(o.name)+' <i>×'+money(o.odds)+'</i>'+(pending?'':o.hit?' ✓':'')+'</span>'}).join('')+'</div>';
- var pendingLabel=row.blindMasked?'赛果已遮挡':row.blindPending?'比赛中断 · 待结算':'官方赛前赔率 · 待赛';
+ var pendingLabel='赛前赔率';
  html+='<div class="leg-result">'+(pending?pendingLabel:'赛果 '+esc(parseScoreText(row))+' <span style="color:#97a4b4">｜</span> 半场 '+esc(String(row.ht||'—').replace(':','-')))+'</div></div>';
  return html;
 }
@@ -194,39 +191,32 @@ function planCard(plan){
    var masked=!state.reveal,status=masked?'赛果遮挡':plan.unsettled?'待结算':calc.covered?'命中':'未命中';
    var tag=masked||plan.unsettled?'pending':calc.covered?'hit':'miss';
    var showReturn=!masked&&!plan.unsettled;
-   var note='<p class="version-note">历史赛果遮挡回放（非当日真实发布）；先冻结方案，后读取比赛结果。</p>';
-   return '<article class="plan variant-shadow"><div class="plan-head"><span class="plan-id">'+esc(plan.versionLabel)+'</span><span class="flag '+tag+'">'+status+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div>'+note+
+   var note='';
+   return '<article class="plan variant-shadow"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div>'+note+
    '<div class="plan-foot"><div class="plan-return"><small>'+(showReturn?'模拟返还 · '+money(state.budget)+'点':'组合赔率 · '+calc.list.length+'种')+'</small><strong>'+
    (showReturn?money(calc.returns)+' <span style="font-size:12px">点</span>':'×'+money(minOdds)+(Math.abs(minOdds-maxOdds)>0.0001?'—'+money(maxOdds):''))+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="1">方案详情 →</button></div></article>';
  }
  if(plan.prematch){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
-   var title=esc(plan.versionLabel||'精选方案');
+   var title=esc(personaPlan(plan.index));
    var risk='';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span><span class="flag pending">待赛'+esc(risk)+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
  if(plan.variant){
    var status=calc.covered?'命中':'未命中',cls=calc.covered?'hit':'miss';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(plan.versionLabel||'原版方案')+'</span><span class="flag '+cls+'">'+status+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>赛后模拟返还 · 投入'+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
  }
- return '<article class="plan"><div class="plan-head"><span class="plan-id">方案 '+String(plan.index).padStart(2,'0')+'</span><span class="flag '+(calc.covered?'hit':'miss')+'">'+rowStatus(calc)+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
-}
-function pendingPersonaCard(index){
- return '<article class="plan variant-'+(index===1?'original':'shadow')+'" data-qc-missing-main="'+index+'">'+
- '<div class="plan-head"><span class="plan-id">'+esc(personaNames[index])+'</span></div>'+
- '<div class="legs"><div class="leg"><div class="leg-result">暂无方案</div></div></div></article>';
+ return '<article class="plan"><div class="plan-head"><span class="plan-id">'+esc(personaPlan(plan.index))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'">方案详情 →</button></div></article>';
 }
 function renderPlans(){
- var plans=plansFor(state.day,state.type),pack=db.selectedPlans&&db.selectedPlans[state.day];
+ var plans=plansFor(state.day,state.type);
  $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案';
- if((pack&&pack.rule==='QCDA_DB_DIRECT_VIEW_V1')||(!pack&&state.day>='2026-10-21')){
-  $('dailyMeta').textContent='';
-  $('plans').innerHTML=[1,2,3].map(function(i){var p=plans.find(function(x){return x.index===i});return p?planCard(p):pendingPersonaCard(i)}).join('');
- }else{
-  $('dailyMeta').textContent='共'+plans.length+'组';
-  $('plans').innerHTML=plans.map(planCard).join('')||'<div class="empty">当日暂无该类组合</div>';
- }
+ $('dailyMeta').textContent='';
+ // Only genuine plan records: do not manufacture blank/missing-plan cards.
+ $('plans').innerHTML=plans.map(planCard).join('');
+ $('plans').style.display=plans.length?'':'none';
+ var band=$('infoBand');if(band)band.style.display=plans.length?'':'none';
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
@@ -237,7 +227,7 @@ function renderHistory(){
   plansFor(day,type).forEach(function(p){
     var planSet=db.selectedPlans[day],res=allocation(p,state.budget,state.mode),
       pending=p.prematch||p.unsettled,
-      name=personaNames[p.index]||p.versionLabel||'历史方案',
+      name=personaPlan(p.index),
       status=pending?'待结算':res.covered?'命中':'未中',
       amount=pending?'—':money(res.returns),
       legs=planLegs(p),teams=legs.map(function(l){return idNum(l.row)+' '+l.row.h}).join(' / '),
@@ -249,7 +239,9 @@ function renderHistory(){
       '<span class="hist-status '+(!pending&&res.covered?'hit':pending?'pending':'')+'">'+status+'</span></button>');
    });
  });
- host.innerHTML=rows.join('')||'<div class="empty">10月19日起暂无可回看的真实方案。</div>';
+ host.innerHTML=rows.join('');
+ if(host.parentElement)host.parentElement.style.display=rows.length?'':'none';
+ if(heading)heading.style.display=rows.length?'':'none';
 }
 function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
 function calendar(){
@@ -283,8 +275,8 @@ function renderDialog(){
  var q=state.open;if(!q)return;var plan=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!plan)return;
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel=plan.blind?plan.unsettled?'待结算':'遮挡':'待赛';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
- $('dialogTitle').textContent=displayType+(planLegs(plan).length===3?'三场':'双场')+' · 方案'+String(plan.index).padStart(2,'0');
- $('dialogSub').textContent=readableDay(plan.day)+(pending?' · '+(plan.versionLabel||'赛前精选')+' · 官方赛前赔率':plan.variant?' · '+(plan.versionLabel||'赛前精选')+' · 赛后模拟结算':' · 历史模拟');
+ $('dialogTitle').textContent=personaPlan(plan.index)+' · '+displayType+(planLegs(plan).length===3?'三场':'双场');
+ $('dialogSub').textContent=readableDay(plan.day);
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=money(sim.grossMin)+'–'+money(sim.grossMax);
  var summary='<div class="summary"><div class="summary-item"><small>模拟金额</small><strong>'+money(state.budget)+'点</strong></div><div class="summary-item"><small>组合选项</small><strong>'+sim.list.length+'种</strong></div><div class="summary-item"><small>'+(pending?'情景返还范围':'模拟返还')+'</small><strong>'+(pending?range:money(sim.returns)+'点')+'</strong></div></div>';
@@ -304,7 +296,7 @@ function copyText(){
  if(!state.open)return;
  var q=state.open,p=plansFor(q.day,q.type).find(function(p){return p.index===q.index});if(!p)return;
  var sim=allocation(p,state.budget,state.mode),pending=!!p.prematch;
- var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+(p.versionLabel||'方案'+p.index)];
+ var t=['球场档案｜精选方案',p.day+' '+types[p.type].label+' '+personaPlan(p.index)];
  planLegs(p).forEach(function(l,i){
   t.push((i+1)+'. '+l.row.num+' '+l.row.h+' vs '+l.row.a+'：'+l.options.map(function(o){return o.name+' @'+money(o.odds)}).join(' / '));
  });
