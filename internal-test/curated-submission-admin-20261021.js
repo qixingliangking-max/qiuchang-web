@@ -48,10 +48,10 @@ function consistentCard(label,legs,tag,variant,addon,format,detailKind,detailCod
 function card(row,source,day){
  return consistentCard(name(row.track),row.legs,hitStatus(row,source?.batch_status),row.track==='baseline'?'variant-original':'variant-shadow',false,'双场方案','admin',row.group_code,day);
 }
-function addonCard(row){
+function addonCard(row,day){
  if(!row)return '';
  var title='分析师加选 · '+({direction:'胜平负',htft:'半全场',goals:'总进球',score:'比分'}[row.project]||row.format);
- return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format,'addon',row.project);
+ return consistentCard(title,row.legs,hitStatus(row),'variant-shadow',true,row.format,'addon',row.project,day);
 }
 function draw(){
  if(!archive)return;
@@ -62,7 +62,7 @@ function draw(){
  if(currently){
   var sub=active.groups.filter(function(g){return g.project===project()});
   var addon=(window.QC_CURATED_EXTRA?.date===day ? window.QC_CURATED_EXTRA.groups||[] : []).find(function(g){return g.project===project()});
-  root.innerHTML='<div class="panels">'+sub.map(function(g){return card(g,active,day)}).join('')+addonCard(addon)+'</div>';
+  root.innerHTML='<div class="panels">'+sub.map(function(g){return card(g,active,day)}).join('')+addonCard(addon,day)+'</div>';
   var t=document.getElementById('dailyTitle'),meta=document.getElementById('dailyMeta');
   if(t)t.textContent=Number(day.slice(5,7))+'月'+Number(day.slice(8,10))+'日 · '+({direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[project()])+'精选测试';
   if(meta)meta.textContent=(sub.length+(addon?1:0))+'组方案';
@@ -88,15 +88,8 @@ function draw(){
     '<span class="hist-amount">'+amount+'</span>'+
     '<span class="hist-status">'+esc(hitStatus(g,archive.batch_status))+'</span></button>';
   }).join('');
-  var extra=(window.QC_CURATED_EXTRA?.date===targetDay ? window.QC_CURATED_EXTRA.groups||[] : []).find(function(g){return g.project===project()});
-  if(extra){
-   var teams=(extra.legs||[]).map(function(l){return esc(l.match_num+' '+l.home)}).join(' / ');
-   rows+='<button type="button" class="hist-row" data-qc-submitted-row="1" data-qc-detail-kind="addon" data-qc-detail-code="'+esc(extra.project)+'">'+
-    '<span class="hist-day">10/21</span>'+
-    '<span class="hist-leg"><b>'+teams+'</b><small>分析师加选 · '+esc(extra.format)+'</small></span>'+
-    '<span class="hist-amount">—</span>'+
-    '<span class="hist-status">'+esc(extra.settlement_status==='settled'?(extra.group_hit?'命中':'未中'):'待结算')+'</span></button>';
-  }
+  // Public, confirmed analyst add-ons are rendered in history by the
+  // dedicated add-ons component, independent of admin authentication.
   if(rows)history.insertAdjacentHTML('afterbegin',rows);
  }
 }
