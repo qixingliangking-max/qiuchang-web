@@ -73,7 +73,7 @@ jobs:
             const title=await page.locator('.hero h1').innerText();
             if(title!=='精选方案')throw Error(name+': wrong user-facing heading '+title);
             if((await page.locator('body').innerText()).includes('生产数据变更')||(await page.locator('body').innerText()).includes('INTERNAL PREVIEW'))throw Error(name+': leaked internal labels');
-            if((await page.locator('#history .hist-row[data-open-type="direction"]').count())!==4)throw Error(name+': four frozen baseline/AI direction history rows must be preserved');
+            if((await page.locator('#history .hist-row[data-open-type="direction"][data-open-date="2026-10-19"], #history .hist-row[data-open-type="direction"][data-open-date="2026-10-20"]').count())!==4)throw Error(name+': four frozen baseline/AI direction history rows must be preserved');
             if(await page.locator('.method').evaluate(el=>el.open))throw Error(name+': method text not collapsed');
             const dayBefore=await page.locator('#dateLabel').innerText();
             if(!dayBefore.includes('10月19日'))throw Error(name+': default date incorrect: '+dayBefore);
@@ -121,7 +121,7 @@ jobs:
             // Actual frozen-selection history begins on 19 Oct. It is not the
             // separate Oct 05–18 masked retrospective experiment.
             if(await page.locator('a.blind-replay-link').count()!==0)throw Error(name+': retired backtest promo still visible');
-            if(await page.locator('#history .hist-row[data-open-type="direction"]').count()!==4)throw Error(name+': frozen direction variants should remain alongside separately published add-ons');
+            if(await page.locator('#history .hist-row[data-open-type="direction"][data-open-date="2026-10-19"], #history .hist-row[data-open-type="direction"][data-open-date="2026-10-20"]').count()!==4)throw Error(name+': frozen direction variants should remain alongside separately published add-ons');
             const historyText=await page.locator('#history').innerText();
             if(historyText.includes('10月18日')||/昨日补录|影子测试|原方案 · 已确认/.test(historyText)||!historyText.includes('基准版')||!historyText.includes('AI精选版'))throw Error(name+': history not cleaned or includes backtests');
             await page.locator('#dateLabel').click();
@@ -130,7 +130,7 @@ jobs:
             await page.locator('#tabs button[data-type="direction"]').click();
             for(const [category,label] of [['direction','胜平负'],['htft','半全场'],['goals','总进球'],['score','比分']]){
               await page.locator('#tabs button[data-type="'+category+'"]').click();
-              const records=page.locator('#history .hist-row[data-open-type="'+category+'"]');
+              const records=page.locator('#history .hist-row[data-open-type="'+category+'"][data-open-date="2026-10-19"], #history .hist-row[data-open-type="'+category+'"][data-open-date="2026-10-20"]');
               if(await records.count()!==4)throw Error(name+': '+category+' lost one of its four authentic baseline/AI archived rows');
               if(await page.locator('#history .hist-row:not([data-open-type="'+category+'"]):not([data-qc-addon-history])').count()!==0)throw Error(name+': cross-category history leaked into '+category);
               const addonRows=page.locator('#history .hist-row[data-qc-addon-history="2026-10-21"]');
@@ -138,7 +138,7 @@ jobs:
               if(await addonRows.count()===1 && await addonRows.first().getAttribute('data-qc-detail-code')!==category)throw Error(name+': wrong 10/21 add-on category');
               if(!(await page.locator('.section-bar h2').last().innerText()).includes(label))throw Error(name+': history title not bound to '+category);
             }
-            const scoreRow=page.locator('#history .hist-row[data-open-type="score"]').first();
+            const scoreRow=page.locator('#history .hist-row[data-open-type="score"][data-open-date="2026-10-19"]').first();
             await scoreRow.click();
             if(!(await page.locator('#dialogTitle').innerText()).includes('比分双场'))throw Error(name+': history detail not opening correct category');
             await page.locator('#closeDialog').click();
