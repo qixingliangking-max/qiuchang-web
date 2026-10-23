@@ -22,7 +22,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-92630.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-164734.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "68145ab9-c5ef-4b18-a79a-4ba5dfdb0b7c",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 200,
+            "s-1sd": 500,
+            "s-1sh": 60,
+            "s00s00": 11,
+            "s00s01": 11,
+            "s00s02": 23,
+            "s00s03": 75,
+            "s00s04": 250,
+            "s00s05": 700,
+            "s01s00": 6.25,
+            "s01s01": 6,
+            "s01s02": 12,
+            "s01s03": 50,
+            "s01s04": 175,
+            "s01s05": 500,
+            "s02s00": 7.25,
+            "s02s01": 6.7,
+            "s02s02": 14,
+            "s02s03": 50,
+            "s02s04": 200,
+            "s02s05": 600,
+            "s03s00": 12.5,
+            "s03s01": 13,
+            "s03s02": 25,
+            "s03s03": 75,
+            "s04s00": 30,
+            "s04s01": 30,
+            "s04s02": 75,
+            "s05s00": 90,
+            "s05s01": 90,
+            "s05s02": 200
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68145ab9-c5ef-4b18-a79a-4ba5dfdb0b7c",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.4,
+            "d": 3.42,
+            "h": 1.64
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68145ab9-c5ef-4b18-a79a-4ba5dfdb0b7c",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 7.5,
+            "ad": 15,
+            "ah": 23,
+            "da": 9,
+            "dd": 5.25,
+            "dh": 4.4,
+            "ha": 32,
+            "hd": 15,
+            "hh": 2.6
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68145ab9-c5ef-4b18-a79a-4ba5dfdb0b7c",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.98,
+            "d": 3.32,
+            "h": 3.1
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68145ab9-c5ef-4b18-a79a-4ba5dfdb0b7c",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 11,
+            "s1": 4.5,
+            "s2": 3.2,
+            "s3": 3.5,
+            "s4": 6,
+            "s5": 11,
+            "s6": 19,
+            "s7": 30
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
@@ -43,7 +145,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-133895.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-133898.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 200,
+            "s-1sd": 500,
+            "s-1sh": 100,
+            "s00s00": 9,
+            "s00s01": 9,
+            "s00s02": 16,
+            "s00s03": 50,
+            "s00s04": 175,
+            "s00s05": 500,
+            "s01s00": 6,
+            "s01s01": 5.75,
+            "s01s02": 10,
+            "s01s03": 29,
+            "s01s04": 100,
+            "s01s05": 500,
+            "s02s00": 8.5,
+            "s02s01": 7,
+            "s02s02": 14,
+            "s02s03": 48,
+            "s02s04": 175,
+            "s02s05": 500,
+            "s03s00": 17,
+            "s03s01": 16,
+            "s03s02": 30,
+            "s03s03": 90,
+            "s04s00": 50,
+            "s04s01": 50,
+            "s04s02": 90,
+            "s05s00": 175,
+            "s05s01": 175,
+            "s05s02": 300
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.38,
+            "d": 3.05,
+            "h": 1.98
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 5.7,
+            "ad": 14,
+            "ah": 24,
+            "da": 7.25,
+            "dd": 4.7,
+            "dh": 4.9,
+            "ha": 32,
+            "hd": 14,
+            "hh": 3.25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.62,
+            "d": 3.5,
+            "h": 4.42
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c76694f6-7f84-4995-93a3-3bbd9bcccaa8",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 9,
+            "s1": 4.1,
+            "s2": 3.1,
+            "s3": 3.6,
+            "s4": 6.5,
+            "s5": 13,
+            "s6": 24,
+            "s7": 40
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "a105d508-2112-4b06-977c-42cfa6955ebf",
@@ -64,7 +268,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-4688.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-194011.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "a105d508-2112-4b06-977c-42cfa6955ebf",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 120,
+            "s-1sd": 450,
+            "s-1sh": 100,
+            "s00s00": 10,
+            "s00s01": 8,
+            "s00s02": 13.5,
+            "s00s03": 32,
+            "s00s04": 100,
+            "s00s05": 350,
+            "s01s00": 7,
+            "s01s01": 5.75,
+            "s01s02": 8.5,
+            "s01s03": 23,
+            "s01s04": 75,
+            "s01s05": 250,
+            "s02s00": 11,
+            "s02s01": 7.75,
+            "s02s02": 12.5,
+            "s02s03": 32,
+            "s02s04": 100,
+            "s02s05": 350,
+            "s03s00": 23,
+            "s03s01": 18,
+            "s03s02": 30,
+            "s03s03": 70,
+            "s04s00": 70,
+            "s04s01": 50,
+            "s04s02": 90,
+            "s05s00": 200,
+            "s05s01": 175,
+            "s05s02": 250
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a105d508-2112-4b06-977c-42cfa6955ebf",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.72,
+            "d": 3.12,
+            "h": 2.27
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a105d508-2112-4b06-977c-42cfa6955ebf",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.6,
+            "ad": 14.5,
+            "ah": 25,
+            "da": 6.25,
+            "dd": 4.8,
+            "dh": 5.3,
+            "ha": 28,
+            "hd": 14.5,
+            "hh": 3.75
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a105d508-2112-4b06-977c-42cfa6955ebf",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.48,
+            "d": 3.8,
+            "h": 5.25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a105d508-2112-4b06-977c-42cfa6955ebf",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 10,
+            "s1": 4.15,
+            "s2": 3.2,
+            "s3": 3.6,
+            "s4": 5.95,
+            "s5": 12,
+            "s6": 23,
+            "s7": 35
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
@@ -85,7 +391,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-4397.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8699.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 70,
+            "s-1sd": 300,
+            "s-1sh": 60,
+            "s00s00": 14,
+            "s00s01": 10,
+            "s00s02": 14.5,
+            "s00s03": 28,
+            "s00s04": 80,
+            "s00s05": 250,
+            "s01s00": 8.75,
+            "s01s01": 6.6,
+            "s01s02": 8.25,
+            "s01s03": 19,
+            "s01s04": 50,
+            "s01s05": 175,
+            "s02s00": 12.5,
+            "s02s01": 7.5,
+            "s02s02": 11,
+            "s02s03": 24,
+            "s02s04": 70,
+            "s02s05": 200,
+            "s03s00": 22,
+            "s03s01": 16,
+            "s03s02": 22,
+            "s03s03": 45,
+            "s04s00": 60,
+            "s04s01": 40,
+            "s04s02": 65,
+            "s05s00": 200,
+            "s05s01": 120,
+            "s05s02": 175
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.56,
+            "d": 3.4,
+            "h": 2.25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.25,
+            "ad": 14,
+            "ah": 22,
+            "da": 6.25,
+            "dd": 5.8,
+            "dh": 5.6,
+            "ha": 25,
+            "hd": 14,
+            "hh": 3.6
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.48,
+            "d": 4,
+            "h": 4.9
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a7f9a3d7-b24c-41f1-9344-bdaeee82c3d5",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.5,
+            "s2": 3.7,
+            "s3": 3.4,
+            "s4": 5,
+            "s5": 8,
+            "s6": 15,
+            "s7": 22
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
@@ -106,7 +514,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-6230.png",
       "_awayLogoUrl": "assets/team-logos/espn-soccer-11143.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 80,
+            "s-1sd": 150,
+            "s-1sh": 75,
+            "s00s00": 12,
+            "s00s01": 9,
+            "s00s02": 13.5,
+            "s00s03": 28,
+            "s00s04": 75,
+            "s00s05": 200,
+            "s01s00": 8.75,
+            "s01s01": 6.2,
+            "s01s02": 8.55,
+            "s01s03": 19,
+            "s01s04": 50,
+            "s01s05": 150,
+            "s02s00": 12.5,
+            "s02s01": 8,
+            "s02s02": 11,
+            "s02s03": 24,
+            "s02s04": 70,
+            "s02s05": 250,
+            "s03s00": 25,
+            "s03s01": 18,
+            "s03s02": 23,
+            "s03s03": 50,
+            "s04s00": 75,
+            "s04s01": 45,
+            "s04s02": 65,
+            "s05s00": 200,
+            "s05s01": 150,
+            "s05s02": 200
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.5,
+            "d": 3.2,
+            "h": 2.4
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.2,
+            "ad": 13.5,
+            "ah": 23,
+            "da": 5.9,
+            "dd": 5.4,
+            "dh": 5.55,
+            "ha": 25,
+            "hd": 13.5,
+            "hh": 4
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.43,
+            "d": 4.05,
+            "h": 5.45
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "69ddd7ff-b142-4845-9760-ddd44327d24b",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 12,
+            "s1": 5,
+            "s2": 3.55,
+            "s3": 3.65,
+            "s4": 5.15,
+            "s5": 9.35,
+            "s6": 15,
+            "s7": 21
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
@@ -127,7 +637,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-10252.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8456.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 21,
+            "s-1sd": 200,
+            "s-1sh": 90,
+            "s00s00": 21,
+            "s00s01": 9.5,
+            "s00s02": 9,
+            "s00s03": 12,
+            "s00s04": 22,
+            "s00s05": 50,
+            "s01s00": 18,
+            "s01s01": 8,
+            "s01s02": 6.75,
+            "s01s03": 10,
+            "s01s04": 19,
+            "s01s05": 50,
+            "s02s00": 29,
+            "s02s01": 13,
+            "s02s02": 12,
+            "s02s03": 16,
+            "s02s04": 31,
+            "s02s05": 75,
+            "s03s00": 80,
+            "s03s01": 34,
+            "s03s02": 31,
+            "s03s03": 40,
+            "s04s00": 250,
+            "s04s01": 100,
+            "s04s02": 100,
+            "s05s00": 650,
+            "s05s01": 500,
+            "s05s02": 400
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 1.48,
+            "d": 4.15,
+            "h": 4.7
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 14:16:30"
+        },
+        {
+          "jc_match_id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 2.17,
+            "ad": 16,
+            "ah": 35,
+            "da": 4.3,
+            "dd": 7.25,
+            "dh": 11,
+            "ha": 19,
+            "hd": 16,
+            "hh": 8
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 2.47,
+            "d": 3.6,
+            "h": 2.24
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 14:16:37"
+        },
+        {
+          "jc_match_id": "1e2f8f81-f850-4e04-8596-6724d01709ef",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 21,
+            "s1": 7,
+            "s2": 4.2,
+            "s3": 3.45,
+            "s4": 4.4,
+            "s5": 6.5,
+            "s6": 11.5,
+            "s7": 15
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
@@ -169,7 +781,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8370.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10268.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 200,
+            "s-1sd": 350,
+            "s-1sh": 40,
+            "s00s00": 14,
+            "s00s01": 13,
+            "s00s02": 25,
+            "s00s03": 75,
+            "s00s04": 300,
+            "s00s05": 500,
+            "s01s00": 7,
+            "s01s01": 6.4,
+            "s01s02": 13,
+            "s01s03": 50,
+            "s01s04": 150,
+            "s01s05": 400,
+            "s02s00": 7.5,
+            "s02s01": 6.75,
+            "s02s02": 13,
+            "s02s03": 40,
+            "s02s04": 150,
+            "s02s05": 400,
+            "s03s00": 12,
+            "s03s01": 12,
+            "s03s02": 21,
+            "s03s03": 50,
+            "s04s00": 25,
+            "s04s01": 25,
+            "s04s02": 50,
+            "s05s00": 60,
+            "s05s01": 75,
+            "s05s02": 150
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.5,
+            "d": 3.65,
+            "h": 1.58
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 8,
+            "ad": 16,
+            "ah": 20,
+            "da": 10.5,
+            "dd": 5.65,
+            "dh": 4.15,
+            "ha": 35,
+            "hd": 16,
+            "hh": 2.43
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.05,
+            "d": 3.5,
+            "h": 2.81
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.3,
+            "s2": 3.4,
+            "s3": 3.4,
+            "s4": 5.05,
+            "s5": 9,
+            "s6": 18,
+            "s7": 25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
@@ -190,7 +904,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-10171.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-7943.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 100,
+            "s-1sd": 200,
+            "s-1sh": 17,
+            "s00s00": 24,
+            "s00s01": 20,
+            "s00s02": 35,
+            "s00s03": 90,
+            "s00s04": 350,
+            "s00s05": 700,
+            "s01s00": 9.5,
+            "s01s01": 9.5,
+            "s01s02": 14,
+            "s01s03": 50,
+            "s01s04": 150,
+            "s01s05": 500,
+            "s02s00": 8.25,
+            "s02s01": 6.7,
+            "s02s02": 13,
+            "s02s03": 30,
+            "s02s04": 150,
+            "s02s05": 500,
+            "s03s00": 11,
+            "s03s01": 9.5,
+            "s03s02": 16,
+            "s03s03": 50,
+            "s04s00": 18,
+            "s04s01": 17,
+            "s04s02": 30,
+            "s05s00": 35,
+            "s05s01": 35,
+            "s05s02": 60
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 5.65,
+            "d": 4.6,
+            "h": 1.36
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:44:55"
+        },
+        {
+          "jc_match_id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 9.5,
+            "ad": 17,
+            "ah": 19,
+            "da": 13,
+            "dd": 8,
+            "dh": 4.5,
+            "ha": 36,
+            "hd": 17,
+            "hh": 1.9
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.6,
+            "d": 3.75,
+            "h": 2.1
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:45:00"
+        },
+        {
+          "jc_match_id": "0c8b7587-2f5d-4731-bb32-f37cd9a28d22",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 24,
+            "s1": 7.2,
+            "s2": 4.35,
+            "s3": 3.6,
+            "s4": 4.4,
+            "s5": 6.3,
+            "s6": 10,
+            "s7": 12.5
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
@@ -211,7 +1027,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8529.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9857.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 150,
+            "s-1sd": 400,
+            "s-1sh": 175,
+            "s00s00": 8.5,
+            "s00s01": 6.8,
+            "s00s02": 10.5,
+            "s00s03": 25,
+            "s00s04": 75,
+            "s00s05": 300,
+            "s01s00": 7.5,
+            "s01s01": 5.5,
+            "s01s02": 8,
+            "s01s03": 21,
+            "s01s04": 75,
+            "s01s05": 300,
+            "s02s00": 11.5,
+            "s02s01": 8.75,
+            "s02s02": 13,
+            "s02s03": 30,
+            "s02s04": 100,
+            "s02s05": 400,
+            "s03s00": 30,
+            "s03s01": 25,
+            "s03s02": 35,
+            "s03s03": 80,
+            "s04s00": 100,
+            "s04s01": 90,
+            "s04s02": 150,
+            "s05s00": 350,
+            "s05s01": 350,
+            "s05s02": 500
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.45,
+            "d": 2.85,
+            "h": 2.7
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.2,
+            "ad": 14.5,
+            "ah": 28,
+            "da": 5.7,
+            "dd": 4.3,
+            "dh": 6.2,
+            "ha": 25,
+            "hd": 14.5,
+            "hh": 4.3
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 5.95,
+            "d": 3.9,
+            "h": 1.42
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "803442bd-367b-44f7-ac21-ddfa099c85ee",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 8.5,
+            "s1": 4,
+            "s2": 3.15,
+            "s3": 3.75,
+            "s4": 6.5,
+            "s5": 13,
+            "s6": 24,
+            "s7": 33
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
@@ -232,7 +1150,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-178475.png",
       "_awayLogoUrl": "assets/team-logos/espn-soccer-10388.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 80,
+            "s-1sd": 125,
+            "s-1sh": 9.5,
+            "s00s00": 38,
+            "s00s01": 33,
+            "s00s02": 55,
+            "s00s03": 125,
+            "s00s04": 400,
+            "s00s05": 750,
+            "s01s00": 14,
+            "s01s01": 12,
+            "s01s02": 19,
+            "s01s03": 45,
+            "s01s04": 150,
+            "s01s05": 500,
+            "s02s00": 10,
+            "s02s01": 7.5,
+            "s02s02": 13,
+            "s02s03": 33,
+            "s02s04": 110,
+            "s02s05": 400,
+            "s03s00": 11,
+            "s03s01": 8.5,
+            "s03s02": 13,
+            "s03s03": 31,
+            "s04s00": 16.5,
+            "s04s01": 13,
+            "s04s02": 20,
+            "s05s00": 31,
+            "s05s01": 24,
+            "s05s02": 37
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 6.5,
+            "d": 5.32,
+            "h": 1.27
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:54:16"
+        },
+        {
+          "jc_match_id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 11,
+            "ad": 18,
+            "ah": 18,
+            "da": 16,
+            "dd": 10.5,
+            "dh": 4.45,
+            "ha": 38,
+            "hd": 18,
+            "hh": 1.7
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.98,
+            "d": 4,
+            "h": 1.84
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:55:34"
+        },
+        {
+          "jc_match_id": "9642d5a6-1ccd-4394-a989-413914dc6fb6",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 38,
+            "s1": 11,
+            "s2": 5.75,
+            "s3": 3.9,
+            "s4": 4,
+            "s5": 5.25,
+            "s6": 7.5,
+            "s7": 7.5
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "d3db2663-f93f-450a-9470-104d206a909c",
@@ -253,7 +1273,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9905.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8697.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "d3db2663-f93f-450a-9470-104d206a909c",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 90,
+            "s-1sd": 200,
+            "s-1sh": 26,
+            "s00s00": 18,
+            "s00s01": 17,
+            "s00s02": 26,
+            "s00s03": 65,
+            "s00s04": 200,
+            "s00s05": 550,
+            "s01s00": 9.75,
+            "s01s01": 8,
+            "s01s02": 12,
+            "s01s03": 31,
+            "s01s04": 100,
+            "s01s05": 400,
+            "s02s00": 9,
+            "s02s01": 6.5,
+            "s02s02": 11.5,
+            "s02s03": 31,
+            "s02s04": 100,
+            "s02s05": 300,
+            "s03s00": 13.5,
+            "s03s01": 10,
+            "s03s02": 16,
+            "s03s03": 41,
+            "s04s00": 27,
+            "s04s01": 20,
+            "s04s02": 33,
+            "s05s00": 70,
+            "s05s01": 50,
+            "s05s02": 70
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "d3db2663-f93f-450a-9470-104d206a909c",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.15,
+            "d": 3.85,
+            "h": 1.59
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "d3db2663-f93f-450a-9470-104d206a909c",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 7.25,
+            "ad": 14,
+            "ah": 18,
+            "da": 9.5,
+            "dd": 6.5,
+            "dh": 4.65,
+            "ha": 28,
+            "hd": 14,
+            "hh": 2.45
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "d3db2663-f93f-450a-9470-104d206a909c",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.05,
+            "d": 3.6,
+            "h": 2.75
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "d3db2663-f93f-450a-9470-104d206a909c",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 18,
+            "s1": 6.8,
+            "s2": 4.1,
+            "s3": 3.45,
+            "s4": 4.4,
+            "s5": 7,
+            "s6": 12,
+            "s7": 15.5
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
@@ -274,7 +1396,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8460.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9790.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 45,
+            "s-1sd": 175,
+            "s-1sh": 39,
+            "s00s00": 18,
+            "s00s01": 13,
+            "s00s02": 16.5,
+            "s00s03": 33,
+            "s00s04": 80,
+            "s00s05": 300,
+            "s01s00": 11.5,
+            "s01s01": 7.25,
+            "s01s02": 8.5,
+            "s01s03": 18,
+            "s01s04": 45,
+            "s01s05": 175,
+            "s02s00": 13,
+            "s02s01": 7.5,
+            "s02s02": 10,
+            "s02s03": 20,
+            "s02s04": 55,
+            "s02s05": 175,
+            "s03s00": 22,
+            "s03s01": 14,
+            "s03s02": 17,
+            "s03s03": 31,
+            "s04s00": 55,
+            "s04s01": 33,
+            "s04s02": 45,
+            "s05s00": 175,
+            "s05s01": 90,
+            "s05s02": 125
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.67,
+            "d": 3.5,
+            "h": 2.13
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.4,
+            "ad": 13,
+            "ah": 20,
+            "da": 6.5,
+            "dd": 6.25,
+            "dh": 5.7,
+            "ha": 23,
+            "hd": 13,
+            "hh": 3.45
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.53,
+            "d": 4.11,
+            "h": 4.3
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "74a872d4-c3bc-430a-a249-18a686ca3b2e",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 18,
+            "s1": 6.8,
+            "s2": 4.1,
+            "s3": 3.45,
+            "s4": 4.5,
+            "s5": 7,
+            "s6": 12,
+            "s7": 15
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
@@ -295,7 +1519,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8722.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10189.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 90,
+            "s-1sd": 200,
+            "s-1sh": 41,
+            "s00s00": 15,
+            "s00s01": 13,
+            "s00s02": 19,
+            "s00s03": 50,
+            "s00s04": 125,
+            "s00s05": 450,
+            "s01s00": 9,
+            "s01s01": 7,
+            "s01s02": 9.5,
+            "s01s03": 23,
+            "s01s04": 70,
+            "s01s05": 300,
+            "s02s00": 10,
+            "s02s01": 6.75,
+            "s02s02": 11,
+            "s02s03": 27,
+            "s02s04": 90,
+            "s02s05": 300,
+            "s03s00": 18,
+            "s03s01": 12.5,
+            "s03s02": 18,
+            "s03s03": 41,
+            "s04s00": 39,
+            "s04s01": 29,
+            "s04s02": 45,
+            "s05s00": 125,
+            "s05s01": 80,
+            "s05s02": 100
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.21,
+            "d": 3.5,
+            "h": 1.88
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 5.55,
+            "ad": 13,
+            "ah": 19,
+            "da": 7.5,
+            "dd": 6,
+            "dh": 5.1,
+            "ha": 26,
+            "hd": 13,
+            "hh": 3
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.71,
+            "d": 3.75,
+            "h": 3.6
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "3f7653e8-40ce-4a46-ba78-33f86cf1ee15",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 15,
+            "s1": 5.8,
+            "s2": 3.9,
+            "s3": 3.45,
+            "s4": 4.55,
+            "s5": 8,
+            "s6": 14,
+            "s7": 19
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
@@ -316,7 +1642,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8406.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8149.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 70,
+            "s-1sd": 150,
+            "s-1sh": 24,
+            "s00s00": 21,
+            "s00s01": 17,
+            "s00s02": 26,
+            "s00s03": 55,
+            "s00s04": 150,
+            "s00s05": 550,
+            "s01s00": 11,
+            "s01s01": 8,
+            "s01s02": 11,
+            "s01s03": 26,
+            "s01s04": 80,
+            "s01s05": 250,
+            "s02s00": 10.5,
+            "s02s01": 6.75,
+            "s02s02": 11,
+            "s02s03": 24,
+            "s02s04": 70,
+            "s02s05": 250,
+            "s03s00": 15.5,
+            "s03s01": 10.5,
+            "s03s02": 15,
+            "s03s03": 31,
+            "s04s00": 32,
+            "s04s01": 21,
+            "s04s02": 29,
+            "s05s00": 80,
+            "s05s01": 50,
+            "s05s02": 70
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.75,
+            "d": 3.85,
+            "h": 1.66
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 6.5,
+            "ad": 14,
+            "ah": 17,
+            "da": 9,
+            "dd": 6.9,
+            "dh": 4.9,
+            "ha": 26,
+            "hd": 14,
+            "hh": 2.5
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.95,
+            "d": 3.68,
+            "h": 2.9
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "f0d15ee2-a3a4-48cd-8b0f-5092eb26a34b",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 21,
+            "s1": 7.4,
+            "s2": 4.3,
+            "s3": 3.5,
+            "s4": 4.35,
+            "s5": 6.5,
+            "s6": 10.5,
+            "s7": 13.5
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
@@ -337,7 +1765,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9825.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8668.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 500,
+            "s-1sd": 600,
+            "s-1sh": 30,
+            "s00s00": 13,
+            "s00s01": 17,
+            "s00s02": 50,
+            "s00s03": 200,
+            "s00s04": 650,
+            "s00s05": 1000,
+            "s01s00": 6,
+            "s01s01": 7.5,
+            "s01s02": 21,
+            "s01s03": 90,
+            "s01s04": 500,
+            "s01s05": 1000,
+            "s02s00": 5.75,
+            "s02s01": 7,
+            "s02s02": 20,
+            "s02s03": 80,
+            "s02s04": 500,
+            "s02s05": 1000,
+            "s03s00": 8,
+            "s03s01": 10,
+            "s03s02": 27,
+            "s03s03": 100,
+            "s04s00": 14,
+            "s04s01": 21,
+            "s04s02": 60,
+            "s05s00": 35,
+            "s05s01": 50,
+            "s05s02": 125
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 8.12,
+            "d": 4.32,
+            "h": 1.29
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 14:38:25"
+        },
+        {
+          "jc_match_id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 14,
+            "ad": 20,
+            "ah": 27,
+            "da": 17,
+            "dd": 6.5,
+            "dh": 3.65,
+            "ha": 55,
+            "hd": 20,
+            "hh": 1.85
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.89,
+            "d": 3.36,
+            "h": 2.06
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 14:38:37"
+        },
+        {
+          "jc_match_id": "07be71fe-5c71-4937-b6e5-dcde514521a5",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 13,
+            "s1": 5.2,
+            "s2": 3.6,
+            "s3": 3.45,
+            "s4": 5.1,
+            "s5": 8.5,
+            "s6": 16,
+            "s7": 24
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
@@ -358,7 +1888,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8669.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9879.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 50,
+            "s-1sd": 300,
+            "s-1sh": 90,
+            "s00s00": 14,
+            "s00s01": 9,
+            "s00s02": 11,
+            "s00s03": 19,
+            "s00s04": 55,
+            "s00s05": 150,
+            "s01s00": 11.5,
+            "s01s01": 6,
+            "s01s02": 7,
+            "s01s03": 14,
+            "s01s04": 36,
+            "s01s05": 100,
+            "s02s00": 17,
+            "s02s01": 9,
+            "s02s02": 10.5,
+            "s02s03": 21,
+            "s02s04": 55,
+            "s02s05": 150,
+            "s03s00": 36,
+            "s03s01": 21,
+            "s03s02": 26,
+            "s03s03": 45,
+            "s04s00": 120,
+            "s04s01": 75,
+            "s04s02": 90,
+            "s05s00": 400,
+            "s05s01": 200,
+            "s05s02": 300
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.04,
+            "d": 3.35,
+            "h": 2.95
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.4,
+            "ad": 13.5,
+            "ah": 28,
+            "da": 5.1,
+            "dd": 5.4,
+            "dh": 6.9,
+            "ha": 22,
+            "hd": 13.5,
+            "hh": 4.9
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 4.15,
+            "d": 3.8,
+            "h": 1.6
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "566b60ce-700e-483d-80b6-1d00d6af59ef",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.6,
+            "s2": 3.5,
+            "s3": 3.4,
+            "s4": 4.9,
+            "s5": 8.5,
+            "s6": 16,
+            "s7": 25
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "f34cdbcd-a765-4685-a86c-ed67294cab3f",
@@ -400,7 +2032,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8696.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8558.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 70,
+            "s-1sd": 150,
+            "s-1sh": 60,
+            "s00s00": 16,
+            "s00s01": 10.5,
+            "s00s02": 14,
+            "s00s03": 30,
+            "s00s04": 75,
+            "s00s05": 200,
+            "s01s00": 10,
+            "s01s01": 6.5,
+            "s01s02": 8.25,
+            "s01s03": 19,
+            "s01s04": 50,
+            "s01s05": 150,
+            "s02s00": 12.5,
+            "s02s01": 7.75,
+            "s02s02": 10,
+            "s02s03": 22,
+            "s02s04": 70,
+            "s02s05": 200,
+            "s03s00": 23,
+            "s03s01": 17,
+            "s03s02": 20,
+            "s03s03": 35,
+            "s04s00": 60,
+            "s04s01": 40,
+            "s04s02": 60,
+            "s05s00": 150,
+            "s05s01": 100,
+            "s05s02": 150
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.52,
+            "d": 3.45,
+            "h": 2.26
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.1,
+            "ad": 14,
+            "ah": 23,
+            "da": 6.25,
+            "dd": 5.75,
+            "dh": 5.7,
+            "ha": 25,
+            "hd": 14,
+            "hh": 3.65
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.48,
+            "d": 4.15,
+            "h": 4.7
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 16,
+            "s1": 6,
+            "s2": 3.8,
+            "s3": 3.4,
+            "s4": 4.65,
+            "s5": 7.75,
+            "s6": 14,
+            "s7": 19
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
@@ -421,7 +2155,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9908.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-6413.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 100,
+            "s-1sd": 175,
+            "s-1sh": 20,
+            "s00s00": 23,
+            "s00s01": 17,
+            "s00s02": 28,
+            "s00s03": 80,
+            "s00s04": 250,
+            "s00s05": 650,
+            "s01s00": 9.5,
+            "s01s01": 8,
+            "s01s02": 13,
+            "s01s03": 30,
+            "s01s04": 120,
+            "s01s05": 400,
+            "s02s00": 9,
+            "s02s01": 7,
+            "s02s02": 11.5,
+            "s02s03": 28,
+            "s02s04": 120,
+            "s02s05": 400,
+            "s03s00": 12.5,
+            "s03s01": 10.5,
+            "s03s02": 16,
+            "s03s03": 38,
+            "s04s00": 22,
+            "s04s01": 20,
+            "s04s02": 30,
+            "s05s00": 50,
+            "s05s01": 45,
+            "s05s02": 75
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.57,
+            "d": 4.1,
+            "h": 1.5
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 7.2,
+            "ad": 16,
+            "ah": 20,
+            "da": 10.5,
+            "dd": 7.5,
+            "dh": 4.6,
+            "ha": 34,
+            "hd": 16,
+            "hh": 2.15
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.22,
+            "d": 3.7,
+            "h": 2.45
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "0f01d1c1-b673-46f0-aa59-d3c3bda6db5e",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 23,
+            "s1": 7.5,
+            "s2": 4.3,
+            "s3": 3.5,
+            "s4": 4.3,
+            "s5": 6.5,
+            "s6": 10.5,
+            "s7": 13
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
@@ -442,7 +2278,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-1074320.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-212821.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 250,
+            "s-1sd": 550,
+            "s-1sh": 65,
+            "s00s00": 11,
+            "s00s01": 10.5,
+            "s00s02": 21,
+            "s00s03": 60,
+            "s00s04": 350,
+            "s00s05": 750,
+            "s01s00": 6.3,
+            "s01s01": 6.2,
+            "s01s02": 11,
+            "s01s03": 39,
+            "s01s04": 200,
+            "s01s05": 550,
+            "s02s00": 7.5,
+            "s02s01": 7,
+            "s02s02": 14,
+            "s02s03": 50,
+            "s02s04": 250,
+            "s02s05": 650,
+            "s03s00": 13,
+            "s03s01": 12,
+            "s03s02": 25,
+            "s03s03": 80,
+            "s04s00": 30,
+            "s04s01": 30,
+            "s04s02": 80,
+            "s05s00": 100,
+            "s05s01": 100,
+            "s05s02": 250
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 4.2,
+            "d": 3.42,
+            "h": 1.67
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 6.5,
+            "ad": 16,
+            "ah": 23,
+            "da": 9,
+            "dd": 5.2,
+            "dh": 4.5,
+            "ha": 35,
+            "hd": 16,
+            "hh": 2.65
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.94,
+            "d": 3.32,
+            "h": 3.2
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "68741f46-1c97-4662-851d-d2b00a9d5fbb",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 11,
+            "s1": 4.5,
+            "s2": 3.3,
+            "s3": 3.55,
+            "s4": 5.7,
+            "s5": 10.5,
+            "s6": 19,
+            "s7": 30
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
@@ -463,7 +2401,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9875.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8686.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 90,
+            "s-1sd": 500,
+            "s-1sh": 100,
+            "s00s00": 11,
+            "s00s01": 8,
+            "s00s02": 11,
+            "s00s03": 24,
+            "s00s04": 75,
+            "s00s05": 200,
+            "s01s00": 8.5,
+            "s01s01": 6,
+            "s01s02": 7.75,
+            "s01s03": 19,
+            "s01s04": 55,
+            "s01s05": 175,
+            "s02s00": 12.5,
+            "s02s01": 8,
+            "s02s02": 12,
+            "s02s03": 26,
+            "s02s04": 75,
+            "s02s05": 300,
+            "s03s00": 28,
+            "s03s01": 21,
+            "s03s02": 27,
+            "s03s03": 60,
+            "s04s00": 90,
+            "s04s01": 60,
+            "s04s02": 90,
+            "s05s00": 350,
+            "s05s01": 200,
+            "s05s02": 350
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.32,
+            "d": 3.15,
+            "h": 2.63
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:49:55"
+        },
+        {
+          "jc_match_id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.95,
+            "ad": 14,
+            "ah": 28,
+            "da": 5.7,
+            "dd": 5.2,
+            "dh": 6,
+            "ha": 26,
+            "hd": 14,
+            "hh": 4
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 5.27,
+            "d": 4,
+            "h": 1.45
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "e19f5670-1b71-41f6-9f4d-450546232f2e",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 11,
+            "s1": 4.7,
+            "s2": 3.35,
+            "s3": 3.55,
+            "s4": 5.6,
+            "s5": 10,
+            "s6": 18,
+            "s7": 28
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
@@ -484,7 +2524,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8455.png",
       "_awayLogoUrl": "assets/team-logos/espn-soccer-367.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 70,
+            "s-1sd": 150,
+            "s-1sh": 26,
+            "s00s00": 21,
+            "s00s01": 16,
+            "s00s02": 25,
+            "s00s03": 50,
+            "s00s04": 175,
+            "s00s05": 550,
+            "s01s00": 10,
+            "s01s01": 7.5,
+            "s01s02": 11,
+            "s01s03": 26,
+            "s01s04": 80,
+            "s01s05": 250,
+            "s02s00": 10.5,
+            "s02s01": 7,
+            "s02s02": 10.5,
+            "s02s03": 25,
+            "s02s04": 80,
+            "s02s05": 300,
+            "s03s00": 15,
+            "s03s01": 10.5,
+            "s03s02": 16,
+            "s03s03": 30,
+            "s04s00": 32,
+            "s04s01": 23,
+            "s04s02": 32,
+            "s05s00": 80,
+            "s05s01": 60,
+            "s05s02": 90
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 3.9,
+            "d": 3.92,
+            "h": 1.62
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:46:56"
+        },
+        {
+          "jc_match_id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 6,
+            "ad": 14.5,
+            "ah": 20,
+            "da": 8.75,
+            "dd": 6.5,
+            "dh": 4.65,
+            "ha": 32,
+            "hd": 14.5,
+            "hh": 2.6
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2,
+            "d": 3.7,
+            "h": 2.8
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 15:47:07"
+        },
+        {
+          "jc_match_id": "7c61d78d-7dbd-4444-83a5-6a818eb94be5",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 21,
+            "s1": 7,
+            "s2": 4.2,
+            "s3": 3.5,
+            "s4": 4.4,
+            "s5": 6.5,
+            "s6": 11,
+            "s7": 15
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
@@ -505,7 +2647,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9789.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9810.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 80,
+            "s-1sd": 150,
+            "s-1sh": 13,
+            "s00s00": 30,
+            "s00s01": 26,
+            "s00s02": 39,
+            "s00s03": 100,
+            "s00s04": 350,
+            "s00s05": 750,
+            "s01s00": 12,
+            "s01s01": 10,
+            "s01s02": 16,
+            "s01s03": 39,
+            "s01s04": 125,
+            "s01s05": 450,
+            "s02s00": 9.5,
+            "s02s01": 7,
+            "s02s02": 12,
+            "s02s03": 31,
+            "s02s04": 100,
+            "s02s05": 400,
+            "s03s00": 12,
+            "s03s01": 8.75,
+            "s03s02": 14,
+            "s03s03": 31,
+            "s04s00": 19,
+            "s04s01": 15,
+            "s04s02": 24,
+            "s05s00": 39,
+            "s05s01": 31,
+            "s05s02": 45
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 5.6,
+            "d": 4.9,
+            "h": 1.34
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 15:48:31"
+        },
+        {
+          "jc_match_id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 9.25,
+            "ad": 16,
+            "ah": 18,
+            "da": 13,
+            "dd": 8.75,
+            "dh": 4.5,
+            "ha": 38,
+            "hd": 16,
+            "hh": 1.9
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.7,
+            "d": 3.9,
+            "h": 1.99
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 15:48:37"
+        },
+        {
+          "jc_match_id": "5bea9c4c-7333-4d2e-afa8-33b6428772e8",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 30,
+            "s1": 9.3,
+            "s2": 5,
+            "s3": 3.7,
+            "s4": 4,
+            "s5": 5.75,
+            "s6": 8.75,
+            "s7": 9.5
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
@@ -526,7 +2770,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-10267.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10205.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 50,
+            "s-1sd": 300,
+            "s-1sh": 90,
+            "s00s00": 14,
+            "s00s01": 8.5,
+            "s00s02": 10.5,
+            "s00s03": 19,
+            "s00s04": 50,
+            "s00s05": 150,
+            "s01s00": 10.5,
+            "s01s01": 6.1,
+            "s01s02": 7.25,
+            "s01s03": 15,
+            "s01s04": 40,
+            "s01s05": 100,
+            "s02s00": 16,
+            "s02s01": 9,
+            "s02s02": 10.5,
+            "s02s03": 22,
+            "s02s04": 60,
+            "s02s05": 175,
+            "s03s00": 35,
+            "s03s01": 22,
+            "s03s02": 30,
+            "s03s03": 45,
+            "s04s00": 100,
+            "s04s01": 75,
+            "s04s02": 90,
+            "s05s00": 300,
+            "s05s01": 200,
+            "s05s02": 300
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.02,
+            "d": 3.4,
+            "h": 2.95
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 3.4,
+            "ad": 14,
+            "ah": 25,
+            "da": 5.1,
+            "dd": 5.4,
+            "dh": 7,
+            "ha": 22,
+            "hd": 14,
+            "hh": 4.85
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 4.1,
+            "d": 3.8,
+            "h": 1.61
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "b6023c8c-835c-4d2c-877b-a6ca6c053308",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 14,
+            "s1": 5.4,
+            "s2": 3.6,
+            "s3": 3.4,
+            "s4": 4.95,
+            "s5": 8.75,
+            "s6": 15,
+            "s7": 24
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
@@ -547,7 +2893,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8543.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10167.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 500,
+            "s-1sd": 600,
+            "s-1sh": 30,
+            "s00s00": 12.5,
+            "s00s01": 15,
+            "s00s02": 50,
+            "s00s03": 175,
+            "s00s04": 500,
+            "s00s05": 1000,
+            "s01s00": 6,
+            "s01s01": 7.5,
+            "s01s02": 19,
+            "s01s03": 90,
+            "s01s04": 350,
+            "s01s05": 1000,
+            "s02s00": 6,
+            "s02s01": 7,
+            "s02s02": 19,
+            "s02s03": 75,
+            "s02s04": 350,
+            "s02s05": 900,
+            "s03s00": 8,
+            "s03s01": 11,
+            "s03s02": 27,
+            "s03s03": 100,
+            "s04s00": 15,
+            "s04s01": 21,
+            "s04s02": 60,
+            "s05s00": 35,
+            "s05s01": 50,
+            "s05s02": 150
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 7.85,
+            "d": 4.4,
+            "h": 1.29
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 14:41:39"
+        },
+        {
+          "jc_match_id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 12,
+            "ad": 20,
+            "ah": 27,
+            "da": 15,
+            "dd": 6.5,
+            "dh": 3.75,
+            "ha": 50,
+            "hd": 20,
+            "hh": 1.9
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 2.92,
+            "d": 3.35,
+            "h": 2.05
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 14:41:49"
+        },
+        {
+          "jc_match_id": "c8d4b0b0-df43-4ee4-a237-1f1462a44da5",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 12.5,
+            "s1": 4.75,
+            "s2": 3.45,
+            "s3": 3.55,
+            "s4": 5.3,
+            "s5": 9.5,
+            "s6": 17,
+            "s7": 25
+          },
+          "captured_at": "2026-10-23T11:55:55.114438+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
@@ -568,7 +3016,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8588.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-6379.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 55,
+            "s-1sd": 200,
+            "s-1sh": 50,
+            "s00s00": 16,
+            "s00s01": 11,
+            "s00s02": 14.5,
+            "s00s03": 30,
+            "s00s04": 80,
+            "s00s05": 200,
+            "s01s00": 10.5,
+            "s01s01": 6.75,
+            "s01s02": 8,
+            "s01s03": 18,
+            "s01s04": 45,
+            "s01s05": 150,
+            "s02s00": 13,
+            "s02s01": 7.5,
+            "s02s02": 10.5,
+            "s02s03": 21,
+            "s02s04": 55,
+            "s02s05": 200,
+            "s03s00": 24,
+            "s03s01": 16,
+            "s03s02": 19,
+            "s03s03": 40,
+            "s04s00": 65,
+            "s04s01": 40,
+            "s04s02": 50,
+            "s05s00": 175,
+            "s05s01": 100,
+            "s05s02": 175
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 2.52,
+            "d": 3.42,
+            "h": 2.27
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 4.1,
+            "ad": 14,
+            "ah": 23,
+            "da": 6.2,
+            "dd": 5.7,
+            "dh": 5.65,
+            "ha": 25,
+            "hd": 14,
+            "hh": 3.7
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
+          "pool_code": "hhad",
+          "goal_line": "-1",
+          "outcomes": {
+            "a": 1.49,
+            "d": 4.25,
+            "h": 4.5
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "6d0c0a94-64f9-411b-8553-ac053cbcded7",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 16,
+            "s1": 6,
+            "s2": 3.85,
+            "s3": 3.4,
+            "s4": 4.7,
+            "s5": 7.6,
+            "s6": 13.5,
+            "s7": 19
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
@@ -589,7 +3139,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9906.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9783.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 400,
+            "s-1sd": 400,
+            "s-1sh": 17,
+            "s00s00": 18,
+            "s00s01": 22,
+            "s00s02": 60,
+            "s00s03": 300,
+            "s00s04": 500,
+            "s00s05": 700,
+            "s01s00": 6.8,
+            "s01s01": 9.5,
+            "s01s02": 25,
+            "s01s03": 100,
+            "s01s04": 400,
+            "s01s05": 700,
+            "s02s00": 5.9,
+            "s02s01": 7.75,
+            "s02s02": 22,
+            "s02s03": 90,
+            "s02s04": 400,
+            "s02s05": 700,
+            "s03s00": 7,
+            "s03s01": 9.5,
+            "s03s02": 26,
+            "s03s03": 100,
+            "s04s00": 11.5,
+            "s04s01": 16,
+            "s04s02": 50,
+            "s05s00": 22,
+            "s05s01": 30,
+            "s05s02": 90
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 10.3,
+            "d": 5.4,
+            "h": 1.18
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 20,
+            "ad": 24,
+            "ah": 23,
+            "da": 23,
+            "dd": 8.25,
+            "dh": 3.75,
+            "ha": 80,
+            "hd": 24,
+            "hh": 1.58
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
+          "pool_code": "hhad",
+          "goal_line": "-2",
+          "outcomes": {
+            "a": 1.9,
+            "d": 3.9,
+            "h": 2.88
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "557ff6bd-2d7a-45c1-a12f-66ca1b24a667",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 18,
+            "s1": 5.75,
+            "s2": 3.9,
+            "s3": 3.4,
+            "s4": 4.65,
+            "s5": 7.8,
+            "s6": 13.5,
+            "s7": 18
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
@@ -610,7 +3262,109 @@
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9764.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9773.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "jc_match_id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
+          "pool_code": "crs",
+          "goal_line": null,
+          "outcomes": {
+            "s-1sa": 30,
+            "s-1sd": 750,
+            "s-1sh": 550,
+            "s00s00": 13,
+            "s00s01": 6,
+            "s00s02": 5.7,
+            "s00s03": 7.5,
+            "s00s04": 14,
+            "s00s05": 30,
+            "s01s00": 16,
+            "s01s01": 7.75,
+            "s01s02": 7,
+            "s01s03": 10.5,
+            "s01s04": 21,
+            "s01s05": 50,
+            "s02s00": 50,
+            "s02s01": 20,
+            "s02s02": 21,
+            "s02s03": 28,
+            "s02s04": 60,
+            "s02s05": 150,
+            "s03s00": 250,
+            "s03s01": 100,
+            "s03s02": 100,
+            "s03s03": 120,
+            "s04s00": 650,
+            "s04s01": 550,
+            "s04s02": 550,
+            "s05s00": 1000,
+            "s05s01": 1000,
+            "s05s02": 1000
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
+          "pool_code": "had",
+          "goal_line": null,
+          "outcomes": {
+            "a": 1.27,
+            "d": 4.55,
+            "h": 8.25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
+          "pool_code": "hafu",
+          "goal_line": null,
+          "outcomes": {
+            "aa": 1.8,
+            "ad": 21,
+            "ah": 70,
+            "da": 3.7,
+            "dd": 6.5,
+            "dh": 17,
+            "ha": 27,
+            "hd": 21,
+            "hh": 15
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
+          "pool_code": "hhad",
+          "goal_line": "+1",
+          "outcomes": {
+            "a": 1.98,
+            "d": 3.45,
+            "h": 3
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        },
+        {
+          "jc_match_id": "652413b3-acc7-4dce-abbb-3c793490d1f5",
+          "pool_code": "ttg",
+          "goal_line": null,
+          "outcomes": {
+            "s0": 13,
+            "s1": 5.1,
+            "s2": 3.5,
+            "s3": 3.5,
+            "s4": 5.1,
+            "s5": 9,
+            "s6": 16,
+            "s7": 25
+          },
+          "captured_at": "2026-10-23T11:55:55.305624+00:00",
+          "official_update_time": "2026-10-23 09:40:01"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "b198ad17-5b26-43e1-8892-c7307c472fad",
