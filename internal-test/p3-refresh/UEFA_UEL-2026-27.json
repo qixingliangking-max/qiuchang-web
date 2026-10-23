@@ -6,7 +6,7 @@
     "73"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 44,
+  "baseline_finished_matches": 54,
   "team_map": {
     "Lyon": "里昂",
     "Milan": "AC米兰",
@@ -45,6 +45,6 @@
     "Union St.Gilloise": "圣吉罗斯联合",
     "Jagiellonia Białystok": "雅盖隆"
   },
-  "last_successful_refresh_at": "2026-10-22T19:21:55.874Z",
-  "last_published_blob_sha": "ae13c054fd28108989bef1fe49b255aa749c8ab4"
+  "last_successful_refresh_at": "2026-10-23T05:11:56.227Z",
+  "last_published_blob_sha": "b416a799b5c27a44e03956d5b2edca45cc837933"
 }

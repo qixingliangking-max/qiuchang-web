@@ -129,14 +129,14 @@
       "quality_tier": "LIMITED",
       "teams": 36,
       "published_path": "internal-test/p3-data/UEFA_UEL-2026-27.json",
-      "blob_sha": "ae13c054fd28108989bef1fe49b255aa749c8ab4",
+      "blob_sha": "b416a799b5c27a44e03956d5b2edca45cc837933",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UEL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-22T19:21:55.874Z",
-      "finished_matches": 44
+      "last_incremental_refresh_at": "2026-10-23T05:11:56.227Z",
+      "finished_matches": 54
     },
     {
       "league_code": "GER_BL",
