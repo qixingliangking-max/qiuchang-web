@@ -1537,7 +1537,23 @@
       "home_team": "代格福什",
       "away_team": "卡尔马",
       "match_date": "2026-10-19",
-      "kickoff_at": "2026-10-19T17:00:00.000Z"
+      "kickoff_at": "2026-10-19T17:00:00Z"
+    },
+    {
+      "source_match_id": "5107633",
+      "match_id": "fotmob:5107633",
+      "home_team": "埃尔夫斯堡",
+      "away_team": "马尔默",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T17:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107635",
+      "match_id": "fotmob:5107635",
+      "home_team": "瓦斯特拉斯",
+      "away_team": "哈尔姆斯塔德",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T17:00:00.000Z"
     }
   ]
 }
