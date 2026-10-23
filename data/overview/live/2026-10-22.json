@@ -1478,11 +1478,11 @@
       "match_date": "2026-10-23",
       "match_time": "08:30:00",
       "kickoff_at": "2026-10-23T00:30:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:0",
+        "sectionsNo1": "0:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9770.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10094.png",
