@@ -1009,7 +1009,9 @@ function jcRenderOverviewTable(rows,today,mode='today'){
         ? '<strong class="jc-score-full">'+qcEscape(displayScore)+'</strong><span class="'+scoreMetaClass+'">'+qcEscape(scoreMeta)+'</span>'
         : '<strong class="jc-score-full vs">VS</strong><span class="jc-score-half">'+qcEscape(scoreMeta)+'</span>';
 
-      return '<tr class="jc-overview-row" data-match-id="'+qcEscape(m.id)+'" data-href="'+href+'">'+
+      return '<tr class="jc-overview-row" data-match-id="'+qcEscape(m.id)+'" data-href="'+href+'"'+
+        ' data-qc-match-date="'+qcEscape(m.match_date||'')+'"'+
+        ' data-qc-kickoff-at="'+qcEscape(m.kickoff_at||'')+'">'+
         '<td class="jc-num"><b>'+num+'</b></td>'+
         '<td class="jc-time"><time>'+time+'</time></td>'+
         '<td><span class="jc-overview-league">'+league+'</span></td>'+
