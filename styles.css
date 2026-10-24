@@ -5614,3 +5614,12 @@ body.qc-profile-contact-open{overflow:hidden}
   .jc-odds-page .jc-ai-article-page.jc-ai-article-pending{padding-bottom:12px;}
   .jc-odds-page .jc-ai-article-page.jc-ai-article-pending .jc-ai-wait{min-height:64px;}
 }
+
+/* Keep JC date navigation responsive while the full day's data is fetched.
+   Lightweight state change only; do not alter FINAL cards or mobile layout. */
+#jcFootballDateLabel.qc-date-pending { opacity:.7; }
+#jcFootballCards.qc-football-switching { opacity:.82; }
+#jcFootballCards.qc-football-switching .jc-card-link { pointer-events:none; }
+@media (prefers-reduced-motion:no-preference) {
+  #jcFootballDateLabel.qc-date-pending { transition:opacity .12s ease; }
+}
