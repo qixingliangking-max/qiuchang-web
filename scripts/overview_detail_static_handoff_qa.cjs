@@ -94,9 +94,9 @@ const {chromium,webkit,devices}=require('playwright');
        publicScore:h?.match?.raw?.sectionsNo999,
        firstPaint:!!document.querySelector('[data-qc-public-first-paint="1"]')}
    });
-   if(details.matchId!==selectedId || !/^\\d{4}-\\d{2}-\\d{2}$/.test(details.matchDate||'') ||
-      !/^\\d{4}-\\d{2}-\\d{2}T/.test(details.kickoffAt||'') ||
-      !/^\\d{1,2}[-:]\\d{1,2}$/.test(details.publicScore||''))
+   if(details.matchId!==selectedId || !/^\d{4}-\d{2}-\d{2}$/.test(details.matchDate||'') ||
+      !/^\d{4}-\d{2}-\d{2}T/.test(details.kickoffAt||'') ||
+      !/^\d{1,2}[-:]\d{1,2}$/.test(details.publicScore||''))
      throw Error('Early static handoff missing published fixture metadata '+JSON.stringify({engine:item.name,details}));
    await page.locator('#jcMatchDetailRoot .detail-head').waitFor({state:'visible',timeout:15000});
    reports.push({engine:item.name,mode:'pre-app-static-row',endToEndClickMs:Date.now()-t0,
