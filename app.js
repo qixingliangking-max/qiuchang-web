@@ -4587,6 +4587,158 @@ async function setupJcMatchDetail(options={}){
     '</div>'+
     '<div id="jcMainPanel"><div class="jc-match-loading-shell compact" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div></div>'
   );
+  // Tabs are usable as soon as the public match shell paints, independent
+  // of the member entitlement/AI snapshot network waterfall. Never render
+  // protected content before a fresh successful Pro check.
+  let access={loggedIn:false,isPro:false};
+  let canViewPremium=false;
+  let detailAccessReady=false;
+  let snapshotRowsFast=null;
+  let pools=null;
+  let model=null;
+  let aiAnalysis=null;
+  let snapshotDetails=[];
+  const panel=$('#jcMainPanel',root);
+  let activeDetailTab='ai';
+  let detailTabToken=0;
+  let oddsHistoryPromise=null;
+  async function ensureOddsHistoryRows(){
+    const cached=jcDetailOddsHistoryCache.get(String(id));
+    if(cached?.data) return cached.data;
+    if(cached?.promise) return cached.promise;
+    const query=jcFetchDetailOddsHistory(id,m.kickoff_at)
+      .then(data=>{
+        const rows=Array.isArray(data)?data:[];
+        jcDetailOddsHistoryCache.set(String(id),{data:rows});
+        // Bound in-memory cache; never persist private or live score data.
+        if(jcDetailOddsHistoryCache.size>8)
+          jcDetailOddsHistoryCache.delete(jcDetailOddsHistoryCache.keys().next().value);
+        return rows;
+      }).catch(error=>{
+        jcDetailOddsHistoryCache.delete(String(id));
+        console.warn('赔率详情读取失败，可点击重新尝试',error);
+        return [];
+      });
+    jcDetailOddsHistoryCache.set(String(id),{promise:query});
+    oddsHistoryPromise=query;
+    // The AI fallback may already contain the latest five pools, but not
+    // their earlier captures. Always load full public pre-kick history when
+    // the user explicitly opens 赔率. Keep locked AI / FINAL untouched.
+    const history=await oddsHistoryPromise;
+    return history.length?history:(Array.isArray(snapshotRowsFast)?snapshotRowsFast:[]);
+  }
+
+  // Facts panels always read the current Sporttery detail cache.
+  // Locked snapshots remain authoritative only for model/AI conclusions.
+  let detailRows=null;
+  let sportteryDetails=null;
+
+  async function ensureDetailRows(){
+    const key=String(id);
+    const cached=jcDetailFactsCache.get(key);
+    if(jcDetailCacheFresh(cached,120000)) return cached.data;
+    if(cached?.promise) return cached.promise;
+
+    const promise=window.qcSupabase.from('jc_match_details')
+      .select('detail_type,payload,source_endpoint,fetched_at')
+      .eq('jc_match_id',id)
+      .then(({data,error})=>{
+        if(error) console.warn('读取竞彩详情数据失败',error);
+        const rows=data||[];
+        jcDetailFactsCache.set(key,{data:rows,savedAt:Date.now()});
+        return rows;
+      })
+      .catch(error=>{
+        jcDetailFactsCache.delete(key);
+        console.warn('读取竞彩详情数据失败',error);
+        return [];
+      });
+    jcDetailFactsCache.set(key,{promise,savedAt:Date.now()});
+    return promise;
+  }
+
+  async function loadFacts(){
+    if(!panel) return;
+    const currentTabToken=detailTabToken;
+    panel.innerHTML=jcRenderFactsShell();
+    let activeFactsTab='data';
+
+    detailRows=detailRows || await ensureDetailRows();
+    if(loadSeq!==jcDetailLoadSeq || currentTabToken!==detailTabToken ||
+       activeDetailTab!=='facts') return;
+    sportteryDetails=sportteryDetails || jcSportteryDetailsMap(detailRows||[]);
+
+    function renderFactsTab(tab){
+      activeFactsTab=tab;
+      $$('.jc-facts-subtabs button',panel).forEach(b=>b.classList.toggle('active',b.dataset.factsTab===tab));
+      const content=$('#jcFactsContent',panel);
+      if(!content) return;
+      if(tab==='lineups') content.innerHTML=jcRenderSportteryLineups(m,sportteryDetails);
+      else if(tab==='standings') content.innerHTML=jcRenderStandings(m,sportteryDetails);
+      else if(tab==='stats') content.innerHTML=jcRenderTechnicalStats(m);
+      else if(tab==='h2h') content.innerHTML=jcRenderH2H(m,sportteryDetails);
+      else content.innerHTML=jcRenderFeatureBlock(m,sportteryDetails,null);
+    }
+
+    $$('.jc-facts-subtabs button',panel).forEach(btn=>{
+      btn.onclick=e=>{
+        e.preventDefault();
+        renderFactsTab(btn.dataset.factsTab||'data');
+      };
+    });
+    renderFactsTab('data');
+
+
+  }
+
+  async function renderOdds(){
+    if(!panel) return;
+    const currentTabToken=detailTabToken;
+    panel.innerHTML='<div class="jc-match-loading-shell compact" role="status" aria-live="polite">赔率记录读取中…</div>';
+    // Lazy-load the full PRE-KICK history, deduped across repeated switches.
+    const latestRows=await ensureOddsHistoryRows();
+    if(loadSeq!==jcDetailLoadSeq || currentTabToken!==detailTabToken ||
+       activeDetailTab!=='odds') return;
+    const latestPools=jcLatestPools(latestRows);
+    panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(latestPools,latestRows,'had')+'</div>';
+    jcBindOddsPlayTabs(panel,latestPools,latestRows);
+  }
+
+  async function renderMainTab(tab){
+    activeDetailTab=tab;
+    ++detailTabToken;
+    Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
+    if(tab==='odds'){
+      await renderOdds();
+      return;
+    }
+    if(tab==='ai'){
+      if(!detailAccessReady){
+        panel.innerHTML='<div class="jc-match-loading-shell compact" role="status" aria-live="polite">正在验证访问权限并读取固定报告…</div>';
+        return;
+      }
+      panel.innerHTML=canViewPremium
+        ? jcRenderAiPanel(m,pools,model,aiAnalysis)
+        : jcRenderAiLockedPanel(m,null,access);
+      return;
+    }
+    await loadFacts();
+  }
+
+  Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(btn=>{
+    btn.onclick=async e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      await renderMainTab(btn.dataset.mainTab||'ai');
+    };
+  });
+
+  // The dedicated design-review URL opens inside the EXISTING 赛况数据→数据
+  // view. Ordinary match links and all other fixtures retain their normal tab.
+  if(jcPostmatchPreviewEnabled(m)){
+    renderMainTab('facts').catch(error=>console.warn('赛后统计预览打开失败',error));
+  }
+
   jcSyncDetailNavToCurrent(root);
   jcBindDetailMatchSwitches(root);
   // Finish the sidebar in the background; never recreate the main AI panel.
@@ -4636,16 +4788,12 @@ async function setupJcMatchDetail(options={}){
     if(away && away.innerHTML!==awayHtml) away.innerHTML=awayHtml;
   }).catch(error=>console.warn('队徽延后加载失败',error));
 
-  const {access,canViewPremium,detailSnapshotPromise}=await accessAndSnapshotPromise;
+  const verifiedDetail=await accessAndSnapshotPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
-  const lockedSnapshot=await detailSnapshotPromise;
+  access=verifiedDetail.access||{loggedIn:false,isPro:false};
+  canViewPremium=verifiedDetail.canViewPremium;
+  const lockedSnapshot=await verifiedDetail.detailSnapshotPromise;
   if(loadSeq!==jcDetailLoadSeq) return;
-
-  let snapshotRowsFast=null;
-  let pools=null;
-  let model=null;
-  let aiAnalysis=null;
-  let snapshotDetails=[];
 
   if(canViewPremium && lockedSnapshot){
     model=lockedSnapshot.model;
@@ -4653,7 +4801,7 @@ async function setupJcMatchDetail(options={}){
     snapshotDetails=lockedSnapshot.details||[];
     pools=jcPoolsFromCodes(lockedSnapshot.marketPoolCodes);
   }else if(canViewPremium){
-    // Safety fallback for a newly generated match whose snapshot has not been captured yet.
+    // Existing authorized fallback; same FINAL and AI source, no new model.
     const fastData=await jcFetchDetailFastData(id,access);
     if(loadSeq!==jcDetailLoadSeq) return;
     snapshotRowsFast=fastData.latestSnapshots||[];
@@ -4662,126 +4810,15 @@ async function setupJcMatchDetail(options={}){
     aiAnalysis=fastData.analysis||null;
   }
 
-  const panel=$('#jcMainPanel',root);
-  if(panel){
-    panel.innerHTML=canViewPremium
-      ? jcRenderAiPanel(m,pools,model,aiAnalysis)
-      : jcRenderAiLockedPanel(m,null,access);
+  detailAccessReady=true;
+  // Never steal the view from a user who opened 赛况 or 赔率 while the
+  // protected AI snapshot was pending.
+  if(activeDetailTab==='ai'){
+    renderMainTab('ai').catch(error=>console.warn('报告显示失败',error));
   }
 
-  // Immutable neighbor snapshots can be prefetched once and reused for instant match switching.
+  // Immutable authorized neighboring snapshots remain memory-only.
   setTimeout(()=>jcPrefetchDetailPredictionSnapshots(sameDay,m.id,access),120);
-
-  let oddsHistoryPromise=null;
-  async function ensureOddsHistoryRows(){
-    // The AI fallback may already contain the latest five pools, but not
-    // their earlier captures. Always load full public pre-kick history when
-    // the user explicitly opens 赔率. Keep locked AI / FINAL untouched.
-    if(!oddsHistoryPromise) oddsHistoryPromise=jcFetchDetailOddsHistory(id,m.kickoff_at);
-    const history=await oddsHistoryPromise;
-    return history.length?history:(Array.isArray(snapshotRowsFast)?snapshotRowsFast:[]);
-  }
-
-  // Facts panels always read the current Sporttery detail cache.
-  // Locked snapshots remain authoritative only for model/AI conclusions.
-  let detailRows=null;
-  let sportteryDetails=null;
-
-  async function ensureDetailRows(){
-    const key=String(id);
-    const cached=jcDetailFactsCache.get(key);
-    if(jcDetailCacheFresh(cached,120000)) return cached.data;
-    if(cached?.promise) return cached.promise;
-
-    const promise=window.qcSupabase.from('jc_match_details')
-      .select('detail_type,payload,source_endpoint,fetched_at')
-      .eq('jc_match_id',id)
-      .then(({data,error})=>{
-        if(error) console.warn('读取竞彩详情数据失败',error);
-        const rows=data||[];
-        jcDetailFactsCache.set(key,{data:rows,savedAt:Date.now()});
-        return rows;
-      })
-      .catch(error=>{
-        jcDetailFactsCache.delete(key);
-        console.warn('读取竞彩详情数据失败',error);
-        return [];
-      });
-    jcDetailFactsCache.set(key,{promise,savedAt:Date.now()});
-    return promise;
-  }
-
-  async function loadFacts(){
-    if(!panel) return;
-    panel.innerHTML=jcRenderFactsShell();
-    let activeFactsTab='data';
-
-    detailRows=detailRows || await ensureDetailRows();
-    if(loadSeq!==jcDetailLoadSeq) return;
-    sportteryDetails=sportteryDetails || jcSportteryDetailsMap(detailRows||[]);
-
-    function renderFactsTab(tab){
-      activeFactsTab=tab;
-      $$('.jc-facts-subtabs button',panel).forEach(b=>b.classList.toggle('active',b.dataset.factsTab===tab));
-      const content=$('#jcFactsContent',panel);
-      if(!content) return;
-      if(tab==='lineups') content.innerHTML=jcRenderSportteryLineups(m,sportteryDetails);
-      else if(tab==='standings') content.innerHTML=jcRenderStandings(m,sportteryDetails);
-      else if(tab==='stats') content.innerHTML=jcRenderTechnicalStats(m);
-      else if(tab==='h2h') content.innerHTML=jcRenderH2H(m,sportteryDetails);
-      else content.innerHTML=jcRenderFeatureBlock(m,sportteryDetails,null);
-    }
-
-    $$('.jc-facts-subtabs button',panel).forEach(btn=>{
-      btn.onclick=e=>{
-        e.preventDefault();
-        renderFactsTab(btn.dataset.factsTab||'data');
-      };
-    });
-    renderFactsTab('data');
-
-
-  }
-
-  async function renderOdds(){
-    if(!panel) return;
-    // Lazy-load the full pre-kickoff capture history only on the odds tab.
-    // It does not change published predictions or immutable final settlement.
-    const latestRows=await ensureOddsHistoryRows();
-    if(loadSeq!==jcDetailLoadSeq) return;
-    const latestPools=jcLatestPools(latestRows);
-    panel.innerHTML='<div class="jc-odds-detail-page">'+jcRenderOddsPlayShell(latestPools,latestRows,'had')+'</div>';
-    jcBindOddsPlayTabs(panel,latestPools,latestRows);
-  }
-
-  async function renderMainTab(tab){
-    Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(b=>b.classList.toggle('active',b.dataset.mainTab===tab));
-    if(tab==='odds'){
-      await renderOdds();
-      return;
-    }
-    if(tab==='ai'){
-      panel.innerHTML=canViewPremium
-        ? jcRenderAiPanel(m,pools,model,aiAnalysis)
-        : jcRenderAiLockedPanel(m,null,access);
-      return;
-    }
-    await loadFacts();
-  }
-
-  Array.from(root.querySelectorAll('.jc-main-tabs button')).forEach(btn=>{
-    btn.onclick=async e=>{
-      e.preventDefault();
-      e.stopPropagation();
-      await renderMainTab(btn.dataset.mainTab||'ai');
-    };
-  });
-
-  // The dedicated design-review URL opens inside the EXISTING 赛况数据→数据
-  // view. Ordinary match links and all other fixtures retain their normal tab.
-  if(jcPostmatchPreviewEnabled(m)){
-    renderMainTab('facts').catch(error=>console.warn('赛后统计预览打开失败',error));
-  }
 
   // Live score refresh is never allowed to hold up AI rendering.
   if(jcShouldFetchLive(m)){
