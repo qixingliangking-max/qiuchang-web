@@ -6,7 +6,7 @@
     "48"
   ],
   "fotmob_ccode3": "ENG",
-  "baseline_finished_matches": 132,
+  "baseline_finished_matches": 133,
   "team_map": {
     "Burnley": "伯恩利",
     "Watford": "沃特福德",
@@ -33,6 +33,6 @@
     "West Bromwich Albion": "西布罗姆维奇",
     "Wolverhampton Wanderers": "狼队"
   },
-  "last_successful_refresh_at": "2026-10-21T05:08:34.406Z",
-  "last_published_blob_sha": "572ef4e046e958e51ffc0f38319746a5dc64cf41"
+  "last_successful_refresh_at": "2026-10-24T04:54:35.960Z",
+  "last_published_blob_sha": "0755bbe4c25dac853f28e185c1baaf108aa56ef8"
 }

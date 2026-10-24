@@ -2474,6 +2474,14 @@
       "away_team": "维多利亚",
       "match_date": "2026-10-19",
       "kickoff_at": "2026-10-19T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103679",
+      "match_id": "fotmob:5103679",
+      "home_team": "克鲁塞罗",
+      "away_team": "雷莫",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T23:00:00Z"
     }
   ]
 }

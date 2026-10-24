@@ -425,7 +425,7 @@
       "home_team": "勒沃库森",
       "away_team": "弗赖堡",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T13:30:00.000Z"
+      "kickoff_at": "2026-10-18T13:30:00Z"
     },
     {
       "source_match_id": "5881190",
@@ -433,7 +433,15 @@
       "home_team": "门兴格拉德巴赫",
       "away_team": "霍芬海姆",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T15:30:00.000Z"
+      "kickoff_at": "2026-10-18T15:30:00Z"
+    },
+    {
+      "source_match_id": "5881205",
+      "match_id": "fotmob:5881205",
+      "home_team": "斯图加特",
+      "away_team": "门兴格拉德巴赫",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:30:00Z"
     }
   ]
 }

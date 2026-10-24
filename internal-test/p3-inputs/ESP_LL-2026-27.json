@@ -722,6 +722,14 @@
       "away_team": "毕尔巴鄂竞技",
       "match_date": "2026-10-21",
       "kickoff_at": "2026-10-21T18:00:00Z"
+    },
+    {
+      "source_match_id": "5868101",
+      "match_id": "fotmob:5868101",
+      "home_team": "阿拉维斯",
+      "away_team": "马拉加",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T19:00:00Z"
     }
   ]
 }

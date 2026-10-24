@@ -553,7 +553,7 @@
       "home_team": "蒙扎",
       "away_team": "卡利亚里",
       "match_date": "2026-10-19",
-      "kickoff_at": "2026-10-19T16:30:00.000Z"
+      "kickoff_at": "2026-10-19T16:30:00Z"
     },
     {
       "source_match_id": "5749707",
@@ -561,7 +561,15 @@
       "home_team": "帕尔马",
       "away_team": "都灵",
       "match_date": "2026-10-19",
-      "kickoff_at": "2026-10-19T18:45:00.000Z"
+      "kickoff_at": "2026-10-19T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749718",
+      "match_id": "fotmob:5749718",
+      "home_team": "都灵",
+      "away_team": "蒙扎",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:45:00Z"
     }
   ]
 }

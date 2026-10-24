@@ -506,6 +506,14 @@
       "away_team": "尼斯",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T18:45:00Z"
+    },
+    {
+      "source_match_id": "5802966",
+      "match_id": "fotmob:5802966",
+      "home_team": "布雷斯特",
+      "away_team": "尼斯",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:45:00Z"
     }
   ]
 }

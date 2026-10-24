@@ -562,6 +562,14 @@
       "away_team": "阿雷佐",
       "match_date": "2026-10-18",
       "kickoff_at": "2026-10-18T17:30:00Z"
+    },
+    {
+      "source_match_id": "5967113",
+      "match_id": "fotmob:5967113",
+      "home_team": "恩波利",
+      "away_team": "维琴察",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:30:00Z"
     }
   ]
 }

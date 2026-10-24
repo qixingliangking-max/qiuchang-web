@@ -881,7 +881,15 @@
       "home_team": "塞尔塔B",
       "away_team": "特内里费",
       "match_date": "2026-10-19",
-      "kickoff_at": "2026-10-19T18:30:00.000Z"
+      "kickoff_at": "2026-10-19T18:30:00Z"
+    },
+    {
+      "source_match_id": "5868510",
+      "match_id": "fotmob:5868510",
+      "home_team": "格拉纳达",
+      "away_team": "巴拉多利德",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:30:00Z"
     }
   ]
 }

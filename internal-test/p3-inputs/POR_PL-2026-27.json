@@ -578,6 +578,14 @@
       "away_team": "吉维森特",
       "match_date": "2026-10-19",
       "kickoff_at": "2026-10-19T19:15:00Z"
+    },
+    {
+      "source_match_id": "5887662",
+      "match_id": "fotmob:5887662",
+      "home_team": "吉马良斯",
+      "away_team": "马里迪莫",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T19:45:00Z"
     }
   ]
 }

@@ -562,6 +562,14 @@
       "away_team": "考文垂",
       "match_date": "2026-10-19",
       "kickoff_at": "2026-10-19T19:00:00Z"
+    },
+    {
+      "source_match_id": "5795491",
+      "match_id": "fotmob:5795491",
+      "home_team": "伊普斯维奇",
+      "away_team": "诺丁汉森林",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T19:00:00Z"
     }
   ]
 }
