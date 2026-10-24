@@ -542,7 +542,7 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
 
   const primaryHref=loggedIn
     ? (isAi?'profile.html':'profile.html')
-    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20261024authstable4&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn
     ? (isAi?'订阅查看完整报告':'进入个人中心')
     : '立即登录';
@@ -3865,7 +3865,7 @@ function jcRenderAiLockedPanel(m,pools,access){
   const loggedIn=Boolean(access?.loggedIn);
   const actionHref=loggedIn
     ? 'profile.html'
-    : 'login.html?v=20260926login3&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20261024authstable4&next='+encodeURIComponent(location.pathname+location.search);
   const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
   const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
   const lockDesc=loggedIn
@@ -5252,7 +5252,7 @@ async function setupDemoAuth(){
       }
 
       await window.qcSupabase.auth.signOut();
-      location.replace('login.html?v=20260926login3&reset=success');
+      location.replace('login.html?v=20261024authstable4&reset=success');
     };
   }
 
@@ -5659,7 +5659,7 @@ async function setupProfile(){
   const user=sessionData?.session?.user||null;
 
   if(sessionError || !user){
-    location.href = 'login.html?v=20260926login3';
+    location.href = 'login.html?v=20261024authstable4';
     return;
   }
 
@@ -5909,7 +5909,7 @@ async function setupProfile(){
     logoutBtn.onclick = async e => {
       e.preventDefault();
       await window.qcSupabase.auth.signOut();
-      location.href = 'login.html?v=20260926login3';
+      location.href = 'login.html?v=20261024authstable4';
     };
   }
 }
@@ -5968,7 +5968,7 @@ async function qcAdminSession(root,nextPage){
   const session=sessionData?.session||null;
   const user=session?.user||null;
   if(sessionError||!user){
-    location.href='login.html?v=20260926login3&next='+encodeURIComponent(nextPage||'admin.html');
+    location.href='login.html?v=20261024authstable4&next='+encodeURIComponent(nextPage||'admin.html');
     return null;
   }
 
