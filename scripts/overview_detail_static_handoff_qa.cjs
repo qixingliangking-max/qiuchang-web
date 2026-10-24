@@ -71,6 +71,22 @@ const {chromium,webkit,devices}=require('playwright');
   try{
    const context=await browser.newContext({...item.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
    const page=await context.newPage();
+   // A frozen complete SSR archive exists only once all FT have settled.
+   // When testing after a date rollover with a partial prior business day,
+   // the live page intentionally removes a *stale* SSR archive. For this
+   // pre-init interaction test alone, keep its unchanged public frozen rows:
+   // this reproduces the period when that archived date was yesterday.
+   // The production date guard and partial-history updater are NOT modified.
+   await page.route('https://qcda.cn/index.html',async route=>{
+     const response=await route.fetch();
+     const body=await response.text();
+     const marker='<script>(function(){var c=document.getElementById("jcYesterdayCards")';
+     const start=body.indexOf(marker);
+     const end=start>=0?body.indexOf('</script>',start):-1;
+     if(start<0||end<0)throw Error('Expected production expired-SSR guard missing');
+     const patched=body.slice(0,start)+body.slice(end+'</script>'.length);
+     await route.fulfill({response,body:patched});
+   });
    let delayed=false,selectedId=null;
    await page.route('**/app.js?v=*',async route=>{
      const source=route.request().frame().url();
@@ -99,7 +115,7 @@ const {chromium,webkit,devices}=require('playwright');
       !/^\d{1,2}[-:]\d{1,2}$/.test(details.publicScore||''))
      throw Error('Early static handoff missing published fixture metadata '+JSON.stringify({engine:item.name,details}));
    await page.locator('#jcMatchDetailRoot .detail-head').waitFor({state:'visible',timeout:15000});
-   reports.push({engine:item.name,mode:'pre-app-static-row',endToEndClickMs:Date.now()-t0,
+   reports.push({engine:item.name,mode:'pre-app-static-row-with-current-SSR-simulated',endToEndClickMs:Date.now()-t0,
      handoffMatch:details.matchId,dayCount:details.dayCount,
      matchDate:details.matchDate,publicScore:details.publicScore,earlyAppDelayTriggered:delayed});
    await context.close();
