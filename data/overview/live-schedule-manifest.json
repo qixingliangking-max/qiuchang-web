@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T15:20:55+08:00",
+  "updated_at": "2026-10-24T08:43:43.664Z",
   "dates": {
     "2026-10-23": {
       "file": "data/overview/live/2026-10-23.json",
@@ -9,7 +9,7 @@
     },
     "2026-10-24": {
       "file": "data/overview/live/2026-10-24.json",
-      "version": "de248ebca8262829",
+      "version": "a6c06d27f2453425",
       "match_count": 30
     },
     "2026-10-25": {
