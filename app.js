@@ -4838,6 +4838,23 @@ async function qcAuthSignUpResilient(email,password){
   return directSignup;
 }
 
+function qcSafeLoginReturnTarget(raw){
+  // A decoded next=/football.html?... from an internal Pro gate must be
+  // allowed. Reject external origins and non-page paths (open redirects).
+  if(!raw || String(raw).length>1024) return 'index.html';
+  try{
+    const url=new URL(String(raw),location.origin);
+    if(url.origin!==location.origin) return 'index.html';
+    if(url.pathname==='/' || url.pathname==='/index.html')
+      return 'index.html'+url.search;
+    if(!/^\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_-]+\.html$/.test(url.pathname))
+      return 'index.html';
+    return url.pathname.slice(1)+url.search;
+  }catch(_){
+    return 'index.html';
+  }
+}
+
 async function setupDemoAuth(){
   const login = $('#loginForm');
 
@@ -4960,7 +4977,7 @@ async function setupDemoAuth(){
           loginHint.className='code-hint success';
         }
         const next = new URLSearchParams(location.search).get('next');
-        const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
+        const safeNext=qcSafeLoginReturnTarget(next);
 
         // 确认 Supabase 会话已经写入浏览器存储，再进入数据页，避免登录后首屏仍按旧状态渲染。
         qcAccessStatePromise=null;
@@ -4992,7 +5009,7 @@ async function setupDemoAuth(){
              login.querySelector('input[type="password"]')?.value ||
              login.contains(document.activeElement)) return;
           const next=new URLSearchParams(location.search).get('next');
-          const safeNext=next && /^[a-zA-Z0-9._?=&-]+$/.test(next)?next:'index.html';
+          const safeNext=qcSafeLoginReturnTarget(next);
           location.replace(safeNext);
         }catch(_){
           console.warn('自动登录会话恢复稍后再试');
