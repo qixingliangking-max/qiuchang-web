@@ -76,6 +76,65 @@
     <a href="#" class="logout" id="navLogout" style="display:none">退出登录</a>
   </nav>
 </div>
+<script>
+  // Public-only first paint for same-tab list → detail navigation.
+  // Official app.js replaces this placeholder; no Pro data or claims are cached.
+  (()=>{
+    try{
+      const q=new URLSearchParams(location.search);
+      const id=q.get('id');
+      if(!id || !/^[0-9a-f-]{36}$/i.test(id)) return;
+      const saved=JSON.parse(sessionStorage.getItem('qc-football-detail-nav-v1')||'null');
+      const m=saved?.match;
+      if(!saved || !m || !Array.isArray(saved.day) ||
+        Date.now()-Number(saved.savedAt)>45000 ||
+        saved.businessDate!==m.business_date ||
+        String(m.id)!==id ||
+        !saved.day.some(row=>String(row.id)===id)) return;
+
+      const root=document.getElementById('jcMatchDetailRoot');
+      if(!root) return;
+      const el=(tag,cls,value)=>{
+        const node=document.createElement(tag);
+        if(cls) node.className=cls;
+        if(value!==undefined) node.textContent=String(value||'');
+        return node;
+      };
+      const layout=el('div','jc-detail-layout');
+      layout.dataset.qcPublicFirstPaint='1';
+      const aside=el('aside','jc-detail-sidebar');
+      const asideHead=el('div','jc-detail-sidebar-head');
+      const back=el('a','');
+      back.href='football.html?date='+encodeURIComponent(saved.businessDate);
+      back.textContent='‹ 返回赛事';
+      asideHead.append(back,el('b','',saved.day.length+' 场'));
+      aside.append(asideHead);
+      layout.append(aside);
+
+      const main=el('section','jc-detail-main');
+      const head=el('div','detail-head jc-odds-headcard');
+      const top=el('div','match-top');
+      top.append(el('span','',(m.match_num||'')+' · '+(m.league_name||m.league_short_name||'—')),
+                 el('span','',(m.match_date||'')+' '+String(m.match_time||'').slice(0,5)));
+      head.append(top);
+      const title=el('div','detail-title jc-odds-matchup');
+      title.style.marginTop='18px';
+      const home=el('div','team-badge jc-detail-team jc-detail-team-home',m.home_team_name||'—');
+      const center=el('div','center-score');
+      // No stale score/status assumptions: the official detail app fills both.
+      center.append(el('strong','','VS'),el('small','','读取比赛状态…'));
+      const away=el('div','team-badge right jc-detail-team jc-detail-team-away',m.away_team_name||'—');
+      title.append(home,center,away);
+      head.append(title);
+      main.append(head);
+      const loading=el('div','jc-match-loading-shell compact','比赛详情加载中…');
+      loading.setAttribute('role','status');
+      main.append(loading);
+      layout.append(main);
+      root.replaceChildren(layout);
+    }catch(_){ /* Missing/storage-blocked handoff keeps the old safe loader. */ }
+  })();
+</script>
 <script src="assets/vendor/supabase-js-2.117.3.js"></script>
 <script src="supabase-config.js"></script>
 <script src="supabase-client.js?v=20260927autologin1"></script>
