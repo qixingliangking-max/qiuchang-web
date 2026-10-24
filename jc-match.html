@@ -121,8 +121,20 @@
       title.style.marginTop='18px';
       const home=el('div','team-badge jc-detail-team jc-detail-team-home',m.home_team_name||'—');
       const center=el('div','center-score');
-      // No stale score/status assumptions: the official detail app fills both.
-      center.append(el('strong','','VS'),el('small','','读取比赛状态…'));
+      // Yesterday's immutable publicly settled HT/FT can paint immediately
+      // from the already visible archive row. Never expose any locked model,
+      // AI report, odds or inferred result before official status is known.
+      const status=String(m.match_status||m.raw?.matchStatusName||'');
+      const ft=String(m.raw?.sectionsNo999||'').trim();
+      const ht=String(m.raw?.sectionsNo1||'').trim();
+      const finished=/(已结束|完场|完赛|FT|FINISHED)/i.test(status) &&
+        /^\d{1,2}[-:]\d{1,2}$/.test(ft) &&
+        /^\d{1,2}[-:]\d{1,2}$/.test(ht);
+      center.append(
+        el('strong',finished?'jc-detail-score-finished':'',
+          finished?ft.replace(':','-'):'VS'),
+        el('small','',finished?'半 '+ht.replace(':','-'):'读取比赛状态…')
+      );
       const away=el('div','team-badge right jc-detail-team jc-detail-team-away',m.away_team_name||'—');
       title.append(home,center,away);
       head.append(title);
