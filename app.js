@@ -4604,8 +4604,12 @@ async function setupJcMatchDetail(options={}){
   let oddsHistoryPromise=null;
   async function ensureOddsHistoryRows(){
     const cached=jcDetailOddsHistoryCache.get(String(id));
-    if(cached?.data) return cached.data;
-    if(cached?.promise) return cached.promise;
+    if(cached?.data)
+      return cached.data.length?cached.data:(Array.isArray(snapshotRowsFast)?snapshotRowsFast:[]);
+    if(cached?.promise){
+      const rows=await cached.promise;
+      return rows.length?rows:(Array.isArray(snapshotRowsFast)?snapshotRowsFast:[]);
+    }
     const query=jcFetchDetailOddsHistory(id,m.kickoff_at)
       .then(data=>{
         const rows=Array.isArray(data)?data:[];
