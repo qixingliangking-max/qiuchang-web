@@ -1,0 +1,88 @@
+name: iPhone detail public first-paint production QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - jc-match.html
+      - .github/workflows/detail-ios-fastpath-qa.yml
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser runners
+        run: |
+          mkdir -p /tmp/qcda-iphone-qa
+          cd /tmp/qcda-iphone-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Verify actual production header handoff and protected panel
+        env:
+          NODE_PATH: /tmp/qcda-iphone-qa/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          (async()=>{
+            const engines=[
+              {name:'iphone-webkit',engine:webkit,device:devices['iPhone 13']},
+              {name:'android-chromium',engine:chromium,device:devices['Pixel 7']}
+            ];
+            const reports=[];
+            for(const engine of engines){
+              const browser=await engine.engine.launch({headless:true});
+              try{
+                const context=await browser.newContext({...engine.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                await context.addInitScript(()=>{
+                  window.__qcPerfHandoff={early:null,official:null};
+                  const obs=new MutationObserver(()=>{
+                    const current=document.querySelector('[data-qc-public-first-paint="1"]');
+                    if(current && window.__qcPerfHandoff.early===null)
+                      window.__qcPerfHandoff.early=performance.now();
+                    const official=document.querySelector('#jcMatchDetailRoot .detail-head');
+                    if(official && !current && window.__qcPerfHandoff.official===null)
+                      window.__qcPerfHandoff.official=performance.now();
+                  });
+                  obs.observe(document,{childList:true,subtree:true});
+                });
+                const page=await context.newPage();
+                const errors=[];
+                page.on('pageerror',e=>errors.push(String(e)));
+                const homepage=await page.goto('https://qcda.cn/index.html',{waitUntil:'domcontentloaded',timeout:45000});
+                if(homepage?.status()!==200) throw Error('Homepage unavailable');
+                await page.locator('#jcYesterdayCards a.jc-review-match').first().waitFor({state:'visible',timeout:30000});
+                await page.locator('#jcYesterdayCards a.jc-review-match').first().click();
+                await page.waitForFunction(()=>{
+                  const t=window.__qcPerfHandoff;
+                  const panel=document.querySelector('#jcMainPanel');
+                  return location.pathname.endsWith('/jc-match.html') && t?.early!=null && t?.official!=null &&
+                    panel && !/正在加载中/.test(panel.textContent||'');
+                },null,{timeout:30000});
+                const measurements=await page.evaluate(()=>({
+                  firstPublicHeaderMs:Math.round(window.__qcPerfHandoff.early),
+                  officialHeaderMs:Math.round(window.__qcPerfHandoff.official),
+                  panel:document.querySelector('#jcMainPanel')?.innerText?.slice(0,240),
+                  link:location.href,
+                  finalFastPlaceholderCount:document.querySelectorAll('[data-qc-public-first-paint]').length,
+                  officialHeader:document.querySelector('#jcMatchDetailRoot .detail-head')?.innerText?.slice(0,220)
+                }));
+                if(measurements.firstPublicHeaderMs>=measurements.officialHeaderMs)
+                  throw Error('Public header not shown before full app: '+JSON.stringify(measurements));
+                if(measurements.finalFastPlaceholderCount!==0)
+                  throw Error('Temporary header did not cleanly yield to app');
+                if(!/登录后查看/.test(measurements.panel||''))
+                  throw Error('Guest permission wall not preserved: '+measurements.panel);
+                if(errors.length) throw Error('Page JS errors '+errors.slice(0,3).join(' | '));
+                reports.push({engine:engine.name,...measurements,errorCount:errors.length});
+                await context.close();
+              } finally { await browser.close(); }
+            }
+            console.log('QCDA_IOS_FASTPATH_PRODUCTION='+JSON.stringify(reports));
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1);});
+          JS
