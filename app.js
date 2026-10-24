@@ -2552,25 +2552,41 @@ async function loadJcFrontend(){
       _homeLogoUrl:m._homeLogoUrl||'',_awayLogoUrl:m._awayLogoUrl||''
     };
   }
+  function handoffOverviewDetail(id){
+    if(!id) return false;
+    // Reuse the already published PUBLIC fixture/FT snapshot, never a
+    // protected model or AI report. Works for both the text link and the
+    // clickable row (which previously skipped this fast path).
+    const entry=[...detailPublicRowsByDate].find(([,rows])=>
+      rows.some(m=>String(m.id)===String(id)));
+    if(!entry) return false;
+    const match=entry[1].find(m=>String(m.id)===String(id));
+    if(!match) return false;
+    try{
+      sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
+        savedAt:Date.now(),businessDate:entry[0],
+        match:publicDetailFields(match),
+        day:entry[1].map(row=>{
+          const item=publicDetailFields(row);
+          delete item.raw;
+          return item;
+        })
+      }));
+      return true;
+    }catch(_){return false;}
+  }
   for(const container of [cards,reviewCards].filter(Boolean)){
     container.addEventListener('click',event=>{
       const link=event.target?.closest?.('a[href*="jc-match.html?id="]');
-      if(!link || !container.contains(link)) return;
-      const id=new URL(link.href,location.href).searchParams.get('id');
-      const ds=[...detailPublicRowsByDate].find(([date,rows])=>rows.some(m=>String(m.id)===String(id)));
-      if(!ds) return;
-      const match=ds[1].find(m=>String(m.id)===String(id));
-      try{
-        sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
-          savedAt:Date.now(),businessDate:ds[0],
-          match:publicDetailFields(match),
-          day:ds[1].map(row=>{
-            const item=publicDetailFields(row);
-            delete item.raw;
-            return item;
-          })
-        }));
-      }catch(_){}
+      const row=event.target?.closest?.('.jc-overview-row[data-match-id]');
+      if(link && !container.contains(link)) return;
+      if(!link && (!row || !container.contains(row) ||
+        event.target?.closest?.('a,button,input,select,textarea'))) return;
+      let id=null;
+      if(link){
+        try{id=new URL(link.href,location.href).searchParams.get('id');}catch(_){}
+      }else id=row?.dataset.matchId;
+      handoffOverviewDetail(id);
     },true);
   }
 
