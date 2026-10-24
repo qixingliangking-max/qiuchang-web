@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - 'scripts/overview_detail_static_handoff_qa.cjs'
+      - 'index.html'
+      - 'app.js'
+      - 'jc-match.html'
       - '.github/workflows/overview-static-detail-handoff-qa.yml'
 permissions:
   contents: read
@@ -23,6 +26,19 @@ jobs:
           npm init -y >/dev/null
           npm install --no-audit --no-fund playwright@1.56.1
           npx playwright install --with-deps chromium webkit
+      - name: Confirm live page includes early handler and public dates
+        run: |
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            page="$(curl -fsSL --max-time 12 'https://qcda.cn/index.html?qa=early-static-20261024' || true)"
+            if printf '%s' "$page" | grep -q 'data-qc-kickoff-at=' &&
+               printf '%s' "$page" | grep -q 'Early home date taps'; then
+              echo "Production static detail metadata active"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Production static HTML has not deployed" >&2
+          exit 1
       - name: Click yesterday's static match rows and links
         env:
           NODE_PATH: /tmp/qcda-detail-qa/node_modules
