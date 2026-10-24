@@ -3078,24 +3078,31 @@ async function loadJcFrontend(){
     cards.setAttribute('aria-busy','true');
 
     const dsPrev=qcAddDays(ds,-1);
-    let timer;
-    let nextCurrent, nextPrevious;
+    // Resolve the target day independently of its previous-day review.
+    // On iPhone WebKit an archived review can lag by seconds; this must not
+    // freeze the date controls or delay the selected day's public/Pro gate.
+    let previousResolved=false;
+    let previousValue=null;
+    const previousTask=Promise.resolve()
+      .then(()=>fetchHistoryReviewDateReady(dsPrev))
+      .catch(error=>({data:[],error}))
+      .then(result=>{
+        previousResolved=true;
+        previousValue=result;
+        return result;
+      });
+    let timer, nextCurrent;
     try{
-      [nextCurrent,nextPrevious]=await Promise.race([
-        Promise.all([
-          fetchOverviewDateReady(ds),
-          fetchHistoryReviewDateReady(dsPrev).catch(error=>({data:[],error}))
-        ]),
+      nextCurrent=await Promise.race([
+        fetchOverviewDateReady(ds),
         new Promise(resolve=>{
-          timer=setTimeout(()=>resolve([
-            {data:[],error:new Error('overview_date_timeout')},
-            {data:[],error:new Error('overview_history_timeout')}
-          ]),12000);
+          timer=setTimeout(()=>resolve({
+            data:[],error:new Error('overview_date_timeout')
+          }),12000);
         })
       ]);
     }catch(error){
       nextCurrent={data:[],error};
-      nextPrevious={data:[],error};
     }finally{
       clearTimeout(timer);
     }
@@ -3104,30 +3111,61 @@ async function loadJcFrontend(){
     if(nextCurrent?.error || !Array.isArray(nextCurrent?.data)){
       requestedDate=selectedDate;
       reflectOverviewDateIntent(selectedDate,false);
-      // The previous fully loaded day remains visible and clickable.
       console.warn('日期切换读取失败，保留已显示内容',nextCurrent?.error);
       return;
     }
 
-    // A failed previous-day review must not block a fully loaded destination.
-    // Keep permission filtering and completed historical state unchanged.
-    const previousForDisplay=nextPrevious?.error || !Array.isArray(nextPrevious?.data)
-      ? {data:allRows.filter(m=>jcBusinessDate(m)===dsPrev),historyFinal:false}
-      : nextPrevious;
+    const previousFallback=allRows.filter(m=>jcBusinessDate(m)===dsPrev);
+    const readyReview=previousResolved && previousValue &&
+      !previousValue.error && Array.isArray(previousValue.data);
+    const previousForDisplay=readyReview
+      ? previousValue : {data:previousFallback,historyFinal:false};
     allRows=[...(nextCurrent.data||[]),...(previousForDisplay.data||[])].filter(m=>m.match_date);
     previousHistoryFinal=Boolean(previousForDisplay?.historyFinal);
-    previousLoading=false;
+    // If the review isn't ready and cannot be reused from the current set,
+    // show an honest loading label. Never claim 0 finished matches.
+    previousLoading=!readyReview && previousFallback.length===0;
+    if(previousLoading && reviewCards){
+      reviewCards.innerHTML='<div class="jc-review-empty" role="status">正在更新赛后回看…</div>';
+      if($('#jcYesterdayMeta')) $('#jcYesterdayMeta').textContent=dsPrev.slice(5)+' · 加载中';
+    }
     selectedDate=ds;
     requestedDate=ds;
     reflectOverviewDateIntent(ds,false);
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
-
-    // The entire static day snapshot is rendered once, with no per-match fetch.
     if(token!==loadToken || selectedDate!==ds) return;
     render();
-    // Date changes render only the chosen static day and its review.
-    // The existing two-minute timer checks only today's post-match scores.
+
+    if(!readyReview){
+      // Incremental review completion only repaints the public history area.
+      // A later date tap invalidates this callback through loadToken.
+      previousTask.then(result=>{
+        if(token!==loadToken || selectedDate!==ds) return;
+        if(result?.error || !Array.isArray(result?.data)){
+          previousLoading=false;
+          if(reviewCards && !previousFallback.length)
+            reviewCards.innerHTML='<div class="jc-review-empty">赛后回看暂时读取失败</div>';
+          return;
+        }
+        const current=allRows.filter(m=>jcBusinessDate(m)===ds);
+        allRows=[...current,...result.data].filter(m=>m.match_date);
+        previousHistoryFinal=Boolean(result.historyFinal);
+        previousLoading=false;
+        // Protect the already rendered predictions and access gate: only
+        // update the separate review section and its metadata.
+        const safeRows=access.loggedIn ? result.data :
+          jcGuestFinishedReviewRows(result.data.filter(m=>qcJcIsVisibleMatch(m)));
+        rememberDetailPublicRows(dsPrev,safeRows);
+        if($('#jcYesterdayMeta'))
+          $('#jcYesterdayMeta').textContent=dsPrev.slice(5)+' · '+safeRows.length+'场';
+        if(reviewCards){
+          qcReconcileOverviewTable(reviewCards,jcRenderYesterdayReview(safeRows,calendarToday));
+          jcBindOverviewRows(reviewCards);
+        }
+      }).catch(error=>console.warn('赛后回看异步更新失败',error));
+    }
+    // The selected date is now responsive even when history is still loading.
   }
 
   function render(){
