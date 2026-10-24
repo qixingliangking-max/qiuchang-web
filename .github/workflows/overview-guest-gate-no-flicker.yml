@@ -1,0 +1,88 @@
+name: Home guest gate no-flicker QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - '.github/workflows/overview-guest-gate-no-flicker.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install isolated browsers
+        run: |
+          mkdir -p /tmp/qcda-guest-gate-qa
+          cd /tmp/qcda-guest-gate-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Check guest homepage never flashes public predictions
+        env:
+          NODE_PATH: /tmp/qcda-guest-gate-qa/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          (async()=>{
+            const results=[];
+            for(const [engineName,engine,device] of [
+              ['iphone-webkit',webkit,devices['iPhone 13']],
+              ['android-chromium',chromium,devices['Pixel 7']]
+            ]){
+              const browser=await engine.launch({headless:true});
+              try{
+                const context=await browser.newContext({...device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                await context.addInitScript(()=>{
+                  window.__qcGuestFrames=[];
+                  window.__qcGuestSawPredictionTable=false;
+                  const inspect=()=>{
+                    const target=document.getElementById('jcLiveCards');
+                    if(!target) return;
+                    const text=(target.innerText||target.textContent||'').slice(0,100);
+                    const hasTable=Boolean(target.querySelector('.jc-overview-table'));
+                    if(hasTable) window.__qcGuestSawPredictionTable=true;
+                    const state=hasTable?'PREDICTION_TABLE':target.querySelector('.qc-premium-gate')?'LOGIN_GATE':text;
+                    if(window.__qcGuestFrames.at(-1)?.state!==state)
+                      window.__qcGuestFrames.push({at:Math.round(performance.now()),state});
+                  };
+                  new MutationObserver(inspect).observe(document,{subtree:true,childList:true,characterData:true});
+                  document.addEventListener('DOMContentLoaded',inspect);
+                });
+                const page=await context.newPage();
+                const jsErrors=[];
+                page.on('pageerror',err=>jsErrors.push(err.message));
+                const res=await page.goto('https://qcda.cn/index.html?gateqa=20261024',
+                    {waitUntil:'domcontentloaded',timeout:45000});
+                if(res?.status()!==200)throw Error(engineName+' page HTTP '+res?.status());
+                await page.locator('#jcLiveCards .qc-premium-gate a.qc-premium-primary')
+                  .waitFor({state:'visible',timeout:30000});
+                const observation=await page.evaluate(()=>({
+                  states:window.__qcGuestFrames,
+                  flashedTable:window.__qcGuestSawPredictionTable,
+                  gate:document.querySelector('#jcLiveCards .qc-premium-gate')?.innerText,
+                  metadata:document.querySelector('#jcPredictionMeta')?.textContent,
+                  hasHistorySection:Boolean(document.querySelector('#jcYesterdayCards')),
+                  scripts:[...document.scripts].map(s=>s.src).filter(x=>x.includes('app.js'))
+                }));
+                if(observation.flashedTable || observation.states.some(x=>x.state==='PREDICTION_TABLE'))
+                  throw Error(engineName+' guest prediction table FLASH '+JSON.stringify(observation));
+                if(!observation.gate?.includes('登录后查看今日预测'))
+                  throw Error(engineName+' guest gate missing '+JSON.stringify(observation));
+                if(!observation.hasHistorySection)throw Error(engineName+' public history removed');
+                if(!observation.scripts.some(x=>x.includes('20261024guestgate1')))
+                  throw Error(engineName+' stale app.js cache');
+                if(jsErrors.length)throw Error(engineName+' JS errors '+jsErrors.slice(0,3).join(' | '));
+                results.push({engine:engineName,...observation,errorCount:jsErrors.length});
+                await context.close();
+              }finally{await browser.close();}
+            }
+            console.log('QCDA_GUEST_GATE_NO_FLICKER='+JSON.stringify(results));
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
+          JS
