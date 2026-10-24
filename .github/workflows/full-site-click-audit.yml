@@ -1,0 +1,29 @@
+name: Full-site interactive click performance audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/full_site_click_audit_20261024.cjs'
+      - '.github/workflows/full-site-click-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser automation
+        run: |
+          mkdir -p /tmp/qcda-full-click
+          cd /tmp/qcda-full-click
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Click production pages on desktop, iPhone and Android
+        env:
+          NODE_PATH: /tmp/qcda-full-click/node_modules
+        run: node scripts/full_site_click_audit_20261024.cjs
