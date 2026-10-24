@@ -40,6 +40,12 @@ jobs:
               try{
                 const context=await browser.newContext({...engine.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
                 await context.addInitScript(()=>{
+                  // This captures the actual user click event, separate from
+                  // Playwright's click actionability/scroll wait.
+                  document.addEventListener('click',event=>{
+                    if(event.target?.closest?.('a.jc-review-match'))
+                      sessionStorage.setItem('qcda-test-actual-click-at',String(Date.now()));
+                  },true);
                   window.__qcPerfHandoff={early:null,official:null};
                   const obs=new MutationObserver(()=>{
                     const current=document.querySelector('[data-qc-public-first-paint="1"]');
@@ -86,6 +92,8 @@ jobs:
                   officialHeaderMs:Math.round(window.__qcPerfHandoff.official),
                   clickToPublicHeaderMs:Math.round(performance.timeOrigin+window.__qcPerfHandoff.early-clickedAt),
                   clickToOfficialHeaderMs:Math.round(performance.timeOrigin+window.__qcPerfHandoff.official-clickedAt),
+                  actualEventToPublicMs:Math.round(performance.timeOrigin+window.__qcPerfHandoff.early-Number(sessionStorage.getItem('qcda-test-actual-click-at')||clickedAt)),
+                  actualEventToOfficialMs:Math.round(performance.timeOrigin+window.__qcPerfHandoff.official-Number(sessionStorage.getItem('qcda-test-actual-click-at')||clickedAt)),
                   panel:document.querySelector('#jcMainPanel')?.innerText?.slice(0,240),
                   link:location.href,
                   finalFastPlaceholderCount:document.querySelectorAll('[data-qc-public-first-paint]').length,
