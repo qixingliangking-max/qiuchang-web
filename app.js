@@ -5478,13 +5478,27 @@ async function setupFootballLoginBar(){
   const apply=session=>{
     bars.forEach(bar=>{ bar.style.display=session?'none':'flex'; });
   };
-
-  const {data,error}=await window.qcSupabase.auth.getSession();
-  apply(!error && data ? data.session : null);
-
+  // Subscribe BEFORE reading session. A slow refresh must not prevent
+  // SIGNED_IN/SIGNED_OUT from updating the fixed blue login CTA.
+  let authEventSeen=false;
   window.qcSupabase.auth.onAuthStateChange((_event,nextSession)=>{
+    authEventSeen=true;
     apply(nextSession);
   });
+
+  // Unknown session is not proof of being logged out: preserve initial
+  // display:none instead of flashing a guest CTA over a member's cards.
+  try{
+    const {data,error}=await Promise.race([
+      window.qcSupabase.auth.getSession(),
+      new Promise(resolve=>setTimeout(()=>resolve({
+        data:null,error:{message:'session_check_timeout'}
+      }),2400))
+    ]);
+    if(!authEventSeen && !error && data) apply(data.session);
+  }catch(_){
+    // Auth subscription remains active and will reconcile on recovery.
+  }
 }
 
 
