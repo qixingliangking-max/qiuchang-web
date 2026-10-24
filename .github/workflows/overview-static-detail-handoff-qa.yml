@@ -1,0 +1,29 @@
+name: Overview static match detail handoff production QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/overview_detail_static_handoff_qa.cjs'
+      - '.github/workflows/overview-static-detail-handoff-qa.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Chromium and WebKit
+        run: |
+          mkdir -p /tmp/qcda-detail-qa
+          cd /tmp/qcda-detail-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Click yesterday's static match rows and links
+        env:
+          NODE_PATH: /tmp/qcda-detail-qa/node_modules
+        run: node scripts/overview_detail_static_handoff_qa.cjs
