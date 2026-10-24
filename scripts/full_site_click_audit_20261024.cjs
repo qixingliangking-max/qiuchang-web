@@ -15,15 +15,25 @@ for(const c of configs){
   {page:'football',url:'football.html',ready:'#jcFootballCards .jc-football-card',dateButton:'#jcFootballPrevDate',date:'#jcFootballDateLabel'},
   {page:'league',url:'league.html',ready:'#leagueRecordRoot .qc-league-gate'},
   {page:'login',url:'login.html?v=20261024authstable4',ready:'#loginForm button[type="submit"]'},
-  {page:'profile',url:'profile.html',ready:'body'}
+  {page:'profile',url:'profile.html',ready:'body'},
+  {page:'register',url:'register.html',ready:'#registerForm button[type="submit"]'},
+  {page:'match',url:'jc-match.html?id=06ce3c9d-a44a-413c-b96a-a3b28091ed21',ready:'#jcMatchDetailRoot .detail-head'},
+  {page:'curated',url:'internal-test/curated-lab-20261019.html',ready:'body'}
  ]){
   const page=await context.newPage();
+  await page.addInitScript(()=>{
+    window.__qcAuditTapAt=null;
+    document.addEventListener('click',event=>{
+      if(event.target?.closest?.('#jcPrevDate,#jcFootballPrevDate'))
+        window.__qcAuditTapAt=performance.now();
+    },true);
+  });
   const errors=[],requestErrors=[],slow=[],pending=new Map();
   page.on('pageerror',e=>errors.push(String(e).slice(0,200)));
   page.on('request',r=>pending.set(r,{at:Date.now(),path:new URL(r.url()).pathname}));
   page.on('requestfinished',r=>{const v=pending.get(r);if(v)slow.push({path:v.path,ms:Date.now()-v.at});pending.delete(r)});
   page.on('requestfailed',r=>{requestErrors.push({path:r.url().split('?')[0],err:r.failure()?.errorText});pending.delete(r)});
-  const t0=Date.now();let http=null,readyMs=null,clickMs=null,dateResult=null,menuMs=null,interaction=null,gate=null;
+  const t0=Date.now();let http=null,readyMs=null,clickMs=null,eventToDateMs=null,dateResult=null,menuMs=null,interaction=null,gate=null;
   try {
    const r=await page.goto(BASE+spec.url,{waitUntil:'domcontentloaded',timeout:45000});
    http=r?.status();
@@ -36,9 +46,15 @@ for(const c of configs){
     readyMs=Date.now()-t0;
    }
    if(spec.dateButton){
+     const before=await page.locator(spec.date).innerText();
      const t=Date.now(); await page.locator(spec.dateButton).click({timeout:10000});
-     await page.waitForFunction(selector=>document.querySelector(selector)?.getAttribute('aria-busy')!=='true',spec.date,{timeout:15000});
-     clickMs=Date.now()-t;dateResult=await page.locator(spec.date).innerText();
+     await page.waitForFunction(([selector,original])=>{
+       const label=document.querySelector(selector);
+       return label?.textContent!==original && label?.getAttribute('aria-busy')!=='true';
+     },[spec.date,before],{timeout:15000});
+     clickMs=Date.now()-t;
+     eventToDateMs=await page.evaluate(()=>window.__qcAuditTapAt===null?null:Math.round(performance.now()-window.__qcAuditTapAt));
+     dateResult=await page.locator(spec.date).innerText();
    }
    if(spec.page==='home'||spec.page==='football'){
     if(await page.locator('#menuBtn').isVisible()){
@@ -52,6 +68,12 @@ for(const c of configs){
     const links=await page.locator('#leagueRecordRoot a[href*="login.html"]').count();
     interaction={guestGateLinks:links};
    }
+   if(spec.page==='register'){
+     await page.locator('#regEmail').click();
+     interaction={emailFocused:await page.locator('#regEmail').evaluate(el=>document.activeElement===el)};
+   }
+   if(spec.page==='curated') interaction={visible:(await page.locator('body').innerText()).slice(0,100)};
+   if(spec.page==='match') interaction={head:(await page.locator('#jcMatchDetailRoot .detail-head').innerText()).slice(0,100)};
    if(spec.page==='login'){
     const email=page.locator('#loginEmail');
     const button=page.locator('#loginForm button[type="submit"]');
@@ -60,7 +82,7 @@ for(const c of configs){
     await button.click({timeout:5000});
     interaction={hint:(await page.locator('#loginHint').innerText()).slice(0,130),agreementValid:await page.locator('#loginAgreement').evaluate(el=>el.validity.valid)};
    }
-   report.push({engine:c.name,page:spec.page,http,domMs,readyMs,clickMs,menuMs,dateResult,gate,interaction,
+   report.push({engine:c.name,page:spec.page,http,domMs,readyMs,clickMs,eventToDateMs,menuMs,dateResult,gate,interaction,
      errors,requestErrors:requestErrors.slice(0,5),slow:slow.sort((a,b)=>b.ms-a.ms).slice(0,5),bytesRequests:slow.length});
   }catch(e){report.push({engine:c.name,page:spec.page,http,fail:String(e).slice(0,500),readyMs:Date.now()-t0,errors,requestErrors:requestErrors.slice(0,5),slow:slow.sort((a,b)=>b.ms-a.ms).slice(0,5)})}
   await page.close();
@@ -105,7 +127,7 @@ for(const c of configs){
  console.log('QCDA_EARLY_CLICK_REPLAY='+JSON.stringify(earlyResults));
  if(earlyResults.length!==6)throw Error('Early click regression missing browsers');
 
-console.log('QCDA_AUDIT_PHASE=post_early_click_fix_20261024');
+console.log('QCDA_AUDIT_PHASE=expanded_site_with_event_clock_20261024');
 console.log('QCDA_FULL_CLICK_AUDIT='+JSON.stringify(report));
 console.log('QCDA_FAILURES='+report.filter(x=>x.fail).length);
 })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
