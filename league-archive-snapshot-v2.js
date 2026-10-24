@@ -354,10 +354,18 @@
       return;
     }
 
-    let snapshot;
+    let snapshot,timeoutId;
     try{
-      snapshot=await fetchLeagueSnapshot(comp,stat);
+      snapshot=await Promise.race([
+        fetchLeagueSnapshot(comp,stat),
+        new Promise((_,reject)=>{
+          timeoutId=setTimeout(()=>reject(new Error('联赛快照响应超时，请重新展开重试')),11000);
+        })
+      ]);
     }catch(error){
+      // A stuck promise must not poison the cache for the next attempt.
+      leagueSnapshotCache.delete(String(comp.id)+'|'+String(stat?.season||''));
+
       console.error('联赛快照读取失败',comp.code,error);
       if(box.hidden || !card.classList.contains('is-open')) return;
       box.innerHTML='<div class="qc-league-detail-head"><strong>'+esc(comp.name_cn)+'｜球队赛季数据</strong><button class="qc-league-detail-close" type="button">收起</button></div><div class="qc-league-empty">联赛快照读取失败，请稍后刷新。</div>';
@@ -368,6 +376,9 @@
       return;
     }
 
+    finally{
+      clearTimeout(timeoutId);
+    }
     if(box.hidden || !card.classList.contains('is-open')) return;
 
     const payload=snapshot.payload||{};
