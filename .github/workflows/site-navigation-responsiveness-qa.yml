@@ -1,0 +1,102 @@
+name: Full site navigation responsiveness QA
+on:
+  push:
+    paths:
+      - 'app.js'
+      - 'football.html'
+      - 'index.html'
+      - '.github/workflows/site-navigation-responsiveness-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nav:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install headless browsers
+        run: |
+          mkdir -p /tmp/qcda-navigation-qa
+          cd /tmp/qcda-navigation-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Test live fast date navigation with three browser surfaces
+        env:
+          NODE_PATH: /tmp/qcda-navigation-qa/node_modules
+        run: |
+          node <<'JS'
+          const {webkit,chromium,devices}=require('playwright');
+          const start='2026-10-24', before='2026-10-22', midway='2026-10-23';
+          const configs=[
+            {name:'desktop-Chrome',engine:chromium,opts:{viewport:{width:1360,height:900}}},
+            {name:'iPhone-WebKit',engine:webkit,opts:devices['iPhone 13']},
+            {name:'Android-Chromium',engine:chromium,opts:devices['Pixel 7']}
+          ];
+          const results=[];
+          (async()=>{
+            for(const cfg of configs){
+              const browser=await cfg.engine.launch({headless:true});
+              try{
+                const context=await browser.newContext({...cfg.opts,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                for(const test of [
+                  {name:'football',url:'football.html',prev:'#jcFootballPrevDate',next:'#jcFootballNextDate',label:'#jcFootballDateLabel',
+                  ready:()=>document.querySelectorAll('#jcFootballCards .jc-football-card').length>0},
+                  {name:'homepage',url:'index.html',prev:'#jcPrevDate',next:'#jcNextDate',label:'#jcDateLabel',
+                  ready:()=>document.querySelector('#jcLiveCards .qc-premium-gate') && document.querySelector('#jcYesterdayCards')}
+                ]){
+                  const page=await context.newPage();
+                  const errors=[];
+                  page.on('pageerror',e=>errors.push(String(e)));
+                  const url='https://qcda.cn/'+test.url+'?date='+start;
+                  const t0=Date.now();
+                  const resp=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
+                  if(resp?.status()!==200)throw Error('HTTP failed '+cfg.name+' '+test.url);
+                  if(test.name==='football')
+                    await page.waitForFunction(test.ready,null,{timeout:35000});
+                  else await page.locator('#jcLiveCards .qc-premium-gate').waitFor({state:'visible',timeout:35000});
+                  const tReady=Date.now();
+                  // Delay unseen history files to reproduce previously unresponsive arrows.
+                  await page.route('**/data/overview/**',async route=>{
+                    await new Promise(resolve=>setTimeout(resolve,500));
+                    await route.continue();
+                  });
+                  const prev=page.locator(test.prev);
+                  const next=page.locator(test.next);
+                  const initialLabel=await page.locator(test.label).innerText();
+                  if(await prev.isDisabled()) throw Error('Previous arrow unexpectedly disabled '+cfg.name+' '+test.name);
+                  await prev.click();
+                  await prev.click();
+                  await page.waitForFunction(date=>new URL(location.href).searchParams.get('date')===date,before,{timeout:30000});
+                  if(await page.locator(test.label).getAttribute('aria-busy')==='true')
+                    await page.waitForFunction(sel=>document.querySelector(sel)?.getAttribute('aria-busy')!=='true',test.label,{timeout:5000});
+                  const tTwo=Date.now();
+                  await next.click();
+                  await page.waitForFunction(date=>new URL(location.href).searchParams.get('date')===date,midway,{timeout:30000});
+                  const tBack=Date.now();
+                  const metrics={
+                    engine:cfg.name,page:test.name,initialLabel,
+                    initialLoadMs:tReady-t0,rapidTwoPrevMs:tTwo-tReady,
+                    nextAfterTwoPrevMs:tBack-tTwo,
+                    finalDate:new URL(page.url()).searchParams.get('date'),
+                    label:await page.locator(test.label).innerText(),
+                    errors,rows:test.name==='football'
+                      ?await page.locator('#jcFootballCards .jc-football-card').count()
+                      :await page.locator('#jcLiveCards .qc-premium-gate').count()
+                  };
+                  console.log('QCDA_NAVIGATION_QA='+JSON.stringify(metrics));
+                  if(metrics.errors.length)throw Error('JS exceptions '+JSON.stringify(metrics));
+                  if(metrics.rows<1)throw Error('Content unavailable '+JSON.stringify(metrics));
+                  results.push(metrics);
+                  await page.close();
+                }
+                await context.close();
+              }finally{await browser.close();}
+            }
+            console.log('QCDA_NAVIGATION_PASS='+results.length);
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
+          JS
