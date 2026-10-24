@@ -81,9 +81,10 @@ for(const c of configs){
        {name:'football',route:'football.html',button:'#jcFootballPrevDate',label:'#jcFootballDateLabel'}
      ]){
        const page=await context.newPage();
-       const nowInBeijing=new Intl.DateTimeFormat('en-CA',{
+       const parts=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{
          timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
-       }).format(new Date());
+       }).formatToParts(new Date()).map(v=>[v.type,v.value]));
+       const nowInBeijing=[parts.year,parts.month,parts.day].join('-');
        const d=new Date(nowInBeijing+'T12:00:00Z');
        d.setUTCDate(d.getUTCDate()-1);
        const prev=d.toISOString().slice(0,10);
