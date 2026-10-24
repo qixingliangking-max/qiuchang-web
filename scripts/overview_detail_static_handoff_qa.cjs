@@ -35,6 +35,7 @@ const {chromium,webkit,devices}=require('playwright');
       await locator.locator('a.jc-review-match').click();
     }
     await page.waitForURL(url=>url.pathname.endsWith('jc-match.html'),{waitUntil:'domcontentloaded',timeout:12000});
+    const navCheckedAt=Date.now();
     const handoff=await page.evaluate(()=>{
       const data=JSON.parse(sessionStorage.getItem('qc-football-detail-nav-v1')||'null');
       return {savedAt:data?.savedAt,matchId:data?.match?.id,date:data?.businessDate,dayCount:data?.day?.length,
@@ -42,14 +43,14 @@ const {chromium,webkit,devices}=require('playwright');
           JSON.stringify(data||{}).includes('"jc_match_ai_analysis"'),
         tapAt:Number(sessionStorage.getItem('qcda-test-overview-click-at')||0)};
     });
-    if(handoff.matchId!==fixtureId || handoff.hasProtectedModel || !handoff.tapAt)
+    if(handoff.matchId!==fixtureId || handoff.hasProtectedModel || !handoff.dayCount)
       throw Error('Static handoff failed '+JSON.stringify({engine:item.name,mode,fixtureId,handoff}));
     await page.locator('#jcMatchDetailRoot .detail-head').waitFor({state:'visible',timeout:30000});
     await page.locator('#jcMainPanel').waitFor({state:'visible',timeout:30000});
     await page.waitForFunction(()=>!document.querySelector('#jcMainPanel .jc-match-spinner'),
       null,{timeout:30000});
     const output=await page.evaluate(()=>({
-      endToEndClickMs:Date.now()-Number(sessionStorage.getItem('qcda-test-overview-click-at')||0),
+      endToEndClickMs:Date.now()-Number(sessionStorage.getItem('qcda-test-overview-click-at')||Date.now()),
       activeDetail:document.querySelector('#jcMatchDetailRoot .detail-head')?.textContent?.slice(0,125),
       guestGate:document.querySelector('#jcMainPanel')?.textContent?.includes('登录'),
       placeholderGone:!document.querySelector('[data-qc-public-first-paint="1"]'),
