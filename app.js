@@ -2664,6 +2664,7 @@ async function loadJcFrontend(){
   rememberDetailPublicRows(candidatePreviousDate,(previousResult.data||[]));
   let previousHistoryFinal=Boolean(previousResult?.historyFinal);
   let selectedDate=initialDate;
+  let requestedDate=initialDate;
   let modelsLoaded=false;
   let loadToken=0;
 
@@ -3040,31 +3041,74 @@ async function loadJcFrontend(){
     render();
   }
 
+  function reflectOverviewDateIntent(ds,busy){
+    if(label){
+      label.textContent=qcDateLabel(ds);
+      label.setAttribute('aria-busy',String(Boolean(busy)));
+      label.classList.toggle('qc-date-pending',Boolean(busy));
+    }
+    if(prev){
+      prev.disabled=!access.loggedIn && ds<=overviewMinDate;
+      prev.setAttribute('aria-disabled',String(prev.disabled));
+    }
+    if(next){
+      next.disabled=!access.loggedIn && ds>=overviewMaxDate;
+      next.setAttribute('aria-disabled',String(next.disabled));
+    }
+  }
+
   async function loadFrontendDateBundle(ds){
     if(!isValidOverviewDate(ds)) return;
     if(!access.loggedIn && !isOverviewDateAllowed(ds)) return;
+    if(ds===selectedDate && requestedDate===selectedDate && !cards.hasAttribute('aria-busy')) return;
     const token=++loadToken;
+    requestedDate=ds;
+    reflectOverviewDateIntent(ds,true);
+    cards.setAttribute('aria-busy','true');
+
     const dsPrev=qcAddDays(ds,-1);
-    const [nextCurrent,nextPrevious]=await Promise.all([
-      fetchOverviewDateReady(ds),
-      fetchHistoryReviewDateReady(dsPrev)
-    ]);
+    let timer;
+    let nextCurrent, nextPrevious;
+    try{
+      [nextCurrent,nextPrevious]=await Promise.race([
+        Promise.all([
+          fetchOverviewDateReady(ds),
+          fetchHistoryReviewDateReady(dsPrev).catch(error=>({data:[],error}))
+        ]),
+        new Promise(resolve=>{
+          timer=setTimeout(()=>resolve([
+            {data:[],error:new Error('overview_date_timeout')},
+            {data:[],error:new Error('overview_history_timeout')}
+          ]),12000);
+        })
+      ]);
+    }catch(error){
+      nextCurrent={data:[],error};
+      nextPrevious={data:[],error};
+    }finally{
+      clearTimeout(timer);
+    }
     if(token!==loadToken) return;
-    if(nextCurrent.error||(nextPrevious.error && ds<=today)){
-      if(label) label.textContent=qcDateLabel(selectedDate);
+    cards.removeAttribute('aria-busy');
+    if(nextCurrent?.error || !Array.isArray(nextCurrent?.data)){
+      requestedDate=selectedDate;
+      reflectOverviewDateIntent(selectedDate,false);
+      // The previous fully loaded day remains visible and clickable.
+      console.warn('日期切换读取失败，保留已显示内容',nextCurrent?.error);
       return;
     }
 
-    // If tomorrow has no published fixtures yet, a temporary previous-day
-    // history API failure must not cancel navigation. Reuse the day already
-    // displayed on this page; role-specific FT filtering remains in render().
-    const previousForDisplay=nextPrevious.error
+    // A failed previous-day review must not block a fully loaded destination.
+    // Keep permission filtering and completed historical state unchanged.
+    const previousForDisplay=nextPrevious?.error || !Array.isArray(nextPrevious?.data)
       ? {data:allRows.filter(m=>jcBusinessDate(m)===dsPrev),historyFinal:false}
       : nextPrevious;
     allRows=[...(nextCurrent.data||[]),...(previousForDisplay.data||[])].filter(m=>m.match_date);
     previousHistoryFinal=Boolean(previousForDisplay?.historyFinal);
     previousLoading=false;
     selectedDate=ds;
+    requestedDate=ds;
+    reflectOverviewDateIntent(ds,false);
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
 
@@ -3088,7 +3132,7 @@ async function loadJcFrontend(){
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
 
-    if(label) label.textContent=qcDateLabel(selectedDate);
+    if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
       $('#jcPredictionMeta').textContent=accessDisplayPhase!=='ready'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
@@ -3112,11 +3156,11 @@ async function loadJcFrontend(){
     }
 
     if(prev){
-      prev.disabled=!access.loggedIn && selectedDate<=overviewMinDate;
+      prev.disabled=!access.loggedIn && requestedDate<=overviewMinDate;
       prev.setAttribute('aria-disabled',String(prev.disabled));
     }
     if(next){
-      next.disabled=!access.loggedIn && selectedDate>=overviewMaxDate;
+      next.disabled=!access.loggedIn && requestedDate>=overviewMaxDate;
       next.setAttribute('aria-disabled',String(next.disabled));
     }
     if(todayBtn){
@@ -3175,11 +3219,11 @@ async function loadJcFrontend(){
   }
 
   if(prev) prev.onclick=()=>{
-    const ds=qcAddDays(selectedDate,-1);
+    const ds=qcAddDays(requestedDate,-1);
     if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
   };
   if(next) next.onclick=()=>{
-    const ds=qcAddDays(selectedDate,1);
+    const ds=qcAddDays(requestedDate,1);
     if(access.loggedIn || isOverviewDateAllowed(ds)) loadFrontendDateBundle(ds);
   };
   if(todayBtn) todayBtn.onclick=()=>loadFrontendDateBundle(today);
