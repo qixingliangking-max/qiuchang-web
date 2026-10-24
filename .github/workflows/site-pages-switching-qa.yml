@@ -55,7 +55,14 @@ jobs:
                   const response=await page.goto('https://qcda.cn/'+path,{waitUntil:'domcontentloaded',timeout:45000});
                   const dcl=Date.now()-start;
                   if(response?.status()!==200) throw Error('Page unavailable '+path+' HTTP '+response?.status());
-                  await page.locator(selector).first().waitFor({state:'attached',timeout:20000});
+                  if(path==='profile.html'){
+                    // Profile is protected; anonymous visitors must redirect
+                    // to login rather than receiving a privileged DOM.
+                    await page.waitForURL(/login\.html/,{timeout:20000});
+                    await page.locator('#loginForm').waitFor({state:'attached',timeout:10000});
+                  }else{
+                    await page.locator(selector).first().waitFor({state:'attached',timeout:20000});
+                  }
                   // Test visible content, not just a blank HTTP 200.
                   if(path.startsWith('football')) await page.waitForFunction(()=>
                       document.querySelectorAll('#jcFootballCards .jc-football-card').length>0,{timeout:30000});
