@@ -67,7 +67,44 @@ for(const c of configs){
  }
  await context.close();await browser.close();
 }
-console.log('QCDA_AUDIT_PHASE=post_ux_20261024');
+
+ // Explicitly test a visible date arrow BEFORE async session / snapshot
+ // initialization completes. Historically the arrow was clickable visually
+ // but did not yet have an onclick handler, so the tap silently vanished.
+ const earlyResults=[];
+ for(const c of configs){
+   const browser=await c.engine.launch();
+   try{
+     const context=await browser.newContext({...c.opts,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+     for(const item of [
+       {name:'home',route:'index.html',button:'#jcPrevDate',label:'#jcDateLabel'},
+       {name:'football',route:'football.html',button:'#jcFootballPrevDate',label:'#jcFootballDateLabel'}
+     ]){
+       const page=await context.newPage();
+       const nowInBeijing=new Intl.DateTimeFormat('en-CA',{
+         timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
+       }).format(new Date());
+       const d=new Date(nowInBeijing+'T12:00:00Z');
+       d.setUTCDate(d.getUTCDate()-1);
+       const prev=d.toISOString().slice(0,10);
+       const t=Date.now();
+       const resp=await page.goto(BASE+item.route,{waitUntil:'domcontentloaded',timeout:45000});
+       if(resp?.status()!==200)throw Error('early navigation HTTP '+resp?.status());
+       await page.locator(item.button).click({timeout:10000});
+       await page.waitForFunction(expected=>new URL(location.href).searchParams.get('date')===expected,
+         prev,{timeout:30000});
+       const label=await page.locator(item.label).textContent();
+       const row={engine:c.name,page:item.name,elapsedMs:Date.now()-t,finalDate:prev,label};
+       earlyResults.push(row);
+       await page.close();
+     }
+     await context.close();
+   }finally{await browser.close();}
+ }
+ console.log('QCDA_EARLY_CLICK_REPLAY='+JSON.stringify(earlyResults));
+ if(earlyResults.length!==6)throw Error('Early click regression missing browsers');
+
+console.log('QCDA_AUDIT_PHASE=post_early_click_fix_20261024');
 console.log('QCDA_FULL_CLICK_AUDIT='+JSON.stringify(report));
 console.log('QCDA_FAILURES='+report.filter(x=>x.fail).length);
 })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
