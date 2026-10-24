@@ -3047,7 +3047,7 @@ async function loadJcFrontend(){
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')){
       $('#jcPredictionMeta').textContent=accessDisplayPhase!=='ready'
-        ? '正在确认登录状态…'
+        ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
         : selectedDate>today && !dateRows.length
         ? '赛程尚未发布'
         : predictionRestricted
@@ -3097,13 +3097,14 @@ async function loadJcFrontend(){
       if(selectedDate>today && !dateRows.length){
         qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
       }else if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
-        // Do not flash a public 30-match prediction table before the
-        // user's session and entitlement have been resolved. In particular,
-        // iOS in-app browsers can keep the auth check pending while static
-        // fixtures have already loaded. The permanent guest login gate is
-        // rendered below only AFTER access resolution.
+        // In a browser with no cached session and no recent auth handoff,
+        // the HTML has already painted the normal anonymous gate. Preserve
+        // it while Supabase restores auth; real session/Pro claims always
+        // wait for the verified accessPromise below.
         qcReconcileOverviewTable(cards,
-          '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
+          window.qcOverviewKnownGuestFirstPaint
+            ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
+            : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
       }else if(predictionRestricted){
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else{
@@ -3188,6 +3189,7 @@ async function loadJcFrontend(){
   // Keep the protected card neutral until the authorized FINAL is available.
   accessPromise.then(async resolved=>{
     access=resolved||{loggedIn:false,isPro:false,userId:null};
+    window.qcOverviewKnownGuestFirstPaint=false;
     if(access.isPro){
       // The public static schedule is already loaded. After server-verified
       // Pro access, show the complete table immediately with "待生成" for
