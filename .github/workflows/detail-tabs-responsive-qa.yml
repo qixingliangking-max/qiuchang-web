@@ -1,0 +1,29 @@
+name: Detail tabs mobile desktop auth-isolation QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/detail_tabs_responsive_qa_20261025.cjs
+      - .github/workflows/detail-tabs-responsive-qa.yml
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browsers
+        run: |
+          mkdir -p /tmp/qcda-detail-tab-qa
+          cd /tmp/qcda-detail-tab-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Verify tab clicks while auth never resolves, and normal guest gate
+        env:
+          NODE_PATH: /tmp/qcda-detail-tab-qa/node_modules
+        run: node scripts/detail_tabs_responsive_qa_20261025.cjs
