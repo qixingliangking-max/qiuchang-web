@@ -5623,3 +5623,24 @@ body.qc-profile-contact-open{overflow:hidden}
 @media (prefers-reduced-motion:no-preference) {
   #jcFootballDateLabel.qc-date-pending { transition:opacity .12s ease; }
 }
+
+/* 2026-10-24 | responsive interaction feedback, all screen widths
+   No page geometry, scoring, access gate or card styling is changed. */
+button, a, [role="button"] { touch-action:manipulation; }
+button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
+  outline:2px solid #3f66df;
+  outline-offset:3px;
+}
+@media (pointer:coarse) {
+  .jc-football-arrow:active,
+  .jc-football-today:active,
+  .jc-today-btn:active,
+  .date-switch button:active,
+  .qc-football-login-cta:active,
+  .qc-premium-primary:active,
+  .menu-btn:active,
+  .qc-league-region-tabs button:active,
+  .jc-card-link:active {
+    opacity:.83;
+  }
+}
