@@ -1755,7 +1755,9 @@ function qcBindFootballGuestLoginCta(){
     if(!cta) return;
     e.preventDefault();
     e.stopPropagation();
-    location.href='login.html';
+    const from=location.pathname.slice(1)||'index.html';
+    const returnTo=from+location.search;
+    location.assign('login.html?v=20261024authstable4&next='+encodeURIComponent(returnTo));
   });
 
   document.addEventListener('keydown',e=>{
@@ -1764,7 +1766,9 @@ function qcBindFootballGuestLoginCta(){
     if(!cta) return;
     e.preventDefault();
     e.stopPropagation();
-    location.href='login.html';
+    const from=location.pathname.slice(1)||'index.html';
+    const returnTo=from+location.search;
+    location.assign('login.html?v=20261024authstable4&next='+encodeURIComponent(returnTo));
   });
 }
 
@@ -6537,7 +6541,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('jc-detail',()=>setupJcMatchDetail());
   safe('legacy-match',()=>renderMatch());
   safe('auth',()=>setupDemoAuth());
-  safe('last-active',()=>setupLastActiveTracking());
+  // Activity bookkeeping is lower priority than the first usable frame.
+  // It must not compete with guest/login/fixture auth on slow iOS networks.
+  const initActivity=()=>safe('last-active',()=>setupLastActiveTracking());
+  if(typeof requestIdleCallback==='function')
+    requestIdleCallback(initActivity,{timeout:1600});
+  else setTimeout(initActivity,550);
   safe('auth-recovery',()=>setupAuthStateRecovery());
   safe('auth-nav',()=>setupAuthNav());
   safe('auth-ticker',()=>setupAuthTickerVisibility());
