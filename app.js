@@ -4476,6 +4476,12 @@ async function setupJcMatchDetail(options={}){
       if(handoff && Date.now()-Number(handoff.savedAt)<45000 &&
          String(handoff.match?.id)===String(id) &&
          handoff.businessDate===handoff.match?.business_date &&
+         // Complete handoff from an initialized overview can bypass
+         // jc_matches entirely. A pre-init server-HTML row carries the
+         // visible public FT only: paint that instantly, but retrieve the
+         // authoritative kickoff/match date before using full detail logic.
+         /^\d{4}-\d{2}-\d{2}$/.test(String(handoff.match?.match_date||'')) &&
+         Boolean(handoff.match?.kickoff_at) &&
          Array.isArray(handoff.day) && handoff.day.length){
         jcDetailMatchCache.set(String(id),handoff.match);
         usedRecentFootballHandoff=true;
