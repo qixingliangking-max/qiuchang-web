@@ -34,7 +34,7 @@ const {chromium,webkit,devices}=require('playwright');
     }else{
       await locator.locator('a.jc-review-match').click();
     }
-    await page.waitForURL(url=>url.pathname.endsWith('jc-match.html'),{timeout:30000});
+    await page.waitForURL(url=>url.pathname.endsWith('jc-match.html'),{waitUntil:'domcontentloaded',timeout:12000});
     const handoff=await page.evaluate(()=>{
       const data=JSON.parse(sessionStorage.getItem('qc-football-detail-nav-v1')||'null');
       return {savedAt:data?.savedAt,matchId:data?.match?.id,date:data?.businessDate,dayCount:data?.day?.length,
