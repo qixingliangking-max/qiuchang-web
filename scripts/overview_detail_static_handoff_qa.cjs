@@ -63,6 +63,49 @@ const {chromium,webkit,devices}=require('playwright');
    }
   }finally{await browser.close()}
  }
+ // Test the previously slow path: static review appears before app.js is
+ // ready. A tap must navigate and hand off verified FT/HT + canonical fixture
+ // dates without requesting the selected match from jc_matches again.
+ for(const item of scenarios){
+  const browser=await item.engine.launch();
+  try{
+   const context=await browser.newContext({...item.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+   const page=await context.newPage();
+   let delayed=false,selectedId=null;
+   await page.route('**/app.js?v=*',async route=>{
+     const source=route.request().frame().url();
+     if(source.includes('/index.html')){
+       delayed=true;
+       await new Promise(resolve=>setTimeout(resolve,6500));
+     }
+     await route.continue().catch(()=>{});
+   });
+   await page.goto('https://qcda.cn/index.html',{waitUntil:'commit',timeout:45000});
+   const row=page.locator('#jcYesterdayCards .jc-overview-row[data-match-id]').first();
+   await row.waitFor({state:'visible',timeout:12000});
+   selectedId=await row.getAttribute('data-match-id');
+   const t0=Date.now();
+   await row.locator('td.jc-num').click({force:true,timeout:5000});
+   await page.waitForURL(url=>url.pathname.endsWith('jc-match.html'),{waitUntil:'domcontentloaded',timeout:14000});
+   const details=await page.evaluate(()=>{
+     const h=JSON.parse(sessionStorage.getItem('qc-football-detail-nav-v1')||'null');
+     return {matchId:h?.match?.id,matchDate:h?.match?.match_date,
+       kickoffAt:h?.match?.kickoff_at,dayCount:h?.day?.length,
+       publicScore:h?.match?.raw?.sectionsNo999,
+       firstPaint:!!document.querySelector('[data-qc-public-first-paint="1"]')}
+   });
+   if(details.matchId!==selectedId || !/^\\d{4}-\\d{2}-\\d{2}$/.test(details.matchDate||'') ||
+      !/^\\d{4}-\\d{2}-\\d{2}T/.test(details.kickoffAt||'') ||
+      !/^\\d{1,2}[-:]\\d{1,2}$/.test(details.publicScore||''))
+     throw Error('Early static handoff missing published fixture metadata '+JSON.stringify({engine:item.name,details}));
+   await page.locator('#jcMatchDetailRoot .detail-head').waitFor({state:'visible',timeout:15000});
+   reports.push({engine:item.name,mode:'pre-app-static-row',endToEndClickMs:Date.now()-t0,
+     handoffMatch:details.matchId,dayCount:details.dayCount,
+     matchDate:details.matchDate,publicScore:details.publicScore,earlyAppDelayTriggered:delayed});
+   await context.close();
+  }finally{await browser.close()}
+ }
+
  console.log('QCDA_STATIC_DETAIL_HANDOFF_QA='+JSON.stringify(reports));
- if(reports.length!==6)throw Error('6 mandatory QA cases not completed');
+ if(reports.length!==9)throw Error('9 mandatory QA cases not completed');
 })().catch(e=>{console.error(e.stack||e);process.exit(1)});
