@@ -1913,6 +1913,10 @@ async function loadJcFootball(){
     ds>=minArchivedDate &&
     (access.loggedIn || ds<=today || publishedPublicDates.has(ds));
   let selectedDate=initialDate;
+  // An arrow click must advance from the last requested date, not from
+  // the last *finished* network response. Otherwise rapid desktop/iOS clicks
+  // repeatedly request the same day and appear to do nothing.
+  let requestedDate=initialDate;
   let activeLeague='全部';
   let activeStatus='all'; // Mobile-only public fixture status filter.
   const isCompactMobile=()=>window.matchMedia('(max-width:760px)').matches;
@@ -2007,11 +2011,11 @@ async function loadJcFootball(){
       dates.forEach(ds=>publishedPublicDates.add(ds));
       availableDates=[...new Set([...availableDates,...dates])].sort();
       if(next){
-        next.disabled=!isAllowedDate(qcAddDays(selectedDate,1));
+        next.disabled=!isAllowedDate(qcAddDays(requestedDate,1));
         next.setAttribute('aria-disabled',String(next.disabled));
       }
       if(prev){
-        prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
+        prev.disabled=!isAllowedDate(qcAddDays(requestedDate,-1));
         prev.setAttribute('aria-disabled',String(prev.disabled));
       }
       renderFootballCalendar(selectedDate,availableDates,ds=>{
@@ -2168,35 +2172,75 @@ async function loadJcFootball(){
     }).catch(error=>console.warn('历史未完赛场次补充资料失败',error));
   }
 
+  function footballDateText(ds){
+    const d=new Date(ds+'T12:00:00+08:00');
+    return ds.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
+  }
+
+  function reflectFootballDateIntent(ds,busy){
+    // Keep previously rendered match cards intact until the selected day's
+    // complete static/archive snapshot is ready. Only lightweight controls
+    // change immediately; no locked FINAL or probability data is recalculated.
+    if(label){
+      label.textContent=footballDateText(ds);
+      label.setAttribute('aria-busy',String(Boolean(busy)));
+      label.classList.toggle('qc-date-pending',Boolean(busy));
+    }
+    if(prev){
+      prev.disabled=!isAllowedDate(qcAddDays(ds,-1));
+      prev.setAttribute('aria-disabled',String(prev.disabled));
+    }
+    if(next){
+      next.disabled=!isAllowedDate(qcAddDays(ds,1));
+      next.setAttribute('aria-disabled',String(next.disabled));
+    }
+  }
+
   async function loadFootballDate(ds){
     if(!isAllowedDate(ds)) return;
+    if(ds===selectedDate && requestedDate===selectedDate && !cards.hasAttribute('aria-busy')) return;
     const token=++loadToken;
-    // Keep the existing date label and cards unchanged until the destination
-    // static snapshot is ready; never show an "opening" suffix during taps.
+    requestedDate=ds;
     cards.setAttribute('aria-busy','true');
-    const cache=qcJcDateRowsCache.get(ds);
-    const cacheFresh=Boolean(cache?.data && Date.now()-cache.savedAt<45000);
-    const historyCached=ds<today && (
-      Boolean(qcHistoryOverviewRowsCache.get(ds)?.isFinal) ||
-      Boolean(qcReadFinalHistoryFromStorage(ds))
-    );
-    if(!cacheFresh && !historyCached && !cards.querySelector('.jc-football-card')){
-      cards.innerHTML='<div class="profile-card">正在加载中…</div>';
-    }
+    cards.classList.add('qc-football-switching');
+    reflectFootballDateIntent(ds,true);
 
-    const result=await jcFetchFootballScheduleRows(ds);
+    // A stalled CDN/database request must never leave the arrows frozen.
+    // The latest-click token prevents any older completion repainting cards.
+    let timeoutId;
+    let result;
+    try{
+      result=await Promise.race([
+        jcFetchFootballScheduleRows(ds),
+        new Promise(resolve=>{
+          timeoutId=setTimeout(()=>resolve({
+            data:[],error:new Error('date_load_timeout')
+          }),12000);
+        })
+      ]);
+    }catch(error){
+      result={data:[],error};
+    }finally{
+      clearTimeout(timeoutId);
+    }
     if(token!==loadToken) return;
     cards.removeAttribute('aria-busy');
-    if(result.error){
-      cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请稍后重试。</div>';
-      if(label){
-        const current=new Date(selectedDate+'T12:00:00+08:00');
-        label.textContent=selectedDate.slice(5)+' '+current.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
-      }
+    cards.classList.remove('qc-football-switching');
+    if(result?.error || !Array.isArray(result?.data)){
+      requestedDate=selectedDate;
+      reflectFootballDateIntent(selectedDate,false);
+      const counter=$('#jcFootballFixtureCount');
+      if(counter) counter.textContent='切换失败，请重试';
+      // Preserve the last fully consistent date. Never wipe working cards
+      // with an error while a user is browsing an earlier complete archive.
+      if(!cards.querySelector('.jc-football-card'))
+        cards.innerHTML='<div class="profile-card">该日期数据暂时读取失败，请点击日期重试。</div>';
       return;
     }
-    allRows=(result.data||[]).filter(m=>m.match_date);
+    allRows=result.data.filter(m=>m.match_date);
     selectedDate=ds;
+    requestedDate=ds;
+    reflectFootballDateIntent(ds,false);
     activeLeague='全部';
     activeStatus='all';
     if(result.fromHistorySnapshot){
@@ -2243,11 +2287,11 @@ async function loadJcFootball(){
         ((activeStatus!=='all'||activeLeague!=='全部')?' · 当前'+filtered.length+'场':'')
       : '共'+filtered.length+'场';
     if(prev){
-      prev.disabled=!isAllowedDate(qcAddDays(selectedDate,-1));
+      prev.disabled=!isAllowedDate(qcAddDays(requestedDate,-1));
       prev.setAttribute('aria-disabled',String(prev.disabled));
     }
     if(next){
-      next.disabled=!isAllowedDate(qcAddDays(selectedDate,1));
+      next.disabled=!isAllowedDate(qcAddDays(requestedDate,1));
       next.setAttribute('aria-disabled',String(next.disabled));
     }
     if(todayBtn) todayBtn.disabled=selectedDate===today;
@@ -2268,12 +2312,12 @@ async function loadJcFootball(){
     if(prev) prev.onclick=()=>{
       activeLeague='全部';
       closeLeague();
-      loadFootballDate(qcAddDays(selectedDate,-1));
+      loadFootballDate(qcAddDays(requestedDate,-1));
     };
     if(next) next.onclick=()=>{
       activeLeague='全部';
       closeLeague();
-      loadFootballDate(qcAddDays(selectedDate,1));
+      loadFootballDate(qcAddDays(requestedDate,1));
     };
     if(todayBtn) todayBtn.onclick=()=>{
       activeLeague='全部';
