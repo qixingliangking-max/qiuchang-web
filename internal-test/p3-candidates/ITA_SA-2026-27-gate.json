@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 71,
-  "collected_matches": 71,
+  "input_matches": 74,
+  "collected_matches": 74,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -36,12 +36,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "博洛尼亚",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡利亚里",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,12 +81,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科莫",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "罗马",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨索洛",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,7 +106,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "那不勒斯",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",

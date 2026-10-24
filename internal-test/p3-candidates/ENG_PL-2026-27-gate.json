@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 71,
-  "collected_matches": 71,
+  "input_matches": 74,
+  "collected_matches": 74,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -41,12 +41,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃弗顿",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "富勒姆",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼城",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "考文垂",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,12 +106,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿斯顿维拉",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿森纳",
-      "matches": 7
+      "matches": 8
     }
   ],
   "gate_status": "PASS",

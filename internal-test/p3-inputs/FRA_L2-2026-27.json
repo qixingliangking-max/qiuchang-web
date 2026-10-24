@@ -690,6 +690,14 @@
       "away_team": "阿讷西",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T18:00:00Z"
+    },
+    {
+      "source_match_id": "5803292",
+      "match_id": "fotmob:5803292",
+      "home_team": "第戎",
+      "away_team": "罗德兹",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T12:00:00.000Z"
     }
   ]
 }

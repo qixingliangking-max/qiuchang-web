@@ -1321,7 +1321,23 @@
       "home_team": "古比斯",
       "away_team": "VPS瓦萨",
       "match_date": "2026-10-18",
-      "kickoff_at": "2026-10-18T12:00:00.000Z"
+      "kickoff_at": "2026-10-18T12:00:00Z"
+    },
+    {
+      "source_match_id": "6145884",
+      "match_id": "fotmob:6145884",
+      "home_team": "VPS瓦萨",
+      "away_team": "图尔库国际",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T11:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145885",
+      "match_id": "fotmob:6145885",
+      "home_team": "格尼斯坦",
+      "away_team": "奥卢",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:00:00.000Z"
     }
   ]
 }

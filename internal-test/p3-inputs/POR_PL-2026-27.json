@@ -586,6 +586,14 @@
       "away_team": "马里迪莫",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T19:45:00Z"
+    },
+    {
+      "source_match_id": "5887655",
+      "match_id": "fotmob:5887655",
+      "home_team": "阿马多拉之星",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:30:00.000Z"
     }
   ]
 }

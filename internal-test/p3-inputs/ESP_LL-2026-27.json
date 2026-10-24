@@ -730,6 +730,22 @@
       "away_team": "马拉加",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868107",
+      "match_id": "fotmob:5868107",
+      "home_team": "巴列卡诺",
+      "away_team": "埃尔切",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868106",
+      "match_id": "fotmob:5868106",
+      "home_team": "桑坦德竞技",
+      "away_team": "西班牙人",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:15:00.000Z"
     }
   ]
 }

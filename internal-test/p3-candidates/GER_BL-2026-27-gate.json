@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 55,
-  "collected_matches": 55,
+  "input_matches": 60,
+  "collected_matches": 60,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 455,
+  "aggregate_players": 462,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,7 +16,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "云达不莱梅",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃尔弗斯堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -36,12 +36,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "奥格斯堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "帕德博恩",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,17 +61,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "柏林联合",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "汉堡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "沙尔克04",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,17 +81,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科隆",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "美因茨",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "莱比锡",
-      "matches": 6
+      "matches": 7
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,5 +106,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0
+  "avg_team_depth_coverage_pct": 1
 }

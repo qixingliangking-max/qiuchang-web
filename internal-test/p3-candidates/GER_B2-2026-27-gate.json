@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 74,
-  "collected_matches": 74,
+  "input_matches": 77,
+  "collected_matches": 77,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 474,
+  "aggregate_players": 478,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡尔斯鲁厄",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,12 +46,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "柏林赫塔",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "比勒费尔德",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,12 +71,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "海登海姆",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "科特布斯",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,10 +101,10 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马格德堡",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 9.1
+  "avg_team_depth_coverage_pct": 11.6
 }

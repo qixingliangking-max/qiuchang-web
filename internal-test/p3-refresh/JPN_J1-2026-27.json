@@ -6,7 +6,7 @@
     "223"
   ],
   "fotmob_ccode3": "JPN",
-  "baseline_finished_matches": 110,
+  "baseline_finished_matches": 115,
   "team_map": {
     "FC Tokyo": "FC东京",
     "Gamba Osaka": "大阪钢巴",
@@ -29,6 +29,6 @@
     "Yokohama F.Marinos": "横滨水手",
     "Sanfrecce Hiroshima": "广岛三箭"
   },
-  "last_successful_refresh_at": "2026-10-21T19:28:30.394Z",
-  "last_published_blob_sha": "aeb8eca845b498b9e5d1a4fa7568011f4af3d7cf"
+  "last_successful_refresh_at": "2026-10-24T18:20:13.391Z",
+  "last_published_blob_sha": "59ca6ec0b1b45a47542d11e02bd6ec2d886b7c1e"
 }

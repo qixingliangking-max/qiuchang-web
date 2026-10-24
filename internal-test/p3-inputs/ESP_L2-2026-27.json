@@ -890,6 +890,22 @@
       "away_team": "巴拉多利德",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T18:30:00Z"
+    },
+    {
+      "source_match_id": "5868508",
+      "match_id": "fotmob:5868508",
+      "home_team": "科尔多瓦",
+      "away_team": "埃瓦尔",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868511",
+      "match_id": "fotmob:5868511",
+      "home_team": "莱加内斯",
+      "away_team": "马略卡",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:15:00.000Z"
     }
   ]
 }

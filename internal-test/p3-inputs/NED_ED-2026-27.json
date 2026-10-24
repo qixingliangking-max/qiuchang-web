@@ -658,6 +658,14 @@
       "away_team": "特尔斯达",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T18:00:00Z"
+    },
+    {
+      "source_match_id": "5781784",
+      "match_id": "fotmob:5781784",
+      "home_team": "乌德勒支",
+      "away_team": "兹沃勒",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:30:00.000Z"
     }
   ]
 }

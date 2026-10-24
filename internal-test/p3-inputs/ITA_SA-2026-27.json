@@ -570,6 +570,30 @@
       "away_team": "蒙扎",
       "match_date": "2026-10-23",
       "kickoff_at": "2026-10-23T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749711",
+      "match_id": "fotmob:5749711",
+      "home_team": "卡利亚里",
+      "away_team": "博洛尼亚",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749712",
+      "match_id": "fotmob:5749712",
+      "home_team": "科莫",
+      "away_team": "萨索洛",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749717",
+      "match_id": "fotmob:5749717",
+      "home_team": "那不勒斯",
+      "away_team": "罗马",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T16:00:00.000Z"
     }
   ]
 }
