@@ -4853,21 +4853,6 @@ async function setupDemoAuth(){
       });
     }
 
-    // 已开启自动登录且会话仍有效时，直接进入目标页，不再停留在登录页。
-    if(window.qcGetAutoLoginPreference?.() && window.qcSupabase){
-      try{
-        const {data:autoSessionData}=await window.qcSupabase.auth.getSession();
-        if(autoSessionData?.session){
-          const next = new URLSearchParams(location.search).get('next');
-          const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
-          location.replace(safeNext);
-          return;
-        }
-      }catch(err){
-        console.warn('自动登录会话恢复失败',err);
-      }
-    }
-
     // 首次仍由用户主动确认；确认过一次后记住选择，后续登录自动勾选。
     // 如果未来协议有重大更新，只需升级这个 key（例如 v2）即可重新要求确认。
     if(loginAgreement){
@@ -4889,8 +4874,17 @@ async function setupDemoAuth(){
       history.replaceState({},'',location.pathname);
     }
 
+    // Keep the form responsive even when Safari session recovery stalls.
+    login.addEventListener('invalid',event=>{
+      if(event.target?.id==='loginAgreement' && loginHint){
+        loginHint.textContent='请先勾选用户服务协议和隐私政策';
+        loginHint.className='code-hint error';
+      }
+    },true);
+
     login.onsubmit = async e => {
       e.preventDefault();
+      if(login.dataset.authSubmitting==='1') return;
 
       if(!window.qcSupabase){
         if(loginHint){
@@ -4904,16 +4898,33 @@ async function setupDemoAuth(){
       const password = login.querySelector('input[type="password"]').value;
       const button = login.querySelector('button');
 
-      button.disabled = true;
-      button.textContent = '登录中...';
-
-      // 必须在登录请求前写入偏好，确保 Supabase 把本次会话存到正确的存储层。
+      login.dataset.authSubmitting='1';
+      button.disabled=true;
+      button.textContent='验证账号中…';
+      if(loginHint){
+        loginHint.textContent='正在验证账号，请勿重复点击。';
+        loginHint.className='code-hint';
+      }
       window.qcSetAutoLoginPreference?.(Boolean(loginAutoLogin?.checked));
-
-      let { data, error } = await qcAuthSignInResilient(email,password);
-
-      button.disabled = false;
-      button.textContent = '登录';
+      let response,timeoutId;
+      try{
+        response=await Promise.race([
+          qcAuthSignInResilient(email,password),
+          new Promise(resolve=>{
+            timeoutId=setTimeout(()=>resolve({
+              data:null,error:{code:'AUTH_NETWORK_TIMEOUT',message:'账号验证等待超时',status:0}
+            }),15000);
+          })
+        ]);
+      }catch(error){
+        response={data:null,error};
+      }finally{
+        clearTimeout(timeoutId);
+        button.disabled=false;
+        button.textContent='登录';
+        delete login.dataset.authSubmitting;
+      }
+      const {data,error}=response||{data:null,error:{code:'AUTH_NO_RESPONSE',message:'账号服务未返回结果'}};
 
       if(error){
         const raw = String(error.message || '');
@@ -4929,20 +4940,25 @@ async function setupDemoAuth(){
           message = '邮箱或密码错误';
         }else if(/email not confirmed|email_not_confirmed/i.test(raw+' '+code)){
           message = '邮箱尚未完成验证';
+        }else if(code==='AUTH_NETWORK_TIMEOUT'){
+          message='账号服务响应较慢，请稍后重试；如果已登录，可直接返回首页查看。';
         }else if(/rate|too many|over_request_rate_limit/i.test(raw+' '+code)){
           message = '登录请求过于频繁，请稍后再试';
         }
 
-        console.error('登录失败', {name,errorCode:code,status,message:raw,navigatorOnline:navigator.onLine});
+        console.warn('登录未完成',{errorCode:code||'unspecified',status,network:looksNetwork});
         if(loginHint){
           loginHint.textContent = message;
           loginHint.className = 'code-hint error';
         }
-        if(!looksNetwork) alert(message);
         return;
       }
 
-      if(data.user){
+      if(data?.user || data?.session?.user){
+        if(loginHint){
+          loginHint.textContent='登录成功，正在进入网站…';
+          loginHint.className='code-hint success';
+        }
         const next = new URLSearchParams(location.search).get('next');
         const safeNext = next && /^[a-zA-Z0-9._?=&-]+$/.test(next) ? next : 'index.html';
 
@@ -4950,15 +4966,39 @@ async function setupDemoAuth(){
         qcAccessStatePromise=null;
         qcLastAccessState=null;
         try{ sessionStorage.setItem('qc-auth-handoff',String(Date.now())); }catch(_){}
-        for(let attempt=0;attempt<3;attempt++){
-          const {data:sessionData}=await window.qcSupabase.auth.getSession();
-          if(sessionData?.session) break;
-          await new Promise(resolve=>setTimeout(resolve,120+(attempt*120)));
-        }
-        try{ await window.qcSupabase.rpc('record_user_login'); }catch(_){}
+        // Successful signInWithPassword has persisted the session. Another
+        // getSession may wait on refresh/storage locks on desktop browsers.
+        // Ancillary audit must not block navigation indefinitely.
+        try{
+          await Promise.race([
+            window.qcSupabase.rpc('record_user_login'),
+            new Promise(resolve=>setTimeout(resolve,350))
+          ]);
+        }catch(_){}
         location.replace(safeNext);
       }
     };
+
+    // Optional auto-login MUST run after onsubmit is installed; skip redirect
+    // if the user is already typing or submitting manually.
+    if(window.qcGetAutoLoginPreference?.() && window.qcSupabase){
+      (async()=>{
+        try{
+          const {data:sessionData}=await Promise.race([
+            window.qcSupabase.auth.getSession(),
+            new Promise(resolve=>setTimeout(()=>resolve({data:null}),2200))
+          ]);
+          if(!sessionData?.session || login.dataset.authSubmitting==='1' ||
+             login.querySelector('input[type="password"]')?.value ||
+             login.contains(document.activeElement)) return;
+          const next=new URLSearchParams(location.search).get('next');
+          const safeNext=next && /^[a-zA-Z0-9._?=&-]+$/.test(next)?next:'index.html';
+          location.replace(safeNext);
+        }catch(_){
+          console.warn('自动登录会话恢复稍后再试');
+        }
+      })();
+    }
   }
 
   const reg = $('#registerForm');
