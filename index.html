@@ -10,6 +10,80 @@
   <style>/* Show loading placeholders immediately; only defer the footer until bootstrap finishes. */body.qc-overview-booting .footer-note{visibility:hidden}</style>
   <link rel="stylesheet" href="styles.css?v=20261024ux20261024">
   <link rel="stylesheet" href="footer-compact.css?v=20261010footer1">
+  <!-- Static review rows must respond before the deferred app bundle loads. -->
+  <script>
+(function(){
+  // Early home date taps are buffered until access/data initialization
+  // finishes and real date handlers are attached. No protected data is painted.
+  var key='home';
+  var state=window.qcEarlyDateTaps||(window.qcEarlyDateTaps={});
+  state[key]=0;
+  // Server-rendered yesterday rows can be tapped before async app.js loads.
+  document.addEventListener('click',function(event){
+    var row=event.target?.closest?.('.jc-overview-row[data-match-id]');
+    if(!row || row.onclick || !row.closest('#jcYesterdayCards, #jcLiveCards') ||
+       event.target.closest('button,input,textarea,select')) return;
+    var href=row.getAttribute('data-href')||'';
+    if(!/^jc-match\.html\?id=[0-9a-f-]{36}$/i.test(href)) return;
+    var root=row.closest('#jcYesterdayCards');
+    var ds=root?.getAttribute('data-qc-final-date');
+    // Embedded static HT/FT are already public. Only pass verified, visible
+    // scoreboard information; never transfer protected prediction/AI fields.
+    if(root && /^\d{4}-\d{2}-\d{2}$/.test(ds||'')){
+      try{
+        var rows=Array.from(root.querySelectorAll('.jc-overview-row[data-match-id]')).map(function(el){
+          var link=el.querySelector('a.jc-review-match');
+          var teams=link?.querySelectorAll(':scope > span');
+          var ft=el.querySelector('.jc-score-full')?.textContent?.trim()||'';
+          var ht=el.querySelector('.jc-score-half')?.textContent?.replace(/^半\s*/,'').trim()||'';
+          if(!el.dataset.matchId || !teams || teams.length<3 ||
+             !/^\d{1,2}-\d{1,2}$/.test(ft) || !/^\d{1,2}-\d{1,2}$/.test(ht)) return null;
+          return {
+            id:el.dataset.matchId,business_date:ds,
+            match_num:el.querySelector('.jc-num')?.textContent?.trim()||'',
+            league_short_name:el.querySelector('.jc-overview-league')?.textContent?.trim()||'',
+            home_team_name:teams[0].textContent.trim(),
+            away_team_name:teams[2].textContent.trim(),
+            match_date:/^\d{4}-\d{2}-\d{2}$/.test(el.dataset.qcMatchDate||'')
+              ? el.dataset.qcMatchDate : '',
+            kickoff_at:/^\d{4}-\d{2}-\d{2}T/.test(el.dataset.qcKickoffAt||'')
+              ? el.dataset.qcKickoffAt : '',
+            match_time:el.querySelector('.jc-time time')?.textContent?.trim()||'',
+            match_status:'已结束',
+            raw:{sectionsNo999:ft,sectionsNo1:ht,matchStatusName:'已结束'}
+          };
+        }).filter(Boolean);
+        var match=rows.find(function(m){return m.id===row.dataset.matchId});
+        if(match && rows.length===root.querySelectorAll('.jc-overview-row[data-match-id]').length){
+          sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
+            savedAt:Date.now(),businessDate:ds,match:match,
+            day:rows.map(function(m){var copy=Object.assign({},m);delete copy.raw;return copy;})
+          }));
+        }
+      }catch(_){}
+    }
+    if(event.target.closest('a[href]')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.assign(href);
+  },true);
+  document.addEventListener('click',function(event){
+    if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
+    var target=event.target&&event.target.closest&&event.target.closest('button');
+    if(!target) return;
+    var direction=target.id==='jcPrevDate'?-1:(target.id==='jcNextDate'?1:0);
+    if(!direction) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    state[key]=Math.max(-7,Math.min(7,(state[key]||0)+direction));
+    var label=document.getElementById('jcDateLabel');
+    if(label){
+      label.textContent='正在准备日期切换…';
+      label.setAttribute('aria-busy','true');
+    }
+  },true);
+})();
+</script>
 </head>
 <body class="qc-home qc-overview-page qc-overview-booting">
 <div class="shell">
@@ -116,79 +190,6 @@
   </nav>
 </div>
 
-<script>
-(function(){
-  // Early home date taps are buffered until access/data initialization
-  // finishes and real date handlers are attached. No protected data is painted.
-  var key='home';
-  var state=window.qcEarlyDateTaps||(window.qcEarlyDateTaps={});
-  state[key]=0;
-  // Server-rendered yesterday rows can be tapped before async app.js loads.
-  document.addEventListener('click',function(event){
-    var row=event.target?.closest?.('.jc-overview-row[data-match-id]');
-    if(!row || row.onclick || !row.closest('#jcYesterdayCards, #jcLiveCards') ||
-       event.target.closest('button,input,textarea,select')) return;
-    var href=row.getAttribute('data-href')||'';
-    if(!/^jc-match\.html\?id=[0-9a-f-]{36}$/i.test(href)) return;
-    var root=row.closest('#jcYesterdayCards');
-    var ds=root?.getAttribute('data-qc-final-date');
-    // Embedded static HT/FT are already public. Only pass verified, visible
-    // scoreboard information; never transfer protected prediction/AI fields.
-    if(root && /^\d{4}-\d{2}-\d{2}$/.test(ds||'')){
-      try{
-        var rows=Array.from(root.querySelectorAll('.jc-overview-row[data-match-id]')).map(function(el){
-          var link=el.querySelector('a.jc-review-match');
-          var teams=link?.querySelectorAll(':scope > span');
-          var ft=el.querySelector('.jc-score-full')?.textContent?.trim()||'';
-          var ht=el.querySelector('.jc-score-half')?.textContent?.replace(/^半\s*/,'').trim()||'';
-          if(!el.dataset.matchId || !teams || teams.length<3 ||
-             !/^\d{1,2}-\d{1,2}$/.test(ft) || !/^\d{1,2}-\d{1,2}$/.test(ht)) return null;
-          return {
-            id:el.dataset.matchId,business_date:ds,
-            match_num:el.querySelector('.jc-num')?.textContent?.trim()||'',
-            league_short_name:el.querySelector('.jc-overview-league')?.textContent?.trim()||'',
-            home_team_name:teams[0].textContent.trim(),
-            away_team_name:teams[2].textContent.trim(),
-            match_date:/^\d{4}-\d{2}-\d{2}$/.test(el.dataset.qcMatchDate||'')
-              ? el.dataset.qcMatchDate : '',
-            kickoff_at:/^\d{4}-\d{2}-\d{2}T/.test(el.dataset.qcKickoffAt||'')
-              ? el.dataset.qcKickoffAt : '',
-            match_time:el.querySelector('.jc-time time')?.textContent?.trim()||'',
-            match_status:'已结束',
-            raw:{sectionsNo999:ft,sectionsNo1:ht,matchStatusName:'已结束'}
-          };
-        }).filter(Boolean);
-        var match=rows.find(function(m){return m.id===row.dataset.matchId});
-        if(match && rows.length===root.querySelectorAll('.jc-overview-row[data-match-id]').length){
-          sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
-            savedAt:Date.now(),businessDate:ds,match:match,
-            day:rows.map(function(m){var copy=Object.assign({},m);delete copy.raw;return copy;})
-          }));
-        }
-      }catch(_){}
-    }
-    if(event.target.closest('a[href]')) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    location.assign(href);
-  },true);
-  document.addEventListener('click',function(event){
-    if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
-    var target=event.target&&event.target.closest&&event.target.closest('button');
-    if(!target) return;
-    var direction=target.id==='jcPrevDate'?-1:(target.id==='jcNextDate'?1:0);
-    if(!direction) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    state[key]=Math.max(-7,Math.min(7,(state[key]||0)+direction));
-    var label=document.getElementById('jcDateLabel');
-    if(label){
-      label.textContent='正在准备日期切换…';
-      label.setAttribute('aria-busy','true');
-    }
-  },true);
-})();
-</script>
 <script defer src="overview-public-rescue.js?v=20261024authgate3"></script>
 <script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
 <script defer src="supabase-config.js"></script>
