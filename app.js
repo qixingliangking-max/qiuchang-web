@@ -4663,16 +4663,18 @@ async function setupJcMatchDetail(options={}){
     panel.innerHTML=jcRenderFactsShell();
     let activeFactsTab='data';
 
-    detailRows=detailRows || await ensureDetailRows();
-    if(loadSeq!==jcDetailLoadSeq || currentTabToken!==detailTabToken ||
-       activeDetailTab!=='facts') return;
-    sportteryDetails=sportteryDetails || jcSportteryDetailsMap(detailRows||[]);
-
     function renderFactsTab(tab){
       activeFactsTab=tab;
-      $$('.jc-facts-subtabs button',panel).forEach(b=>b.classList.toggle('active',b.dataset.factsTab===tab));
+      $$('.jc-facts-subtabs button',panel).forEach(b=>
+        b.classList.toggle('active',b.dataset.factsTab===tab));
       const content=$('#jcFactsContent',panel);
       if(!content) return;
+      // Do not wait for the whole Sporttery detail payload to acknowledge
+      // subtab taps. Never present an empty/stale result while it is pending.
+      if(!sportteryDetails){
+        content.innerHTML='<div class="profile-card" role="status">赛况资料读取中…</div>';
+        return;
+      }
       if(tab==='lineups') content.innerHTML=jcRenderSportteryLineups(m,sportteryDetails);
       else if(tab==='standings') content.innerHTML=jcRenderStandings(m,sportteryDetails);
       else if(tab==='stats') content.innerHTML=jcRenderTechnicalStats(m);
@@ -4688,7 +4690,12 @@ async function setupJcMatchDetail(options={}){
     });
     renderFactsTab('data');
 
-
+    detailRows=detailRows || await ensureDetailRows();
+    if(loadSeq!==jcDetailLoadSeq || currentTabToken!==detailTabToken ||
+       activeDetailTab!=='facts') return;
+    sportteryDetails=sportteryDetails || jcSportteryDetailsMap(detailRows||[]);
+    // Respect the subtab selected while the request was in flight.
+    renderFactsTab(activeFactsTab);
   }
 
   async function renderOdds(){
