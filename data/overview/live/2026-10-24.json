@@ -506,11 +506,11 @@
       "match_date": "2026-10-24",
       "match_time": "16:40:00",
       "kickoff_at": "2026-10-24T08:40:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "1:1",
+        "sectionsNo1": "1:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-6230.png",
       "_awayLogoUrl": "assets/team-logos/espn-soccer-11143.png",
