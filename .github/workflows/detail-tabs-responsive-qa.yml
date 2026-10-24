@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - app.js
+      - jc-match.html
       - scripts/detail_tabs_responsive_qa_20261025.cjs
       - .github/workflows/detail-tabs-responsive-qa.yml
 permissions:
