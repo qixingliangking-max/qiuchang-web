@@ -75,6 +75,30 @@
   </nav>
 </div>
 
+<script>
+(function(){
+  // Early football date taps are buffered until access/data initialization
+  // finishes and real date handlers are attached. No protected data is painted.
+  var key='football';
+  var state=window.qcEarlyDateTaps||(window.qcEarlyDateTaps={});
+  state[key]=0;
+  document.addEventListener('click',function(event){
+    if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
+    var target=event.target&&event.target.closest&&event.target.closest('button');
+    if(!target) return;
+    var direction=target.id==='jcFootballPrevDate'?-1:(target.id==='jcFootballNextDate'?1:0);
+    if(!direction) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    state[key]=Math.max(-7,Math.min(7,(state[key]||0)+direction));
+    var label=document.getElementById('jcFootballDateLabel');
+    if(label){
+      label.textContent='正在准备日期切换…';
+      label.setAttribute('aria-busy','true');
+    }
+  },true);
+})();
+</script>
 <script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
 <script defer src="supabase-config.js"></script>
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
