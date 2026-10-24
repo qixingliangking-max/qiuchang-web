@@ -123,6 +123,51 @@
   var key='home';
   var state=window.qcEarlyDateTaps||(window.qcEarlyDateTaps={});
   state[key]=0;
+  // Server-rendered yesterday rows can be tapped before async app.js loads.
+  document.addEventListener('click',function(event){
+    var row=event.target?.closest?.('.jc-overview-row[data-match-id]');
+    if(!row || row.onclick || !row.closest('#jcYesterdayCards, #jcLiveCards') ||
+       event.target.closest('button,input,textarea,select')) return;
+    var href=row.getAttribute('data-href')||'';
+    if(!/^jc-match\.html\?id=[0-9a-f-]{36}$/i.test(href)) return;
+    var root=row.closest('#jcYesterdayCards');
+    var ds=root?.getAttribute('data-qc-final-date');
+    // Embedded static HT/FT are already public. Only pass verified, visible
+    // scoreboard information; never transfer protected prediction/AI fields.
+    if(root && /^\d{4}-\d{2}-\d{2}$/.test(ds||'')){
+      try{
+        var rows=Array.from(root.querySelectorAll('.jc-overview-row[data-match-id]')).map(function(el){
+          var link=el.querySelector('a.jc-review-match');
+          var teams=link?.querySelectorAll(':scope > span');
+          var ft=el.querySelector('.jc-score-full')?.textContent?.trim()||'';
+          var ht=el.querySelector('.jc-score-half')?.textContent?.replace(/^半\s*/,'').trim()||'';
+          if(!el.dataset.matchId || !teams || teams.length<3 ||
+             !/^\d{1,2}-\d{1,2}$/.test(ft) || !/^\d{1,2}-\d{1,2}$/.test(ht)) return null;
+          return {
+            id:el.dataset.matchId,business_date:ds,
+            match_num:el.querySelector('.jc-num')?.textContent?.trim()||'',
+            league_short_name:el.querySelector('.jc-overview-league')?.textContent?.trim()||'',
+            home_team_name:teams[0].textContent.trim(),
+            away_team_name:teams[2].textContent.trim(),
+            match_date:'',match_time:el.querySelector('.jc-time time')?.textContent?.trim()||'',
+            match_status:'已结束',
+            raw:{sectionsNo999:ft,sectionsNo1:ht,matchStatusName:'已结束'}
+          };
+        }).filter(Boolean);
+        var match=rows.find(function(m){return m.id===row.dataset.matchId});
+        if(match && rows.length===root.querySelectorAll('.jc-overview-row[data-match-id]').length){
+          sessionStorage.setItem('qc-football-detail-nav-v1',JSON.stringify({
+            savedAt:Date.now(),businessDate:ds,match:match,
+            day:rows.map(function(m){var copy=Object.assign({},m);delete copy.raw;return copy;})
+          }));
+        }
+      }catch(_){}
+    }
+    if(event.target.closest('a[href]')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.assign(href);
+  },true);
   document.addEventListener('click',function(event){
     if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
     var target=event.target&&event.target.closest&&event.target.closest('button');
