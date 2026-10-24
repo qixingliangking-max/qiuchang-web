@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25T00:03:39+08:00",
+  "updated_at": "2026-10-25T00:28:34+08:00",
   "dates": {
     "2026-10-24": {
       "file": "data/overview/live/2026-10-24.json",
-      "version": "3cf2a5c75e32b308",
+      "version": "15a7e48afd4e5b58",
       "match_count": 30
     },
     "2026-10-25": {
