@@ -3046,7 +3046,9 @@ async function loadJcFrontend(){
 
     if(label) label.textContent=qcDateLabel(selectedDate);
     if($('#jcPredictionMeta')){
-      $('#jcPredictionMeta').textContent=selectedDate>today && !dateRows.length
+      $('#jcPredictionMeta').textContent=accessDisplayPhase!=='ready'
+        ? '正在确认登录状态…'
+        : selectedDate>today && !dateRows.length
         ? '赛程尚未发布'
         : predictionRestricted
           ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
@@ -3095,17 +3097,13 @@ async function loadJcFrontend(){
       if(selectedDate>today && !dateRows.length){
         qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
       }else if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
-        // Public fixture identities are already available from static JSON.
-        // Render them immediately, even if an auth request is slow/failed.
-        // Never include private FINAL/odds while entitlement is unresolved.
-        const publicRows=dateRows.map(m=>({
-          ...m,jc_model_outputs:[],jc_market_snapshots:[],
-          _jcModelsLoaded:false,_jcModelsLoading:false,_jcModelLoadFailed:false
-        }));
-        qcReconcileOverviewTable(cards,publicRows.length
-          ? jcRenderOverviewTable(publicRows,calendarToday,'today')
-          : '<div class="profile-card" role="status">正在加载中…</div>');
-        jcBindOverviewRows(cards);
+        // Do not flash a public 30-match prediction table before the
+        // user's session and entitlement have been resolved. In particular,
+        // iOS in-app browsers can keep the auth check pending while static
+        // fixtures have already loaded. The permanent guest login gate is
+        // rendered below only AFTER access resolution.
+        qcReconcileOverviewTable(cards,
+          '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
       }else if(predictionRestricted){
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else{
