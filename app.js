@@ -1922,6 +1922,7 @@ async function loadJcFootball(){
   const isCompactMobile=()=>window.matchMedia('(max-width:760px)').matches;
   let availableDates=[selectedDate];
   let loadToken=0;
+  let footballHydrateTimer=0;
   const warmHistoryRequested=new Set();
   function warmHistoryNeighbors(ds){
     // On any archived day, warm the two adjacent days in idle time. Previously
@@ -2147,6 +2148,17 @@ async function loadJcFootball(){
     await Promise.allSettled([hitsReady,logosReady]);
   }
 
+  function scheduleFootballHydration(rows,ds,token){
+    // Date navigation has priority over optional market/model/logo patching.
+    // Rapid taps cancel work that has not begun for an abandoned date.
+    clearTimeout(footballHydrateTimer);
+    footballHydrateTimer=setTimeout(()=>{
+      if(token!==loadToken || selectedDate!==ds) return;
+      hydrateFootballRows(rows,ds,token,true)
+        .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error));
+    },150);
+  }
+
   function hydrateHistoricalFootballExtras(rows,ds,token){
     // October archived public cards already embed official static crest URLs.
     // Do not query team logos or model/market tables for frozen records.
@@ -2200,6 +2212,7 @@ async function loadJcFootball(){
     if(!isAllowedDate(ds)) return;
     if(ds===selectedDate && requestedDate===selectedDate && !cards.hasAttribute('aria-busy')) return;
     const token=++loadToken;
+    clearTimeout(footballHydrateTimer);
     requestedDate=ds;
     cards.setAttribute('aria-busy','true');
     cards.classList.add('qc-football-switching');
@@ -2256,8 +2269,7 @@ async function loadJcFootball(){
     // Only HT/FT/completion refresh dynamically, independently of all other data.
     if(ds===qcBeijingBusinessToday())
       refreshFootballLive().catch(error=>console.warn('竞彩比分即时补充失败',error));
-    hydrateFootballRows(allRows,ds,token,true)
-      .catch(error=>console.warn('竞彩足球补充数据失败，保留原始赛程',error));
+    scheduleFootballHydration(allRows,ds,token);
   }
 
   function render(){
@@ -2359,8 +2371,7 @@ async function loadJcFootball(){
     // Start the scoreboard check as soon as fixed cards are painted.
     if(selectedDate===qcBeijingBusinessToday())
       refreshFootballLive().catch(error=>console.warn('竞彩首次比分补充失败',error));
-    hydrateFootballRows(allRows,selectedDate,initialToken,true)
-      .catch(error=>console.warn('竞彩足球初次补充数据失败，保留原始赛程',error));
+    scheduleFootballHydration(allRows,selectedDate,initialToken);
   }
 
   // One quiet public-FINAL prefetch after first paint. Date navigation can
