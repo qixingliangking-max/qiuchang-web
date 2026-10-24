@@ -1,0 +1,103 @@
+name: Desktop mobile sticky login and auth wait QA
+on:
+  push:
+    paths:
+      - app.js
+      - login.html
+      - index.html
+      - football.html
+      - .github/workflows/login-sticky-auth-regression.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  auth-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install WebKit and Chromium
+        run: |
+          mkdir -p /tmp/qcda-auth-qa
+          cd /tmp/qcda-auth-qa
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Verify live login links and nonblocking form
+        env:
+          NODE_PATH: /tmp/qcda-auth-qa/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          (async()=>{
+            const runs=[
+              {name:'desktop-Chrome',engine:chromium,options:{viewport:{width:1366,height:768}}},
+              {name:'desktop-WebKit',engine:webkit,options:{viewport:{width:1366,height:768}}},
+              {name:'iPhone-WebKit',engine:webkit,options:devices['iPhone 13']},
+            ];
+            for(const cfg of runs){
+              const browser=await cfg.engine.launch();
+              try{
+                const ctx=await browser.newContext({...cfg.options,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                const page=await ctx.newPage();
+                const exceptions=[];
+                page.on('pageerror',e=>exceptions.push(String(e)));
+                for(const [route,expected] of [['index.html','index.html'],['football.html','football.html']]){
+                  const r=await page.goto('https://qcda.cn/'+route,{waitUntil:'domcontentloaded',timeout:45000});
+                  if(r?.status()!==200) throw Error('route HTTP '+route);
+                  const href=await page.locator('#'+(route.startsWith('index')?'qcOverviewLoginBar':'qcFootballLoginBar')+' .qc-football-login-cta').getAttribute('href');
+                  const url=new URL(href,'https://qcda.cn/');
+                  if(url.pathname!=='/login.html'||url.searchParams.get('next')!==expected)
+                    throw Error(cfg.name+' wrong sticky CTA '+href);
+                  if(cfg.name==='desktop-Chrome' && route==='index.html'){
+                    await page.locator('#qcOverviewLoginBar .qc-football-login-cta').waitFor({state:'visible',timeout:20000});
+                    await page.locator('#qcOverviewLoginBar .qc-football-login-cta').click();
+                    await page.waitForURL(/\/login\.html/,{timeout:16000});
+                    if(new URL(page.url()).searchParams.get('next')!=='index.html')
+                      throw Error('sticky click lost return target');
+                  }
+                }
+                await page.addInitScript(()=>{
+                  localStorage.setItem('qc-auto-login','1');
+                  // Test-only fake auth. Never send credentials to the backend.
+                  Object.defineProperty(window,'qcSupabase',{
+                    configurable:true,
+                    get(){return this.__qaClient},
+                    set(client){
+                      this.__qaClient=client;
+                      client.auth.getSession=()=>new Promise(()=>{}); // simulate hung refresh
+                      client.auth.signInWithPassword=async()=>({
+                        data:{user:{id:'qa-test-user'},session:{user:{id:'qa-test-user'}}},
+                        error:null
+                      });
+                      const originalRpc=client.rpc.bind(client);
+                      client.rpc=(name,...args)=>name==='record_user_login'
+                        ? new Promise(()=>{}) : originalRpc(name,...args);
+                    }
+                  });
+                });
+                const t0=Date.now();
+                const loginResp=await page.goto('https://qcda.cn/login.html?v=20261024loginbind1&next=football.html',
+                  {waitUntil:'domcontentloaded',timeout:45000});
+                if(loginResp?.status()!==200)throw Error('login HTTP '+loginResp?.status());
+                await page.locator('#loginEmail').fill('test-login@invalid.example');
+                await page.locator('#loginPassword').fill('not-a-real-password');
+                await page.locator('#loginAgreement').check();
+                // The hang in getSession must not make the submit handler inert.
+                await page.locator('#loginForm button[type="submit"]').click();
+                await page.waitForURL(url=>url.pathname.endsWith('/football.html'),{timeout:7000});
+                const elapsed=Date.now()-t0;
+                if(elapsed>7000)throw Error('login stuck '+elapsed);
+                console.log('QCDA_STICKY_AUTH_QA='+JSON.stringify({
+                  browser:cfg.name,loginFormNavigationMs:elapsed,source:'synthetic',
+                  note:'fake success and hung getSession; no user credentials sent',
+                  pageErrors:exceptions.filter(e=>!/Fetch API cannot load/.test(e)).slice(0,3)
+                }));
+                await ctx.close();
+              }finally{await browser.close();}
+            }
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
+          JS
