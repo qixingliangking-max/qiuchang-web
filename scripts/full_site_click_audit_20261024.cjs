@@ -67,6 +67,7 @@ for(const c of configs){
  }
  await context.close();await browser.close();
 }
+console.log('QCDA_AUDIT_PHASE=post_ux_20261024');
 console.log('QCDA_FULL_CLICK_AUDIT='+JSON.stringify(report));
 console.log('QCDA_FAILURES='+report.filter(x=>x.fail).length);
 })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
