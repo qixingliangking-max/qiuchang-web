@@ -52,6 +52,11 @@ const cases=[
    await page.waitForFunction(()=>document.querySelector('[data-main-tab="facts"]')?.classList.contains('active'),null,{timeout:2500});
    const factsStarted=await page.locator('#jcMainPanel').innerText();
    await page.waitForFunction(()=>!!document.querySelector('#jcMainPanel .jc-facts-subtabs'),null,{timeout:2500});
+   await page.locator('[data-facts-tab="lineups"]').click();
+   const subtab=await page.locator('[data-facts-tab="lineups"]').evaluate(el=>el.classList.contains('active'));
+   const status=await page.locator('#jcFactsContent').innerText();
+   if(!subtab || !status.includes('赛况资料读取中'))
+     throw Error('Nested facts tabs not usable during slow request');
    await page.locator('[data-main-tab="odds"]').click();
    await page.waitForFunction(()=>document.querySelector('[data-main-tab="odds"]')?.classList.contains('active'),null,{timeout:2500});
    const oddsFeedback=await page.locator('#jcMainPanel').innerText();
