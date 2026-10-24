@@ -752,15 +752,117 @@
       "match_date": "2026-10-24",
       "match_time": "19:30:00",
       "kickoff_at": "2026-10-24T11:30:00+00:00",
-      "match_status": "1",
+      "match_status": "2",
       "raw": {
-        "matchStatusName": "待开售",
+        "matchStatusName": "已开售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8451.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-9850.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "outcomes": {
+            "s-1sa": 60,
+            "s-1sd": 400,
+            "s-1sh": 150,
+            "s00s00": 12,
+            "s00s01": 7.5,
+            "s00s02": 8.75,
+            "s00s03": 16,
+            "s00s04": 40,
+            "s00s05": 100,
+            "s01s00": 11,
+            "s01s01": 6,
+            "s01s02": 7,
+            "s01s03": 14,
+            "s01s04": 35,
+            "s01s05": 100,
+            "s02s00": 18,
+            "s02s01": 9.5,
+            "s02s02": 12,
+            "s02s03": 23,
+            "s02s04": 60,
+            "s02s05": 200,
+            "s03s00": 50,
+            "s03s01": 29,
+            "s03s02": 30,
+            "s03s03": 55,
+            "s04s00": 175,
+            "s04s01": 100,
+            "s04s02": 150,
+            "s05s00": 500,
+            "s05s01": 350,
+            "s05s02": 500
+          },
+          "goal_line": null,
+          "pool_code": "crs",
+          "captured_at": "2026-10-24T04:59:52.380581+00:00",
+          "jc_match_id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "a": 1.88,
+            "d": 3.3,
+            "h": 3.4
+          },
+          "goal_line": null,
+          "pool_code": "had",
+          "captured_at": "2026-10-24T04:59:52.380581+00:00",
+          "jc_match_id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "aa": 3,
+            "ad": 14,
+            "ah": 32,
+            "da": 4.9,
+            "dd": 5.2,
+            "dh": 7.5,
+            "ha": 24,
+            "hd": 14,
+            "hh": 5.7
+          },
+          "goal_line": null,
+          "pool_code": "hafu",
+          "captured_at": "2026-10-24T04:59:52.380581+00:00",
+          "jc_match_id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "a": 3.65,
+            "d": 3.65,
+            "h": 1.72
+          },
+          "goal_line": "+1",
+          "pool_code": "hhad",
+          "captured_at": "2026-10-24T04:59:52.380581+00:00",
+          "jc_match_id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "s0": 12,
+            "s1": 5,
+            "s2": 3.3,
+            "s3": 3.55,
+            "s4": 5.3,
+            "s5": 9.5,
+            "s6": 18,
+            "s7": 27
+          },
+          "goal_line": null,
+          "pool_code": "ttg",
+          "captured_at": "2026-10-24T04:59:52.380581+00:00",
+          "jc_match_id": "027b8954-1d5f-4105-a0f7-414cbc21d382",
+          "official_update_time": "2026-10-24 09:46:21"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "a8029a36-cf9d-4dcc-8a4a-df52220c5c39",
@@ -2003,15 +2105,105 @@
       "match_date": "2026-10-24",
       "match_time": "22:00:00",
       "kickoff_at": "2026-10-24T14:00:00+00:00",
-      "match_status": "1",
+      "match_status": "2",
       "raw": {
-        "matchStatusName": "待开售",
+        "matchStatusName": "已开售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8402.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8007.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "outcomes": {
+            "s-1sa": 120,
+            "s-1sd": 150,
+            "s-1sh": 5,
+            "s00s00": 60,
+            "s00s01": 70,
+            "s00s02": 120,
+            "s00s03": 350,
+            "s00s04": 650,
+            "s00s05": 1000,
+            "s01s00": 18,
+            "s01s01": 18,
+            "s01s02": 40,
+            "s01s03": 100,
+            "s01s04": 400,
+            "s01s05": 750,
+            "s02s00": 11,
+            "s02s01": 10,
+            "s02s02": 20,
+            "s02s03": 55,
+            "s02s04": 250,
+            "s02s05": 650,
+            "s03s00": 9.5,
+            "s03s01": 8,
+            "s03s02": 14,
+            "s03s03": 45,
+            "s04s00": 11,
+            "s04s01": 10,
+            "s04s02": 19,
+            "s05s00": 15,
+            "s05s01": 15,
+            "s05s02": 29
+          },
+          "goal_line": null,
+          "pool_code": "crs",
+          "captured_at": "2026-10-24T04:59:52.047427+00:00",
+          "jc_match_id": "f34cdbcd-a765-4685-a86c-ed67294cab3f",
+          "official_update_time": "2026-10-24 09:46:20"
+        },
+        {
+          "outcomes": {
+            "aa": 21,
+            "ad": 26,
+            "ah": 18,
+            "da": 30,
+            "dd": 15.5,
+            "dh": 4.6,
+            "ha": 80,
+            "hd": 26,
+            "hh": 1.34
+          },
+          "goal_line": null,
+          "pool_code": "hafu",
+          "captured_at": "2026-10-24T04:59:52.047427+00:00",
+          "jc_match_id": "f34cdbcd-a765-4685-a86c-ed67294cab3f",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "a": 2.79,
+            "d": 4.4,
+            "h": 1.84
+          },
+          "goal_line": "-2",
+          "pool_code": "hhad",
+          "captured_at": "2026-10-24T04:59:52.047427+00:00",
+          "jc_match_id": "f34cdbcd-a765-4685-a86c-ed67294cab3f",
+          "official_update_time": "2026-10-24 12:16:12"
+        },
+        {
+          "outcomes": {
+            "s0": 60,
+            "s1": 16.5,
+            "s2": 7.7,
+            "s3": 4.85,
+            "s4": 4.1,
+            "s5": 4.6,
+            "s6": 6,
+            "s7": 4.7
+          },
+          "goal_line": null,
+          "pool_code": "ttg",
+          "captured_at": "2026-10-24T04:59:52.047427+00:00",
+          "jc_match_id": "f34cdbcd-a765-4685-a86c-ed67294cab3f",
+          "official_update_time": "2026-10-24 09:46:21"
+        }
+      ],
+      "_jcMarketsComplete": true
     },
     {
       "id": "a240bf68-55a0-43ec-ab1f-8cac568b1bd0",
@@ -3377,15 +3569,117 @@
       "match_date": "2026-10-25",
       "match_time": "08:00:00",
       "kickoff_at": "2026-10-25T00:00:00+00:00",
-      "match_status": "1",
+      "match_status": "2",
       "raw": {
-        "matchStatusName": "待开售",
+        "matchStatusName": "已开售",
         "sectionsNo999": "",
         "sectionsNo1": ""
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8514.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-7877.png",
-      "_jcScheduleSnapshot": true
+      "_jcScheduleSnapshot": true,
+      "jc_market_snapshots": [
+        {
+          "outcomes": {
+            "s-1sa": 80,
+            "s-1sd": 200,
+            "s-1sh": 34,
+            "s00s00": 17,
+            "s00s01": 13,
+            "s00s02": 21,
+            "s00s03": 50,
+            "s00s04": 120,
+            "s00s05": 350,
+            "s01s00": 9.5,
+            "s01s01": 7.5,
+            "s01s02": 10,
+            "s01s03": 24,
+            "s01s04": 65,
+            "s01s05": 250,
+            "s02s00": 9.75,
+            "s02s01": 7,
+            "s02s02": 10.5,
+            "s02s03": 25,
+            "s02s04": 80,
+            "s02s05": 300,
+            "s03s00": 18,
+            "s03s01": 13,
+            "s03s02": 18,
+            "s03s03": 38,
+            "s04s00": 31,
+            "s04s01": 27,
+            "s04s02": 40,
+            "s05s00": 80,
+            "s05s01": 60,
+            "s05s02": 80
+          },
+          "goal_line": null,
+          "pool_code": "crs",
+          "captured_at": "2026-10-24T04:59:52.567826+00:00",
+          "jc_match_id": "b198ad17-5b26-43e1-8892-c7307c472fad",
+          "official_update_time": "2026-10-24 09:46:21"
+        },
+        {
+          "outcomes": {
+            "a": 3.57,
+            "d": 3.6,
+            "h": 1.75
+          },
+          "goal_line": null,
+          "pool_code": "had",
+          "captured_at": "2026-10-24T04:59:52.567826+00:00",
+          "jc_match_id": "b198ad17-5b26-43e1-8892-c7307c472fad",
+          "official_update_time": "2026-10-24 12:56:10"
+        },
+        {
+          "outcomes": {
+            "aa": 6,
+            "ad": 14,
+            "ah": 22,
+            "da": 8.3,
+            "dd": 6.35,
+            "dh": 4.5,
+            "ha": 34,
+            "hd": 14,
+            "hh": 2.7
+          },
+          "goal_line": null,
+          "pool_code": "hafu",
+          "captured_at": "2026-10-24T04:59:52.567826+00:00",
+          "jc_match_id": "b198ad17-5b26-43e1-8892-c7307c472fad",
+          "official_update_time": "2026-10-24 12:56:21"
+        },
+        {
+          "outcomes": {
+            "a": 1.85,
+            "d": 3.5,
+            "h": 3.3
+          },
+          "goal_line": "-1",
+          "pool_code": "hhad",
+          "captured_at": "2026-10-24T04:59:52.567826+00:00",
+          "jc_match_id": "b198ad17-5b26-43e1-8892-c7307c472fad",
+          "official_update_time": "2026-10-24 12:56:15"
+        },
+        {
+          "outcomes": {
+            "s0": 17,
+            "s1": 6.1,
+            "s2": 3.8,
+            "s3": 3.4,
+            "s4": 4.5,
+            "s5": 7.5,
+            "s6": 14.5,
+            "s7": 20
+          },
+          "goal_line": null,
+          "pool_code": "ttg",
+          "captured_at": "2026-10-24T04:59:52.567826+00:00",
+          "jc_match_id": "b198ad17-5b26-43e1-8892-c7307c472fad",
+          "official_update_time": "2026-10-24 09:46:21"
+        }
+      ],
+      "_jcMarketsComplete": true
     }
   ]
 }
