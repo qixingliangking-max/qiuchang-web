@@ -1,0 +1,95 @@
+name: iOS homepage guest gate first-paint QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - index.html
+      - app.js
+      - .github/workflows/overview-guest-fast-gate-qa.yml
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browsers
+        run: |
+          mkdir -p /tmp/qc-guest
+          cd /tmp/qc-guest
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Real production anonymous and cached-session checks
+        env:
+          NODE_PATH: /tmp/qc-guest/node_modules
+        run: |
+          node <<'JS'
+          const { chromium, webkit, devices }=require('playwright');
+          (async()=>{
+            const results=[];
+            for(const setup of [
+              {name:'iphone-webkit',engine:webkit,device:devices['iPhone 13']},
+              {name:'android-chromium',engine:chromium,device:devices['Pixel 7']}
+            ]){
+              const browser=await setup.engine.launch({headless:true});
+              try {
+                for(const mode of ['guest','saved-session']){
+                  const context=await browser.newContext({...setup.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                  await context.addInitScript((mode)=>{
+                    if(mode==='saved-session'){
+                      localStorage.setItem('qc-auto-login','1');
+                      localStorage.setItem('sb-oqtloldkfjxildoribkf-auth-token',JSON.stringify({
+                        access_token:'test-nonvalid-token',refresh_token:'test-nonvalid-refresh',
+                        token_type:'bearer',expires_at:1893456000,
+                        user:{id:'00000000-0000-0000-0000-000000000001',aud:'authenticated',role:'authenticated'}
+                      }));
+                    }
+                    window.__gateTimeline=[];
+                    const observer=new MutationObserver(()=>{
+                      const cards=document.getElementById('jcLiveCards');
+                      if(!cards)return;
+                      const value=cards.querySelector('.qc-premium-gate')?'gate':cards.querySelector('.jc-overview-table')?'table':'placeholder';
+                      if(window.__gateTimeline.at(-1)?.state!==value)
+                        window.__gateTimeline.push({state:value,at:Math.round(performance.now())});
+                    });
+                    observer.observe(document,{subtree:true,childList:true});
+                  },mode);
+                  const page=await context.newPage();
+                  const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+                  const response=await page.goto('https://qcda.cn/index.html',{waitUntil:'domcontentloaded',timeout:45000});
+                  if(response.status()!==200)throw Error('Live site returned '+response.status());
+                  const atDom=await page.evaluate(()=>({
+                    guestFlag:window.qcOverviewKnownGuestFirstPaint===true,
+                    hasGate:Boolean(document.querySelector('#jcLiveCards .qc-premium-gate')),
+                    hasLoading:Boolean(document.querySelector('#jcLiveCards [role=status]')),
+                    hasPublicTable:Boolean(document.querySelector('#jcLiveCards .jc-overview-table')),
+                    href:document.querySelector('#jcLiveCards .qc-premium-primary')?.getAttribute('href'),
+                    timeline:window.__gateTimeline
+                  }));
+                  if(mode==='guest'){
+                    if(!atDom.guestFlag||!atDom.hasGate||atDom.hasPublicTable||!atDom.href?.includes('login.html'))
+                      throw Error('Anonymous first paint regression: '+JSON.stringify(atDom));
+                    await page.waitForTimeout(1800);
+                    const after=await page.evaluate(()=>({
+                      gate:Boolean(document.querySelector('#jcLiveCards .qc-premium-gate')),
+                      transientTable:Boolean(window.__gateTimeline.some(x=>x.state==='table')),
+                      accessHint:document.querySelector('#jcPredictionMeta')?.textContent||''
+                    }));
+                    if(!after.gate||after.transientTable)throw Error('Guest gate flicker: '+JSON.stringify(after));
+                  }else{
+                    if(atDom.hasGate||atDom.guestFlag)throw Error('Session was misclassified as guest: '+JSON.stringify(atDom));
+                  }
+                  if(errors.length)throw Error('JS errors: '+errors.slice(0,3).join(' | '));
+                  results.push({device:setup.name,mode,firstPaint:atDom,errors:errors.length});
+                  await context.close();
+                }
+              }finally{await browser.close()}
+            }
+            console.log('QCDA_GUEST_FIRST_PAINT_QA='+JSON.stringify(results));
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
+          JS
