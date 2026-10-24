@@ -2363,6 +2363,17 @@ async function loadJcFootball(){
     if(leaguePop && !leaguePop.hidden && e.target!==leagueToggle && !leaguePop.contains(e.target)) closeLeague();
   });
 
+  // Replay taps made after date controls became visible but before
+  // the async fixture/session bootstrap attached the real handlers.
+  window.qcDateHandlersReady=window.qcDateHandlersReady||{};
+  window.qcDateHandlersReady.football=true;
+  const queuedFootballTaps=Number(window.qcEarlyDateTaps?.football||0);
+  if(window.qcEarlyDateTaps) window.qcEarlyDateTaps.football=0;
+  if(queuedFootballTaps && !dateLocked){
+    const ds=qcAddDays(requestedDate,queuedFootballTaps);
+    if(isAllowedDate(ds)) queueMicrotask(()=>loadFootballDate(ds));
+  }
+
   const initialToken=++loadToken;
   if(initial.fromHistorySnapshot){
     // Historical snapshot is already self-contained; do not wait for logos,
@@ -3293,6 +3304,16 @@ async function loadJcFrontend(){
   document.addEventListener('click',e=>{
     if(pop && !pop.hidden && e.target!==label && !pop.contains(e.target)) pop.hidden=true;
   });
+
+  window.qcDateHandlersReady=window.qcDateHandlersReady||{};
+  window.qcDateHandlersReady.home=true;
+  const queuedHomeTaps=Number(window.qcEarlyDateTaps?.home||0);
+  if(window.qcEarlyDateTaps) window.qcEarlyDateTaps.home=0;
+  if(queuedHomeTaps){
+    const ds=qcAddDays(requestedDate,queuedHomeTaps);
+    if(access.loggedIn || isOverviewDateAllowed(ds))
+      queueMicrotask(()=>loadFrontendDateBundle(ds));
+  }
 
   const initialToken=++loadToken;
   // Both the before-lock schedule and after-lock Pro prediction are static.
