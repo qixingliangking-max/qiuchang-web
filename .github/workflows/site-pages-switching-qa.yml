@@ -1,0 +1,86 @@
+name: Site-wide desktop and mobile switching QA
+on:
+  push:
+    paths:
+      - '.github/workflows/site-pages-switching-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser engines
+        run: |
+          mkdir -p /tmp/qcda-site-switching
+          cd /tmp/qcda-site-switching
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Test key routes and navigations in three browser configurations
+        env:
+          NODE_PATH: /tmp/qcda-site-switching/node_modules
+        run: |
+          node <<'JS'
+          const {chromium,webkit,devices}=require('playwright');
+          const configs=[
+            {name:'desktop-Chrome',browser:chromium,device:{viewport:{width:1360,height:900}}},
+            {name:'iPhone-WebKit',browser:webkit,device:devices['iPhone 13']},
+            {name:'Android-Chromium',browser:chromium,device:devices['Pixel 7']}
+          ];
+          const pages=[
+            ['index.html','#jcLiveCards'],
+            ['football.html','#jcFootballCards'],
+            ['league.html','#leagueRecordRoot'],
+            ['login.html','#loginForm'],
+            ['register.html','#registerForm'],
+            ['profile.html','#profileRoot'],
+            ['internal-test/curated-lab-20261019.html','body']
+          ];
+          (async()=>{
+            for(const cfg of configs){
+              const browser=await cfg.browser.launch();
+              try{
+                const ctx=await browser.newContext({...cfg.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                const page=await ctx.newPage();
+                const errors=[];
+                page.on('pageerror',error=>errors.push(String(error)));
+                for(const [path,selector] of pages){
+                  const start=Date.now();
+                  const response=await page.goto('https://qcda.cn/'+path,{waitUntil:'domcontentloaded',timeout:45000});
+                  const dcl=Date.now()-start;
+                  if(response?.status()!==200) throw Error('Page unavailable '+path+' HTTP '+response?.status());
+                  await page.locator(selector).first().waitFor({state:'attached',timeout:20000});
+                  // Test visible content, not just a blank HTTP 200.
+                  if(path.startsWith('football')) await page.waitForFunction(()=>
+                      document.querySelectorAll('#jcFootballCards .jc-football-card').length>0,{timeout:30000});
+                  if(path==='league.html') await page.waitForFunction(()=>
+                    /登录|会员|联赛|读取/.test(document.querySelector('#leagueRecordRoot')?.textContent||''),null,{timeout:15000});
+                  const metric=await page.evaluate(()=>({domNodes:document.getElementsByTagName('*').length,
+                    navTime:Math.round(performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd||0),
+                    visible:!!document.body && document.body.getBoundingClientRect().height>0}));
+                  if(!metric.visible) throw Error('Invisible body '+path);
+                  console.log('QCDA_SITE_ROUTE='+JSON.stringify({engine:cfg.name,path,dclMs:dcl,...metric}));
+                }
+                // Real user click: return from football to home using visible brand.
+                await page.goto('https://qcda.cn/football.html?date=2026-10-24',
+                  {waitUntil:'domcontentloaded',timeout:45000});
+                await page.locator('#jcFootballCards .jc-football-card').first().waitFor({state:'visible',timeout:25000});
+                const navStart=Date.now();
+                await page.locator('header a[href="index.html"]').first().click();
+                await page.waitForURL(/index\.html/,{timeout:15000});
+                await page.locator('#jcLiveCards').first().waitFor({state:'attached',timeout:15000});
+                console.log('QCDA_SITE_REAL_CLICK='+JSON.stringify({engine:cfg.name,
+                  from:'football',to:'home',elapsedMs:Date.now()-navStart}));
+                if(errors.length)throw Error('JavaScript errors '+cfg.name+' '+JSON.stringify(errors.slice(0,5)));
+                await ctx.close();
+              }finally{await browser.close();}
+            }
+            console.log('QCDA_SITE_SWITCHING_PASS=3');
+          })().catch(err=>{console.error(err.stack||String(err));process.exit(1)});
+          JS
