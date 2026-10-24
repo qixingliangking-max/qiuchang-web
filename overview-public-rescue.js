@@ -132,7 +132,10 @@
     }
     // Give normal initialization first chance; rescue only placeholders.
     setTimeout(function(){
-      if(pending(cards)) rescueLive(ds);
+      // Never paint public fixture rows into 今日预测 while auth is
+      // unresolved. The official app.js alone owns this permission-gated
+      // panel; a 700ms public rescue caused a 30-row flash on iOS Safari.
+      // Yesterday's completed public review retains its own safe fallback.
       var review=document.getElementById('jcYesterdayCards');
       if(pending(review)) rescueHistory(addDays(ds,-1));
     },700);
