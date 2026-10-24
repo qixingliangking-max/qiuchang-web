@@ -60,6 +60,37 @@
         <span class="section-meta" id="jcPredictionMeta">正在确认登录状态…</span>
       </div>
       <div class="jc-live-cards" id="jcLiveCards"><div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div></div>
+<script>
+/* Anonymous display fast path only. Entitlements remain server verified. */
+(function(){
+  try {
+    var now=Date.now(), hash=location.hash||'';
+    if(/access_token=|refresh_token=|type=recovery|type=invite/i.test(hash)) return;
+    var handoff=Number(sessionStorage.getItem('qc-auth-handoff')||0);
+    if(handoff>0 && now-handoff>=0 && now-handoff<30000) return;
+    var key='sb-oqtloldkfjxildoribkf-auth-token';
+    var pref=localStorage.getItem('qc-auto-login');
+    var token=pref==='1'?localStorage.getItem(key)
+      :pref==='0'?sessionStorage.getItem(key)
+      :(sessionStorage.getItem(key)||localStorage.getItem(key));
+    if(token) return; // Cached session may be Pro: never flash guest UI.
+    window.qcOverviewKnownGuestFirstPaint=true;
+    var node=document.getElementById('jcLiveCards');
+    if(!node) return;
+    node.innerHTML='<div class="qc-premium-gate">'+
+      '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
+      '<h3>登录后查看今日预测</h3>'+
+      '<p>今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。</p>'+
+      '<a class="qc-premium-primary" href="login.html?v=20260926login3&amp;next='+
+        encodeURIComponent(location.pathname+location.search)+'">立即登录</a>'+
+      '</div>';
+    var meta=document.getElementById('jcPredictionMeta');
+    if(meta) meta.textContent='';
+  }catch(_){
+    // Storage unavailable: keep neutral placeholder until session resolves.
+  }
+})();
+</script>
     </section>
   </main>
 
@@ -92,7 +123,7 @@
 <script defer src="data.js"></script>
 <script defer src="assets/team-logos/catalog.js?v=20261017crestready2"></script>
 <script defer src="overview-live-static.js?v=20261022marketfresh1"></script>
-<script defer src="app.js?v=20261024guestgate1"></script>
+<script defer src="app.js?v=20261024knownanonymous2"></script>
 <script defer src="overview-static-first.js?v=20261009staticfirst4"></script>
 <script defer src="overview-schedule-snapshot.js?v=20261017forcefix1"></script>
 <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
