@@ -84,7 +84,17 @@ jobs:
                 await page.locator('#jcLiveCards').first().waitFor({state:'attached',timeout:15000});
                 console.log('QCDA_SITE_REAL_CLICK='+JSON.stringify({engine:cfg.name,
                   from:'football',to:'home',elapsedMs:Date.now()-navStart}));
-                if(errors.length)throw Error('JavaScript errors '+cfg.name+' '+JSON.stringify(errors.slice(0,5)));
+                // WebKit reports unfinished cross-origin Fetch calls as
+                // pageerror when this test navigates away from an active page.
+                // Record them separately; fatal app exceptions still fail CI.
+                const navigationCancelled=errors.filter(e=>
+                  /Fetch API cannot load.*due to access control checks/i.test(e));
+                const appErrors=errors.filter(e=>!navigationCancelled.includes(e));
+                console.log('QCDA_SITE_ERRORS='+JSON.stringify({
+                  engine:cfg.name,cancelledFetchOnNavigation:navigationCancelled.length,
+                  applicationExceptions:appErrors
+                }));
+                if(appErrors.length)throw Error('JavaScript errors '+cfg.name+' '+JSON.stringify(appErrors.slice(0,5)));
                 await ctx.close();
               }finally{await browser.close();}
             }
