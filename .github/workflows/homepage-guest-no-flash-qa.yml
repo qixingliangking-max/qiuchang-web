@@ -1,0 +1,82 @@
+name: Homepage guest gate no-flash WebKit QA
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'overview-public-rescue.js'
+      - '.github/workflows/homepage-guest-no-flash-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  guest-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/qcda-guest-test
+          cd /tmp/qcda-guest-test
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Assert today's premium panel never flashes public fixtures
+        env:
+          NODE_PATH: /tmp/qcda-guest-test/node_modules
+        run: |
+          node <<'JS'
+          const {webkit,chromium,devices}=require('playwright');
+          (async()=>{
+            for(const b of [
+              {engine:'iPhone WebKit',browser:webkit,device:devices['iPhone 13']},
+              {engine:'Android Chromium',browser:chromium,device:devices['Pixel 7']}
+            ]){
+              const browser=await b.browser.launch();
+              try{
+                const context=await browser.newContext({...b.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+                await context.addInitScript(()=>{
+                  window.__homeGateAudit={tableSeen:false,previewSeen:false,states:[],last:'',errors:[]};
+                  const check=()=>{
+                    const area=document.querySelector('#jcLiveCards');
+                    if(!area) return;
+                    if(area.querySelector('table,.jc-overview-table,.jc-review-table,.jc-overview-row')){
+                      window.__homeGateAudit.tableSeen=true;
+                    }
+                    const label=(area.innerText||area.textContent||'').trim().slice(0,100);
+                    if(!label) return;
+                    if(/(?:001|002|003).*?(?:VS|待生成)/.test(label))
+                      window.__homeGateAudit.previewSeen=true;
+                    if(label!==window.__homeGateAudit.last){
+                      window.__homeGateAudit.last=label;
+                      window.__homeGateAudit.states.push({at:Math.round(performance.now()),label});
+                    }
+                  };
+                  const obs=new MutationObserver(check);
+                  obs.observe(document,{childList:true,subtree:true,characterData:true});
+                  document.addEventListener('DOMContentLoaded',check);
+                });
+                const page=await context.newPage();
+                const exceptions=[];
+                page.on('pageerror',e=>exceptions.push(String(e)));
+                const response=await page.goto('https://qcda.cn/index.html',{waitUntil:'domcontentloaded',timeout:45000});
+                if(response?.status()!==200)throw Error('HTTP='+response?.status());
+                await page.locator('#jcLiveCards .qc-premium-gate a.qc-premium-primary').waitFor({state:'visible',timeout:30000});
+                await page.waitForTimeout(1500);
+                const result=await page.evaluate(()=>({
+                  ...window.__homeGateAudit,
+                  gateVisible:!!document.querySelector('#jcLiveCards .qc-premium-gate a.qc-premium-primary'),
+                  yesterdayUnchanged:!!document.querySelector('#jcYesterdayCards')
+                }));
+                console.log('QCDA_HOME_GUEST_NO_FLASH='+JSON.stringify({engine:b.engine,...result}));
+                if(result.tableSeen||result.previewSeen||!result.gateVisible||!result.yesterdayUnchanged||exceptions.length)
+                  throw Error('Guest gate regression '+b.engine+' '+JSON.stringify({...result,exceptions}));
+                await context.close();
+              }finally{await browser.close();}
+            }
+          })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
+          JS
