@@ -2868,7 +2868,7 @@ async function loadJcFrontend(){
     // 当前选中日期只在官方确认完赛后一次性写入FT/HT及命中圈。
     // Historical and future dates are static browsing only. The current
     // Beijing calendar day alone needs post-match score/status refreshes.
-    if(ds!==today || qcFrozenOverviewManifestCache?.dates?.[ds]) return;
+    if(ds!==today) return;
     // Public schedule is complete. Before its FIRST kickoff, only use the
     // fixed fixture card: there cannot yet be any post-game FT to collect.
     // Unknown kickoff timestamps deliberately retain the old network path.
@@ -2880,15 +2880,32 @@ async function loadJcFrontend(){
     try{
       // Silent background status checks. On-field score, HT and clock remain
       // unchanged until the backend persists the confirmed final result.
-      // The scheduled FT publisher already freezes one confirmed match into
-      // versioned public JSON. Read THAT published artifact first, rather than
-      // asking the production database to compute every visitor's score.
-      // If the publisher is temporarily unavailable, retain the proven
-      // public match-status fallback so a finished score is never lost.
-      const published=typeof window.qcFetchLiveScheduleDate==='function'
-        ? await window.qcFetchLiveScheduleDate(ds,true).catch(()=>null) : null;
-      const result=published?.data?.length ? published
-        : await jcFetchDateRows(ds,false,true);
+      // Confirmed FT/HT in the production schedule snapshot is authoritative
+      // for today's status only. GitHub static publication can lag behind
+      // score ingestion; never let an older static row mask a verified finish.
+      // Read-only: do not fetch or replace FINAL, odds, fixture IDs, or reports.
+      let result=null;
+      if(window.qcSupabase){
+        const {data,error}=await window.qcSupabase
+          .from('jc_overview_schedule_snapshots')
+          .select('payload,match_count')
+          .eq('business_date',ds).maybeSingle();
+        const rows=data?.payload?.rows;
+        if(!error && Array.isArray(rows) &&
+           rows.length===Number(data?.match_count||0) &&
+           rows.length===publicDayRows.length &&
+           rows.every(m=>m?.id && m.business_date===ds)){
+          const known=new Set(publicDayRows.map(m=>String(m.id)));
+          if(rows.every(m=>known.has(String(m.id))) &&
+             new Set(rows.map(m=>String(m.id))).size===known.size)
+            result={data:rows,error:null};
+        }
+      }
+      // Static score fallback is allowed only if the validated database
+      // snapshot is unavailable; never prefer stale static to newer FT.
+      if(!result && typeof window.qcFetchLiveScheduleDate==='function')
+        result=await window.qcFetchLiveScheduleDate(ds,true).catch(()=>null);
+      if(!result?.data?.length) result=await jcFetchDateRows(ds,false,true);
       if(token!==loadToken || selectedDate!==ds || result?.error ||
          !Array.isArray(result?.data)) return;
       const finalById=new Map(result.data.filter(m=>m?.id && qcIsConfirmedFinal(m))
