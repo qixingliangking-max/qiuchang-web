@@ -610,6 +610,14 @@
       "away_team": "波尔图",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T19:30:00Z"
+    },
+    {
+      "source_match_id": "5887656",
+      "match_id": "fotmob:5887656",
+      "home_team": "埃斯托里尔",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T15:30:00.000Z"
     }
   ]
 }

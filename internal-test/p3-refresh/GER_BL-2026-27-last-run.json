@@ -1,19 +1,20 @@
 {
   "league_code": "GER_BL",
   "season": "2026/27",
-  "run_at": "2026-10-25T05:06:49.931Z",
+  "run_at": "2026-10-25T18:32:08.257Z",
   "discovered_fixtures": 306,
-  "discovered_finished": 61,
-  "in_scope_finished": 61,
+  "discovered_finished": 63,
+  "in_scope_finished": 63,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 60,
-  "new_finished_matches": 1,
+  "baseline_finished_matches": 61,
+  "new_finished_matches": 2,
   "added_source_match_ids": [
-    "5881198"
+    "5881200",
+    "5881201"
   ],
   "removed_source_match_ids": [],
-  "mapped_finished": 61,
+  "mapped_finished": 63,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -23,5 +24,5 @@
   "collection_failures": 0,
   "quality_tier": "LIMITED",
   "avg_team_depth_coverage_pct": 1,
-  "published_blob_sha": "83378e03759b5982e56901c6c6b53c7184b05743"
+  "published_blob_sha": "52a51bd768929a96bbb11012dd1cb6d8a6c503f2"
 }

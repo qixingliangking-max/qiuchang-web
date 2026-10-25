@@ -682,6 +682,38 @@
       "away_team": "海伦芬",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5781780",
+      "match_id": "fotmob:5781780",
+      "home_team": "锡塔德幸运",
+      "away_team": "SBV精英",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T11:15:00.000Z"
+    },
+    {
+      "source_match_id": "5781777",
+      "match_id": "fotmob:5781777",
+      "home_team": "奈梅亨",
+      "away_team": "格罗宁根",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5781783",
+      "match_id": "fotmob:5781783",
+      "home_team": "埃因霍温",
+      "away_team": "费耶诺德",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T13:30:00.000Z"
+    },
+    {
+      "source_match_id": "5781778",
+      "match_id": "fotmob:5781778",
+      "home_team": "鹿特丹斯巴达",
+      "away_team": "阿贾克斯",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T15:45:00.000Z"
     }
   ]
 }

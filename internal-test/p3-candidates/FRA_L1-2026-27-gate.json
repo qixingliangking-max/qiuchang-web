@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 65,
-  "collected_matches": 65,
+  "input_matches": 71,
+  "collected_matches": 71,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 481,
+  "aggregate_players": 483,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -16,17 +16,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "勒芒",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "勒阿弗尔",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "图卢兹",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,17 +51,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "摩纳哥",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯特拉斯堡",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "昂热",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,22 +71,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "欧塞尔",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "洛里昂",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "特鲁瓦",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "里尔",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,15 +96,15 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "雷恩",
-      "matches": 7
+      "matches": 8
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "马赛",
-      "matches": 7
+      "matches": 8
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 1
+  "avg_team_depth_coverage_pct": 9.1
 }

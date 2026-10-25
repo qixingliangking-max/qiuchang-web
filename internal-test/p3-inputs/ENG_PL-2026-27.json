@@ -602,6 +602,46 @@
       "away_team": "热刺",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T16:30:00Z"
+    },
+    {
+      "source_match_id": "5795489",
+      "match_id": "fotmob:5795489",
+      "home_team": "水晶宫",
+      "away_team": "纽卡斯尔联",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5795490",
+      "match_id": "fotmob:5795490",
+      "home_team": "赫尔城",
+      "away_team": "布伦特福德",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5795492",
+      "match_id": "fotmob:5795492",
+      "home_team": "利物浦",
+      "away_team": "布莱顿",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5795493",
+      "match_id": "fotmob:5795493",
+      "home_team": "曼联",
+      "away_team": "伯恩茅斯",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5795494",
+      "match_id": "fotmob:5795494",
+      "home_team": "桑德兰",
+      "away_team": "利兹联",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T16:30:00.000Z"
     }
   ]
 }

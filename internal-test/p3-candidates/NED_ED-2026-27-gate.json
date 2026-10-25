@@ -3,36 +3,16 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 85,
-  "collected_matches": 85,
+  "input_matches": 89,
+  "collected_matches": 89,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 542,
+  "aggregate_players": 545,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "SBV精英",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "埃因霍温",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "奈梅亨",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "格罗宁根",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "特温特",
@@ -40,31 +20,11 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "费耶诺德",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "锡塔德幸运",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "阿尔克马尔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "阿贾克斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "鹿特丹斯巴达",
       "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 18.2
+  "avg_team_depth_coverage_pct": 20.2
 }

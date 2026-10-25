@@ -602,6 +602,30 @@
       "away_team": "帕尔马",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T18:45:00Z"
+    },
+    {
+      "source_match_id": "5749714",
+      "match_id": "fotmob:5749714",
+      "home_team": "国际米兰",
+      "away_team": "佛罗伦萨",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T11:30:00.000Z"
+    },
+    {
+      "source_match_id": "5749710",
+      "match_id": "fotmob:5749710",
+      "home_team": "亚特兰大",
+      "away_team": "弗罗西诺内",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749713",
+      "match_id": "fotmob:5749713",
+      "home_team": "热那亚",
+      "away_team": "威尼斯",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
     }
   ]
 }

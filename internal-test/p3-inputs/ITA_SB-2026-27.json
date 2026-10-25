@@ -626,6 +626,22 @@
       "away_team": "贝内文托",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T17:30:00Z"
+    },
+    {
+      "source_match_id": "5967116",
+      "match_id": "fotmob:5967116",
+      "home_team": "巴勒莫",
+      "away_team": "凯勒雷斯",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967118",
+      "match_id": "fotmob:5967118",
+      "home_team": "维罗纳",
+      "away_team": "比萨",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T16:15:00.000Z"
     }
   ]
 }

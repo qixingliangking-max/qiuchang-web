@@ -490,6 +490,22 @@
       "away_team": "法兰克福",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T16:30:00Z"
+    },
+    {
+      "source_match_id": "5881201",
+      "match_id": "fotmob:5881201",
+      "home_team": "霍芬海姆",
+      "away_team": "勒沃库森",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881200",
+      "match_id": "fotmob:5881200",
+      "home_team": "弗赖堡",
+      "away_team": "拜仁慕尼黑",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T16:30:00.000Z"
     }
   ]
 }

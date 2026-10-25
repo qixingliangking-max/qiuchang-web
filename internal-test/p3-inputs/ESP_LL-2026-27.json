@@ -762,6 +762,22 @@
       "away_team": "拉科鲁尼亚",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5868102",
+      "match_id": "fotmob:5868102",
+      "home_team": "毕尔巴鄂竞技",
+      "away_team": "赫塔费",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868104",
+      "match_id": "fotmob:5868104",
+      "home_team": "塞尔塔",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T15:15:00.000Z"
     }
   ]
 }

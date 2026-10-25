@@ -3,21 +3,16 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 95,
-  "collected_matches": 95,
+  "input_matches": 97,
+  "collected_matches": 97,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 597,
+  "aggregate_players": 599,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "塞尔塔",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞维利亚",
@@ -35,17 +30,7 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "毕尔巴鄂竞技",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "皇家社会",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "皇家贝蒂斯",
       "matches": 9
     },
     {
@@ -57,14 +42,9 @@
       "type": "LIMITED_SAMPLE",
       "team": "莱万特",
       "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "赫塔费",
-      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 15.5
+  "avg_team_depth_coverage_pct": 16.8
 }
