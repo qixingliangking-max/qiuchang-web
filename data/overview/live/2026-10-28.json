@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "business_date": "2026-10-28",
+  "match_count": 17,
+  "rows": [
+    {
+      "id": "a6a30f57-c061-425e-bcb4-428c34c4e7de",
+      "match_num": "周三001",
+      "business_date": "2026-10-28",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "大阪钢巴",
+      "away_team_name": "布里兰",
+      "match_date": "2026-10-28",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-10-28T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6582.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-165243.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d4ced24e-8f18-47bd-9f8c-4652d3c6b347",
+      "match_num": "周三002",
+      "business_date": "2026-10-28",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "鹿岛鹿角",
+      "away_team_name": "浦项制铁",
+      "match_date": "2026-10-28",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-10-28T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-4397.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-109373.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "b1d2d5f1-8296-4b28-88df-4610e850979e",
+      "match_num": "周三003",
+      "business_date": "2026-10-28",
+      "league_name": "日联赛杯",
+      "league_short_name": "日联赛杯",
+      "home_team_name": "横滨水手",
+      "away_team_name": "广岛三箭",
+      "match_date": "2026-10-28",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-10-28T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6581.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6224.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "464b80af-83d5-438c-adb8-02a39ccdc698",
+      "match_num": "周三004",
+      "business_date": "2026-10-28",
+      "league_name": "德国杯",
+      "league_short_name": "德国杯",
+      "home_team_name": "帕德博恩",
+      "away_team_name": "斯图加特",
+      "match_date": "2026-10-29",
+      "match_time": "01:00:00",
+      "kickoff_at": "2026-10-28T17:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8460.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10269.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "9ecd0836-8dbd-4aff-bee2-92a96c74785f",
+      "match_num": "周三005",
+      "business_date": "2026-10-28",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "威尼斯",
+      "away_team_name": "国际米兰",
+      "match_date": "2026-10-29",
+      "match_time": "01:30:00",
+      "kickoff_at": "2026-10-28T17:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-7881.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8636.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "2133318e-4b7b-4e41-b7f0-d220dafce7b5",
+      "match_num": "周三006",
+      "business_date": "2026-10-28",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "AC米兰",
+      "away_team_name": "博洛尼亚",
+      "match_date": "2026-10-29",
+      "match_time": "01:30:00",
+      "kickoff_at": "2026-10-28T17:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8564.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9857.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "235f2069-e57c-4285-a231-197e7ba60c61",
+      "match_num": "周三007",
+      "business_date": "2026-10-28",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "帕尔马",
+      "away_team_name": "乌迪内斯",
+      "match_date": "2026-10-29",
+      "match_time": "01:30:00",
+      "kickoff_at": "2026-10-28T17:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10167.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8600.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "cb3dc64a-9575-4732-a491-ac12edfbb6d4",
+      "match_num": "周三008",
+      "business_date": "2026-10-28",
+      "league_name": "荷兰杯",
+      "league_short_name": "荷兰杯",
+      "home_team_name": "鹿特丹斯巴达",
+      "away_team_name": "福图纳锡塔德",
+      "match_date": "2026-10-29",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-10-28T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8614.png",
+      "_awayLogoUrl": "assets/team-logos/espn-soccer-143.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c49d52d9-e3d4-4abf-974e-aa2078bdff20",
+      "match_num": "周三009",
+      "business_date": "2026-10-28",
+      "league_name": "瑞超",
+      "league_short_name": "瑞超",
+      "home_team_name": "布鲁马波卡纳",
+      "away_team_name": "赫根",
+      "match_date": "2026-10-29",
+      "match_time": "02:00:00",
+      "kickoff_at": "2026-10-28T18:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-8221.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8428.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "6218305a-7874-4443-b91c-642a4eec2de7",
+      "match_num": "周三010",
+      "business_date": "2026-10-28",
+      "league_name": "英联赛杯",
+      "league_short_name": "英联赛杯",
+      "home_team_name": "桑德兰",
+      "away_team_name": "布伦特福德",
+      "match_date": "2026-10-29",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-28T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8472.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9937.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "a565fbc1-0aa0-4222-948d-ce7ce4c4bd49",
+      "match_num": "周三011",
+      "business_date": "2026-10-28",
+      "league_name": "英联赛杯",
+      "league_short_name": "英联赛杯",
+      "home_team_name": "伯恩茅斯",
+      "away_team_name": "阿斯顿维拉",
+      "match_date": "2026-10-29",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-28T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8678.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10252.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "e7c5ed33-a948-478f-97d4-f4c057930238",
+      "match_num": "周三012",
+      "business_date": "2026-10-28",
+      "league_name": "英联赛杯",
+      "league_short_name": "英联赛杯",
+      "home_team_name": "富勒姆",
+      "away_team_name": "水晶宫",
+      "match_date": "2026-10-29",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-28T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9879.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9826.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "0f8c9dbb-a5a8-4fac-a223-7a275d281870",
+      "match_num": "周三013",
+      "business_date": "2026-10-28",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "蒙扎",
+      "away_team_name": "那不勒斯",
+      "match_date": "2026-10-29",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-28T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6504.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9875.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "7adf58c7-d574-499c-953c-d0395d83407f",
+      "match_num": "周三014",
+      "business_date": "2026-10-28",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "热那亚",
+      "away_team_name": "尤文图斯",
+      "match_date": "2026-10-29",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-28T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10233.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9885.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "72005d15-19d6-4254-9365-c207440f024d",
+      "match_num": "周三015",
+      "business_date": "2026-10-28",
+      "league_name": "英联赛杯",
+      "league_short_name": "英联赛杯",
+      "home_team_name": "利物浦",
+      "away_team_name": "切尔西",
+      "match_date": "2026-10-29",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-10-28T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8650.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8455.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "ecc77c94-0658-43f8-8c5b-32bf6d0a41c0",
+      "match_num": "周三016",
+      "business_date": "2026-10-28",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "弗鲁米嫩塞",
+      "away_team_name": "巴西国际",
+      "match_date": "2026-10-29",
+      "match_time": "06:30:00",
+      "kickoff_at": "2026-10-28T22:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9863.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8702.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "4dbfd71b-53f3-4396-9c7f-11f776c83fd2",
+      "match_num": "周三017",
+      "business_date": "2026-10-28",
+      "league_name": "美职",
+      "league_short_name": "美职",
+      "home_team_name": "迈阿密国际",
+      "away_team_name": "辛辛那提FC",
+      "match_date": "2026-10-29",
+      "match_time": "07:30:00",
+      "kickoff_at": "2026-10-28T23:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-960720.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-722265.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
