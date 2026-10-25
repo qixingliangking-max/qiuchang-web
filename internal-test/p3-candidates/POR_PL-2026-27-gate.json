@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 77,
-  "collected_matches": 77,
+  "input_matches": 79,
+  "collected_matches": 79,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 541,
+  "aggregate_players": 543,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉加",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -51,7 +51,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "法马利康",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -76,12 +76,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "葡萄牙国民",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "里奥阿维",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,5 +106,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 6.1
+  "avg_team_depth_coverage_pct": 7.6
 }

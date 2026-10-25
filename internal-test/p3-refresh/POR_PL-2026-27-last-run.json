@@ -1,18 +1,28 @@
 {
   "league_code": "POR_PL",
   "season": "2026/27",
-  "run_at": "2026-10-25T19:46:59.036Z",
+  "run_at": "2026-10-25T21:18:22.121Z",
   "discovered_fixtures": 306,
-  "discovered_finished": 77,
-  "in_scope_finished": 77,
+  "discovered_finished": 79,
+  "in_scope_finished": 79,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 77,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 2,
+  "added_source_match_ids": [
+    "5887658",
+    "5887659"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 77,
+  "mapped_finished": 79,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 7.6,
+  "published_blob_sha": "46b7f39a9648ef40de20bc6b3b5d6da024c2ca16"
 }
