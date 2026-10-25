@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "business_date": "2026-10-27",
+  "match_count": 10,
+  "rows": [
+    {
+      "id": "7bf1d0c0-c532-4071-aad7-bef05bbfbb90",
+      "match_num": "周二001",
+      "business_date": "2026-10-27",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "京都不死鸟",
+      "away_team_name": "纽卡斯尔喷气机",
+      "match_date": "2026-10-27",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-10-27T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8542.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6454.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "3df01c7d-b3b2-4338-94a5-397a2c55c6d6",
+      "match_num": "周二002",
+      "business_date": "2026-10-27",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "大田市民",
+      "away_team_name": "神户胜利船",
+      "match_date": "2026-10-27",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-10-27T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-133900.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-4688.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "6b1c2213-f255-45b1-b990-9995a7d7a5e4",
+      "match_num": "周二003",
+      "business_date": "2026-10-27",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "北京国安",
+      "away_team_name": "全北现代",
+      "match_date": "2026-10-27",
+      "match_time": "20:15:00",
+      "kickoff_at": "2026-10-27T12:15:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-4177.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-46038.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c3cc9d57-1a7a-45ad-9c23-83249443b731",
+      "match_num": "周二004",
+      "business_date": "2026-10-27",
+      "league_name": "德国杯",
+      "league_short_name": "德国杯",
+      "home_team_name": "汉堡",
+      "away_team_name": "法兰克福",
+      "match_date": "2026-10-28",
+      "match_time": "01:00:00",
+      "kickoff_at": "2026-10-27T17:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9790.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9810.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d0c5cf80-1359-428e-b660-232295d8894d",
+      "match_num": "周二005",
+      "business_date": "2026-10-27",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "萨索洛",
+      "away_team_name": "拉齐奥",
+      "match_date": "2026-10-28",
+      "match_time": "01:30:00",
+      "kickoff_at": "2026-10-27T17:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-7943.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8543.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "94bd2581-2d0a-410f-a181-1a41d1b8a51c",
+      "match_num": "周二006",
+      "business_date": "2026-10-27",
+      "league_name": "瑞超",
+      "league_short_name": "瑞超",
+      "home_team_name": "AIK索尔纳",
+      "away_team_name": "埃尔夫斯堡",
+      "match_date": "2026-10-28",
+      "match_time": "02:00:00",
+      "kickoff_at": "2026-10-27T18:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8349.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8014.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "ad82cb8a-3ac4-491c-b079-6e7067dc6f6f",
+      "match_num": "周二007",
+      "business_date": "2026-10-27",
+      "league_name": "德国杯",
+      "league_short_name": "德国杯",
+      "home_team_name": "多特蒙德",
+      "away_team_name": "云达不来梅",
+      "match_date": "2026-10-28",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-27T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9789.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8697.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "62fef451-654e-4283-8a5a-33ddaaf08d66",
+      "match_num": "周二008",
+      "business_date": "2026-10-27",
+      "league_name": "德国杯",
+      "league_short_name": "德国杯",
+      "home_team_name": "科隆",
+      "away_team_name": "柏林联合",
+      "match_date": "2026-10-28",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-27T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8722.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8149.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "30b22c29-3f23-41bc-b193-fe58d71e3bcf",
+      "match_num": "周二009",
+      "business_date": "2026-10-27",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "罗马",
+      "away_team_name": "卡利亚里",
+      "match_date": "2026-10-28",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-27T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8686.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8529.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "1d2e63d9-fd82-4a7e-93e3-8ca6fc9cc798",
+      "match_num": "周二010",
+      "business_date": "2026-10-27",
+      "league_name": "意甲",
+      "league_short_name": "意甲",
+      "home_team_name": "都灵",
+      "away_team_name": "科莫",
+      "match_date": "2026-10-28",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-10-27T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9804.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10171.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
