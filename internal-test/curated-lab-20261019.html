@@ -255,6 +255,34 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 .compare-table-scroll th{color:#7287a4;background:#f6f8fc}
 .compare-total{font-size:12px;font-weight:850;line-height:1.7;color:#42638d}
 @media(max-width:620px){.compare-section{padding:12px}.compare-grid{gap:8px}.compare-cell{padding:10px}.compare-cell strong{font-size:16px}.reveal-row{padding:7px 4px 0}.reveal-row span{max-width:220px}}
+
+/* V2.1 analyst identity colors; no layout, data or settlement changes. */
+.plan.analyst-guheng,.dialog[data-analyst="guheng"]{
+ --analyst-accent:#3468bf;--analyst-light:#f0f5ff;--analyst-border:#c9d8f5;
+}
+.plan.analyst-shence,.dialog[data-analyst="shence"]{
+ --analyst-accent:#8759b5;--analyst-light:#f6f0fc;--analyst-border:#dac8ed;
+}
+.plan.analyst-luye,.dialog[data-analyst="luye"]{
+ --analyst-accent:#23836b;--analyst-light:#eefaf5;--analyst-border:#bde4d5;
+}
+.plan.analyst-guheng,.plan.analyst-shence,.plan.analyst-luye{
+ border-top:3px solid var(--analyst-accent);
+}
+.plan[class*="analyst-"] .plan-head{background:var(--analyst-light)}
+.plan[class*="analyst-"] .plan-id{color:var(--analyst-accent)}
+.plan[class*="analyst-"] .inspect{
+ color:var(--analyst-accent);background:var(--analyst-light);border-color:var(--analyst-border);
+}
+.plan[class*="analyst-"] .inspect:hover{border-color:var(--analyst-accent)}
+.plan[class*="analyst-"] .plan-return strong:not(.null){color:var(--analyst-accent)}
+.dialog[data-analyst] #dialogTitle{color:var(--analyst-accent)}
+.dialog[data-analyst] .mode-tabs button.active{
+ color:var(--analyst-accent);border-color:var(--analyst-accent);background:var(--analyst-light);
+}
+.dialog[data-analyst] .dialog-actions .primary-action{
+ background:var(--analyst-accent);border-color:var(--analyst-accent);color:#fff;
+}
 </style>
 </head>
 <body>
@@ -277,6 +305,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #8daa
 <script src="curated-lab-data-20261019.js?v=20261021publicclean1"></script>
 <script src="../supabase-config.js"></script>
 <script src="curated-db-direct-20261022.js?v=20261023replayfix4"></script>
-<script src="curated-lab-20261019.js?v=20261023unifiedarchive5"></script>
+<script src="curated-lab-20261019.js?v=20261025analystcolors1"></script>
 </body>
 </html>
