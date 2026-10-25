@@ -778,6 +778,14 @@
       "away_team": "皇家贝蒂斯",
       "match_date": "2026-10-25",
       "kickoff_at": "2026-10-25T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868108",
+      "match_id": "fotmob:5868108",
+      "home_team": "皇家社会",
+      "away_team": "莱万特",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T17:30:00.000Z"
     }
   ]
 }

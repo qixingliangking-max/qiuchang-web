@@ -954,6 +954,14 @@
       "away_team": "休达",
       "match_date": "2026-10-25",
       "kickoff_at": "2026-10-25T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868507",
+      "match_id": "fotmob:5868507",
+      "home_team": "卡斯特利翁",
+      "away_team": "希洪竞技",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T17:30:00.000Z"
     }
   ]
 }

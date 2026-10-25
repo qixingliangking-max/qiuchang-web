@@ -1,18 +1,27 @@
 {
   "league_code": "ESP_LL",
   "season": "2026/27",
-  "run_at": "2026-10-25T18:51:39.930Z",
+  "run_at": "2026-10-25T19:46:34.837Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 97,
-  "in_scope_finished": 97,
+  "discovered_finished": 98,
+  "in_scope_finished": 98,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 97,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 1,
+  "added_source_match_ids": [
+    "5868108"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 97,
+  "mapped_finished": 98,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 17.7,
+  "published_blob_sha": "dc7df0f235d57ecfae18d484cc7f4cd89c4759b5"
 }

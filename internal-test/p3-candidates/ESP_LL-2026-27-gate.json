@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 97,
-  "collected_matches": 97,
+  "input_matches": 98,
+  "collected_matches": 98,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -30,21 +30,11 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "皇家社会",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "皇家马德里",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "莱万特",
       "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 16.8
+  "avg_team_depth_coverage_pct": 17.7
 }
