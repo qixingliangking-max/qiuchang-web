@@ -577,7 +577,7 @@
       "home_team": "卡利亚里",
       "away_team": "博洛尼亚",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T13:00:00.000Z"
+      "kickoff_at": "2026-10-24T13:00:00Z"
     },
     {
       "source_match_id": "5749712",
@@ -585,7 +585,7 @@
       "home_team": "科莫",
       "away_team": "萨索洛",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T13:00:00.000Z"
+      "kickoff_at": "2026-10-24T13:00:00Z"
     },
     {
       "source_match_id": "5749717",
@@ -593,7 +593,15 @@
       "home_team": "那不勒斯",
       "away_team": "罗马",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T16:00:00.000Z"
+      "kickoff_at": "2026-10-24T16:00:00Z"
+    },
+    {
+      "source_match_id": "5749715",
+      "match_id": "fotmob:5749715",
+      "home_team": "拉齐奥",
+      "away_team": "帕尔马",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T18:45:00Z"
     }
   ]
 }

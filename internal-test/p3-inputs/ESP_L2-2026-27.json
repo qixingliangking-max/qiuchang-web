@@ -897,7 +897,7 @@
       "home_team": "科尔多瓦",
       "away_team": "埃瓦尔",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T12:00:00.000Z"
+      "kickoff_at": "2026-10-24T12:00:00Z"
     },
     {
       "source_match_id": "5868511",
@@ -905,7 +905,31 @@
       "home_team": "莱加内斯",
       "away_team": "马略卡",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T14:15:00.000Z"
+      "kickoff_at": "2026-10-24T14:15:00Z"
+    },
+    {
+      "source_match_id": "5868509",
+      "match_id": "fotmob:5868509",
+      "home_team": "赫罗纳",
+      "away_team": "塞尔塔B",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868512",
+      "match_id": "fotmob:5868512",
+      "home_team": "拉斯帕尔马斯",
+      "away_team": "皇家社会B",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T16:30:00Z"
+    },
+    {
+      "source_match_id": "5868504",
+      "match_id": "fotmob:5868504",
+      "home_team": "阿尔梅里亚",
+      "away_team": "奥维耶多",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T19:00:00Z"
     }
   ]
 }

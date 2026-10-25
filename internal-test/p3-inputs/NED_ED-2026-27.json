@@ -665,7 +665,23 @@
       "home_team": "乌德勒支",
       "away_team": "兹沃勒",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T14:30:00.000Z"
+      "kickoff_at": "2026-10-24T14:30:00Z"
+    },
+    {
+      "source_match_id": "5781785",
+      "match_id": "fotmob:5781785",
+      "home_team": "威廉二世",
+      "away_team": "坎布尔",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T16:45:00Z"
+    },
+    {
+      "source_match_id": "5781779",
+      "match_id": "fotmob:5781779",
+      "home_team": "海牙",
+      "away_team": "海伦芬",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T19:00:00Z"
     }
   ]
 }

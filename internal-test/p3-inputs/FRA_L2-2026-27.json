@@ -697,7 +697,15 @@
       "home_team": "第戎",
       "away_team": "罗德兹",
       "match_date": "2026-10-24",
-      "kickoff_at": "2026-10-24T12:00:00.000Z"
+      "kickoff_at": "2026-10-24T12:00:00Z"
+    },
+    {
+      "source_match_id": "5803298",
+      "match_id": "fotmob:5803298",
+      "home_team": "圣埃蒂安",
+      "away_team": "南特",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T18:45:00Z"
     }
   ]
 }
