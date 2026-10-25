@@ -1,6 +1,8 @@
 name: P3 Scheduled Offline Refresh
 
 on:
+  # Reusable entry point: invoked only after the final-score publisher confirms new results.
+  workflow_call:
   schedule:
     # Beijing time 08:30 and 23:30 every day (UTC 00:30 / 15:30).
     - cron: "30 0,15 * * *"
