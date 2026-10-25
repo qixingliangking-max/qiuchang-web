@@ -634,6 +634,14 @@
       "away_team": "尤文图斯",
       "match_date": "2026-10-25",
       "kickoff_at": "2026-10-25T17:05:00.000Z"
+    },
+    {
+      "source_match_id": "5749719",
+      "match_id": "fotmob:5749719",
+      "home_team": "乌迪内斯",
+      "away_team": "AC米兰",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T19:45:00.000Z"
     }
   ]
 }
