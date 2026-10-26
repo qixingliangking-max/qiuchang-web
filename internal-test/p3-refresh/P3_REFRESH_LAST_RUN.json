@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-26T04:43:33.707Z",
+  "run_at": "2026-10-26T05:09:19.502Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 23,
+  "promoted_leagues": 0,
+  "noop_leagues": 24,
   "blocked_leagues": 0,
   "results": [
     {
@@ -331,15 +331,15 @@
     {
       "league_code": "USA_MLS",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 466,
-      "baseline_finished_matches": 465,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 466,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     }
   ]
