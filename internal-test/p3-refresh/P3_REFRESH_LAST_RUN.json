@@ -1,23 +1,23 @@
 {
-  "run_at": "2026-10-26T05:09:19.502Z",
+  "run_at": "2026-10-26T20:41:06.799Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 0,
-  "noop_leagues": 24,
+  "promoted_leagues": 1,
+  "noop_leagues": 23,
   "blocked_leagues": 0,
   "results": [
     {
       "league_code": "AFC_ACLE",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 32,
+      "status": "PROMOTED",
+      "discovered_finished": 37,
       "baseline_finished_matches": 32,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 5,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
