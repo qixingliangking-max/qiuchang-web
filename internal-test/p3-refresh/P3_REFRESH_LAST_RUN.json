@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-25T23:22:21.726Z",
+  "run_at": "2026-10-26T04:43:33.707Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 1,
@@ -261,15 +261,15 @@
     {
       "league_code": "POR_PL",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 80,
-      "baseline_finished_matches": 79,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 80,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -331,15 +331,15 @@
     {
       "league_code": "USA_MLS",
       "season": "2026",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 465,
+      "status": "PROMOTED",
+      "discovered_finished": 466,
       "baseline_finished_matches": 465,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     }
   ]
