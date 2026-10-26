@@ -3,38 +3,17 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 88,
-  "collected_matches": 88,
+  "input_matches": 90,
+  "collected_matches": 90,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 510,
+  "aggregate_players": 512,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
-  "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "兰斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "布洛涅",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "红星",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "蒙彼利埃",
-      "matches": 9
-    }
-  ],
+  "strict_warnings": [],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 23.3
+  "avg_team_depth_coverage_pct": 24.8
 }

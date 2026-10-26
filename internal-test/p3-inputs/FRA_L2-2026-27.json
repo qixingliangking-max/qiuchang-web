@@ -706,6 +706,22 @@
       "away_team": "南特",
       "match_date": "2026-10-24",
       "kickoff_at": "2026-10-24T18:45:00Z"
+    },
+    {
+      "source_match_id": "5803290",
+      "match_id": "fotmob:5803290",
+      "home_team": "布洛涅",
+      "away_team": "兰斯",
+      "match_date": "2026-10-26",
+      "kickoff_at": "2026-10-26T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5803294",
+      "match_id": "fotmob:5803294",
+      "home_team": "蒙彼利埃",
+      "away_team": "红星",
+      "match_date": "2026-10-26",
+      "kickoff_at": "2026-10-26T19:45:00.000Z"
     }
   ]
 }
