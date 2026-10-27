@@ -2537,7 +2537,23 @@
       "home_team": "桑托斯",
       "away_team": "巴伊亚",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:00:00.000Z"
+      "kickoff_at": "2026-10-25T01:00:00Z"
+    },
+    {
+      "source_match_id": "5103681",
+      "match_id": "fotmob:5103681",
+      "home_team": "科里蒂巴",
+      "away_team": "格雷米奥",
+      "match_date": "2026-10-26",
+      "kickoff_at": "2026-10-26T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103674",
+      "match_id": "fotmob:5103674",
+      "home_team": "弗拉门戈",
+      "away_team": "米内罗竞技",
+      "match_date": "2026-10-26",
+      "kickoff_at": "2026-10-26T23:00:00Z"
     }
   ]
 }
