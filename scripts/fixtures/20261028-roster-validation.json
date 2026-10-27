@@ -1,0 +1,160 @@
+{
+  "source": "read-only public.jc_matches snapshot 2026-10-27",
+  "note": "No jc_model_outputs/current or jc_match_ai_analysis/ready as of this snapshot; test must block rather than guess",
+  "business_date": "2026-10-28",
+  "fixtures": [
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三001",
+      "league": "亚冠精英",
+      "home_team_name": "大阪钢巴",
+      "away_team_name": "布里兰",
+      "kickoff_bjt": "2026-10-28 18:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三002",
+      "league": "亚冠精英",
+      "home_team_name": "鹿岛鹿角",
+      "away_team_name": "浦项制铁",
+      "kickoff_bjt": "2026-10-28 18:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三003",
+      "league": "日联赛杯",
+      "home_team_name": "横滨水手",
+      "away_team_name": "广岛三箭",
+      "kickoff_bjt": "2026-10-28 18:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三004",
+      "league": "德国杯",
+      "home_team_name": "帕德博恩",
+      "away_team_name": "斯图加特",
+      "kickoff_bjt": "2026-10-29 01:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三005",
+      "league": "意甲",
+      "home_team_name": "威尼斯",
+      "away_team_name": "国际米兰",
+      "kickoff_bjt": "2026-10-29 01:30",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三006",
+      "league": "意甲",
+      "home_team_name": "AC米兰",
+      "away_team_name": "博洛尼亚",
+      "kickoff_bjt": "2026-10-29 01:30",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三007",
+      "league": "意甲",
+      "home_team_name": "帕尔马",
+      "away_team_name": "乌迪内斯",
+      "kickoff_bjt": "2026-10-29 01:30",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三008",
+      "league": "荷兰杯",
+      "home_team_name": "鹿特丹斯巴达",
+      "away_team_name": "福图纳锡塔德",
+      "kickoff_bjt": "2026-10-29 01:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三009",
+      "league": "瑞超",
+      "home_team_name": "布鲁马波卡纳",
+      "away_team_name": "赫根",
+      "kickoff_bjt": "2026-10-29 02:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三010",
+      "league": "英联赛杯",
+      "home_team_name": "桑德兰",
+      "away_team_name": "布伦特福德",
+      "kickoff_bjt": "2026-10-29 03:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三011",
+      "league": "英联赛杯",
+      "home_team_name": "伯恩茅斯",
+      "away_team_name": "阿斯顿维拉",
+      "kickoff_bjt": "2026-10-29 03:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三012",
+      "league": "英联赛杯",
+      "home_team_name": "富勒姆",
+      "away_team_name": "水晶宫",
+      "kickoff_bjt": "2026-10-29 03:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三013",
+      "league": "意甲",
+      "home_team_name": "蒙扎",
+      "away_team_name": "那不勒斯",
+      "kickoff_bjt": "2026-10-29 03:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三014",
+      "league": "意甲",
+      "home_team_name": "热那亚",
+      "away_team_name": "尤文图斯",
+      "kickoff_bjt": "2026-10-29 03:45",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三015",
+      "league": "英联赛杯",
+      "home_team_name": "利物浦",
+      "away_team_name": "切尔西",
+      "kickoff_bjt": "2026-10-29 04:00",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三016",
+      "league": "巴甲",
+      "home_team_name": "弗鲁米嫩塞",
+      "away_team_name": "巴西国际",
+      "kickoff_bjt": "2026-10-29 06:30",
+      "model": null
+    },
+    {
+      "business_date": "2026-10-28",
+      "match_num": "周三017",
+      "league": "美职",
+      "home_team_name": "迈阿密国际",
+      "away_team_name": "辛辛那提FC",
+      "kickoff_bjt": "2026-10-29 07:30",
+      "model": null
+    }
+  ]
+}
