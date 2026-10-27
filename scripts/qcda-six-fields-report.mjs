@@ -14,7 +14,7 @@ function readField(raw,key){
   return raw[has[0]];
 }
 function parseText(str){
-  const names=[...new Set(fields.flatMap(f=>f.aliases).filter(x=>!/[a-z_]/i.test(x)))].sort((a,b)=>b.length-a.length);
+  const names=[...new Set([...fields.flatMap(f=>f.aliases).filter(x=>!x.includes('_') && x!=='direction' && x!=='htft'),'M7','M8'])].sort((a,b)=>b.length-a.length);
   const rx=new RegExp('(?:[①②③④⑤⑥⑦⑧]\\s*)?('+names.join('|')+')\\s*[：:]','g');
   const ms=[...str.matchAll(rx)],out={};
   for(let i=0;i<ms.length;i++){
