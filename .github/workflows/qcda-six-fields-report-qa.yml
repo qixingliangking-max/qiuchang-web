@@ -1,0 +1,23 @@
+name: QCDA six-field and report V1.3 isolated QA
+on:
+  push:
+    paths:
+      - 'config/qcda-six-fields-report-v1.3.json'
+      - 'scripts/qcda-six-fields-report.mjs'
+      - 'scripts/qcda-six-fields-report.test.mjs'
+      - 'scripts/fixtures/20261028-roster-validation.json'
+      - '.github/workflows/qcda-six-fields-report-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sixfields:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate independent read-only conversion + report gate
+        run: node --test scripts/qcda-six-fields-report.test.mjs
