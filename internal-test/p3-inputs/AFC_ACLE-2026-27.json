@@ -330,6 +330,22 @@
       "away_team": "河内公安",
       "match_date": "2026-10-27",
       "kickoff_at": "2026-10-27T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6049996",
+      "match_id": "fotmob:6049996",
+      "home_team": "北京国安",
+      "away_team": "全北现代",
+      "match_date": "2026-10-27",
+      "kickoff_at": "2026-10-27T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6049997",
+      "match_id": "fotmob:6049997",
+      "home_team": "拉查布里",
+      "away_team": "柏太阳神",
+      "match_date": "2026-10-27",
+      "kickoff_at": "2026-10-27T12:15:00.000Z"
     }
   ]
 }
