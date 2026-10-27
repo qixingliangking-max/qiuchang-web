@@ -5,6 +5,10 @@
   if(typeof window==='undefined') return;
   const memory=new Map();
   let manifestPromise=null;
+  // Avoid a forced same-origin manifest roundtrip on rapid cross-page navigation.
+  // The public fixture version index is reusable for at most 12 seconds.
+  let manifestCheckedAt=0;
+  const manifestReuseMs=12000;
   const manifestKey='qc-live-schedule-manifest-v1';
   const localKey=ds=>'qc-live-schedule-v1-'+ds;
 
@@ -45,18 +49,31 @@
     });
   }
   async function loadManifest(force=false){
-    if(!force && manifestPromise) return manifestPromise;
+    const now=Date.now();
     const cached=readJson(manifestKey);
+    if(!force && manifestPromise && now>=manifestCheckedAt &&
+       now-manifestCheckedAt<manifestReuseMs) return manifestPromise;
+    // Cache only the public version manifest, never Pro or FINAL content.
+    if(!force && cached?.version===1 && cached?.dates &&
+       Number.isFinite(Number(cached.checkedAt)) && Number(cached.checkedAt)>0 &&
+       now>=Number(cached.checkedAt) && now-Number(cached.checkedAt)<manifestReuseMs){
+      manifestCheckedAt=Number(cached.checkedAt);
+      manifestPromise=Promise.resolve(cached);
+      return manifestPromise;
+    }
+    manifestCheckedAt=now;
     manifestPromise=fetch('data/overview/live-schedule-manifest.json',{cache:'no-cache'})
       .then(async res=>{
         if(!res.ok) throw new Error('live schedule manifest HTTP '+res.status);
         const value=await res.json();
         if(value?.version!==1 || !value?.dates || typeof value.dates!=='object')
           throw new Error('invalid live schedule manifest');
-        writeJson(manifestKey,value);
+        manifestCheckedAt=Date.now();
+        writeJson(manifestKey,{...value,checkedAt:manifestCheckedAt});
         return value;
       })
       .catch(error=>{
+        manifestPromise=null;
         if(cached?.version===1 && cached?.dates) return cached;
         throw error;
       });
@@ -73,7 +90,7 @@
     const beijingToday=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
     let freshManifest=null;
     if(!force && ds>=beijingToday){
-      try{ freshManifest=await loadManifest(true); }
+      try{ freshManifest=await loadManifest(false); }
       catch(error){ console.warn('公开赛程索引暂不可用，保留已验证缓存',error); }
     }
     const currentVersion=freshManifest?.dates?.[ds]?.version;
