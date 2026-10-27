@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 80,
-  "collected_matches": 80,
+  "input_matches": 81,
+  "collected_matches": 81,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "拉齐奥",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨索洛",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,5 +116,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 1.8
+  "avg_team_depth_coverage_pct": 2.3
 }

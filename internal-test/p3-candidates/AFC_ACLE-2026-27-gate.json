@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 43,
-  "collected_matches": 43,
+  "input_matches": 44,
+  "collected_matches": 44,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
-  "aggregate_players": 850,
+  "aggregate_players": 853,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "德黑兰独立",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -166,7 +166,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "迪拜青年国民",
-      "matches": 2
+      "matches": 3
     },
     {
       "type": "LIMITED_SAMPLE",

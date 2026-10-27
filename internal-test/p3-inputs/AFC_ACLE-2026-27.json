@@ -346,6 +346,14 @@
       "away_team": "柏太阳神",
       "match_date": "2026-10-27",
       "kickoff_at": "2026-10-27T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050086",
+      "match_id": "fotmob:6050086",
+      "home_team": "迪拜青年国民",
+      "away_team": "德黑兰独立",
+      "match_date": "2026-10-27",
+      "kickoff_at": "2026-10-27T16:00:00.000Z"
     }
   ]
 }
