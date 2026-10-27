@@ -31,7 +31,11 @@ jobs:
         run: |
           node <<'JS'
           const {webkit,chromium,devices}=require('playwright');
-          const start='2026-10-24', before='2026-10-22', midway='2026-10-23';
+          // Use a rolling completed-day baseline: fixed 10/24 fixtures expired
+          // from the homepage guest's 3-day navigation window after 10/27.
+          const moveDate=(ds,n)=>{const d=new Date(ds+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+          const beijingToday=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
+          const start=moveDate(beijingToday,-1), before=moveDate(start,-2), midway=moveDate(start,-1);
           const configs=[
             {name:'desktop-Chrome',engine:chromium,opts:{viewport:{width:1360,height:900}}},
             {name:'iPhone-WebKit',engine:webkit,opts:devices['iPhone 13']},
