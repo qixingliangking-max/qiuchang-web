@@ -64,7 +64,7 @@ const cases=[
    await page.locator('[data-main-tab="ai"]').click();
    const aiPending=await page.locator('#jcMainPanel').innerText();
    if(!aiPending.includes('正在验证访问权限')||
-      /模型方向|TOP3比分/.test(aiPending))
+      /模型方向|核心方向|TOP3比分|比分参考/.test(aiPending))
      throw Error('Protected AI displayed without verified session');
    const first={browser:spec.name,unresolvedAuth:true,factsPanelReady:true,oddsPanelReady:true,
      factsClickedWhileAuthHung:!!factsStarted,oddsPendingWhileAuthHung:true,oddsFeedback:oddsFeedback.slice(0,45),
