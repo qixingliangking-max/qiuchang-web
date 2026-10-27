@@ -752,11 +752,11 @@
       "match_date": "2026-10-28",
       "match_time": "03:45:00",
       "kickoff_at": "2026-10-27T19:45:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "3:2",
+        "sectionsNo1": "2:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9789.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8697.png",
@@ -875,11 +875,11 @@
       "match_date": "2026-10-28",
       "match_time": "03:45:00",
       "kickoff_at": "2026-10-27T19:45:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "5:0",
+        "sectionsNo1": "1:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8722.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8149.png",
@@ -998,11 +998,11 @@
       "match_date": "2026-10-28",
       "match_time": "03:45:00",
       "kickoff_at": "2026-10-27T19:45:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "4:2",
+        "sectionsNo1": "2:1"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8686.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8529.png",
@@ -1121,11 +1121,11 @@
       "match_date": "2026-10-28",
       "match_time": "03:45:00",
       "kickoff_at": "2026-10-27T19:45:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "1:3",
+        "sectionsNo1": "1:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-9804.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-10171.png",
