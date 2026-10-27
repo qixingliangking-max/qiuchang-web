@@ -21,12 +21,13 @@ test('10/27 real locked data -> six public fields, original order retained',()=>
 });
 test('10/27 real DB locked guest/sample: single wins the double order',()=>{
   const r=convertSixFields({direction:'负 / 平',single_pick:'负',
-    raw_input:{single_prob:'39.2'},handicap_direction:'让胜 / 让负',
+    raw_input:{single_prob:'39.2',handicap_line:'+1'},handicap_direction:'让胜 / 让负',
     htft:'负/负、平/负',goal_range:'3球｜2球',
     top_scores:['1-2','1-1','1-3']});
   assert.equal(r.status,'ready');
   assert.equal(r.fields['核心方向'],'负 / 平');
   assert.equal(r.fields['单选倾向'],'负｜39.2%');
+  assert.equal(r.fields['官方让球'],'让胜 / 让负（+1）');
 });
 test('single=平 on a 主队不败 input -> 平 / 胜, no changes to scores',()=>{
   const r=convertSixFields({...model27,'TEST单选':'平｜28.0%'});

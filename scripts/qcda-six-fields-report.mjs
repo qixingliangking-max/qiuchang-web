@@ -85,7 +85,14 @@ export function convertSixFields(input){
   }
   if(!probability)errors.push('缺少TEST单选概率');
   else if(Number(probability)<0||Number(probability)>100)errors.push('TEST概率超出范围');
-  const handicap=trim(v.handicap);
+  let handicap=trim(v.handicap);
+  // The official +/- goal is sometimes a separate locked raw_input field.
+  // Reattach it for public display only; never recompute or reorder picks.
+  const handicapLine=trim(raw.handicap_line??raw.raw_input?.handicap_line);
+  if(handicapLine && !/[（(][+-]?\d+(?:\.\d+)?[)）]/.test(handicap)){
+    if(/^[+-]\d+(?:\.\d+)?$/.test(handicapLine))handicap+='（'+handicapLine+'）';
+    else errors.push('官方让球数值无法确认');
+  }
   if(!handicap)errors.push('缺少官方让球');
   const htft=getHTFT(v.htft);
   if(!htft)errors.push('缺少半全场');
