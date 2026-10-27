@@ -1,0 +1,166 @@
+{
+  "version": "QCDA-SIX-REPORT-V1.3-20261027",
+  "effectiveDate": "2026-10-27",
+  "language": "zh-CN",
+  "scope": "public six-field display and four-chapter seven-paragraph prematch articles",
+  "fields": [
+    {
+      "key": "direction",
+      "label": "核心方向",
+      "aliases": [
+        "模型方向",
+        "主方向",
+        "核心方向",
+        "direction"
+      ]
+    },
+    {
+      "key": "single",
+      "label": "单选倾向",
+      "aliases": [
+        "TEST单选",
+        "单选",
+        "单选倾向",
+        "single_pick"
+      ]
+    },
+    {
+      "key": "handicap",
+      "label": "官方让球",
+      "aliases": [
+        "官方让球保护",
+        "官方让球",
+        "handicap_direction"
+      ]
+    },
+    {
+      "key": "htft",
+      "label": "半全场",
+      "aliases": [
+        "半全场TOP2",
+        "半全场",
+        "HT/FT",
+        "htft"
+      ]
+    },
+    {
+      "key": "goals",
+      "label": "总进球",
+      "aliases": [
+        "总进球",
+        "进球数",
+        "goal_range"
+      ]
+    },
+    {
+      "key": "scores",
+      "label": "比分参考",
+      "aliases": [
+        "TOP3比分",
+        "TOP3",
+        "TOP",
+        "比分参考",
+        "top_scores"
+      ]
+    }
+  ],
+  "doubleDirectionRule": "保留原双选结果集合，TEST单选对应项置于第一位；与双选集合冲突时拒绝转换。",
+  "orderInvariant": [
+    "官方让球原值和让球数不变",
+    "半全场TOP1/2原序不变",
+    "离散总进球原序不变",
+    "比分TOP3原序不变",
+    "M7/M8不进入公开六项"
+  ],
+  "report": {
+    "title": "赛前分析报告",
+    "chapters": [
+      {
+        "title": "一、比赛背景与双方实力分析",
+        "fields": [
+          "strength_baseline"
+        ],
+        "paragraphs": 1
+      },
+      {
+        "title": "二、核心方向与单选倾向",
+        "fields": [
+          "summary",
+          "comprehensive_observation"
+        ],
+        "paragraphs": 2
+      },
+      {
+        "title": "三、让球保护与半全场分析",
+        "fields": [
+          "market_movement",
+          "logic_relation"
+        ],
+        "paragraphs": 2
+      },
+      {
+        "title": "四、总进球与比分参考分析",
+        "fields": [
+          "match_path",
+          "recent_form"
+        ],
+        "paragraphs": 2
+      }
+    ],
+    "requiredParagraphs": 7,
+    "evidencePriority": [
+      "球队及赛事官方赛前公告",
+      "官方联赛统计",
+      "可靠体育媒体",
+      "有来源时间的赛前统计"
+    ],
+    "uncertainFacts": "查不到可靠证据不得写作确定事实，不能为凑字数编造；重大冲突交由人工复核。",
+    "preKickoffOnly": true,
+    "externalLookupOnMissingFacts": true,
+    "reportProhibitedWords": [
+      "中央数据库",
+      "数据库",
+      "专库",
+      "主库",
+      "FINAL",
+      "锁板",
+      "Gate",
+      "模型重跑",
+      "T1",
+      "T2",
+      "P1",
+      "P2",
+      "P3",
+      "M7",
+      "M8",
+      "内部版本",
+      "内部流程",
+      "量化流程",
+      "审计",
+      "审核流程",
+      "采集",
+      "收集",
+      "抓取",
+      "补齐",
+      "核验",
+      "写入",
+      "导入",
+      "模型方向",
+      "TOP3",
+      "TOP",
+      "赔率",
+      "盘口",
+      "投注",
+      "竞彩",
+      "Gemini",
+      "ESPN"
+    ],
+    "publicStyle": "只写真实足球事实、双方攻防特点、人员条件、比赛路径和已锁定六项结论，不叙述内容制作过程。"
+  },
+  "hardGuards": [
+    "禁止改写已锁定的原始预测值",
+    "无已确定六项或资料不足时不得发布报告",
+    "没有通过权限验证不可公开Pro分析",
+    "校验只生成建议与待审结果，不主动写生产预测表"
+  ]
+}
