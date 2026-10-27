@@ -3996,12 +3996,12 @@ function jcRenderAiPanel(m,pools,model,analysis){
   // Fixed data overview: this block is intentionally preserved exactly above the article report.
   const modelBlock=
     '<div class="jc-ai-model-summary">'+
-      '<div><span>模型方向</span><b>'+qcEscape(directionText)+'</b></div>'+
+      '<div><span>核心方向</span><b>'+qcEscape(directionText)+'</b></div>'+
       '<div><span>单选倾向</span><b>'+qcEscape(singleText)+'</b></div>'+
       '<div><span>官方让球</span><b>'+qcEscape(handicapText)+'</b></div>'+
       '<div><span>半全场</span><b>'+qcEscape(htftText)+'</b></div>'+
       '<div><span>总进球</span><b>'+qcEscape(goalsText)+'</b></div>'+
-      '<div><span>TOP</span><b>'+qcEscape(topText)+'</b></div>'+
+      '<div><span>比分参考</span><b>'+qcEscape(topText)+'</b></div>'+
     '</div>';
 
   const contextBlock=
@@ -4022,7 +4022,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   let analysisHtml='';
   if(reportPublished){
     const fallbackLogic=model
-      ? '模型方向、单选倾向、让球保护、半全场、总进球与TOP需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
+      ? '核心方向、单选倾向、让球保护、半全场、总进球与比分参考需要放在同一条比赛路径中理解；当前尚无更详细的逻辑说明。'
       : '本场模型结果尚未写入，六项数据逻辑将在锁板后展示。';
 
     // All published reports use four editorial sections; archived five-section records
@@ -4054,7 +4054,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
         body:aiParagraphs([analysis.strength_baseline])
       },
       {
-        title:'二、模型方向与单选倾向',
+        title:'二、核心方向与单选倾向',
         body:aiParagraphs([
           analysis.summary,
           analysis.comprehensive_observation||analysis.summary
@@ -4068,7 +4068,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
         ])
       },
       {
-        title:'四、总进球与TOP3比分分析',
+        title:'四、总进球与比分参考分析',
         body:aiParagraphs([
           analysis.match_path,
           analysis.recent_form
@@ -4086,7 +4086,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
         ])
       },
       {
-        title:'二、模型方向与单选倾向',
+        title:'二、核心方向与单选倾向',
         body:aiParagraphs([
           analysis.summary,
           analysis.comprehensive_observation
@@ -4100,7 +4100,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
         ])
       },
       {
-        title:'四、总进球与TOP3比分分析',
+        title:'四、总进球与比分参考分析',
         body:aiParagraphs([analysis.match_path,analysis.recent_form])
       }
     ];
@@ -4582,7 +4582,7 @@ async function setupJcMatchDetail(options={}){
       '<div class="jc-main-tabs">'+
         '<button type="button" data-main-tab="facts">赛况数据</button>'+
         '<button type="button" data-main-tab="odds">赔率详情</button>'+
-        '<button type="button" class="active" data-main-tab="ai">AI分析</button>'+
+        '<button type="button" class="active" data-main-tab="ai">玩法解析</button>'+
       '</div>'+
     '</div>'+
     '<div id="jcMainPanel"><div class="jc-match-loading-shell compact" role="status" aria-live="polite"><span class="jc-match-spinner" aria-hidden="true"></span><span>正在加载中…</span></div></div>'
