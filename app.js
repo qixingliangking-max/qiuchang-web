@@ -2721,7 +2721,29 @@ async function loadJcFrontend(){
     console.warn('昨日回看异步读取失败',error);
     return {data:[],error,historyFinal:false};
   });
-  const currentResult=await fetchOverviewDateReady(initialDate);
+  // A delayed public fixture file or REST fallback must not leave the
+  // homepage in its initial loading state forever. This timeout never grants
+  // model/report access; only the existing Pro server verdict can do that.
+  let initialCurrent;
+  try{
+    initialCurrent=await qcAuthDeadline(fetchOverviewDateReady(initialDate),5500);
+  }catch(error){
+    initialCurrent={timeout:false,value:{data:[],error}};
+  }
+  let currentResult=initialCurrent.timeout
+    ? {data:[],error:new Error('当日赛程读取超时')} : initialCurrent.value;
+  if((currentResult?.error || !currentResult) &&
+     initialDate>=today && candidatePublicSchedulePromise){
+    try{
+      const publicFallback=await qcAuthDeadline(candidatePublicSchedulePromise,1500);
+      if(!publicFallback.timeout && publicFallback.value?.data?.length)
+        currentResult=publicFallback.value;
+    }catch(error){
+      console.warn('公开赛程备用快照暂不可用',error);
+    }
+  }
+  if(!currentResult)
+    currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
   let previousLoading=true;
 
