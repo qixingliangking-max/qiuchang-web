@@ -451,8 +451,11 @@ function qcGetSharedSession(){
     });
   }
   if(!qcSharedSessionPromise){
-    qcSharedSessionPromise=Promise.resolve()
-      .then(()=>window.qcSupabase.auth.getSession())
+    // The homepage primes this same SDK session read before app.js executes.
+    // All widgets share it instead of competing for a second WebView auth lock.
+    qcSharedSessionPromise=(window.qcHomeEarlySession
+      ? Promise.resolve(window.qcHomeEarlySession)
+      : Promise.resolve().then(()=>window.qcSupabase.auth.getSession()))
       .catch(error=>({data:{session:null},error}));
   }
   return qcSharedSessionPromise;
@@ -2590,6 +2593,30 @@ async function loadJcFrontend(){
   };
   // Server-authoritative standalone membership check does not await fixtures.
   const accessPromise=qcGetAccessState();
+  // Membership may settle before the public fixture request. Update ONLY the
+  // neutral placeholder immediately, without waiting for today's schedule.
+  // Protected models are still rendered by the existing checked-access path.
+  accessPromise.then(earlyAccess=>{
+    if(cards.dataset.qcAuthPaintReady==='1') return;
+    const pending=cards.textContent?.includes('正在确认登录状态');
+    if(!pending) return;
+    const meta=$('#jcPredictionMeta');
+    if(earlyAccess?.verificationPending){
+      if(meta) meta.textContent='会员状态暂时无法验证';
+      cards.innerHTML='<div class="profile-card" role="status">'+
+        '会员状态暂时无法验证，请检查网络后重试。 '+
+        '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button></div>';
+      const retry=cards.querySelector('#qcRetryMemberStatus');
+      if(retry) retry.onclick=()=>location.reload();
+    }else if(earlyAccess?.isPro){
+      if(meta) meta.textContent='会员已验证';
+      cards.innerHTML='<div class="profile-card" role="status">'+
+        '会员已验证，正在载入今日赛事…</div>';
+    }else{
+      if(meta) meta.textContent='';
+      cards.innerHTML=qcPremiumGateHtml(earlyAccess||{},'prediction','today');
+    }
+  }).catch(error=>console.warn('会员首屏提示更新失败',error));
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
@@ -2698,8 +2725,12 @@ async function loadJcFrontend(){
   // Pending verification is not an anonymous verdict. Never show a
   // "login to view" prompt to an already-signed-in Pro member on refresh.
   // Authorized models are rendered only after a fresh server entitlement check.
-  let access={loggedIn:false,isPro:false,userId:null};
-  let accessDisplayPhase='verifying'; // verifying | ready | unavailable
+  // Access may already be checked while the public schedule was loading.
+  // Never reset an authenticated user to a misleading "verifying" spinner.
+  let access=qcLastAccessState||{loggedIn:false,isPro:false,userId:null};
+  let accessDisplayPhase=qcLastAccessState
+    ? (qcLastAccessState.verificationPending?'unavailable':'ready')
+    : 'verifying'; // verifying | ready | unavailable
   // Do not bulk-download up to 90 historical Pro snapshots before the first frame.
   // The authorized current-day bundle is loaded by fetchOverviewDateReady;
   // background priming happens only after the visible table is painted.
@@ -3285,6 +3316,8 @@ async function loadJcFrontend(){
   }
 
   function render(){
+    // From here onward the regular authorized renderer owns this container.
+    cards.dataset.qcAuthPaintReady='1';
     const dateRows=allRows.filter(m=>jcBusinessDate(m)===selectedDate && qcJcIsVisibleMatch(m));
     rememberDetailPublicRows(selectedDate,dateRows);
     const previousDate=qcAddDays(selectedDate,-1);
