@@ -140,6 +140,11 @@
       if(pending(review)) rescueHistory(addDays(ds,-1));
     },700);
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  // This script is placed after the homepage markup. Start as soon as its
+  // public placeholders exist, even while heavyweight deferred app scripts
+  // are still downloading. DOMContentLoaded waits for those scripts and can
+  // otherwise hold yesterday's PUBLIC review behind authentication code.
+  if(document.getElementById('jcLiveCards')) start();
+  else if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
   else start();
 })();
