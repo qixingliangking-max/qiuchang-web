@@ -4,6 +4,8 @@ on:
     paths:
       - 'app.js'
       - 'login.html'
+      - 'login-fast.js'
+      - 'scripts/login_fast_qa_20261028.cjs'
       - 'index.html'
       - 'football.html'
       - 'league.html'
@@ -29,3 +31,5 @@ jobs:
           node-version: '22'
       - name: Login storage/lock race and cache reuse
         run: node --test scripts/auth_lock_mobile_qa_20261028.cjs
+      - name: Lightweight login functional QA
+        run: node --test scripts/login_fast_qa_20261028.cjs
