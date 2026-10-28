@@ -5884,15 +5884,13 @@ async function setupProfile(){
   if(roleEl) roleEl.textContent=role==='admin'?'管理员':activeSubscription?'Pro会员':'基础用户';
   renderMembership(activeSubscription,role);
 
-  // Keep private admin shortcuts in the personal-center navigation only.
-  // The server-side admin RPC must succeed before either link is created;
-  // the model archive is independently protected by admin-only RLS.
+  // Cosmetic links only: the trusted profile row already tells us which
+  // navigation to show. Every admin destination verifies its own entitlement
+  // and RLS; do not run an admin statistics RPC during ordinary profile load.
   if(role === 'admin' && status === 'active'){
-    window.qcSupabase.rpc('admin_dashboard_stats').then(({error})=>{
-      if(error) return;
-      const drawer=$('#drawerBackdrop .drawer');
-      const logoutLink=$('#logoutBtn');
-      if(!drawer || !logoutLink) return;
+    const drawer=$('#drawerBackdrop .drawer');
+    const logoutLink=$('#logoutBtn');
+    if(drawer && logoutLink){
       const shortcuts=[
         ['profileAdminNavLink','admin.html','后台管理'],
         ['profileModelRecordNavLink','model-record-test.html','模型档案']
@@ -5905,7 +5903,7 @@ async function setupProfile(){
         link.textContent=label;
         drawer.insertBefore(link,logoutLink);
       }
-    }).catch(err=>console.warn('管理员导航入口验证失败',err));
+    }
   }
 
   const redeemForm = $('#redeemForm');
