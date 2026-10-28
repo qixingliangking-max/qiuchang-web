@@ -1,0 +1,22 @@
+name: Public first-paint pre-auth QA
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'overview-public-rescue.js'
+      - 'scripts/public_firstpaint_qa_20261028.cjs'
+      - '.github/workflows/public-firstpaint-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-rescue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Public review cannot be held behind auth or leak member data
+        run: node --test scripts/public_firstpaint_qa_20261028.cjs

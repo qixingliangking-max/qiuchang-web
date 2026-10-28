@@ -69,7 +69,7 @@ jobs:
                     set(client){
                       this.__qaClient=client;
                       client.auth.getSession=()=>new Promise(()=>{}); // simulate hung refresh
-                      client.auth.signInWithPassword=async()=>({
+                      client.auth.setSession=async()=>({
                         data:{user:{id:'qa-test-user'},session:{user:{id:'qa-test-user'}}},
                         error:null
                       });
@@ -78,6 +78,12 @@ jobs:
                         ? new Promise(()=>{}) : originalRpc(name,...args);
                     }
                   });
+                });
+                // Isolated login uses native abortable fetch then SDK setSession.
+                // Intercept it here so synthetic credentials never reach Auth.
+                await page.route('**/auth/v1/token?grant_type=password',async route=>{
+                  await route.fulfill({status:200,contentType:'application/json',
+                    body:JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh'})});
                 });
                 const t0=Date.now();
                 const loginResp=await page.goto('https://qcda.cn/login.html?v=20261024loginbind1&next=football.html',
@@ -88,7 +94,7 @@ jobs:
                 await page.locator('#loginAgreement').check();
                 // The hang in getSession must not make the submit handler inert.
                 await page.locator('#loginForm button[type="submit"]').click();
-                await page.waitForURL(url=>url.pathname.endsWith('/football.html'),{timeout:7000});
+                await page.waitForURL(url=>url.pathname.endsWith('/football.html'),{waitUntil:'commit',timeout:7000});
                 const elapsed=Date.now()-t0;
                 if(elapsed>7000)throw Error('login stuck '+elapsed);
                 console.log('QCDA_STICKY_AUTH_QA='+JSON.stringify({
