@@ -21,7 +21,7 @@ function create({member=true}={}){
     calls.otherRPC++;throw Error('unapproved RPC '+name);
   }};
   const context=vm.createContext({
-    window:{qcSupabase:client},sessionStorage:{getItem:()=>null,removeItem(){}},console,Date,Promise,setTimeout
+    window:{qcSupabase:client},sessionStorage:{getItem:()=>null,removeItem(){}},console,Date,Promise,setTimeout,clearTimeout
   });
   vm.runInContext(fragment,context);
   return {callbacks,ctx:context,client,calls,
