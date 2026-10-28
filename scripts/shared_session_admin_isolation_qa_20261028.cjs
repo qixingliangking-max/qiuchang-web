@@ -67,6 +67,24 @@ test('SDK signed-out event updates shared session with no new auth lock',async()
   assert.equal(later.data.session,null);
   assert.equal(h.calls.getSession,1);
 });
+test('same-user token refresh does not repeat a checked membership RPC',async()=>{
+  const h=create();
+  await h.access();
+  assert.equal(h.calls.pro,1);
+  const start=source.indexOf('let qcAuthRecoveryBound=false;');
+  const end=source.indexOf('async function setupAuthNav()',start);
+  assert.ok(start>0&&end>start);
+  vm.runInContext(source.slice(start,end),h.ctx);
+  vm.runInContext('setupAuthStateRecovery()',h.ctx);
+  assert.equal(h.callbacks.length,2);
+  for(const callback of h.callbacks) callback('TOKEN_REFRESHED',{user:{id:'member-test'}});
+  const repeat=await h.access();
+  assert.equal(repeat.isPro,true);
+  assert.equal(h.calls.pro,1,'token refresh must not invalidate unchanged user');
+  for(const callback of h.callbacks) callback('SIGNED_OUT',null);
+  const guest=await h.access();
+  assert.equal(guest.isPro,false,'signed-out user must not retain membership');
+});
 test('legacy admin functions and RPCs absent from public bundle',()=>{
   assert.doesNotMatch(source,/function qcAdminSession\(/);
   assert.doesNotMatch(source,/async function setupAdmin(?:Users|Codes|Data|Logs)?\(/);
