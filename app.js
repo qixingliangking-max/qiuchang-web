@@ -431,6 +431,33 @@ function jcHandicapResult(score,goalLine){
 let qcAccessStatePromise=null;
 let qcLastAccessState=null;
 
+// One shared SDK session read for page startup. Only the Supabase server
+// determines access to protected prediction/report rows.
+let qcSharedSessionPromise=null;
+let qcSharedSessionBound=false;
+function qcGetSharedSession(){
+  if(!window.qcSupabase)
+    return Promise.resolve({data:{session:null},error:null});
+  if(!qcSharedSessionBound){
+    qcSharedSessionBound=true;
+    window.qcSupabase.auth.onAuthStateChange((event,session)=>{
+      // The callback itself must never await getSession() (SDK auth lock).
+      if(['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED',
+          'USER_UPDATED','PASSWORD_RECOVERY'].includes(event)){
+        qcSharedSessionPromise=Promise.resolve({
+          data:{session:session||null},error:null
+        });
+      }
+    });
+  }
+  if(!qcSharedSessionPromise){
+    qcSharedSessionPromise=Promise.resolve()
+      .then(()=>window.qcSupabase.auth.getSession())
+      .catch(error=>({data:{session:null},error}));
+  }
+  return qcSharedSessionPromise;
+}
+
 async function qcGetAccessState(force=false,overviewBundlePromise=null){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
@@ -450,7 +477,7 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       }catch(_){}
       const sessionAttempts=recentAuthHandoff?4:1;
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
-        const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+        const {data:sessionData,error:sessionError}=await qcGetSharedSession();
         if(sessionError) console.warn('读取登录状态失败',sessionError);
         session=sessionData?.session||null;
         if(!session && attempt+1<sessionAttempts){
@@ -5137,7 +5164,7 @@ async function setupDemoAuth(){
       (async()=>{
         try{
           const {data:sessionData}=await Promise.race([
-            window.qcSupabase.auth.getSession(),
+            qcGetSharedSession(),
             new Promise(resolve=>setTimeout(()=>resolve({data:null}),2200))
           ]);
           if(!sessionData?.session || login.dataset.authSubmitting==='1' ||
@@ -5328,7 +5355,7 @@ async function setupDemoAuth(){
         history.replaceState({},'',location.pathname);
       }
 
-      const { data, error } = await window.qcSupabase.auth.getSession();
+      const { data, error } = await qcGetSharedSession();
       const session = data && data.session;
       const ready = !error && Boolean(session);
       button.disabled = !ready;
@@ -5401,7 +5428,7 @@ async function qcTouchLastActive(force=false){
 
   let session=null;
   try{
-    const {data,error}=await window.qcSupabase.auth.getSession();
+    const {data,error}=await qcGetSharedSession();
     if(error) return;
     session=data?.session||null;
   }catch(_){
@@ -5464,12 +5491,19 @@ function setupAuthStateRecovery(){
       qcLastAccessState=null;
       return;
     }
-    if(session) qcAccessStatePromise=null;
+    // Re-authenticate only if the actual user changed or a late session
+    // replaces a previously confirmed guest. INITIAL_SESSION and
+    // TOKEN_REFRESHED for the SAME user must not discard the verified Pro
+    // result and repeat the membership RPC.
+    const previousAccess=qcLastAccessState;
+    const changedIdentity=Boolean(session && previousAccess &&
+      previousAccess.userId && previousAccess.userId!==session.user?.id);
+    const recoveredGuest=Boolean(session && previousAccess &&
+      previousAccess.loggedIn===false);
+    if(changedIdentity || recoveredGuest) qcAccessStatePromise=null;
 
     const lateSession=Boolean(
-      session &&
-      qcLastAccessState &&
-      qcLastAccessState.loggedIn===false &&
+      recoveredGuest &&
       ['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)
     );
     if(!lateSession) return;
@@ -5525,7 +5559,7 @@ async function setupAuthNav(){
       location.href='index.html';
     };
   }
-  const {data,error}=await window.qcSupabase.auth.getSession();
+  const {data,error}=await qcGetSharedSession();
   apply(!error?data?.session:null);
   // An expired or restored session must update the menu without a page reload.
   window.qcSupabase.auth.onAuthStateChange((_event,session)=>apply(session));
@@ -5648,7 +5682,7 @@ async function setupFootballLoginBar(){
   // display:none instead of flashing a guest CTA over a member's cards.
   try{
     const {data,error}=await Promise.race([
-      window.qcSupabase.auth.getSession(),
+      qcGetSharedSession(),
       new Promise(resolve=>setTimeout(()=>resolve({
         data:null,error:{message:'session_check_timeout'}
       }),2400))
@@ -5670,7 +5704,7 @@ async function setupAuthTickerVisibility(){
 
   document.body.classList.remove('qc-ticker-authenticated');
 
-  const {data,error}=await window.qcSupabase.auth.getSession();
+  const {data,error}=await qcGetSharedSession();
   apply(!error && data ? data.session : null);
 
   window.qcSupabase.auth.onAuthStateChange((_event,session)=>{
@@ -5696,7 +5730,7 @@ async function setupDesktopAccountNav(){
     if(divider){ divider.hidden=false; divider.style.display='block'; }
   };
 
-  const {data,error}=await window.qcSupabase.auth.getSession();
+  const {data,error}=await qcGetSharedSession();
   const session=!error && data ? data.session : null;
   if(!session){
     setLoggedOut();
@@ -5796,7 +5830,7 @@ async function setupProfile(){
   // The profile page already verifies access through RLS-protected queries.
   // Avoid an extra auth.getUser() network round-trip and load profile/member
   // records in parallel so mobile/WeChat does not feel serially blocked.
-  const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
+  const {data:sessionData,error:sessionError}=await qcGetSharedSession();
   const user=sessionData?.session?.user||null;
 
   if(sessionError || !user){
@@ -5857,15 +5891,13 @@ async function setupProfile(){
   if(roleEl) roleEl.textContent=role==='admin'?'管理员':activeSubscription?'Pro会员':'基础用户';
   renderMembership(activeSubscription,role);
 
-  // Keep private admin shortcuts in the personal-center navigation only.
-  // The server-side admin RPC must succeed before either link is created;
-  // the model archive is independently protected by admin-only RLS.
+  // Cosmetic links only: the trusted profile row already tells us which
+  // navigation to show. Every admin destination verifies its own entitlement
+  // and RLS; do not run an admin statistics RPC during ordinary profile load.
   if(role === 'admin' && status === 'active'){
-    window.qcSupabase.rpc('admin_dashboard_stats').then(({error})=>{
-      if(error) return;
-      const drawer=$('#drawerBackdrop .drawer');
-      const logoutLink=$('#logoutBtn');
-      if(!drawer || !logoutLink) return;
+    const drawer=$('#drawerBackdrop .drawer');
+    const logoutLink=$('#logoutBtn');
+    if(drawer && logoutLink){
       const shortcuts=[
         ['profileAdminNavLink','admin.html','后台管理'],
         ['profileModelRecordNavLink','model-record-test.html','模型档案']
@@ -5878,7 +5910,7 @@ async function setupProfile(){
         link.textContent=label;
         drawer.insertBefore(link,logoutLink);
       }
-    }).catch(err=>console.warn('管理员导航入口验证失败',err));
+    }
   }
 
   const redeemForm = $('#redeemForm');
@@ -6096,540 +6128,6 @@ function renderMembership(subscription, role){
 }
 
 
-async function qcAdminSession(root,nextPage){
-  if(!window.qcSupabase){
-    if(root) root.innerHTML='<div class="profile-card">数据库连接失败，请刷新页面后重试。</div>';
-    return null;
-  }
-
-  // Admin pages already make an authoritative SECURITY DEFINER RPC below.
-  // Use the locally cached auth session first instead of an extra getUser()
-  // network round-trip; this materially improves WeChat/mobile admin loading.
-  const {data:sessionData,error:sessionError}=await window.qcSupabase.auth.getSession();
-  const session=sessionData?.session||null;
-  const user=session?.user||null;
-  if(sessionError||!user){
-    location.href='login.html?v=20261024authstable4&next='+encodeURIComponent(nextPage||'admin.html');
-    return null;
-  }
-
-  const {data:stats,error}=await window.qcSupabase.rpc('admin_dashboard_stats');
-  if(error){
-    const raw=String(error.message||'');
-    if(root){
-      root.innerHTML=
-        '<div class="profile-card"><h2>管理员验证未通过</h2>'+
-        '<p style="color:var(--muted);line-height:1.7">'+
-        qcEscape(raw.includes('ADMIN_REQUIRED')?'当前账号没有管理员权限':'管理员权限校验失败')+
-        '。</p><a class="small-btn" href="admin.html">返回后台</a></div>';
-    }
-    return null;
-  }
-  return {user,stats};
-}
-
-function qcAdminFmt(v){
-  if(!v) return '—';
-  return new Date(v).toLocaleString('zh-CN',{
-    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'
-  });
-}
-
-async function setupAdmin(){
-  const root=$('#adminRoot');
-  if(!root) return;
-
-  const session=await qcAdminSession(root,'admin.html');
-  if(!session) return;
-
-  const stats=session.stats||{};
-  if($('#adminUsers')) $('#adminUsers').textContent=stats.users??0;
-  if($('#adminProUsers')) $('#adminProUsers').textContent=stats.pro_users??0;
-  if($('#adminUnusedCodes')) $('#adminUnusedCodes').textContent=stats.unused_codes??0;
-  if($('#adminUsedCodes')) $('#adminUsedCodes').textContent=stats.used_codes??0;
-
-  const [{data:overview},latestRunResult,activityResult]=await Promise.all([
-    window.qcSupabase.rpc('admin_user_overview'),
-    window.qcSupabase.from('jc_sync_runs')
-      .select('status,finished_at,started_at,matches_received,snapshots_inserted')
-      .order('started_at',{ascending:false})
-      .limit(1),
-    window.qcSupabase.rpc('admin_system_activity',{p_limit:1})
-  ]);
-
-  if(overview){
-    if($('#adminTodayNew')) $('#adminTodayNew').textContent=overview.today_new??0;
-    if($('#adminLogin24h')) $('#adminLogin24h').textContent=overview.active_24h??overview.login_24h??0;
-  }
-
-  const run=latestRunResult.data&&latestRunResult.data[0];
-  if($('#adminCollectorSummary')){
-    $('#adminCollectorSummary').textContent=run
-      ? '历史保留 · 最近同步 '+qcAdminFmt(run.finished_at||run.started_at)
-      : '历史保留 · 暂无同步记录';
-  }
-
-  const activity=activityResult.data&&activityResult.data[0];
-  if($('#adminLogSummary')){
-    $('#adminLogSummary').textContent=activity
-      ? qcAdminFmt(activity.event_time)+' · '+String(activity.title||'系统活动')
-      : '暂无系统活动';
-  }
-}
-
-async function setupAdminUsers(){
-  const root=$('#adminUsersRoot');
-  if(!root) return;
-
-  const session=await qcAdminSession(root,'admin-users.html');
-  if(!session) return;
-
-  const rows=$('#adminUserRows');
-  const search=$('#adminUserSearch');
-  let all=[];
-
-  const updateOverview=async()=>{
-    const {data:overview}=await window.qcSupabase.rpc('admin_user_overview');
-    if(!overview) return;
-    if($('#usersTotal')) $('#usersTotal').textContent=overview.total_users??0;
-    if($('#usersPro')) $('#usersPro').textContent=overview.pro_users??0;
-    if($('#usersToday')) $('#usersToday').textContent=overview.today_new??0;
-    if($('#usersLogin24h')) $('#usersLogin24h').textContent=overview.active_24h??overview.login_24h??0;
-    if($('#dailyTodayActive')) $('#dailyTodayActive').textContent=overview.today_active??0;
-    if($('#dailyTodayLogin')) $('#dailyTodayLogin').textContent=overview.today_login??0;
-    if($('#dailyTodayRedeem')) $('#dailyTodayRedeem').textContent=overview.today_redeem??0;
-    if($('#daily7Active')) $('#daily7Active').textContent=overview.active_7d??0;
-  };
-
-  const render=(items)=>{
-    if(!rows) return;
-    if(!items.length){
-      rows.innerHTML='<tr><td colspan="8">没有匹配用户</td></tr>';
-      return;
-    }
-    rows.innerHTML=items.map(item=>{
-      const active=item.account_status==='active';
-      const membership=item.membership||'基础用户';
-      const expiry=membership==='Pro会员'
-        ? qcAdminFmt(item.pro_expires_at)
-        : membership==='管理员'?'管理员权限':'—';
-      const status=active
-        ? '<span class="admin-status ok">正常</span>'
-        : '<span class="admin-status off">已停用</span>';
-      const action=item.role==='admin'
-        ? '<span class="admin-action-muted">—</span>'
-        : '<button class="admin-user-action '+(active?'danger':'restore')+'" type="button" data-user-id="'+
-          qcEscape(item.user_id||'')+'" data-email="'+qcEscape(item.email||'')+'" data-action="'+
-          (active?'disable':'restore')+'">'+(active?'停用':'恢复')+'</button>';
-      return '<tr>'+
-        '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
-        '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
-        '<td>'+qcEscape(qcAdminFmt(item.last_active_at))+'</td>'+
-        '<td>'+qcEscape(qcAdminFmt(item.last_sign_in_at))+'</td>'+
-        '<td>'+qcEscape(membership)+'</td>'+
-        '<td>'+qcEscape(expiry)+'</td>'+
-        '<td>'+status+'</td>'+
-        '<td>'+action+'</td>'+
-      '</tr>';
-    }).join('');
-
-    $$('.admin-user-action',rows).forEach(btn=>{
-      btn.onclick=async()=>{
-        const action=btn.dataset.action;
-        const email=btn.dataset.email||'该账号';
-        const rpc=action==='disable'?'admin_disable_user':'admin_restore_user';
-        const verb=action==='disable'?'停用':'恢复';
-        if(!confirm('确认'+verb+'账号：'+email+'？')) return;
-
-        btn.disabled=true;
-        btn.textContent=verb+'中…';
-        const {data,error}=await window.qcSupabase.rpc(rpc,{target_user:btn.dataset.userId});
-        if(error||!data?.ok){
-          const raw=String(error?.message||data?.error||'');
-          let msg=verb+'失败';
-          if(raw.includes('CANNOT_DISABLE_SELF')) msg='不能停用当前管理员账号';
-          if(raw.includes('CANNOT_DISABLE_ADMIN')) msg='不能停用管理员账号';
-          if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
-          alert(msg);
-          btn.disabled=false;
-          btn.textContent=verb;
-          return;
-        }
-
-        await Promise.all([loadUsers(),updateOverview()]);
-      };
-    });
-  };
-
-  const applyFilter=()=>{
-    const q=(search?.value||'').trim().toLowerCase();
-    render(!q?all:all.filter(x=>String(x.email||'').toLowerCase().includes(q)));
-  };
-
-  const loadUsers=async()=>{
-    const {data:users,error}=await window.qcSupabase.rpc('admin_users_list');
-    if(error){
-      if(rows) rows.innerHTML='<tr><td colspan="8">用户数据读取失败</td></tr>';
-      return;
-    }
-    all=users||[];
-    applyFilter();
-  };
-
-  const dailyRows=$('#adminDailyRows');
-  const dailyDetailRows=$('#adminDailyDetailRows');
-  const dailyDetailTitle=$('#adminDailyDetailTitle');
-  const dailyTabs=$('.admin-daily-tabs button');
-  let selectedDailyDate=qcBeijingToday();
-
-  const dailyDateLabel=(dateStr)=>{
-    if(!dateStr) return '—';
-    const d=new Date(dateStr+'T12:00:00+08:00');
-    if(Number.isNaN(d.getTime())) return dateStr;
-    return (d.getMonth()+1)+'月'+d.getDate()+'日';
-  };
-
-  const loadDailyDetail=async(dateStr)=>{
-    selectedDailyDate=dateStr||qcBeijingToday();
-    if(dailyDetailTitle) dailyDetailTitle.textContent=dailyDateLabel(selectedDailyDate)+' 明细';
-    if(dailyDetailRows) dailyDetailRows.innerHTML='<tr><td colspan="7">正在读取…</td></tr>';
-
-    const {data,error}=await window.qcSupabase.rpc('admin_daily_activity_detail',{p_date:selectedDailyDate});
-    if(error){
-      if(dailyDetailRows) dailyDetailRows.innerHTML='<tr><td colspan="7">每日明细读取失败</td></tr>';
-      return;
-    }
-
-    const items=data||[];
-    if(dailyDetailRows){
-      dailyDetailRows.innerHTML=items.length?items.map(item=>
-        '<tr>'+
-          '<td><strong>'+qcEscape(item.email||'—')+'</strong></td>'+
-          '<td>'+qcEscape(item.membership||'—')+'</td>'+
-          '<td>'+qcEscape(qcAdminFmt(item.first_active_at))+'</td>'+
-          '<td>'+qcEscape(qcAdminFmt(item.last_active_at))+'</td>'+
-          '<td>'+qcEscape(item.active_count??0)+'</td>'+
-          '<td>'+qcEscape(item.login_count??0)+'</td>'+
-          '<td>'+qcEscape(item.redeem_count??0)+'</td>'+
-        '</tr>'
-      ).join(''):'<tr><td colspan="7">当天暂无记录</td></tr>';
-    }
-
-    if(dailyRows){
-      dailyRows.querySelectorAll('tr[data-date]').forEach(tr=>{
-        tr.classList.toggle('selected',tr.dataset.date===selectedDailyDate);
-      });
-    }
-  };
-
-  const loadDaily=async(days=7)=>{
-    if(dailyRows) dailyRows.innerHTML='<tr><td colspan="5">正在读取…</td></tr>';
-    const {data,error}=await window.qcSupabase.rpc('admin_daily_activity_summary',{p_days:days});
-    if(error){
-      if(dailyRows) dailyRows.innerHTML='<tr><td colspan="5">每日活跃读取失败</td></tr>';
-      return;
-    }
-
-    const items=data||[];
-    if(dailyRows){
-      dailyRows.innerHTML=items.map(item=>
-        '<tr data-date="'+qcEscape(item.activity_date||'')+'" class="'+(item.activity_date===selectedDailyDate?'selected':'')+'">'+
-          '<td><strong>'+qcEscape(dailyDateLabel(item.activity_date))+'</strong></td>'+
-          '<td>'+qcEscape(item.active_users??0)+'</td>'+
-          '<td>'+qcEscape(item.login_users??0)+'</td>'+
-          '<td>'+qcEscape(item.login_events??0)+'</td>'+
-          '<td>'+qcEscape(item.redeem_users??0)+'</td>'+
-        '</tr>'
-      ).join('');
-
-      dailyRows.querySelectorAll('tr[data-date]').forEach(tr=>{
-        tr.onclick=()=>loadDailyDetail(tr.dataset.date);
-      });
-    }
-  };
-
-  dailyTabs.forEach(btn=>{
-    btn.onclick=async()=>{
-      dailyTabs.forEach(x=>x.classList.toggle('active',x===btn));
-      await loadDaily(Number(btn.dataset.days||7));
-    };
-  });
-
-  if(search) search.oninput=applyFilter;
-  await Promise.all([loadUsers(),updateOverview(),loadDaily(7),loadDailyDetail(selectedDailyDate)]);
-}
-
-async function setupAdminCodes(){
-  const root=$('#adminCodesRoot');
-  if(!root) return;
-
-  const form=$('#createCodeForm');
-  const submitBtn=form?.querySelector('button[type="submit"]')||null;
-  const hint=$('#adminHint');
-  const box=$('#createdCodeBox');
-  if(submitBtn){
-    submitBtn.disabled=true;
-    submitBtn.textContent='正在连接…';
-  }
-
-  const session=await qcAdminSession(root,'admin-codes.html');
-  if(!session) return;
-
-  const applyStats=(stats)=>{
-    if(!stats) return;
-    if($('#codesUnused')) $('#codesUnused').textContent=stats.unused_codes??0;
-    if($('#codesUsed')) $('#codesUsed').textContent=stats.used_codes??0;
-  };
-  applyStats(session.stats);
-
-  const loadCodes=async({refreshStats=false}={})=>{
-    const rows=$('#redeemCodeRows');
-    try{
-      const tasks=[window.qcSupabase.rpc('admin_redeem_codes')];
-      if(refreshStats) tasks.push(window.qcSupabase.rpc('admin_dashboard_stats'));
-      const results=await Promise.all(tasks);
-      const codesResult=results[0];
-      const statsResult=results[1];
-      if(statsResult?.data) applyStats(statsResult.data);
-
-      if(!rows) return;
-      if(codesResult.error){
-        rows.innerHTML='<tr><td colspan="6">兑换码读取失败，可稍后刷新重试</td></tr>';
-        return;
-      }
-      const codes=codesResult.data||[];
-      if(!codes.length){
-        rows.innerHTML='<tr><td colspan="6">暂无兑换码</td></tr>';
-        return;
-      }
-
-      rows.innerHTML=codes.map(item=>{
-        const statusText=item.status==='unused'?'未使用':item.status==='used'?'已使用':'已停用';
-        return '<tr>'+
-          '<td><strong>'+qcEscape(item.code||'—')+'</strong></td>'+
-          '<td>'+qcEscape(item.duration_days)+'天</td>'+
-          '<td>'+qcEscape(statusText)+'</td>'+
-          '<td>'+qcEscape(item.used_by_email||'—')+'</td>'+
-          '<td>'+qcEscape(qcAdminFmt(item.created_at))+'</td>'+
-          '<td>'+qcEscape(qcAdminFmt(item.used_at))+'</td>'+
-        '</tr>';
-      }).join('');
-    }catch(err){
-      console.error('admin redeem codes load failed',err);
-      if(rows) rows.innerHTML='<tr><td colspan="6">网络较慢，兑换码列表稍后自动刷新</td></tr>';
-    }
-  };
-
-  // Bind the form before the heavier list refresh. Previously the page waited
-  // for multiple RPCs before attaching onsubmit, so tapping early looked broken.
-  if(form){
-    form.onsubmit=async e=>{
-      e.preventDefault();
-      if(form.dataset.submitting==='1') return;
-
-      const days=Number($('#codeDays').value);
-      const note=($('#codeNote').value||'').trim();
-      if(!Number.isInteger(days)||days<1||days>3650){
-        alert('会员天数请输入 1–3650 之间的整数');
-        return;
-      }
-
-      form.dataset.submitting='1';
-      if(submitBtn){
-        submitBtn.disabled=true;
-        submitBtn.textContent='生成中…';
-      }
-      if(hint){hint.textContent='正在生成兑换码…';hint.className='code-hint';}
-
-      try{
-        const {data,error}=await window.qcSupabase.rpc('create_redeem_code',{
-          p_duration_days:days,p_note:note||null
-        });
-
-        if(error){
-          const raw=String(error.message||'');
-          let msg='兑换码生成失败';
-          if(raw.includes('ADMIN_REQUIRED')) msg='当前账号没有管理员权限';
-          if(raw.includes('INVALID_DURATION')) msg='会员天数不正确';
-          if(raw.includes('NOT_AUTHENTICATED')) msg='登录状态已失效，请重新登录';
-          if(hint){hint.textContent=msg;hint.className='code-hint error';}
-          return;
-        }
-
-        if(!data?.code) throw new Error('EMPTY_REDEEM_CODE_RESPONSE');
-        if($('#createdCode')) $('#createdCode').textContent=data.code;
-        if(box) box.hidden=false;
-        if(hint){hint.textContent='已生成 '+data.duration_days+' 天 Pro 会员兑换码。';hint.className='code-hint success';}
-        if($('#codeNote')) $('#codeNote').value='';
-
-        // Do not make the successful action wait for the list/stat refresh.
-        loadCodes({refreshStats:true}).catch(()=>{});
-      }catch(err){
-        console.error('create redeem code failed',err);
-        if(hint){
-          hint.textContent='网络响应异常，请先看“最近兑换码”是否已生成，再决定是否重试。';
-          hint.className='code-hint error';
-        }
-        loadCodes({refreshStats:true}).catch(()=>{});
-      }finally{
-        form.dataset.submitting='0';
-        if(submitBtn){
-          submitBtn.disabled=false;
-          submitBtn.textContent='生成兑换码';
-        }
-      }
-    };
-  }
-
-  const copyBtn=$('#copyCodeBtn');
-  if(copyBtn){
-    copyBtn.onclick=async()=>{
-      const code=($('#createdCode')?.textContent||'').trim();
-      if(!code||code==='—') return;
-      try{
-        await navigator.clipboard.writeText(code);
-        copyBtn.textContent='已复制';
-        setTimeout(()=>copyBtn.textContent='复制',1200);
-      }catch{
-        alert('复制失败，请手动复制');
-      }
-    };
-  }
-
-  if(submitBtn){
-    submitBtn.disabled=false;
-    submitBtn.textContent='生成兑换码';
-  }
-
-  // Initial list load runs in the background and no longer blocks the button.
-  loadCodes().catch(()=>{});
-}
-async function setupAdminData(){
-  const root=$('#adminDataRoot');
-  if(!root) return;
-
-  const session=await qcAdminSession(root,'admin-data.html');
-  if(!session) return;
-
-  const [{count:matches},{count:snapshots},latestRunResult,collectorResult,runsResult]=await Promise.all([
-    window.qcSupabase.from('jc_matches').select('*',{count:'exact',head:true}),
-    window.qcSupabase.from('jc_market_snapshots').select('*',{count:'exact',head:true}),
-    window.qcSupabase.from('jc_sync_runs')
-      .select('status,started_at,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message,source')
-      .order('started_at',{ascending:false}).limit(1),
-    window.qcSupabase.from('jc_collector_devices')
-      .select('name,status,last_seen_at,last_success_at,last_error')
-      .order('created_at',{ascending:false}).limit(1),
-    window.qcSupabase.from('jc_sync_runs')
-      .select('status,started_at,finished_at,matches_received,matches_upserted,snapshots_inserted,error_message,source')
-      .order('started_at',{ascending:false}).limit(30)
-  ]);
-
-  if($('#dataMatchCount')) $('#dataMatchCount').textContent=matches??0;
-  if($('#dataSnapshotCount')) $('#dataSnapshotCount').textContent=snapshots??0;
-
-  const run=latestRunResult.data&&latestRunResult.data[0];
-  if($('#dataLastSync')){
-    $('#dataLastSync').textContent=run?qcAdminFmt(run.finished_at||run.started_at)+' · '+String(run.status||'—'):'尚无记录';
-  }
-
-  const collector=collectorResult.data&&collectorResult.data[0];
-  if($('#dataCollectorStatus')){
-    if(!collector) $('#dataCollectorStatus').textContent='尚未创建';
-    else if(collector.last_success_at) $('#dataCollectorStatus').textContent='最近成功 '+qcAdminFmt(collector.last_success_at);
-    else if(collector.last_seen_at) $('#dataCollectorStatus').textContent='最近连接 '+qcAdminFmt(collector.last_seen_at);
-    else $('#dataCollectorStatus').textContent='已保留';
-  }
-
-  const rows=$('#dataRunRows');
-  if(rows){
-    const items=runsResult.data||[];
-    rows.innerHTML=items.length?items.map(x=>{
-      const detail=String(x.matches_received??0)+'场 / '+String(x.snapshots_inserted??0)+'条快照';
-      return '<tr>'+
-        '<td>'+qcEscape(qcAdminFmt(x.finished_at||x.started_at))+'</td>'+
-        '<td>'+qcEscape(x.status||'—')+'</td>'+
-        '<td>'+qcEscape(detail)+'</td>'+
-        '<td>'+qcEscape(x.error_message||'—')+'</td>'+
-      '</tr>';
-    }).join(''):'<tr><td colspan="4">暂无历史同步记录</td></tr>';
-  }
-
-  const createCollectorBtn=$('#createCollectorBtn');
-  if(createCollectorBtn){
-    createCollectorBtn.onclick=async()=>{
-      if(!confirm('确认创建一个新的 Windows 采集器凭证？旧凭证和历史数据不会删除。')) return;
-      const hint=$('#jcSyncHint');
-      createCollectorBtn.disabled=true;
-      createCollectorBtn.textContent='创建中…';
-      const {data,error}=await window.qcSupabase.rpc('create_collector_device',{p_name:'Windows Auto Collector'});
-      createCollectorBtn.disabled=false;
-      createCollectorBtn.textContent='创建新的采集器凭证';
-      if(error||!data?.ok){
-        const msg='采集器凭证创建失败';
-        if(hint){hint.textContent=msg;hint.className='code-hint error';}
-        alert(msg);
-        return;
-      }
-      if($('#collectorToken')) $('#collectorToken').textContent=data.token;
-      if($('#collectorTokenBox')) $('#collectorTokenBox').hidden=false;
-      if(hint){hint.textContent='凭证已创建。只在需要重新启用本机采集器时使用。';hint.className='code-hint success';}
-    };
-  }
-
-  const copyCollectorTokenBtn=$('#copyCollectorTokenBtn');
-  if(copyCollectorTokenBtn){
-    copyCollectorTokenBtn.onclick=async()=>{
-      const token=($('#collectorToken')?.textContent||'').trim();
-      if(!token||token==='—') return;
-      try{
-        await navigator.clipboard.writeText(token);
-        copyCollectorTokenBtn.textContent='已复制';
-        setTimeout(()=>copyCollectorTokenBtn.textContent='复制',1200);
-      }catch{
-        alert('复制失败，请手动复制');
-      }
-    };
-  }
-}
-
-async function setupAdminLogs(){
-  const root=$('#adminLogsRoot');
-  if(!root) return;
-
-  const session=await qcAdminSession(root,'admin-logs.html');
-  if(!session) return;
-
-  const {data:events,error}=await window.qcSupabase.rpc('admin_system_activity',{p_limit:150});
-  const rows=$('#adminLogRows');
-  if(error){
-    if(rows) rows.innerHTML='<tr><td colspan="5">系统活动读取失败</td></tr>';
-    return;
-  }
-
-  const items=events||[];
-  const signupCount=items.filter(x=>x.event_type==='signup').length;
-  const loginCount=items.filter(x=>x.event_type==='login').length;
-  const collectorCount=items.filter(x=>x.event_type==='collector').length;
-  if($('#logSignupCount')) $('#logSignupCount').textContent=signupCount;
-  if($('#logLoginCount')) $('#logLoginCount').textContent=loginCount;
-  if($('#logCollectorCount')) $('#logCollectorCount').textContent=collectorCount;
-
-  const typeLabel={signup:'注册',login:'登录',collector:'采集'};
-  const statusLabel={success:'成功',failed:'失败',partial:'部分成功',blocked:'被拦截',running:'进行中'};
-  if(rows){
-    rows.innerHTML=items.length?items.map(x=>
-      '<tr>'+
-        '<td>'+qcEscape(qcAdminFmt(x.event_time))+'</td>'+
-        '<td>'+qcEscape(typeLabel[x.event_type]||x.event_type||'系统')+'</td>'+
-        '<td>'+qcEscape(x.title||'—')+'</td>'+
-        '<td>'+qcEscape(x.detail||'—')+'</td>'+
-        '<td>'+qcEscape(statusLabel[x.status]||x.status||'—')+'</td>'+
-      '</tr>'
-    ).join(''):'<tr><td colspan="5">暂无系统活动</td></tr>';
-  }
-}
-
 document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>document.body.classList.remove('qc-overview-booting'),2500);
   const safe=(name,fn)=>{try{const r=fn();if(r&&typeof r.catch==='function')r.catch(e=>console.error(name,e));}catch(e){console.error(name,e);}};
@@ -6652,9 +6150,4 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('desktop-account-nav',()=>setupDesktopAccountNav());
   safe('football-login-bar',()=>setupFootballLoginBar());
   safe('profile',()=>setupProfile());
-  safe('admin',()=>setupAdmin());
-  safe('admin-users',()=>setupAdminUsers());
-  safe('admin-codes',()=>setupAdminCodes());
-  safe('admin-data',()=>setupAdminData());
-  safe('admin-logs',()=>setupAdminLogs());
 })
