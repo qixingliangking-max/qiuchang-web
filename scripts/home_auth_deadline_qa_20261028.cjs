@@ -79,7 +79,7 @@ test('guests never call member or admin RPC',async()=>{
  assert.equal(h.calls.pro,0);
 });
 test('homepage authorization no longer awaits the potentially slow day bootstrap',()=>{
- assert.match(app,/const accessPromise=qcGetAccessState\(\);\s*\/\/ Current day/);
+ assert.match(app,/const accessPromise=qcGetAccessState\(\);\s*\/\/ Membership may settle/);
  assert.doesNotMatch(app,/const accessPromise=qcGetAccessState\(false,requestCandidateCurrentBundle\)/);
 });
 test('slow access ends with actionable retry and never exposes protected models',()=>{
