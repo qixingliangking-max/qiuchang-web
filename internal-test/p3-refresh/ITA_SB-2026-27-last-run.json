@@ -1,18 +1,28 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-10-28T20:28:07.573Z",
+  "run_at": "2026-10-28T21:40:39.813Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 88,
-  "in_scope_finished": 88,
+  "discovered_finished": 90,
+  "in_scope_finished": 90,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 88,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 2,
+  "added_source_match_ids": [
+    "5967121",
+    "5967124"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 88,
+  "mapped_finished": 90,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 12.3,
+  "published_blob_sha": "24b777028d0f41d1ad684c3b1ce77414900e6b16"
 }
