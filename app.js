@@ -5427,14 +5427,20 @@ async function qcTouchLastActive(force=false){
 
 function setupLastActiveTracking(){
   if(qcLastActiveBound || !window.qcSupabase) return;
+  // Auth forms must not start unrelated session reads while sign-in is
+  // acquiring the SDK's session lock (particularly in mobile WebViews).
+  if(document.querySelector('#loginForm,#registerForm,#forgotPasswordForm,#resetPasswordForm')) return;
   qcLastActiveBound=true;
 
-  qcTouchLastActive(false);
+  // Keep profile/last-active bookkeeping off the critical first-paint path.
+  setTimeout(()=>{ qcTouchLastActive(false).catch(()=>{}); },3200);
 
   window.qcSupabase.auth.onAuthStateChange((event,session)=>{
     if(!session) return;
     if(['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)){
-      qcTouchLastActive(event==='SIGNED_IN');
+      // NEVER call auth.getSession() synchronously from an auth callback:
+      // signInWithPassword/setSession can deadlock behind that same lock.
+      setTimeout(()=>{ qcTouchLastActive(event==='SIGNED_IN').catch(()=>{}); },0);
     }
   });
 
