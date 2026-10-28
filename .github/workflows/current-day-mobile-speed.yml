@@ -1,0 +1,37 @@
+name: Current day mobile site speed measurements
+on:
+  push:
+    paths:
+      - 'scripts/current_day_mobile_speed_qa.cjs'
+      - '.github/workflows/current-day-mobile-speed.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser dependencies
+        run: |
+          mkdir -p /tmp/qcda-current-speed
+          cd /tmp/qcda-current-speed
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Test current business day, guest homepage and login
+        env:
+          NODE_PATH: /tmp/qcda-current-speed/node_modules
+        run: node scripts/current_day_mobile_speed_qa.cjs
+      - name: Upload mobile benchmark
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qcda-current-day-mobile-speed
+          path: .github/reports/current-day-mobile-speed.json
+          if-no-files-found: warn
+          retention-days: 14
