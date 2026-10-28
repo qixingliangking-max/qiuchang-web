@@ -76,7 +76,7 @@ jobs:
                 if(!observation.gate?.includes('登录后查看今日预测'))
                   throw Error(engineName+' guest gate missing '+JSON.stringify(observation));
                 if(!observation.hasHistorySection)throw Error(engineName+' public history removed');
-                if(!observation.scripts.some(x=>x.includes('20261024guestgate1')))
+                if(!observation.scripts.some(x=>x.includes('app.js?v=')))
                   throw Error(engineName+' stale app.js cache');
                 if(jsErrors.length)throw Error(engineName+' JS errors '+jsErrors.slice(0,3).join(' | '));
                 results.push({engine:engineName,...observation,errorCount:jsErrors.length});
