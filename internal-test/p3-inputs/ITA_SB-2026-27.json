@@ -649,7 +649,7 @@
       "home_team": "贝内文托",
       "away_team": "卡坦扎罗",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T18:00:00.000Z"
+      "kickoff_at": "2026-10-27T18:00:00Z"
     },
     {
       "source_match_id": "5967119",
@@ -657,7 +657,7 @@
       "home_team": "阿斯科利",
       "away_team": "桑普多利亚",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
     },
     {
       "source_match_id": "5967122",
@@ -665,7 +665,7 @@
       "home_team": "切塞纳",
       "away_team": "恩波利",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
     },
     {
       "source_match_id": "5967123",
@@ -673,7 +673,7 @@
       "home_team": "恩特拉",
       "away_team": "阿维利诺",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
     },
     {
       "source_match_id": "5967125",
@@ -681,7 +681,7 @@
       "home_team": "维琴察",
       "away_team": "摩德纳",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
     },
     {
       "source_match_id": "5967126",
@@ -689,7 +689,7 @@
       "home_team": "曼托瓦",
       "away_team": "克雷莫纳",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
     },
     {
       "source_match_id": "5967127",
@@ -697,7 +697,15 @@
       "home_team": "帕多瓦",
       "away_team": "南蒂罗尔",
       "match_date": "2026-10-27",
-      "kickoff_at": "2026-10-27T19:00:00.000Z"
+      "kickoff_at": "2026-10-27T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967128",
+      "match_id": "fotmob:5967128",
+      "home_team": "比萨",
+      "away_team": "巴勒莫",
+      "match_date": "2026-10-28",
+      "kickoff_at": "2026-10-28T18:00:00.000Z"
     }
   ]
 }

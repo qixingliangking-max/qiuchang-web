@@ -6,7 +6,7 @@
     "51"
   ],
   "fotmob_ccode3": "FIN",
-  "baseline_finished_matches": 168,
+  "baseline_finished_matches": 169,
   "team_map": {
     "HJK": "HJK赫尔辛基",
     "SJK": "塞伊奈约基",
@@ -21,6 +21,6 @@
     "IFK Mariehamn": "玛丽港",
     "FC Inter Turku": "图尔库国际"
   },
-  "last_successful_refresh_at": "2026-10-25T18:31:42.768Z",
-  "last_published_blob_sha": "813d23eca14482d98efd67bbdbcf0373168de132"
+  "last_successful_refresh_at": "2026-10-28T20:15:44.910Z",
+  "last_published_blob_sha": "fb90d4682fe110e25dd6e014b4e7720bceafa37c"
 }
