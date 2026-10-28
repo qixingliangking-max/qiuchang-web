@@ -458,6 +458,16 @@ function qcGetSharedSession(){
   return qcSharedSessionPromise;
 }
 
+// Mobile embedded browsers sometimes leave the SDK lock or a network RPC
+// unresolved. Fail closed after a finite deadline rather than freezing the
+// protected homepage behind '正在确认登录状态' forever.
+function qcAuthDeadline(work,ms){
+  let timer;
+  return Promise.race([
+    Promise.resolve(work).then(value=>({timeout:false,value})),
+    new Promise(resolve=>{timer=setTimeout(()=>resolve({timeout:true,value:null}),ms);})
+  ]).finally(()=>clearTimeout(timer));
+}
 async function qcGetAccessState(force=false,overviewBundlePromise=null){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
@@ -477,8 +487,18 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       }catch(_){}
       const sessionAttempts=recentAuthHandoff?4:1;
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
-        const {data:sessionData,error:sessionError}=await qcGetSharedSession();
-        if(sessionError) console.warn('读取登录状态失败',sessionError);
+        const state=await qcAuthDeadline(qcGetSharedSession(),4000);
+        if(state.timeout){
+          console.warn('登录状态读取超时，会员内容保持关闭');
+          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
+          return qcLastAccessState;
+        }
+        const {data:sessionData,error:sessionError}=state.value||{};
+        if(sessionError){
+          console.warn('读取登录状态失败',sessionError);
+          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
+          return qcLastAccessState;
+        }
         session=sessionData?.session||null;
         if(!session && attempt+1<sessionAttempts){
           const delay=recentAuthHandoff ? 120+(attempt*120) : 220;
@@ -503,8 +523,10 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       // Other pages (or a failed bootstrap) retain the original check.
       if(overviewBundlePromise){
         try{
-          const bundle=await (typeof overviewBundlePromise==='function'
-            ? overviewBundlePromise() : overviewBundlePromise);
+          const checked=await qcAuthDeadline(
+            typeof overviewBundlePromise==='function'
+              ? overviewBundlePromise() : overviewBundlePromise,1800);
+          const bundle=checked.timeout ? null : checked.value;
           if(bundle && typeof bundle.is_pro==='boolean'){
             isPro=bundle.is_pro===true;
             verifiedByOverview=true;
@@ -515,7 +537,13 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       }
       if(!verifiedByOverview){
         for(let attempt=0;attempt<2;attempt++){
-          const result=await window.qcSupabase.rpc('has_active_pro_access');
+          const checked=await qcAuthDeadline(
+            window.qcSupabase.rpc('has_active_pro_access'),4500);
+          if(checked.timeout){
+            proError=new Error('会员验证请求超时');
+            break;
+          }
+          const result=checked.value||{};
           proError=result.error||null;
           if(!proError){
             isPro=result.data===true;
@@ -523,14 +551,19 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
           }
           if(attempt===0) await new Promise(resolve=>setTimeout(resolve,320));
         }
-        if(proError) console.warn('读取Pro权限失败',proError);
+        if(proError){
+          console.warn('读取Pro权限失败',proError);
+          qcLastAccessState={loggedIn:true,isPro:false,userId:session.user?.id||null,
+            verificationPending:true};
+          return qcLastAccessState;
+        }
       }
 
       qcLastAccessState={loggedIn:true,isPro,userId:session.user?.id||null};
       return qcLastAccessState;
     }catch(err){
       console.warn('读取会员权限失败',err);
-      qcLastAccessState={loggedIn:false,isPro:false};
+      qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
       return qcLastAccessState;
     }
   })();
@@ -2546,16 +2579,17 @@ async function loadJcFrontend(){
       ? window.qcFetchLiveScheduleDate(candidateDate) : null;
   // Protected prediction bundles still require server-verified Pro access.
   qcLoadFrozenOverviewManifest();
-  // One lazy server-authorized bootstrap is shared by Pro verification and
-  // the authenticated prediction read. Anonymous public first paint never
-  // starts this protected request.
+  // The protected day bundle is started only when the actual Pro table is
+  // requested. Identity and membership are verified separately so a slow
+  // large day bootstrap cannot block the small authorization verdict.
   let candidateCurrentPromise=null;
   const requestCandidateCurrentBundle=()=>{
     if(!candidateCurrentPromise && typeof window.qcFetchOverviewBootstrap==='function')
       candidateCurrentPromise=window.qcFetchOverviewBootstrap(candidateDate);
     return candidateCurrentPromise;
   };
-  const accessPromise=qcGetAccessState(false,requestCandidateCurrentBundle);
+  // Server-authoritative standalone membership check does not await fixtures.
+  const accessPromise=qcGetAccessState();
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
   const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
@@ -3243,7 +3277,9 @@ async function loadJcFrontend(){
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
-      $('#jcPredictionMeta').textContent=accessDisplayPhase!=='ready'
+      $('#jcPredictionMeta').textContent=accessDisplayPhase==='unavailable'
+        ? '会员状态暂时无法验证'
+        : accessDisplayPhase==='verifying'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
         : selectedDate>today && !dateRows.length
         ? '赛程尚未发布'
@@ -3293,11 +3329,18 @@ async function loadJcFrontend(){
       if(predictionShell) predictionShell.hidden=false;
       if(selectedDate>today && !dateRows.length){
         qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
-      }else if(accessDisplayPhase==='verifying' || accessDisplayPhase==='unavailable'){
-        // In a browser with no cached session and no recent auth handoff,
-        // the HTML has already painted the normal anonymous gate. Preserve
-        // it while Supabase restores auth; real session/Pro claims always
-        // wait for the verified accessPromise below.
+      }else if(accessDisplayPhase==='unavailable'){
+        // Never confuse a failed authorization request with a genuine guest.
+        // A network issue never grants access to protected model content.
+        qcReconcileOverviewTable(cards,
+          '<div class="profile-card" role="status" aria-live="polite">'+
+          '会员状态暂时无法验证，请检查网络后重试。 '+
+          '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button>'+
+          '</div>');
+        const retry=cards.querySelector('#qcRetryMemberStatus');
+        if(retry) retry.onclick=()=>location.reload();
+      }else if(accessDisplayPhase==='verifying'){
+        // Preserve a neutral state while the server has not yet answered.
         qcReconcileOverviewTable(cards,
           window.qcOverviewKnownGuestFirstPaint
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
@@ -3395,8 +3438,13 @@ async function loadJcFrontend(){
   // Upgrade public first paint after server auth/Pro verification.
   // Keep the protected card neutral until the authorized FINAL is available.
   accessPromise.then(async resolved=>{
-    access=resolved||{loggedIn:false,isPro:false,userId:null};
+    access=resolved||{loggedIn:false,isPro:false,userId:null,verificationPending:true};
     window.qcOverviewKnownGuestFirstPaint=false;
+    if(access.verificationPending){
+      accessDisplayPhase='unavailable';
+      render();
+      return;
+    }
     if(access.isPro){
       // The public static schedule is already loaded. After server-verified
       // Pro access, show the complete table immediately with "待生成" for

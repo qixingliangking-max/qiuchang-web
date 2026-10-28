@@ -21,7 +21,7 @@ function create({member=true}={}){
     calls.otherRPC++;throw Error('unapproved RPC '+name);
   }};
   const context=vm.createContext({
-    window:{qcSupabase:client},sessionStorage:{getItem:()=>null,removeItem(){}},console,Date,Promise,setTimeout
+    window:{qcSupabase:client},sessionStorage:{getItem:()=>null,removeItem(){}},console,Date,Promise,setTimeout,clearTimeout
   });
   vm.runInContext(fragment,context);
   return {callbacks,ctx:context,client,calls,
@@ -94,7 +94,7 @@ test('legacy admin functions and RPCs absent from public bundle',()=>{
     'model-record-test.html','league-archive-preview.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/src="app\.js\?v=20261028authshared1"/,page);
+    assert.match(html,/src="app\.js\?v=20261028authdeadline1"/,page);
   }
 });
 test('dedicated admin pages keep standalone entry scripts',()=>{
