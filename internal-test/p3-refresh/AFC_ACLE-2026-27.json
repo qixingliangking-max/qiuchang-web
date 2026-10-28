@@ -6,7 +6,7 @@
     "525"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 45,
+  "baseline_finished_matches": 47,
   "team_map": {
     "Al Ahli": "吉达国民",
     "Al Hilal": "利雅得新月",
@@ -41,6 +41,6 @@
     "Tractor": "大不里士拖拉机",
     "Vissel Kobe": "神户胜利船"
   },
-  "last_successful_refresh_at": "2026-10-27T20:37:21.253Z",
-  "last_published_blob_sha": "5d9e75ce32898eeb97d9c5a9c4a12cc55a47ae32"
+  "last_successful_refresh_at": "2026-10-28T15:04:39.619Z",
+  "last_published_blob_sha": "c125b86f98dcd88362a2221350e50dce6774423a"
 }
