@@ -17,6 +17,7 @@ on:
       - 'verify.html'
       - 'scripts/auth_lock_mobile_qa_20261028.cjs'
       - 'scripts/shared_session_admin_isolation_qa_20261028.cjs'
+      - 'scripts/home_auth_deadline_qa_20261028.cjs'
       - '.github/workflows/auth-lock-mobile-qa.yml'
   workflow_dispatch:
 permissions:
@@ -36,3 +37,5 @@ jobs:
         run: node --test scripts/login_fast_qa_20261028.cjs
       - name: Shared-session and admin-isolation regression
         run: node --test scripts/shared_session_admin_isolation_qa_20261028.cjs
+      - name: Home auth never waits indefinitely or bypasses server entitlements
+        run: node --test scripts/home_auth_deadline_qa_20261028.cjs
