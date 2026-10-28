@@ -5491,12 +5491,19 @@ function setupAuthStateRecovery(){
       qcLastAccessState=null;
       return;
     }
-    if(session) qcAccessStatePromise=null;
+    // Re-authenticate only if the actual user changed or a late session
+    // replaces a previously confirmed guest. INITIAL_SESSION and
+    // TOKEN_REFRESHED for the SAME user must not discard the verified Pro
+    // result and repeat the membership RPC.
+    const previousAccess=qcLastAccessState;
+    const changedIdentity=Boolean(session && previousAccess &&
+      previousAccess.userId && previousAccess.userId!==session.user?.id);
+    const recoveredGuest=Boolean(session && previousAccess &&
+      previousAccess.loggedIn===false);
+    if(changedIdentity || recoveredGuest) qcAccessStatePromise=null;
 
     const lateSession=Boolean(
-      session &&
-      qcLastAccessState &&
-      qcLastAccessState.loggedIn===false &&
+      recoveredGuest &&
       ['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)
     );
     if(!lateSession) return;
