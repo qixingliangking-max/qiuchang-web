@@ -29,26 +29,16 @@ function harness({session='member',sessionHangs=false,proHangs=false,proError=fa
       return Promise.resolve({data:true,error:null});
     }
   };
-  let seq=0;
-  const handles=new Map();
-  const mockTimeout=(callback,ms)=>{
-    const id=++seq;
-    // Simulate the deadline elapsing without imposing a 4.5s test delay.
-    if(ms>=1800){
-      Promise.resolve().then(()=>{if(handles.has(id)){handles.delete(id);callback();}});
-    }else{
-      handles.set(id,callback);
-    }
-    handles.set(id,callback);
-    return id;
-  };
+  // Let normal already-resolved auth promises finish in the microtask queue.
+  // Simulate only stalled deadline timers without 4.5s of actual waiting.
+  const mockTimeout=(fn,ms)=>setTimeout(fn,ms>=1800?0:ms);
   const context=vm.createContext({
     window:{qcSupabase:client},
     console,
     sessionStorage:{getItem:()=>null,removeItem(){}},
     Promise,Date,
     setTimeout:mockTimeout,
-    clearTimeout:id=>handles.delete(id)
+    clearTimeout
   });
   vm.runInContext(snippet,context);
   const access=(expr='qcGetAccessState()')=>vm.runInContext(expr,context);
