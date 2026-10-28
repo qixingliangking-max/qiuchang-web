@@ -55,7 +55,7 @@ test('ordinary page defers session reads and auth-event work',()=>{
 });
 
 test('shared cached application asset across active user pages',()=>{
-  const pages=['login.html','index.html','football.html','league.html',
+  const pages=['index.html','football.html','league.html',
     'jc-match.html','profile.html','register.html',
     'forgot-password.html','reset-password.html','verify.html'];
   for(const page of pages){
@@ -63,4 +63,7 @@ test('shared cached application asset across active user pages',()=>{
     assert.match(html,/<script\b[^>]*src="app\.js\?v=20261028authlock1"/,
       page+' must use the same app.js cache key');
   }
+  const login=fs.readFileSync(path.join(root,'login.html'),'utf8');
+  assert.match(login,/<script\b[^>]*src="login-fast\.js\?v=20261028fastlogin1"/);
+  assert.doesNotMatch(login,/<script\b[^>]*src="app\.js/);
 });
