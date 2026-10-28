@@ -1,0 +1,31 @@
+name: Mobile login auth lock and cache QA
+on:
+  push:
+    paths:
+      - 'app.js'
+      - 'login.html'
+      - 'index.html'
+      - 'football.html'
+      - 'league.html'
+      - 'jc-match.html'
+      - 'profile.html'
+      - 'register.html'
+      - 'forgot-password.html'
+      - 'reset-password.html'
+      - 'verify.html'
+      - 'scripts/auth_lock_mobile_qa_20261028.cjs'
+      - '.github/workflows/auth-lock-mobile-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Login storage/lock race and cache reuse
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs
