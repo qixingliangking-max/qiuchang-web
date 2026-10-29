@@ -1,0 +1,30 @@
+name: Football incremental FT/HT and rollover QA
+on:
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'football.html'
+      - 'scripts/football_incremental_final_rollover_qa_20261030.cjs'
+      - '.github/workflows/football-incremental-finals-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'scripts/football_incremental_final_rollover_qa_20261030.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check app and test syntax
+        run: node --check app.js && node --check scripts/football_incremental_final_rollover_qa_20261030.cjs
+      - name: Verify 10am rollover and staged seven-match FT/HT settlement
+        run: node --test scripts/football_incremental_final_rollover_qa_20261030.cjs
+      - name: Verify the independent once-per-fixture static publisher
+        run: python3 scripts/publish_final_scores.py --self-test
+      - name: Verify existing mobile login and page-version invariants
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs
