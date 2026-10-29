@@ -10,17 +10,20 @@
   // A single four-second total deadline prevents an indefinite neutral card.
   window.qcHomeEarlySession=Promise.resolve().then(()=>sdk.auth.getSession());
   const check=(async()=>{
+    let knownUserId=null;
     try{
       const {data:sessionData,error:sessionError}=await window.qcHomeEarlySession;
       if(sessionError) throw sessionError;
       const session=sessionData?.session||null;
       if(!session) return {loggedIn:false,isPro:false};
+      knownUserId=session.user?.id||null;
       const {data:isPro,error:proError}=await sdk.rpc('has_active_pro_access');
       if(proError) throw proError;
       return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
     }catch(error){
       console.warn('读取会员权限失败',error);
-      return {loggedIn:false,isPro:false,verificationPending:true};
+      return {loggedIn:Boolean(knownUserId),isPro:false,
+        userId:knownUserId,verificationPending:true};
     }
   })();
 
