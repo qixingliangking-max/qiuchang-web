@@ -5772,10 +5772,17 @@ async function setupAuthNav(){
   const registerLink=$('#navRegister');
   const profileLink=$('#navProfile');
   const logoutLink=$('#navLogout');
-  if(!loginLink && !registerLink && !profileLink && !logoutLink) return;
+  const leagueLinks=$('[data-qc-member-nav="league"]');
+  if(!loginLink && !registerLink && !profileLink && !logoutLink && !leagueLinks.length) return;
 
   const apply=session=>{
     const loggedIn=Boolean(session?.user);
+    // This feature is discoverable after sign-in, never before session
+    // confirmation. Access to league data itself remains Pro/RLS-gated.
+    for(const link of leagueLinks){
+      link.hidden=!loggedIn;
+      link.style.display=loggedIn?'':'none';
+    }
     if(loginLink){loginLink.hidden=loggedIn;loginLink.style.display=loggedIn?'none':'block';}
     if(registerLink){registerLink.hidden=loggedIn;registerLink.style.display=loggedIn?'none':'block';}
     if(profileLink){profileLink.hidden=!loggedIn;profileLink.style.display=loggedIn?'block':'none';}
