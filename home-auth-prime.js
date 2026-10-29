@@ -6,6 +6,21 @@
   const cards=document.getElementById('jcLiveCards');
   if(!cards || !window.qcSupabase) return;
   const sdk=window.qcSupabase;
+  // iOS / Android WebViews can hold auth.getSession() behind the SDK's
+  // token-refresh lock even after INITIAL_SESSION has fired. Accept the
+  // SDK's own session event instead of waiting for an unnecessary timeout.
+  let resolveInitialEvent=null;
+  let signedOut=false;
+  const eventSession=new Promise(resolve=>{resolveInitialEvent=resolve;});
+  sdk.auth.onAuthStateChange((event,session)=>{
+    // Never call or await SDK auth methods inside this callback.
+    if(event==='SIGNED_OUT') signedOut=true;
+    if(resolveInitialEvent &&
+       ['INITIAL_SESSION','SIGNED_IN','TOKEN_REFRESHED','SIGNED_OUT'].includes(event)){
+      resolveInitialEvent({data:{session:session||null},error:null});
+      resolveInitialEvent=null;
+    }
+  });
   const timed=async (promise,ms)=>{
     let timer;
     try {
@@ -17,18 +32,22 @@
   };
   // This exact SDK call is reused across homepage and app. No competing
   // getSession() is introduced, even when an embedded WebView is slow.
-  window.qcHomeEarlySession=Promise.resolve()
-    .then(()=>sdk.auth.getSession())
-    .catch(error=>({data:{session:null},error}));
+  window.qcHomeEarlySession=Promise.race([
+    Promise.resolve().then(()=>sdk.auth.getSession())
+      .catch(error=>({data:{session:null},error})),
+    eventSession
+  ]);
 
   window.qcHomeEarlyAccessPromise=(async()=>{
     const checked=await timed(window.qcHomeEarlySession,2500);
+    if(signedOut) return {loggedIn:false,isPro:false};
     if(checked.timeout || checked.value?.error)
       return {loggedIn:false,isPro:false,verificationPending:true};
     const session=checked.value?.data?.session||null;
     if(!session) return {loggedIn:false,isPro:false};
     const identity=session.user?.id||null;
     const verified=await timed(sdk.rpc('has_active_pro_access'),2500);
+    if(signedOut) return {loggedIn:false,isPro:false};
     if(verified.timeout || verified.value?.error)
       return {loggedIn:true,isPro:false,userId:identity,verificationPending:true};
     return {loggedIn:true,isPro:verified.value?.data===true,userId:identity};
@@ -40,7 +59,7 @@
   // Paint the verdict without waiting for the app bundle, public schedules,
   // full crest catalog or yesterday's already-rendered archive.
   window.qcHomeEarlyAccessPromise.then(access=>{
-    if(cards.dataset.qcAuthPaintReady==='1')return;
+    if(signedOut || cards.dataset.qcAuthPaintReady==='1')return;
     const meta=document.getElementById('jcPredictionMeta');
     let handoff=0;
     try{handoff=Number(sessionStorage.getItem('qc-auth-handoff')||0);}catch(_){}
