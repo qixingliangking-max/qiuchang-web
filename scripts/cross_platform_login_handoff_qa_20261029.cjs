@@ -31,27 +31,30 @@ function setup({handoff=false,sessions=[null],pro=true}={}){
   clearTimeout
  });
  vm.runInContext(fragment,ctx);
- return {ctx,calls,callbacks,access:()=>vm.runInContext('qcGetAccessState()',ctx)};
+ return {ctx,calls,callbacks,access:(force=false)=>vm.runInContext(force?'qcGetAccessState(true)':'qcGetAccessState()',ctx)};
 }
 
-test('cross-platform login handoff does a truly fresh SDK read after an empty session',async()=>{
+test('handoff reads once and a manual recheck can recover a late SDK session',async()=>{
  const member={user:{id:'test-user'}};
- const a=setup({handoff:true,sessions:[null,member]});
- const state=await a.access();
- assert.equal(state.isPro,true);
- assert.equal(state.loggedIn,true);
- assert.equal(a.calls.read,2,'must not repeat a cached null promise');
- assert.equal(a.calls.entitlement,1,'server authorization is still mandatory');
+ const h=setup({handoff:true,sessions:[null,member]});
+ const initial=await h.access();
+ assert.equal(initial.isPro,false);
+ assert.equal(initial.loggedIn,false);
+ assert.equal(h.calls.read,1);
+ const second=await h.access(true);
+ assert.equal(second.loggedIn,true);
+ assert.equal(second.isPro,true);
+ assert.equal(h.calls.read,2);
+ assert.equal(h.calls.entitlement,1);
 });
 
-test('recent login with two empty SDK sessions stays unverified, never becomes guest',async()=>{
- const a=setup({handoff:true,sessions:[null,null]});
- const state=await a.access();
+test('missing session never grants Pro or triggers automatic retries',async()=>{
+ const h=setup({handoff:true,sessions:[null,null]});
+ const state=await h.access();
  assert.equal(state.loggedIn,false);
  assert.equal(state.isPro,false);
- assert.equal(state.verificationPending,true);
- assert.equal(a.calls.read,2);
- assert.equal(a.calls.entitlement,0);
+ assert.equal(h.calls.read,1);
+ assert.equal(h.calls.entitlement,0);
 });
 
 test('normal guest does not issue repeated SDK reads or ask for Pro',async()=>{
@@ -77,7 +80,7 @@ test('all public pages load one synchronized app and all guest entries use curre
  'model-record-test.html','league-archive-preview.html'];
  pages.forEach(page=>{
   const html=fs.readFileSync(path.join(root,page),'utf8');
-  assert.equal((html.match(/app\.js\?v=20261029homeslim3/g)||[]).length,1,page);
+  assert.equal((html.match(/app\.js\?v=20261029simpleauth1/g)||[]).length,1,page);
   assert.doesNotMatch(html,/login\.html\?v=20261024authstable4/,page);
  });
  assert.match(app,/login\.html\?v=20261029authhandoff5/);

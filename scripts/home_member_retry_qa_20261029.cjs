@@ -72,7 +72,7 @@ test('manual retry rechecks the server after a transient Pro timeout',async()=>{
   const retry=await f.access(true);
   assert.equal(retry.loggedIn,true);
   assert.equal(retry.isPro,true);
-  assert.equal(f.calls.getSession,1,'reuse actual SDK session');
+  assert.equal(f.calls.getSession,2,'manual retry explicitly rereads the current session');
   assert.equal(f.calls.pro,2,'authorization is checked again on server');
   assert.equal(f.calls.admin,0);
 });
@@ -87,7 +87,7 @@ test('guests never receive Pro and never call an entitlement RPC',async()=>{
 test('the homepage manual retry is in-place, rate-limited, and does not reload',()=>{
   assert.match(code,/async function qcRetryMemberInPlace\(\)/);
   assert.match(code,/await qcApplyMemberAccess\(await qcGetAccessState\(true\),epoch\)/);
-  assert.match(code,/if\(!qcMemberAutoRetryUsed\)/);
+  assert.doesNotMatch(code,/qcMemberAutoRetryUsed/);
   assert.match(code,/qcMemberRetryInProgress/);
   assert.match(code,/cards\.__qcRetryMemberAccess=qcRetryMemberInPlace/);
   assert.match(code,/const recoveredPending=Boolean\(session && previousAccess\?\.verificationPending\)/);

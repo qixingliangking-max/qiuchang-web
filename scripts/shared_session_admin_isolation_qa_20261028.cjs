@@ -43,13 +43,13 @@ test('entitlement uses one server result for all concurrent readers',async()=>{
   assert.equal(h.calls.pro,1);
   assert.equal(h.calls.otherRPC,0);
 });
-test('homepage reuses checked bootstrap entitlement rather than a duplicate RPC',async()=>{
+test('membership always requires server RPC even with a bootstrap hint',async()=>{
   const h=create();
   h.ctx.bundlePromise=Promise.resolve({is_pro:true});
   const access=await vm.runInContext('qcGetAccessState(false,bundlePromise)',h.ctx);
   assert.equal(access.isPro,true);
   assert.equal(h.calls.getSession,1);
-  assert.equal(h.calls.pro,0);
+  assert.equal(h.calls.pro,1);
 });
 test('guest never executes pro or admin queries',async()=>{
   const h=create({member:false});
@@ -94,7 +94,7 @@ test('legacy admin functions and RPCs absent from public bundle',()=>{
     'model-record-test.html','league-archive-preview.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/src="app\.js\?v=20261029homeslim3"/,page);
+    assert.match(html,/src="app\.js\?v=20261029simpleauth1"/,page);
   }
 });
 test('dedicated admin pages keep standalone entry scripts',()=>{
