@@ -75,7 +75,7 @@ test('valid member without handoff verifies once and keeps role gated on RPC',as
 });
 
 test('all public pages load one synchronized app and all guest entries use current login URL',()=>{
- const pages=['index.html','football.html','league.html','jc-match.html','profile.html',
+ const pages=['index.html','football.html','jc-match.html','profile.html',
  'register.html','forgot-password.html','reset-password.html','verify.html','match.html',
  'model-record-test.html','league-archive-preview.html'];
  pages.forEach(page=>{
@@ -87,4 +87,10 @@ test('all public pages load one synchronized app and all guest entries use curre
  const login=fs.readFileSync(path.join(root,'login.html'),'utf8');
  assert.match(login,/login-fast\.js\?v=20261029netretry2/);
  assert.doesNotMatch(login,/<script[^>]*src="app\.js/);
+});
+
+test('league archive is an intentionally isolated guest-light entrypoint',()=>{
+  const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
+  assert.match(html,/league-entry\.js\?v=20261029authlazy1/);
+  assert.doesNotMatch(html,/src="app\.js\?/);
 });
