@@ -1362,6 +1362,14 @@
       "away_team": "HJK赫尔辛基",
       "match_date": "2026-10-29",
       "kickoff_at": "2026-10-29T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "6145889",
+      "match_id": "fotmob:6145889",
+      "home_team": "古比斯",
+      "away_team": "格尼斯坦",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T17:00:00.000Z"
     }
   ]
 }

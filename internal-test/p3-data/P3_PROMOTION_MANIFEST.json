@@ -84,14 +84,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/SWE_AS-2026.json",
-      "blob_sha": "5d346df8f88f36dcf2d90de0f1457246bbb862c3",
+      "blob_sha": "18b93f50d0c941a4d6be7afc6bc44d0c7ab6b611",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 77.3,
+      "avg_team_depth_coverage_pct": 77.8,
       "gate_report": "internal-test/p3-candidates/SWE_AS-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
-      "last_incremental_refresh_at": "2026-10-28T20:16:35.110Z",
-      "finished_matches": 205
+      "last_incremental_refresh_at": "2026-10-29T19:40:57.793Z",
+      "finished_matches": 206
     },
     {
       "league_code": "FIN_VL",
@@ -99,14 +99,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/FIN_VL-2026.json",
-      "blob_sha": "a666ffe46a8d1babcf341396a715799370b45af4",
+      "blob_sha": "b78515d814ca578cac76baa3d9fa10002d828990",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 90.9,
       "gate_report": "internal-test/p3-candidates/FIN_VL-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
-      "last_incremental_refresh_at": "2026-10-29T18:30:18.779Z",
-      "finished_matches": 170
+      "last_incremental_refresh_at": "2026-10-29T19:40:20.675Z",
+      "finished_matches": 171
     },
     {
       "league_code": "UEFA_UCL",
@@ -159,14 +159,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ITA_SA-2026-27.json",
-      "blob_sha": "9d4faa6644de5da98d5bed0f5c7965f768a69ca0",
+      "blob_sha": "996095c9afe8f1fc76d382ca2a919446248fadd0",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 8.2,
       "gate_report": "internal-test/p3-candidates/ITA_SA-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-28T21:40:32.910Z",
-      "finished_matches": 88
+      "last_incremental_refresh_at": "2026-10-29T19:40:39.199Z",
+      "finished_matches": 89
     },
     {
       "league_code": "FRA_L1",
