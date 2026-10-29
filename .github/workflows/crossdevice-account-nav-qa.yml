@@ -8,12 +8,14 @@ on:
       - 'jc-match.html'
       - 'profile.html'
       - 'scripts/crossdevice_account_nav_qa_20261029.cjs'
+      - 'scripts/home_complete_history_reuse_qa_20261029.cjs'
       - '.github/workflows/crossdevice-account-nav-qa.yml'
   push:
     branches: [main]
     paths:
       - 'app.js'
       - 'scripts/crossdevice_account_nav_qa_20261029.cjs'
+      - 'scripts/home_complete_history_reuse_qa_20261029.cjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,5 +29,7 @@ jobs:
         run: node --check app.js
       - name: Mobile, desktop, stale auth and username latency checks
         run: node --test scripts/crossdevice_account_nav_qa_20261029.cjs
+      - name: Historical date arrows use verified complete memory without fresh requests
+        run: node --test scripts/home_complete_history_reuse_qa_20261029.cjs
       - name: Existing mobile auth and cross-platform navigation regressions
         run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs

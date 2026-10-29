@@ -45,11 +45,13 @@ test('ordinary page defers session reads and auth-event work',()=>{
   callback('SIGNED_IN',{user:{id:'test-placeholder'}});
   assert.equal(run.calls.length,0,'no auth.getSession within auth callback');
   assert.equal(run.delayed.length,2);
-  assert.equal(run.delayed[1].delay,0);
+  assert.equal(run.delayed[1].delay,4500,'SIGNED_IN bookkeeping must not compete with first paint');
+  assert.equal(run.calls.length,0);
   run.delayed[1].callback();
   assert.deepEqual(run.calls,[true]);
   callback('TOKEN_REFRESHED',{user:{id:'test-placeholder'}});
   assert.equal(run.calls.length,1);
+  assert.equal(run.delayed[2].delay,5200);
   run.delayed[2].callback();
   assert.deepEqual(run.calls,[true,false]);
 });
@@ -60,7 +62,7 @@ test('shared cached application asset across active user pages',()=>{
     'forgot-password.html','reset-password.html','verify.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261029allnav3"/,
+    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261029allnav4"/,
       page+' must use the same app.js cache key');
   }
   const login=fs.readFileSync(path.join(root,'login.html'),'utf8');
