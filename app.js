@@ -2247,6 +2247,14 @@ async function loadJcFootball(){
     }).catch(error=>console.warn('历史未完赛场次补充资料失败',error));
   }
 
+  // Late fixtures can finish after the 10:00 Beijing business-day rollover.
+  // Continue to watch only the current and immediately preceding sale day;
+  // older historical archives remain immutable and fetch only on navigation.
+  function qcFootballDateNeedsFinalRefresh(ds){
+    const active=qcBeijingBusinessToday();
+    return ds===active || ds===qcAddDays(active,-1);
+  }
+
   function footballDateText(ds){
     const d=new Date(ds+'T12:00:00+08:00');
     return ds.slice(5)+' '+d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'});
@@ -2324,13 +2332,19 @@ async function loadJcFootball(){
       // Render immediately: logos and exceptional unfinished fixtures must not
       // block the first historical frame or trigger a second card render.
       render();
+      // The previous sale day can still contain a late unfinished fixture
+      // (e.g. 08:30 kickoff). Reconcile confirmed HT+FT immediately, then
+      // continue the ordinary 2-minute visible-tab checks until all FT.
+      if(qcFootballDateNeedsFinalRefresh(ds) &&
+         allRows.some(m=>!qcIsConfirmedFinal(m)))
+        refreshFootballLive().catch(error=>console.warn('跨日赛果即时补充失败',error));
       hydrateHistoricalFootballExtras(allRows,ds,token);
       return;
     }
     // Current-date fixtures still paint immediately and receive live odds.
     render();
     // Only HT/FT/completion refresh dynamically, independently of all other data.
-    if(ds===qcBeijingBusinessToday())
+    if(qcFootballDateNeedsFinalRefresh(ds))
       refreshFootballLive().catch(error=>console.warn('竞彩比分即时补充失败',error));
     scheduleFootballHydration(allRows,ds,token);
   }
@@ -2438,12 +2452,15 @@ async function loadJcFootball(){
     // Historical snapshot is already self-contained; do not wait for logos,
     // market lookups or model lookups before the first complete paint.
     render();
+    if(qcFootballDateNeedsFinalRefresh(selectedDate) &&
+       allRows.some(m=>!qcIsConfirmedFinal(m)))
+      refreshFootballLive().catch(error=>console.warn('竞彩跨日首屏补查失败',error));
     hydrateHistoricalFootballExtras(allRows,selectedDate,initialToken);
   }else{
     // Current-date fixtures paint first; odds and crests follow as before.
     render();
     // Start the scoreboard check as soon as fixed cards are painted.
-    if(selectedDate===qcBeijingBusinessToday())
+    if(qcFootballDateNeedsFinalRefresh(selectedDate))
       refreshFootballLive().catch(error=>console.warn('竞彩首次比分补充失败',error));
     scheduleFootballHydration(allRows,selectedDate,initialToken);
   }
@@ -2466,7 +2483,7 @@ async function loadJcFootball(){
     // No in-play updates: apply one official settlement only after FT.
     // All fixed fixtures, teams, crests, odds, FINAL and AI stay unchanged.
     // Invisible tabs should not compete with the user's active page for RPCs.
-    if(document.hidden || selectedDate!==qcBeijingBusinessToday()) return;
+    if(document.hidden || !qcFootballDateNeedsFinalRefresh(selectedDate)) return;
     // If every published kickoff is in the future, no completed match can
     // exist. Avoid a redundant database request on cold opens and every tick.
     // With any missing kickoff, retain the original database fallback.
