@@ -5,6 +5,7 @@ on:
     paths:
       - 'app.js'
       - 'scripts/cache_static_team_logos.py'
+      - 'scripts/publish_final_scores.py'
       - 'scripts/static_team_crest_qa_20261029.cjs'
       - '.github/workflows/cache-static-team-logos.yml'
       - '.github/workflows/static-team-crest-qa.yml'
@@ -13,6 +14,7 @@ on:
     paths:
       - 'app.js'
       - 'scripts/cache_static_team_logos.py'
+      - 'scripts/publish_final_scores.py'
       - 'assets/team-logos/catalog.js'
       - 'data/overview/live/*.json'
       - 'scripts/static_team_crest_qa_20261029.cjs'
@@ -29,5 +31,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate before-kickoff/FINAL immutability behavior
         run: python3 scripts/cache_static_team_logos.py --self-test
+      - name: Verify final settlement on existing IDs with newly added fixtures
+        run: python3 scripts/publish_final_scores.py --self-test
       - name: Verify published crests never hit runtime resolver
         run: node --test scripts/static_team_crest_qa_20261029.cjs
+      - name: Validate pre-rendered PUBLIC fixtures against manifest
+        run: node --test scripts/football_prerender_qa_20261029.cjs
