@@ -1,0 +1,28 @@
+name: Football confirmed FT without HT display QA
+on:
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'football.html'
+      - 'scripts/football_official_ft_missing_ht_qa_20261030.cjs'
+      - '.github/workflows/football-ft-without-ht-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'scripts/football_official_ft_missing_ht_qa_20261030.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse score and application scripts
+        run: node --check app.js
+      - name: Verify official FT without HT behavior
+        run: node --test scripts/football_official_ft_missing_ht_qa_20261030.cjs
+      - name: Verify existing mobile and account regressions
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs
