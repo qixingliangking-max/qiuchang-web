@@ -2826,7 +2826,18 @@ async function loadJcFrontend(){
   // model/report access; only the existing Pro server verdict can do that.
   let initialCurrent;
   try{
-    initialCurrent=await qcAuthDeadline(fetchOverviewDateReady(initialDate),5500);
+    // First frame uses the small PUBLIC static schedule (no membership RPC).
+    // Pro predictions upgrade this same table in qcApplyMemberAccess only after
+    // the server approves access. A missing public file retains the full
+    // existing date/Pro fallback; this is never a shortcut to private rows.
+    const fastPublic=initialDate===candidateDate && candidatePublicSchedulePromise
+      ? await qcAuthDeadline(candidatePublicSchedulePromise,1600) : null;
+    if(fastPublic && !fastPublic.timeout && !fastPublic.value?.error &&
+       Array.isArray(fastPublic.value?.data) && fastPublic.value.data.length){
+      initialCurrent=fastPublic;
+    }else{
+      initialCurrent=await qcAuthDeadline(fetchOverviewDateReady(initialDate),5500);
+    }
   }catch(error){
     initialCurrent={timeout:false,value:{data:[],error}};
   }
