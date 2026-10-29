@@ -25,7 +25,8 @@
     return day.toISOString().slice(0,10);
   }
   function pending(el){
-    return el && /正在加载中|^\s*$/.test(String(el.textContent||'').trim());
+    return el && !el.dataset?.qcPublicRescue &&
+      /正在加载中|完整赛果尚在核验|^\s*$/.test(String(el.textContent||'').trim());
   }
   async function staticJSON(url){
     var res=await fetch(url,{cache:'no-cache'});
@@ -45,6 +46,14 @@
          String(r.business_date)!==ds || ids.has(r.id)) return null;
       ids.add(r.id);
     }
+    if(final && payload.rows.some(function(r){
+      var raw=r.raw||{};
+      return !/^\d{1,2}[:-]\d{1,2}$/.test(String(raw.sectionsNo999||'')) ||
+        !/^\d{1,2}[:-]\d{1,2}$/.test(String(raw.sectionsNo1||'')) ||
+        !/(已结束|完赛|已完成|finished|final)/i.test(
+          String(r.match_status||'')+' '+String(raw.matchStatusName||'')) ||
+        !Array.isArray(r.jc_model_outputs) || !r.jc_model_outputs.length;
+    })) return null;
     return payload.rows;
   }
   function table(rows,ds,isYesterday){
@@ -108,13 +117,58 @@
   async function rescueHistory(ds){
     var el=document.getElementById('jcYesterdayCards');
     if(!pending(el)) return;
+    var rows=null;
     try{
       var manifest=await staticJSON('data/overview/manifest.json');
       var file=manifest && manifest.dates && manifest.dates[ds];
-      if(!file || !/^data\/overview\/[\w.-]+\.json$/.test(file)) return;
-      var rows=validRows(await staticJSON(file),ds,true);
-      if(rows) show(el,rows,ds,'yesterday',document.getElementById('jcYesterdayMeta'));
-    }catch(error){ console.warn('昨日历史静态兜底暂不可用',error); }
+      if(file && /^data\/overview\/[\w.-]+\.json$/.test(file))
+        rows=validRows(await staticJSON(file),ds,true);
+    }catch(error){ console.warn('昨日归档静态快照暂不可用',error); }
+    if(rows){
+      show(el,rows,ds,'yesterday',document.getElementById('jcYesterdayMeta'));
+      return;
+    }
+    // GitHub scheduled workflows are best-effort. If the final-day archive is
+    // late, query the PUBLIC settled-history snapshot and independently verify
+    // that its IDs match the full schedule. No Pro/admin/member queries.
+    var client=window.qcSupabase;
+    if(!client){
+      // The fast rescue script runs before the deferred Supabase SDK.
+      // Give it one nonblocking chance when the SDK finishes initializing.
+      if(document.readyState==='loading')
+        document.addEventListener('DOMContentLoaded',function(){
+          if(pending(el)) rescueHistory(ds);
+        },{once:true});
+      return;
+    }
+    try{
+      var requests=await Promise.all([
+        client.from('jc_history_overview_snapshots')
+          .select('business_date,payload,match_count,finished_count,is_final')
+          .eq('business_date',ds).maybeSingle(),
+        client.from('jc_overview_schedule_snapshots')
+          .select('business_date,payload,match_count')
+          .eq('business_date',ds).maybeSingle()
+      ]);
+      var history=requests[0],schedule=requests[1];
+      if(history.error || schedule.error || !history.data || !schedule.data ||
+         history.data.is_final!==true || history.data.business_date!==ds ||
+         schedule.data.business_date!==ds) return;
+      var count=Number(schedule.data.match_count||0);
+      var fixtures=schedule.data.payload?.rows;
+      var snap=history.data;
+      if(count<1 || !Array.isArray(fixtures) || fixtures.length!==count ||
+         Number(snap.match_count)!==count ||
+         Number(snap.finished_count)!==count) return;
+      var ids=new Set(fixtures.map(function(r){return String(r.id||'')}));
+      var candidate={...snap,rows:snap.payload?.rows||[]};
+      rows=validRows(candidate,ds,true);
+      if(ids.size!==count || !rows || rows.length!==count ||
+         rows.some(function(r){return !ids.has(String(r.id));})) return;
+      show(el,rows,ds,'yesterday',document.getElementById('jcYesterdayMeta'));
+    }catch(error){
+      console.warn('完整公开赛果校验暂不可用',error);
+    }
   }
   function start(){
     var cards=document.getElementById('jcLiveCards');
