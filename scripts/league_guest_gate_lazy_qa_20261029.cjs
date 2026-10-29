@@ -111,9 +111,11 @@ test('all customer-facing links default hidden; shared session reveals them',()=
    const source=fs.readFileSync(path.join(root,file),'utf8');
    const links=[...source.matchAll(/<a[^>]*href="league\.html"[^>]*>联赛档案<\/a>/g)];
    assert.ok(links.length>0,file);
+   assert.match(source,/id="qcMemberNavGuestGuard"/,file);
+   assert.match(source,/a\[data-qc-member-nav="league"\]\[hidden\]\{display:none!important\}/,file);
    assert.ok(links.every(x=>x[0].includes('data-qc-member-nav="league"')&&
      x[0].includes('hidden')&&x[0].includes('display:none')),file);
  }
- assert.ok(app.includes("const leagueLinks=$('[data-qc-member-nav=\"league\"]')"));
+ assert.ok(app.includes("const leagueLinks=[...document.querySelectorAll('[data-qc-member-nav=\"league\"]')]"));
  assert.match(app,/link\.hidden=!loggedIn/);
 });
