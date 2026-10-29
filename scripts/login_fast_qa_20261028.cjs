@@ -7,7 +7,7 @@ const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'login-fast.js'),'utf8');
 
-function makeHarness({status=200,next='jc-match.html?id=abc',persisted=false}={}){
+function makeHarness({status=200,next='jc-match.html?id=abc',persisted=false,networkFailures=0,hangFirst=false}={}){
   const events={},calls={requests:[],sessions:[],getSession:0,navigate:[],eventCallbacks:[]};
   const el=(id)=>({
     id,value:'',checked:false,disabled:false,textContent:'',className:'',dataset:{},handlers:{},
@@ -51,6 +51,8 @@ function makeHarness({status=200,next='jc-match.html?id=abc',persisted=false}={}
     setTimeout(fn,_ms){const id=++timeoutSeq;timers.set(id,fn);return id},
     clearTimeout(id){timers.delete(id)},
     async fetch(url,opts){calls.requests.push({url,opts});
+      if(hangFirst&&calls.requests.length===1)return new Promise(()=>{});
+      if(calls.requests.length<=networkFailures)throw new TypeError('Failed to fetch');
       return {ok:status===200,status,async json(){
         return status===200?{access_token:'token',refresh_token:'refresh'}:
         {code:'invalid_credentials',message:'Invalid login credentials'};
@@ -67,7 +69,7 @@ async function submit(h){
 }
 test('login page downloads only small login controller, not full app bundle',()=>{
  const html=fs.readFileSync(path.join(root,'login.html'),'utf8');
- assert.match(html,/src="login-fast\.js\?v=20261028fastlogin1"/);
+ assert.match(html,/src="login-fast\.js\?v=20261029netretry2"/);
  assert.doesNotMatch(html,/<script\b[^>]*src="app\.js/);
  assert.ok(Buffer.byteLength(source)<10000,'fast login target 10KB');
 });
@@ -88,6 +90,32 @@ test('invalid credentials get precise user-facing feedback, never navigate',asyn
  assert.match(h.nodes.loginHint.textContent,/邮箱或密码错误/);
  assert.equal(h.calls.sessions.length,0);
 });
+test('temporary transport error retries once with one SDK session',async()=>{
+  const h=makeHarness({networkFailures:1}); await submit(h);
+  assert.equal(h.calls.requests.length,2);
+  assert.equal(h.calls.sessions.length,1);
+  assert.equal(h.calls.navigate.length,1);
+});
+
+test('server 400 must not retry credentials',async()=>{
+  const h=makeHarness({status:400}); await submit(h);
+  assert.equal(h.calls.requests.length,1);
+  assert.equal(h.calls.sessions.length,0);
+});
+
+test('hung Android WebView fetch is bounded even when abort is ignored',async()=>{
+  const h=makeHarness({hangFirst:true});
+  const work=submit(h);
+  await Promise.resolve(); await Promise.resolve();
+  const trigger=[...h.timers.values()][0];
+  assert.equal(typeof trigger,'function');
+  trigger();
+  await work;
+  assert.equal(h.calls.requests.length,2);
+  assert.equal(h.calls.sessions.length,1);
+  assert.equal(h.calls.navigate.length,1);
+});
+
 test('cross-origin next query cannot redirect outside the site',async()=>{
  const h=makeHarness({next:'https://evil.example/steal'});await submit(h);
  assert.deepEqual(h.calls.navigate,['index.html']);
