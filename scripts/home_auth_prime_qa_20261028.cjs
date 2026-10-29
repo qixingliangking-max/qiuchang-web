@@ -12,13 +12,14 @@ const end=app.indexOf('function qcMatchHasStarted(',begin);
 assert.ok(begin>0&&end>begin,'shared authorization implementation exists');
 const fragment=app.slice(begin,end);
 
-function fixture({member=true,pro=true,proError=false,handoff=false,sessions=null}={}){
+function fixture({member=true,pro=true,proError=false,handoff=false,sessions=null,sessionHangs=false}={}){
   const calls={sessions:0,entitlements:0,admin:0};
   const events=[];
   const client={
     auth:{
       async getSession(){
       const n=calls.sessions++;
+      if(sessionHangs)return new Promise(()=>{});
       const session=sessions?sessions[Math.min(n,sessions.length-1)]:
         member?{user:{id:'member-one'}}:null;
       return {data:{session},error:null};
@@ -133,4 +134,18 @@ test('recent login handoff ignores early null and retries a genuinely fresh SDK 
   assert.equal(state.isPro,true);
   assert.equal(f.calls.sessions,2);
   assert.equal(f.calls.entitlements,1);
+  assert.equal(f.cards.innerHTML,'','no guest login prompt after return from login');
+});
+
+test('stalled SDK getSession uses INITIAL_SESSION event to verify once',async()=>{
+  const f=fixture({sessionHangs:true});
+  assert.ok(f.events.length>0);
+  const outcome=f.ctx.window.qcHomeEarlyAccess;
+  f.events[0]('INITIAL_SESSION',{user:{id:'member-one'}});
+  const result=await outcome;
+  assert.equal(result.loggedIn,true);
+  assert.equal(result.isPro,true);
+  assert.equal(f.calls.sessions,1);
+  assert.equal(f.calls.entitlements,1);
+  assert.equal(f.meta.textContent,'会员已验证');
 });
