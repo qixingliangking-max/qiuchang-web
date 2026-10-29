@@ -64,6 +64,6 @@ test('shared cached application asset across active user pages',()=>{
       page+' must use the same app.js cache key');
   }
   const login=fs.readFileSync(path.join(root,'login.html'),'utf8');
-  assert.match(login,/<script\b[^>]*src="login-fast\.js\?v=20261028fastlogin1"/);
+  assert.match(login,/<script\b[^>]*src="login-fast\.js\?v=20261029netretry2"/);
   assert.doesNotMatch(login,/<script\b[^>]*src="app\.js/);
 });
