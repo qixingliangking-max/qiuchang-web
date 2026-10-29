@@ -116,6 +116,6 @@ test('all customer-facing links default hidden; shared session reveals them',()=
    assert.ok(links.every(x=>x[0].includes('data-qc-member-nav="league"')&&
      x[0].includes('hidden')&&x[0].includes('display:none')),file);
  }
- assert.ok(app.includes("const leagueLinks=$('[data-qc-member-nav=\"league\"]')"));
+ assert.ok(app.includes("const leagueLinks=[...document.querySelectorAll('[data-qc-member-nav=\"league\"]')]"));
  assert.match(app,/link\.hidden=!loggedIn/);
 });
