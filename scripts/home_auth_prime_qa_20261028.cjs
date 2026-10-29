@@ -18,7 +18,11 @@ function setup({session={user:{id:'member'}},isPro=true,sessionError=false,proEr
     ? {error:new Error('offline')}: {data:{session},error:null});},
   onAuthStateChange(fn){callbacks.push(fn);return {data:{subscription:{unsubscribe(){}}}};}
  },rpc(name){assert.equal(name,'has_active_pro_access');counts.entitlement++;
-   return Promise.resolve(proError?{error:new Error('offline')}:{data:isPro,error:null});}};
+   return Promise.resolve(proError?{error:new Error('offline')}:{data:isPro,error:null});},
+ from(name){assert.equal(name,'jc_overview_prediction_snapshots');
+   return {select(){return this;},eq(){return this;},
+     limit(){return Promise.resolve({data:[{business_date:'2026-10-29',
+       match_count:1,model_count:1,payload:{rows:[]}}],error:null});}};}};
  const cards={dataset:{},innerHTML:'',querySelector(){return null;}};
  const meta={textContent:''};
  const ctx=vm.createContext({
@@ -26,7 +30,7 @@ function setup({session={user:{id:'member'}},isPro=true,sessionError=false,proEr
   document:{getElementById(id){return id==='jcLiveCards'?cards:meta;}},
   location:{pathname:'/index.html',search:''},
   sessionStorage:{getItem(){return null;},removeItem(){}},
-  Date,Promise,setTimeout,clearTimeout,encodeURIComponent,console:{warn(){}}
+  Date,Intl,URLSearchParams,Promise,setTimeout,clearTimeout,encodeURIComponent,console:{warn(){}}
  });
  vm.runInContext(prime,ctx);
  vm.runInContext(fragment,ctx);
@@ -86,8 +90,8 @@ test('main auth has no nested retry or duplicate homepage Pro check',()=>{
 });
 test('lightweight two-step primer loads before app with shared session',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
- const p=html.indexOf('home-auth-prime.js?v=20261029simpleauth1');
- const a=html.indexOf('app.js?v=20261029simpleauth1');
+ const p=html.indexOf('home-auth-prime.js?v=20261029proonesnap1');
+ const a=html.indexOf('app.js?v=20261029proonesnap1');
  assert.ok(p>0&&a>p);
  assert.match(prime,/window\.qcHomeEarlySession=Promise\.resolve\(\)\.then/);
  assert.equal((prime.match(/rpc\('has_active_pro_access'\)/g)||[]).length,1);
