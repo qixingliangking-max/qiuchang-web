@@ -435,28 +435,40 @@ let qcLastAccessState=null;
 // determines access to protected prediction/report rows.
 let qcSharedSessionPromise=null;
 let qcSharedSessionBound=false;
+let qcInitialAuthEventPromise=null;
+let qcInitialAuthEventResolve=null;
 function qcGetSharedSession(){
   if(!window.qcSupabase)
     return Promise.resolve({data:{session:null},error:null});
   if(!qcSharedSessionBound){
     qcSharedSessionBound=true;
+    // Supabase emits INITIAL_SESSION once the SDK restores its storage state.
+    // Accept that authoritative SDK event even if an earlier getSession()
+    // remains queued behind a mobile WebView auth/refresh lock.
+    qcInitialAuthEventPromise=new Promise(resolve=>{
+      qcInitialAuthEventResolve=resolve;
+    });
     window.qcSupabase.auth.onAuthStateChange((event,session)=>{
-      // The callback itself must never await getSession() (SDK auth lock).
+      // Never await an SDK auth call inside the callback (auth-lock safety).
       if(['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED',
           'USER_UPDATED','PASSWORD_RECOVERY'].includes(event)){
-        qcSharedSessionPromise=Promise.resolve({
-          data:{session:session||null},error:null
-        });
+        const current={data:{session:session||null},error:null};
+        qcSharedSessionPromise=Promise.resolve(current);
+        if(qcInitialAuthEventResolve){
+          qcInitialAuthEventResolve(current);
+          qcInitialAuthEventResolve=null;
+        }
       }
     });
   }
   if(!qcSharedSessionPromise){
-    // The homepage primes this same SDK session read before app.js executes.
-    // All widgets share it instead of competing for a second WebView auth lock.
-    qcSharedSessionPromise=(window.qcHomeEarlySession
+    // Exactly one primed SDK read, raced against its auth-state event.
+    // Neither route grants Pro: has_active_pro_access remains mandatory.
+    const sdkRead=(window.qcHomeEarlySession
       ? Promise.resolve(window.qcHomeEarlySession)
       : Promise.resolve().then(()=>window.qcSupabase.auth.getSession()))
       .catch(error=>({data:{session:null},error}));
+    qcSharedSessionPromise=Promise.race([sdkRead,qcInitialAuthEventPromise]);
   }
   return qcSharedSessionPromise;
 }
@@ -2607,7 +2619,7 @@ async function loadJcFrontend(){
         '会员状态暂时无法验证，请检查网络后重试。 '+
         '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button></div>';
       const retry=cards.querySelector('#qcRetryMemberStatus');
-      if(retry) retry.onclick=()=>location.reload();
+      if(retry) retry.onclick=()=>cards.__qcRetryMemberAccess?.();
     }else if(earlyAccess?.isPro){
       if(meta) meta.textContent='会员已验证';
       cards.innerHTML='<div class="profile-card" role="status">'+
@@ -3393,7 +3405,7 @@ async function loadJcFrontend(){
           '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button>'+
           '</div>');
         const retry=cards.querySelector('#qcRetryMemberStatus');
-        if(retry) retry.onclick=()=>location.reload();
+        if(retry) retry.onclick=()=>cards.__qcRetryMemberAccess?.();
       }else if(accessDisplayPhase==='verifying'){
         // Preserve a neutral state while the server has not yet answered.
         qcReconcileOverviewTable(cards,
@@ -3492,12 +3504,24 @@ async function loadJcFrontend(){
 
   // Upgrade public first paint after server auth/Pro verification.
   // Keep the protected card neutral until the authorized FINAL is available.
-  accessPromise.then(async resolved=>{
+  let qcMemberRetryInProgress=false;
+  let qcMemberAutoRetryUsed=false;
+  let qcMemberAutoRetryTimer=null;
+  async function qcApplyMemberAccess(resolved){
     access=resolved||{loggedIn:false,isPro:false,userId:null,verificationPending:true};
     window.qcOverviewKnownGuestFirstPaint=false;
     if(access.verificationPending){
       accessDisplayPhase='unavailable';
       render();
+      // A transient SDK auth lock or slow Pro RPC may recover without a reload.
+      // Retry once only; repeated failures stay fail-closed with a manual retry.
+      if(!qcMemberAutoRetryUsed){
+        qcMemberAutoRetryUsed=true;
+        qcMemberAutoRetryTimer=setTimeout(()=>{
+          qcMemberAutoRetryTimer=null;
+          if(document.hidden!==true) qcRetryMemberInPlace();
+        },1200);
+      }
       return;
     }
     if(access.isPro){
@@ -3566,7 +3590,31 @@ async function loadJcFrontend(){
         }
       }).catch(err=>console.warn('登录后日期索引读取失败',err));
     }
-  }).catch(error=>{
+  }
+
+  async function qcRetryMemberInPlace(){
+    if(qcMemberRetryInProgress) return;
+    if(qcMemberAutoRetryTimer){
+      clearTimeout(qcMemberAutoRetryTimer);
+      qcMemberAutoRetryTimer=null;
+    }
+    qcMemberRetryInProgress=true;
+    accessDisplayPhase='verifying';
+    render();
+    try{
+      // Re-evaluate the session and server entitlement. Do not reuse a failed
+      // qcAccessStatePromise and never reload or bypass the protected table.
+      await qcApplyMemberAccess(await qcGetAccessState(true));
+    }catch(error){
+      console.warn('会员重新验证失败',error);
+      accessDisplayPhase='unavailable';
+      render();
+    }finally{
+      qcMemberRetryInProgress=false;
+    }
+  }
+  cards.__qcRetryMemberAccess=qcRetryMemberInPlace;
+  accessPromise.then(qcApplyMemberAccess).catch(error=>{
     console.warn('后台权限状态读取失败',error);
     accessDisplayPhase='unavailable';
     render();
