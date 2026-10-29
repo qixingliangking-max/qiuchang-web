@@ -7,6 +7,7 @@ on:
       - 'home-auth-prime.js'
       - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
       - 'scripts/home_member_early_table_qa_20261029.cjs'
+      - 'scripts/home_auth_prime_qa_20261028.cjs'
       - '.github/workflows/home-pro-one-snapshot-firstpaint-qa.yml'
   push:
     branches: [main]
@@ -16,6 +17,7 @@ on:
       - 'home-auth-prime.js'
       - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
       - 'scripts/home_member_early_table_qa_20261029.cjs'
+      - 'scripts/home_auth_prime_qa_20261028.cjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -29,3 +31,9 @@ jobs:
         run: node --test scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs
       - name: Verify paid predictions paint before main app, guests stay locked
         run: node --test scripts/home_member_early_table_qa_20261029.cjs
+      - name: Check script syntax
+        run: node --check home-auth-prime.js && node --check app.js
+      - name: Verify session reuse and failure isolation
+        run: node --test scripts/home_auth_prime_qa_20261028.cjs
+      - name: Verify mobile auth and shared-cache regression
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs
