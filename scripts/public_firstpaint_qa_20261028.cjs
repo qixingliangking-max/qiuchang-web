@@ -39,7 +39,9 @@ async function run({final=true}={}){
        rows:[{id:'public-fixture',match_num:'周二001',
          business_date:'2026-10-27',match_time:'19:00',
          league_short_name:'测试联赛',home_team_name:'主队',
-         away_team_name:'客队',raw:{sectionsNo999:'2:1',sectionsNo1:'1:0'}}]};
+         away_team_name:'客队',match_status:'已结束',
+         jc_model_outputs:[{stage:'FINAL'}],
+         raw:{sectionsNo999:'2:1',sectionsNo1:'1:0',matchStatusName:'已结束'}}]};
    return {ok:true,async json(){return body}};
   }
  };
