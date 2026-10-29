@@ -18,7 +18,7 @@ async function execute({staticMode='ready',primary='timed-out',sameDate=true}={}
     :staticMode==='missing'?Promise.resolve({data:[],error:null})
     :new Promise(()=>{});
   const ctx={
-    Promise,console,Error,Array,
+    Promise,console,Error,Array,window:{qcHomeEarlyProValidatedRecord:null},
     initialDate:sameDate?'2026-10-29':'2026-10-28',
     candidateDate:'2026-10-29',today:'2026-10-29',
     candidatePublicSchedulePromise:publicPromise,

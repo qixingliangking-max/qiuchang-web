@@ -6,6 +6,7 @@ on:
       - 'index.html'
       - 'home-auth-prime.js'
       - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
+      - 'scripts/home_member_early_table_qa_20261029.cjs'
       - '.github/workflows/home-pro-one-snapshot-firstpaint-qa.yml'
   push:
     branches: [main]
@@ -14,6 +15,7 @@ on:
       - 'index.html'
       - 'home-auth-prime.js'
       - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
+      - 'scripts/home_member_early_table_qa_20261029.cjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,3 +27,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verify one member lookup, zero guest lookups and immediate authorized return
         run: node --test scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs
+      - name: Verify paid predictions paint before main app, guests stay locked
+        run: node --test scripts/home_member_early_table_qa_20261029.cjs
