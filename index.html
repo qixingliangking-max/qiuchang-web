@@ -153,9 +153,18 @@
     if(!isWaiting())return;
     if(meta) meta.textContent='会员状态尚未确认';
     cards.innerHTML='<div class="profile-card" role="status" aria-live="polite">'+
-      '会员状态尚未确认，请检查网络或重新登录。 '+
-      '<a class="btn btn-outline" href="'+loginUrl+'">前往登录</a></div>';
+      '会员状态尚未确认，请检查网络后重新验证。 '+
+      '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button> '+
+      '<a href="'+loginUrl+'">前往登录</a></div>';
+    var retry=cards.querySelector('#qcRetryMemberStatus');
+    if(retry)retry.onclick=function(){
+      if(typeof cards.__qcRetryMemberAccess==='function')
+        cards.__qcRetryMemberAccess();
+      else location.reload(); // Only a real user click; no automatic loop.
+    };
     window.qcHomeAuthWatchdogTriggered=true;
+    window.qcHomeAuthWatchdogReason=!window.qcSupabase?'sdk_not_ready':
+      !window.qcHomeEarlyAccessPromise?'prime_not_started':'auth_or_main_delayed';
   },3000);
   try {
     var now=Date.now(),hash=location.hash||'';
