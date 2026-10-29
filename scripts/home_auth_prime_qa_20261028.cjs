@@ -12,12 +12,16 @@ const end=app.indexOf('function qcMatchHasStarted(',begin);
 assert.ok(begin>0&&end>begin,'shared authorization implementation exists');
 const fragment=app.slice(begin,end);
 
-function fixture({member=true}={}){
+function fixture({member=true,sessionHangs=false}={}){
   const calls={sessions:0,entitlements:0,admin:0};
   const events=[];
   const client={
     auth:{
-      async getSession(){calls.sessions++;return {data:{session:member?{user:{id:'member-one'}}:null},error:null};},
+      async getSession(){
+        calls.sessions++;
+        if(sessionHangs)return new Promise(()=>{});
+        return {data:{session:member?{user:{id:'member-one'}}:null},error:null};
+      },
       onAuthStateChange(fn){events.push(fn);return {data:{subscription:{unsubscribe(){}}}};}
     },
     async rpc(name){
@@ -79,7 +83,7 @@ test('guest remains unprivileged and never invokes membership or admin RPC',asyn
 
 test('only homepage gets the lightweight prime and it runs before app.js',()=>{
   const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
-  const primeAt=home.indexOf('src="home-auth-prime.js?v=20261029authprime2"');
+  const primeAt=home.indexOf('src="home-auth-prime.js?v=20261029authprime3"');
   const clientAt=home.indexOf('src="supabase-client.js?');
   const appAt=home.indexOf('src="app.js?v=20261029homeslim3"');
   assert.ok(clientAt>0&&primeAt>clientAt&&appAt>primeAt);
@@ -97,4 +101,26 @@ test('verified membership changes the placeholder before waiting on fixture time
   assert.match(app,/cards\.dataset\.qcAuthPaintReady='1'/);
   assert.match(app,/let access=qcLastAccessState\|\|/);
   assert.match(app,/return Boolean\(access\?\.loggedIn && access\?\.isPro\)/);
+});
+
+test('INITIAL_SESSION event recovers stalled iOS/Android SDK session without waiting 2.5 seconds',async()=>{
+ const f=fixture({sessionHangs:true});
+ assert.ok(f.events.length>0,'auth events must be registered before SDK read');
+ const statePromise=f.ctx.window.qcHomeEarlyAccessPromise;
+ f.events[0]('INITIAL_SESSION',{user:{id:'member-one'}});
+ const state=await statePromise;
+ assert.equal(state.loggedIn,true);
+ assert.equal(state.isPro,true);
+ assert.equal(f.calls.sessions,1);
+ assert.equal(f.calls.entitlements,1);
+ assert.match(f.cards.innerHTML,/会员已验证/);
+});
+
+test('SIGNED_OUT never grants membership after an in-flight auth bootstrap',async()=>{
+ const f=fixture({sessionHangs:true});
+ f.events[0]('SIGNED_OUT',null);
+ const state=await f.ctx.window.qcHomeEarlyAccessPromise;
+ assert.equal(state.loggedIn,false);
+ assert.equal(state.isPro,false);
+ assert.equal(f.calls.entitlements,0);
 });
