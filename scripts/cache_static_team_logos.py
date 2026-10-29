@@ -433,6 +433,90 @@ def static_crest_self_test():
     print("PASS: crest gaps can only be filled before kickoff; FT remains sealed")
 
 
+def allow_additive_fixture_intake(old_by_id, incoming_by_id, now, ds):
+    """Allow ONLY new, unstarted official fixture IDs.
+
+    Refuse deleted/replaced IDs, duplicate match numbers and any changes to
+    the sealed existing team's identity. Existing FT/HT, model references and
+    kickoff-time information remain protected from collector overwrites.
+    """
+    old_ids = set(old_by_id)
+    new_ids = set(incoming_by_id)
+    if not old_ids.issubset(new_ids):
+        print("WARNING static fixture identity disappeared; blocked:", ds,
+              sorted(old_ids - new_ids))
+        return False
+    if len(incoming_by_id) != len(new_ids):
+        print("WARNING duplicate incoming fixture IDs; blocked:", ds)
+        return False
+    seen_nums = set()
+    for old in old_by_id.values():
+        number = str(old.get("match_num") or "")
+        if not number or number in seen_nums:
+            print("WARNING duplicate pre-existing fixture numbers:", ds)
+            return False
+        seen_nums.add(number)
+    for match_id in old_ids:
+        old = old_by_id[match_id]
+        fresh = incoming_by_id[match_id]
+        for key in ("match_num", "business_date", "home_team_name",
+                    "away_team_name", "kickoff_at", "match_date", "match_time"):
+            if str(old.get(key) or "") != str(fresh.get(key) or ""):
+                print("WARNING sealed fixture metadata differs; blocked:",
+                      ds, match_id, key)
+                return False
+    additions = new_ids - old_ids
+    for match_id in additions:
+        candidate = incoming_by_id[match_id]
+        number = str(candidate.get("match_num") or "")
+        if not number or number in seen_nums or not prekick_is_open(candidate, now):
+            print("WARNING unsafe newly collected fixture; blocked:", ds, match_id)
+            return False
+        seen_nums.add(number)
+    if additions:
+        print("Safe public fixture additions:", ds, len(additions),
+              ",".join(sorted(str(incoming_by_id[x].get("match_num")) for x in additions)))
+    return True
+
+
+def static_additive_fixture_self_test():
+    from copy import deepcopy
+    now = datetime(2026, 10, 29, 3, tzinfo=timezone.utc)
+    original = {"id": "old1", "match_num": "周四001",
+                "business_date": "2026-10-29",
+                "home_team_name": "主队A", "away_team_name": "客队A",
+                "match_date": "2026-10-29", "match_time": "20:00:00",
+                "kickoff_at": "2026-10-29T12:00:00+00:00",
+                "match_status": "3", "raw": {"matchStatusName": "待开售",
+                "sectionsNo999": "", "sectionsNo1": ""}}
+    later = {**original, "id": "new2", "match_num": "周四002",
+             "home_team_name": "主队B", "away_team_name": "客队B"}
+    assert allow_additive_fixture_intake({"old1": original},
+             {"old1": deepcopy(original), "new2": later},
+             now, "2026-10-29")
+    assert allow_additive_fixture_intake({"old1": original},
+             {"old1": deepcopy(original)}, now, "2026-10-29")
+    assert not allow_additive_fixture_intake({"old1": original},
+             {"new2": later}, now, "2026-10-29")
+    replaced = {**later, "match_num": "周四001"}
+    assert not allow_additive_fixture_intake({"old1": original},
+             {"old1": original, "new2": replaced}, now, "2026-10-29")
+    started = {**later, "raw": {"matchStatusName": "已结束"}}
+    assert not allow_additive_fixture_intake({"old1": original},
+             {"old1": original, "new2": started}, now, "2026-10-29")
+    changed = {**original, "home_team_name": "错误球队"}
+    assert not allow_additive_fixture_intake({"old1": original},
+             {"old1": changed}, now, "2026-10-29")
+    finished = deepcopy(original)
+    finished["raw"] = {"matchStatusName": "已结束",
+                       "sectionsNo999": "2-1", "sectionsNo1": "1-1"}
+    assert allow_additive_fixture_intake({"old1": finished},
+             {"old1": original, "new2": later}, now, "2026-10-29")
+    # Preserve the original locked FT object even when a fresh roster adds IDs.
+    assert finished["raw"]["sectionsNo999"] == "2-1"
+    print("PASS safe additive fixtures: allow prekick only, preserve sealed FT")
+
+
 def publish_live_schedules(by_team):
     """Publish public-only current schedule snapshots so first paint never needs Supabase."""
     LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
@@ -491,10 +575,13 @@ def publish_live_schedules(by_team):
                     len({str(r.get("id")) for r in old_rows}) != len(old_rows)):
                 raise RuntimeError("Existing immutable fixture failed integrity check: " + ds)
             old_by_id = {str(r["id"]): r for r in old_rows}
-            incoming_ids = {str(r.get("id")) for r in base_rows if isinstance(r, dict)}
-            if len(incoming_ids) != count or incoming_ids != set(old_by_id):
-                print("WARNING immutable fixture IDs/count differ; manual review required:", ds)
-                # Do not replace an existing roster or delete published settlements.
+            incoming_by_id = {str(r.get("id")): r for r in base_rows
+                              if isinstance(r, dict) and r.get("id")}
+            if (len(incoming_by_id) != count or
+                    not allow_additive_fixture_intake(
+                        old_by_id, incoming_by_id, now, ds)):
+                print("WARNING public roster differs unsafely; preserved immutable original:", ds)
+                # Do not remove or replace previously published matches or FINALS.
                 old_digest = hashlib.sha256(json.dumps(existing, ensure_ascii=False,
                     separators=(",", ":")).encode("utf-8")).hexdigest()[:16]
                 dates[ds] = {"file": relative, "version": old_digest,
@@ -626,6 +713,7 @@ if __name__ == "__main__":
     if "--self-test" in __import__("sys").argv:
         static_odds_self_test()
         static_crest_self_test()
+        static_additive_fixture_self_test()
     elif "--audit" in __import__("sys").argv:
         audit_published_live_crests()
     else:

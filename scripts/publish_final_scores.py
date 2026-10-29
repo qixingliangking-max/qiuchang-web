@@ -60,6 +60,25 @@ def settlement_updates(current, official):
     return True
 
 
+def official_by_id_for_settlement(fixed_rows, official, reported_count, ds):
+    """Official roster may gain *new* fixtures before publisher expands JSON.
+
+    Settle original IDs only. Never copy or silently drop any additional match.
+    """
+    if not isinstance(official, list) or len(official) != int(reported_count):
+        raise RuntimeError("Official public roster count mismatch: " + ds)
+    by_id = {str(r.get("id")): r for r in official
+             if isinstance(r, dict) and r.get("id")}
+    fixed_ids = {str(r.get("id")) for r in fixed_rows}
+    if len(by_id) != len(official) or not fixed_ids.issubset(by_id):
+        raise RuntimeError("Published fixture identity missing/duplicated: " + ds)
+    extras = set(by_id) - fixed_ids
+    if extras:
+        print("INFO pending additional prekick fixtures: " + ds + " " +
+              str(len(extras)) + "; settling existing IDs only")
+    return by_id
+
+
 def run_one(ds, now):
     # Publish confirmed full/half-time scores from ONE immutable fixture day.
     path = LIVE_DIR / (ds + ".json")
@@ -84,12 +103,8 @@ def run_one(ds, now):
         raise RuntimeError("Public score snapshot not available: " + ds)
     entry = records[0]
     official = (entry.get("payload") or {}).get("rows") or []
-    if (int(entry.get("match_count") or 0) != count or
-            not isinstance(official, list) or len(official) != count):
-        raise RuntimeError("Published fixture count differs from database: " + ds)
-    by_id = {str(r.get("id")): r for r in official if isinstance(r, dict)}
-    if len(by_id) != count or set(by_id) != {str(r["id"]) for r in rows}:
-        raise RuntimeError("IDs differ between fixed fixture and official snapshot: " + ds)
+    by_id = official_by_id_for_settlement(
+        rows, official, entry.get("match_count") or 0, ds)
 
     done = []
     for row in rows:
@@ -149,7 +164,22 @@ def self_test():
     assert old["home_team_name"] == "固定主队" and old["_homeLogoUrl"] == "assets/team-logos/fixture.png"
     assert not settlement_updates(old, {**official, "raw": {**official["raw"], "sectionsNo999": "5-0"}})
     assert not settlement_updates({"id": "fixture-2", "raw": {}}, official)
-    print("PASS: in-play ignored, confirmed FT frozen once, team/crest preserved")
+    with_addition = official_by_id_for_settlement(
+        [old], [official, {**official, "id": "new-fixture-3"}], 2, "2026-10-29")
+    assert set(with_addition) == {"fixture-1", "new-fixture-3"}
+    assert old["raw"]["sectionsNo999"] == "4-0"
+    try:
+        official_by_id_for_settlement([old], [official], 2, "2026-10-29")
+        raise AssertionError("invalid official count must fail")
+    except RuntimeError:
+        pass
+    try:
+        official_by_id_for_settlement([old],
+            [{**official, "id": "unrelated"}], 1, "2026-10-29")
+        raise AssertionError("missing original fixture must fail")
+    except RuntimeError:
+        pass
+    print("PASS: only existing IDs settle, added fixtures compatible, FT locked")
 
 
 if __name__ == "__main__":
