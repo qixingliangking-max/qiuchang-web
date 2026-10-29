@@ -63,9 +63,18 @@ const cases=[
    if(!oddsFeedback.includes('赔率记录读取中'))throw Error('No immediate loading feedback for odds');
    await page.locator('[data-main-tab="ai"]').click();
    const aiPending=await page.locator('#jcMainPanel').innerText();
-   if(!aiPending.includes('正在验证访问权限')||
+   // A bounded 4-second auth deadline intentionally turns an endlessly
+   // pending session into a safe, locked guest panel. Both states are valid;
+   // neither may reveal an actual prediction or the private report.
+   const aiHtml=await page.locator('#jcMainPanel').innerHTML();
+   const neutral=aiPending.includes('正在验证访问权限');
+   const failClosed=aiPending.includes('登录后查看完整赛前分析报告') &&
+     aiHtml.includes('jc-ai-locked');
+   if((!neutral && !failClosed) ||
+      aiHtml.includes('jc-ai-model-summary') ||
       /模型方向|核心方向|TOP3比分|比分参考/.test(aiPending))
-     throw Error('Protected AI displayed without verified session');
+     throw Error('Protected AI failed safe authentication gate: '+
+       aiPending.slice(0,180));
    const first={browser:spec.name,unresolvedAuth:true,factsPanelReady:true,oddsPanelReady:true,
      factsClickedWhileAuthHung:!!factsStarted,oddsPendingWhileAuthHung:true,oddsFeedback:oddsFeedback.slice(0,45),
      aiUnverified:aiPending.slice(0,100),jsErrors};
