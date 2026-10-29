@@ -3604,17 +3604,17 @@ async function loadJcFrontend(){
         // snapshot request has returned; update only on actual data change.
         if(changedTable) render();
         const prevDate=qcAddDays(ds,-1);
-        if(bakedYesterdayReady && ds===today && prevDate===candidatePreviousDate)
-          return;
-        const history=await fetchHistoryReviewDateReady(
-          prevDate,ds===candidateDate?candidatePreviousPromise:null
-        );
-        if(token!==loadToken || selectedDate!==ds) return;
-        if(!history?.error){
-          previousHistoryFinal=Boolean(history.historyFinal);
-          allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
-            ...(history.data||[]).filter(m=>m.match_date)];
-          render();
+        if(!(bakedYesterdayReady && ds===today && prevDate===candidatePreviousDate)){
+          const history=await fetchHistoryReviewDateReady(
+            prevDate,ds===candidateDate?candidatePreviousPromise:null
+          );
+          if(token!==loadToken || selectedDate!==ds) return;
+          if(!history?.error){
+            previousHistoryFinal=Boolean(history.historyFinal);
+            allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
+              ...(history.data||[]).filter(m=>m.match_date)];
+            render();
+          }
         }
       }catch(error){
         console.warn('Pro静态快照后台补齐失败，保留完整公开赛程与待生成占位',error);
