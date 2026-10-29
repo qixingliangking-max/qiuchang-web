@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T01:36:44+08:00",
+  "updated_at": "2026-10-30T02:25:00+08:00",
   "dates": {
     "2026-10-29": {
       "file": "data/overview/live/2026-10-29.json",
-      "version": "f61995793ec730c6",
+      "version": "ft24ht12-20261030-verified",
       "match_count": 7
     },
     "2026-10-30": {
