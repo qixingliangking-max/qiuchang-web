@@ -268,31 +268,47 @@ function jcMatchStatusLabel(m,today){
   return '未开赛';
 }
 
-// A final settlement is authoritative only when the backend marks the match
-// completed AND has written the full-time result. In-play numbers are ignored.
-function qcIsConfirmedFinal(m){
+// A server-confirmed FT is enough to show the public result and count the
+// fixture as finished. Some providers publish official HT minutes/hours later.
+// Never turn a live score into a final: BOTH final status and valid FT required.
+function qcHasConfirmedFullTime(m){
   const status=String(m?.raw?.matchStatusName||'')+' '+String(m?.match_status||'');
   const ft=String(m?.raw?.sectionsNo999||'').trim();
-  const ht=String(m?.raw?.sectionsNo1||'').trim();
-  // Full + half are both required before freezing a settlement; an FT-only
-  // partial row must keep polling and must not create an incomplete hit card.
   return /(?:已结束|完赛|已完成|finished|final)/i.test(status) &&
-    /^\d{1,2}[:\-]\d{1,2}$/.test(ft) && /^\d{1,2}[:\-]\d{1,2}$/.test(ht);
+    /^\d{1,2}[:\-]\d{1,2}$/.test(ft);
 }
 
-// Apply the settlement atomically once per fixture. Never copy other dynamic
-// properties across: fixture, odds, crests, FINAL and pregame report are frozen.
+// Complete settlement, hit aggregation and halftime/fulltime evaluation still
+// require a real official HT result. An FT-only fixture must keep polling.
+function qcIsConfirmedFinal(m){
+  const ht=String(m?.raw?.sectionsNo1||'').trim();
+  return qcHasConfirmedFullTime(m) && /^\d{1,2}[:\-]\d{1,2}$/.test(ht);
+}
+
+// Copy ONLY backend-confirmed FT, HT and final status onto the fixed fixture.
+// Show FT immediately; if HT is absent, update HT on a subsequent refresh.
+// Never rewrite a locked model, pre-kickoff market, crest or archived FINAL.
 function qcApplyOnceFinal(old,fresh){
-  if(!old || !fresh || qcIsConfirmedFinal(old) || !qcIsConfirmedFinal(fresh))
+  if(!old || !fresh || qcIsConfirmedFinal(old) || !qcHasConfirmedFullTime(fresh))
     return old;
+  const ft=String(fresh.raw?.sectionsNo999||'').trim();
+  const ht=String(fresh.raw?.sectionsNo1||'').trim();
+  const officialHt=/^\d{1,2}[:\-]\d{1,2}$/.test(ht) ? ht
+    : String(old.raw?.sectionsNo1||'');
+  const status=fresh.raw?.matchStatusName||'已结束';
+  const nextStatus=fresh.match_status||old.match_status;
+  if(String(old.raw?.sectionsNo999||'').trim()===ft &&
+     String(old.raw?.sectionsNo1||'')===officialHt &&
+     String(old.raw?.matchStatusName||'')===status &&
+     String(old.match_status||'')===String(nextStatus||'')) return old;
   return {
     ...old,
-    match_status:fresh.match_status||old.match_status,
+    match_status:nextStatus,
     raw:{
       ...(old.raw||{}),
-      sectionsNo999:fresh.raw.sectionsNo999,
-      sectionsNo1:fresh.raw.sectionsNo1||old.raw?.sectionsNo1||'',
-      matchStatusName:fresh.raw.matchStatusName||'已结束'
+      sectionsNo999:ft,
+      sectionsNo1:officialHt,
+      matchStatusName:status
     }
   };
 }
@@ -1118,6 +1134,13 @@ function jcFootballHitBlock(m,access){
 
   // All odds and settlements continue using the original locked-market source.
   // Added mobile-only markup is entirely hidden on desktop.
+  // FT-only is visible as "完赛", but missing HT must not be graded as
+  // zero hits or a complete half/full-time settlement.
+  if(score.finished && !qcIsConfirmedFinal(m)){
+    return '<div class="jc-card-after-odds">'+guestLock+
+      '<div class="qc-mobile-report-pending"><span>半场比分待补齐，命中统计核验中</span>'+
+      '<span class="qc-mobile-report-link">玩法分析报告 <span aria-hidden="true">›</span></span></div></div>';
+  }
   if(score.finished){
     const model=jcPublicModel(m);
     const hit=jcFootballHitOddsHtml(m,model,score);
@@ -2341,7 +2364,7 @@ async function loadJcFootball(){
     const leagueRows=activeLeague==='全部'?dateRows:dateRows.filter(m=>leagueKey(m)===activeLeague);
     const filtered=isCompactMobile() && activeStatus!=='all'
       ? leagueRows.filter(m=>activeStatus==='finished'
-        ? qcIsConfirmedFinal(m)
+        ? qcHasConfirmedFullTime(m)
         : jcMatchStatusLabel(m,calendarToday)==='未开赛')
       : leagueRows;
 
@@ -2358,7 +2381,7 @@ async function loadJcFootball(){
     renderLeagueMenu(dateRows);
     renderInlineLeagueTabs(dateRows);
     if(fixtureCount) fixtureCount.textContent=isCompactMobile()
-      ? dateRows.length+'场比赛 · '+dateRows.filter(qcIsConfirmedFinal).length+'场完赛'+
+      ? dateRows.length+'场比赛 · '+dateRows.filter(qcHasConfirmedFullTime).length+'场完赛'+
         ((activeStatus!=='all'||activeLeague!=='全部')?' · 当前'+filtered.length+'场':'')
       : '共'+filtered.length+'场';
     if(prev){
