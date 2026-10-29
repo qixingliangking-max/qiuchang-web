@@ -11,6 +11,8 @@
   let scriptsPromise=null;
   window.qcLeagueGateManaged=true;
   window.qcLeagueVerifiedAccess=()=>authorized;
+  // Invalidate a previous directory read when auth identity changes.
+  window.qcLeagueGateEpoch=()=>epoch;
 
   const loginUrl='login.html?v=20261029authhandoff5&next='+encodeURIComponent('league.html');
   const gate=(title,desc,button,label)=>'<div class="qc-league-gate" role="status">'+
@@ -55,7 +57,7 @@
     if(!scriptsPromise){
       // P3 only defines UI helpers; actual P3 data remains on-demand.
       scriptsPromise=loadScript('league-p3-public.js?v=20261022p3single1')
-        .then(()=>loadScript('league-archive-snapshot-v2.js?v=20261029authlazy1'));
+        .then(()=>loadScript('league-archive-snapshot-v2.js?v=20261029authlazy2'));
     }
     return scriptsPromise;
   }
@@ -75,9 +77,13 @@
       authorized=true;
       root.innerHTML=gate('正在载入联赛目录','会员权限已确认，正在加载联赛数据。');
       await beginLeagueModules();
-      // The archive script handles its own first data paint. If membership
-      // changed while scripts downloaded, never display the protected view.
       if(token!==epoch || !authorized) return;
+      // Explicitly start the archive for this authorization epoch. Reusing a
+      // downloaded script without reinitialization left returning Pro users
+      // stuck on the loading notice after an auth state transition.
+      if(typeof window.qcLeagueArchiveStart!=='function')
+        throw new Error('联赛目录入口未初始化');
+      await window.qcLeagueArchiveStart(token);
     }catch(err){
       if(token!==epoch) return;
       console.warn('联赛档案权限/模块加载失败',err);

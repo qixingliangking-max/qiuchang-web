@@ -70,6 +70,6 @@ test('shared cached application asset across active user pages',()=>{
 
 test('league archive is an intentionally isolated guest-light entrypoint',()=>{
   const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
-  assert.match(html,/league-entry\.js\?v=20261029authlazy1/);
+  assert.match(html,/league-entry\.js\?v=20261029authlazy2/);
   assert.doesNotMatch(html,/src="app\.js\?/);
 });
