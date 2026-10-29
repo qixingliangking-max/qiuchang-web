@@ -12,7 +12,7 @@ async function runPrime({loggedIn=true,isPro=true,date='2026-10-29'}={}){
  const chain={
   select(fields){calls.fields=fields;return this;},
   eq(key,day){assert.equal(key,'business_date');calls.queryDate=day;return this;},
-  limit(n){assert.equal(n,1);calls.predictions++;return Promise.resolve({data:[{business_date:date,match_count:7,model_count:7,payload:{rows:[{id:'a',jc_model_outputs:[{}]}]}}],error:null});}
+  limit(n){assert.equal(n,1);calls.predictions++;return Promise.resolve({data:isPro?[{business_date:date,match_count:7,model_count:7,payload:{rows:[{id:'a',jc_model_outputs:[{}]}]}}]:[],error:null});}
  };
  const sdk={
   auth:{async getSession(){calls.session++;return {data:{session:loggedIn?{user:{id:'u1'}}:null},error:null};}},
@@ -22,7 +22,7 @@ async function runPrime({loggedIn=true,isPro=true,date='2026-10-29'}={}){
  const window={qcSupabase:sdk};
  const context={window,document:{getElementById(id){return id==='jcLiveCards'?cards:id==='jcPredictionMeta'?meta:null;}},location:{search:'?date='+date,pathname:'/index.html'},URLSearchParams,Intl,Date,Promise,setTimeout,clearTimeout,encodeURIComponent,console:{warn(){}}};
  vm.runInNewContext(prime,context);
- const record=await window.qcHomeEarlyProSnapshotPromise;
+ const [record]=await Promise.all([window.qcHomeEarlyProSnapshotPromise,window.qcHomeEarlyAccessPromise]);
  return {record,calls,meta:meta.textContent,html:cards.innerHTML,window};
 }
 test('verified Pro starts one date-specific RLS snapshot before main app',async()=>{
@@ -34,10 +34,10 @@ test('verified Pro starts one date-specific RLS snapshot before main app',async(
  assert.equal(x.meta,'会员已验证');
  assert.doesNotMatch(x.html,/上海|竞彩预测|jc_model_outputs/);
 });
-test('member without Pro never issues protected prediction read',async()=>{
+test('member without Pro gets zero rows from the RLS-protected prediction read',async()=>{
  const x=await runPrime({loggedIn:true,isPro:false});
  assert.equal(x.calls.session,1);assert.equal(x.calls.access,1);
- assert.equal(x.calls.predictions,0);assert.equal(x.record,null);
+ assert.equal(x.calls.predictions,1);assert.equal(x.record,null);
 });
 test('guest never issues Pro verdict or protected snapshot query',async()=>{
  const x=await runPrime({loggedIn:false});
@@ -71,9 +71,49 @@ test('main guest never uses member fast path, preserving server gate',async()=>{
  assert.equal(called,false);assert.equal(result,null);
 });
 test('homepage script cache-busts both changed first-paint files',()=>{
- assert.match(home,/home-auth-prime\.js\?v=20261029proawait3/);
+ assert.match(home,/home-auth-prime\.js\?v=20261029parallelrls4/);
  assert.match(home,/app\.js\?v=20261029proawait3/);
  assert.match(app,/key===window\.qcHomeEarlyProDate/);
  assert.match(app,/const immediatePro=await qcFetchProOverviewDate\(ds\)/);
  assert.doesNotMatch(prime,/localStorage\.setItem|sessionStorage\.setItem/);
+});
+
+test('signed-in requests start in parallel and late RPC success is never discarded',async()=>{
+ let finishRpc,finishSnapshot,authCalls=0,queryCalls=0;
+ const rpcPromise=new Promise(resolve=>{finishRpc=resolve;});
+ const snapshotPromise=new Promise(resolve=>{finishSnapshot=resolve;});
+ const timers=new Map();let nextTimer=0;
+ const cards={dataset:{},innerHTML:'正在确认登录状态…',querySelector(){return null;}};
+ const meta={textContent:''};
+ const window={qcSupabase:{
+  auth:{getSession(){authCalls++;return Promise.resolve({data:{session:{user:{id:'u1'}}},error:null});}},
+  rpc(){return rpcPromise;},
+  from(name){assert.equal(name,'jc_overview_prediction_snapshots');return {
+    select(){return this;},eq(){return this;},
+    limit(){queryCalls++;return snapshotPromise;}
+  };}
+ }};
+ vm.runInNewContext(prime,{window,document:{getElementById(id){
+  return id==='jcLiveCards'?cards:id==='jcPredictionMeta'?meta:null;
+ }},location:{search:'?date=2026-10-29',pathname:'/index.html'},
+ URLSearchParams,Intl,Date,Promise,encodeURIComponent,
+ setTimeout(fn){const id=++nextTimer;timers.set(id,fn);return id;},
+ clearTimeout(id){timers.delete(id);},
+ console:{warn(){}}});
+ for(let i=0;i<5;i++) await Promise.resolve();
+ assert.equal(authCalls,1);
+ assert.equal(queryCalls,1,'RLS query starts before the entitlement RPC resolves');
+ assert.equal(typeof finishRpc,'function');
+ assert.equal(typeof finishSnapshot,'function');
+ for(const [,callback] of [...timers]) callback(); // simulate 4-second UI notice
+ assert.match(cards.innerHTML,/仍在继续加载/);
+ finishSnapshot({data:[],error:null}); // RLS response may be empty
+ finishRpc({data:true,error:null});
+ const [record,access]=await Promise.all([
+  window.qcHomeEarlyProSnapshotPromise,window.qcHomeEarlyAccessPromise
+ ]);
+ assert.equal(record,null);assert.equal(access.isPro,true);
+ for(let i=0;i<5;i++) await Promise.resolve();
+ assert.match(cards.innerHTML,/会员已验证/,'late success restores authenticated state');
+ assert.doesNotMatch(cards.innerHTML,/重新验证/);
 });
