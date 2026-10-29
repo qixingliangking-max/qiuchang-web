@@ -437,9 +437,21 @@ let qcSharedSessionPromise=null;
 let qcSharedSessionBound=false;
 let qcInitialAuthEventPromise=null;
 let qcInitialAuthEventResolve=null;
-function qcGetSharedSession(){
+function qcGetSharedSession(forceFresh=false){
   if(!window.qcSupabase)
     return Promise.resolve({data:{session:null},error:null});
+  // After login.html returns to the site, the INITIAL_SESSION race may have
+  // resolved to an empty value before restored storage becomes available.
+  // A retry must make a NEW SDK read, never await the same settled guest result.
+  if(forceFresh){
+    const refreshed=Promise.resolve()
+      .then(()=>window.qcSupabase.auth.getSession())
+      .catch(error=>({data:{session:null},error}));
+    return refreshed.then(result=>{
+      if(result?.data?.session) qcSharedSessionPromise=Promise.resolve(result);
+      return result;
+    });
+  }
   if(!qcSharedSessionBound){
     qcSharedSessionBound=true;
     // Supabase emits INITIAL_SESSION once the SDK restores its storage state.
@@ -500,9 +512,11 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
         const handoffAt=Number(sessionStorage.getItem('qc-auth-handoff')||0);
         recentAuthHandoff=Boolean(handoffAt && Date.now()-handoffAt<12000);
       }catch(_){}
-      const sessionAttempts=recentAuthHandoff?4:1;
+      // Handoff allows one short fresh SDK read if the initial event was
+      // empty; repeatedly consuming the same null promise cannot recover.
+      const sessionAttempts=recentAuthHandoff?2:1;
       for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
-        const state=await qcAuthDeadline(qcGetSharedSession(),4000);
+        const state=await qcAuthDeadline(qcGetSharedSession(attempt>0),4000);
         if(state.timeout){
           console.warn('登录状态读取超时，会员内容保持关闭');
           qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
@@ -526,7 +540,11 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
       }
 
       if(!session){
-        qcLastAccessState={loggedIn:false,isPro:false};
+        // A recent successful login must not silently become a signed-out
+        // page when iOS/Android has not restored the SDK storage in time.
+        qcLastAccessState=recentAuthHandoff
+          ? {loggedIn:false,isPro:false,verificationPending:true}
+          : {loggedIn:false,isPro:false};
         return qcLastAccessState;
       }
 
@@ -617,7 +635,7 @@ function qcPremiumGateHtml(access,kind='prediction',scope='today'){
 
   const primaryHref=loggedIn
     ? (isAi?'profile.html':'profile.html')
-    : 'login.html?v=20261024authstable4&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20261029authhandoff5&next='+encodeURIComponent(location.pathname+location.search);
   const primaryText=loggedIn
     ? (isAi?'订阅查看完整报告':'进入个人中心')
     : '立即登录';
@@ -1834,7 +1852,7 @@ function qcBindFootballGuestLoginCta(){
     e.stopPropagation();
     const from=location.pathname.slice(1)||'index.html';
     const returnTo=from+location.search;
-    location.assign('login.html?v=20261024authstable4&next='+encodeURIComponent(returnTo));
+    location.assign('login.html?v=20261029authhandoff5&next='+encodeURIComponent(returnTo));
   });
 
   document.addEventListener('keydown',e=>{
@@ -1845,7 +1863,7 @@ function qcBindFootballGuestLoginCta(){
     e.stopPropagation();
     const from=location.pathname.slice(1)||'index.html';
     const returnTo=from+location.search;
-    location.assign('login.html?v=20261024authstable4&next='+encodeURIComponent(returnTo));
+    location.assign('login.html?v=20261029authhandoff5&next='+encodeURIComponent(returnTo));
   });
 }
 
@@ -4135,7 +4153,7 @@ function jcRenderAiLockedPanel(m,pools,access){
   const loggedIn=Boolean(access?.loggedIn);
   const actionHref=loggedIn
     ? 'profile.html'
-    : 'login.html?v=20261024authstable4&next='+encodeURIComponent(location.pathname+location.search);
+    : 'login.html?v=20261029authhandoff5&next='+encodeURIComponent(location.pathname+location.search);
   const actionText=loggedIn?'🔒 订阅查看完整报告':'🔒 登录查看完整报告';
   const lockTitle=loggedIn?'订阅后查看完整赛前分析报告':'登录后查看完整赛前分析报告';
   const lockDesc=loggedIn
@@ -5576,7 +5594,7 @@ async function setupDemoAuth(){
       }
 
       await window.qcSupabase.auth.signOut();
-      location.replace('login.html?v=20261024authstable4&reset=success');
+      location.replace('login.html?v=20261029authhandoff5&reset=success');
     };
   }
 
@@ -6003,7 +6021,7 @@ async function setupProfile(){
   const user=sessionData?.session?.user||null;
 
   if(sessionError || !user){
-    location.href = 'login.html?v=20261024authstable4';
+    location.href = 'login.html?v=20261029authhandoff5';
     return;
   }
 
@@ -6251,7 +6269,7 @@ async function setupProfile(){
     logoutBtn.onclick = async e => {
       e.preventDefault();
       await window.qcSupabase.auth.signOut();
-      location.href = 'login.html?v=20261024authstable4';
+      location.href = 'login.html?v=20261029authhandoff5';
     };
   }
 }
