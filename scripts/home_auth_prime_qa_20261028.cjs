@@ -90,7 +90,7 @@ test('only homepage gets the lightweight prime and it runs before app.js',()=>{
   const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
   const primeAt=home.indexOf('src="home-auth-prime.js?v=20261029earlymember1"');
   const clientAt=home.indexOf('src="supabase-client.js?');
-  const appAt=home.indexOf('src="app.js?v=20261029crossauth5&amp;home=20261029memberfast1"');
+  const appAt=home.indexOf('src="app.js?v=20261029memberfast1"');
   assert.ok(clientAt>0&&primeAt>clientAt&&appAt>primeAt);
   const detail=fs.readFileSync(path.join(root,'jc-match.html'),'utf8');
   assert.doesNotMatch(detail,/home-auth-prime\.js/);
