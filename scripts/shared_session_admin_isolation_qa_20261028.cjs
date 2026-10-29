@@ -89,7 +89,7 @@ test('legacy admin functions and RPCs absent from public bundle',()=>{
   assert.doesNotMatch(source,/function qcAdminSession\(/);
   assert.doesNotMatch(source,/async function setupAdmin(?:Users|Codes|Data|Logs)?\(/);
   assert.doesNotMatch(source,/admin_dashboard_stats|admin_system_activity|admin_user_overview/);
-  const pages=['index.html','football.html','league.html','jc-match.html','profile.html',
+  const pages=['index.html','football.html','jc-match.html','profile.html',
     'register.html','forgot-password.html','reset-password.html','verify.html','match.html',
     'model-record-test.html','league-archive-preview.html'];
   for(const page of pages){
@@ -105,4 +105,10 @@ test('dedicated admin pages keep standalone entry scripts',()=>{
     assert.match(text,new RegExp('src="'+js.replace('.','\\.')+'\\?'));
     assert.doesNotMatch(text,/src="app\.js/);
   }
+});
+
+test('league archive is an intentionally isolated guest-light entrypoint',()=>{
+  const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
+  assert.match(html,/league-entry\.js\?v=20261029authlazy1/);
+  assert.doesNotMatch(html,/src="app\.js\?/);
 });
