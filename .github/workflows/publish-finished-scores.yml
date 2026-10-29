@@ -15,6 +15,8 @@ on:
   push:
     paths:
       - 'scripts/publish_final_scores.py'
+      - 'scripts/prerender_public_football.cjs'
+      - 'scripts/football_prerender_qa_20261029.cjs'
       - '.github/workflows/publish-finished-scores.yml'
 
 permissions:
@@ -44,12 +46,17 @@ jobs:
       - name: Copy newly confirmed FT into static fixture without changing other fields
         run: python3 scripts/publish_final_scores.py
 
+      - name: Re-render public football HTML after confirmed FT scores
+        run: |
+          node scripts/prerender_public_football.cjs
+          node --test scripts/football_prerender_qa_20261029.cjs
+
       - name: Publish versioned final snapshot only if any match newly finished
         id: publish
         shell: bash
         run: |
           set -euo pipefail
-          git add data/overview/live/ data/overview/live-schedule-manifest.json
+          git add data/overview/live/ data/overview/live-schedule-manifest.json football.html
           if git diff --cached --quiet; then
             echo 'has_new_finals=false' >> "$GITHUB_OUTPUT"
             echo 'No new official finals. No file change or deployment.'

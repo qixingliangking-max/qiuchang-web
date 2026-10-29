@@ -1,0 +1,28 @@
+name: Football no-JavaScript first paint validation
+on:
+  pull_request:
+    paths:
+      - 'football.html'
+      - 'app.js'
+      - 'scripts/prerender_public_football.cjs'
+      - 'scripts/football_prerender_qa_20261029.cjs'
+      - '.github/workflows/football-public-firstpaint-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'football.html'
+      - 'scripts/prerender_public_football.cjs'
+      - 'scripts/football_prerender_qa_20261029.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-js-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render immutable public cards from verified schedule
+        run: node scripts/prerender_public_football.cjs
+      - name: Ensure full public fixture cards visible without client JS or Supabase
+        run: node --test scripts/football_prerender_qa_20261029.cjs
