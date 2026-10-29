@@ -511,6 +511,7 @@ async function qcGetAccessState(force=false,_unusedBundle=null){
       qcLastAccessState=await window.qcHomeEarlyAccessPromise;
       return qcLastAccessState;
     }
+    let knownUserId=null;
     try{
       const checked=await qcAuthDeadline((async()=>{
         const {data:sessionData,error:sessionError}=
@@ -518,18 +519,20 @@ async function qcGetAccessState(force=false,_unusedBundle=null){
         if(sessionError) throw sessionError;
         const session=sessionData?.session||null;
         if(!session) return {loggedIn:false,isPro:false};
+        knownUserId=session.user?.id||null;
         const {data:isPro,error:proError}=
           await window.qcSupabase.rpc('has_active_pro_access');
         if(proError) throw proError;
         return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
       })(),4000);
       qcLastAccessState=checked.timeout
-        ? {loggedIn:false,isPro:false,verificationPending:true}
+        ? {loggedIn:Boolean(knownUserId),isPro:false,userId:knownUserId,verificationPending:true}
         : checked.value;
       return qcLastAccessState;
     }catch(error){
       console.warn('读取会员权限失败',error);
-      qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
+      qcLastAccessState={loggedIn:Boolean(knownUserId),isPro:false,
+        userId:knownUserId,verificationPending:true};
       return qcLastAccessState;
     }
   })();
