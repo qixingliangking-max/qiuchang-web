@@ -56,6 +56,15 @@
   // deferred scripts complete. Never display Pro fixtures from this script.
   window.qcHomeEarlyAccess.then(state=>{
     if(signedOut || cards.dataset.qcAuthPaintReady==='1') return;
+    // An immediate return from login.html may briefly report a null SDK
+    // session before storage settles. Never flash a guest login card while
+    // the main app is doing its bounded fresh-session handoff.
+    if(!state.loggedIn){
+      try{
+        const stamp=Number(sessionStorage.getItem('qc-auth-handoff')||0);
+        if(stamp && Date.now()-stamp>=0 && Date.now()-stamp<12000) return;
+      }catch(_){}
+    }
     const current=String(cards.textContent||'');
     if(!current.includes('正在确认登录状态')) return;
     const meta=document.getElementById('jcPredictionMeta');
