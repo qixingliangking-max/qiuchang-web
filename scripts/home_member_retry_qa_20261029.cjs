@@ -86,7 +86,7 @@ test('guests never receive Pro and never call an entitlement RPC',async()=>{
 
 test('the homepage manual retry is in-place, rate-limited, and does not reload',()=>{
   assert.match(code,/async function qcRetryMemberInPlace\(\)/);
-  assert.match(code,/await qcApplyMemberAccess\(await qcGetAccessState\(true\)\)/);
+  assert.match(code,/await qcApplyMemberAccess\(await qcGetAccessState\(true\),epoch\)/);
   assert.match(code,/if\(!qcMemberAutoRetryUsed\)/);
   assert.match(code,/qcMemberRetryInProgress/);
   assert.match(code,/cards\.__qcRetryMemberAccess=qcRetryMemberInPlace/);
