@@ -77,7 +77,7 @@ test('all public pages load one synchronized app and all guest entries use curre
  'model-record-test.html','league-archive-preview.html'];
  pages.forEach(page=>{
   const html=fs.readFileSync(path.join(root,page),'utf8');
-  assert.equal((html.match(/app\.js\?v=20261029crossauth5/g)||[]).length,1,page);
+  assert.equal((html.match(/app\.js\?v=20261029homeslim3/g)||[]).length,1,page);
   assert.doesNotMatch(html,/login\.html\?v=20261024authstable4/,page);
  });
  assert.match(app,/login\.html\?v=20261029authhandoff5/);
