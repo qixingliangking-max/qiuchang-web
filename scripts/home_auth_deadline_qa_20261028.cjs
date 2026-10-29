@@ -83,7 +83,7 @@ test('homepage authorization no longer awaits the potentially slow day bootstrap
  assert.doesNotMatch(app,/const accessPromise=qcGetAccessState\(false,requestCandidateCurrentBundle\)/);
 });
 test('slow access ends with actionable retry and never exposes protected models',()=>{
- assert.match(app,/accessDisplayPhase='unavailable';\s*render\(\);\s*return;/);
+ assert.match(app,/if\(access\.verificationPending\)\{\s*accessDisplayPhase='unavailable';\s*render\(\);/);
  assert.match(app,/id="qcRetryMemberStatus"/);
  assert.match(app,/if\(retry\) retry\.onclick=\(\)=>cards\.__qcRetryMemberAccess\?\.\(\)/);
  assert.match(app,/await qcApplyMemberAccess\(await qcGetAccessState\(true\)\)/);
