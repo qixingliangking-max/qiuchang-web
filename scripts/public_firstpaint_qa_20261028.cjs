@@ -8,7 +8,7 @@ const root=path.resolve(__dirname,'..');
 
 test('homepage loads public-only rescue synchronously, ahead of deferred auth',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
- const start=html.indexOf('<script src="overview-public-rescue.js?v=20261028earlypaint1"></script>');
+ const start=html.indexOf('<script src="overview-public-rescue.js?v=20261029finalguard1"></script>');
  const sdk=html.indexOf('src="assets/vendor/supabase-js-2.117.3.js"');
  assert.ok(start>0&&sdk>start);
  assert.doesNotMatch(html,/<script defer src="overview-public-rescue/);
