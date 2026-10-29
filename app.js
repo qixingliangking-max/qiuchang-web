@@ -512,6 +512,25 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
         const handoffAt=Number(sessionStorage.getItem('qc-auth-handoff')||0);
         recentAuthHandoff=Boolean(handoffAt && Date.now()-handoffAt<12000);
       }catch(_){}
+      // Homepage already started an SDK session read and a server-side Pro
+      // check before this large bundle executed. Reuse that EXACT verdict;
+      // normal opens must not issue a second entitlement RPC. A login handoff
+      // that briefly looked anonymous still follows the fresh SDK retry below.
+      if(!force && window.qcHomeEarlyAccessPromise){
+        const early=await qcAuthDeadline(window.qcHomeEarlyAccessPromise,5200);
+        if(!early.timeout && early.value &&
+           (!recentAuthHandoff || early.value.loggedIn===true)){
+          qcLastAccessState=early.value;
+          if(qcLastAccessState.loggedIn){
+            try{sessionStorage.removeItem('qc-auth-handoff');}catch(_){}
+          }
+          return qcLastAccessState;
+        }
+        if(early.timeout && !recentAuthHandoff){
+          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
+          return qcLastAccessState;
+        }
+      }
       // Handoff allows one short fresh SDK read if the initial event was
       // empty; repeatedly consuming the same null promise cannot recover.
       const sessionAttempts=recentAuthHandoff?2:1;
@@ -2807,7 +2826,18 @@ async function loadJcFrontend(){
   // model/report access; only the existing Pro server verdict can do that.
   let initialCurrent;
   try{
-    initialCurrent=await qcAuthDeadline(fetchOverviewDateReady(initialDate),5500);
+    // First frame uses the small PUBLIC static schedule (no membership RPC).
+    // Pro predictions upgrade this same table in qcApplyMemberAccess only after
+    // the server approves access. A missing public file retains the full
+    // existing date/Pro fallback; this is never a shortcut to private rows.
+    const fastPublic=initialDate===candidateDate && candidatePublicSchedulePromise
+      ? await qcAuthDeadline(candidatePublicSchedulePromise,1600) : null;
+    if(fastPublic && !fastPublic.timeout && !fastPublic.value?.error &&
+       Array.isArray(fastPublic.value?.data) && fastPublic.value.data.length){
+      initialCurrent=fastPublic;
+    }else{
+      initialCurrent=await qcAuthDeadline(fetchOverviewDateReady(initialDate),5500);
+    }
   }catch(error){
     initialCurrent={timeout:false,value:{data:[],error}};
   }
