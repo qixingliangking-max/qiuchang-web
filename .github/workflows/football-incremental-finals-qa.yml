@@ -5,6 +5,7 @@ on:
       - 'app.js'
       - 'football.html'
       - 'scripts/football_incremental_final_rollover_qa_20261030.cjs'
+      - 'scripts/home_static_review_slim_qa_20261029.cjs'
       - '.github/workflows/football-incremental-finals-qa.yml'
   push:
     branches: [main]
@@ -24,6 +25,8 @@ jobs:
         run: node --check app.js && node --check scripts/football_incremental_final_rollover_qa_20261030.cjs
       - name: Verify 10am rollover and staged seven-match FT/HT settlement
         run: node --test scripts/football_incremental_final_rollover_qa_20261030.cjs
+      - name: Validate dynamic yesterday home review without obsolete fixed date
+        run: node --test scripts/home_static_review_slim_qa_20261029.cjs
       - name: Verify the independent once-per-fixture static publisher
         run: python3 scripts/publish_final_scores.py --self-test
       - name: Verify existing mobile login and page-version invariants

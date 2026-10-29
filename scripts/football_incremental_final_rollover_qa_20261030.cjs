@@ -20,6 +20,11 @@ const settlement={};
 vm.createContext(settlement);
 vm.runInContext(app.slice(scoreA,scoreB),settlement);
 const {qcIsConfirmedFinal, qcApplyOnceFinal}=settlement;
+const syntheticPending=(r)=>({
+ ...JSON.parse(JSON.stringify(r)),match_status:'2',
+ raw:{...(r.raw||{}),sectionsNo999:'',sectionsNo1:'',matchStatusName:'已开售'}
+});
+
 
 test('10:00 rollover continues polling 10/29 while 10/30 is active',()=>{
  assert.equal(calendar.qcFootballDateNeedsFinalRefresh('2026-10-30'),true);
@@ -35,10 +40,12 @@ test('historical date navigation and cold historical first paint recheck pending
 });
 test('one confirmed FT+HT changes precisely one of seven cards while keeping earlier settled rows immutable',()=>{
  assert.equal(fixture.business_date,'2026-10-29');assert.equal(fixture.match_count,7);
- let rows=fixture.rows.map(r=>JSON.parse(JSON.stringify(r)));
+ // Preserve two known settled rows but simulate remaining pending fixtures, even
+ // after the real static JSON gains a third, fourth or seventh actual result.
+ let rows=fixture.rows.map((r,i)=>i<2?JSON.parse(JSON.stringify(r)):syntheticPending(r));
  assert.equal(rows.filter(qcIsConfirmedFinal).length,2);
  const originals=rows.map(r=>JSON.stringify(r));
- const target=rows[2]; // 003 future simulated final, NOT actual score
+ const target=rows[2]; // synthetic pending 003, NOT actual match score
  const fresh={id:target.id,match_status:'已结束',raw:{
    sectionsNo999:'3:1',sectionsNo1:'1:0',matchStatusName:'已结束'
  }};
@@ -58,13 +65,18 @@ test('one confirmed FT+HT changes precisely one of seven cards while keeping ear
 test('FT-only and non-final in-play updates cannot publish a settled card',()=>{
  const fresh={id:fixture.rows[2].id,match_status:'已结束',raw:{
    sectionsNo999:'3:1',sectionsNo1:'',matchStatusName:'已结束'}};
- assert.strictEqual(qcApplyOnceFinal(fixture.rows[2],fresh),fixture.rows[2]);
+ const pending=syntheticPending(fixture.rows[2]);
+ assert.strictEqual(qcApplyOnceFinal(pending,fresh),pending);
  const inPlay={...fresh,raw:{...fresh.raw,sectionsNo1:'1:0',matchStatusName:'进行中'},match_status:'比赛中'};
- assert.strictEqual(qcApplyOnceFinal(fixture.rows[2],inPlay),fixture.rows[2]);
+ assert.strictEqual(qcApplyOnceFinal(pending,inPlay),pending);
 });
 test('all seven static IDs are unique, pre-match markets and models remain unchanged',()=>{
  assert.equal(new Set(fixture.rows.map(r=>r.id)).size,7);
- assert.equal(fixture.rows.filter(qcIsConfirmedFinal).length,2);
+ assert.ok(fixture.rows.filter(qcIsConfirmedFinal).length>=2);
+ assert.equal(fixture.rows[0].raw.sectionsNo999,'0:1');
+ assert.equal(fixture.rows[0].raw.sectionsNo1,'0:1');
+ assert.equal(fixture.rows[1].raw.sectionsNo999,'2:4');
+ assert.equal(fixture.rows[1].raw.sectionsNo1,'1:2');
  for(const row of fixture.rows){
   assert.equal(row.business_date,'2026-10-29');
   assert.equal(Object.hasOwn(row,'jc_model_outputs'),false);

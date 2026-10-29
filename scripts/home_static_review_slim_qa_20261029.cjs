@@ -80,7 +80,15 @@ test('homepage removes only three redundant script tags, retains safe real data 
   'overview-public-rescue.js']){
   assert.ok(scripts.some(src=>src.includes(required)),required);
  }
- assert.match(html,/data-qc-final-date="2026-10-28" data-qc-final-count="17"/);
+  // A newly published review can be incomplete or a new completed day.
+  // Do not require the old 2026-10-28 17-match stamp forever.
+  assert.match(html,/id="jcYesterdayCards"/);
+  if(html.includes('data-qc-final-date="')){
+    assert.match(html,/data-qc-final-date="\\d{4}-\\d{2}-\\d{2}"/);
+    assert.match(html,/data-qc-final-count="\\d+"/);
+  }else{
+    assert.match(html,/昨日完整赛果尚在核验|昨日赛果/);
+  }
  assert.match(html,/app\.js\?v=20261030latefinal1/);
  assert.doesNotMatch(html,/src="[^"]*admin-home\.js/);
 });
