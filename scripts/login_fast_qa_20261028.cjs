@@ -67,7 +67,7 @@ async function submit(h){
 }
 test('login page downloads only small login controller, not full app bundle',()=>{
  const html=fs.readFileSync(path.join(root,'login.html'),'utf8');
- assert.match(html,/src="login-fast\.js\?v=20261028fastlogin1"/);
+ assert.match(html,/src="login-fast\.js\?v=20261029netretry2"/);
  assert.doesNotMatch(html,/<script\b[^>]*src="app\.js/);
  assert.ok(Buffer.byteLength(source)<10000,'fast login target 10KB');
 });
