@@ -90,6 +90,8 @@ test('the homepage manual retry is in-place, rate-limited, and does not reload',
   assert.match(code,/if\(!qcMemberAutoRetryUsed\)/);
   assert.match(code,/qcMemberRetryInProgress/);
   assert.match(code,/cards\.__qcRetryMemberAccess=qcRetryMemberInPlace/);
+  assert.match(code,/const recoveredPending=Boolean\(session && previousAccess\?\.verificationPending\)/);
+  assert.match(code,/overview\.__qcRetryMemberAccess\(\)/);
   assert.doesNotMatch(code,/if\(retry\) retry\.onclick=\(\)=>location\.reload\(\)/);
   assert.match(code,/return Boolean\(access\?\.loggedIn && access\?\.isPro\)/);
 });
