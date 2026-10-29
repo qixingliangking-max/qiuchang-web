@@ -9,7 +9,8 @@ const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
 
 function boot({session=null,isPro=false,lateSession=false,latePro=false}={}){
   let resolveSession,resolvePro,authCb;
-  const requested=[],counters={session:0,rpc:0};
+  const requested=[],counters={session:0,rpc:0,archive:0};
+  let testWindow;
   const timerFns=[];
   const elements={};
   for(const id of ['leagueRecordRoot','menuBtn','drawerBackdrop',
@@ -23,6 +24,12 @@ function boot({session=null,isPro=false,lateSession=false,latePro=false}={}){
     querySelectorAll(sel){return sel==='[data-qc-member-nav="league"]'?leagueLinks:[];},
     body:{appendChild(el){
       requested.push(el.src);
+      if(el.src.startsWith('league-archive-snapshot-v2.js')){
+        testWindow.qcLeagueArchiveStart=async token=>{
+          assert.equal(token,testWindow.qcLeagueGateEpoch());
+          counters.archive++;
+        };
+      }
       Promise.resolve().then(()=>el.onload());
     }},
     createElement(){return {src:'',onload:null,onerror:null};}
@@ -46,12 +53,14 @@ function boot({session=null,isPro=false,lateSession=false,latePro=false}={}){
     Promise,URLSearchParams,encodeURIComponent,
     setTimeout(fn){timerFns.push(fn);return timerFns.length;},
     clearTimeout(){},console:{warn(){}}};
+  testWindow=ctx.window;
   vm.runInNewContext(entry,ctx,{timeout:2000});
   return {ctx,root:elements['#leagueRecordRoot'],links:leagueLinks,
     requested,counters,timerFns,
     releaseSession:val=>resolveSession?.({data:{session:val},error:null}),
     releasePro:val=>resolvePro?.({data:val,error:null}),
     signOut:()=>authCb('SIGNED_OUT',null),
+    signIn:nextSession=>authCb('SIGNED_IN',nextSession),
     async settle(){for(let i=0;i<18;i++) await Promise.resolve();}
   };
 }
@@ -73,6 +82,7 @@ test('server-verified Pro alone loads P3 helpers and archive in sequence',async(
  const h=boot({session:{user:{id:'pro'}},isPro:true});await h.settle();
  assert.equal(h.counters.rpc,1);
  assert.equal(h.requested.length,2);
+ assert.equal(h.counters.archive,1);
  assert.match(h.requested[0],/^league-p3-public\.js/);
  assert.match(h.requested[1],/^league-archive-snapshot-v2\.js/);
  assert.equal(h.ctx.window.qcLeagueVerifiedAccess(),true);
@@ -103,6 +113,8 @@ test('league HTML only includes lightweight auth dependencies',()=>{
  }
  assert.match(html,/正在确认登录状态/);
  assert.match(archive,/document\.readyState==='loading'/);
+ assert.match(archive,/window\.qcLeagueArchiveStart=setup/);
+ assert.match(archive,/qcLeagueGateEpoch/);
  assert.match(archive,/qcLeagueVerifiedAccess/);
  assert.match(archive,/if\(managed && !window\.qcLeagueVerifiedAccess/);
 });
@@ -118,4 +130,19 @@ test('all customer-facing links default hidden; shared session reveals them',()=
  }
  assert.ok(app.includes("const leagueLinks=[...document.querySelectorAll('[data-qc-member-nav=\"league\"]')]"));
  assert.match(app,/link\.hidden=!loggedIn/);
+});
+
+test('returning Pro within same tab re-initializes archive without duplicate script downloads',async()=>{
+ const h=boot({session:{user:{id:'pro'}},isPro:true});
+ await h.settle();
+ assert.equal(h.counters.archive,1);
+ assert.equal(h.requested.length,2);
+ h.signOut();
+ await h.settle();
+ assert.match(h.root.innerHTML,/请先登录/);
+ h.signIn({user:{id:'pro'}});
+ await h.settle();
+ assert.equal(h.counters.archive,2,'directory is reinitialized for renewed session');
+ assert.equal(h.requested.length,2,'modules reused, not fetched again');
+ assert.ok(h.ctx.window.qcLeagueVerifiedAccess());
 });
