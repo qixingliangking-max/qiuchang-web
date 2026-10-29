@@ -52,7 +52,7 @@ test('partial embedded HTML never masquerades as complete archive',async()=>{
  assert.equal(result.baked,false);
 });
 
-test('selected historical date does not mistakenly reuse today's baked review',async()=>{
+test('selected historical date does not reuse the baked review',async()=>{
  const result=await simulate({requested:'2026-10-28'});
  assert.equal(result.archiveRequests,1);
  assert.equal(result.baked,false);
