@@ -5954,53 +5954,61 @@ async function setupAuthTickerVisibility(){
 
 async function setupDesktopAccountNav(){
   if(!window.qcSupabase) return;
-
-  const login=$('#desktopLogin');
-  const redeem=$('#desktopRedeem');
-  const account=$('#desktopAccount');
-  const logout=$('#desktopLogout');
+  const login=$('#desktopLogin'),redeem=$('#desktopRedeem');
+  const account=$('#desktopAccount'),logout=$('#desktopLogout');
   const divider=$('#desktopAccountDivider');
   if(!login && !redeem && !account && !logout) return;
 
-  const setLoggedOut=()=>{
-    if(login){ login.hidden=false; login.style.display='inline-flex'; }
-    if(redeem){ redeem.hidden=true; redeem.style.display='none'; }
-    if(account){ account.hidden=true; account.style.display='none'; }
-    if(logout){ logout.hidden=true; logout.style.display='none'; }
-    if(divider){ divider.hidden=false; divider.style.display='block'; }
+  // The desktop navigation exists in the DOM on mobile as well. Its
+  // nickname query used to run on every mobile visit despite being hidden.
+  let generation=0,lastUserId=null;
+  const setVisible=(el,show,style='inline-flex')=>{
+    if(!el) return;
+    el.hidden=!show;
+    el.style.display=show?style:'none';
   };
-
-  const {data,error}=await qcGetSharedSession();
-  const session=!error && data ? data.session : null;
-  if(!session){
-    setLoggedOut();
-    return;
-  }
-
-  if(login){ login.hidden=true; login.style.display='none'; }
-  if(redeem){ redeem.hidden=false; redeem.style.display='inline-flex'; }
-  if(account){ account.hidden=false; account.style.display='inline-flex'; }
-  if(logout){ logout.hidden=false; logout.style.display='inline-flex'; }
-  if(divider){ divider.hidden=false; divider.style.display='block'; }
-
-  const email=session.user?.email||'';
-  let name=email ? email.split('@')[0] : '个人中心';
-  try{
-    const {data:profile}=await window.qcSupabase
-      .from('profiles')
-      .select('nickname')
-      .eq('id',session.user.id)
-      .maybeSingle();
-    const nickname=String(profile?.nickname||'').trim();
-    if(nickname) name=nickname;
-  }catch(err){
-    console.warn('顶部昵称读取失败',err);
-  }
-
-  if(account){
-    account.textContent=name;
-    account.title='进入个人中心';
-  }
+  const apply=session=>{
+    const user=session?.user||null;
+    const userId=user?.id||null;
+    setVisible(login,!userId);
+    setVisible(redeem,Boolean(userId));
+    setVisible(account,Boolean(userId));
+    setVisible(logout,Boolean(userId));
+    setVisible(divider,true,'block');
+    if(lastUserId===userId) return;
+    lastUserId=userId;
+    const requestGeneration=++generation;
+    if(!userId) {
+      if(account){account.textContent='个人中心';account.title='进入个人中心';}
+      return;
+    }
+    // The trusted session already contains the email. Show the account link
+    // immediately, without waiting on a second profile request.
+    const email=user.email||'';
+    if(account){
+      account.textContent=email?email.split('@')[0]:'个人中心';
+      account.title='进入个人中心';
+    }
+    // On mobile the desktop menu is hidden: avoid the duplicate profile RPC.
+    if(!account || (typeof matchMedia==='function' &&
+       !matchMedia('(min-width:1024px)').matches)) return;
+    const fetchOptionalNickname=async()=>{
+      if(requestGeneration!==generation) return;
+      try{
+        const {data:profile}=await window.qcSupabase.from('profiles')
+          .select('nickname').eq('id',userId).maybeSingle();
+        if(requestGeneration!==generation || lastUserId!==userId) return;
+        const nickname=String(profile?.nickname||'').trim();
+        if(nickname) account.textContent=nickname;
+      }catch(err){
+        console.warn('顶部昵称读取失败',err);
+      }
+    };
+    // Personalization is cosmetic, never a dependency of navigation or data.
+    if(typeof requestIdleCallback==='function')
+      requestIdleCallback(fetchOptionalNickname,{timeout:1500});
+    else setTimeout(fetchOptionalNickname,500);
+  };
 
   if(redeem){
     redeem.onclick=()=>{
@@ -6008,17 +6016,31 @@ async function setupDesktopAccountNav(){
       modal._qcOpen?.();
     };
   }
-
   if(logout){
     logout.onclick=async()=>{
       logout.disabled=true;
       logout.textContent='退出中…';
-      await window.qcSupabase.auth.signOut();
+      try{await window.qcSupabase.auth.signOut();}
+      finally{apply(null);}
       location.href='index.html';
     };
   }
-}
 
+  // Start with a safe guest navigation, then reuse the single shared session.
+  apply(null);
+  let authEventObserved=false;
+  window.qcSupabase.auth.onAuthStateChange((event,session)=>{
+    if(!['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED','USER_UPDATED'].includes(event))return;
+    authEventObserved=true;
+    apply(session||null);
+  });
+  try{
+    const {data,error}=await qcGetSharedSession();
+    if(!authEventObserved) apply(!error?data?.session:null);
+  }catch(err){
+    console.warn('顶部账号状态读取失败',err);
+  }
+}
 
 function qcSetupProfileContactModal(){
   const modal=$('#qcProfileContactModal');
