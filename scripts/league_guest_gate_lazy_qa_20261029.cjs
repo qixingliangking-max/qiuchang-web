@@ -116,7 +116,8 @@ test('league HTML only includes lightweight auth dependencies',()=>{
  assert.match(archive,/window\.qcLeagueArchiveStart=setup/);
  assert.match(archive,/qcLeagueGateEpoch/);
  assert.match(archive,/qcLeagueVerifiedAccess/);
- assert.match(archive,/if\(managed && !window\.qcLeagueVerifiedAccess/);
+ assert.match(archive,/window\.qcLeagueGateEpoch/);
+ assert.match(archive,/if\(!valid\(\)\) return/);
 });
 test('all customer-facing links default hidden; shared session reveals them',()=>{
  for(const file of ['index.html','football.html','jc-match.html','profile.html','league.html']){
