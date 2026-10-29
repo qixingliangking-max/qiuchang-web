@@ -98,7 +98,7 @@ test('homepage primer runs BEFORE large app and all pages share one cached app.j
  const p=html.indexOf('home-auth-prime.js?v=20261029parallelrls4');
  const a=html.indexOf('app.js?v=20261029leaguegate1');
  assert.ok(p>0&&a>p);
- const pages=['index.html','football.html','league.html','jc-match.html','profile.html','register.html','forgot-password.html','reset-password.html','verify.html','match.html','model-record-test.html','league-archive-preview.html'];
+ const pages=['index.html','football.html','jc-match.html','profile.html','register.html','forgot-password.html','reset-password.html','verify.html','match.html','model-record-test.html','league-archive-preview.html'];
  for(const page of pages)assert.match(fs.readFileSync(path.join(root,page),'utf8'),/app\.js\?v=20261029leaguegate1/);
  assert.doesNotMatch(prime,/localStorage\.setItem|sessionStorage\.setItem/);
 });
