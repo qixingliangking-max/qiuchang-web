@@ -2578,6 +2578,22 @@
       "away_team": "沙佩科恩斯",
       "match_date": "2026-10-28",
       "kickoff_at": "2026-10-28T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103692",
+      "match_id": "fotmob:5103692",
+      "home_team": "巴伊亚",
+      "away_team": "圣保罗",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T00:30:00.000Z"
+    },
+    {
+      "source_match_id": "5103693",
+      "match_id": "fotmob:5103693",
+      "home_team": "雷莫",
+      "away_team": "博塔弗戈",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T00:30:00.000Z"
     }
   ]
 }
