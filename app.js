@@ -506,6 +506,29 @@ async function qcGetAccessState(force=false,overviewBundlePromise=null){
     }
 
     try{
+      // Homepage's lightweight primer already restored the SDK session and
+      // asked the SAME server entitlement RPC before the heavy app loaded.
+      // Reuse that completed result: no duplicate getSession()/Pro check.
+      // A login-page handoff with a transient empty session must instead
+      // use the existing fresh-session recovery below.
+      if(!force && !overviewBundlePromise && window.qcHomeEarlyAccess){
+        const early=await window.qcHomeEarlyAccess;
+        if(early && typeof early.loggedIn==='boolean'){
+          let handoffPending=false;
+          try{
+            const stamp=Number(sessionStorage.getItem('qc-auth-handoff')||0);
+            handoffPending=Boolean(stamp && Date.now()-stamp>=0 &&
+              Date.now()-stamp<12000);
+          }catch(_){}
+          if(!(handoffPending && !early.loggedIn)){
+            qcLastAccessState=early;
+            if(early.loggedIn){
+              try{sessionStorage.removeItem('qc-auth-handoff');}catch(_){}
+            }
+            return qcLastAccessState;
+          }
+        }
+      }
       let session=null;
       let recentAuthHandoff=false;
       try{
