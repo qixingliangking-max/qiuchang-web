@@ -20,6 +20,7 @@ on:
       - 'scripts/shared_session_admin_isolation_qa_20261028.cjs'
       - 'scripts/home_auth_deadline_qa_20261028.cjs'
       - 'scripts/home_auth_prime_qa_20261028.cjs'
+      - 'scripts/home_auth_watchdog_qa_20261029.cjs'
       - 'scripts/home_member_retry_qa_20261029.cjs'
       - 'scripts/cross_platform_login_handoff_qa_20261029.cjs'
       - 'scripts/home_schedule_firstpaint_deadline_qa_20261028.cjs'
@@ -45,6 +46,8 @@ jobs:
         run: node --test scripts/shared_session_admin_isolation_qa_20261028.cjs
       - name: Homepage early session and immediate verified-state QA
         run: node --test scripts/home_auth_prime_qa_20261028.cjs
+      - name: HTML auth timeout guarantees finite, actionable status even if all SDK scripts stall
+        run: node --test scripts/home_auth_watchdog_qa_20261029.cjs
       - name: Home auth never waits indefinitely or bypasses server entitlements
         run: node --test scripts/home_auth_deadline_qa_20261028.cjs
       - name: Recovery from stalled SDK and one-time membership recheck
