@@ -2798,6 +2798,17 @@ async function loadJcFrontend(){
       console.warn('公开赛程备用快照暂不可用',error);
     }
   }
+  // The lightweight verified member primer may have already painted its
+  // complete RLS-protected FINAL while this large bundle was downloading.
+  // Reuse those exact rows at takeover; never downgrade the visible table to
+  // an anonymous static schedule or "待生成" on app startup.
+  const earlyReady=window.qcHomeEarlyProValidatedRecord;
+  if(earlyReady && earlyReady.business_date===initialDate &&
+     Number(earlyReady.match_count)===Number(earlyReady.model_count) &&
+     earlyReady.payload?.rows?.length===Number(earlyReady.match_count)){
+    const verified=qcCacheProOverviewSnapshot(earlyReady);
+    if(verified?.data?.length) currentResult=verified;
+  }
   if(!currentResult)
     currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
@@ -3437,8 +3448,12 @@ async function loadJcFrontend(){
         const retry=cards.querySelector('#qcRetryMemberStatus');
         if(retry) retry.onclick=()=>cards.__qcRetryMemberAccess?.();
       }else if(accessDisplayPhase==='verifying'){
-        // Preserve a neutral state while the server has not yet answered.
-        qcReconcileOverviewTable(cards,
+        // The small primer only paints AFTER the same server Pro verdict and
+        // RLS snapshot are both confirmed. Do not erase that verified table
+        // merely because the large app is still completing initial setup.
+        const alreadyVisible=cards.dataset.qcEarlyProPainted==='1' &&
+          cards.dataset.qcEarlyProDate===selectedDate;
+        if(!alreadyVisible) qcReconcileOverviewTable(cards,
           window.qcOverviewKnownGuestFirstPaint
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
             : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
@@ -3548,10 +3563,25 @@ async function loadJcFrontend(){
       return;
     }
     if(access.isPro){
-      // The public static schedule is already loaded. After server-verified
-      // Pro access, show the complete table immediately with "待生成" for
-      // unapproved rows. A missing/slow prediction snapshot is NOT a reason
-      // to hide the 25 fixtures behind a perpetual loading card.
+      // If the small verified primer already painted FINAL, take over its
+      // exact protected rows before the first main-app render. No guest
+      // placeholders and no extra network round-trip are necessary.
+      const fastRecord=window.qcHomeEarlyProValidatedRecord;
+      if(fastRecord?.business_date===selectedDate &&
+         Number(fastRecord.match_count)===Number(fastRecord.model_count) &&
+         fastRecord.payload?.rows?.length===Number(fastRecord.match_count)){
+        const ready=qcCacheProOverviewSnapshot(fastRecord);
+        if(ready?.data?.length){
+          const already=new Map(allRows.filter(m=>jcBusinessDate(m)===selectedDate)
+            .map(m=>[String(m.id),m]));
+          allRows=[...allRows.filter(m=>jcBusinessDate(m)!==selectedDate),
+            ...ready.data.map(m=>{
+              const old=already.get(String(m.id));
+              return old?{...m,match_status:old.match_status,
+                raw:{...(m.raw||{}),...(old.raw||{})}}:m;
+            })];
+        }
+      }
       accessDisplayPhase='ready';
       render();
       const ds=selectedDate;
