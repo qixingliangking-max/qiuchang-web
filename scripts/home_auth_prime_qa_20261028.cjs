@@ -26,9 +26,12 @@ function fixture({member=true}={}){
       return {data:true,error:null};
     }
   };
+  const cards={dataset:{},innerHTML:'',querySelector(){return null}};
+  const meta={textContent:''};
   const ctx=vm.createContext({
     window:{qcSupabase:client},
-    document:{getElementById:id=>id==='jcLiveCards'?{}:null},
+    document:{getElementById(id){return id==='jcLiveCards'?cards:id==='jcPredictionMeta'?meta:null;}},
+    location:{pathname:'/index.html',search:''},
     sessionStorage:{getItem:()=>null,removeItem(){}},
     Date,Promise,console,setTimeout,clearTimeout
   });
@@ -36,20 +39,22 @@ function fixture({member=true}={}){
   const initial=ctx.window.qcHomeEarlySession;
   assert.ok(initial && typeof initial.then==='function','early standalone script primes a promise');
   vm.runInContext(fragment,ctx);
-  return {calls,events,ctx,initial,access:()=>vm.runInContext('qcGetAccessState()',ctx),
+  return {calls,events,ctx,cards,meta,initial,access:()=>vm.runInContext('qcGetAccessState()',ctx),
     shared:()=>vm.runInContext('qcGetSharedSession()',ctx)};
 }
 
-test('homepage early script starts SDK read without running any entitlement checks or model fetching',async()=>{
+test('homepage begins one SDK read and one server entitlement before app loads',async()=>{
   // Analyze executable source only; documentation comments may correctly
   // mention the server entitlement API without invoking it.
   const executable=primer.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,'');
-  assert.doesNotMatch(executable,/has_active_pro_access|qc_model_outputs|jc_model_outputs|qcFetchOverviewBootstrap/);
+  assert.doesNotMatch(executable,/jc_model_outputs|qc_model_outputs|qcFetchOverviewBootstrap/);
   const f=fixture();
-  await f.initial;
+  await f.ctx.window.qcHomeEarlyAccessPromise;
   assert.equal(f.calls.sessions,1);
-  assert.equal(f.calls.entitlements,0);
+  assert.equal(f.calls.entitlements,1);
   assert.equal(f.calls.admin,0);
+  assert.match(f.cards.innerHTML,/会员已验证/);
+  assert.equal(f.meta.textContent,'会员已验证');
 });
 
 test('main app adopts primed session and queries exactly one server membership RPC',async()=>{
@@ -74,9 +79,9 @@ test('guest remains unprivileged and never invokes membership or admin RPC',asyn
 
 test('only homepage gets the lightweight prime and it runs before app.js',()=>{
   const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
-  const primeAt=home.indexOf('src="home-auth-prime.js?v=20261028homeauthfast1"');
+  const primeAt=home.indexOf('src="home-auth-prime.js?v=20261029authprime2"');
   const clientAt=home.indexOf('src="supabase-client.js?');
-  const appAt=home.indexOf('src="app.js?v=20261029crossauth5&amp;home=20261029slim1"');
+  const appAt=home.indexOf('src="app.js?v=20261029homeslim3"');
   assert.ok(clientAt>0&&primeAt>clientAt&&appAt>primeAt);
   const detail=fs.readFileSync(path.join(root,'jc-match.html'),'utf8');
   assert.doesNotMatch(detail,/home-auth-prime\.js/);
