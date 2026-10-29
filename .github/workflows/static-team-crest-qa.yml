@@ -1,0 +1,33 @@
+name: Immutable static team-crest coverage QA
+
+on:
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'scripts/cache_static_team_logos.py'
+      - 'scripts/static_team_crest_qa_20261029.cjs'
+      - '.github/workflows/cache-static-team-logos.yml'
+      - '.github/workflows/static-team-crest-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'scripts/cache_static_team_logos.py'
+      - 'assets/team-logos/catalog.js'
+      - 'data/overview/live/*.json'
+      - 'scripts/static_team_crest_qa_20261029.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate before-kickoff/FINAL immutability behavior
+        run: python3 scripts/cache_static_team_logos.py --self-test
+      - name: Verify published crests never hit runtime resolver
+        run: node --test scripts/static_team_crest_qa_20261029.cjs
