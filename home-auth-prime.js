@@ -45,7 +45,7 @@
   }).formatToParts(new Date()).map(item=>[item.type,item.value]));
   const calendarDay=parts.year+'-'+parts.month+'-'+parts.day;
   const requested=new URLSearchParams(location.search).get('date');
-  const proDay=requested && /^\\d{4}-\\d{2}-\\d{2}$/.test(requested)
+  const proDay=requested && /^\d{4}-\d{2}-\d{2}$/.test(requested)
     ? requested : calendarDay;
   window.qcHomeEarlyProDate=proDay;
   window.qcHomeEarlyProSnapshotPromise=window.qcHomeEarlyAccessPromise
