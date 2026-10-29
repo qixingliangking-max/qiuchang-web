@@ -71,7 +71,7 @@ test('main guest never uses member fast path, preserving server gate',async()=>{
  assert.equal(called,false);assert.equal(result,null);
 });
 test('homepage script cache-busts both changed first-paint files',()=>{
- assert.match(home,/home-auth-prime\.js\?v=20261029proawait3/);
+ assert.match(home,/home-auth-prime\.js\?v=20261029parallelrls4/);
  assert.match(home,/app\.js\?v=20261029proawait3/);
  assert.match(app,/key===window\.qcHomeEarlyProDate/);
  assert.match(app,/const immediatePro=await qcFetchProOverviewDate\(ds\)/);
