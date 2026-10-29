@@ -175,6 +175,10 @@ def fill_missing_sources(teams):
         "利雅得胜利": "https://a.espncdn.com/i/teamlogos/soccer/500/817.png",
         # Confirmed official FotMob team profile /teams/9841 for Wrexham AFC.
         "雷克斯汉姆": "https://images.fotmob.com/image_resources/logo/teamlogo/9841.png",
+        # FotMob verified club profiles: Vegalta Sendai /teams/162192,
+        # RB Omiya Ardija /teams/4398. Chinese aliases in JC official feed.
+        "仙台七夕": "https://images.fotmob.com/image_resources/logo/teamlogo/162192.png",
+        "大宫松鼠RB": "https://images.fotmob.com/image_resources/logo/teamlogo/4398.png",
     }
     for name, url in verified.items():
         if name in teams:
