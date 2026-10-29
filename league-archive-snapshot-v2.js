@@ -454,8 +454,12 @@
     });
   }
 
-  async function setup(){
+  async function setup(expectedEpoch){
     const root=$('#leagueRecordRoot');
+    const valid=()=>!window.qcLeagueGateManaged ||
+      (window.qcLeagueVerifiedAccess?.()===true &&
+       window.qcLeagueGateEpoch?.()===expectedEpoch);
+    if(!root || !valid()) return;
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
       // The lightweight league-entry.js has already read the session and
@@ -463,7 +467,7 @@
       // after loading this bundle; it recreates the very wait we removed.
       // Any direct/legacy standalone usage still verifies both normally.
       const managed=window.qcLeagueGateManaged===true;
-      if(managed && !window.qcLeagueVerifiedAccess?.()) return;
+      if(!valid()) return;
       if(!managed){
         const authPromise=window.qcSupabase.auth.getSession();
         const {data:authData,error:authError}=await authPromise;
@@ -480,7 +484,7 @@
         .eq('is_current',true)
         .order('priority',{ascending:true})
         .order('name_cn',{ascending:true});
-      if(managed && !window.qcLeagueVerifiedAccess?.()) return;
+      if(!valid()) return;
       if(!managed){
         const proRes=await window.qcSupabase.rpc('has_active_pro_access');
         if(proRes.error) throw proRes.error;
@@ -522,7 +526,7 @@
 
 
       const regions=['全部','洲际赛事','欧洲','北欧','亚洲','美洲'];
-      if(window.qcLeagueGateManaged && !window.qcLeagueVerifiedAccess?.()) return;
+      if(!valid()) return;
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
@@ -546,14 +550,19 @@
         };
       });
     }catch(err){
+      if(!valid()) return;
       console.error('联赛档案读取失败',err);
       root.innerHTML='<div class="qc-league-gate"><h2>联赛档案读取失败</h2><p>'+esc(err?.message||'请稍后刷新')+'</p></div>';
     }
   }
 
-  // This file is injected only AFTER Pro verification on the production
-  // league page, so DOMContentLoaded may already have fired.
-  if(document.readyState==='loading')
-    document.addEventListener('DOMContentLoaded',setup,{once:true});
-  else setup();
+  // The fast league entry invokes this for every newly verified Pro epoch.
+  // Do not auto-run in managed mode: that caused duplicate or stale fetches
+  // during logout/login while this bundle was already loaded in memory.
+  window.qcLeagueArchiveStart=setup;
+  if(!window.qcLeagueGateManaged){
+    if(document.readyState==='loading')
+      document.addEventListener('DOMContentLoaded',()=>setup(),{once:true});
+    else setup();
+  }
 })();
