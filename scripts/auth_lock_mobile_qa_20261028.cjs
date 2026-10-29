@@ -55,15 +55,21 @@ test('ordinary page defers session reads and auth-event work',()=>{
 });
 
 test('shared cached application asset across active user pages',()=>{
-  const pages=['index.html','football.html','league.html',
+  const pages=['index.html','football.html',
     'jc-match.html','profile.html','register.html',
     'forgot-password.html','reset-password.html','verify.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261029proawait3"/,
+    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261029leaguegate1"/,
       page+' must use the same app.js cache key');
   }
   const login=fs.readFileSync(path.join(root,'login.html'),'utf8');
   assert.match(login,/<script\b[^>]*src="login-fast\.js\?v=20261029netretry2"/);
   assert.doesNotMatch(login,/<script\b[^>]*src="app\.js/);
+});
+
+test('league archive is an intentionally isolated guest-light entrypoint',()=>{
+  const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
+  assert.match(html,/league-entry\.js\?v=20261029authlazy1/);
+  assert.doesNotMatch(html,/src="app\.js\?/);
 });

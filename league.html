@@ -211,7 +211,7 @@
     <nav class="qc-desktop-nav" aria-label="主导航">
       <a href="index.html">今日速览</a>
       <a href="football.html">竞彩足球</a>
-      <a class="active" href="league.html">联赛档案</a>
+      <a class="active" href="league.html" data-qc-member-nav="league" hidden style="display:none">联赛档案</a>
       <span class="qc-desktop-account-divider" id="desktopAccountDivider" aria-hidden="true"></span>
       <a class="qc-desktop-auth-login" href="login.html?v=20260926login3" id="desktopLogin">登录</a>
       <a class="qc-desktop-auth-account" href="profile.html" id="desktopAccount" hidden style="display:none">个人中心</a>
@@ -226,7 +226,7 @@
       <p>统计整个赛季的全部比赛，不只统计本站预测场次。联赛整体、球队赛季、主客场和近期状态分层保存。</p>
     </section>
 
-    <div id="leagueRecordRoot"><div class="qc-league-loading" role="status" aria-live="polite">正在验证会员权限并读取联赛目录…</div></div>
+    <div id="leagueRecordRoot"><div class="qc-league-loading" role="status" aria-live="polite">正在确认登录状态…</div></div>
   </main>
 </div>
 
@@ -234,7 +234,7 @@
   <nav class="drawer">
     <a href="index.html">今日速览</a>
     <a href="football.html">竞彩足球</a>
-    <a class="active" href="league.html">联赛档案</a>
+    <a class="active" href="league.html" data-qc-member-nav="league" hidden style="display:none">联赛档案</a>
     <hr>
     <a href="profile.html" id="navProfile" hidden style="display:none">个人中心</a>
     <a href="login.html?v=20260926login3" id="navLogin">登录</a>
@@ -245,10 +245,7 @@
 <script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
 <script defer src="supabase-config.js"></script>
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
-<script defer src="data.js"></script>
-<script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
-<script defer src="app.js?v=20261029proawait3"></script>
-<script defer src="league-p3-public.js?v=20261022p3single1"></script>
-<script defer src="league-archive-snapshot-v2.js?v=20261024timeout1"></script>
+<!-- Heavy league/P2/P3 modules are injected only after verified Pro access. -->
+<script defer src="league-entry.js?v=20261029authlazy1"></script>
 </body>
 </html>
