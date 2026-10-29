@@ -5772,7 +5772,7 @@ async function setupAuthNav(){
   const registerLink=$('#navRegister');
   const profileLink=$('#navProfile');
   const logoutLink=$('#navLogout');
-  const leagueLinks=$('[data-qc-member-nav="league"]');
+  const leagueLinks=[...document.querySelectorAll('[data-qc-member-nav="league"]')];
   if(!loginLink && !registerLink && !profileLink && !logoutLink && !leagueLinks.length) return;
 
   const apply=session=>{
