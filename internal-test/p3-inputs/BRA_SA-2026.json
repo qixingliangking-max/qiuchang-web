@@ -2554,6 +2554,30 @@
       "away_team": "米内罗竞技",
       "match_date": "2026-10-26",
       "kickoff_at": "2026-10-26T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103684",
+      "match_id": "fotmob:5103684",
+      "home_team": "弗鲁米嫩塞",
+      "away_team": "巴西国际",
+      "match_date": "2026-10-28",
+      "kickoff_at": "2026-10-28T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103686",
+      "match_id": "fotmob:5103686",
+      "home_team": "桑托斯",
+      "away_team": "帕尔梅拉斯",
+      "match_date": "2026-10-28",
+      "kickoff_at": "2026-10-28T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103688",
+      "match_id": "fotmob:5103688",
+      "home_team": "布拉干蒂诺RB",
+      "away_team": "沙佩科恩斯",
+      "match_date": "2026-10-28",
+      "kickoff_at": "2026-10-28T22:30:00Z"
     }
   ]
 }
