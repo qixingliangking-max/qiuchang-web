@@ -2571,6 +2571,9 @@ async function loadJcFrontend(){
   const cards=$('#jcLiveCards');
   const reviewCards=$('#jcYesterdayCards');
   if(!cards || !window.qcSupabase) return;
+  // A very early retry click can arrive before the full static schedule
+  // has initialized the in-place recovery handler.
+  cards.__qcRetryMemberAccess=()=>{ cards.dataset.qcRetryRequested='1'; };
 
   // 今日速览按北京时间自然日；竞彩足球页继续使用独立的竞彩日规则。
   const calendarToday=qcBeijingToday();
@@ -3614,6 +3617,10 @@ async function loadJcFrontend(){
     }
   }
   cards.__qcRetryMemberAccess=qcRetryMemberInPlace;
+  if(cards.dataset.qcRetryRequested==='1'){
+    delete cards.dataset.qcRetryRequested;
+    Promise.resolve().then(()=>qcRetryMemberInPlace());
+  }
   accessPromise.then(qcApplyMemberAccess).catch(error=>{
     console.warn('后台权限状态读取失败',error);
     accessDisplayPhase='unavailable';
