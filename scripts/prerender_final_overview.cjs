@@ -62,11 +62,11 @@ const guard = [
 const block = markup
   ? '<div id="jcYesterdayCards" data-qc-final-date="' + yesterday +
     '" data-qc-final-count="' + count + '">' + markup + '</div>\n      ' + guard
-  : '<div id="jcYesterdayCards"><div class="jc-review-empty">正在加载中…</div></div>';
+  : '<div id="jcYesterdayCards"><div class="jc-review-empty">昨日完整赛果尚在核验，全部完赛后将自动更新</div></div>';
 let result = current.slice(0, start) + '      ' + block + current.slice(end);
 result = result.replace(
   /(<span class="section-meta" id="jcYesterdayMeta">)[^<]*(<\/span>)/,
-  '$1' + (markup ? yesterday.slice(5) + ' · ' + count + '场' : '正在加载中…') + '$2'
+  '$1' + (markup ? yesterday.slice(5) + ' · ' + count + '场' : '等待完整赛果') + '$2'
 );
 if (result !== current) {
   fs.writeFileSync(file, result, 'utf8');
