@@ -1650,6 +1650,22 @@
       "away_team": "天狼星",
       "match_date": "2026-10-29",
       "kickoff_at": "2026-10-29T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "5107640",
+      "match_id": "fotmob:5107640",
+      "home_team": "奥尔格里特",
+      "away_team": "米亚尔比",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107643",
+      "match_id": "fotmob:5107643",
+      "home_team": "卡尔马",
+      "away_team": "哥德堡盖斯",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T18:00:00.000Z"
     }
   ]
 }

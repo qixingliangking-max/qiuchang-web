@@ -6,7 +6,7 @@
     "67"
   ],
   "fotmob_ccode3": "SWE",
-  "baseline_finished_matches": 206,
+  "baseline_finished_matches": 208,
   "team_map": {
     "AIK": "AIK索尔纳",
     "GAIS": "哥德堡盖斯",
@@ -25,6 +25,6 @@
     "Västerås SK": "瓦斯特拉斯",
     "Brommapojkarna": "布洛马波卡纳"
   },
-  "last_successful_refresh_at": "2026-10-29T19:40:57.793Z",
-  "last_published_blob_sha": "18b93f50d0c941a4d6be7afc6bc44d0c7ab6b611"
+  "last_successful_refresh_at": "2026-10-29T20:27:17.452Z",
+  "last_published_blob_sha": "cb27713cb753ef8ec5a0039c2c7985be73d66d05"
 }

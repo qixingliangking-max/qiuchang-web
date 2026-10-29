@@ -84,14 +84,14 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/SWE_AS-2026.json",
-      "blob_sha": "18b93f50d0c941a4d6be7afc6bc44d0c7ab6b611",
+      "blob_sha": "cb27713cb753ef8ec5a0039c2c7985be73d66d05",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 77.8,
+      "avg_team_depth_coverage_pct": 79,
       "gate_report": "internal-test/p3-candidates/SWE_AS-2026-gate.json",
       "model_read_rule": "P3_VALID + PILOT_FULL; standard P3 reading is allowed within the promoted static snapshot.",
-      "last_incremental_refresh_at": "2026-10-29T19:40:57.793Z",
-      "finished_matches": 206
+      "last_incremental_refresh_at": "2026-10-29T20:27:17.452Z",
+      "finished_matches": 208
     },
     {
       "league_code": "FIN_VL",
