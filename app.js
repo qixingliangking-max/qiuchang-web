@@ -2650,7 +2650,7 @@ async function loadJcFrontend(){
   // Protected models are still rendered by the existing checked-access path.
   accessPromise.then(earlyAccess=>{
     if(cards.dataset.qcAuthPaintReady==='1') return;
-    const pending=cards.textContent?.includes('正在确认登录状态');
+    const pending=/正在确认登录状态|正在恢复会员会话|会员状态尚未确认/.test(cards.textContent||'');
     if(!pending) return;
     const meta=$('#jcPredictionMeta');
     if(earlyAccess?.verificationPending){
