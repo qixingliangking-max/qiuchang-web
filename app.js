@@ -3510,7 +3510,10 @@ async function loadJcFrontend(){
   let qcMemberRetryInProgress=false;
   let qcMemberAutoRetryUsed=false;
   let qcMemberAutoRetryTimer=null;
-  async function qcApplyMemberAccess(resolved){
+  let qcMemberAuthEpoch=0;
+  async function qcApplyMemberAccess(resolved,epoch=0){
+    // Ignore an old failed read if a more recent in-place retry has started.
+    if(epoch!==qcMemberAuthEpoch) return;
     access=resolved||{loggedIn:false,isPro:false,userId:null,verificationPending:true};
     window.qcOverviewKnownGuestFirstPaint=false;
     if(access.verificationPending){
@@ -3602,12 +3605,13 @@ async function loadJcFrontend(){
       qcMemberAutoRetryTimer=null;
     }
     qcMemberRetryInProgress=true;
+    const epoch=++qcMemberAuthEpoch;
     accessDisplayPhase='verifying';
     render();
     try{
       // Re-evaluate the session and server entitlement. Do not reuse a failed
       // qcAccessStatePromise and never reload or bypass the protected table.
-      await qcApplyMemberAccess(await qcGetAccessState(true));
+      await qcApplyMemberAccess(await qcGetAccessState(true),epoch);
     }catch(error){
       console.warn('会员重新验证失败',error);
       accessDisplayPhase='unavailable';
@@ -3621,7 +3625,7 @@ async function loadJcFrontend(){
     delete cards.dataset.qcRetryRequested;
     Promise.resolve().then(()=>qcRetryMemberInPlace());
   }
-  accessPromise.then(qcApplyMemberAccess).catch(error=>{
+  accessPromise.then(resolved=>qcApplyMemberAccess(resolved,0)).catch(error=>{
     console.warn('后台权限状态读取失败',error);
     accessDisplayPhase='unavailable';
     render();
