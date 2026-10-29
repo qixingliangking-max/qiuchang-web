@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-29T17:37:51.359Z",
+  "run_at": "2026-10-29T18:31:04.450Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 0,
-  "noop_leagues": 24,
+  "promoted_leagues": 1,
+  "noop_leagues": 23,
   "blocked_leagues": 0,
   "results": [
     {
@@ -93,15 +93,15 @@
     {
       "league_code": "FIN_VL",
       "season": "2026",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 169,
+      "status": "PROMOTED",
+      "discovered_finished": 170,
       "baseline_finished_matches": 169,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
