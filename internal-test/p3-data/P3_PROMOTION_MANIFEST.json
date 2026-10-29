@@ -159,14 +159,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ITA_SA-2026-27.json",
-      "blob_sha": "996095c9afe8f1fc76d382ca2a919446248fadd0",
+      "blob_sha": "55a8739bacff4809954ca64b18247c633c6779b9",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 8.2,
+      "avg_team_depth_coverage_pct": 10,
       "gate_report": "internal-test/p3-candidates/ITA_SA-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-29T19:40:39.199Z",
-      "finished_matches": 89
+      "last_incremental_refresh_at": "2026-10-29T22:01:00.341Z",
+      "finished_matches": 90
     },
     {
       "league_code": "FRA_L1",
