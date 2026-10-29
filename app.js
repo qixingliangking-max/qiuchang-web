@@ -5662,10 +5662,14 @@ function setupAuthStateRecovery(){
       previousAccess.userId && previousAccess.userId!==session.user?.id);
     const recoveredGuest=Boolean(session && previousAccess &&
       previousAccess.loggedIn===false);
-    if(changedIdentity || recoveredGuest) qcAccessStatePromise=null;
+    // Also recover a logged-in user whose Pro RPC timed out. The old guest-
+    // only recovery ignored this exact mobile failure and left a dead button.
+    const recoveredPending=Boolean(session && previousAccess?.verificationPending);
+    if(changedIdentity || recoveredGuest || recoveredPending)
+      qcAccessStatePromise=null;
 
     const lateSession=Boolean(
-      recoveredGuest &&
+      (recoveredGuest || recoveredPending) &&
       ['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)
     );
     if(!lateSession) return;
@@ -5688,7 +5692,10 @@ function setupAuthStateRecovery(){
     // Recover late sessions in place. Quark/QQ should not visibly reload the
     // whole page after the user has already seen the homepage.
     setTimeout(()=>{
-      if($('#jcLiveCards')) loadJcFrontend();
+      const overview=$('#jcLiveCards');
+      if(overview && typeof overview.__qcRetryMemberAccess==='function')
+        overview.__qcRetryMemberAccess();
+      else if(overview) loadJcFrontend();
       else if($('#jcFootballCards')) loadJcFootball();
       else if($('#jcMatchDetailRoot')) setupJcMatchDetail();
     },120);
