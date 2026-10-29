@@ -1,0 +1,37 @@
+name: League guest gate and lazy Pro archive QA
+on:
+  pull_request:
+    paths:
+      - 'league.html'
+      - 'league-entry.js'
+      - 'league-archive-snapshot-v2.js'
+      - 'app.js'
+      - 'index.html'
+      - 'football.html'
+      - 'jc-match.html'
+      - 'profile.html'
+      - 'scripts/league_guest_gate_lazy_qa_20261029.cjs'
+      - '.github/workflows/league-guest-gate-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'league.html'
+      - 'league-entry.js'
+      - 'league-archive-snapshot-v2.js'
+      - 'app.js'
+      - 'scripts/league_guest_gate_lazy_qa_20261029.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax of gate and archive bundles
+        run: node --check league-entry.js && node --check league-archive-snapshot-v2.js && node --check app.js
+      - name: Test guest/basic/Pro lazy loading and sign-out
+        run: node --test scripts/league_guest_gate_lazy_qa_20261029.cjs
+      - name: Test mobile auth and shared application cache
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs
