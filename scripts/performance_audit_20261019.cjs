@@ -12,7 +12,15 @@ async function trackStep(out,name,action,verify){
   try{
     await action();
     if(verify) await verify();
-    out.steps.push({name,ms:Date.now()-before,ok:true});
+    const ms=Date.now()-before;
+    // Performance is a requirement, not a best-effort notice. Budgets are
+    // deliberately generous for an external GitHub runner and cold browsers.
+    const budgetMs=name==='first-content-visible'?3000:
+      name.startsWith('date-')?3000:
+      name.startsWith('detail-tab-')?1500:
+      name==='same-day-match-switch'?2500:5000;
+    out.steps.push(ms<=budgetMs?{name,ms,ok:true,budgetMs}:
+      {name,ms,ok:false,budgetMs,error:'Performance budget exceeded'});
   }catch(e){
     out.steps.push({name,ms:Date.now()-before,ok:false,error:String(e).slice(0,240)});
   }
