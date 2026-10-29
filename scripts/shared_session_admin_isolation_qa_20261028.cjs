@@ -94,7 +94,7 @@ test('legacy admin functions and RPCs absent from public bundle',()=>{
     'model-record-test.html','league-archive-preview.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/src="app\.js\?v=20261029leaguegate2"/,page);
+    assert.match(html,/src="app\.js\?v=20261029allnav3"/,page);
   }
 });
 test('dedicated admin pages keep standalone entry scripts',()=>{
