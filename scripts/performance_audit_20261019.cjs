@@ -3,7 +3,9 @@ const {chromium,webkit,devices}=require('playwright');
 const fs=require('fs');
 const BASE='https://qcda.cn';
 const audit={testedAt:new Date().toISOString(),base:BASE,mode:'Guest; GitHub runner to live site; fresh browser contexts; browser-based user interactions',results:[]};
-const limit=18000;
+const limit=10000;
+const today=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
+const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function trackStep(out,name,action,verify){
   const before=Date.now();
@@ -45,17 +47,17 @@ async function auditEngine(engine){
      page.on('pageerror',e=>out.exceptions.push(String(e).slice(0,250)));
      page.on('requestfailed',r=>out.failedRequests.push({url:r.url().split('?')[0].slice(0,125),why:r.failure()?.errorText?.slice(0,100)}));
      page.on('request',r=>{out.resourceCount++;if(r.url().includes('supabase.co/rest/'))out.apiRequests++;if(r.resourceType()==='image')out.imageRequests++});
-     const target=surface==='overview' ? '/index.html?date=2026-10-19' : '/football.html?date=2026-10-19';
+     const target=surface==='overview' ? '/index.html?date='+today : '/football.html?date='+today;
      try{
        const nav=await page.goto(BASE+target,{waitUntil:'domcontentloaded',timeout:30000});
        out.http=nav?.status();
        out.domContentLoadedMs=Date.now()-firstTime;
        await trackStep(out,'first-content-visible',async()=>{
          if(surface==='overview'){
-           await nonempty(page,'#jcYesterdayCards .jc-overview-row');
-           await waitFor(page,()=>/10-18.*[0-9]+场/.test(document.querySelector('#jcYesterdayMeta')?.textContent||''),null);
+           await nonempty(page,'#jcLiveCards .qc-premium-gate');
+           await nonempty(page,'#jcYesterdayCards');
          }else{
-           await waitFor(page,()=>document.querySelectorAll('#jcFootballCards .jc-football-card').length===8,null);
+           await waitFor(page,()=>document.querySelectorAll('#jcFootballCards .jc-football-card').length>0,null);
          }
        });
        out.firstContentMs=Date.now()-firstTime;
@@ -67,17 +69,20 @@ async function auditEngine(engine){
        });
        out.performance=perf;
        if(surface==='overview'){
-         const firstDate='2026-10-18';
-         await trackStep(out,'date-19-to-18',()=>page.locator('#jcPrevDate').click(),async()=>waitFor(page,()=>/10月18日/.test(document.querySelector('#jcDateLabel')?.textContent||''),null));
+         await trackStep(out,'date-today-to-yesterday',()=>page.locator('#jcPrevDate').click(),
+           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,yesterday));
          out.reviewCountAfterPrevious=await page.locator('#jcYesterdayCards .jc-overview-row').count();
-         await trackStep(out,'date-18-to-19',()=>page.locator('#jcNextDate').click(),async()=>waitFor(page,()=>/10月19日/.test(document.querySelector('#jcDateLabel')?.textContent||''),null));
+         await trackStep(out,'date-yesterday-to-today',()=>page.locator('#jcNextDate').click(),
+           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,today));
          await trackStep(out,'click-match-from-overview',async()=>{
             await page.locator('#jcYesterdayCards .jc-review-match').first().click();
          },async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
        }else{
-         await trackStep(out,'date-19-to-18',()=>page.locator('#jcFootballPrevDate').click(),async()=>waitFor(page,()=>/10.18/.test(document.querySelector('#jcFootballDateLabel')?.textContent||'') && document.querySelectorAll('#jcFootballCards .jc-football-card').length>=21,null));
+         await trackStep(out,'date-today-to-yesterday',()=>page.locator('#jcFootballPrevDate').click(),
+           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,yesterday));
          out.rowsAfterPrevious=await page.locator('#jcFootballCards .jc-football-card').count();
-         await trackStep(out,'date-18-to-19',()=>page.locator('#jcFootballNextDate').click(),async()=>waitFor(page,()=>/10.19/.test(document.querySelector('#jcFootballDateLabel')?.textContent||'') && document.querySelectorAll('#jcFootballCards .jc-football-card').length===8,null));
+         await trackStep(out,'date-yesterday-to-today',()=>page.locator('#jcFootballNextDate').click(),
+           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,today));
          out.dateHasOpeningMessage=(await page.locator('#jcFootballDateLabel').innerText()).includes('打开中');
          await trackStep(out,'click-match-from-football',()=>page.locator('#jcFootballCards a.jc-card-link').first().click(),async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
        }
@@ -116,5 +121,10 @@ async function auditEngine(engine){
  fs.writeFileSync('.github/reports/production-perf-20261019.json',JSON.stringify(audit,null,2)+'\n');
  console.log('QCDA_PERF_SUMMARY='+JSON.stringify({at:audit.testedAt,results:audit.results.map(x=>({device:x.engine,surface:x.surface,dom:x.domContentLoadedMs,first:x.firstContentMs,steps:x.steps,errors:x.exceptions.length,failed:x.failedRequests.length,api:x.apiRequests,static:x.performance?.staticResources}))}));
  const failures=audit.results.filter(x=>x.fatal || x.steps.some(s=>!s.ok));
- if(failures.length)console.warn('QCDA_PERF_WARNINGS '+JSON.stringify(failures.map(x=>({device:x.engine,surface:x.surface,fatal:x.fatal,failedSteps:x.steps.filter(s=>!s.ok)}))));
+ if(failures.length){
+   console.error('QCDA_PERF_FAILURES '+JSON.stringify(failures.map(x=>({
+     device:x.engine,surface:x.surface,fatal:x.fatal,failedSteps:x.steps.filter(s=>!s.ok)
+   }))));
+   process.exitCode=1;
+ }
 })().catch(e=>{console.error(e);process.exitCode=1});
