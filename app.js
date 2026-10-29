@@ -5693,7 +5693,11 @@ function setupLastActiveTracking(){
     if(['SIGNED_IN','INITIAL_SESSION','TOKEN_REFRESHED'].includes(event)){
       // NEVER call auth.getSession() synchronously from an auth callback:
       // signInWithPassword/setSession can deadlock behind that same lock.
-      setTimeout(()=>{ qcTouchLastActive(event==='SIGNED_IN').catch(()=>{}); },0);
+      // Keep the member prediction / score first paint ahead of optional
+      // activity bookkeeping on Safari, Android and embedded WebViews.
+      // A fast SIGNED_IN may otherwise start a competing Supabase RPC at 0ms.
+      const activityDelay=event==='SIGNED_IN'?4500:5200;
+      setTimeout(()=>{ qcTouchLastActive(event==='SIGNED_IN').catch(()=>{}); },activityDelay);
     }
   });
 
