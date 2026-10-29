@@ -42,7 +42,8 @@
   window.qcHomeEarlyAccessPromise.then(access=>{
     if(cards.dataset.qcAuthPaintReady==='1')return;
     const meta=document.getElementById('jcPredictionMeta');
-    const handoff=Number(sessionStorage.getItem('qc-auth-handoff')||0);
+    let handoff=0;
+    try{handoff=Number(sessionStorage.getItem('qc-auth-handoff')||0);}catch(_){}
     if(!access.loggedIn && handoff>0 && Date.now()-handoff<12000)return;
     if(access.verificationPending){
       if(meta)meta.textContent='会员状态暂时无法验证';
