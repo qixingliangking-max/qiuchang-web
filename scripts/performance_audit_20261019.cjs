@@ -81,7 +81,12 @@ async function auditEngine(engine){
            async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,yesterday));
          out.reviewCountAfterPrevious=await page.locator('#jcYesterdayCards .jc-overview-row').count();
          await trackStep(out,'date-yesterday-to-today',()=>page.locator('#jcNextDate').click(),
-           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,today));
+           async()=>waitFor(page,day=>{
+             const value=new URL(location.href).searchParams.get('date');
+             const label=document.querySelector('#jcDateLabel')?.textContent||'';
+             const formatted=Number(day.slice(5,7))+'月'+Number(day.slice(8,10))+'日';
+             return (!value || value===day) && label.includes(formatted);
+           },today));
          await trackStep(out,'click-match-from-overview',async()=>{
             await page.locator('#jcYesterdayCards .jc-review-match').first().click();
          },async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
@@ -90,7 +95,12 @@ async function auditEngine(engine){
            async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,yesterday));
          out.rowsAfterPrevious=await page.locator('#jcFootballCards .jc-football-card').count();
          await trackStep(out,'date-yesterday-to-today',()=>page.locator('#jcFootballNextDate').click(),
-           async()=>waitFor(page,day=>new URL(location.href).searchParams.get('date')===day,today));
+           async()=>waitFor(page,day=>{
+             const value=new URL(location.href).searchParams.get('date');
+             const label=document.querySelector('#jcFootballDateLabel')?.textContent||'';
+             return (!value || value===day) &&
+               (label.includes(day.slice(5)) || label.includes(day.slice(5).replace('-','.')));
+           },today));
          out.dateHasOpeningMessage=(await page.locator('#jcFootballDateLabel').innerText()).includes('打开中');
          await trackStep(out,'click-match-from-football',()=>page.locator('#jcFootballCards a.jc-card-link').first().click(),async()=>{await nonempty(page,'#jcMatchDetailRoot .detail-head');await checkPanel(page);});
        }
@@ -157,10 +167,18 @@ async function auditRoutes(engine){
     row.status=response?.status();
     row.finalPath=new URL(page.url()).pathname;
     // Admin/profile guests may be redirected to /login.html asynchronously.
-    const waitSelector=page.url().includes('/login.html')?'#loginForm':selector;
-    await page.locator(waitSelector).first().waitFor({state:'visible',timeout:7000});
+    // Account and admin guest routes correctly redirect to login; treat
+    // that as an expected result, not a 7-second invisible-root timeout.
+    const allowedLoginRedirect=['/profile.html','/admin.html','/model-record-test.html'].includes(route);
+    await Promise.any([
+      page.locator(selector).first().waitFor({state:'visible',timeout:7000}),
+      ...(allowedLoginRedirect?[page.locator('#loginForm').first()
+        .waitFor({state:'visible',timeout:7000})]:[])
+    ]);
     row.firstVisibleMs=Date.now()-t0;
-    row.ok=row.status===200;
+    row.finalPath=new URL(page.url()).pathname;
+    row.loginRedirect=row.finalPath==='/login.html';
+    row.ok=row.status===200 && (!row.loginRedirect || allowedLoginRedirect);
     // Structural page checks are strict, loading time is monitored separately.
     if(row.firstVisibleMs>5000)row.performanceWarning='first useful element >5s';
    }catch(error){
