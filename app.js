@@ -3563,6 +3563,25 @@ async function loadJcFrontend(){
       return;
     }
     if(access.isPro){
+      // Reuse the *same* in-flight verified snapshot before any Pro render.
+      // The old path painted empty fixture placeholders first and could
+      // suppress the faster primer via qcAuthPaintReady.
+      if(selectedDate===window.qcHomeEarlyProDate &&
+         window.qcHomeEarlyProSnapshotPromise){
+        try{
+          const earlyRecord=await window.qcHomeEarlyProSnapshotPromise;
+          if(epoch!==qcMemberAuthEpoch) return;
+          if(earlyRecord?.business_date===selectedDate &&
+             Number(earlyRecord.match_count)>0 &&
+             Number(earlyRecord.match_count)===Number(earlyRecord.model_count) &&
+             Array.isArray(earlyRecord.payload?.rows) &&
+             earlyRecord.payload.rows.length===Number(earlyRecord.match_count)){
+            window.qcHomeEarlyProValidatedRecord=earlyRecord;
+          }
+        }catch(error){
+          console.warn('提前读取会员预测失败，使用现有受保护回退',error);
+        }
+      }
       // If the small verified primer already painted FINAL, take over its
       // exact protected rows before the first main-app render. No guest
       // placeholders and no extra network round-trip are necessary.
