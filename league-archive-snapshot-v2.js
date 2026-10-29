@@ -458,42 +458,36 @@
     const root=$('#leagueRecordRoot');
     try{
       if(!window.qcSupabase) throw new Error('数据连接未就绪');
-      const authPromise=window.qcSupabase.auth.getSession();
-      const authRace=await Promise.race([
-        authPromise,
-        new Promise(resolve=>setTimeout(()=>resolve({__qcAuthTimeout:true}),450))
-      ]);
-      let authResult=authRace;
-      if(authRace?.__qcAuthTimeout){
-        // Never leave an anonymous visitor staring at an indefinite loader.
-        // The real session check continues; a valid Pro session replaces this
-        // temporary public-safe prompt when it resolves.
-        root.innerHTML='<div class="qc-league-gate"><h2>正在确认访问权限</h2><p>联赛档案需要登录并通过会员权限验证。若尚未登录，可先登录后返回。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
-        authResult=await authPromise;
+      // The lightweight league-entry.js has already read the session and
+      // confirmed Pro access. Never re-run auth.getSession and the Pro RPC
+      // after loading this bundle; it recreates the very wait we removed.
+      // Any direct/legacy standalone usage still verifies both normally.
+      const managed=window.qcLeagueGateManaged===true;
+      if(managed && !window.qcLeagueVerifiedAccess?.()) return;
+      if(!managed){
+        const authPromise=window.qcSupabase.auth.getSession();
+        const {data:authData,error:authError}=await authPromise;
+        if(authError) throw authError;
+        if(!authData?.session){
+          root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
+          return;
+        }
       }
-      const {data:authData,error:authError}=authResult;
-      if(authError) throw authError;
-      if(!authData?.session){
-        root.innerHTML='<div class="qc-league-gate"><h2>请先登录</h2><p>登录后可查看联赛档案。</p><a href="login.html?next='+encodeURIComponent(location.pathname)+'">立即登录</a></div>';
-        return;
-      }
-
-      // The league index is small and RLS restricts it to Pro members.
-      // Start the permission RPC and index read together; the user sees
-      // neither the index nor any Pro data until the RPC confirms access.
-      const [proRes,snapRes]=await Promise.all([
-        window.qcSupabase.rpc('has_active_pro_access'),
-        window.qcSupabase
-          .from('league_archive_snapshots')
-          .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
-          .eq('is_current',true)
-          .order('priority',{ascending:true})
-          .order('name_cn',{ascending:true})
-      ]);
-      if(proRes.error) throw proRes.error;
-      if(proRes.data!==true){
-        root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂未开放</h2><p>当前账号没有联赛档案访问权限。</p></div>';
-        return;
+      // RLS still independently enforces the Pro entitlement on this table.
+      const snapRes=await window.qcSupabase
+        .from('league_archive_snapshots')
+        .select('competition_id,season,code,name_cn,name_en,country_cn,tier,season_cycle,priority,matches_played,total_goals,avg_total_goals,home_wins,draws,away_wins,generated_at')
+        .eq('is_current',true)
+        .order('priority',{ascending:true})
+        .order('name_cn',{ascending:true});
+      if(managed && !window.qcLeagueVerifiedAccess?.()) return;
+      if(!managed){
+        const proRes=await window.qcSupabase.rpc('has_active_pro_access');
+        if(proRes.error) throw proRes.error;
+        if(proRes.data!==true){
+          root.innerHTML='<div class="qc-league-gate"><h2>联赛档案暂未开放</h2><p>当前账号没有联赛档案访问权限。</p></div>';
+          return;
+        }
       }
       if(snapRes.error) throw snapRes.error;
 
@@ -528,6 +522,7 @@
 
 
       const regions=['全部','洲际赛事','欧洲','北欧','亚洲','美洲'];
+      if(window.qcLeagueGateManaged && !window.qcLeagueVerifiedAccess?.()) return;
       root.innerHTML=
         '<div class="qc-league-toolbar">'+
           '<div class="qc-league-region-tabs">'+regions.map((x,i)=>'<button type="button" data-region="'+x+'" class="'+(i===0?'active':'')+'">'+x+'</button>').join('')+'</div>'+
@@ -556,5 +551,9 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded',setup);
+  // This file is injected only AFTER Pro verification on the production
+  // league page, so DOMContentLoaded may already have fired.
+  if(document.readyState==='loading')
+    document.addEventListener('DOMContentLoaded',setup,{once:true});
+  else setup();
 })();
