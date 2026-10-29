@@ -15,7 +15,8 @@ const rows=['001','002'].map((n,i)=>({
 function harness({session=true,isPro=true,day='2026-10-29',snapshot=null,deferSnapshot=false}={}){
  let release,authEvent,lookupCount=0,sessionCount=0,rpcCount=0;
  const data=snapshot===null?{business_date:day,match_count:2,model_count:2,payload:{rows}}:snapshot;
- const gate=deferSnapshot?new Promise(resolve=>{release=()=>resolve({data:[data],error:null});}):Promise.resolve({data:[data],error:null});
+ const response={data:isPro?[data]:[],error:null};
+ const gate=deferSnapshot?new Promise(resolve=>{release=()=>resolve(response);}):Promise.resolve(response);
  const cards={dataset:{},innerHTML:'正在确认登录状态…',
   querySelector(){return null;}};
  const meta={textContent:'正在确认登录状态…'};
@@ -57,10 +58,10 @@ test('an unverified member cannot see any protected model before the response',a
  h.release();await h.flush();
  assert.equal(h.cards.dataset.qcEarlyProPainted,'1');
 });
-test('guest and ordinary user never access the protected prediction snapshot',async()=>{
+test('guest makes no protected request; non-Pro reads zero RLS rows and never paints',async()=>{
  for(const state of [{session:false},{session:true,isPro:false}]){
   const h=harness(state);await h.flush();
-  assert.equal(h.calls().prediction,0);
+  assert.equal(h.calls().prediction,state.session===false?0:1);
   assert.equal(h.cards.dataset.qcEarlyProPainted,undefined);
   assert.ok(!h.window.qcHomeEarlyProValidatedRecord);
  }
@@ -94,10 +95,10 @@ test('main app takes over already visible verified table without a loading reset
  assert.match(app,/const fastRecord=window\.qcHomeEarlyProValidatedRecord/);
 });
 test('homepage primer runs BEFORE large app and all pages share one cached app.js',()=>{
- const p=html.indexOf('home-auth-prime.js?v=20261029proearlypaint2');
- const a=html.indexOf('app.js?v=20261029proearlypaint2');
+ const p=html.indexOf('home-auth-prime.js?v=20261029parallelrls4');
+ const a=html.indexOf('app.js?v=20261029proawait3');
  assert.ok(p>0&&a>p);
  const pages=['index.html','football.html','league.html','jc-match.html','profile.html','register.html','forgot-password.html','reset-password.html','verify.html','match.html','model-record-test.html','league-archive-preview.html'];
- for(const page of pages)assert.match(fs.readFileSync(path.join(root,page),'utf8'),/app\.js\?v=20261029proearlypaint2/);
+ for(const page of pages)assert.match(fs.readFileSync(path.join(root,page),'utf8'),/app\.js\?v=20261029proawait3/);
  assert.doesNotMatch(prime,/localStorage\.setItem|sessionStorage\.setItem/);
 });
