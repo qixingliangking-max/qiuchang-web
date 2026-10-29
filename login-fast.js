@@ -51,6 +51,9 @@
     show('密码修改成功，请使用新密码重新登录。','success');
     try{history.replaceState({},'',location.pathname);}catch(_){}
   }
+  else if(inApp()){
+    show('当前是应用内浏览器；若登录连接超时，可通过右上角菜单选择“在浏览器打开”。');
+  }
   form.addEventListener('invalid',event=>{
     if(event.target===agreement)show('请先勾选用户服务协议和隐私政策','error');
   },true);
@@ -69,35 +72,60 @@
     });
   }
 
-  // Native Auth fetch is abortable. A timeout must stop the request instead
-  // of unlocking a form while a hidden SDK password request is still running.
-  async function authenticate(email,password){
-    if(!loginClient || !window.QC_SUPABASE_URL || !window.QC_SUPABASE_PUBLISHABLE_KEY)
-      return {error:{code:'AUTH_UNAVAILABLE'}};
+  // A few Android in-app browsers silently stall fetch or ignore abort.
+  // Race both response headers AND body against a deadline; a second bounded
+  // attempt is permitted only for transport failures, never for 4xx/429.
+  // No credentials or tokens are persisted in diagnostic logs.
+  async function passwordTokenAttempt(email,password,deadlineMs){
     const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),12000);
-    let payload={},status=0;
+    let timer;
     try{
-      const response=await fetch(window.QC_SUPABASE_URL+'/auth/v1/token?grant_type=password',{
+      const request=fetch(window.QC_SUPABASE_URL+'/auth/v1/token?grant_type=password',{
         method:'POST',mode:'cors',cache:'no-store',signal:controller.signal,
         headers:{'Content-Type':'application/json','apikey':window.QC_SUPABASE_PUBLISHABLE_KEY},
         body:JSON.stringify({email,password})
+      }).then(async response=>{
+        let payload={};
+        try{payload=await response.json();}catch(_){}
+        return {response,payload};
       });
-      status=response.status;
-      try{payload=await response.json();}catch(_){}
+      const timeout=new Promise(resolve=>{
+        timer=setTimeout(()=>{
+          controller.abort();
+          resolve({timeout:true});
+        },deadlineMs);
+      });
+      const result=await Promise.race([request,timeout]);
+      if(result?.timeout)return {error:{code:'AUTH_NETWORK_TIMEOUT',status:0}};
+      const {response,payload}=result;
       if(!response.ok)return {error:{
         code:String(payload?.code||payload?.error_code||'AUTH_FAILED'),
         message:String(payload?.message||payload?.error_description||payload?.error||''),
-        status
+        status:response.status
       }};
-      if(!payload.access_token || !payload.refresh_token)
+      if(!payload?.access_token || !payload?.refresh_token)
         return {error:{code:'AUTH_INVALID_RESPONSE'}};
+      return {payload};
     }catch(error){
       return {error:{code:error?.name==='AbortError'?'AUTH_NETWORK_TIMEOUT':'AUTH_NETWORK',
-        message:String(error?.message||''),status:0}};
+        message:String(error?.name||''),status:0}};
     }finally{
-      clearTimeout(timeout);
+      clearTimeout(timer);
     }
+  }
+
+  async function authenticate(email,password){
+    if(!loginClient || !window.QC_SUPABASE_URL || !window.QC_SUPABASE_PUBLISHABLE_KEY)
+      return {error:{code:'AUTH_UNAVAILABLE'}};
+    let payload=null;
+    for(let attempt=0;attempt<2;attempt++){
+      const result=await passwordTokenAttempt(email,password,6000);
+      if(!result.error){payload=result.payload;break;}
+      if(attempt===0 && ['AUTH_NETWORK_TIMEOUT','AUTH_NETWORK'].includes(result.error.code))
+        continue;
+      return {error:result.error};
+    }
+    if(!payload)return {error:{code:'AUTH_NETWORK_TIMEOUT'}};
 
     // setSession writes to the same protected storage used across the site.
     // Do not replace Supabase storage with an unaudited custom token cache.
@@ -125,7 +153,9 @@
     if(/invalid_credentials|invalid login credentials/i.test(code+' '+message))return '邮箱或密码错误';
     if(/email_not_confirmed|email not confirmed/i.test(code+' '+message))return '邮箱尚未完成验证';
     if(/too_many|rate|over_request_rate_limit/i.test(code+' '+message))return '登录请求过于频繁，请稍后再试';
-    if(code==='AUTH_NETWORK_TIMEOUT')return '账号服务连接超时，建议切换网络或使用系统浏览器重试。';
+    if(code==='AUTH_NETWORK_TIMEOUT')return inApp()
+      ? '当前内置浏览器未能连接账号服务。请点右上角“…”选择“在浏览器打开”，用系统浏览器重新登录。'
+      : '账号服务连接超时，请检查 Wi-Fi / 移动网络后重试。';
     if(code==='AUTH_SESSION_TIMEOUT')return '账号已通过验证，但登录状态同步较慢，请返回首页查看后再决定是否重试。';
     if(/AUTH_NETWORK|AUTH_UNAVAILABLE|AUTH_INVALID_RESPONSE|AUTH_SESSION_ERROR|AUTH_NO_SESSION/.test(code))
       return networkMessage();
