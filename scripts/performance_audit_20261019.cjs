@@ -178,7 +178,7 @@ async function auditRoutes(engine){
     row.firstVisibleMs=Date.now()-t0;
     row.finalPath=new URL(page.url()).pathname;
     row.loginRedirect=row.finalPath==='/login.html';
-    row.ok=row.status===200 && (!row.loginRedirect || allowedLoginRedirect);
+    row.ok=row.status===200 && (!row.loginRedirect || allowedLoginRedirect || route==='/login.html');
     // Structural page checks are strict, loading time is monitored separately.
     if(row.firstVisibleMs>5000)row.performanceWarning='first useful element >5s';
    }catch(error){
