@@ -2,7 +2,7 @@
 const {chromium,webkit,devices}=require('playwright');
 const fs=require('fs');
 const BASE='https://qcda.cn';
-const audit={testedAt:new Date().toISOString(),base:BASE,mode:'Guest; GitHub runner to live site; fresh browser contexts; browser-based user interactions',results:[]};
+const audit={testedAt:new Date().toISOString(),base:BASE,mode:'Guest; GitHub runner to live site; fresh browser contexts; browser-based user interactions',results:[],routes:[]};
 const limit=10000;
 const today=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
 const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
@@ -112,15 +112,79 @@ async function auditEngine(engine){
    }
  }finally{await browser.close();}
 }
+// A complete guest-route sweep runs on the same production hostname.
+// No credentials are used; admin/model record pages are checked for public
+// first paint and proper guest handling, never for privileged internals.
+async function auditRoutes(engine){
+ const browser=await engine.type.launch({headless:true});
+ const checks=[
+  ['/index.html','#jcLiveCards'],
+  ['/football.html','#jcFootballCards'],
+  ['/league.html','#leagueRecordRoot'],
+  ['/login.html','#loginForm'],
+  ['/register.html','#registerForm'],
+  ['/forgot-password.html','#forgotPasswordForm'],
+  ['/profile.html','#profileRoot'],
+  ['/admin.html','#adminRoot'],
+  ['/model-record-test.html','#modelRecordRoot'],
+  ['/internal-test/curated-lab-20261019.html','body'],
+  ['/jc-match.html?id=a6a30f57-c061-425e-bcb4-428c34c4e7de','#jcMatchDetailRoot'],
+  ['/privacy.html','body'],
+  ['/terms.html','body']
+ ];
+ try{
+  for(const [route,selector] of checks){
+   const ctx=await browser.newContext({...engine.device,locale:'zh-CN',timezoneId:'Asia/Shanghai'});
+   const page=await ctx.newPage();
+   const errors=[];let requests=0,api=0;
+   page.on('pageerror',error=>errors.push(String(error).slice(0,160)));
+   page.on('request',request=>{
+    requests++;
+    if(request.url().includes('.supabase.co/rest/'))api++;
+   });
+   const t0=Date.now(),row={device:engine.name,route,selector};
+   try{
+    const response=await page.goto(BASE+route,{waitUntil:'domcontentloaded',timeout:20000});
+    row.domMs=Date.now()-t0;
+    row.status=response?.status();
+    row.finalPath=new URL(page.url()).pathname;
+    // Admin/profile guests may be redirected to /login.html asynchronously.
+    const waitSelector=page.url().includes('/login.html')?'#loginForm':selector;
+    await page.locator(waitSelector).first().waitFor({state:'visible',timeout:7000});
+    row.firstVisibleMs=Date.now()-t0;
+    row.ok=row.status===200;
+    // Structural page checks are strict, loading time is monitored separately.
+    if(row.firstVisibleMs>5000)row.performanceWarning='first useful element >5s';
+   }catch(error){
+    row.ok=false;row.error=String(error).slice(0,250);
+   }
+   row.requests=requests;row.api=api;row.jsErrors=errors.slice(0,3);
+   audit.routes.push(row);
+   console.log('QCDA_ROUTE_PERF='+JSON.stringify(row));
+   await ctx.close();
+  }
+ }finally{await browser.close();}
+}
+
 (async()=>{
  for(const e of [
+  {name:'desktop-chrome',type:chromium,device:{viewport:{width:1360,height:900}}},
   {name:'android-chromium',type:chromium,device:devices['Pixel 7']},
   {name:'iphone-webkit',type:webkit,device:devices['iPhone 13']}
- ])await auditEngine(e);
+ ]) {
+   await auditEngine(e);
+   await auditRoutes(e);
+ }
  fs.mkdirSync('.github/reports',{recursive:true});
  fs.writeFileSync('.github/reports/production-perf-20261019.json',JSON.stringify(audit,null,2)+'\n');
  console.log('QCDA_PERF_SUMMARY='+JSON.stringify({at:audit.testedAt,results:audit.results.map(x=>({device:x.engine,surface:x.surface,dom:x.domContentLoadedMs,first:x.firstContentMs,steps:x.steps,errors:x.exceptions.length,failed:x.failedRequests.length,api:x.apiRequests,static:x.performance?.staticResources}))}));
+ console.log('QCDA_ROUTE_SUMMARY='+JSON.stringify({
+   count:audit.routes.length,failed:audit.routes.filter(r=>!r.ok),
+   slow:audit.routes.filter(r=>r.performanceWarning)
+ }));
  const failures=audit.results.filter(x=>x.fatal || x.steps.some(s=>!s.ok));
+ if(audit.routes.some(r=>!r.ok || r.performanceWarning || r.jsErrors.length))
+   process.exitCode=1;
  if(failures.length){
    console.error('QCDA_PERF_FAILURES '+JSON.stringify(failures.map(x=>({
      device:x.engine,surface:x.surface,fatal:x.fatal,failedSteps:x.steps.filter(s=>!s.ok)
