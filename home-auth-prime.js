@@ -9,7 +9,17 @@
   if(!cards || !client) return;
 
   let signedOut=false;
-  client.auth.onAuthStateChange(event=>{
+  let resolveInitialSession=null;
+  const eventSession=new Promise(resolve=>{resolveInitialSession=resolve;});
+  client.auth.onAuthStateChange((event,session)=>{
+    // Supabase restores INITIAL_SESSION independently of getSession().
+    // A slow mobile WebView SDK read must not hold auth first paint if
+    // its authoritative session event has already arrived.
+    if(['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED'].includes(event) &&
+       resolveInitialSession){
+      resolveInitialSession({data:{session:session||null},error:null});
+      resolveInitialSession=null;
+    }
     if(event==='SIGNED_OUT'){
       signedOut=true;
       window.qcHomeEarlyAccess=null;
@@ -29,9 +39,11 @@
   });
   // Use exactly one SDK read, adopted by app.js (never start a second SDK
   // getSession while WebView token refresh may hold the SDK auth lock).
-  window.qcHomeEarlySession=Promise.resolve()
-    .then(()=>client.auth.getSession())
-    .catch(error=>({data:{session:null},error}));
+  window.qcHomeEarlySession=Promise.race([
+    Promise.resolve().then(()=>client.auth.getSession())
+      .catch(error=>({data:{session:null},error})),
+    eventSession
+  ]);
 
   window.qcHomeEarlyAccess=(async()=>{
     const first=await deadline(window.qcHomeEarlySession,4000);
