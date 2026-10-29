@@ -1,0 +1,31 @@
+name: Cross-device account navigation fast path QA
+on:
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'football.html'
+      - 'jc-match.html'
+      - 'profile.html'
+      - 'scripts/crossdevice_account_nav_qa_20261029.cjs'
+      - '.github/workflows/crossdevice-account-nav-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'scripts/crossdevice_account_nav_qa_20261029.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: JS parse check
+        run: node --check app.js
+      - name: Mobile, desktop, stale auth and username latency checks
+        run: node --test scripts/crossdevice_account_nav_qa_20261029.cjs
+      - name: Existing mobile auth and cross-platform navigation regressions
+        run: node --test scripts/auth_lock_mobile_qa_20261028.cjs scripts/cross_platform_login_handoff_qa_20261029.cjs
