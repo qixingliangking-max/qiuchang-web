@@ -2913,6 +2913,22 @@ async function loadJcFrontend(){
   }
 
   async function fetchOverviewDatePreferred(ds){
+    // When the previous-day review is already fully and authoritatively
+    // settled in memory, guest/basic date arrows must not fetch the same
+    // archived match list a second time (especially slow on iOS WebKit).
+    // Pro retains its existing FINAL prediction source and never substitutes
+    // a public review for its protected historical model payload.
+    if(ds<today && !access.isPro){
+      const saved=qcHistoryOverviewRowsCache.get(ds);
+      const count=Number(saved?.matchCount||0);
+      if(saved?.isFinal===true && Array.isArray(saved.data) && count>0 &&
+         saved.data.length===count && Number(saved.finishedCount)>=count &&
+         saved.data.every(m=>m?.id && jcBusinessDate(m)===ds &&
+           jcScoreInfo(m).finished)){
+        return {data:saved.data,error:null,fromHistorySnapshot:true,
+          historyFinal:true,matchCount:count,finishedCount:count,fromMemory:true};
+      }
+    }
     // Historical dates must resolve through the immutable public archive even
     // if its manifest is still loading. Never fall through to live DB assembly
     // just because the browser opened the date before the manifest completed.
