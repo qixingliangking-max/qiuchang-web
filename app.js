@@ -495,131 +495,44 @@ function qcAuthDeadline(work,ms){
     new Promise(resolve=>{timer=setTimeout(()=>resolve({timeout:true,value:null}),ms);})
   ]).finally(()=>clearTimeout(timer));
 }
-async function qcGetAccessState(force=false,overviewBundlePromise=null){
+async function qcGetAccessState(force=false,_unusedBundle=null){
   if(force) qcAccessStatePromise=null;
   if(qcAccessStatePromise) return qcAccessStatePromise;
 
+  // Restored September's two-step flow: one session, one server Pro check.
+  // The small home pre-reader performs the same steps ahead of app.js,
+  // and the main app reuses its single checked result.
   qcAccessStatePromise=(async()=>{
     if(!window.qcSupabase){
-      qcLastAccessState={loggedIn:false,isPro:false};
+      qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
       return qcLastAccessState;
     }
-
-    try{
-      let session=null;
-      let recentAuthHandoff=false;
-      try{
-        const handoffAt=Number(sessionStorage.getItem('qc-auth-handoff')||0);
-        recentAuthHandoff=Boolean(handoffAt && Date.now()-handoffAt<12000);
-      }catch(_){}
-      // Homepage already started an SDK session read and a server-side Pro
-      // check before this large bundle executed. Reuse that EXACT verdict;
-      // normal opens must not issue a second entitlement RPC. A login handoff
-      // that briefly looked anonymous still follows the fresh SDK retry below.
-      if(!force && window.qcHomeEarlyAccessPromise){
-        const early=await qcAuthDeadline(window.qcHomeEarlyAccessPromise,5200);
-        if(!early.timeout && early.value &&
-           (!recentAuthHandoff || early.value.loggedIn===true)){
-          qcLastAccessState=early.value;
-          if(qcLastAccessState.loggedIn){
-            try{sessionStorage.removeItem('qc-auth-handoff');}catch(_){}
-          }
-          return qcLastAccessState;
-        }
-        if(early.timeout && !recentAuthHandoff){
-          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
-          return qcLastAccessState;
-        }
-      }
-      // Handoff allows one short fresh SDK read if the initial event was
-      // empty; repeatedly consuming the same null promise cannot recover.
-      const sessionAttempts=recentAuthHandoff?2:1;
-      for(let attempt=0;attempt<sessionAttempts && !session;attempt++){
-        const state=await qcAuthDeadline(qcGetSharedSession(attempt>0),4000);
-        if(state.timeout){
-          console.warn('登录状态读取超时，会员内容保持关闭');
-          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
-          return qcLastAccessState;
-        }
-        const {data:sessionData,error:sessionError}=state.value||{};
-        if(sessionError){
-          console.warn('读取登录状态失败',sessionError);
-          qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
-          return qcLastAccessState;
-        }
-        session=sessionData?.session||null;
-        if(!session && attempt+1<sessionAttempts){
-          const delay=recentAuthHandoff ? 120+(attempt*120) : 220;
-          await new Promise(resolve=>setTimeout(resolve,delay));
-        }
-      }
-
-      if(session){
-        try{ sessionStorage.removeItem('qc-auth-handoff'); }catch(_){}
-      }
-
-      if(!session){
-        // A recent successful login must not silently become a signed-out
-        // page when iOS/Android has not restored the SDK storage in time.
-        qcLastAccessState=recentAuthHandoff
-          ? {loggedIn:false,isPro:false,verificationPending:true}
-          : {loggedIn:false,isPro:false};
-        return qcLastAccessState;
-      }
-
-      let isPro=false;
-      let proError=null;
-      let verifiedByOverview=false;
-      // The homepage bootstrap already checks the current user's Pro access
-      // on the server. Reuse that verdict rather than issuing a second RPC.
-      // Other pages (or a failed bootstrap) retain the original check.
-      if(overviewBundlePromise){
-        try{
-          const checked=await qcAuthDeadline(
-            typeof overviewBundlePromise==='function'
-              ? overviewBundlePromise() : overviewBundlePromise,1800);
-          const bundle=checked.timeout ? null : checked.value;
-          if(bundle && typeof bundle.is_pro==='boolean'){
-            isPro=bundle.is_pro===true;
-            verifiedByOverview=true;
-          }
-        }catch(error){
-          console.warn('首页权限复用失败，使用独立权限检查',error);
-        }
-      }
-      if(!verifiedByOverview){
-        for(let attempt=0;attempt<2;attempt++){
-          const checked=await qcAuthDeadline(
-            window.qcSupabase.rpc('has_active_pro_access'),4500);
-          if(checked.timeout){
-            proError=new Error('会员验证请求超时');
-            break;
-          }
-          const result=checked.value||{};
-          proError=result.error||null;
-          if(!proError){
-            isPro=result.data===true;
-            break;
-          }
-          if(attempt===0) await new Promise(resolve=>setTimeout(resolve,320));
-        }
-        if(proError){
-          console.warn('读取Pro权限失败',proError);
-          qcLastAccessState={loggedIn:true,isPro:false,userId:session.user?.id||null,
-            verificationPending:true};
-          return qcLastAccessState;
-        }
-      }
-
-      qcLastAccessState={loggedIn:true,isPro,userId:session.user?.id||null};
+    if(!force && window.qcHomeEarlyAccessPromise){
+      qcLastAccessState=await window.qcHomeEarlyAccessPromise;
       return qcLastAccessState;
-    }catch(err){
-      console.warn('读取会员权限失败',err);
+    }
+    try{
+      const checked=await qcAuthDeadline((async()=>{
+        const {data:sessionData,error:sessionError}=
+          await qcGetSharedSession(force);
+        if(sessionError) throw sessionError;
+        const session=sessionData?.session||null;
+        if(!session) return {loggedIn:false,isPro:false};
+        const {data:isPro,error:proError}=
+          await window.qcSupabase.rpc('has_active_pro_access');
+        if(proError) throw proError;
+        return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
+      })(),4000);
+      qcLastAccessState=checked.timeout
+        ? {loggedIn:false,isPro:false,verificationPending:true}
+        : checked.value;
+      return qcLastAccessState;
+    }catch(error){
+      console.warn('读取会员权限失败',error);
       qcLastAccessState={loggedIn:false,isPro:false,verificationPending:true};
       return qcLastAccessState;
     }
   })();
-
   return qcAccessStatePromise;
 }
 
@@ -3576,8 +3489,6 @@ async function loadJcFrontend(){
   // Upgrade public first paint after server auth/Pro verification.
   // Keep the protected card neutral until the authorized FINAL is available.
   let qcMemberRetryInProgress=false;
-  let qcMemberAutoRetryUsed=false;
-  let qcMemberAutoRetryTimer=null;
   let qcMemberAuthEpoch=0;
   async function qcApplyMemberAccess(resolved,epoch=0){
     // Ignore an old failed read if a more recent in-place retry has started.
@@ -3587,15 +3498,6 @@ async function loadJcFrontend(){
     if(access.verificationPending){
       accessDisplayPhase='unavailable';
       render();
-      // A transient SDK auth lock or slow Pro RPC may recover without a reload.
-      // Retry once only; repeated failures stay fail-closed with a manual retry.
-      if(!qcMemberAutoRetryUsed){
-        qcMemberAutoRetryUsed=true;
-        qcMemberAutoRetryTimer=setTimeout(()=>{
-          qcMemberAutoRetryTimer=null;
-          if(document.hidden!==true) qcRetryMemberInPlace();
-        },1200);
-      }
       return;
     }
     if(access.isPro){
@@ -3670,10 +3572,6 @@ async function loadJcFrontend(){
 
   async function qcRetryMemberInPlace(){
     if(qcMemberRetryInProgress) return;
-    if(qcMemberAutoRetryTimer){
-      clearTimeout(qcMemberAutoRetryTimer);
-      qcMemberAutoRetryTimer=null;
-    }
     qcMemberRetryInProgress=true;
     const epoch=++qcMemberAuthEpoch;
     accessDisplayPhase='verifying';
