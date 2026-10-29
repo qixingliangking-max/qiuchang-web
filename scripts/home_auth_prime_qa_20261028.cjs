@@ -41,7 +41,10 @@ function fixture({member=true}={}){
 }
 
 test('homepage early script starts SDK read without running any entitlement checks or model fetching',async()=>{
-  assert.doesNotMatch(primer,/has_active_pro_access|qc_model_outputs|jc_model_outputs|qcFetchOverviewBootstrap/);
+  // Analyze executable source only; documentation comments may correctly
+  // mention the server entitlement API without invoking it.
+  const executable=primer.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,'');
+  assert.doesNotMatch(executable,/has_active_pro_access|qc_model_outputs|jc_model_outputs|qcFetchOverviewBootstrap/);
   const f=fixture();
   await f.initial;
   assert.equal(f.calls.sessions,1);
