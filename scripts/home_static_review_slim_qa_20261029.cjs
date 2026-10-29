@@ -81,6 +81,6 @@ test('homepage removes only three redundant script tags, retains safe real data 
   assert.ok(scripts.some(src=>src.includes(required)),required);
  }
  assert.match(html,/data-qc-final-date="2026-10-28" data-qc-final-count="17"/);
- assert.match(html,/app\.js\?v=20261029allnav4/);
+ assert.match(html,/app\.js\?v=20261030latefinal1/);
  assert.doesNotMatch(html,/src="[^"]*admin-home\.js/);
 });
