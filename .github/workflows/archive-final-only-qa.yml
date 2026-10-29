@@ -1,0 +1,50 @@
+name: FINAL-only daily archive publication QA
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/publish_public_overview_archives.py'
+      - 'scripts/test_publish_public_overview_archives.py'
+      - 'scripts/prerender_final_overview.cjs'
+      - 'overview-public-rescue.js'
+      - 'scripts/public_history_db_fallback_qa_20261029.cjs'
+      - 'scripts/public_firstpaint_qa_20261028.cjs'
+      - 'index.html'
+      - '.github/workflows/publish-public-football-history.yml'
+      - '.github/workflows/archive-final-only-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/publish_public_overview_archives.py'
+      - 'scripts/test_publish_public_overview_archives.py'
+      - 'scripts/prerender_final_overview.cjs'
+      - 'overview-public-rescue.js'
+      - 'scripts/public_history_db_fallback_qa_20261029.cjs'
+      - 'scripts/public_firstpaint_qa_20261028.cjs'
+      - 'index.html'
+      - '.github/workflows/archive-final-only-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  safe-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python syntax and strict archive invariants
+        run: |
+          python -m py_compile scripts/publish_public_overview_archives.py
+          python -m unittest discover -s scripts -p 'test_publish_public_overview_archives.py' -v
+      - name: JS syntax and safe fast public-history fallback
+        run: |
+          node --check scripts/prerender_final_overview.cjs
+          node --check overview-public-rescue.js
+          node --test scripts/public_history_db_fallback_qa_20261029.cjs scripts/public_firstpaint_qa_20261028.cjs

@@ -8,7 +8,7 @@ const root=path.resolve(__dirname,'..');
 
 test('homepage loads public-only rescue synchronously, ahead of deferred auth',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
- const start=html.indexOf('<script src="overview-public-rescue.js?v=20261028earlypaint1"></script>');
+ const start=html.indexOf('<script src="overview-public-rescue.js?v=20261029finalguard1"></script>');
  const sdk=html.indexOf('src="assets/vendor/supabase-js-2.117.3.js"');
  assert.ok(start>0&&sdk>start);
  assert.doesNotMatch(html,/<script defer src="overview-public-rescue/);
@@ -39,7 +39,9 @@ async function run({final=true}={}){
        rows:[{id:'public-fixture',match_num:'周二001',
          business_date:'2026-10-27',match_time:'19:00',
          league_short_name:'测试联赛',home_team_name:'主队',
-         away_team_name:'客队',raw:{sectionsNo999:'2:1',sectionsNo1:'1:0'}}]};
+         away_team_name:'客队',match_status:'已结束',
+         jc_model_outputs:[{stage:'FINAL'}],
+         raw:{sectionsNo999:'2:1',sectionsNo1:'1:0',matchStatusName:'已结束'}}]};
    return {ok:true,async json(){return body}};
   }
  };
