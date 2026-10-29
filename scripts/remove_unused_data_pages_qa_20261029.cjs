@@ -22,14 +22,14 @@ for(const [page,container] of Object.entries(targets)){
 test('production league archive uses isolated guest-light entry and lazy Pro modules',()=>{
  const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
  const entry=fs.readFileSync(path.join(root,'league-entry.js'),'utf8');
- assert.doesNotMatch(html,/<script[^>]*src=["']data\\.js["']/);
- assert.doesNotMatch(html,/<script[^>]*src=["']app\\.js\\?/);
- assert.match(html,/id=["']leagueRecordRoot["']/);
- assert.match(html,/league-entry\\.js/);
- assert.match(html,/supabase-client\\.js/);
- assert.match(entry,/league-p3-public\\.js/);
- assert.match(entry,/league-archive-snapshot-v2\\.js/);
- assert.match(entry,/has_active_pro_access/);
+ assert.ok(!html.includes('src="data.js"'));
+ assert.ok(!html.includes('src="app.js?'));
+ assert.ok(html.includes('id="leagueRecordRoot"'));
+ assert.ok(html.includes('league-entry.js'));
+ assert.ok(html.includes('supabase-client.js'));
+ assert.ok(entry.includes('league-p3-public.js'));
+ assert.ok(entry.includes('league-archive-snapshot-v2.js'));
+ assert.ok(entry.includes('has_active_pro_access'));
 });
 test('legacy demo page retains its required data.js fixture',()=>{
  const html=fs.readFileSync(path.join(root,'match.html'),'utf8');
