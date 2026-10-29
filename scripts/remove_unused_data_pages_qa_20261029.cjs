@@ -7,7 +7,6 @@ const root=path.resolve(__dirname,'..');
 const targets={
  'football.html':'jcFootballCards',
  'jc-match.html':'jcMatchDetailRoot',
- 'league.html':'leagueRecordRoot',
  'model-record-test.html':'modelRecordRoot'
 };
 for(const [page,container] of Object.entries(targets)){
@@ -20,6 +19,14 @@ for(const [page,container] of Object.entries(targets)){
   assert.doesNotMatch(html,/id=["'](?:recapRows|matchCards|matchRoot)["']/);
  });
 }
+test('restored league archive retains its original data.js load and main renderer',()=>{
+ const html=fs.readFileSync(path.join(root,'league.html'),'utf8');
+ assert.match(html,/<script[^>]*src=["']data\.js["']/);
+ assert.match(html,/id=["']leagueRecordRoot["']/);
+ assert.match(html,/league-p3-public\.js/);
+ assert.match(html,/league-archive-snapshot-v2\.js/);
+ assert.match(html,/supabase-client\.js/);
+});
 test('legacy demo page retains its required data.js fixture',()=>{
  const html=fs.readFileSync(path.join(root,'match.html'),'utf8');
  assert.match(html,/<script[^>]*src=["']data\.js["']/);
