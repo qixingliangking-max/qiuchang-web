@@ -8,9 +8,10 @@
 
   // One session read, followed by exactly one Pro entitlement RPC.
   // A single four-second total deadline prevents an indefinite neutral card.
+  window.qcHomeEarlySession=Promise.resolve().then(()=>sdk.auth.getSession());
   const check=(async()=>{
     try{
-      const {data:sessionData,error:sessionError}=await sdk.auth.getSession();
+      const {data:sessionData,error:sessionError}=await window.qcHomeEarlySession;
       if(sessionError) throw sessionError;
       const session=sessionData?.session||null;
       if(!session) return {loggedIn:false,isPro:false};
