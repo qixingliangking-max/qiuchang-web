@@ -20,6 +20,7 @@ on:
       - 'scripts/shared_session_admin_isolation_qa_20261028.cjs'
       - 'scripts/home_auth_deadline_qa_20261028.cjs'
       - 'scripts/home_auth_prime_qa_20261028.cjs'
+      - 'scripts/home_member_retry_qa_20261029.cjs'
       - 'scripts/home_schedule_firstpaint_deadline_qa_20261028.cjs'
       - '.github/workflows/auth-lock-mobile-qa.yml'
   workflow_dispatch:
@@ -44,6 +45,8 @@ jobs:
         run: node --test scripts/home_auth_prime_qa_20261028.cjs
       - name: Home auth never waits indefinitely or bypasses server entitlements
         run: node --test scripts/home_auth_deadline_qa_20261028.cjs
+      - name: Recovery from stalled SDK and one-time membership recheck
+        run: node --test scripts/home_member_retry_qa_20261029.cjs
       - name: Public current-day static fallback never blocks homepage forever
         run: node --test scripts/home_schedule_firstpaint_deadline_qa_20261028.cjs
       - name: Check full application JavaScript syntax
