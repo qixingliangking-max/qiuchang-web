@@ -135,33 +135,54 @@
       </div>
       <div class="jc-live-cards" id="jcLiveCards"><div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div></div>
 <script>
-/* Anonymous display fast path only. Entitlements remain server verified. */
+/* Fail-closed homepage auth watchdog: runs directly from HTML and does not
+   wait for Supabase SDK, logo catalog, or the main application download. */
 (function(){
+  var cards=document.getElementById('jcLiveCards');
+  var meta=document.getElementById('jcPredictionMeta');
+  if(!cards) return;
+  var loginUrl='login.html?v=20261029authhandoff5&amp;next='+
+    encodeURIComponent(location.pathname+location.search);
+  function isWaiting(){
+    return cards.dataset.qcAuthPaintReady!=='1' &&
+      /正在确认登录状态|正在恢复会员会话/.test(cards.textContent||'');
+  }
+  // Even if *all deferred scripts fail*, never leave an inert spinner.
+  // This does not grant access: only a server-verified Pro result can show rows.
+  window.setTimeout(function(){
+    if(!isWaiting())return;
+    if(meta) meta.textContent='会员状态尚未确认';
+    cards.innerHTML='<div class="profile-card" role="status" aria-live="polite">'+
+      '会员状态尚未确认，请检查网络或重新登录。 '+
+      '<a class="btn btn-outline" href="'+loginUrl+'">前往登录</a></div>';
+    window.qcHomeAuthWatchdogTriggered=true;
+  },3000);
   try {
-    var now=Date.now(), hash=location.hash||'';
-    if(/access_token=|refresh_token=|type=recovery|type=invite/i.test(hash)) return;
+    var now=Date.now(),hash=location.hash||'';
+    if(/access_token=|refresh_token=|type=recovery|type=invite/i.test(hash))return;
     var handoff=Number(sessionStorage.getItem('qc-auth-handoff')||0);
-    if(handoff>0 && now-handoff>=0 && now-handoff<30000) return;
+    var recentHandoff=handoff>0 && now-handoff>=0 && now-handoff<30000;
     var key='sb-oqtloldkfjxildoribkf-auth-token';
     var pref=localStorage.getItem('qc-auto-login');
     var token=pref==='1'?localStorage.getItem(key)
       :pref==='0'?sessionStorage.getItem(key)
       :(sessionStorage.getItem(key)||localStorage.getItem(key));
-    if(token) return; // Cached session may be Pro: never flash guest UI.
+    if(token || recentHandoff){
+      cards.innerHTML='<div class="profile-card" role="status" aria-live="polite">'+
+        '正在恢复会员会话，请稍候…</div>';
+      if(meta)meta.textContent='正在核验会员';
+      return;
+    }
     window.qcOverviewKnownGuestFirstPaint=true;
-    var node=document.getElementById('jcLiveCards');
-    if(!node) return;
-    node.innerHTML='<div class="qc-premium-gate">'+
+    cards.innerHTML='<div class="qc-premium-gate">'+
       '<div class="qc-premium-lock" aria-hidden="true">🔒</div>'+
       '<h3>登录后查看今日预测</h3>'+
-      '<p>今日预测包含本站 AI 玩法推荐与比分判断，需要登录后查看。</p>'+
-      '<a class="qc-premium-primary" href="login.html?v=20261029authhandoff5&amp;next='+
-        encodeURIComponent(location.pathname+location.search)+'">立即登录</a>'+
+      '<p>今日预测需要登录后查看。</p>'+
+      '<a class="qc-premium-primary" href="'+loginUrl+'">立即登录</a>'+
       '</div>';
-    var meta=document.getElementById('jcPredictionMeta');
-    if(meta) meta.textContent='';
+    if(meta)meta.textContent='';
   }catch(_){
-    // Storage unavailable: keep neutral placeholder until session resolves.
+    // No writable WebView storage: independent 3s watchdog handles this.
   }
 })();
 </script>
