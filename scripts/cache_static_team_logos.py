@@ -173,6 +173,8 @@ def fill_missing_sources(teams):
         "磐田喜悦": "https://images.fotmob.com/image_resources/logo/teamlogo/8065.png",
         "宫崎惊奇牛鸟": "https://images.fotmob.com/image_resources/logo/teamlogo/941024.png",
         "利雅得胜利": "https://a.espncdn.com/i/teamlogos/soccer/500/817.png",
+        # Confirmed official FotMob team profile /teams/9841 for Wrexham AFC.
+        "雷克斯汉姆": "https://images.fotmob.com/image_resources/logo/teamlogo/9841.png",
     }
     for name, url in verified.items():
         if name in teams:
@@ -339,6 +341,98 @@ def static_odds_self_test():
     print("PASS: odds update only prekick; in-play and FT static immutable")
 
 
+def complete_prekick_crests(row, by_team, now):
+    """Only fill missing immutable *local* crests before kickoff.
+
+    Never alter a played/FT/cancelled match, its identity, score, odds or FINAL.
+    """
+    if not prekick_is_open(row, now):
+        return row
+    update = {}
+    for side in ("home", "away"):
+        field = "_" + side + "LogoUrl"
+        current = str(row.get(field) or "").strip()
+        if current and current.startswith("assets/team-logos/") and asset_is_valid(ROOT / current):
+            continue
+        name = str(row.get(side + "_team_name") or "").strip()
+        local = by_team.get(name, "")
+        if local and local.startswith("assets/team-logos/") and asset_is_valid(ROOT / local):
+            update[field] = local
+    return {**row, **update} if update else row
+
+
+def assert_prekick_crests_complete(rows, by_team, now, date_str):
+    """Stop incomplete public snapshot publication instead of silent empty logos."""
+    missing = []
+    for row in rows:
+        if not prekick_is_open(row, now):
+            continue
+        for side in ("home", "away"):
+            team = str(row.get(side + "_team_name") or "").strip()
+            local = str(row.get("_" + side + "LogoUrl") or "")
+            if not (local and local == by_team.get(team) and
+                    local.startswith("assets/team-logos/") and
+                    asset_is_valid(ROOT / local)):
+                missing.append(str(row.get("match_num") or row.get("id")) +
+                               ":" + team)
+    if missing:
+        raise RuntimeError("Static schedule crest gate " + date_str +
+                           ": missing local validated logos for " +
+                           ", ".join(missing))
+
+
+def audit_published_live_crests():
+    """Check every published live roster against actual local files; read-only."""
+    catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
+    by_team = catalog.get("by_team") or {}
+    manifest = json.loads(LIVE_SCHEDULE_MANIFEST.read_text(encoding="utf-8"))
+    checked = 0
+    today = datetime.now(BEIJING).date()
+    for ds, entry in (manifest.get("dates") or {}).items():
+        file_path = (ROOT / str(entry["file"])).resolve()
+        if not file_path.is_relative_to(LIVE_SCHEDULE_DIR) or not file_path.is_file():
+            raise RuntimeError("Static crest audit: manifest file missing " + ds)
+        payload = json.loads(file_path.read_text(encoding="utf-8"))
+        rows = payload.get("rows") or []
+        if len(rows) != int(entry["match_count"]) or len(rows) != int(payload.get("match_count") or 0):
+            raise RuntimeError("Static crest audit: incomplete fixtures " + ds)
+        for row in rows:
+            for side in ("home", "away"):
+                local = row.get("_" + side + "LogoUrl") or ""
+                team = str(row.get(side + "_team_name") or "")
+                # Past locked results must never be re-written. Their missing
+                # crests are still reported, while future/current fixtures fail.
+                if (not local or local != by_team.get(team) or
+                        not local.startswith("assets/team-logos/") or
+                        not asset_is_valid(ROOT / local)):
+                    msg = ds + " " + str(row.get("match_num") or "") + " " + team
+                    if ds >= today.isoformat():
+                        raise RuntimeError("Static crest audit: unresolved published match " + msg)
+                    print("WARNING past frozen crest missing (not overwritten):", msg)
+                checked += 1
+    print("PASS: static published crest audit checked", checked,
+          "team slots across", len(manifest.get("dates") or {}), "dates")
+
+
+def static_crest_self_test():
+    from copy import deepcopy
+    now = datetime(2026, 10, 29, 8, tzinfo=timezone.utc)
+    before = {"id": "fixed-crest-001", "match_num": "周五008",
+              "kickoff_at": "2026-10-30T17:00:00+00:00",
+              "home_team_name": "谢菲尔德联", "away_team_name": "雷克斯汉姆",
+              "match_status": "未开始", "_homeLogoUrl": "", "_awayLogoUrl": "",
+              "raw": {"sectionsNo999": ""}}
+    # Do not assume any downloaded images exist for this offline self-test.
+    after = complete_prekick_crests(before, {}, now)
+    assert after is before
+    finished = deepcopy(before)
+    finished["raw"]["matchStatusName"] = "已结束"
+    assert complete_prekick_crests(finished, {}, now) is finished
+    assert complete_prekick_crests(before, {},
+        datetime(2026, 10, 31, tzinfo=timezone.utc)) is before
+    print("PASS: crest gaps can only be filled before kickoff; FT remains sealed")
+
+
 def publish_live_schedules(by_team):
     """Publish public-only current schedule snapshots so first paint never needs Supabase."""
     LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
@@ -437,10 +531,16 @@ def publish_live_schedules(by_team):
                     row["jc_market_snapshots"] = match_markets
                     row["_jcMarketsComplete"] = True
                 row["_jcScheduleSnapshot"] = True
+            # A previously published prekick roster may have been sealed before
+            # the crest asset was first cached. Fill ONLY empty/invalid crest
+            # paths now; keep the entire match and all odds/FT values intact.
+            row = complete_prekick_crests(row, by_team, now)
             rows.append(row)
         if not valid or len(rows) != count:
             print("WARNING invalid live schedule rows; skipped:", ds)
             continue
+
+        assert_prekick_crests_complete(rows, by_team, now, ds)
 
         payload = {
             "version": 1,
@@ -525,5 +625,8 @@ def publish():
 if __name__ == "__main__":
     if "--self-test" in __import__("sys").argv:
         static_odds_self_test()
+        static_crest_self_test()
+    elif "--audit" in __import__("sys").argv:
+        audit_published_live_crests()
     else:
         publish()

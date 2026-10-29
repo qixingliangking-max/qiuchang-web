@@ -1142,6 +1142,19 @@ function jcStaticTeamLogoUrl(teamName){
 
 async function jcAttachTeamLogos(rows){
   if(!Array.isArray(rows) || !rows.length) return rows||[];
+  // Published public/static schedules carry the final same-origin URLs.
+  // No client-side team resolver RPC or late badge DOM patch is needed.
+  // Never consult a remote resolver for a sealed fixture or a FINAL archive.
+  if(rows.every(m=>m._qcStaticLiveSchedule || m._jcFrozenOverview ||
+    m._jcScheduleSnapshot || m._jcHistorySnapshot)){
+    for(const m of rows){
+      const home=jcStaticTeamLogoUrl(m.home_team_name);
+      const away=jcStaticTeamLogoUrl(m.away_team_name);
+      if(home) m._homeLogoUrl=home;
+      if(away) m._awayLogoUrl=away;
+    }
+    return rows;
+  }
   const names=[...new Set(rows.flatMap(m=>[m?.home_team_name,m?.away_team_name]).filter(Boolean))];
   const missing=[];
   for(const name of names){
@@ -2176,9 +2189,16 @@ async function loadJcFootball(){
     const hitsReady=Promise.allSettled([oddsReady,modelsReady]).then(()=>{
       if(valid()) jcPatchFootballHitsOnly(cards,rows,access);
     });
-    const logosReady=jcAttachTeamLogos(rows).then(()=>{
-      if(valid()) jcPatchFootballLogos(cards,rows);
-    });
+    const embeddedLogosReady=rows.every(m=>
+      (m._qcStaticLiveSchedule || m._jcFrozenOverview ||
+       m._jcScheduleSnapshot || m._jcHistorySnapshot) &&
+      jcLogoDisplayUrl(m._homeLogoUrl).startsWith('assets/team-logos/') &&
+      jcLogoDisplayUrl(m._awayLogoUrl).startsWith('assets/team-logos/'));
+    const logosReady=embeddedLogosReady
+      ? Promise.resolve()
+      : jcAttachTeamLogos(rows).then(()=>{
+          if(valid()) jcPatchFootballLogos(cards,rows);
+        });
     await Promise.allSettled([hitsReady,logosReady]);
   }
 

@@ -17,6 +17,7 @@ on:
   push:
     paths:
       - 'scripts/cache_static_team_logos.py'
+      - 'app.js'
       - 'data/overview/manifest.json'
       - 'data/overview/*.json'
       - '!data/overview/live-schedule-manifest.json'
@@ -45,6 +46,9 @@ jobs:
 
       - name: Cache newly discovered team logos from public schedules
         run: python3 scripts/cache_static_team_logos.py
+
+      - name: Audit every published schedule crest and local binary
+        run: python3 scripts/cache_static_team_logos.py --audit
 
       - name: Publish immutable binary images and updated static catalog
         shell: bash
