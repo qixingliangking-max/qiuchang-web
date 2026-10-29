@@ -2613,8 +2613,8 @@ async function loadJcFrontend(){
   const candidatePublicSchedulePromise=candidateDate>=today &&
     typeof window.qcFetchLiveScheduleDate==='function'
       ? window.qcFetchLiveScheduleDate(candidateDate) : null;
-  // Protected prediction bundles still require server-verified Pro access.
-  qcLoadFrozenOverviewManifest();
+  // Load the history manifest lazily only when the user requests an
+  // unbaked date. The complete embedded review needs no manifest fetch.
   // The protected day bundle is started only when the actual Pro table is
   // requested. Identity and membership are verified separately so a slow
   // large day bootstrap cannot block the small authorization verdict.
@@ -2652,7 +2652,20 @@ async function loadJcFrontend(){
   }).catch(error=>console.warn('会员首屏提示更新失败',error));
   // Current day: read only complete public or Pro-protected static snapshots.
   const candidatePreviousDate=qcAddDays(candidateDate,-1);
-  const candidatePreviousPromise=qcFetchHistoryOverviewDate(candidatePreviousDate);
+  // Complete independently-verified server HTML is authoritative on first
+  // paint. Checking its date/count avoids a duplicate full-day download.
+  const embeddedYesterdayCount=Number(reviewCards?.dataset?.qcFinalCount||0);
+  const bakedYesterdayReady=Boolean(
+    candidateDate===today &&
+    reviewCards?.dataset?.qcFinalDate===candidatePreviousDate &&
+    Number.isInteger(embeddedYesterdayCount) && embeddedYesterdayCount>0 &&
+    reviewCards.querySelectorAll('tbody tr.jc-overview-row[data-match-id]').length===embeddedYesterdayCount
+  );
+  const embeddedYesterday={data:[],error:null,historyFinal:true,
+    embeddedInHtml:true,matchCount:embeddedYesterdayCount,finishedCount:embeddedYesterdayCount};
+  const candidatePreviousPromise=bakedYesterdayReady
+    ? Promise.resolve(embeddedYesterday)
+    : qcFetchHistoryOverviewDate(candidatePreviousDate);
 
   // A detail link already has its PUBLIC fixture identity on this page.
   // Transfer only basic fixture/score/crest fields, never model or AI data.
@@ -2715,7 +2728,8 @@ async function loadJcFrontend(){
 
   // Browser cache gives repeat opens an immediate first frame.
   try{
-    const cached=JSON.parse(localStorage.getItem('qc-finished-review-'+candidatePreviousDate)||'null');
+    const cached=bakedYesterdayReady?null:
+      JSON.parse(localStorage.getItem('qc-finished-review-'+candidatePreviousDate)||'null');
     if(cached?.isFinal===true && Number(cached?.matchCount)>0 && Array.isArray(cached?.rows) && cached.rows.length===Number(cached.matchCount) && cached.rows.every(m=>jcScoreInfo(m).finished)){
       rememberDetailPublicRows(candidatePreviousDate,cached.rows);
       reviewCards.innerHTML=jcRenderYesterdayReview(cached.rows,calendarToday);
@@ -2727,6 +2741,7 @@ async function loadJcFrontend(){
 
   // Network refresh also does not wait for auth. Only finished rows are exposed here.
   candidatePreviousPromise.then(async result=>{
+    if(result?.embeddedInHtml) return;
     // Render yesterday's early preview only if the complete FINAL history is present.
     // Partial finished-match caches used to show 4-6 rows before the full table arrived.
     if(result?.error || !result?.historyFinal) return;
@@ -2778,10 +2793,12 @@ async function loadJcFrontend(){
   // Yesterday's review may require an additional Pro snapshot merge; it must
   // not hold up today's 14-row table on slow mobile connections.
   const initialPrevDate=qcAddDays(initialDate,-1);
-  const previousReadyPromise=fetchHistoryReviewDateReady(
-    initialPrevDate,
-    initialDate===candidateDate ? candidatePreviousPromise : null
-  ).catch(error=>{
+  const previousReadyPromise=(bakedYesterdayReady && initialDate===today
+    ? candidatePreviousPromise
+    : fetchHistoryReviewDateReady(
+        initialPrevDate,
+        initialDate===candidateDate ? candidatePreviousPromise : null
+      )).catch(error=>{
     console.warn('昨日回看异步读取失败',error);
     return {data:[],error,historyFinal:false};
   });
@@ -2809,7 +2826,7 @@ async function loadJcFrontend(){
   if(!currentResult)
     currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
-  let previousLoading=true;
+  let previousLoading=!(bakedYesterdayReady && initialDate===today);
 
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
@@ -2853,7 +2870,7 @@ async function loadJcFrontend(){
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
   rememberDetailPublicRows(initialDate,(currentResult.data||[]));
   rememberDetailPublicRows(candidatePreviousDate,(previousResult.data||[]));
-  let previousHistoryFinal=Boolean(previousResult?.historyFinal);
+  let previousHistoryFinal=Boolean(previousResult?.historyFinal) || bakedYesterdayReady;
   let selectedDate=initialDate;
   let requestedDate=initialDate;
   let modelsLoaded=false;
@@ -3359,6 +3376,8 @@ async function loadJcFrontend(){
     // remain hidden until the next immutable public settlement is published.
     const reviewVisibleRows=access.loggedIn
       ? previousRows : jcGuestFinishedReviewRows(previousRows);
+    const preserveEmbeddedReview=bakedYesterdayReady && selectedDate===today &&
+      previousDate===candidatePreviousDate && previousRows.length===0;
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
@@ -3376,7 +3395,7 @@ async function loadJcFrontend(){
           : (selectedDate===today?'今日竞彩日':'竞彩日')+' · '+dateRows.length+'场';
     }
     if($('#jcPredictionCount')) $('#jcPredictionCount').textContent=dateRows.length+'场';
-    if($('#jcYesterdayMeta') && !previousLoading){
+    if($('#jcYesterdayMeta') && !previousLoading && !preserveEmbeddedReview){
       const reviewCount=reviewVisibleRows.length;
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
@@ -3402,7 +3421,7 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(reviewCards && !previousLoading){
+      if(reviewCards && !previousLoading && !preserveEmbeddedReview){
         // Only the display layer is role-filtered. The existing protected
         // snapshot and full Pro fixture navigation are not modified.
         qcReconcileOverviewTable(reviewCards,jcRenderYesterdayReview(reviewVisibleRows,calendarToday));
@@ -3499,7 +3518,8 @@ async function loadJcFrontend(){
   // Keep the existing previous-day skeleton (or a complete cached history)
   // until the separate review request has finished. Do not flash 4–6 rows.
   previousReadyPromise.then(result=>{
-    if(initialToken!==loadToken || selectedDate!==initialDate) return;
+    if(initialToken!==loadToken || selectedDate!==initialDate ||
+       result?.embeddedInHtml) return;
     previousLoading=false;
     if(!result?.error){
       previousHistoryFinal=Boolean(result.historyFinal);
@@ -3584,15 +3604,17 @@ async function loadJcFrontend(){
         // snapshot request has returned; update only on actual data change.
         if(changedTable) render();
         const prevDate=qcAddDays(ds,-1);
-        const history=await fetchHistoryReviewDateReady(
-          prevDate,ds===candidateDate?candidatePreviousPromise:null
-        );
-        if(token!==loadToken || selectedDate!==ds) return;
-        if(!history?.error){
-          previousHistoryFinal=Boolean(history.historyFinal);
-          allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
-            ...(history.data||[]).filter(m=>m.match_date)];
-          render();
+        if(!(bakedYesterdayReady && ds===today && prevDate===candidatePreviousDate)){
+          const history=await fetchHistoryReviewDateReady(
+            prevDate,ds===candidateDate?candidatePreviousPromise:null
+          );
+          if(token!==loadToken || selectedDate!==ds) return;
+          if(!history?.error){
+            previousHistoryFinal=Boolean(history.historyFinal);
+            allRows=[...allRows.filter(m=>jcBusinessDate(m)!==prevDate),
+              ...(history.data||[]).filter(m=>m.match_date)];
+            render();
+          }
         }
       }catch(error){
         console.warn('Pro静态快照后台补齐失败，保留完整公开赛程与待生成占位',error);
@@ -6319,7 +6341,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>document.body.classList.remove('qc-overview-booting'),2500);
   const safe=(name,fn)=>{try{const r=fn();if(r&&typeof r.catch==='function')r.catch(e=>console.error(name,e));}catch(e){console.error(name,e);}};
   safe('drawer',()=>setupDrawer());
-  safe('legacy-index',()=>renderIndex());
+  if($('#recapRows') && $('#matchCards'))
+    safe('legacy-index',()=>renderIndex());
   safe('jc-frontend',()=>loadJcFrontend());
   safe('jc-football',()=>loadJcFootball());
   safe('jc-detail',()=>setupJcMatchDetail());
