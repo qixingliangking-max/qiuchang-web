@@ -6031,7 +6031,9 @@ async function setupDesktopAccountNav(){
   let authEventObserved=false;
   window.qcSupabase.auth.onAuthStateChange((event,session)=>{
     if(!['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED','USER_UPDATED'].includes(event))return;
-    authEventObserved=true;
+    // INITIAL_SESSION is a provisional SDK snapshot; let the shared session
+    // result settle it if no subsequent authoritative auth event arrived.
+    if(event!=='INITIAL_SESSION') authEventObserved=true;
     apply(session||null);
   });
   try{
