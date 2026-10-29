@@ -6,9 +6,34 @@
   const sdk=window.qcSupabase;
   if(!cards || !sdk) return;
 
-  // One session read, followed by exactly one Pro entitlement RPC.
-  // A single four-second total deadline prevents an indefinite neutral card.
+  // Reuse the one SDK session, then overlap the membership RPC and
+  // the single-date RLS-protected SELECT. The SELECT's database policy
+  // independently enforces has_active_pro_access() for every row.
+  // Private predictions are never rendered until the RPC also confirms Pro.
   window.qcHomeEarlySession=Promise.resolve().then(()=>sdk.auth.getSession());
+  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date()).map(item=>[item.type,item.value]));
+  const calendarDay=parts.year+'-'+parts.month+'-'+parts.day;
+  const requested=new URLSearchParams(location.search).get('date');
+  const proDay=requested && /^\d{4}-\d{2}-\d{2}$/.test(requested)
+    ? requested : calendarDay;
+  window.qcHomeEarlyProDate=proDay;
+
+  // No protected query for signed-out users; no member data is persisted.
+  window.qcHomeEarlyProSnapshotPromise=window.qcHomeEarlySession.then(async reply=>{
+    if(reply?.error) throw reply.error;
+    if(!reply?.data?.session?.user?.id) return null;
+    const {data,error}=await sdk.from('jc_overview_prediction_snapshots')
+      .select('business_date,payload,match_count,model_count,generated_at')
+      .eq('business_date',proDay).limit(1);
+    if(error) throw error;
+    return (data||[])[0]||null;
+  }).catch(error=>{
+    console.warn('会员单日受保护快照暂不可用，保留授权回退路径',error);
+    return null;
+  });
+
   const check=(async()=>{
     let knownUserId=null;
     try{
@@ -19,7 +44,7 @@
       knownUserId=session.user?.id||null;
       const {data:isPro,error:proError}=await sdk.rpc('has_active_pro_access');
       if(proError) throw proError;
-      return {loggedIn:true,isPro:isPro===true,userId:session.user?.id||null};
+      return {loggedIn:true,isPro:isPro===true,userId:knownUserId};
     }catch(error){
       console.warn('读取会员权限失败',error);
       return {loggedIn:Boolean(knownUserId),isPro:false,
@@ -27,40 +52,22 @@
     }
   })();
 
-  let timer;
-  window.qcHomeEarlyAccessPromise=Promise.race([
-    check,
-    new Promise(resolve=>{
-      timer=setTimeout(()=>resolve({
-        loggedIn:false,isPro:false,verificationPending:true
-      }),4000);
-    })
-  ]).finally(()=>clearTimeout(timer));
-
-  // Once the server verified Pro, begin the *single-date* RLS-protected
-  // FINAL snapshot immediately, while large app/static assets are loading.
-  // Never fetch member predictions before verification. Never persist them.
-  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{
-    timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
-  }).formatToParts(new Date()).map(item=>[item.type,item.value]));
-  const calendarDay=parts.year+'-'+parts.month+'-'+parts.day;
-  const requested=new URLSearchParams(location.search).get('date');
-  const proDay=requested && /^\d{4}-\d{2}-\d{2}$/.test(requested)
-    ? requested : calendarDay;
-  window.qcHomeEarlyProDate=proDay;
-  window.qcHomeEarlyProSnapshotPromise=window.qcHomeEarlyAccessPromise
-    .then(async access=>{
-      if(!access?.isPro) return null;
-      const {data,error}=await sdk.from('jc_overview_prediction_snapshots')
-        .select('business_date,payload,match_count,model_count,generated_at')
-        .eq('business_date',proDay).limit(1);
-      if(error) throw error;
-      return (data||[])[0]||null;
-    }).catch(error=>{
-      console.warn('会员单日静态快照暂不可用，保留已有授权加载路径',error);
-      return null;
-    });
-
+  // The 4s budget controls only the user-facing slow-network notice.
+  // It must never throw away the eventual success or force a second query.
+  window.qcHomeEarlyAccessPromise=check;
+  const timer=setTimeout(()=>{
+    if(cards.dataset.qcAuthPaintReady==='1') return;
+    const meta=document.getElementById('jcPredictionMeta');
+    if(meta) meta.textContent='连接较慢，正在继续确认会员';
+    if(cards.dataset.qcEarlyProPainted!=='1'){
+      cards.innerHTML='<div class="profile-card" role="status">'+
+        '会员验证响应较慢，仍在继续加载。 '+
+        '<button type="button" id="qcRetryMemberStatus" class="btn btn-outline">重新验证</button></div>';
+      const retry=cards.querySelector('#qcRetryMemberStatus');
+      if(retry)retry.onclick=()=>cards.__qcRetryMemberAccess?.();
+    }
+  },4000);
+  check.then(()=>clearTimeout(timer),()=>clearTimeout(timer));
 
   // Render server-verified FINAL rows BEFORE app.js downloads or DOMContentLoaded.
   // This private HTML is built solely from the RLS-protected single-day response.
