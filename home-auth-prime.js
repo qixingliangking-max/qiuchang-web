@@ -37,6 +37,30 @@
     })
   ]).finally(()=>clearTimeout(timer));
 
+  // Once the server verified Pro, begin the *single-date* RLS-protected
+  // FINAL snapshot immediately, while large app/static assets are loading.
+  // Never fetch member predictions before verification. Never persist them.
+  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date()).map(item=>[item.type,item.value]));
+  const calendarDay=parts.year+'-'+parts.month+'-'+parts.day;
+  const requested=new URLSearchParams(location.search).get('date');
+  const proDay=requested && /^\d{4}-\d{2}-\d{2}$/.test(requested)
+    ? requested : calendarDay;
+  window.qcHomeEarlyProDate=proDay;
+  window.qcHomeEarlyProSnapshotPromise=window.qcHomeEarlyAccessPromise
+    .then(async access=>{
+      if(!access?.isPro) return null;
+      const {data,error}=await sdk.from('jc_overview_prediction_snapshots')
+        .select('business_date,payload,match_count,model_count,generated_at')
+        .eq('business_date',proDay).limit(1);
+      if(error) throw error;
+      return (data||[])[0]||null;
+    }).catch(error=>{
+      console.warn('会员单日静态快照暂不可用，保留已有授权加载路径',error);
+      return null;
+    });
+
   // Show the result before the large app initializes. This never renders
   // protected predictions; those still require server-verified Pro access.
   window.qcHomeEarlyAccessPromise.then(access=>{

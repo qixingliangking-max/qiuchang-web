@@ -1,0 +1,27 @@
+name: Home verified member one-snapshot firstpaint QA
+on:
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'home-auth-prime.js'
+      - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
+      - '.github/workflows/home-pro-one-snapshot-firstpaint-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'home-auth-prime.js'
+      - 'scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify one member lookup, zero guest lookups and immediate authorized return
+        run: node --test scripts/home_pro_one_snapshot_firstpaint_qa_20261029.cjs

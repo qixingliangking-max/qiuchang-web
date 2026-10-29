@@ -1564,17 +1564,26 @@ async function qcFetchProOverviewDate(dateStr){
   if(qcProOverviewSnapshotsPrimed) return null;
   if(!window.qcSupabase) return null;
 
-  const {data,error}=await window.qcSupabase
-    .from('jc_overview_prediction_snapshots')
-    .select('business_date,payload,generated_at')
-    .eq('business_date',key)
-    .limit(1);
-
-  if(error){
-    console.warn('读取Pro锁板日快照失败 '+key,error);
-    return null;
+  // The homepage starts this one-day RLS query immediately AFTER successful
+  // server Pro verification. Consume the same result; never make a duplicate
+  // protected request behind the slower public/history bootstrap.
+  const homeEarly=key===window.qcHomeEarlyProDate &&
+    window.qcHomeEarlyProSnapshotPromise;
+  let record=null;
+  if(homeEarly){
+    record=await window.qcHomeEarlyProSnapshotPromise;
+  }else{
+    const {data,error}=await window.qcSupabase
+      .from('jc_overview_prediction_snapshots')
+      .select('business_date,payload,match_count,model_count,generated_at')
+      .eq('business_date',key)
+      .limit(1);
+    if(error){
+      console.warn('读取Pro锁板日快照失败 '+key,error);
+      return null;
+    }
+    record=(data||[])[0]||null;
   }
-  let record=(data||[])[0];
   if(record && Number(record.model_count)>0 &&
      Number(record.model_count)<Number(record.match_count)){
     const scheduleResult=await window.qcSupabase
@@ -2911,6 +2920,21 @@ async function loadJcFrontend(){
       const localSchedule=await (ds===candidateDate && candidatePublicSchedulePromise
         ? candidatePublicSchedulePromise : window.qcFetchLiveScheduleDate(ds));
       if(localSchedule?.data?.length) return localSchedule;
+    }
+
+    // Fast Pro path: use the one signed-in, RLS-protected snapshot already
+    // requested after membership verification. Do not first wait for the
+    // combined schedule + yesterday-history bootstrap. A complete FINAL
+    // is safe to render immediately; current scores are refreshed separately.
+    if(access.isPro && ds===candidateDate &&
+       window.qcHomeEarlyProSnapshotPromise &&
+       window.qcHomeEarlyProDate===ds){
+      const immediatePro=await qcFetchProOverviewDate(ds);
+      if(immediatePro?.data?.length &&
+         immediatePro.data.some(m=>
+           Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)){
+        return immediatePro;
+      }
     }
 
     // Server validates Pro entitlement. It never returns protected prediction
