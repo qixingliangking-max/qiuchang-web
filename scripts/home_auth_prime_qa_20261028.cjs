@@ -90,7 +90,7 @@ test('main auth has no nested retry or duplicate homepage Pro check',()=>{
 });
 test('lightweight two-step primer loads before app with shared session',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
- const p=html.indexOf('home-auth-prime.js?v=20261029proawait3');
+ const p=html.indexOf('home-auth-prime.js?v=20261029parallelrls4');
  const a=html.indexOf('app.js?v=20261029proawait3');
  assert.ok(p>0&&a>p);
  assert.match(prime,/window\.qcHomeEarlySession=Promise\.resolve\(\)\.then/);
