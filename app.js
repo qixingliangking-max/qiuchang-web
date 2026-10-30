@@ -642,6 +642,16 @@ function jcCompactHandicapPick(text){
     .split('/').map(x=>x.trim()).filter(Boolean).join(' / ');
 }
 
+// Public display only: preserve the original official handicap line without
+// changing the independent handicap choices or the settlement calculation.
+function jcDisplayOfficialHandicap(model){
+  const choices=jcCompactHandicapPick(model?.handicap_direction);
+  const embedded=String(model?.handicap_direction||'').match(/^([+-]\d+(?:\.\d+)?)\s*[｜|]/)?.[1];
+  const raw=String(model?.raw_input?.handicap_line??embedded??'').trim();
+  if(!/^[+-]\d+(?:\.\d+)?$/.test(raw)||/[（(][+-]\d+(?:\.\d+)?[）)]/.test(choices)) return choices;
+  return choices+'（'+raw+'）';
+}
+
 function jcHasOrdinaryResult(m){
   return (m?.jc_market_snapshots||[]).some(s=>s?.pool_code==='had');
 }
@@ -4274,7 +4284,7 @@ function jcRenderAiPanel(m,pools,model,analysis){
   const singleText=model
     ? singlePickText+jcDisplaySingleSuffix(model,m)
     : '待生成';
-  const handicapText=model?jcCompactHandicapPick(model.handicap_direction):'待生成';
+  const handicapText=model?jcDisplayOfficialHandicap(model):'待生成';
   const htftText=model?([model.htft_top1,model.htft_top2].filter(Boolean).join('｜')||'待生成'):'待生成';
   const goalsText=model?jcPublicTotalGoalsText(model.goal_range):'待生成';
   const topText=model?jcModelTopText(model):'待生成';
