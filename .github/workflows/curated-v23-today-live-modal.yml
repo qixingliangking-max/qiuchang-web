@@ -1,0 +1,26 @@
+name: Curated V2.3 actual live mobile and desktop modal QA
+on:
+  pull_request:
+    paths:
+      - 'scripts/curated_v23_today_live_modal_qa_20261030.cjs'
+      - '.github/workflows/curated-v23-today-live-modal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-audit --no-fund --prefix /tmp/qc-v23-live playwright@1.56.1
+          cd /tmp/qc-v23-live
+          npx playwright install --with-deps chromium
+      - name: Confirm current analyst plans and working modal on desktop and iPhone
+        env:
+          NODE_PATH: /tmp/qc-v23-live/node_modules
+        run: node scripts/curated_v23_today_live_modal_qa_20261030.cjs
