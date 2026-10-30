@@ -62,7 +62,7 @@ test('shared cached application asset across active user pages',()=>{
     'forgot-password.html','reset-password.html','verify.html'];
   for(const page of pages){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261030latefinal1"/,
+    assert.match(html,/<script\b[^>]*src="app\.js\?v=20261030sixfields2"/,
       page+' must use the same app.js cache key');
   }
   const login=fs.readFileSync(path.join(root,'login.html'),'utf8');

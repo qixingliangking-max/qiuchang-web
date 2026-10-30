@@ -1,0 +1,25 @@
+name: Website official handicap line display QA
+on:
+  pull_request:
+    paths:
+      - app.js
+      - 'scripts/official_handicap_line_qa_20261030.cjs'
+      - '.github/workflows/official-handicap-line-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - app.js
+      - 'scripts/official_handicap_line_qa_20261030.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse app
+        run: node --check app.js
+      - name: Verify original handicap line shown only as display
+        run: node --test scripts/official_handicap_line_qa_20261030.cjs
