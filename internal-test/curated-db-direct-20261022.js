@@ -1,6 +1,8 @@
 (function(){
 'use strict';
 var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
+// Modern dates must never start with embedded legacy plans.
+Object.keys(db.selectedPlans||{}).forEach(function(day){if(day>='2026-10-22')delete db.selectedPlans[day]});
 function keyFor(market,label){
  var map={'胜':'h','平':'d','负':'a','让胜':'h','让平':'d','让负':'a'};
  if(market==='had'||market==='hhad')return map[label]||'';
@@ -68,7 +70,7 @@ async function rpc(name,args){
 
 function buildV2Entry(day,p){
  var results=Array.isArray(p.leg_results)?p.leg_results:[];
- return {id:p.id,type:p.market_group,format:p.version,gate:'',legs:(p.legs||[]).map(function(leg){
+ return {id:p.id,type:p.market_group,format:p.version,preview:!!p.preview,gate:p.preview?'V2.3独立精选 · 赛前候选':'',legs:(p.legs||[]).map(function(leg){
    var result=results.find(function(r){return r.match_num===leg.match_num})||null;
    return buildLeg(day,{
       market:leg.market,match_num:leg.match_num,home:leg.home,away:leg.away,
@@ -103,20 +105,44 @@ async function loadReplayDay(day){
  };
  return true;
 }
+async function loadV23PreviewDay(day){
+ var raw=await rpc('qc_v23_curated_public',{p_business_date:day});
+ if(!raw||raw.engine!=='QCDA_V23_ANALYST_CURATED_PREVIEW'||raw.preview!==true||!Array.isArray(raw.analysts)||raw.analysts.length!==3)
+  throw Error('V2.3 independent review is unavailable');
+ var byId={};
+ raw.analysts.forEach(function(a){byId[a.id]=a});
+ if(!byId.guheng||!byId.shence||!byId.luye)throw Error('V2.3 analyst identity missing');
+ var entries=function(id){return (byId[id].plans||[]).map(function(p){return buildV2Entry(day,p)})};
+ var pack={
+  rule:'QCDA_V23_CURATED_PREVIEW',preview:true,
+  entries:entries('guheng'),
+  aiSelector:{entries:entries('shence')},
+  analystSelector:{entries:entries('luye')},
+  streaks:{1:0,2:0,3:0}
+ };
+ db.selectedPlans=db.selectedPlans||{};
+ if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack))return false;
+ db.selectedPlans[day]=pack;
+ return true;
+}
 async function loadIndependentDay(day){
+ // Display replacement only. Never rewrite V2.2 submitted plan history.
+ if(day==='2026-10-30')return loadV23PreviewDay(day);
  var raw=await rpc('qc_v2_public',{p_business_date:day});
  var sources=Array.isArray(raw&&raw.analysts)?raw.analysts:[];
  var byId={};
  sources.forEach(function(a){byId[a.id]=a});
  var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0};
  db.selectedPlans=db.selectedPlans||{};
- db.selectedPlans[day]={
+ var pack={
   rule:'QCDA_INDEPENDENT_3_ANALYSTS_V2',
   entries:(a1.plans||[]).map(function(p){return buildV2Entry(day,p)}),
   aiSelector:{entries:(a2.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   analystSelector:{entries:(a3.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0}
  };
+ if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack))return false;
+ db.selectedPlans[day]=pack;
  return true;
 }
 
@@ -175,8 +201,20 @@ async function refresh(){
   }));
  }finally{refreshActive=false}
 }
-// Never block the original page on a network round trip. Render existing data immediately.
-window.QC_CURATED_DB_READY=Promise.resolve();
-setTimeout(refresh,0);
-setInterval(refresh,120000);
+// Show the current live version on first paint, not the embedded legacy template.
+function businessDay(){
+ var p={};
+ new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'})
+  .formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
+ var stamp=Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day));
+ if(Number(p.hour)<12)stamp-=86400000;
+ return new Date(stamp).toISOString().slice(0,10);
+}
+window.QC_CURATED_DB_READY=loadDay(businessDay()).catch(function(error){
+ window.QC_CURATED_INITIAL_ERROR=String(error);
+ console.warn('精选首屏数据不可用，保持安全加载状态',String(error));
+}).then(function(){
+ setTimeout(refresh,0);
+ setInterval(refresh,120000);
+});
 })();
