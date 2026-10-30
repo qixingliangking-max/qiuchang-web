@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 81,
-  "collected_matches": 81,
+  "input_matches": 82,
+  "collected_matches": 82,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -13,11 +13,6 @@
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "卡萨皮亚",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "吉维森特",
@@ -66,11 +61,6 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "莫雷拉人",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "葡萄牙体育",
       "matches": 9
     },
     {

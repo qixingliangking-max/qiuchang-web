@@ -6,7 +6,7 @@
     "110"
   ],
   "fotmob_ccode3": "FRA",
-  "baseline_finished_matches": 90,
+  "baseline_finished_matches": 95,
   "team_map": {
     "Pau": "波城",
     "Metz": "梅斯",
@@ -28,6 +28,6 @@
     "Saint-Etienne": "圣埃蒂安",
     "Saint-Étienne": "圣埃蒂安"
   },
-  "last_successful_refresh_at": "2026-10-26T23:17:06.832Z",
-  "last_published_blob_sha": "764a74ef1b40f657516b82181cdf2fedd0c02b2c"
+  "last_successful_refresh_at": "2026-10-30T23:15:25.798Z",
+  "last_published_blob_sha": "a97cd609eb122acdafc8dd25e6c02333e4a4f179"
 }

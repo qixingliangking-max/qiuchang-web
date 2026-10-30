@@ -6,7 +6,7 @@
     "54"
   ],
   "fotmob_ccode3": "GER",
-  "baseline_finished_matches": 63,
+  "baseline_finished_matches": 64,
   "team_map": {
     "Augsburg": "奥格斯堡",
     "Freiburg": "弗赖堡",
@@ -27,6 +27,6 @@
     "Eintracht Frankfurt": "法兰克福",
     "Borussia Mönchengladbach": "门兴格拉德巴赫"
   },
-  "last_successful_refresh_at": "2026-10-25T18:32:08.257Z",
-  "last_published_blob_sha": "52a51bd768929a96bbb11012dd1cb6d8a6c503f2"
+  "last_successful_refresh_at": "2026-10-30T23:15:33.955Z",
+  "last_published_blob_sha": "e80d5b12d9ba5e0fc0c3bc6d2d319d539c403599"
 }

@@ -649,7 +649,15 @@
       "home_team": "圣克拉拉",
       "away_team": "本菲卡",
       "match_date": "2026-10-26",
-      "kickoff_at": "2026-10-26T18:45:00.000Z"
+      "kickoff_at": "2026-10-26T18:45:00Z"
+    },
+    {
+      "source_match_id": "5887666",
+      "match_id": "fotmob:5887666",
+      "home_team": "卡萨皮亚",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T20:15:00.000Z"
     }
   ]
 }
