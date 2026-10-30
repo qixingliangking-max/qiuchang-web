@@ -1,6 +1,7 @@
 (function(){
 'use strict';
 var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
+Object.keys(db.selectedPlans||{}).forEach(function(day){if(day>='2026-10-22')delete db.selectedPlans[day]});
 function keyFor(market,label){
  var map={'胜':'h','平':'d','负':'a','让胜':'h','让平':'d','让负':'a'};
  if(market==='had'||market==='hhad')return map[label]||'';
@@ -103,20 +104,51 @@ async function loadReplayDay(day){
  };
  return true;
 }
+async function loadV23PreviewDay(day){
+ var raw=await rpc('qc_v2_public',{p_business_date:day});
+ if(!raw||!Array.isArray(raw.analysts)||raw.analysts.length!==3)
+  throw Error('V2.3 independent review is unavailable');
+ var byId={};
+ raw.analysts.forEach(function(a){byId[a.id]=a});
+ if(!byId.guheng||!byId.shence||!byId.luye)throw Error('V2.3 analyst identity missing');
+ var entries=function(id){
+  var plans=(byId[id].plans||[]).filter(function(p){
+    return p.settlement_status!=='void' && Array.isArray(p.legs) && p.legs.length>0
+      && p.legs.every(function(leg){return Array.isArray(leg.options)&&leg.options.length>0
+        && leg.options.every(function(o){return o.source==='LOCKED_FINAL'})});
+  });
+  if(plans.length!==1)throw Error('V2.3 active plan count mismatch: '+id);
+  return plans.map(function(p){return buildV2Entry(day,p)});
+ };
+ var pack={
+  rule:'QCDA_V23_CURATED_FORMAL',preview:false,
+  entries:entries('guheng'),
+  aiSelector:{entries:entries('shence')},
+  analystSelector:{entries:entries('luye')},
+  streaks:{1:0,2:0,3:0}
+ };
+ db.selectedPlans=db.selectedPlans||{};
+ if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack))return false;
+ db.selectedPlans[day]=pack;
+ return true;
+}
 async function loadIndependentDay(day){
+ if(day==='2026-10-30')return loadV23PreviewDay(day);
  var raw=await rpc('qc_v2_public',{p_business_date:day});
  var sources=Array.isArray(raw&&raw.analysts)?raw.analysts:[];
  var byId={};
  sources.forEach(function(a){byId[a.id]=a});
  var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0};
  db.selectedPlans=db.selectedPlans||{};
- db.selectedPlans[day]={
+ var pack={
   rule:'QCDA_INDEPENDENT_3_ANALYSTS_V2',
   entries:(a1.plans||[]).map(function(p){return buildV2Entry(day,p)}),
   aiSelector:{entries:(a2.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   analystSelector:{entries:(a3.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0}
  };
+ if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack))return false;
+ db.selectedPlans[day]=pack;
  return true;
 }
 
@@ -177,12 +209,21 @@ async function refresh(){
 }
 // Load the current live business day BEFORE the first visible render.
 // The old static archive remains available for historical browsing only.
-var initialDay=recentDays()[0];
+function businessDay(){
+ var p={};
+ new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'})
+  .formatToParts(new Date()).forEach(function(x){p[x.type]=x.value});
+ var stamp=Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day));
+ if(Number(p.hour)<12)stamp-=86400000;
+ return new Date(stamp).toISOString().slice(0,10);
+}
+var initialDay=businessDay();
 window.QC_CURATED_DB_READY=loadDay(initialDay).then(function(changed){
  if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
  return true;
 }).catch(function(error){
  console.warn('当前精选数据首屏读取失败',initialDay,String(error));
+ window.QC_CURATED_INITIAL_ERROR=String(error);
  window.dispatchEvent(new CustomEvent('qc-curated-db-error',{detail:{date:initialDay,message:String(error)}}));
  return false;
 });
