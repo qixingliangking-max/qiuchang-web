@@ -106,15 +106,23 @@ async function loadReplayDay(day){
  return true;
 }
 async function loadV23PreviewDay(day){
- var raw=await rpc('qc_v23_curated_public',{p_business_date:day});
- if(!raw||raw.engine!=='QCDA_V23_ANALYST_CURATED_PREVIEW'||raw.preview!==true||!Array.isArray(raw.analysts)||raw.analysts.length!==3)
+ var raw=await rpc('qc_v2_public',{p_business_date:day});
+ if(!raw||!Array.isArray(raw.analysts)||raw.analysts.length!==3)
   throw Error('V2.3 independent review is unavailable');
  var byId={};
  raw.analysts.forEach(function(a){byId[a.id]=a});
  if(!byId.guheng||!byId.shence||!byId.luye)throw Error('V2.3 analyst identity missing');
- var entries=function(id){return (byId[id].plans||[]).map(function(p){return buildV2Entry(day,p)})};
+ var entries=function(id){
+  var plans=(byId[id].plans||[]).filter(function(p){
+    return p.settlement_status!=='void' && Array.isArray(p.legs) && p.legs.length>0
+      && p.legs.every(function(leg){return Array.isArray(leg.options)&&leg.options.length>0
+        && leg.options.every(function(o){return o.source==='LOCKED_FINAL'})});
+  });
+  if(plans.length!==1)throw Error('V2.3 active plan count mismatch: '+id);
+  return plans.map(function(p){return buildV2Entry(day,p)});
+ };
  var pack={
-  rule:'QCDA_V23_CURATED_PREVIEW',preview:true,
+  rule:'QCDA_V23_CURATED_FORMAL',preview:false,
   entries:entries('guheng'),
   aiSelector:{entries:entries('shence')},
   analystSelector:{entries:entries('luye')},
