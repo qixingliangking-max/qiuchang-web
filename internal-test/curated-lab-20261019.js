@@ -7,7 +7,7 @@ var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selec
 var blind=null; // Historical pre-19 backtest intentionally excluded from canonical display.
 var settled=null;
 var $=function(id){return document.getElementById(id)};
-var types={direction:{label:'方向 · 双场',desc:'赛前模型方向与同一官方玩法赔率；无胜平负的比赛使用让球方向。',color:'#315db3'},htft:{label:'半全场 · 组合',desc:'两场各取赛前锁定的半全场TOP2，分别与官方半全场赔率匹配。',color:'#8660b0'},goals:{label:'总进球 · 组合',desc:'从赛前锁板的独立进球区间读取选项，再匹配总进球官方赔率。',color:'#218a71'},score:{label:'比分 · 组合',desc:'每场最多使用锁定TOP3比分，两场形成最多9种精确比分组合。',color:'#b86670'}};
+var types={direction:{label:'胜平负',desc:'胜平负组合观察。',color:'#315db3'},htft:{label:'半全场',desc:'半全场组合观察。',color:'#8660b0'},goals:{label:'总进球',desc:'进球数参考。',color:'#218a71'},score:{label:'比分',desc:'比分组合参考。',color:'#b86670'}};
 var modes={balanced:'平均分配',hot:'常规优先',cold:'逆向观察',hybrid:'攻防平衡'};
 var state={day:null,type:'direction',budget:1000,mode:'balanced',month:null,open:null,origin:null,reveal:false};
 var dates=[];
@@ -20,7 +20,7 @@ function personaPlan(index){return (personaNames[index]||'')+'方案'}
 var analystColorKey={1:'guheng',2:'shence',3:'luye'};
 function analystCardClass(plan){return ' analyst-'+(analystColorKey[plan.index]||'guheng')}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
-function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];if(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL')return personaPlan(plan.index)+' · V2.3正式精选'+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'');var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
+function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];if(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL')return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'');var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
 function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
 function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -172,7 +172,7 @@ function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
  var plans=plansFor(state.day,state.type);
  var pack=db.selectedPlans&&db.selectedPlans[state.day];
- $('infoBand').textContent=pack&&pack.rule==='QCDA_V23_CURATED_FORMAL'?(plans.length?'V2.3：三位分析师各自从12场锁板赛事中精选；旧版方案已作废并退回模拟积分，历史记录保留。':'今日没有提交这一玩法，请切换其他栏目查看。'):(plans.length?'点击方案查看详情。':'');
+ $('infoBand').textContent=plans.length?'点击方案查看详情。':'本栏目暂无精选方案。';
 }
 
 function renderDate(){
@@ -222,12 +222,12 @@ function planCard(plan){
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
  var pack=db.selectedPlans&&db.selectedPlans[state.day];
- $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL'?'（V2.3独立精选）':pack&&pack.isReplay?'（赛后数据回看）':'');
- $('dailyMeta').textContent=pack&&pack.rule==='QCDA_V23_CURATED_FORMAL'?'12场独立评估 · 三组正式方案':'';
+ $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(pack&&pack.isReplay?'（赛后回看）':'');
+ $('dailyMeta').textContent='';
  // Only genuine plan records: do not manufacture blank/missing-plan cards.
  $('plans').innerHTML=plans.map(planCard).join('');
  $('plans').style.display=plans.length?'':'none';
- var band=$('infoBand');if(band)band.style.display=(plans.length||(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL'))?'':'none';
+ var band=$('infoBand');if(band)band.style.display=plans.length?'':'none';
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
