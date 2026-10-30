@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-30T14:36:55.821Z",
+  "run_at": "2026-10-30T19:43:11.387Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 0,
-  "noop_leagues": 24,
+  "promoted_leagues": 1,
+  "noop_leagues": 23,
   "blocked_leagues": 0,
   "results": [
     {
@@ -135,15 +135,15 @@
     {
       "league_code": "GER_B2",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 81,
+      "status": "PROMOTED",
+      "discovered_finished": 83,
       "baseline_finished_matches": 81,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 2,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
