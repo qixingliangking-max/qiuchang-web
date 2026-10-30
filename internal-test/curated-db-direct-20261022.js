@@ -107,7 +107,7 @@ async function loadReplayDay(day){
 async function loadV23PreviewDay(day){
  var raw=await rpc('qc_v2_public',{p_business_date:day});
  if(!raw||!Array.isArray(raw.analysts)||raw.analysts.length!==3)
-  throw Error('V2.3 independent review is unavailable');
+  throw Error('Daily selections unavailable');
  var byId={};
  raw.analysts.forEach(function(a){byId[a.id]=a});
  if(!byId.guheng||!byId.shence||!byId.luye)throw Error('V2.3 analyst identity missing');
@@ -117,7 +117,9 @@ async function loadV23PreviewDay(day){
       && p.legs.every(function(leg){return Array.isArray(leg.options)&&leg.options.length>0
         && leg.options.every(function(o){return o.source==='LOCKED_FINAL'})});
   });
-  if(plans.length!==1)throw Error('V2.3 active plan count mismatch: '+id);
+  var categories=plans.map(function(p){return p.market_group}).sort().join(',');
+  if(plans.length!==4||categories!=='direction,goals,htft,score')
+   throw Error('Daily selection categories incomplete: '+id);
   return plans.map(function(p){return buildV2Entry(day,p)});
  };
  var pack={
