@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-30T20:00:38.740Z",
+  "run_at": "2026-10-30T20:18:35.943Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 2,
-  "noop_leagues": 22,
+  "promoted_leagues": 0,
+  "noop_leagues": 24,
   "blocked_leagues": 0,
   "results": [
     {
@@ -107,15 +107,15 @@
     {
       "league_code": "FRA_L1",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 74,
-      "baseline_finished_matches": 72,
-      "new_finished_matches": 2,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 74,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -247,15 +247,15 @@
     {
       "league_code": "NOR_ES",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 193,
-      "baseline_finished_matches": 192,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 193,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
