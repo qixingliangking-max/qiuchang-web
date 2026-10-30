@@ -5,38 +5,44 @@ const root=path.join(__dirname,'..','internal-test');
 const loader=fs.readFileSync(path.join(root,'curated-db-direct-20261022.js'),'utf8');
 const app=fs.readFileSync(path.join(root,'curated-lab-20261019.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'curated-lab-20261019.html'),'utf8');
-test('first paint waits for live data and preserves the boot overlay',()=>{
+test('first paint waits for live data without showing embedded legacy cards',()=>{
  assert.match(loader,/window\.QC_CURATED_DB_READY=loadDay\(initialDay\)/);
  assert.match(loader,/var initialDay=businessDay\(\)/);
- assert.doesNotMatch(loader,/QC_CURATED_DB_READY=Promise\.resolve\(\)/);
- assert.match(loader,/Object\.keys\(db\.selectedPlans\|\|\{\}\)\.forEach/);
  assert.match(html,/<body class="curated-booting">/);
  assert.match(html,/body\.curated-booting #plans/);
  assert.match(app,/document\.body\.classList\.remove\('curated-booting'\)/);
 });
-test('30 Oct uses only formally submitted V2.3 source-model plans',()=>{
+test('all 12 formal submitted groups are allowed and public management text is absent',()=>{
  assert.match(loader,/day==='2026-10-30'\)return loadV23PreviewDay\(day\)/);
  assert.match(loader,/var raw=await rpc\('qc_v2_public'/);
  assert.match(loader,/p\.settlement_status!=='void'/);
  assert.match(loader,/o\.source==='LOCKED_FINAL'/);
- assert.match(loader,/plans\.length!==1/);
- assert.match(loader,/rule:'QCDA_V23_CURATED_FORMAL',preview:false/);
+ assert.match(loader,/plans\.length!==4/);
+ assert.match(loader,/categories!=='direction,goals,htft,score'/);
  assert.match(app,/QCDA_V23_CURATED_FORMAL/);
- assert.match(app,/V2\.3正式精选/);
- assert.match(app,/三组正式方案/);
- assert.match(html,/curated-db-direct-20261022\.js\?v=20261030v23formal2/);
- assert.match(html,/curated-lab-20261019\.js\?v=20261030v23formal2/);
+ for(const forbidden of ['V2.3正式精选','三组正式方案','旧版方案已作废','锁板赛事','12场独立评估']){
+   assert.equal(app.includes(forbidden),false,forbidden+' must not be visible to site visitors');
+ }
+ assert.match(html,/curated-db-direct-20261022\.js\?v=20261030fourmarket1/);
+ assert.match(html,/curated-lab-20261019\.js\?v=20261030fourmarket1/);
+ for(const label of ['胜平负','半全场','总进球','比分'])
+   assert.match(html,new RegExp('<strong>'+label+'</strong><span>精选方案</span>'));
 });
-test('three analysts retain independent identity and correct category placement',()=>{
+test('each of four tabs contains one card from every analyst',()=>{
  const a=app.indexOf('function plansFor(day,type){'),b=app.indexOf('function planLegs(plan){',a);
  assert.ok(a>0&&b>a);
- const mk=(name,type)=>({id:name,type,legs:[{market:type==='direction'?'had':'hafu',row:{num:'周五005'},picks:[{name:'胜',key:'h'}]}]});
- const context={db:{selectedPlans:{
- '2026-10-30':{rule:'QCDA_V23_CURATED_FORMAL',entries:[mk('guheng','direction')],
- aiSelector:{entries:[mk('shence','htft')]},analystSelector:{entries:[mk('luye','htft')]}}
- }},state:{reveal:false},blind:null,settled:null,score:()=>null,option:(row,m,k,name)=>({key:k,name,market:m,odds:2})};
+ const types=['direction','htft','goals','score'];
+ const mk=(analyst,type)=>({id:analyst+'-'+type,type,legs:[{market:type==='direction'?'had':type==='htft'?'hafu':type==='goals'?'ttg':'crs',row:{num:'周五005'},picks:[{name:'胜',key:'h'}]}]});
+ const data={rule:'QCDA_V23_CURATED_FORMAL',
+ entries:types.map(type=>mk('guheng',type)),
+ aiSelector:{entries:types.map(type=>mk('shence',type))},
+ analystSelector:{entries:types.map(type=>mk('luye',type))}};
+ const context={db:{selectedPlans:{'2026-10-30':data}},state:{reveal:false},
+  blind:null,settled:null,score:()=>null,option:(row,m,k,name)=>({key:k,name,market:m,odds:2})};
  vm.createContext(context);vm.runInContext(app.slice(a,b),context);
- const d=context.plansFor('2026-10-30','direction'),h=context.plansFor('2026-10-30','htft');
- assert.equal(d.length,1);assert.equal(h.length,2);
- assert.equal(d[0].index,1);assert.equal(h[0].index,2);assert.equal(h[1].index,3);
+ for(const type of types){
+  const shown=context.plansFor('2026-10-30',type);
+  assert.equal(shown.length,3,type);
+  assert.deepEqual(Array.from(shown,x=>x.index),[1,2,3],type);
+ }
 });

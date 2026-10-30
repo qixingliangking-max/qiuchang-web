@@ -8,8 +8,8 @@ test('legacy static archive never flashes before the live first render',()=>{
  assert.match(html,/<body class="curated-booting">/);
  assert.match(html,/body\.curated-booting #plans/);
  assert.match(html,/body\.curated-booting #tabs/);
- assert.match(html,/curated-db-direct-20261022\.js\?v=20261030v23formal2/);
- assert.match(html,/curated-lab-20261019\.js\?v=20261030v23formal2/);
+ assert.match(html,/curated-db-direct-20261022\.js\?v=20261030fourmarket1/);
+ assert.match(html,/curated-lab-20261019\.js\?v=20261030fourmarket1/);
  assert.match(ui,/document\.body\.classList\.remove\('curated-booting'\)/);
  assert.match(data,/window\.QC_CURATED_DB_READY=loadDay\(initialDay\)/);
  assert.doesNotMatch(data,/window\.QC_CURATED_DB_READY=Promise\.resolve\(\)/);
