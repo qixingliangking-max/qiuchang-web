@@ -349,7 +349,7 @@ function init(){
  showRealFrozenHistoryOnly();
  all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
- state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
+ state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();document.body.classList.remove('curated-booting');
 }
 
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){

@@ -175,8 +175,17 @@ async function refresh(){
   }));
  }finally{refreshActive=false}
 }
-// Never block the original page on a network round trip. Render existing data immediately.
-window.QC_CURATED_DB_READY=Promise.resolve();
-setTimeout(refresh,0);
+// Load the current live business day BEFORE the first visible render.
+// The old static archive remains available for historical browsing only.
+var initialDay=recentDays()[0];
+window.QC_CURATED_DB_READY=loadDay(initialDay).then(function(changed){
+ if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
+ return true;
+}).catch(function(error){
+ console.warn('当前精选数据首屏读取失败',initialDay,String(error));
+ window.dispatchEvent(new CustomEvent('qc-curated-db-error',{detail:{date:initialDay,message:String(error)}}));
+ return false;
+});
+window.QC_CURATED_DB_READY.then(function(){setTimeout(refresh,0)});
 setInterval(refresh,120000);
 })();

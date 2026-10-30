@@ -1,0 +1,26 @@
+name: Curated live first-paint regression
+on:
+  pull_request:
+    paths:
+      - 'internal-test/curated-lab-20261019.html'
+      - 'internal-test/curated-lab-20261019.js'
+      - 'internal-test/curated-db-direct-20261022.js'
+      - 'scripts/curated_live_firstpaint_qa_20261030.cjs'
+      - '.github/workflows/curated-live-firstpaint.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'internal-test/curated-lab-20261019.html'
+      - 'internal-test/curated-lab-20261019.js'
+      - 'internal-test/curated-db-direct-20261022.js'
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --check internal-test/curated-lab-20261019.js
+      - run: node --check internal-test/curated-db-direct-20261022.js
+      - run: node --test scripts/curated_live_firstpaint_qa_20261030.cjs
