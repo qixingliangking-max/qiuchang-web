@@ -20,7 +20,7 @@ function personaPlan(index){return (personaNames[index]||'')+'方案'}
 var analystColorKey={1:'guheng',2:'shence',3:'luye'};
 function analystCardClass(plan){return ' analyst-'+(analystColorKey[plan.index]||'guheng')}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
-function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
+function personaPlanLive(plan){if(plan.preview)return personaPlan(plan.index)+' · V2.3独立精选';var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
 function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
 function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -96,7 +96,7 @@ function plansFor(day,type){
        return {day:day,type:type,index:version.index,detailId:record.id||null,format:record.format||null,replay:!!record.replay,
          a:legs[0],b:legs[1],legs:legs,prematch:legs.some(function(l){return !score(l.row.ft)||!score(l.row.ht)}),
          variant:version.id,versionLabel:version.label,versionNote:record.note||'',
-         versionGate:record.gate||'',shadow:version.shadow};
+         versionGate:record.gate||'',shadow:version.shadow,preview:!!record.preview};
      }).filter(Boolean);
    });
  }
@@ -171,7 +171,8 @@ function parseScoreText(row){return row.ft?String(row.ft).replace(':','-'):'—'
 function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
  var plans=plansFor(state.day,state.type);
- $('infoBand').textContent=plans.length?'点击方案查看详情。':'';
+ var pack=db.selectedPlans&&db.selectedPlans[state.day];
+ $('infoBand').textContent=pack&&pack.preview?(plans.length?'V2.3：三人分别审核12场锁板赛事；以下是独立精选候选，历史正式方案另外保留。':'三位分析师本日没有选择这一玩法，切换其他栏目查看精选候选。'):(plans.length?'点击方案查看详情。':'');
 }
 
 function renderDate(){
@@ -209,8 +210,8 @@ function planCard(plan){
    var oddList=calc.list.map(function(x){return x.odds});
    var textOdd=oddList.length===1?'×'+money(oddList[0]):'×'+money(Math.min.apply(null,oddList))+'—'+money(Math.max.apply(null,oddList));
    var title=esc(personaPlanLive(plan));
-   var risk='';
-   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+colorClass+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
+   var risk=plan.preview?'<span class="flag" style="background:#e9f2ff;color:#315db3">V2.3研究候选</span>':'';
+   return '<article class="plan variant-'+(plan.shadow?'shadow':'original')+colorClass+'"><div class="plan-head"><span class="plan-id">'+title+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div>'+(plan.preview?'<div style="padding:0 16px 10px;font-size:11px;color:#667b9c">独立研究候选，尚未作为模拟账户正式出单。</div>':'')+'<div class="plan-foot"><div class="plan-return"><small>组合赔率 · '+calc.list.length+'种</small><strong>'+textOdd+'</strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
  }
  if(plan.variant){
    var status=calc.covered?'命中':'未命中',cls=calc.covered?'hit':'miss';
@@ -220,12 +221,13 @@ function planCard(plan){
 }
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
- $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(db.selectedPlans&&db.selectedPlans[state.day]&&db.selectedPlans[state.day].isReplay?'（赛后数据回看）':'');
- $('dailyMeta').textContent='';
+ var pack=db.selectedPlans&&db.selectedPlans[state.day];
+ $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(pack&&pack.preview?'（V2.3独立精选）':pack&&pack.isReplay?'（赛后数据回看）':'');
+ $('dailyMeta').textContent=pack&&pack.preview?'12场全量独立评估 · 研究候选':'';
  // Only genuine plan records: do not manufacture blank/missing-plan cards.
  $('plans').innerHTML=plans.map(planCard).join('');
  $('plans').style.display=plans.length?'':'none';
- var band=$('infoBand');if(band)band.style.display=plans.length?'':'none';
+ var band=$('infoBand');if(band)band.style.display=(plans.length||(pack&&pack.preview))?'':'none';
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
@@ -286,7 +288,7 @@ function renderDialog(){
  var sim=allocation(plan,state.budget,state.mode),pending=!!plan.prematch,pendingLabel='—';
  var displayType={direction:'方向',htft:'半全场',goals:'总进球',score:'比分'}[plan.type]||'双场';
  $('dialogTitle').textContent=personaPlanLive(plan)+' · '+displayType+(planLegs(plan).length===3?'三场':planLegs(plan).length===2?'双场':'单场');
- $('dialogSub').textContent=readableDay(plan.day);
+ $('dialogSub').textContent=readableDay(plan.day)+(plan.preview?'｜V2.3赛前研究候选':'');
  document.querySelectorAll('#modeTabs button').forEach(function(el){var yes=el.dataset.mode===state.mode;el.classList.toggle('active',yes);el.setAttribute('aria-selected',String(yes))});
  var range=money(sim.grossMin)+'–'+money(sim.grossMax);
  var summary='<div class="summary"><div class="summary-item"><small>模拟金额</small><strong>'+money(state.budget)+'点</strong></div><div class="summary-item"><small>组合选项</small><strong>'+sim.list.length+'种</strong></div><div class="summary-item"><small>'+(pending?'情景返还范围':'模拟返还')+'</small><strong>'+(pending?range:money(sim.returns)+'点')+'</strong></div></div>';
@@ -349,7 +351,7 @@ function init(){
  showRealFrozenHistoryOnly();
  all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
  dates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
- state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();
+ state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();if(window.QC_CURATED_INITIAL_ERROR){var band=$('infoBand');if(band){band.style.display='';band.textContent='今日精选内容暂时无法读取，请刷新页面重试；不会显示旧版缓存方案。';}}
 }
 
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
