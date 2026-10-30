@@ -1,0 +1,24 @@
+name: Curated V2.3 first-paint regression QA
+on:
+  pull_request:
+    paths:
+      - 'internal-test/curated-lab-20261019.html'
+      - 'internal-test/curated-lab-20261019.js'
+      - 'internal-test/curated-db-direct-20261022.js'
+      - 'scripts/curated_v23_firstpaint_qa_20261030.cjs'
+      - '.github/workflows/curated-v23-firstpaint-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  curated-firstpaint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript parsing
+        run: |
+          node --check internal-test/curated-db-direct-20261022.js
+          node --check internal-test/curated-lab-20261019.js
+      - name: Run independent V2.3 preview and no-flash regression tests
+        run: node --test scripts/curated_v23_firstpaint_qa_20261030.cjs
