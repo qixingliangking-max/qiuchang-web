@@ -20,7 +20,7 @@ function personaPlan(index){return (personaNames[index]||'')+'方案'}
 var analystColorKey={1:'guheng',2:'shence',3:'luye'};
 function analystCardClass(plan){return ' analyst-'+(analystColorKey[plan.index]||'guheng')}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
-function personaPlanLive(plan){if(plan.preview)return personaPlan(plan.index)+' · V2.3独立精选';var pack=db.selectedPlans&&db.selectedPlans[plan.day];var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
+function personaPlanLive(plan){if(plan.preview)return personaPlan(plan.index)+' · V2.3独立精选候选';var pack=db.selectedPlans&&db.selectedPlans[plan.day];if(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL')return personaPlan(plan.index)+' · V2.3正式精选'+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'');var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
 function detailAttr(plan){return plan.detailId?' data-open-key="'+esc(plan.detailId)+'"':''}
 function findPlan(day,type,index,key){return plansFor(day,type).find(function(p){return key?p.detailId===key:p.index===index})}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]})}
@@ -172,7 +172,8 @@ function renderTabs(){
  document.querySelectorAll('#tabs button').forEach(function(el){var active=el.dataset.type===state.type;el.classList.toggle('active',active);el.setAttribute('aria-selected',String(active))});
  var plans=plansFor(state.day,state.type);
  var pack=db.selectedPlans&&db.selectedPlans[state.day];
- $('infoBand').textContent=pack&&pack.preview?(plans.length?'V2.3：三人分别审核12场锁板赛事；以下是独立精选候选，历史正式方案另外保留。':'三位分析师本日没有选择这一玩法，切换其他栏目查看精选候选。'):(plans.length?'点击方案查看详情。':'');
+ var isV23=pack&&(pack.preview||pack.rule==='QCDA_V23_CURATED_FORMAL');
+ $('infoBand').textContent=isV23?(plans.length?'V2.3：三位分析师各自从12场锁板赛事中精选；旧版方案已作废，历史记录保留。':'今天三位分析师没有提交这一玩法，请切换其他栏目查看。'):(plans.length?'点击方案查看详情。':'');
 }
 
 function renderDate(){
@@ -222,12 +223,12 @@ function planCard(plan){
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
  var pack=db.selectedPlans&&db.selectedPlans[state.day];
- $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(pack&&pack.preview?'（V2.3独立精选）':pack&&pack.isReplay?'（赛后数据回看）':'');
- $('dailyMeta').textContent=pack&&pack.preview?'12场全量独立评估 · 研究候选':'';
+ $('dailyTitle').textContent=readableDay(state.day)+' · 精选方案'+(pack&&(pack.preview||pack.rule==='QCDA_V23_CURATED_FORMAL')?'（V2.3独立精选）':pack&&pack.isReplay?'（赛后数据回看）':'');
+ $('dailyMeta').textContent=pack&&pack.rule==='QCDA_V23_CURATED_FORMAL'?'12场独立评估 · 今日3组正式方案':pack&&pack.preview?'12场全量独立评估 · 研究候选':'';
  // Only genuine plan records: do not manufacture blank/missing-plan cards.
  $('plans').innerHTML=plans.map(planCard).join('');
  $('plans').style.display=plans.length?'':'none';
- var band=$('infoBand');if(band)band.style.display=(plans.length||(pack&&pack.preview))?'':'none';
+ var band=$('infoBand');if(band)band.style.display=(plans.length||(pack&&(pack.preview||pack.rule==='QCDA_V23_CURATED_FORMAL')))?'':'none';
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
