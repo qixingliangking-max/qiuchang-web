@@ -577,7 +577,23 @@
       "home_team": "巴黎圣日耳曼",
       "away_team": "里昂",
       "match_date": "2026-10-26",
-      "kickoff_at": "2026-10-26T19:30:00.000Z"
+      "kickoff_at": "2026-10-26T19:30:00Z"
+    },
+    {
+      "source_match_id": "5802973",
+      "match_id": "fotmob:5802973",
+      "home_team": "勒阿弗尔",
+      "away_team": "巴黎圣日耳曼",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5802978",
+      "match_id": "fotmob:5802978",
+      "home_team": "尼斯",
+      "away_team": "雷恩",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T18:00:00.000Z"
     }
   ]
 }

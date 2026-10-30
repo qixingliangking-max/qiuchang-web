@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 72,
-  "collected_matches": 72,
+  "input_matches": 74,
+  "collected_matches": 74,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "勒阿弗尔",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "尼斯",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -41,7 +41,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "巴黎圣日耳曼",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "雷恩",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,5 +106,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 10.1
+  "avg_team_depth_coverage_pct": 10.6
 }
