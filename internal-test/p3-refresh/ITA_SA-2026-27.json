@@ -6,7 +6,7 @@
     "55"
   ],
   "fotmob_ccode3": "ITA",
-  "baseline_finished_matches": 90,
+  "baseline_finished_matches": 92,
   "team_map": {
     "Como": "科莫",
     "Roma": "罗马",
@@ -29,6 +29,6 @@
     "Frosinone": "弗罗西诺内",
     "Fiorentina": "佛罗伦萨"
   },
-  "last_successful_refresh_at": "2026-10-29T22:01:00.341Z",
-  "last_published_blob_sha": "55a8739bacff4809954ca64b18247c633c6779b9"
+  "last_successful_refresh_at": "2026-10-31T18:53:55.968Z",
+  "last_published_blob_sha": "ab9ea90d03dfb36e3c21d293a33908b534276ea8"
 }

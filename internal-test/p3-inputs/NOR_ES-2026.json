@@ -1545,7 +1545,15 @@
       "home_team": "博德闪耀",
       "away_team": "维京",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T18:00:00.000Z"
+      "kickoff_at": "2026-10-30T18:00:00Z"
+    },
+    {
+      "source_match_id": "5105034",
+      "match_id": "fotmob:5105034",
+      "home_team": "腓特烈斯塔",
+      "away_team": "罗森博格",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T15:00:00.000Z"
     }
   ]
 }

@@ -801,7 +801,23 @@
       "home_team": "比利亚雷亚尔",
       "away_team": "西班牙人",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T20:00:00.000Z"
+      "kickoff_at": "2026-10-30T20:00:00Z"
+    },
+    {
+      "source_match_id": "5868117",
+      "match_id": "fotmob:5868117",
+      "home_team": "莱万特",
+      "away_team": "马德里竞技",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868119",
+      "match_id": "fotmob:5868119",
+      "home_team": "巴列卡诺",
+      "away_team": "塞尔塔",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T15:15:00.000Z"
     },
     {
       "source_match_id": "5868088",

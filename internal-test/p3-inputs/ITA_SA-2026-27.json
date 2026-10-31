@@ -713,7 +713,7 @@
       "home_team": "弗罗西诺内",
       "away_team": "莱切",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T17:30:00.000Z"
+      "kickoff_at": "2026-10-29T17:30:00Z"
     },
     {
       "source_match_id": "5749722",
@@ -721,7 +721,23 @@
       "home_team": "佛罗伦萨",
       "away_team": "亚特兰大",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T19:45:00.000Z"
+      "kickoff_at": "2026-10-29T19:45:00Z"
+    },
+    {
+      "source_match_id": "5749732",
+      "match_id": "fotmob:5749732",
+      "home_team": "博洛尼亚",
+      "away_team": "蒙扎",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749739",
+      "match_id": "fotmob:5749739",
+      "home_team": "乌迪内斯",
+      "away_team": "罗马",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T17:00:00.000Z"
     }
   ]
 }

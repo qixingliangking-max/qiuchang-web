@@ -513,7 +513,47 @@
       "home_team": "埃尔弗斯堡",
       "away_team": "美因茨",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T19:30:00.000Z"
+      "kickoff_at": "2026-10-30T19:30:00Z"
+    },
+    {
+      "source_match_id": "5881206",
+      "match_id": "fotmob:5881206",
+      "home_team": "奥格斯堡",
+      "away_team": "弗赖堡",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881207",
+      "match_id": "fotmob:5881207",
+      "home_team": "勒沃库森",
+      "away_team": "斯图加特",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881209",
+      "match_id": "fotmob:5881209",
+      "home_team": "门兴格拉德巴赫",
+      "away_team": "帕德博恩",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881212",
+      "match_id": "fotmob:5881212",
+      "home_team": "沙尔克04",
+      "away_team": "莱比锡",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881214",
+      "match_id": "fotmob:5881214",
+      "home_team": "云达不莱梅",
+      "away_team": "霍芬海姆",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:30:00.000Z"
     }
   ]
 }

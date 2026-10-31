@@ -969,7 +969,23 @@
       "home_team": "安道尔FC",
       "away_team": "布尔戈斯",
       "match_date": "2026-10-26",
-      "kickoff_at": "2026-10-26T19:30:00.000Z"
+      "kickoff_at": "2026-10-26T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868522",
+      "match_id": "fotmob:5868522",
+      "home_team": "皇家社会B",
+      "away_team": "赫罗纳",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868518",
+      "match_id": "fotmob:5868518",
+      "home_team": "埃瓦尔",
+      "away_team": "阿尔梅里亚",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T15:15:00.000Z"
     }
   ]
 }

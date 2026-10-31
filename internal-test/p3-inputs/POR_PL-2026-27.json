@@ -657,7 +657,15 @@
       "home_team": "卡萨皮亚",
       "away_team": "葡萄牙体育",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T20:15:00.000Z"
+      "kickoff_at": "2026-10-30T20:15:00Z"
+    },
+    {
+      "source_match_id": "5887669",
+      "match_id": "fotmob:5887669",
+      "home_team": "莫雷拉人",
+      "away_team": "阿马多拉之星",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T15:30:00.000Z"
     }
   ]
 }

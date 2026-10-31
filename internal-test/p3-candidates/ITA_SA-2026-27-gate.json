@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 90,
-  "collected_matches": 90,
+  "input_matches": 92,
+  "collected_matches": 92,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -20,22 +20,12 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "乌迪内斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "亚特兰大",
       "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "佛罗伦萨",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "博洛尼亚",
       "matches": 9
     },
     {
@@ -85,22 +75,12 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "罗马",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "莱切",
       "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨索洛",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "蒙扎",
       "matches": 9
     },
     {
@@ -116,5 +96,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 10
+  "avg_team_depth_coverage_pct": 12.7
 }

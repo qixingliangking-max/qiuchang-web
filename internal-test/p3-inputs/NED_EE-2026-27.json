@@ -969,7 +969,7 @@
       "home_team": "福伦丹",
       "away_team": "格拉夫夏普",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T19:00:00.000Z"
+      "kickoff_at": "2026-10-30T19:00:00Z"
     },
     {
       "source_match_id": "5832927",
@@ -977,7 +977,7 @@
       "home_team": "赫尔蒙德",
       "away_team": "FC埃因霍温",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T19:00:00.000Z"
+      "kickoff_at": "2026-10-30T19:00:00Z"
     },
     {
       "source_match_id": "5832928",
@@ -985,7 +985,7 @@
       "home_team": "罗达JC",
       "away_team": "阿尔克马尔青年队",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T19:00:00.000Z"
+      "kickoff_at": "2026-10-30T19:00:00Z"
     },
     {
       "source_match_id": "5832929",
@@ -993,7 +993,15 @@
       "home_team": "瓦尔韦克",
       "away_team": "阿尔梅勒城",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T19:00:00.000Z"
+      "kickoff_at": "2026-10-30T19:00:00Z"
+    },
+    {
+      "source_match_id": "5832930",
+      "match_id": "fotmob:5832930",
+      "home_team": "马斯特里赫特",
+      "away_team": "芬洛",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T15:30:00.000Z"
     }
   ]
 }

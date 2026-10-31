@@ -3,39 +3,19 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 90,
-  "collected_matches": 90,
+  "input_matches": 94,
+  "collected_matches": 94,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
-  "aggregate_players": 598,
+  "aggregate_players": 599,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
     {
       "type": "LIMITED_SAMPLE",
-      "team": "克雷莫纳",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "凯勒雷斯",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "切塞纳",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "南蒂罗尔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "卡坦扎罗",
       "matches": 9
     },
     {
@@ -50,27 +30,12 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "帕多瓦",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "恩波利",
       "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "恩特拉",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "摩德纳",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "曼托瓦",
       "matches": 9
     },
     {
@@ -95,11 +60,6 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "贝内文托",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "阿斯科利",
       "matches": 9
     },
@@ -116,5 +76,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 12.3
+  "avg_team_depth_coverage_pct": 15.9
 }
