@@ -820,6 +820,22 @@
       "kickoff_at": "2026-10-31T15:15:00.000Z"
     },
     {
+      "source_match_id": "5868112",
+      "match_id": "fotmob:5868112",
+      "home_team": "皇家贝蒂斯",
+      "away_team": "马拉加",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868115",
+      "match_id": "fotmob:5868115",
+      "home_team": "巴塞罗那",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T20:00:00.000Z"
+    },
+    {
       "source_match_id": "5868088",
       "match_id": "fotmob:5868088",
       "home_team": "巴列卡诺",

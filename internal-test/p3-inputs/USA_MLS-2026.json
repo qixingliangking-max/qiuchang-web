@@ -3850,6 +3850,46 @@
       "away_team": "奥兰多城",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T17:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071471",
+      "match_id": "fotmob:5071471",
+      "home_team": "辛辛那提FC",
+      "away_team": "费城联合",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071472",
+      "match_id": "fotmob:5071472",
+      "home_team": "哥伦布机员",
+      "away_team": "华盛顿联",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071474",
+      "match_id": "fotmob:5071474",
+      "home_team": "纽约城",
+      "away_team": "蒙特利尔CF",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071476",
+      "match_id": "fotmob:5071476",
+      "home_team": "堪萨斯城竞技",
+      "away_team": "达拉斯FC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071479",
+      "match_id": "fotmob:5071479",
+      "home_team": "圣路易斯城",
+      "away_team": "圣迭戈FC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T19:00:00.000Z"
     }
   ]
 }

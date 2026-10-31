@@ -554,6 +554,14 @@
       "away_team": "霍芬海姆",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881208",
+      "match_id": "fotmob:5881208",
+      "home_team": "拜仁慕尼黑",
+      "away_team": "多特蒙德",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T17:30:00.000Z"
     }
   ]
 }

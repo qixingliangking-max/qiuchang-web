@@ -754,6 +754,14 @@
       "away_team": "帕多瓦",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T16:15:00.000Z"
+    },
+    {
+      "source_match_id": "5967136",
+      "match_id": "fotmob:5967136",
+      "home_team": "桑普多利亚",
+      "away_team": "恩特拉",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T18:30:00.000Z"
     }
   ]
 }

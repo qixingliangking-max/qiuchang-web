@@ -690,6 +690,14 @@
       "away_team": "奥斯纳布吕克",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5881714",
+      "match_id": "fotmob:5881714",
+      "home_team": "卡尔斯鲁厄",
+      "away_team": "海登海姆",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T19:30:00.000Z"
     }
   ]
 }

@@ -738,6 +738,14 @@
       "away_team": "罗马",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T17:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749730",
+      "match_id": "fotmob:5749730",
+      "home_team": "AC米兰",
+      "away_team": "国际米兰",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T19:45:00.000Z"
     }
   ]
 }
