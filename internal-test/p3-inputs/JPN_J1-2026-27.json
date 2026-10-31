@@ -929,7 +929,7 @@
       "home_team": "名古屋鲸八",
       "away_team": "横滨水手",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T05:00:00.000Z"
+      "kickoff_at": "2026-10-25T05:00:00Z"
     },
     {
       "source_match_id": "5803628",
@@ -937,7 +937,7 @@
       "home_team": "大阪樱花",
       "away_team": "千叶市原",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T06:00:00.000Z"
+      "kickoff_at": "2026-10-25T06:00:00Z"
     },
     {
       "source_match_id": "5803635",
@@ -945,7 +945,7 @@
       "home_team": "浦和红钻",
       "away_team": "长崎成功丸",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T06:00:00.000Z"
+      "kickoff_at": "2026-10-25T06:00:00Z"
     },
     {
       "source_match_id": "5803629",
@@ -953,7 +953,7 @@
       "home_team": "FC东京",
       "away_team": "水户蜀葵",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T07:00:00.000Z"
+      "kickoff_at": "2026-10-25T07:00:00Z"
     },
     {
       "source_match_id": "5803632",
@@ -961,7 +961,47 @@
       "home_team": "川崎前锋",
       "away_team": "冈山绿雉",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T07:00:00.000Z"
+      "kickoff_at": "2026-10-25T07:00:00Z"
+    },
+    {
+      "source_match_id": "5803641",
+      "match_id": "fotmob:5803641",
+      "home_team": "京都不死鸟",
+      "away_team": "清水心跳",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803643",
+      "match_id": "fotmob:5803643",
+      "home_team": "水户蜀葵",
+      "away_team": "广岛三箭",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803644",
+      "match_id": "fotmob:5803644",
+      "home_team": "冈山绿雉",
+      "away_team": "FC东京",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803639",
+      "match_id": "fotmob:5803639",
+      "home_team": "鹿岛鹿角",
+      "away_team": "大阪樱花",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T06:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803645",
+      "match_id": "fotmob:5803645",
+      "home_team": "神户胜利船",
+      "away_team": "名古屋鲸八",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T06:00:00.000Z"
     }
   ]
 }
