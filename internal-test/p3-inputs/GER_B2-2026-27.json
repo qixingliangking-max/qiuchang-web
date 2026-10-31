@@ -657,7 +657,7 @@
       "home_team": "比勒费尔德",
       "away_team": "布伦瑞克",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T17:30:00.000Z"
+      "kickoff_at": "2026-10-30T17:30:00Z"
     },
     {
       "source_match_id": "5881709",
@@ -665,7 +665,31 @@
       "home_team": "科特布斯",
       "away_team": "波鸿",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T17:30:00.000Z"
+      "kickoff_at": "2026-10-30T17:30:00Z"
+    },
+    {
+      "source_match_id": "5881710",
+      "match_id": "fotmob:5881710",
+      "home_team": "达姆施塔特",
+      "away_team": "马格德堡",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5881713",
+      "match_id": "fotmob:5881713",
+      "home_team": "凯泽斯劳滕",
+      "away_team": "柏林赫塔",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T12:00:00.000Z"
+    },
+    {
+      "source_match_id": "5881716",
+      "match_id": "fotmob:5881716",
+      "home_team": "沃尔夫斯堡",
+      "away_team": "奥斯纳布吕克",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T12:00:00.000Z"
     }
   ]
 }

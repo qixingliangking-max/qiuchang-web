@@ -1594,6 +1594,14 @@
       "away_team": "大田韩亚市民",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "6503948",
+      "match_id": "fotmob:6503948",
+      "home_team": "光州FC",
+      "away_team": "金泉尚武",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T07:30:00.000Z"
     }
   ]
 }

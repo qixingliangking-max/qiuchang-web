@@ -3,21 +3,16 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 83,
-  "collected_matches": 83,
+  "input_matches": 86,
+  "collected_matches": 86,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 479,
+  "aggregate_players": 481,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
   "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "凯泽斯劳滕",
-      "matches": 9
-    },
     {
       "type": "LIMITED_SAMPLE",
       "team": "卡尔斯鲁厄",
@@ -30,27 +25,12 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "奥斯纳布吕克",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "德累斯顿迪纳摩",
       "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "柏林赫塔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "汉诺威96",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "沃尔夫斯堡",
       "matches": 9
     },
     {
@@ -72,19 +52,9 @@
       "type": "LIMITED_SAMPLE",
       "team": "菲尔特",
       "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "达姆施塔特",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "马格德堡",
-      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 13.6
+  "avg_team_depth_coverage_pct": 18.7
 }

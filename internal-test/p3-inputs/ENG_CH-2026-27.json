@@ -1161,7 +1161,23 @@
       "home_team": "谢菲尔德联",
       "away_team": "雷克瑟姆",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T20:00:00.000Z"
+      "kickoff_at": "2026-10-30T20:00:00Z"
+    },
+    {
+      "source_match_id": "5836903",
+      "match_id": "fotmob:5836903",
+      "home_team": "诺维奇",
+      "away_team": "沃特福德",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5836906",
+      "match_id": "fotmob:5836906",
+      "home_team": "斯托克城",
+      "away_team": "普雷斯顿",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T12:30:00.000Z"
     }
   ]
 }

@@ -1002,6 +1002,14 @@
       "away_team": "名古屋鲸八",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T06:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803640",
+      "match_id": "fotmob:5803640",
+      "home_team": "柏太阳神",
+      "away_team": "浦和红钻",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T07:00:00.000Z"
     }
   ]
 }
