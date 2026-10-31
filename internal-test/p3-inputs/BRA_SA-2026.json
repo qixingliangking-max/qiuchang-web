@@ -2617,7 +2617,15 @@
       "home_team": "格雷米奥",
       "away_team": "巴拉纳竞技",
       "match_date": "2026-10-30",
-      "kickoff_at": "2026-10-30T00:30:00.000Z"
+      "kickoff_at": "2026-10-30T00:30:00Z"
+    },
+    {
+      "source_match_id": "5103687",
+      "match_id": "fotmob:5103687",
+      "home_team": "科林蒂安",
+      "away_team": "米拉索尔",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T23:00:00Z"
     }
   ]
 }
