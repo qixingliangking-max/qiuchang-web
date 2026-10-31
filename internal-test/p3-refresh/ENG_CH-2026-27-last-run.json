@@ -1,20 +1,19 @@
 {
   "league_code": "ENG_CH",
   "season": "2026/27",
-  "run_at": "2026-10-31T14:29:39.621Z",
+  "run_at": "2026-10-31T14:51:10.568Z",
   "discovered_fixtures": 552,
-  "discovered_finished": 147,
-  "in_scope_finished": 147,
+  "discovered_finished": 148,
+  "in_scope_finished": 148,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 145,
-  "new_finished_matches": 2,
+  "baseline_finished_matches": 147,
+  "new_finished_matches": 1,
   "added_source_match_ids": [
-    "5836903",
-    "5836906"
+    "5836900"
   ],
   "removed_source_match_ids": [],
-  "mapped_finished": 147,
+  "mapped_finished": 148,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -23,6 +22,6 @@
   "strict_errors": 0,
   "collection_failures": 0,
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 39.4,
-  "published_blob_sha": "253f699a043577b7c6639603b336bd190732574e"
+  "avg_team_depth_coverage_pct": 39,
+  "published_blob_sha": "305f3669c1717517e5ac9ac151c5ec7438b557ef"
 }
