@@ -3777,7 +3777,7 @@
       "home_team": "奥斯汀FC",
       "away_team": "皇家盐湖城",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071462",
@@ -3785,7 +3785,7 @@
       "home_team": "芝加哥火焰",
       "away_team": "奥兰多城",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071463",
@@ -3793,7 +3793,7 @@
       "home_team": "达拉斯FC",
       "away_team": "哥伦布机员",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071464",
@@ -3801,7 +3801,7 @@
       "home_team": "明尼苏达联",
       "away_team": "堪萨斯城竞技",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071465",
@@ -3809,7 +3809,7 @@
       "home_team": "纳什维尔",
       "away_team": "费城联合",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071468",
@@ -3817,7 +3817,7 @@
       "home_team": "圣路易斯城",
       "away_team": "波特兰伐木工",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T00:30:00.000Z"
+      "kickoff_at": "2026-10-29T00:30:00Z"
     },
     {
       "source_match_id": "5071466",
@@ -3825,7 +3825,7 @@
       "home_team": "圣何塞地震",
       "away_team": "科罗拉多急流",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T02:30:00.000Z"
+      "kickoff_at": "2026-10-29T02:30:00Z"
     },
     {
       "source_match_id": "5071467",
@@ -3833,7 +3833,7 @@
       "home_team": "西雅图海湾人",
       "away_team": "休斯敦迪纳摩",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T02:30:00.000Z"
+      "kickoff_at": "2026-10-29T02:30:00Z"
     },
     {
       "source_match_id": "5071469",
@@ -3841,7 +3841,15 @@
       "home_team": "温哥华白帽",
       "away_team": "圣迭戈FC",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T02:40:00.000Z"
+      "kickoff_at": "2026-10-29T02:40:00Z"
+    },
+    {
+      "source_match_id": "5071470",
+      "match_id": "fotmob:5071470",
+      "home_team": "夏洛特FC",
+      "away_team": "奥兰多城",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T17:00:00.000Z"
     }
   ]
 }

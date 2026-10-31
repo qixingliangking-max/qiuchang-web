@@ -690,6 +690,14 @@
       "away_team": "布莱顿",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T15:00:00.000Z"
+    },
+    {
+      "source_match_id": "5795504",
+      "match_id": "fotmob:5795504",
+      "home_team": "热刺",
+      "away_team": "水晶宫",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T17:30:00.000Z"
     }
   ]
 }

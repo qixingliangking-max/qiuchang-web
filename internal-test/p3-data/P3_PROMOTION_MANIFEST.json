@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "b7e8bdf167c45279d6f00740b3c655126ccf3d16",
+      "blob_sha": "e13f7d6e2dbaf47b40d0018485768270be5120b4",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 85.7,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-29T05:41:53.117Z",
-      "finished_matches": 480,
+      "last_incremental_refresh_at": "2026-10-31T19:28:11.442Z",
+      "finished_matches": 481,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -40,12 +40,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 16,
       "published_path": "internal-test/p3-data/NOR_ES-2026.json",
-      "blob_sha": "f4c909c0089c8104aa49aee6c6be0df7c71534be",
+      "blob_sha": "0f6f601b89bde0ce0469e70c8fd2b9da0f0efa97",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 86.4,
       "gate_report": "internal-test/p3-candidates/NOR_ES-2026-gate.json",
-      "last_incremental_refresh_at": "2026-10-31T18:54:28.180Z",
-      "finished_matches": 194,
+      "last_incremental_refresh_at": "2026-10-31T19:27:48.710Z",
+      "finished_matches": 195,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -189,14 +189,14 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/ENG_PL-2026-27.json",
-      "blob_sha": "fff0406a962695d205169a164d38f6935dc07938",
+      "blob_sha": "2ce251f4df27c99dbe1b5bf55eb5a05d815ff49c",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 5.5,
       "gate_report": "internal-test/p3-candidates/ENG_PL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-10-31T18:53:16.142Z",
-      "finished_matches": 86
+      "last_incremental_refresh_at": "2026-10-31T19:27:19.875Z",
+      "finished_matches": 87
     },
     {
       "league_code": "NED_ED",

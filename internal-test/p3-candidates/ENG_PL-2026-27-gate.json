@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 86,
-  "collected_matches": 86,
+  "input_matches": 87,
+  "collected_matches": 87,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -76,12 +76,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "水晶宫",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "热刺",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
