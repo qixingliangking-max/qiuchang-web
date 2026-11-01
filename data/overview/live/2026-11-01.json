@@ -158,11 +158,11 @@
       "match_date": "2026-11-01",
       "match_time": "15:00:00",
       "kickoff_at": "2026-11-01T07:00:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:0",
+        "sectionsNo1": "0:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-194011.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-6582.png",
@@ -179,11 +179,11 @@
       "match_date": "2026-11-01",
       "match_time": "15:30:00",
       "kickoff_at": "2026-11-01T07:30:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:1",
+        "sectionsNo1": "0:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-92630.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-133895.png",
@@ -302,11 +302,11 @@
       "match_date": "2026-11-01",
       "match_time": "16:00:00",
       "kickoff_at": "2026-11-01T08:00:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "4:0",
+        "sectionsNo1": "3:0"
       },
       "_homeLogoUrl": "assets/team-logos/espn-soccer-5322.png",
       "_awayLogoUrl": "assets/team-logos/espn-soccer-5321.png",
