@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "business_date": "2026-11-03",
+  "match_count": 11,
+  "rows": [
+    {
+      "id": "f7c8e674-fabc-4035-9483-ad86738beb0c",
+      "match_num": "周二001",
+      "business_date": "2026-11-03",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "纽卡斯尔喷气机",
+      "away_team_name": "上海海港",
+      "match_date": "2026-11-03",
+      "match_time": "15:45:00",
+      "kickoff_at": "2026-11-03T07:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6454.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-198616.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d24ea390-3ecf-4e88-8928-8da3cf95a0bd",
+      "match_num": "周二002",
+      "business_date": "2026-11-03",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "柏太阳神",
+      "away_team_name": "大田市民",
+      "match_date": "2026-11-03",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-11-03T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8699.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-133900.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "19d106f5-04fe-4d3d-b9ac-8694cbe9a4d4",
+      "match_num": "周二003",
+      "business_date": "2026-11-03",
+      "league_name": "亚冠精英",
+      "league_short_name": "亚冠精英",
+      "home_team_name": "曼谷港务",
+      "away_team_name": "北京国安",
+      "match_date": "2026-11-03",
+      "match_time": "20:15:00",
+      "kickoff_at": "2026-11-03T12:15:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-165255.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-4177.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "b445a360-c3b7-4fb5-8d4b-2a38b8037f89",
+      "match_num": "周二004",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "加拉塔萨雷",
+      "away_team_name": "斯图加特",
+      "match_date": "2026-11-04",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-11-03T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8637.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10269.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "9c867e32-ffed-4a02-8afe-d0f3624f5174",
+      "match_num": "周二005",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "马德里竞技",
+      "away_team_name": "拜仁慕尼黑",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9906.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9823.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "36733f77-7828-4584-adb4-98dcc052c7cb",
+      "match_num": "周二006",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "LASK林茨",
+      "away_team_name": "布拉迪斯拉发",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9977.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6019.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "066accc3-f77e-43ac-b73f-972a879b5677",
+      "match_num": "周二007",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "费耶诺德",
+      "away_team_name": "国际米兰",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10235.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8636.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f8d4a2df-cd22-4f45-a823-7008d8981fb6",
+      "match_num": "周二008",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "曼彻斯特联",
+      "away_team_name": "罗马",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-360.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8686.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "bd82a4f5-2777-453f-a4cb-4acb3c82f171",
+      "match_num": "周二009",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "巴塞罗那",
+      "away_team_name": "阿斯顿维拉",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8634.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10252.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "57140368-890c-46e6-829c-c7f805516114",
+      "match_num": "周二010",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "比利亚雷亚尔",
+      "away_team_name": "巴黎圣日尔曼",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10205.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9847.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "df1c3365-3794-442c-9577-28f4eb28c500",
+      "match_num": "周二011",
+      "business_date": "2026-11-03",
+      "league_name": "欧冠",
+      "league_short_name": "欧冠",
+      "home_team_name": "博德闪耀",
+      "away_team_name": "里尔",
+      "match_date": "2026-11-04",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-03T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8402.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8639.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
