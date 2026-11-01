@@ -649,7 +649,7 @@
       "home_team": "切尔西",
       "away_team": "曼联",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:30:00.000Z"
+      "kickoff_at": "2026-10-31T12:30:00Z"
     },
     {
       "source_match_id": "5795495",
@@ -657,7 +657,7 @@
       "home_team": "伯恩茅斯",
       "away_team": "利兹联",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5795497",
@@ -665,7 +665,7 @@
       "home_team": "布伦特福德",
       "away_team": "诺丁汉森林",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5795499",
@@ -673,7 +673,7 @@
       "home_team": "考文垂",
       "away_team": "桑德兰",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5795500",
@@ -681,7 +681,7 @@
       "home_team": "赫尔城",
       "away_team": "伊普斯维奇",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5795502",
@@ -689,7 +689,7 @@
       "home_team": "曼城",
       "away_team": "布莱顿",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5795504",
@@ -697,7 +697,7 @@
       "home_team": "热刺",
       "away_team": "水晶宫",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:30:00.000Z"
+      "kickoff_at": "2026-10-31T17:30:00Z"
     },
     {
       "source_match_id": "5795496",
@@ -705,7 +705,15 @@
       "home_team": "阿斯顿维拉",
       "away_team": "富勒姆",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T20:00:00.000Z"
+      "kickoff_at": "2026-10-31T20:00:00Z"
+    },
+    {
+      "source_match_id": "5795501",
+      "match_id": "fotmob:5795501",
+      "home_team": "利物浦",
+      "away_team": "阿森纳",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T16:30:00.000Z"
     }
   ]
 }

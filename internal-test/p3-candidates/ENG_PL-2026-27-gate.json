@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 88,
-  "collected_matches": 88,
+  "input_matches": 89,
+  "collected_matches": 89,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 20,
@@ -36,7 +36,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利物浦",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -111,7 +111,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿森纳",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",

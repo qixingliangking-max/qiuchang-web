@@ -570,6 +570,14 @@
       "away_team": "科隆",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881210",
+      "match_id": "fotmob:5881210",
+      "home_team": "法兰克福",
+      "away_team": "汉堡",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T16:30:00.000Z"
     }
   ]
 }
