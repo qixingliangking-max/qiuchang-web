@@ -5,7 +5,7 @@ on:
   # The history publisher runs independently and frequently; its completion
   # gives score publication a second trigger when GitHub delays cron events.
   workflow_run:
-    workflows: ["Publish finalized public football history"]
+    workflows: ["Publish finalized public football history", "Cache immutable fixture team logos"]
     types: [completed]
     branches: [main]
   schedule:
@@ -29,7 +29,11 @@ concurrency:
 
 jobs:
   publish-confirmed-final:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    # Ignore reciprocal workflow_run completions to prevent a score→crest→score loop.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event != 'workflow_run')
     outputs:
       has_new_finals: ${{ steps.publish.outputs.has_new_finals }}
     runs-on: ubuntu-latest
