@@ -1618,6 +1618,22 @@
       "away_team": "济州SK",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "6503834",
+      "match_id": "fotmob:6503834",
+      "home_team": "首尔FC",
+      "away_team": "仁川联",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T07:30:00.000Z"
+    },
+    {
+      "source_match_id": "6503950",
+      "match_id": "fotmob:6503950",
+      "home_team": "安养FC",
+      "away_team": "富川FC",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T07:30:00.000Z"
     }
   ]
 }

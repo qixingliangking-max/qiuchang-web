@@ -12,12 +12,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 12,
       "published_path": "internal-test/p3-data/KOR_K1-2026.json",
-      "blob_sha": "0dc3e03af2c223324709c5b5743faf736a29439b",
+      "blob_sha": "86c1b5e96fb1c7a1020d99fb0a88b0318b401d6a",
       "gate_status": "PASS",
-      "avg_team_depth_coverage_pct": 91.7,
+      "avg_team_depth_coverage_pct": 92.4,
       "gate_report": "internal-test/p3-candidates/KOR_K1-2026-gate.json",
-      "last_incremental_refresh_at": "2026-11-01T09:20:22.697Z",
-      "finished_matches": 202,
+      "last_incremental_refresh_at": "2026-11-01T12:58:50.483Z",
+      "finished_matches": 204,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
