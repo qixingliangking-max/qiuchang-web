@@ -809,7 +809,7 @@
       "home_team": "莱万特",
       "away_team": "马德里竞技",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T13:00:00.000Z"
+      "kickoff_at": "2026-10-31T13:00:00Z"
     },
     {
       "source_match_id": "5868119",
@@ -817,7 +817,7 @@
       "home_team": "巴列卡诺",
       "away_team": "塞尔塔",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:15:00.000Z"
+      "kickoff_at": "2026-10-31T15:15:00Z"
     },
     {
       "source_match_id": "5868112",
@@ -825,7 +825,7 @@
       "home_team": "皇家贝蒂斯",
       "away_team": "马拉加",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:30:00.000Z"
+      "kickoff_at": "2026-10-31T17:30:00Z"
     },
     {
       "source_match_id": "5868115",
@@ -833,7 +833,15 @@
       "home_team": "巴塞罗那",
       "away_team": "阿拉维斯",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T20:00:00.000Z"
+      "kickoff_at": "2026-10-31T20:00:00Z"
+    },
+    {
+      "source_match_id": "5868116",
+      "match_id": "fotmob:5868116",
+      "home_team": "赫塔费",
+      "away_team": "塞维利亚",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:00:00.000Z"
     },
     {
       "source_match_id": "5868088",

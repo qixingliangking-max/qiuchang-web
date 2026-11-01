@@ -1001,7 +1001,15 @@
       "home_team": "马斯特里赫特",
       "away_team": "芬洛",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:30:00.000Z"
+      "kickoff_at": "2026-10-31T15:30:00Z"
+    },
+    {
+      "source_match_id": "5832925",
+      "match_id": "fotmob:5832925",
+      "home_team": "埃门",
+      "away_team": "邓伯什",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:30:00.000Z"
     }
   ]
 }

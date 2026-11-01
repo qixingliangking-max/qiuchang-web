@@ -3,48 +3,17 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 87,
-  "collected_matches": 87,
+  "input_matches": 90,
+  "collected_matches": 90,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 481,
+  "aggregate_players": 483,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
-  "strict_warnings": [
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "圣保利",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "德累斯顿迪纳摩",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "汉诺威96",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "纽伦堡",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "荷尔斯泰因基尔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "菲尔特",
-      "matches": 9
-    }
-  ],
+  "strict_warnings": [],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 21.2
+  "avg_team_depth_coverage_pct": 20.2
 }

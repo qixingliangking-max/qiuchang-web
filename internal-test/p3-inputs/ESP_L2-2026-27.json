@@ -1002,6 +1002,14 @@
       "away_team": "萨瓦德尔",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T20:00:00Z"
+    },
+    {
+      "source_match_id": "5868519",
+      "match_id": "fotmob:5868519",
+      "home_team": "埃登斯",
+      "away_team": "格拉纳达",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:00:00.000Z"
     }
   ]
 }

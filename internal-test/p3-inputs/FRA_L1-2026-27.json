@@ -609,7 +609,15 @@
       "home_team": "特鲁瓦",
       "away_team": "勒芒",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T19:45:00.000Z"
+      "kickoff_at": "2026-10-31T19:45:00Z"
+    },
+    {
+      "source_match_id": "5802980",
+      "match_id": "fotmob:5802980",
+      "home_team": "斯特拉斯堡",
+      "away_team": "欧塞尔",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T14:00:00.000Z"
     }
   ]
 }

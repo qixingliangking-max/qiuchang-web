@@ -1649,7 +1649,7 @@
       "home_team": "哈马比",
       "away_team": "天狼星",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T17:45:00.000Z"
+      "kickoff_at": "2026-10-29T17:45:00Z"
     },
     {
       "source_match_id": "5107640",
@@ -1657,7 +1657,7 @@
       "home_team": "奥尔格里特",
       "away_team": "米亚尔比",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T18:00:00.000Z"
+      "kickoff_at": "2026-10-29T18:00:00Z"
     },
     {
       "source_match_id": "5107643",
@@ -1665,7 +1665,23 @@
       "home_team": "卡尔马",
       "away_team": "哥德堡盖斯",
       "match_date": "2026-10-29",
-      "kickoff_at": "2026-10-29T18:00:00.000Z"
+      "kickoff_at": "2026-10-29T18:00:00Z"
+    },
+    {
+      "source_match_id": "5107645",
+      "match_id": "fotmob:5107645",
+      "home_team": "佐加顿斯",
+      "away_team": "代格福什",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107649",
+      "match_id": "fotmob:5107649",
+      "home_team": "马尔默",
+      "away_team": "哈马比",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:00:00.000Z"
     }
   ]
 }

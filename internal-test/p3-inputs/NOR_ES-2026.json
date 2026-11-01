@@ -1553,7 +1553,7 @@
       "home_team": "腓特烈斯塔",
       "away_team": "罗森博格",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5105039",
@@ -1561,7 +1561,15 @@
       "home_team": "奥勒松",
       "away_team": "桑德菲杰",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:00:00.000Z"
+      "kickoff_at": "2026-10-31T17:00:00Z"
+    },
+    {
+      "source_match_id": "5105036",
+      "match_id": "fotmob:5105036",
+      "home_team": "布兰",
+      "away_team": "莫尔德",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T13:30:00.000Z"
     }
   ]
 }

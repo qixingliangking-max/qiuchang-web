@@ -673,7 +673,7 @@
       "home_team": "达姆施塔特",
       "away_team": "马格德堡",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:00:00.000Z"
+      "kickoff_at": "2026-10-31T12:00:00Z"
     },
     {
       "source_match_id": "5881713",
@@ -681,7 +681,7 @@
       "home_team": "凯泽斯劳滕",
       "away_team": "柏林赫塔",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:00:00.000Z"
+      "kickoff_at": "2026-10-31T12:00:00Z"
     },
     {
       "source_match_id": "5881716",
@@ -689,7 +689,7 @@
       "home_team": "沃尔夫斯堡",
       "away_team": "奥斯纳布吕克",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:00:00.000Z"
+      "kickoff_at": "2026-10-31T12:00:00Z"
     },
     {
       "source_match_id": "5881714",
@@ -697,7 +697,31 @@
       "home_team": "卡尔斯鲁厄",
       "away_team": "海登海姆",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T19:30:00.000Z"
+      "kickoff_at": "2026-10-31T19:30:00Z"
+    },
+    {
+      "source_match_id": "5881711",
+      "match_id": "fotmob:5881711",
+      "home_team": "菲尔特",
+      "away_team": "荷尔斯泰因基尔",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881712",
+      "match_id": "fotmob:5881712",
+      "home_team": "汉诺威96",
+      "away_team": "德累斯顿迪纳摩",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881715",
+      "match_id": "fotmob:5881715",
+      "home_team": "圣保利",
+      "away_team": "纽伦堡",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T12:30:00.000Z"
     }
   ]
 }
