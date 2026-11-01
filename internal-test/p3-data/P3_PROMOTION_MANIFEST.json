@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "6a9dc9c830f48eb90ffb93d7111cf7ad6f99f27d",
+      "blob_sha": "f339e34ad1cc5ffa227115744ddb53a79feea752",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 86.4,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-11-01T00:51:36.131Z",
-      "finished_matches": 488,
+      "last_incremental_refresh_at": "2026-11-01T06:37:58.765Z",
+      "finished_matches": 489,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -68,15 +68,15 @@
       "quality_tier": "LIMITED",
       "teams": 20,
       "published_path": "internal-test/p3-data/JPN_J1-2026-27.json",
-      "blob_sha": "eb134725a8ff5a75f6f2f5092e15c49097d444c0",
+      "blob_sha": "5218a638a328a45e3845f861e5f44e590f06370c",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "sample_policy": "LOW_SAMPLE/LIMITED",
       "model_read_rule": "P3_VALID is structural only; depth/bench factors are limited-weight until FULL sample quality is reached.",
-      "avg_team_depth_coverage_pct": 33.2,
+      "avg_team_depth_coverage_pct": 34.6,
       "gate_report": "internal-test/p3-candidates/JPN_J1-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-10-31T14:30:13.007Z",
-      "finished_matches": 126
+      "last_incremental_refresh_at": "2026-11-01T06:37:32.596Z",
+      "finished_matches": 127
     },
     {
       "league_code": "SWE_AS",
