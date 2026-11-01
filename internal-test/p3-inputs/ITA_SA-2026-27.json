@@ -729,7 +729,7 @@
       "home_team": "博洛尼亚",
       "away_team": "蒙扎",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T14:00:00.000Z"
+      "kickoff_at": "2026-10-31T14:00:00Z"
     },
     {
       "source_match_id": "5749739",
@@ -737,7 +737,7 @@
       "home_team": "乌迪内斯",
       "away_team": "罗马",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:00:00.000Z"
+      "kickoff_at": "2026-10-31T17:00:00Z"
     },
     {
       "source_match_id": "5749730",
@@ -745,7 +745,15 @@
       "home_team": "AC米兰",
       "away_team": "国际米兰",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T19:45:00.000Z"
+      "kickoff_at": "2026-10-31T19:45:00Z"
+    },
+    {
+      "source_match_id": "5749733",
+      "match_id": "fotmob:5749733",
+      "home_team": "科莫",
+      "away_team": "威尼斯",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T11:30:00.000Z"
     }
   ]
 }

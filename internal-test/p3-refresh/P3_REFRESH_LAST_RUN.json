@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-01T12:59:21.508Z",
+  "run_at": "2026-11-01T13:28:54.568Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 23,
+  "promoted_leagues": 2,
+  "noop_leagues": 22,
   "blocked_leagues": 0,
   "results": [
     {
@@ -163,15 +163,15 @@
     {
       "league_code": "ITA_SA",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 93,
+      "status": "PROMOTED",
+      "discovered_finished": 94,
       "baseline_finished_matches": 93,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -205,29 +205,29 @@
     {
       "league_code": "KOR_K1",
       "season": "2026",
-      "status": "PROMOTED",
-      "discovered_finished": 204,
-      "baseline_finished_matches": 202,
-      "new_finished_matches": 2,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
-      "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
-      "exit_code": 0
-    },
-    {
-      "league_code": "NED_ED",
-      "season": "2026/27",
       "status": "NO_NEW_FINISHED",
-      "discovered_finished": 95,
-      "baseline_finished_matches": 95,
+      "discovered_finished": 204,
+      "baseline_finished_matches": 204,
       "new_finished_matches": 0,
       "gate_status": null,
       "collection_coverage_pct": null,
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
+      "exit_code": 0
+    },
+    {
+      "league_code": "NED_ED",
+      "season": "2026/27",
+      "status": "PROMOTED",
+      "discovered_finished": 96,
+      "baseline_finished_matches": 95,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {

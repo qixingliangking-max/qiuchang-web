@@ -762,6 +762,14 @@
       "away_team": "前进之鹰",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T20:00:00Z"
+    },
+    {
+      "source_match_id": "5781792",
+      "match_id": "fotmob:5781792",
+      "home_team": "兹沃勒",
+      "away_team": "海牙",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T11:15:00.000Z"
     }
   ]
 }
