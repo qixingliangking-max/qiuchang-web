@@ -1018,6 +1018,14 @@
       "away_team": "希洪竞技",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868515",
+      "match_id": "fotmob:5868515",
+      "home_team": "布尔戈斯",
+      "away_team": "卡斯特利翁",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T17:30:00.000Z"
     }
   ]
 }
