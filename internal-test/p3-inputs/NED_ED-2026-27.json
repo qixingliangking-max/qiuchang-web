@@ -729,7 +729,7 @@
       "home_team": "费耶诺德",
       "away_team": "锡塔德幸运",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:30:00.000Z"
+      "kickoff_at": "2026-10-31T15:30:00Z"
     },
     {
       "source_match_id": "5781791",
@@ -737,7 +737,7 @@
       "home_team": "海伦芬",
       "away_team": "奈梅亨",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:45:00.000Z"
+      "kickoff_at": "2026-10-31T17:45:00Z"
     },
     {
       "source_match_id": "5781793",
@@ -745,7 +745,7 @@
       "home_team": "埃因霍温",
       "away_team": "威廉二世",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T17:45:00.000Z"
+      "kickoff_at": "2026-10-31T17:45:00Z"
     },
     {
       "source_match_id": "5781786",
@@ -753,7 +753,15 @@
       "home_team": "阿贾克斯",
       "away_team": "阿尔克马尔",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T20:00:00.000Z"
+      "kickoff_at": "2026-10-31T20:00:00Z"
+    },
+    {
+      "source_match_id": "5781788",
+      "match_id": "fotmob:5781788",
+      "home_team": "坎布尔",
+      "away_team": "前进之鹰",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T20:00:00Z"
     }
   ]
 }

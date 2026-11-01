@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 83,
-  "collected_matches": 83,
+  "input_matches": 84,
+  "collected_matches": 84,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
-  "aggregate_players": 544,
+  "aggregate_players": 545,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -30,11 +30,6 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "埃斯托里尔",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "布拉加",
       "matches": 9
     },
@@ -46,11 +41,6 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "法马利康",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "波尔图",
       "matches": 9
     },
     {

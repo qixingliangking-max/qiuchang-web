@@ -665,7 +665,15 @@
       "home_team": "莫雷拉人",
       "away_team": "阿马多拉之星",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:30:00.000Z"
+      "kickoff_at": "2026-10-31T15:30:00Z"
+    },
+    {
+      "source_match_id": "5887670",
+      "match_id": "fotmob:5887670",
+      "home_team": "波尔图",
+      "away_team": "埃斯托里尔",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T20:30:00Z"
     }
   ]
 }
