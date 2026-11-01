@@ -674,6 +674,14 @@
       "away_team": "埃斯托里尔",
       "match_date": "2026-10-31",
       "kickoff_at": "2026-10-31T20:30:00Z"
+    },
+    {
+      "source_match_id": "5887664",
+      "match_id": "fotmob:5887664",
+      "home_team": "阿罗卡",
+      "away_team": "葡萄牙国民",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T15:30:00.000Z"
     }
   ]
 }
