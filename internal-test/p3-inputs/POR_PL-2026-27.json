@@ -682,6 +682,22 @@
       "away_team": "葡萄牙国民",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T15:30:00.000Z"
+    },
+    {
+      "source_match_id": "5887663",
+      "match_id": "fotmob:5887663",
+      "home_team": "维塞乌学院",
+      "away_team": "里奥阿维",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5887668",
+      "match_id": "fotmob:5887668",
+      "home_team": "马里迪莫",
+      "away_team": "圣克拉拉",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T18:00:00.000Z"
     }
   ]
 }

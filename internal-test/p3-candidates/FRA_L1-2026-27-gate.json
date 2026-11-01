@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 79,
-  "collected_matches": 79,
+  "input_matches": 80,
+  "collected_matches": 80,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "图卢兹",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,10 +101,10 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马赛",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 11.1
+  "avg_team_depth_coverage_pct": 12.1
 }

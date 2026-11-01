@@ -794,6 +794,14 @@
       "away_team": "凯勒雷斯",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T16:15:00.000Z"
+    },
+    {
+      "source_match_id": "5967135",
+      "match_id": "fotmob:5967135",
+      "home_team": "巴勒莫",
+      "away_team": "维琴察",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T18:30:00.000Z"
     }
   ]
 }
