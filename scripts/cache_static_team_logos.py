@@ -179,6 +179,8 @@ def fill_missing_sources(teams):
         # RB Omiya Ardija /teams/4398. Chinese aliases in JC official feed.
         "仙台七夕": "https://images.fotmob.com/image_resources/logo/teamlogo/162192.png",
         "大宫松鼠RB": "https://images.fotmob.com/image_resources/logo/teamlogo/4398.png",
+        # FotMob verified club /teams/6390: Red Star FC (Saint-Ouen), official Chinese name 圣旺红星.
+        "圣旺红星": "https://images.fotmob.com/image_resources/logo/teamlogo/6390.png",
     }
     for name, url in verified.items():
         if name in teams:
@@ -631,7 +633,23 @@ def publish_live_schedules(by_team):
             print("WARNING invalid live schedule rows; skipped:", ds)
             continue
 
-        assert_prekick_crests_complete(rows, by_team, now, ds)
+        try:
+            assert_prekick_crests_complete(rows, by_team, now, ds)
+        except RuntimeError as exc:
+            # Do not let a NEW, incomplete future fixture roster block
+            # publishing the validated current/previous day's static data.
+            # An incomplete future day stays unpublished until the actual
+            # verified local crest becomes available; do not fake logos.
+            if ds <= today.isoformat():
+                raise
+            print("WARNING future schedule deferred (no unverified logo published):", exc)
+            if existing is not None:
+                # Preserve an already complete, immutable published version.
+                old_digest = hashlib.sha256(json.dumps(existing, ensure_ascii=False,
+                    separators=(",", ":")).encode("utf-8")).hexdigest()[:16]
+                dates[ds] = {"file": relative, "version": old_digest,
+                             "match_count": len(existing.get("rows") or [])}
+            continue
 
         payload = {
             "version": 1,
