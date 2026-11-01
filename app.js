@@ -1476,15 +1476,10 @@ async function qcFetchFrozenOverviewDate(dateStr){
 }
 
 async function qcPrimeFrozenOverviewDates(dateList){
-  // Warm old static days one by one, only while the page is visible.
-  // An explicitly requested date keeps its own immediate read path.
   const manifest=await qcLoadFrozenOverviewManifest();
   const dates=[...new Set((dateList||[]).filter(ds=>manifest?.dates?.[ds]))];
-  if(!dates.length || document.hidden) return;
-  for(const ds of dates){
-    if(document.hidden) break;
-    try{ await qcFetchFrozenOverviewDate(ds); }catch(_){}
-  }
+  if(!dates.length) return;
+  await Promise.allSettled(dates.map(ds=>qcFetchFrozenOverviewDate(ds)));
 }
 
 function qcPrepareProOverviewRows(rows){
@@ -2000,7 +1995,7 @@ async function loadJcFootball(){
     // only opening TODAY primed archives; historical arrows cold-fetched JSON.
     if(ds>=today || warmHistoryRequested.has(ds)) return;
     warmHistoryRequested.add(ds);
-    const closeDates=[-1,1].map(offset=>qcAddDays(ds,offset))
+    const closeDates=[-1,1,-2,2].map(offset=>qcAddDays(ds,offset))
       .filter(candidate=>candidate>=minArchivedDate && candidate<today);
     const warm=()=>qcPrimeFrozenOverviewDates(closeDates).catch(()=>{});
     if(typeof window.requestIdleCallback==='function')
@@ -2485,7 +2480,7 @@ async function loadJcFootball(){
   // Only after the live day has painted, warm the closest public static dates.
   // Once loaded the previous dates flip with no live database roundtrip.
   if(initialDate===today){
-    const recent=[1,2].map(n=>qcAddDays(today,-n));
+    const recent=[1,2,3,4].map(n=>qcAddDays(today,-n));
     const warm=()=>qcPrimeFrozenOverviewDates(recent).catch(()=>{});
     if(typeof window.requestIdleCallback==='function'){
       window.requestIdleCallback(warm,{timeout:3200});
