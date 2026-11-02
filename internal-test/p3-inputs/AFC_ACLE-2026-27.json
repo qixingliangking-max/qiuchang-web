@@ -369,7 +369,7 @@
       "home_team": "大阪钢巴",
       "away_team": "武里南联",
       "match_date": "2026-10-28",
-      "kickoff_at": "2026-10-28T10:00:00.000Z"
+      "kickoff_at": "2026-10-28T10:00:00Z"
     },
     {
       "source_match_id": "6049999",
@@ -377,7 +377,55 @@
       "home_team": "鹿岛鹿角",
       "away_team": "浦项制铁",
       "match_date": "2026-10-28",
-      "kickoff_at": "2026-10-28T10:00:00.000Z"
+      "kickoff_at": "2026-10-28T10:00:00Z"
+    },
+    {
+      "source_match_id": "6050088",
+      "match_id": "fotmob:6050088",
+      "home_team": "塔什干棉农",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T13:45:00.000Z"
+    },
+    {
+      "source_match_id": "6050089",
+      "match_id": "fotmob:6050089",
+      "home_team": "萨德",
+      "away_team": "吉达国民",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050090",
+      "match_id": "fotmob:6050090",
+      "home_team": "迪拜祈祷",
+      "away_team": "巴格达空军",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050091",
+      "match_id": "fotmob:6050091",
+      "home_team": "大不里士拖拉机",
+      "away_team": "费尔干纳石油",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050092",
+      "match_id": "fotmob:6050092",
+      "home_team": "加拉法",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T18:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050093",
+      "match_id": "fotmob:6050093",
+      "home_team": "吉达联合",
+      "away_team": "艾因",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T18:15:00.000Z"
     }
   ]
 }
