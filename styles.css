@@ -5644,3 +5644,16 @@ button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
     opacity:.83;
   }
 }
+
+/* 2026-11-03: keep handicap-only double choices together in the narrow overview direction column. */
+@media(max-width:760px){
+  .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline{
+    display:inline-flex!important; flex-wrap:nowrap!important; white-space:nowrap!important;
+    gap:1px!important; max-width:none!important; letter-spacing:-.15px;
+  }
+  .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-primary,
+  .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-secondary,
+  .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-sep{
+    font-size:9px!important; white-space:nowrap!important;
+  }
+}
