@@ -841,7 +841,7 @@
       "home_team": "赫塔费",
       "away_team": "塞维利亚",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T13:00:00.000Z"
+      "kickoff_at": "2026-11-01T13:00:00Z"
     },
     {
       "source_match_id": "5868118",
@@ -849,7 +849,7 @@
       "home_team": "桑坦德竞技",
       "away_team": "皇家马德里",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T15:15:00.000Z"
+      "kickoff_at": "2026-11-01T15:15:00Z"
     },
     {
       "source_match_id": "5868114",
@@ -857,7 +857,7 @@
       "home_team": "埃尔切",
       "away_team": "瓦伦西亚",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T17:30:00.000Z"
+      "kickoff_at": "2026-11-01T17:30:00Z"
     },
     {
       "source_match_id": "5868111",
@@ -865,7 +865,15 @@
       "home_team": "毕尔巴鄂竞技",
       "away_team": "皇家社会",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T20:00:00.000Z"
+      "kickoff_at": "2026-11-01T20:00:00Z"
+    },
+    {
+      "source_match_id": "5868113",
+      "match_id": "fotmob:5868113",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "奥萨苏纳",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T20:00:00.000Z"
     },
     {
       "source_match_id": "5868088",
