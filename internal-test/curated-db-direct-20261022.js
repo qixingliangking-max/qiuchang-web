@@ -1,6 +1,37 @@
 (function(){
 'use strict';
 var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
+window.QC_CURATED_DAY_ERRORS=window.QC_CURATED_DAY_ERRORS||{};
+window.QC_CURATED_CACHE_DATES=window.QC_CURATED_CACHE_DATES||{};
+var cachePrefix='qcda-curated-approved-v24:';
+function restoreVerifiedDay(day){
+ try{
+  var raw=localStorage.getItem(cachePrefix+day);
+  if(!raw)return false;
+  var saved=JSON.parse(raw);
+  if(!saved||!saved.pack||!Number.isFinite(saved.at)||Date.now()-saved.at>36*3600000)return false;
+  var pack=saved.pack;
+  var count=(pack.entries||[]).length+((pack.aiSelector||{}).entries||[]).length+((pack.analystSelector||{}).entries||[]).length;
+  if(!count)return false;
+  db.selectedPlans=db.selectedPlans||{};
+  db.selectedPlans[day]=pack;
+  window.QC_CURATED_CACHE_DATES[day]=true;
+  return true;
+ }catch(e){return false;}
+}
+function rememberVerifiedDay(day,pack){
+ try{localStorage.setItem(cachePrefix+day,JSON.stringify({at:Date.now(),pack:pack}));}catch(e){}
+}
+function updated(day){
+ delete window.QC_CURATED_DAY_ERRORS[day];
+ delete window.QC_CURATED_CACHE_DATES[day];
+ window.dispatchEvent(new Event('qc-curated-db-update'));
+}
+function updateFailed(day,error){
+ window.QC_CURATED_DAY_ERRORS[day]=String(error||'CONNECTION_FAILED');
+ window.dispatchEvent(new CustomEvent('qc-curated-db-error',{detail:{date:day,message:String(error)}}));
+}
+
 Object.keys(db.selectedPlans||{}).forEach(function(day){if(day>='2026-10-22')delete db.selectedPlans[day]});
 function keyFor(market,label){
  var map={'胜':'h','平':'d','负':'a','让胜':'h','让平':'d','让负':'a'};
@@ -56,7 +87,7 @@ async function rpc(name,args){
  var url=(window.QC_SUPABASE_URL||'').replace(/\/$/,'')+'/rest/v1/rpc/'+name;
  var key=window.QC_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)throw Error('Supabase public config missing');
- var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},7000);
+ var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},14000);
  try{
   var r=await fetch(url,{method:'POST',cache:'no-store',signal:controller.signal,headers:{
    'apikey':key,'Content-Type':'application/json','Accept':'application/json'
@@ -138,6 +169,7 @@ async function loadIndependentDay(day){
  if(day==='2026-10-30')return loadV23PreviewDay(day);
  var raw=await rpc('qc_v2_public',{p_business_date:day});
  var sources=Array.isArray(raw&&raw.analysts)?raw.analysts:[];
+ if(sources.length!==3)throw Error('Public analyst response incomplete for '+day);
  var byId={};
  sources.forEach(function(a){byId[a.id]=a});
  var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0};
@@ -149,8 +181,17 @@ async function loadIndependentDay(day){
   analystSelector:{entries:(a3.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0}
  };
- if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack))return false;
+ var count=pack.entries.length+pack.aiSelector.entries.length+pack.analystSelector.entries.length;
+ var previous=db.selectedPlans[day];
+ var previousCount=previous?(previous.entries||[]).length+((previous.aiSelector||{}).entries||[]).length+((previous.analystSelector||{}).entries||[]).length:0;
+ if(!count&&previousCount)throw Error('Empty live plan list; retained last valid submitted day');
+ if(count>0)rememberVerifiedDay(day,pack);
+ if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack)){
+  delete window.QC_CURATED_DAY_ERRORS[day]; delete window.QC_CURATED_CACHE_DATES[day];
+  return false;
+ }
  db.selectedPlans[day]=pack;
+ delete window.QC_CURATED_DAY_ERRORS[day]; delete window.QC_CURATED_CACHE_DATES[day];
  return true;
 }
 
@@ -220,15 +261,28 @@ function businessDay(){
  return new Date(stamp).toISOString().slice(0,10);
 }
 var initialDay=businessDay();
-window.QC_CURATED_DB_READY=loadDay(initialDay).then(function(changed){
- if(changed)window.dispatchEvent(new Event('qc-curated-db-update'));
- return true;
-}).catch(function(error){
- console.warn('当前精选数据首屏读取失败',initialDay,String(error));
- window.QC_CURATED_INITIAL_ERROR=String(error);
- window.dispatchEvent(new CustomEvent('qc-curated-db-error',{detail:{date:initialDay,message:String(error)}}));
- return false;
-});
-window.QC_CURATED_DB_READY.then(function(){setTimeout(refresh,0)});
+function fetchSelectedDay(day){
+ return loadDay(day).then(function(){
+  delete window.QC_CURATED_INITIAL_ERROR;
+  updated(day);
+  return true;
+ }).catch(function(error){updateFailed(day,error);throw error;});
+}
+window.QC_CURATED_RETRY_DAY=function(day){
+ return fetchSelectedDay(day).catch(function(error){
+  console.warn('精选方案重读失败',day,String(error));
+  return false;
+ });
+};
+var cached=restoreVerifiedDay(initialDay);
+window.QC_CURATED_DB_READY=cached?Promise.resolve(true):
+ fetchSelectedDay(initialDay).catch(function(){return new Promise(function(resolve){
+  setTimeout(function(){fetchSelectedDay(initialDay).then(resolve).catch(function(error){
+   window.QC_CURATED_INITIAL_ERROR=String(error);
+   resolve(false);
+  });},350);
+ });});
+if(cached)setTimeout(function(){window.QC_CURATED_RETRY_DAY(initialDay);},120);
+window.QC_CURATED_DB_READY.then(function(){setTimeout(refresh,2500)});
 setInterval(refresh,120000);
 })();
