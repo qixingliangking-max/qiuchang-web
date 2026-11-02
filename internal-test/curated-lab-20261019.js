@@ -227,7 +227,19 @@ function renderPlans(){
  // Only genuine plan records: do not manufacture blank/missing-plan cards.
  $('plans').innerHTML=plans.map(planCard).join('');
  $('plans').style.display=plans.length?'':'none';
- var band=$('infoBand');if(band)band.style.display=plans.length?'':'none';
+ var band=$('infoBand');
+ if(band){
+  var error=(window.QC_CURATED_DAY_ERRORS||{})[state.day];
+  var cached=(window.QC_CURATED_CACHE_DATES||{})[state.day];
+  if(error&&!plans.length){
+   band.innerHTML='当日方案读取失败，后台已提交记录不会消失。 <button type="button" class="curated-retry" data-retry-curated>重新读取</button>';
+  }else if(cached){
+   band.textContent='正在核对上次成功读取的方案，显示内容可能尚未包含最新结算。';
+  }else if(!plans.length){
+   band.innerHTML='本日期暂无可显示的正式方案。 <button type="button" class="curated-retry" data-retry-curated>重新读取</button>';
+  }else{band.textContent='';}
+  band.style.display=(error&&!plans.length)||cached||!plans.length?'':'none';
+ }
 }
 function renderHistory(){
  var host=$('historyRows');if(!host)return;
@@ -320,6 +332,12 @@ function copyText(){
  else window.prompt('复制方案摘要',t);
 }
 function attach(){
+ $('infoBand').addEventListener('click',function(e){
+  var btn=e.target.closest('[data-retry-curated]');
+  if(!btn||!window.QC_CURATED_RETRY_DAY)return;
+  btn.disabled=true;btn.textContent='重新读取中…';
+  Promise.resolve(window.QC_CURATED_RETRY_DAY(state.day)).then(function(){renderAll()}).catch(function(){renderAll()});
+ });
  $('tabs').addEventListener('click',function(e){var b=e.target.closest('button[data-type]');if(!b)return;state.type=b.dataset.type;state.open=null;renderAll()});
  $('prevDate').addEventListener('click',function(){var i=dates.indexOf(state.day);if(i<dates.length-1)selectDay(dates[i+1])});
  $('nextDate').addEventListener('click',function(){var i=dates.indexOf(state.day);if(i>0)selectDay(dates[i-1])});
@@ -357,11 +375,7 @@ function init(){
 Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
  init();
  window.addEventListener('qc-curated-db-error',function(e){
-   var band=$('infoBand');
-   if(band&&(!plansFor(state.day,state.type).length)){
-     band.style.display='';
-     band.textContent='方案数据暂未同步，正在重新连接，请稍后刷新页面。';
-   }
+   if(e&&e.detail&&e.detail.date===state.day)renderAll();
   });
   window.addEventListener('qc-curated-db-update',function(){
   var nextDates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
