@@ -817,7 +817,7 @@ function jcOverviewChoicesHtml(choices){
 function jcOverviewInlineChoicesHtml(choices){
   const list=(choices||[]).filter(Boolean);
   if(!list.length) return jcPredictionPlaceholder();
-  return '<span class="jc-choice-inline">'+list.map((x,i)=>
+  return '<span class="jc-choice-inline'+(list.length===2&&list.every(x=>/^让[胜平负]$/.test(String(x)))?' jc-handicap-inline':'')+'">'+list.map((x,i)=>
     (i?'<span class="jc-choice-sep">/</span>':'')+
     '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+'">'+qcEscape(x)+'</span>'
   ).join('')+'</span>';
@@ -886,7 +886,7 @@ function jcReviewResultHtml(value,hit){
 function jcReviewInlineChoicesHtml(choices,hitValue){
   const list=(choices||[]).filter(Boolean);
   if(!list.length) return jcPredictionPlaceholder();
-  return '<span class="jc-choice-inline jc-review-choices">'+list.map((x,i)=>
+  return '<span class="jc-choice-inline jc-review-choices'+(list.length===2&&list.every(x=>/^让[胜平负]$/.test(String(x)))?' jc-handicap-inline':'')+'">'+list.map((x,i)=>
     (i?'<span class="jc-choice-sep">/</span>':'')+
     '<span class="'+(i===0?'jc-choice-primary':'jc-choice-secondary')+(x===hitValue?' jc-hit-ring':'')+'">'+qcEscape(x)+'</span>'
   ).join('')+'</span>';
