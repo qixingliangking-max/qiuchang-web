@@ -1,18 +1,29 @@
 {
   "league_code": "USA_MLS",
   "season": "2026",
-  "run_at": "2026-11-01T22:11:45.261Z",
+  "run_at": "2026-11-02T01:35:41.223Z",
   "discovered_fixtures": 510,
-  "discovered_finished": 489,
-  "in_scope_finished": 489,
+  "discovered_finished": 492,
+  "in_scope_finished": 492,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 489,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 3,
+  "added_source_match_ids": [
+    "5071473",
+    "5071480",
+    "5071481"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 489,
+  "mapped_finished": 492,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 86.4,
+  "published_blob_sha": "f1a1d57e66e0dbcbcd8066976b52f6346e6a0a36"
 }

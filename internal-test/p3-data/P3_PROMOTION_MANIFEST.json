@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "f339e34ad1cc5ffa227115744ddb53a79feea752",
+      "blob_sha": "f1a1d57e66e0dbcbcd8066976b52f6346e6a0a36",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 86.4,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-11-01T06:37:58.765Z",
-      "finished_matches": 489,
+      "last_incremental_refresh_at": "2026-11-02T01:35:41.223Z",
+      "finished_matches": 492,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
@@ -219,14 +219,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/POR_PL-2026-27.json",
-      "blob_sha": "feb65bd2f82218d3b561c046ca2ea193492b9b71",
+      "blob_sha": "1593dc43a0898bd07605016bd9a347773ca7dad2",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 10.1,
+      "avg_team_depth_coverage_pct": 11.1,
       "gate_report": "internal-test/p3-candidates/POR_PL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-11-01T22:11:29.981Z",
-      "finished_matches": 87
+      "last_incremental_refresh_at": "2026-11-02T01:35:26.898Z",
+      "finished_matches": 88
     },
     {
       "league_code": "ESP_LL",

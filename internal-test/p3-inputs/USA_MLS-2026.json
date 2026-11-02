@@ -3913,7 +3913,31 @@
       "home_team": "科罗拉多急流",
       "away_team": "芝加哥火焰",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T01:30:00.000Z"
+      "kickoff_at": "2026-11-01T01:30:00Z"
+    },
+    {
+      "source_match_id": "5071480",
+      "match_id": "fotmob:5071480",
+      "home_team": "温哥华白帽",
+      "away_team": "西雅图海湾人",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T20:30:00Z"
+    },
+    {
+      "source_match_id": "5071473",
+      "match_id": "fotmob:5071473",
+      "home_team": "纳什维尔",
+      "away_team": "纽约红牛",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T21:30:00Z"
+    },
+    {
+      "source_match_id": "5071481",
+      "match_id": "fotmob:5071481",
+      "home_team": "亚特兰大联",
+      "away_team": "多伦多FC",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T21:30:00Z"
     }
   ]
 }
