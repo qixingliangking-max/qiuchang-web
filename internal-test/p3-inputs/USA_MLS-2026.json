@@ -3938,6 +3938,30 @@
       "away_team": "多伦多FC",
       "match_date": "2026-11-01",
       "kickoff_at": "2026-11-01T21:30:00Z"
+    },
+    {
+      "source_match_id": "5071483",
+      "match_id": "fotmob:5071483",
+      "home_team": "新英格兰革命",
+      "away_team": "迈阿密国际",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071482",
+      "match_id": "fotmob:5071482",
+      "home_team": "洛杉矶FC",
+      "away_team": "明尼苏达联",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T01:30:00.000Z"
+    },
+    {
+      "source_match_id": "5071484",
+      "match_id": "fotmob:5071484",
+      "home_team": "波特兰伐木工",
+      "away_team": "休斯敦迪纳摩",
+      "match_date": "2026-11-02",
+      "kickoff_at": "2026-11-02T02:45:00.000Z"
     }
   ]
 }
