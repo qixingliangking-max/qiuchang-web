@@ -474,6 +474,22 @@
       "away_team": "北京国安",
       "match_date": "2026-11-03",
       "kickoff_at": "2026-11-03T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050094",
+      "match_id": "fotmob:6050094",
+      "home_team": "德黑兰独立",
+      "away_team": "舒马尔",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050095",
+      "match_id": "fotmob:6050095",
+      "home_team": "利雅得新月",
+      "away_team": "迪拜青年国民",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T18:15:00.000Z"
     }
   ]
 }

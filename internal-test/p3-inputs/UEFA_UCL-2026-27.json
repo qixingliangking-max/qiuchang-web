@@ -434,6 +434,22 @@
       "away_team": "费耶诺德",
       "match_date": "2026-10-21",
       "kickoff_at": "2026-10-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6106335",
+      "match_id": "fotmob:6106335",
+      "home_team": "顿涅茨克矿工",
+      "away_team": "葡萄牙体育",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6106341",
+      "match_id": "fotmob:6106341",
+      "home_team": "加拉塔萨雷",
+      "away_team": "斯图加特",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T17:45:00.000Z"
     }
   ]
 }

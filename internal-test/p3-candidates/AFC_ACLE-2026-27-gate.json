@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 59,
-  "collected_matches": 59,
+  "input_matches": 61,
+  "collected_matches": 61,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利雅得新月",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "德黑兰独立",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -141,7 +141,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "舒马尔",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -166,7 +166,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "迪拜青年国民",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",

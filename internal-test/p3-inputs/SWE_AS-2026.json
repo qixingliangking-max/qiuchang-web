@@ -1713,7 +1713,7 @@
       "home_team": "哥德堡盖斯",
       "away_team": "AIK索尔纳",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T18:00:00.000Z"
+      "kickoff_at": "2026-11-02T18:00:00Z"
     },
     {
       "source_match_id": "5107648",
@@ -1721,7 +1721,15 @@
       "home_team": "米亚尔比",
       "away_team": "卡尔马",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T18:00:00.000Z"
+      "kickoff_at": "2026-11-02T18:00:00Z"
+    },
+    {
+      "source_match_id": "5107651",
+      "match_id": "fotmob:5107651",
+      "home_team": "天狼星",
+      "away_team": "哈尔姆斯塔德",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T18:00:00.000Z"
     }
   ]
 }

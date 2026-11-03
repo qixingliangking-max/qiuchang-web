@@ -1,18 +1,28 @@
 {
   "league_code": "UEFA_UCL",
   "season": "2026/27",
-  "run_at": "2026-11-03T15:32:28.227Z",
+  "run_at": "2026-11-03T21:12:50.458Z",
   "discovered_fixtures": 144,
-  "discovered_finished": 54,
-  "in_scope_finished": 54,
+  "discovered_finished": 56,
+  "in_scope_finished": 56,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 54,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 2,
+  "added_source_match_ids": [
+    "6106335",
+    "6106341"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 54,
+  "mapped_finished": 56,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0,
+  "published_blob_sha": "75d4a09d311f3c03a0c7189ebce2739aacf4bc22"
 }
