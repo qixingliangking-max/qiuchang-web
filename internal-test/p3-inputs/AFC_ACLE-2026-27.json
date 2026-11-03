@@ -434,6 +434,46 @@
       "away_team": "上海海港",
       "match_date": "2026-11-03",
       "kickoff_at": "2026-11-03T07:45:00.000Z"
+    },
+    {
+      "source_match_id": "6050001",
+      "match_id": "fotmob:6050001",
+      "home_team": "全北现代",
+      "away_team": "柔佛新山",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050002",
+      "match_id": "fotmob:6050002",
+      "home_team": "柏太阳神",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050003",
+      "match_id": "fotmob:6050003",
+      "home_team": "神户胜利船",
+      "away_team": "拉查布里",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050004",
+      "match_id": "fotmob:6050004",
+      "home_team": "河内公安",
+      "away_team": "京都不死鸟",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050005",
+      "match_id": "fotmob:6050005",
+      "home_team": "泰港",
+      "away_team": "北京国安",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T12:15:00.000Z"
     }
   ]
 }
