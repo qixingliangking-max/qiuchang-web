@@ -1,28 +1,18 @@
 {
   "league_code": "AFC_ACLE",
   "season": "2026/27",
-  "run_at": "2026-11-03T21:12:04.805Z",
+  "run_at": "2026-11-03T21:16:01.456Z",
   "discovered_fixtures": 128,
   "discovered_finished": 61,
   "in_scope_finished": 61,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 59,
-  "new_finished_matches": 2,
-  "added_source_match_ids": [
-    "6050094",
-    "6050095"
-  ],
+  "baseline_finished_matches": 61,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 61,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0,
-  "published_blob_sha": "638e9f4a30149ba6ce34eea07fe1aa9931c4b143"
+  "status": "NO_NEW_FINISHED"
 }
