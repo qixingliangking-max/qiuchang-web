@@ -434,6 +434,14 @@
       "away_team": "皇家社会",
       "match_date": "2026-10-22",
       "kickoff_at": "2026-10-22T19:00:00Z"
+    },
+    {
+      "source_match_id": "6112306",
+      "match_id": "fotmob:6112306",
+      "home_team": "雷恩",
+      "away_team": "奥林匹亚科斯",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T15:30:00.000Z"
     }
   ]
 }
