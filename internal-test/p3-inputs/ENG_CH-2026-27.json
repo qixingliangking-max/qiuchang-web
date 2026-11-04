@@ -1169,7 +1169,7 @@
       "home_team": "林肯城",
       "away_team": "伯明翰",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:30:00.000Z"
+      "kickoff_at": "2026-10-31T12:30:00Z"
     },
     {
       "source_match_id": "5836903",
@@ -1177,7 +1177,7 @@
       "home_team": "诺维奇",
       "away_team": "沃特福德",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:30:00.000Z"
+      "kickoff_at": "2026-10-31T12:30:00Z"
     },
     {
       "source_match_id": "5836906",
@@ -1185,7 +1185,7 @@
       "home_team": "斯托克城",
       "away_team": "普雷斯顿",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T12:30:00.000Z"
+      "kickoff_at": "2026-10-31T12:30:00Z"
     },
     {
       "source_match_id": "5836898",
@@ -1193,7 +1193,7 @@
       "home_team": "博尔顿",
       "away_team": "布里斯托尔城",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836899",
@@ -1201,7 +1201,7 @@
       "home_team": "伯恩利",
       "away_team": "朴茨茅斯",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836901",
@@ -1209,7 +1209,7 @@
       "home_team": "米德尔斯堡",
       "away_team": "查尔顿",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836902",
@@ -1217,7 +1217,7 @@
       "home_team": "米尔沃尔",
       "away_team": "德比郡",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836905",
@@ -1225,7 +1225,7 @@
       "home_team": "南安普敦",
       "away_team": "女王公园巡游者",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836907",
@@ -1233,7 +1233,7 @@
       "home_team": "斯旺西",
       "away_team": "布莱克本",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836908",
@@ -1241,7 +1241,7 @@
       "home_team": "西汉姆联",
       "away_team": "西布罗姆维奇",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
     },
     {
       "source_match_id": "5836909",
@@ -1249,7 +1249,79 @@
       "home_team": "狼队",
       "away_team": "卡迪夫城",
       "match_date": "2026-10-31",
-      "kickoff_at": "2026-10-31T15:00:00.000Z"
+      "kickoff_at": "2026-10-31T15:00:00Z"
+    },
+    {
+      "source_match_id": "5836911",
+      "match_id": "fotmob:5836911",
+      "home_team": "布莱克本",
+      "away_team": "斯托克城",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836912",
+      "match_id": "fotmob:5836912",
+      "home_team": "德比郡",
+      "away_team": "诺维奇",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836913",
+      "match_id": "fotmob:5836913",
+      "home_team": "朴茨茅斯",
+      "away_team": "斯旺西",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836914",
+      "match_id": "fotmob:5836914",
+      "home_team": "普雷斯顿",
+      "away_team": "谢菲尔德联",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836915",
+      "match_id": "fotmob:5836915",
+      "home_team": "女王公园巡游者",
+      "away_team": "伯恩利",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836916",
+      "match_id": "fotmob:5836916",
+      "home_team": "沃特福德",
+      "away_team": "林肯城",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836920",
+      "match_id": "fotmob:5836920",
+      "home_team": "查尔顿",
+      "away_team": "博尔顿",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836910",
+      "match_id": "fotmob:5836910",
+      "home_team": "伯明翰",
+      "away_team": "米尔沃尔",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "5836917",
+      "match_id": "fotmob:5836917",
+      "home_team": "西布罗姆维奇",
+      "away_team": "南安普敦",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
     }
   ]
 }

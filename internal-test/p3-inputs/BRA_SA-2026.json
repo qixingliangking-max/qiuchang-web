@@ -2537,7 +2537,7 @@
       "home_team": "桑托斯",
       "away_team": "巴伊亚",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:00:00Z"
+      "kickoff_at": "2026-10-25T00:00:00Z"
     },
     {
       "source_match_id": "5103681",
@@ -2642,6 +2642,14 @@
       "away_team": "桑托斯",
       "match_date": "2026-11-02",
       "kickoff_at": "2026-11-02T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103703",
+      "match_id": "fotmob:5103703",
+      "home_team": "沙佩科恩斯",
+      "away_team": "米拉索尔",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T22:30:00Z"
     }
   ]
 }

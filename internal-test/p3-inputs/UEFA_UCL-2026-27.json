@@ -441,7 +441,7 @@
       "home_team": "顿涅茨克矿工",
       "away_team": "葡萄牙体育",
       "match_date": "2026-11-03",
-      "kickoff_at": "2026-11-03T17:45:00.000Z"
+      "kickoff_at": "2026-11-03T17:45:00Z"
     },
     {
       "source_match_id": "6106341",
@@ -449,7 +449,63 @@
       "home_team": "加拉塔萨雷",
       "away_team": "斯图加特",
       "match_date": "2026-11-03",
-      "kickoff_at": "2026-11-03T17:45:00.000Z"
+      "kickoff_at": "2026-11-03T17:45:00Z"
+    },
+    {
+      "source_match_id": "6106263",
+      "match_id": "fotmob:6106263",
+      "home_team": "巴塞罗那",
+      "away_team": "阿斯顿维拉",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106266",
+      "match_id": "fotmob:6106266",
+      "home_team": "马德里竞技",
+      "away_team": "拜仁慕尼黑",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106291",
+      "match_id": "fotmob:6106291",
+      "home_team": "曼联",
+      "away_team": "罗马",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106306",
+      "match_id": "fotmob:6106306",
+      "home_team": "费耶诺德",
+      "away_team": "国际米兰",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106316",
+      "match_id": "fotmob:6106316",
+      "home_team": "博德闪耀",
+      "away_team": "里尔",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106326",
+      "match_id": "fotmob:6106326",
+      "home_team": "比利亚雷亚尔",
+      "away_team": "巴黎圣日耳曼",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106408",
+      "match_id": "fotmob:6106408",
+      "home_team": "LASK林茨",
+      "away_team": "布拉迪斯拉发",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T20:00:00Z"
     }
   ]
 }
