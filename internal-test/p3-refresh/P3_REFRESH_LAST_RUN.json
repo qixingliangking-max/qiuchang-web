@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-04T19:54:10.138Z",
+  "run_at": "2026-11-04T21:25:59.067Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 23,
+  "promoted_leagues": 0,
+  "noop_leagues": 24,
   "blocked_leagues": 0,
   "results": [
     {
@@ -289,15 +289,15 @@
     {
       "league_code": "UEFA_UCL",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 65,
-      "baseline_finished_matches": 63,
-      "new_finished_matches": 2,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 65,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
