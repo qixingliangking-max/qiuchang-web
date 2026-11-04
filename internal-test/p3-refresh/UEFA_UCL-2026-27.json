@@ -6,7 +6,7 @@
     "42"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 63,
+  "baseline_finished_matches": 65,
   "team_map": {
     "Como": "科莫",
     "LASK": "LASK林茨",
@@ -45,8 +45,8 @@
     "Slovan Bratislava": "布拉迪斯拉发",
     "Paris Saint-Germain": "巴黎圣日耳曼"
   },
-  "last_successful_refresh_at": "2026-11-04T00:42:23.121Z",
-  "last_published_blob_sha": "fe6a2124a9ddd9a1d305b5f04f80950470534081",
+  "last_successful_refresh_at": "2026-11-04T19:54:00.770Z",
+  "last_published_blob_sha": "a74db703e8850156cb08add2ce36a4e4a5e33859",
   "excluded_source_match_ids": [
     "1000022629",
     "1000022630",

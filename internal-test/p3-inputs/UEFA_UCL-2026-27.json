@@ -506,6 +506,22 @@
       "away_team": "布拉迪斯拉发",
       "match_date": "2026-11-03",
       "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "6106330",
+      "match_id": "fotmob:6106330",
+      "home_team": "费内巴切",
+      "away_team": "利物浦",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6106401",
+      "match_id": "fotmob:6106401",
+      "home_team": "雅典AEK",
+      "away_team": "皇家马德里",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T17:45:00.000Z"
     }
   ]
 }

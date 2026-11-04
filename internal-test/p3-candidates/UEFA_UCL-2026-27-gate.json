@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 63,
-  "collected_matches": 63,
+  "input_matches": 65,
+  "collected_matches": 65,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 926,
+  "aggregate_players": 928,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "利物浦",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,7 +116,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "皇家马德里",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -151,7 +151,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "费内巴切",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -181,7 +181,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "雅典AEK",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
