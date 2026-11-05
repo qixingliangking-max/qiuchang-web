@@ -2674,6 +2674,22 @@
       "away_team": "瓦斯科达伽马",
       "match_date": "2026-11-04",
       "kickoff_at": "2026-11-04T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103695",
+      "match_id": "fotmob:5103695",
+      "home_team": "博塔弗戈",
+      "away_team": "米内罗竞技",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T00:30:00.000Z"
+    },
+    {
+      "source_match_id": "5103696",
+      "match_id": "fotmob:5103696",
+      "home_team": "圣保罗",
+      "away_team": "科林蒂安",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T00:30:00.000Z"
     }
   ]
 }
