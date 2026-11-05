@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T08:56:18+08:00",
+  "updated_at": "2026-11-05T15:57:44+08:00",
   "dates": {
     "2026-11-04": {
       "file": "data/overview/live/2026-11-04.json",
@@ -9,8 +9,13 @@
     },
     "2026-11-05": {
       "file": "data/overview/live/2026-11-05.json",
-      "version": "267dd4b2655ccfdc",
+      "version": "e4e792fb35072a5c",
       "match_count": 13
+    },
+    "2026-11-06": {
+      "file": "data/overview/live/2026-11-06.json",
+      "version": "f33546d5aca18349",
+      "match_count": 14
     }
   }
 }
