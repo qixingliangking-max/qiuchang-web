@@ -441,7 +441,71 @@
       "home_team": "雷恩",
       "away_team": "奥林匹亚科斯",
       "match_date": "2026-11-04",
-      "kickoff_at": "2026-11-04T15:30:00.000Z"
+      "kickoff_at": "2026-11-04T15:30:00Z"
+    },
+    {
+      "source_match_id": "6112255",
+      "match_id": "fotmob:6112255",
+      "home_team": "AC米兰",
+      "away_team": "费伦茨瓦罗斯",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112270",
+      "match_id": "fotmob:6112270",
+      "home_team": "皇家社会",
+      "away_team": "里昂",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112304",
+      "match_id": "fotmob:6112304",
+      "home_team": "布拉格斯巴达",
+      "away_team": "伯恩茅斯",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112311",
+      "match_id": "fotmob:6112311",
+      "home_team": "安德莱赫特",
+      "away_team": "萨尔茨堡",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112325",
+      "match_id": "fotmob:6112325",
+      "home_team": "水晶宫",
+      "away_team": "霍芬海姆",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112368",
+      "match_id": "fotmob:6112368",
+      "home_team": "奈梅亨",
+      "away_team": "奥莫尼亚",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112375",
+      "match_id": "fotmob:6112375",
+      "home_team": "利勒斯特罗姆",
+      "away_team": "比尔森胜利",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112380",
+      "match_id": "fotmob:6112380",
+      "home_team": "索非亚列夫斯基",
+      "away_team": "雅盖隆",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T17:45:00.000Z"
     }
   ]
 }
