@@ -1322,6 +1322,30 @@
       "away_team": "南安普敦",
       "match_date": "2026-11-03",
       "kickoff_at": "2026-11-03T20:00:00Z"
+    },
+    {
+      "source_match_id": "5836919",
+      "match_id": "fotmob:5836919",
+      "home_team": "卡迪夫城",
+      "away_team": "西汉姆联",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836921",
+      "match_id": "fotmob:5836921",
+      "home_team": "雷克瑟姆",
+      "away_team": "米德尔斯堡",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T19:45:00Z"
+    },
+    {
+      "source_match_id": "5836918",
+      "match_id": "fotmob:5836918",
+      "home_team": "布里斯托尔城",
+      "away_team": "狼队",
+      "match_date": "2026-11-04",
+      "kickoff_at": "2026-11-04T20:00:00Z"
     }
   ]
 }

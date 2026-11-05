@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 65,
-  "collected_matches": 65,
+  "input_matches": 72,
+  "collected_matches": 72,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 928,
+  "aggregate_players": 934,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -41,12 +41,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "埃因霍温",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "多特蒙德",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -61,7 +61,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布拉格斯拉维亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "布鲁日",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,7 +86,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "曼城",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -96,7 +96,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "朗斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -106,12 +106,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "波尔图",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "皇家贝蒂斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -121,12 +121,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "科莫",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "维京",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -136,12 +136,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "莱比锡",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨巴赫",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -161,7 +161,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "那不勒斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -176,7 +176,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿森纳",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
