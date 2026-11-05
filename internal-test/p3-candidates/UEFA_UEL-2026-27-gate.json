@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 63,
-  "collected_matches": 63,
+  "input_matches": 72,
+  "collected_matches": 72,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 36,
-  "aggregate_players": 934,
+  "aggregate_players": 944,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "OFI克里特",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -31,7 +31,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "凯尔特人",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -41,17 +41,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "勒沃库森",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "圣吉罗斯联合",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞尔塔",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -76,7 +76,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "尤文图斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -86,22 +86,22 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "托伦斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "本菲卡",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "格拉茨风暴",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "桑德兰",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,7 +116,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "波兹南莱赫",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -136,17 +136,17 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "萨格勒布迪纳摩",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "贝尔谢巴工人",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "贝西克塔斯",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -156,7 +156,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "采列",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -166,12 +166,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿尔克马尔",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "阿拉拉特亚美尼亚",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -191,7 +191,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马赛",
-      "matches": 3
+      "matches": 4
     }
   ],
   "gate_status": "PASS",

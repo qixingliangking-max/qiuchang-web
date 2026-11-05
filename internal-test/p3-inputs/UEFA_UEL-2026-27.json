@@ -506,6 +506,78 @@
       "away_team": "雅盖隆",
       "match_date": "2026-11-05",
       "kickoff_at": "2026-11-05T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6112242",
+      "match_id": "fotmob:6112242",
+      "home_team": "勒沃库森",
+      "away_team": "马赛",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112248",
+      "match_id": "fotmob:6112248",
+      "home_team": "本菲卡",
+      "away_team": "波兹南莱赫",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112262",
+      "match_id": "fotmob:6112262",
+      "home_team": "阿尔克马尔",
+      "away_team": "尤文图斯",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112301",
+      "match_id": "fotmob:6112301",
+      "home_team": "凯尔特人",
+      "away_team": "贝西克塔斯",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112316",
+      "match_id": "fotmob:6112316",
+      "home_team": "格拉茨风暴",
+      "away_team": "采列",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112331",
+      "match_id": "fotmob:6112331",
+      "home_team": "桑德兰",
+      "away_team": "萨格勒布迪纳摩",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112347",
+      "match_id": "fotmob:6112347",
+      "home_team": "塞尔塔",
+      "away_team": "圣吉罗斯联合",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112361",
+      "match_id": "fotmob:6112361",
+      "home_team": "托伦斯",
+      "away_team": "阿拉拉特亚美尼亚",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6112365",
+      "match_id": "fotmob:6112365",
+      "home_team": "贝尔谢巴工人",
+      "away_team": "OFI克里特",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T20:00:00.000Z"
     }
   ]
 }
