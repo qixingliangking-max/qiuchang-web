@@ -873,7 +873,15 @@
       "home_team": "拉科鲁尼亚",
       "away_team": "奥萨苏纳",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T20:00:00.000Z"
+      "kickoff_at": "2026-11-02T20:00:00Z"
+    },
+    {
+      "source_match_id": "5868128",
+      "match_id": "fotmob:5868128",
+      "home_team": "塞维利亚",
+      "away_team": "阿拉维斯",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T20:00:00.000Z"
     },
     {
       "source_match_id": "5868088",

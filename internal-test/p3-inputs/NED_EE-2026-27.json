@@ -1044,10 +1044,26 @@
       "kickoff_at": "2026-11-02T19:00:00Z"
     },
     {
+      "source_match_id": "5832935",
+      "match_id": "fotmob:5832935",
+      "home_team": "多德勒支",
+      "away_team": "布雷达",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T19:00:00.000Z"
+    },
+    {
       "source_match_id": "5832936",
       "match_id": "fotmob:5832936",
       "home_team": "FC埃因霍温",
       "away_team": "阿贾克斯青年队",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832937",
+      "match_id": "fotmob:5832937",
+      "home_team": "赫尔蒙德",
+      "away_team": "福伦丹",
       "match_date": "2026-11-06",
       "kickoff_at": "2026-11-06T19:00:00.000Z"
     },

@@ -793,7 +793,7 @@
       "home_team": "萨索洛",
       "away_team": "佛罗伦萨",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T17:30:00.000Z"
+      "kickoff_at": "2026-11-02T17:30:00Z"
     },
     {
       "source_match_id": "5749731",
@@ -801,7 +801,15 @@
       "home_team": "亚特兰大",
       "away_team": "帕尔马",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T19:45:00.000Z"
+      "kickoff_at": "2026-11-02T19:45:00Z"
+    },
+    {
+      "source_match_id": "5749749",
+      "match_id": "fotmob:5749749",
+      "home_team": "威尼斯",
+      "away_team": "乌迪内斯",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T19:45:00.000Z"
     }
   ]
 }

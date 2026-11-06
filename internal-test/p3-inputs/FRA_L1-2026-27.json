@@ -649,7 +649,15 @@
       "home_team": "洛里昂",
       "away_team": "布雷斯特",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T19:45:00.000Z"
+      "kickoff_at": "2026-11-02T19:45:00Z"
+    },
+    {
+      "source_match_id": "5802989",
+      "match_id": "fotmob:5802989",
+      "home_team": "图卢兹",
+      "away_team": "斯特拉斯堡",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T19:45:00.000Z"
     }
   ]
 }

@@ -769,7 +769,7 @@
       "home_team": "阿雷佐",
       "away_team": "阿斯科利",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T14:00:00.000Z"
+      "kickoff_at": "2026-11-01T14:00:00Z"
     },
     {
       "source_match_id": "5967130",
@@ -777,7 +777,7 @@
       "home_team": "阿维利诺",
       "away_team": "比萨",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T14:00:00.000Z"
+      "kickoff_at": "2026-11-01T14:00:00Z"
     },
     {
       "source_match_id": "5967133",
@@ -785,7 +785,7 @@
       "home_team": "恩波利",
       "away_team": "史泰比亚",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T14:00:00.000Z"
+      "kickoff_at": "2026-11-01T14:00:00Z"
     },
     {
       "source_match_id": "5967138",
@@ -793,7 +793,7 @@
       "home_team": "维罗纳",
       "away_team": "凯勒雷斯",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T16:15:00.000Z"
+      "kickoff_at": "2026-11-01T16:15:00Z"
     },
     {
       "source_match_id": "5967135",
@@ -801,7 +801,15 @@
       "home_team": "巴勒莫",
       "away_team": "维琴察",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T18:30:00.000Z"
+      "kickoff_at": "2026-11-01T18:30:00Z"
+    },
+    {
+      "source_match_id": "5967139",
+      "match_id": "fotmob:5967139",
+      "home_team": "阿斯科利",
+      "away_team": "巴勒莫",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T19:30:00.000Z"
     }
   ]
 }

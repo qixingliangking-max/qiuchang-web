@@ -6,7 +6,7 @@
     "86"
   ],
   "fotmob_ccode3": "ITA",
-  "baseline_finished_matches": 100,
+  "baseline_finished_matches": 101,
   "team_map": {
     "Pisa": "比萨",
     "Arezzo": "阿雷佐",
@@ -29,6 +29,6 @@
     "Hellas Verona": "维罗纳",
     "Virtus Entella": "恩特拉"
   },
-  "last_successful_refresh_at": "2026-11-01T22:11:03.181Z",
-  "last_published_blob_sha": "f3a17e56f51393b47825bee1eb2afb67c8c6dff2"
+  "last_successful_refresh_at": "2026-11-06T22:00:24.092Z",
+  "last_published_blob_sha": "6348d0cc96591b220489078bd6390b96c6e26287"
 }
