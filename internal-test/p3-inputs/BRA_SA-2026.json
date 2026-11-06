@@ -2698,6 +2698,14 @@
       "away_team": "雷莫",
       "match_date": "2026-11-05",
       "kickoff_at": "2026-11-05T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103699",
+      "match_id": "fotmob:5103699",
+      "home_team": "克鲁塞罗",
+      "away_team": "巴伊亚",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T00:30:00.000Z"
     }
   ]
 }
