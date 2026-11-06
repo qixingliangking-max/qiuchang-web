@@ -2681,7 +2681,7 @@
       "home_team": "博塔弗戈",
       "away_team": "米内罗竞技",
       "match_date": "2026-11-05",
-      "kickoff_at": "2026-11-05T00:30:00.000Z"
+      "kickoff_at": "2026-11-05T00:30:00Z"
     },
     {
       "source_match_id": "5103696",
@@ -2689,7 +2689,15 @@
       "home_team": "圣保罗",
       "away_team": "科林蒂安",
       "match_date": "2026-11-05",
-      "kickoff_at": "2026-11-05T00:30:00.000Z"
+      "kickoff_at": "2026-11-05T00:30:00Z"
+    },
+    {
+      "source_match_id": "5103697",
+      "match_id": "fotmob:5103697",
+      "home_team": "帕尔梅拉斯",
+      "away_team": "雷莫",
+      "match_date": "2026-11-05",
+      "kickoff_at": "2026-11-05T22:30:00Z"
     }
   ]
 }
