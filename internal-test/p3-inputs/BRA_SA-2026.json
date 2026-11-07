@@ -2705,7 +2705,15 @@
       "home_team": "克鲁塞罗",
       "away_team": "巴伊亚",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T00:30:00.000Z"
+      "kickoff_at": "2026-11-06T00:30:00Z"
+    },
+    {
+      "source_match_id": "5103702",
+      "match_id": "fotmob:5103702",
+      "home_team": "维多利亚",
+      "away_team": "弗鲁米嫩塞",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T23:00:00Z"
     }
   ]
 }

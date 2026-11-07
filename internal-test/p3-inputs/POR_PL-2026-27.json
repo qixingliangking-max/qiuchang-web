@@ -713,7 +713,7 @@
       "home_team": "吉维森特",
       "away_team": "吉马良斯",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T20:15:00.000Z"
+      "kickoff_at": "2026-11-02T20:15:00Z"
     },
     {
       "source_match_id": "5887671",
@@ -721,7 +721,15 @@
       "home_team": "本菲卡",
       "away_team": "阿尔维卡",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T20:15:00.000Z"
+      "kickoff_at": "2026-11-02T20:15:00Z"
+    },
+    {
+      "source_match_id": "5887675",
+      "match_id": "fotmob:5887675",
+      "home_team": "法马利康",
+      "away_team": "阿罗卡",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T20:45:00Z"
     }
   ]
 }
