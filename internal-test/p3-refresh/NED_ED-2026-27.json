@@ -6,7 +6,7 @@
     "57"
   ],
   "fotmob_ccode3": "NED",
-  "baseline_finished_matches": 100,
+  "baseline_finished_matches": 101,
   "team_map": {
     "Ajax": "阿贾克斯",
     "Cambuur": "坎布尔",
@@ -27,6 +27,6 @@
     "Go Ahead Eagles": "前进之鹰",
     "Sparta Rotterdam": "鹿特丹斯巴达"
   },
-  "last_successful_refresh_at": "2026-11-06T21:00:07.029Z",
-  "last_published_blob_sha": "2616323c200906617c308004137b08c4104cf531"
+  "last_successful_refresh_at": "2026-11-07T19:34:29.915Z",
+  "last_published_blob_sha": "37ac1698e5a5fe822f5be9e53a2455b0a781a7d8"
 }

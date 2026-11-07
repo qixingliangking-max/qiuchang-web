@@ -6,7 +6,7 @@
     "47"
   ],
   "fotmob_ccode3": "ENG",
-  "baseline_finished_matches": 91,
+  "baseline_finished_matches": 95,
   "team_map": {
     "Fulham": "富勒姆",
     "Arsenal": "阿森纳",
@@ -29,6 +29,6 @@
     "Tottenham Hotspur": "热刺",
     "Brighton & Hove Albion": "布莱顿"
   },
-  "last_successful_refresh_at": "2026-11-06T21:59:31.655Z",
-  "last_published_blob_sha": "5f22caadab310f9cc992f499ca4eb0e64c2b6a6a"
+  "last_successful_refresh_at": "2026-11-07T19:32:37.622Z",
+  "last_published_blob_sha": "44c43efaede050e604249730d2154a02420e9df0"
 }

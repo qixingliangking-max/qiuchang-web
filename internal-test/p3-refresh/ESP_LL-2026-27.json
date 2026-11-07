@@ -6,7 +6,7 @@
     "87"
   ],
   "fotmob_ccode3": "ESP",
-  "baseline_finished_matches": 111,
+  "baseline_finished_matches": 114,
   "team_map": {
     "Elche": "埃尔切",
     "Getafe": "赫塔费",
@@ -32,6 +32,6 @@
     "Deportivo Alavés": "阿拉维斯",
     "Deportivo A Coruña": "拉科鲁尼亚"
   },
-  "last_successful_refresh_at": "2026-11-06T21:59:42.744Z",
-  "last_published_blob_sha": "10ed17e1291ad239f83fa2b1f4c788e1b0d9c7dd"
+  "last_successful_refresh_at": "2026-11-07T19:32:58.926Z",
+  "last_published_blob_sha": "29b35aee6ded6d8911219946d7c4a7c9ff59141c"
 }

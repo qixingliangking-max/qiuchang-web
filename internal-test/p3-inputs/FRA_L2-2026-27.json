@@ -801,7 +801,7 @@
       "home_team": "布洛涅",
       "away_team": "阿讷西",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
     },
     {
       "source_match_id": "5803310",
@@ -809,7 +809,7 @@
       "home_team": "第戎",
       "away_team": "红星",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
     },
     {
       "source_match_id": "5803311",
@@ -817,7 +817,7 @@
       "home_team": "敦刻尔克",
       "away_team": "甘冈",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
     },
     {
       "source_match_id": "5803312",
@@ -825,7 +825,7 @@
       "home_team": "格勒诺布尔",
       "away_team": "兰斯",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
     },
     {
       "source_match_id": "5803313",
@@ -833,7 +833,7 @@
       "home_team": "蒙彼利埃",
       "away_team": "梅斯",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
     },
     {
       "source_match_id": "5803314",
@@ -841,7 +841,15 @@
       "home_team": "南锡",
       "away_team": "索肖",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
+    },
+    {
+      "source_match_id": "5803309",
+      "match_id": "fotmob:5803309",
+      "home_team": "克莱蒙",
+      "away_team": "罗德兹",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T13:00:00.000Z"
     }
   ]
 }

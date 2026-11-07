@@ -801,7 +801,15 @@
       "home_team": "威廉二世",
       "away_team": "兹沃勒",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:00:00.000Z"
+      "kickoff_at": "2026-11-06T19:00:00Z"
+    },
+    {
+      "source_match_id": "5781801",
+      "match_id": "fotmob:5781801",
+      "home_team": "锡塔德幸运",
+      "away_team": "特尔斯达",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T15:30:00.000Z"
     }
   ]
 }

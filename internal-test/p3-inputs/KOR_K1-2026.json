@@ -1609,7 +1609,7 @@
       "home_team": "蔚山HD",
       "away_team": "江原FC",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T05:00:00.000Z"
+      "kickoff_at": "2026-11-01T05:00:00Z"
     },
     {
       "source_match_id": "6503949",
@@ -1617,7 +1617,7 @@
       "home_team": "浦项制铁",
       "away_team": "济州SK",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T05:00:00.000Z"
+      "kickoff_at": "2026-11-01T05:00:00Z"
     },
     {
       "source_match_id": "6503834",
@@ -1625,7 +1625,7 @@
       "home_team": "首尔FC",
       "away_team": "仁川联",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T07:30:00.000Z"
+      "kickoff_at": "2026-11-01T07:30:00Z"
     },
     {
       "source_match_id": "6503950",
@@ -1633,7 +1633,23 @@
       "home_team": "安养FC",
       "away_team": "富川FC",
       "match_date": "2026-11-01",
-      "kickoff_at": "2026-11-01T07:30:00.000Z"
+      "kickoff_at": "2026-11-01T07:30:00Z"
+    },
+    {
+      "source_match_id": "6503951",
+      "match_id": "fotmob:6503951",
+      "home_team": "济州SK",
+      "away_team": "光州FC",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "6503952",
+      "match_id": "fotmob:6503952",
+      "home_team": "金泉尚武",
+      "away_team": "安养FC",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T07:30:00.000Z"
     }
   ]
 }

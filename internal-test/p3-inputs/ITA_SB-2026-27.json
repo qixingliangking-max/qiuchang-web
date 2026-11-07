@@ -809,7 +809,47 @@
       "home_team": "阿斯科利",
       "away_team": "巴勒莫",
       "match_date": "2026-11-06",
-      "kickoff_at": "2026-11-06T19:30:00.000Z"
+      "kickoff_at": "2026-11-06T19:30:00Z"
+    },
+    {
+      "source_match_id": "5967142",
+      "match_id": "fotmob:5967142",
+      "home_team": "切塞纳",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967144",
+      "match_id": "fotmob:5967144",
+      "home_team": "史泰比亚",
+      "away_team": "阿雷佐",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967147",
+      "match_id": "fotmob:5967147",
+      "home_team": "帕多瓦",
+      "away_team": "恩波利",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967148",
+      "match_id": "fotmob:5967148",
+      "home_team": "比萨",
+      "away_team": "南蒂罗尔",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967146",
+      "match_id": "fotmob:5967146",
+      "home_team": "曼托瓦",
+      "away_team": "维罗纳",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T16:15:00.000Z"
     }
   ]
 }
