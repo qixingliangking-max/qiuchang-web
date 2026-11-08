@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "business_date": "2026-11-11",
+  "match_count": 6,
+  "rows": [
+    {
+      "id": "cb60ff7c-cc87-4c36-8ea4-eff2a7b3e656",
+      "match_num": "周三001",
+      "business_date": "2026-11-11",
+      "league_name": "日联赛杯",
+      "league_short_name": "日联赛杯",
+      "home_team_name": "横滨水手",
+      "away_team_name": "鹿岛鹿角",
+      "match_date": "2026-11-11",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-11-11T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6581.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-4397.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "a4bc0a68-bb99-4c93-b3fe-e94477eea85d",
+      "match_num": "周三002",
+      "business_date": "2026-11-11",
+      "league_name": "日联赛杯",
+      "league_short_name": "日联赛杯",
+      "home_team_name": "神户胜利船",
+      "away_team_name": "町田泽维亚",
+      "match_date": "2026-11-11",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-11-11T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-4688.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-194011.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "6e9c86ca-530b-489b-9854-4d960104b710",
+      "match_num": "周三003",
+      "business_date": "2026-11-11",
+      "league_name": "日联赛杯",
+      "league_short_name": "日联赛杯",
+      "home_team_name": "川崎前锋",
+      "away_team_name": "柏太阳神",
+      "match_date": "2026-11-11",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-11-11T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6304.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8699.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "99edb176-b99e-4a55-8bf0-d5f72d0a2b6d",
+      "match_num": "周三004",
+      "business_date": "2026-11-11",
+      "league_name": "日联赛杯",
+      "league_short_name": "日联赛杯",
+      "home_team_name": "浦和红钻",
+      "away_team_name": "大阪樱花",
+      "match_date": "2026-11-11",
+      "match_time": "18:30:00",
+      "kickoff_at": "2026-11-11T10:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6244.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-4692.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c85f4b10-70b8-4571-9ce9-9819b7d13a26",
+      "match_num": "周三005",
+      "business_date": "2026-11-11",
+      "league_name": "英锦标赛",
+      "league_short_name": "英锦标赛",
+      "home_team_name": "谢菲尔德星期三",
+      "away_team_name": "阿克宁顿",
+      "match_date": "2026-11-12",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-11-11T19:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "",
+      "_awayLogoUrl": "",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c1356c32-16cb-4d54-9a2d-be367c850f2d",
+      "match_num": "周三006",
+      "business_date": "2026-11-11",
+      "league_name": "英锦标赛",
+      "league_short_name": "英锦标赛",
+      "home_team_name": "巴恩斯利",
+      "away_team_name": "奥德汉姆",
+      "match_date": "2026-11-12",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-11-11T19:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "",
+      "_awayLogoUrl": "",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}

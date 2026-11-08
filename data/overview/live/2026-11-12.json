@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "business_date": "2026-11-12",
+  "match_count": 6,
+  "rows": [
+    {
+      "id": "9a832f60-d01e-461b-bf99-5898af48d6c4",
+      "match_num": "周四001",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "土耳其",
+      "away_team_name": "比利时",
+      "match_date": "2026-11-13",
+      "match_time": "01:00:00",
+      "kickoff_at": "2026-11-12T17:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6595.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8263.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "9b104578-90d2-4101-91fd-64104efa96eb",
+      "match_num": "周四002",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "亚美尼亚",
+      "away_team_name": "塞浦路斯",
+      "match_date": "2026-11-13",
+      "match_time": "01:00:00",
+      "kickoff_at": "2026-11-12T17:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-6583.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-5793.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "633fba69-9c05-4293-ac01-5d7055305fb6",
+      "match_num": "周四003",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "阿尔巴尼亚",
+      "away_team_name": "芬兰",
+      "match_date": "2026-11-13",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-11-12T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10024.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-7871.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "b4955595-d890-4913-852e-e9d3afca29fc",
+      "match_num": "周四004",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "黑山",
+      "away_team_name": "拉脱维亚",
+      "match_date": "2026-11-13",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-11-12T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-49437.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-5795.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c7691ce7-11ad-45fc-b58a-2c47e68e8393",
+      "match_num": "周四005",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "英格兰",
+      "away_team_name": "克罗地亚",
+      "match_date": "2026-11-13",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-11-12T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8491.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10155.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "34a8bb3d-ad0f-4b44-a611-10bd70456d3a",
+      "match_num": "周四006",
+      "business_date": "2026-11-12",
+      "league_name": "欧国联",
+      "league_short_name": "欧国联",
+      "home_team_name": "捷克",
+      "away_team_name": "西班牙",
+      "match_date": "2026-11-13",
+      "match_time": "03:45:00",
+      "kickoff_at": "2026-11-12T19:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8496.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6720.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}

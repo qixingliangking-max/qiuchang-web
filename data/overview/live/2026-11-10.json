@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "business_date": "2026-11-10",
+  "match_count": 2,
+  "rows": [
+    {
+      "id": "1c38cbe0-f660-42ba-b135-817293f9aa8e",
+      "match_num": "周二001",
+      "business_date": "2026-11-10",
+      "league_name": "英锦标赛",
+      "league_short_name": "英锦标赛",
+      "home_team_name": "伯顿",
+      "away_team_name": "诺茨郡",
+      "match_date": "2026-11-11",
+      "match_time": "03:00:00",
+      "kickoff_at": "2026-11-10T19:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "",
+      "_awayLogoUrl": "",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "1a35735c-77bd-4fa0-bfd0-6e9f204be51c",
+      "match_num": "周二002",
+      "business_date": "2026-11-10",
+      "league_name": "英锦标赛",
+      "league_short_name": "英锦标赛",
+      "home_team_name": "布罗姆利",
+      "away_team_name": "米尔顿凯恩斯",
+      "match_date": "2026-11-11",
+      "match_time": "03:30:00",
+      "kickoff_at": "2026-11-10T19:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "",
+      "_awayLogoUrl": "",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
