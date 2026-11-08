@@ -144,14 +144,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/GER_BL-2026-27.json",
-      "blob_sha": "59473ecd1b1d3918b2ad633265695cfd284f309f",
+      "blob_sha": "b4426652b6a35975301daf56fa3ff2ec40abd0aa",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 12.6,
       "gate_report": "internal-test/p3-candidates/GER_BL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-11-07T19:33:31.667Z",
-      "finished_matches": 78
+      "last_incremental_refresh_at": "2026-11-08T16:45:05.088Z",
+      "finished_matches": 79
     },
     {
       "league_code": "ITA_SA",
