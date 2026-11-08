@@ -3449,11 +3449,12 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
-    // A signed-in user's CONFIRMED empty-day public status is displayable
-    // even when Pro entitlement is slow/unavailable. This grants NO access.
-    // Keep the existing login/subscription gate on all guest pages.
+    // Only show the confirmed public no-games message AFTER membership
+    // verification has succeeded. Pending/failed auth retains its own status;
+    // guests retain the login gate and no protected predictions are exposed.
     const signedInEmptyDay=selectedDate===today && selectedDayVerifiedEmpty &&
-      dateRows.length===0 && access.loggedIn===true;
+      dateRows.length===0 && access.loggedIn===true &&
+      access.verificationPending!==true && accessDisplayPhase==='ready';
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
