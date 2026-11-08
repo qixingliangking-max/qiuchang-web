@@ -2886,6 +2886,11 @@ async function loadJcFrontend(){
   let previousHistoryFinal=Boolean(previousResult?.historyFinal) || bakedYesterdayReady;
   let selectedDate=initialDate;
   let requestedDate=initialDate;
+  // Independently verified PUBLIC zero-fixture result; not a membership
+  // or prediction entitlement. Never infer it from an empty/failed RPC.
+  let selectedDayVerifiedEmpty=Boolean(
+    !currentResult.error && currentResult.fromVerifiedNoFixtureDay===true &&
+    Array.isArray(currentResult.data) && currentResult.data.length===0);
   let modelsLoaded=false;
   let loadToken=0;
 
@@ -3388,6 +3393,9 @@ async function loadJcFrontend(){
     }
     selectedDate=ds;
     requestedDate=ds;
+    selectedDayVerifiedEmpty=Boolean(
+      !nextCurrent.error && nextCurrent.fromVerifiedNoFixtureDay===true &&
+      Array.isArray(nextCurrent.data) && nextCurrent.data.length===0);
     reflectOverviewDateIntent(ds,false);
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
@@ -3441,10 +3449,17 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
+    // A signed-in user's CONFIRMED empty-day public status is displayable
+    // even when Pro entitlement is slow/unavailable. This grants NO access.
+    // Keep the existing login/subscription gate on all guest pages.
+    const signedInEmptyDay=selectedDate===today && selectedDayVerifiedEmpty &&
+      dateRows.length===0 && access.loggedIn===true;
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
-      $('#jcPredictionMeta').textContent=accessDisplayPhase==='unavailable'
+      $('#jcPredictionMeta').textContent=signedInEmptyDay
+        ? ''
+        : accessDisplayPhase==='unavailable'
         ? '会员状态暂时无法验证'
         : accessDisplayPhase==='verifying'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
@@ -3496,7 +3511,10 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(accessDisplayPhase==='unavailable'){
+      if(signedInEmptyDay){
+        qcReconcileOverviewTable(cards,
+          '<div class="jc-review-empty" role="status">今日暂无竞彩赛事</div>');
+      }else if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
         qcReconcileOverviewTable(cards,
@@ -3689,7 +3707,9 @@ async function loadJcFrontend(){
         // A complete published prediction replaces placeholders for Pro.
         // With no locked snapshot, continue showing the static fixture table.
         // Only unavailable public fixtures have no table to display.
-        const nextPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
+        const nextPhase=selectedDayVerifiedEmpty && ds===today
+          ? 'ready'
+          : allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
           ? 'ready' : 'unavailable';
         const changedTable=authorized || nextPhase!==accessDisplayPhase;
         accessDisplayPhase=nextPhase;
@@ -3713,7 +3733,9 @@ async function loadJcFrontend(){
       }catch(error){
         console.warn('Pro静态快照后台补齐失败，保留完整公开赛程与待生成占位',error);
         if(token===loadToken && selectedDate===ds){
-          accessDisplayPhase=allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
+          accessDisplayPhase=selectedDayVerifiedEmpty && ds===today
+            ? 'ready'
+            : allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
             ? 'ready' : 'unavailable';
           render();
         }
