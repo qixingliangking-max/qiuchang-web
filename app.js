@@ -2840,11 +2840,6 @@ async function loadJcFrontend(){
     currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
   let previousLoading=!(bakedYesterdayReady && initialDate===today);
-  // Only a successfully resolved empty fixture day can suppress the
-  // prediction/login panel. Failed requests still keep error/retry UI.
-  let selectedDateConfirmedEmpty=!initialCurrentLoadError &&
-    Array.isArray(currentResult.data) && currentResult.data.length===0;
-
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
     qcAddDays(initialToday,-2),
@@ -3394,7 +3389,6 @@ async function loadJcFrontend(){
     }
     selectedDate=ds;
     requestedDate=ds;
-    selectedDateConfirmedEmpty=nextCurrent.data.length===0;
     reflectOverviewDateIntent(ds,false);
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
@@ -3448,10 +3442,9 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
-    const hideEmptyPrediction=selectedDateConfirmedEmpty && dateRows.length===0;
-    // A verified no-fixture day has nothing to purchase or log in to see.
-    // Preserve yesterday's public score review and all date-navigation controls.
-    document.body.classList.toggle('qc-overview-no-fixtures',hideEmptyPrediction);
+    // Today prediction and its login gate are independent of the schedule.
+    // An empty fixture day or a failed schedule request must never hide them.
+    if(predictionShell) predictionShell.hidden=false;
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
@@ -3471,11 +3464,9 @@ async function loadJcFrontend(){
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=selectedDate>=today && !dateRows.length
-        ? '当日赛程'
-        : predictionRestricted
-          ? '今日预测'
-          : (selectedDate===today?'今日预测':'当日赛程');
+      $('#jcPredictionTitle').textContent=predictionRestricted || (selectedDate>=today && !dateRows.length)
+        ? '今日预测'
+        : (selectedDate===today?'今日预测':'当日赛程');
     }
 
     if(prev){
@@ -3504,18 +3495,7 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(predictionShell) predictionShell.hidden=hideEmptyPrediction;
-      if(hideEmptyPrediction){
-        // Ensure a stale guest login prompt is not left in the hidden panel.
-        cards.replaceChildren();
-      }else if(selectedDate>=today && !dateRows.length){
-        qcReconcileOverviewTable(cards,
-          '<div class="profile-card">'+
-          (initialCurrentLoadError && selectedDate===initialDate
-             ? '赛程暂时无法读取，可切换日期或稍后刷新'
-             : '当日暂无赛程，请切换其他日期')+
-          '</div>');
-      }else if(accessDisplayPhase==='unavailable'){
+      if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
         qcReconcileOverviewTable(cards,
@@ -3526,36 +3506,32 @@ async function loadJcFrontend(){
         const retry=cards.querySelector('#qcRetryMemberStatus');
         if(retry) retry.onclick=()=>cards.__qcRetryMemberAccess?.();
       }else if(accessDisplayPhase==='verifying'){
-        // The small primer only paints AFTER the same server Pro verdict and
-        // RLS snapshot are both confirmed. Do not erase that verified table
-        // merely because the large app is still completing initial setup.
+        // Never paint Pro predictions before server entitlement verification.
         const alreadyVisible=cards.dataset.qcEarlyProPainted==='1' &&
           cards.dataset.qcEarlyProDate===selectedDate;
         if(!alreadyVisible) qcReconcileOverviewTable(cards,
           window.qcOverviewKnownGuestFirstPaint
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
             : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
-      }else if(predictionRestricted && selectedDate>today && dateRows.length){
-        // Public future fixtures may be browsed by guests, but always strip
-        // any model data. Locked predictions stay server/RLS protected.
-        const publicFutureFixtures=dateRows.map(m=>({
-          ...m,jc_model_outputs:[],_jcModelsLoaded:true,
-          _jcModelsLoading:false,_jcModelLoadFailed:false
-        }));
-        qcReconcileOverviewTable(cards,
-          jcRenderOverviewTable(publicFutureFixtures,calendarToday,'today'));
-        jcBindOverviewRows(cards);
       }else if(predictionRestricted){
+        // Keep the login/subscription gate visible even with zero fixtures.
+        // The existence or freshness of a schedule is not an access condition.
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
+      }else if(selectedDate>=today && !dateRows.length){
+        qcReconcileOverviewTable(cards,
+          '<div class="profile-card">'+
+          (initialCurrentLoadError && selectedDate===initialDate
+             ? '赛程暂时无法读取，可切换日期或稍后刷新'
+             : '当日暂无赛程，请切换其他日期')+
+          '</div>');
       }else{
         qcReconcileOverviewTable(cards,jcRenderOverviewTable(dateRows,calendarToday,'today'));
         jcBindOverviewRows(cards);
       }
     }catch(err){
       console.error('今日预测渲染失败',err);
-      if(predictionShell) predictionShell.hidden=hideEmptyPrediction;
-      if(!hideEmptyPrediction)
-        cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+      if(predictionShell) predictionShell.hidden=false;
+      cards.innerHTML='<div class="profile-card">正在加载中…</div>';
     }
 
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
