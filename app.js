@@ -2840,6 +2840,7 @@ async function loadJcFrontend(){
     currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
   let previousLoading=!(bakedYesterdayReady && initialDate===today);
+
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
     qcAddDays(initialToday,-2),
@@ -2870,13 +2871,13 @@ async function loadJcFrontend(){
     }).catch(()=>{});
   }
 
-  // Keep date controls and independent previous-day history working even
-  // when the current-day source has a transient network error. A valid
-  // zero-fixture date takes the normal non-error path above.
-  const initialCurrentLoadError=Boolean(currentResult.error||previousResult.error);
-  if(initialCurrentLoadError){
-    console.warn('首页当天赛程暂时不可用，保留日期导航和昨日回看',currentResult.error||previousResult.error);
-    currentResult={data:[],error:null,fromCurrentLoadError:true};
+  const error=currentResult.error||previousResult.error;
+  if(error){
+    console.error('读取竞彩前台数据失败',error);
+    cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
+    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
+    document.body.classList.remove('qc-overview-booting');
+    return;
   }
 
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
@@ -3034,12 +3035,7 @@ async function loadJcFrontend(){
       if(error) return {data:[],error};
       rows=qcCompleteStaticRows(data,ds);
     }
-    // An empty published day is valid (e.g. Nov 9 has no scheduled matches).
-    // Do not make the whole home page fail or disable date navigation.
-    if(!rows && ds>=today) return {
-      data:[],error:null,fromUnpublishedDate:true,
-      fromUnpublishedFuture:ds>today
-    };
+    if(!rows && ds>today) return {data:[],error:null,fromUnpublishedFuture:true};
     if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
     return {
       data:rows.map(m=>({
@@ -3080,7 +3076,7 @@ async function loadJcFrontend(){
     // Guests see only confirmed FT+HT results. They never need the complete
     // future/pending fixture roster, so avoid fetching and merging it for
     // every initial review/date switch. Pro retains the existing full roster.
-    const pendingPublicSchedule=!archived && ds>=qcAddDays(today,-3) &&
+    const pendingPublicSchedule=access.loggedIn && !archived && ds>=qcAddDays(today,-3) &&
       typeof window.qcFetchLiveScheduleDate==='function'
       ? window.qcFetchLiveScheduleDate(ds).catch(()=>null) : null;
     const pendingPrediction=access.isPro && !archived
@@ -3108,9 +3104,6 @@ async function loadJcFrontend(){
         }catch(_){}
       }
       if(!schedule.length || (expected>0 && schedule.length<expected)) return history;
-      // Reuse public HT+FT already confirmed in the fixed roster even when
-      // yesterday's final archive is still partial or its RPC is unavailable.
-      const confirmedCount=schedule.filter(m=>jcScoreInfo(m).finished).length;
       const finishedById=new Map((history.data||[]).filter(m=>jcScoreInfo(m).finished)
         .map(m=>[String(m.id),m]));
       const rows=schedule.map(m=>{
@@ -3131,13 +3124,9 @@ async function loadJcFrontend(){
         };
       });
       return {...history,data:rows,error:null,fromHistorySnapshot:true,
-        finishedCount:Math.max(Number(history.finishedCount||0),confirmedCount),
-        matchCount:schedule.length,fromCompletePublicSchedule:true};
+        fromCompletePublicSchedule:true};
     };
-    // No login required for genuine public finished scores. Guests still
-    // receive ONLY FT/HT rows through jcGuestFinishedReviewRows; the roster
-    // contains no protected predictions or analyst reports.
-    if(!access.isPro) return ensureCompletePublicReview();
+    if(!access.isPro) return access.loggedIn ? ensureCompletePublicReview() : history;
 
     // Once yesterday's COMPLETE final history includes every locked prediction,
     // that single public static file suffices even for Pro users.
@@ -3153,18 +3142,12 @@ async function loadJcFrontend(){
     const protectedSnapshot=await (pendingPrediction || qcFetchProOverviewDate(ds));
     if(!protectedSnapshot?.data?.length) return ensureCompletePublicReview();
 
-    // Never rely on a late final-archive API call for display-only FT/HT.
-    // Merge public confirmed results onto the independently authorized Pro
-    // frozen rows. Model and market fields remain frozen and unchanged.
-    const publicReview=await ensureCompletePublicReview();
-    const finishedById=new Map((publicReview.data||[])
-      .filter(m=>jcScoreInfo(m).finished)
-      .map(row=>[String(row.id),row]));
+    const finishedById=new Map((history.data||[]).map(row=>[String(row.id),row]));
     const merged=(protectedSnapshot.data||[]).map(row=>{
       const finished=finishedById.get(String(row.id));
       return finished?preserveOverviewStaticData(finished,row):row;
     });
-    return {...publicReview,data:merged,error:null,fromHistorySnapshot:true};
+    return {...history,data:merged,fromHistorySnapshot:true};
   }
 
   function resultOrEmpty(result){
@@ -3442,9 +3425,6 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
-    // Today prediction and its login gate are independent of the schedule.
-    // An empty fixture day or a failed schedule request must never hide them.
-    if(predictionShell) predictionShell.hidden=false;
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
@@ -3452,7 +3432,7 @@ async function loadJcFrontend(){
         ? '会员状态暂时无法验证'
         : accessDisplayPhase==='verifying'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
-        : selectedDate>=today && !dateRows.length
+        : selectedDate>today && !dateRows.length
         ? '赛程尚未发布'
         : predictionRestricted
           ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
@@ -3464,9 +3444,11 @@ async function loadJcFrontend(){
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=predictionRestricted || (selectedDate>=today && !dateRows.length)
-        ? '今日预测'
-        : (selectedDate===today?'今日预测':'当日赛程');
+      $('#jcPredictionTitle').textContent=selectedDate>today && !dateRows.length
+        ? '当日赛程'
+        : predictionRestricted
+          ? '今日预测'
+          : (selectedDate===today?'今日预测':'当日赛程');
     }
 
     if(prev){
@@ -3495,7 +3477,10 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(accessDisplayPhase==='unavailable'){
+      if(predictionShell) predictionShell.hidden=false;
+      if(selectedDate>today && !dateRows.length){
+        qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
+      }else if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
         qcReconcileOverviewTable(cards,
@@ -3506,7 +3491,9 @@ async function loadJcFrontend(){
         const retry=cards.querySelector('#qcRetryMemberStatus');
         if(retry) retry.onclick=()=>cards.__qcRetryMemberAccess?.();
       }else if(accessDisplayPhase==='verifying'){
-        // Never paint Pro predictions before server entitlement verification.
+        // The small primer only paints AFTER the same server Pro verdict and
+        // RLS snapshot are both confirmed. Do not erase that verified table
+        // merely because the large app is still completing initial setup.
         const alreadyVisible=cards.dataset.qcEarlyProPainted==='1' &&
           cards.dataset.qcEarlyProDate===selectedDate;
         if(!alreadyVisible) qcReconcileOverviewTable(cards,
@@ -3514,16 +3501,7 @@ async function loadJcFrontend(){
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
             : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
       }else if(predictionRestricted){
-        // Keep the login/subscription gate visible even with zero fixtures.
-        // The existence or freshness of a schedule is not an access condition.
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
-      }else if(selectedDate>=today && !dateRows.length){
-        qcReconcileOverviewTable(cards,
-          '<div class="profile-card">'+
-          (initialCurrentLoadError && selectedDate===initialDate
-             ? '赛程暂时无法读取，可切换日期或稍后刷新'
-             : '当日暂无赛程，请切换其他日期')+
-          '</div>');
       }else{
         qcReconcileOverviewTable(cards,jcRenderOverviewTable(dateRows,calendarToday,'today'));
         jcBindOverviewRows(cards);
