@@ -858,6 +858,14 @@
       "away_team": "阿维利诺",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T18:30:00Z"
+    },
+    {
+      "source_match_id": "5967143",
+      "match_id": "fotmob:5967143",
+      "home_team": "恩特拉",
+      "away_team": "摩德纳",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T14:00:00.000Z"
     }
   ]
 }

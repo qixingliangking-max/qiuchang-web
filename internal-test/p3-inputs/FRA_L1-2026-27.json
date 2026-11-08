@@ -674,6 +674,14 @@
       "away_team": "特鲁瓦",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T20:05:00Z"
+    },
+    {
+      "source_match_id": "5802988",
+      "match_id": "fotmob:5802988",
+      "home_team": "雷恩",
+      "away_team": "里尔",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T14:00:00.000Z"
     }
   ]
 }
