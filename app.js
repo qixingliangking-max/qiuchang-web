@@ -3448,6 +3448,8 @@ async function loadJcFrontend(){
         ? '会员状态暂时无法验证'
         : accessDisplayPhase==='verifying'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
+        : selectedDate===today && !dateRows.length
+        ? '当日暂无赛程'
         : selectedDate>today && !dateRows.length
         ? '赛程尚未发布'
         : predictionRestricted
