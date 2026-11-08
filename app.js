@@ -2840,6 +2840,10 @@ async function loadJcFrontend(){
     currentResult={data:[],error:new Error('当日赛程暂不可用')};
   const previousResult={data:[],error:null,historyFinal:false};
   let previousLoading=!(bakedYesterdayReady && initialDate===today);
+  // Only a successfully resolved empty fixture day can suppress the
+  // prediction/login panel. Failed requests still keep error/retry UI.
+  let selectedDateConfirmedEmpty=!initialCurrentLoadError &&
+    Array.isArray(currentResult.data) && currentResult.data.length===0;
 
   const overviewSelectableDates=[
     qcAddDays(initialToday,-3),
@@ -3390,6 +3394,7 @@ async function loadJcFrontend(){
     }
     selectedDate=ds;
     requestedDate=ds;
+    selectedDateConfirmedEmpty=nextCurrent.data.length===0;
     reflectOverviewDateIntent(ds,false);
     modelsLoaded=false;
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
@@ -3443,6 +3448,10 @@ async function loadJcFrontend(){
     rememberDetailPublicRows(previousDate,reviewVisibleRows);
     const predictionRestricted=!access.isPro;
     const predictionShell=$('.jc-prediction-shell');
+    const hideEmptyPrediction=selectedDateConfirmedEmpty && dateRows.length===0;
+    // A verified no-fixture day has nothing to purchase or log in to see.
+    // Preserve yesterday's public score review and all date-navigation controls.
+    document.body.classList.toggle('qc-overview-no-fixtures',hideEmptyPrediction);
 
     if(label) label.textContent=qcDateLabel(requestedDate);
     if($('#jcPredictionMeta')){
@@ -3495,8 +3504,11 @@ async function loadJcFrontend(){
     }
 
     try{
-      if(predictionShell) predictionShell.hidden=false;
-      if(selectedDate>=today && !dateRows.length){
+      if(predictionShell) predictionShell.hidden=hideEmptyPrediction;
+      if(hideEmptyPrediction){
+        // Ensure a stale guest login prompt is not left in the hidden panel.
+        cards.replaceChildren();
+      }else if(selectedDate>=today && !dateRows.length){
         qcReconcileOverviewTable(cards,
           '<div class="profile-card">'+
           (initialCurrentLoadError && selectedDate===initialDate
@@ -3541,8 +3553,9 @@ async function loadJcFrontend(){
       }
     }catch(err){
       console.error('今日预测渲染失败',err);
-      if(predictionShell) predictionShell.hidden=false;
-      cards.innerHTML='<div class="profile-card">正在加载中…</div>';
+      if(predictionShell) predictionShell.hidden=hideEmptyPrediction;
+      if(!hideEmptyPrediction)
+        cards.innerHTML='<div class="profile-card">正在加载中…</div>';
     }
 
     try{ setUrlDate(selectedDate); }catch(err){ console.warn('日期URL更新失败',err); }
