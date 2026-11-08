@@ -28,7 +28,8 @@ if(entry){
     throw Error('Private member model found in public schedule');
   for(const side of ['home','away']){
    const logo=String(row['_'+side+'LogoUrl']||'');
-   if(!/^assets\/team-logos\/[a-z0-9-]+\.(png|jpg|webp)$/i.test(logo)||
+   if(!logo)continue; // Team names remain visible while an authentic crest is unavailable.
+  if(!/^assets\/team-logos\/[a-z0-9-]+\.(png|jpg|webp)$/i.test(logo)||
       !fs.existsSync(path.join(root,logo)))throw Error('Missing local crest: '+row.match_num+' '+side);
   }
  }
@@ -41,10 +42,16 @@ ctx.today=ds;
 const visible=vm.runInContext('rows.filter(m=>m.match_date&&qcJcIsVisibleMatch(m))',ctx);
 ctx.visible=visible;
 const count=visible.length;
+const nextDay=Object.keys(manifest.dates||{}).sort().find(x=>x>ds&&/^\d{4}-\d{2}-\d{2}$/.test(x));
 const markup=count?vm.runInContext('jcRenderFootballCards(visible,today,{loggedIn:false,isPro:false})',ctx)
- :'<div class="profile-card">今日公开赛程尚未发布，发布后将自动显示。</div>';
+ :'<div class="profile-card">当日暂无赛程。'+
+   (nextDay?'<a href="football.html?date='+nextDay+'">查看下一比赛日 '+nextDay.slice(5)+'</a>':'请切换日期查看其他比赛。')+
+   '</div>';
 if(count&&(markup.match(/class="jc-football-card jc-football-card-lite/g)||[]).length!==count)throw Error('Missing pre-rendered card');
-if(count&&(markup.match(/class="jc-team-logo"/g)||[]).length!==count*2)throw Error('Missing pre-rendered crest');
+const expectedCrests=visible.reduce((n,m)=>n+['home','away'].filter(side=>
+  Boolean(catalog.by_team?.[m[side+'_team_name']]||m['_'+side+'LogoUrl'])).length,0);
+if(count&&(markup.match(/class="jc-team-logo"/g)||[]).length!==expectedCrests)
+  throw Error('Unexpected pre-rendered crest count');
 if(/<script|<\/script|javascript:/i.test(markup))throw Error('Unsafe public HTML');
 const start='<!-- QC_FOOTBALL_PUBLIC_START -->',end='<!-- QC_FOOTBALL_PUBLIC_END -->';
 const box='<div id="jcFootballCards" data-qc-static-date="'+ds+'" data-qc-static-count="'+count+'" data-qc-static-version="'+version+'">'+markup+'</div>';
