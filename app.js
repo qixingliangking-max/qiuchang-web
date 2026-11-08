@@ -3035,6 +3035,22 @@ async function loadJcFrontend(){
       if(error) return {data:[],error};
       rows=qcCompleteStaticRows(data,ds);
     }
+    if(!rows && ds===today){
+      // A valid empty fixture day has no schedule snapshot. The previous
+      // behavior treated that as a transport failure, blocking date changes.
+      // Verify zero public fixture IDs before accepting a no-games day;
+      // never turn an actual API error or unpublished real games into "0".
+      try{
+        const emptyCheck=await window.qcSupabase
+          .from('jc_matches').select('id')
+          .eq('business_date',ds).limit(1);
+        if(!emptyCheck.error && Array.isArray(emptyCheck.data) &&
+           emptyCheck.data.length===0)
+          return {data:[],error:null,fromVerifiedNoFixtureDay:true};
+      }catch(error){
+        console.warn('空赛程日公开身份核验失败',error);
+      }
+    }
     if(!rows && ds>today) return {data:[],error:null,fromUnpublishedFuture:true};
     if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
     return {
@@ -3444,10 +3460,10 @@ async function loadJcFrontend(){
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=selectedDate>today && !dateRows.length
-        ? '当日赛程'
-        : predictionRestricted
-          ? '今日预测'
+      $('#jcPredictionTitle').textContent=predictionRestricted
+        ? '今日预测'
+        : selectedDate>today && !dateRows.length
+          ? '当日赛程'
           : (selectedDate===today?'今日预测':'当日赛程');
     }
 
@@ -3478,9 +3494,7 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(selectedDate>today && !dateRows.length){
-        qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
-      }else if(accessDisplayPhase==='unavailable'){
+      if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
         qcReconcileOverviewTable(cards,
@@ -3501,7 +3515,14 @@ async function loadJcFrontend(){
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
             : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
       }else if(predictionRestricted){
+        // The login/subscription gate depends only on verified access.
+        // No-fixture days and public schedule failures must not hide it.
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
+      }else if(selectedDate>=today && !dateRows.length){
+        qcReconcileOverviewTable(cards,
+          '<div class="profile-card">'+(selectedDate>today
+            ? '该日期赛程尚未发布'
+            : '当日暂无赛程，请切换其他日期')+'</div>');
       }else{
         qcReconcileOverviewTable(cards,jcRenderOverviewTable(dateRows,calendarToday,'today'));
         jcBindOverviewRows(cards);
