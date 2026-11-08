@@ -408,17 +408,13 @@ def audit_published_live_crests():
                 team = str(row.get(side + "_team_name") or "")
                 # Past locked results must never be re-written. Their missing
                 # crests are still reported, while future/current fixtures fail.
-                msg = ds + " " + str(row.get("match_num") or "") + " " + team
-                if not local:
-                    # Unresolved authentic crest is a visual fallback, not a
-                    # reason to hide the entire verified public fixture day.
-                    print("WARNING team crest pending (team name still visible):", msg)
-                elif (local != by_team.get(team) or
+                if (not local or local != by_team.get(team) or
                         not local.startswith("assets/team-logos/") or
                         not asset_is_valid(ROOT / local)):
+                    msg = ds + " " + str(row.get("match_num") or "") + " " + team
                     if ds >= today.isoformat():
-                        raise RuntimeError("Static crest audit: invalid published logo " + msg)
-                    print("WARNING past frozen crest mismatch (not overwritten):", msg)
+                        raise RuntimeError("Static crest audit: unresolved published match " + msg)
+                    print("WARNING past frozen crest missing (not overwritten):", msg)
                 checked += 1
     print("PASS: static published crest audit checked", checked,
           "team slots across", len(manifest.get("dates") or {}), "dates")
@@ -532,7 +528,7 @@ def publish_live_schedules(by_team):
     LIVE_SCHEDULE_DIR.mkdir(parents=True, exist_ok=True)
     today = datetime.now(BEIJING).date()
     start = (today - timedelta(days=1)).isoformat()
-    end = (today + timedelta(days=3)).isoformat()
+    end = (today + timedelta(days=2)).isoformat()
     records = public_request("/rest/v1/jc_overview_schedule_snapshots", {
         "select": "business_date,payload,match_count",
         "business_date": "gte." + start,
@@ -640,19 +636,20 @@ def publish_live_schedules(by_team):
         try:
             assert_prekick_crests_complete(rows, by_team, now, ds)
         except RuntimeError as exc:
-            # Crest availability never gates valid public fixtures. Do not fake
-            # missing logos: client cards keep the accurate team name visible.
-            # Reject any present-but-invalid local crest (rather than silently
-            # publishing broken or external image URLs).
-            for row in rows:
-                for side in ("home", "away"):
-                    icon = str(row.get("_" + side + "LogoUrl") or "")
-                    if icon and (not icon.startswith("assets/team-logos/") or
-                                 not asset_is_valid(ROOT / icon)):
-                        raise RuntimeError("Invalid present fixture crest " + ds +
-                                           " " + str(row.get("match_num") or "") +
-                                           " " + side) from exc
-            print("WARNING authentic crest pending; public fixture day remains visible:", exc)
+            # Do not let a NEW, incomplete future fixture roster block
+            # publishing the validated current/previous day's static data.
+            # An incomplete future day stays unpublished until the actual
+            # verified local crest becomes available; do not fake logos.
+            if ds <= today.isoformat():
+                raise
+            print("WARNING future schedule deferred (no unverified logo published):", exc)
+            if existing is not None:
+                # Preserve an already complete, immutable published version.
+                old_digest = hashlib.sha256(json.dumps(existing, ensure_ascii=False,
+                    separators=(",", ":")).encode("utf-8")).hexdigest()[:16]
+                dates[ds] = {"file": relative, "version": old_digest,
+                             "match_count": len(existing.get("rows") or [])}
+            continue
 
         payload = {
             "version": 1,
