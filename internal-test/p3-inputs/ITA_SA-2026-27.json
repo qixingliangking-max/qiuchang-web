@@ -874,6 +874,14 @@
       "away_team": "科莫",
       "match_date": "2026-11-08",
       "kickoff_at": "2026-11-08T17:00:00.000Z"
+    },
+    {
+      "source_match_id": "5749742",
+      "match_id": "fotmob:5749742",
+      "home_team": "佛罗伦萨",
+      "away_team": "尤文图斯",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T19:45:00.000Z"
     }
   ]
 }

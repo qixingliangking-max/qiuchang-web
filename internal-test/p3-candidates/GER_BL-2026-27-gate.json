@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 80,
-  "collected_matches": 80,
+  "input_matches": 81,
+  "collected_matches": 81,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -71,7 +71,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "沙尔克04",
-      "matches": 8
+      "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -101,7 +101,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "霍芬海姆",
-      "matches": 8
+      "matches": 9
     }
   ],
   "gate_status": "PASS",

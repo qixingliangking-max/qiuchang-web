@@ -874,6 +874,14 @@
       "away_team": "桑普多利亚",
       "match_date": "2026-11-08",
       "kickoff_at": "2026-11-08T16:15:00.000Z"
+    },
+    {
+      "source_match_id": "5967145",
+      "match_id": "fotmob:5967145",
+      "home_team": "维琴察",
+      "away_team": "克雷莫纳",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T18:30:00.000Z"
     }
   ]
 }

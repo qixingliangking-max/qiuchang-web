@@ -948,6 +948,14 @@
       "kickoff_at": "2026-11-08T17:30:00.000Z"
     },
     {
+      "source_match_id": "5868121",
+      "match_id": "fotmob:5868121",
+      "home_team": "马德里竞技",
+      "away_team": "巴塞罗那",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T20:00:00.000Z"
+    },
+    {
       "source_match_id": "5868088",
       "match_id": "fotmob:5868088",
       "home_team": "巴列卡诺",
