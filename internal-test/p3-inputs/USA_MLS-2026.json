@@ -3673,7 +3673,7 @@
       "home_team": "科罗拉多急流",
       "away_team": "温哥华白帽",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:30:00Z"
+      "kickoff_at": "2026-10-25T00:30:00Z"
     },
     {
       "source_match_id": "5071449",
@@ -3681,7 +3681,7 @@
       "home_team": "达拉斯FC",
       "away_team": "圣何塞地震",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:30:00Z"
+      "kickoff_at": "2026-10-25T00:30:00Z"
     },
     {
       "source_match_id": "5071450",
@@ -3689,7 +3689,7 @@
       "home_team": "休斯敦迪纳摩",
       "away_team": "明尼苏达联",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:30:00Z"
+      "kickoff_at": "2026-10-25T00:30:00Z"
     },
     {
       "source_match_id": "5071451",
@@ -3697,7 +3697,7 @@
       "home_team": "堪萨斯城竞技",
       "away_team": "奥斯汀FC",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:30:00Z"
+      "kickoff_at": "2026-10-25T00:30:00Z"
     },
     {
       "source_match_id": "5071453",
@@ -3705,7 +3705,7 @@
       "home_team": "皇家盐湖城",
       "away_team": "圣路易斯城",
       "match_date": "2026-10-25",
-      "kickoff_at": "2026-10-25T01:30:00Z"
+      "kickoff_at": "2026-10-25T00:30:00Z"
     },
     {
       "source_match_id": "5071452",
@@ -3945,7 +3945,7 @@
       "home_team": "新英格兰革命",
       "away_team": "迈阿密国际",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T00:00:00.000Z"
+      "kickoff_at": "2026-11-02T00:00:00Z"
     },
     {
       "source_match_id": "5071482",
@@ -3953,7 +3953,7 @@
       "home_team": "洛杉矶FC",
       "away_team": "明尼苏达联",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T01:30:00.000Z"
+      "kickoff_at": "2026-11-02T01:30:00Z"
     },
     {
       "source_match_id": "5071484",
@@ -3961,7 +3961,127 @@
       "home_team": "波特兰伐木工",
       "away_team": "休斯敦迪纳摩",
       "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T02:45:00.000Z"
+      "kickoff_at": "2026-11-02T02:45:00Z"
+    },
+    {
+      "source_match_id": "5071485",
+      "match_id": "fotmob:5071485",
+      "home_team": "芝加哥火焰",
+      "away_team": "哥伦布机员",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071486",
+      "match_id": "fotmob:5071486",
+      "home_team": "辛辛那提FC",
+      "away_team": "纳什维尔",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071487",
+      "match_id": "fotmob:5071487",
+      "home_team": "华盛顿联",
+      "away_team": "纽约城",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071488",
+      "match_id": "fotmob:5071488",
+      "home_team": "迈阿密国际",
+      "away_team": "夏洛特FC",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071489",
+      "match_id": "fotmob:5071489",
+      "home_team": "蒙特利尔CF",
+      "away_team": "温哥华白帽",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071490",
+      "match_id": "fotmob:5071490",
+      "home_team": "纽约红牛",
+      "away_team": "亚特兰大联",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071491",
+      "match_id": "fotmob:5071491",
+      "home_team": "奥兰多城",
+      "away_team": "新英格兰革命",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071492",
+      "match_id": "fotmob:5071492",
+      "home_team": "费城联合",
+      "away_team": "多伦多FC",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T21:00:00Z"
+    },
+    {
+      "source_match_id": "5071493",
+      "match_id": "fotmob:5071493",
+      "home_team": "奥斯汀FC",
+      "away_team": "波特兰伐木工",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071494",
+      "match_id": "fotmob:5071494",
+      "home_team": "达拉斯FC",
+      "away_team": "科罗拉多急流",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071495",
+      "match_id": "fotmob:5071495",
+      "home_team": "休斯敦迪纳摩",
+      "away_team": "圣路易斯城",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071496",
+      "match_id": "fotmob:5071496",
+      "home_team": "明尼苏达联",
+      "away_team": "圣何塞地震",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5071497",
+      "match_id": "fotmob:5071497",
+      "home_team": "皇家盐湖城",
+      "away_team": "洛杉矶银河",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:10:00.000Z"
+    },
+    {
+      "source_match_id": "5071498",
+      "match_id": "fotmob:5071498",
+      "home_team": "圣迭戈FC",
+      "away_team": "堪萨斯城竞技",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:10:00.000Z"
+    },
+    {
+      "source_match_id": "5071499",
+      "match_id": "fotmob:5071499",
+      "home_team": "西雅图海湾人",
+      "away_team": "洛杉矶FC",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T00:10:00.000Z"
     }
   ]
 }

@@ -817,7 +817,7 @@
       "home_team": "卡利亚里",
       "away_team": "弗罗西诺内",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T14:00:00.000Z"
+      "kickoff_at": "2026-11-07T14:00:00Z"
     },
     {
       "source_match_id": "5749748",
@@ -825,7 +825,7 @@
       "home_team": "都灵",
       "away_team": "莱切",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T14:00:00.000Z"
+      "kickoff_at": "2026-11-07T14:00:00Z"
     },
     {
       "source_match_id": "5749747",
@@ -833,7 +833,15 @@
       "home_team": "帕尔马",
       "away_team": "博洛尼亚",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T17:00:00.000Z"
+      "kickoff_at": "2026-11-07T17:00:00Z"
+    },
+    {
+      "source_match_id": "5749740",
+      "match_id": "fotmob:5749740",
+      "home_team": "罗马",
+      "away_team": "萨索洛",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T19:45:00Z"
     }
   ]
 }

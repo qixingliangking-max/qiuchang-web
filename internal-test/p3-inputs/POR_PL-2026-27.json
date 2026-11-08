@@ -730,6 +730,22 @@
       "away_team": "阿罗卡",
       "match_date": "2026-11-06",
       "kickoff_at": "2026-11-06T20:45:00Z"
+    },
+    {
+      "source_match_id": "5887672",
+      "match_id": "fotmob:5887672",
+      "home_team": "阿尔维卡",
+      "away_team": "卡萨皮亚",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T18:00:00Z"
+    },
+    {
+      "source_match_id": "5887679",
+      "match_id": "fotmob:5887679",
+      "home_team": "葡萄牙体育",
+      "away_team": "莫雷拉人",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T20:30:00Z"
     }
   ]
 }

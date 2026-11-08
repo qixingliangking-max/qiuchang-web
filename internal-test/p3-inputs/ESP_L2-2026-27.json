@@ -1065,7 +1065,7 @@
       "home_team": "布尔戈斯",
       "away_team": "塞尔塔B",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T13:00:00.000Z"
+      "kickoff_at": "2026-11-07T13:00:00Z"
     },
     {
       "source_match_id": "5868527",
@@ -1073,7 +1073,7 @@
       "home_team": "加的斯",
       "away_team": "奥维耶多",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T15:15:00.000Z"
+      "kickoff_at": "2026-11-07T15:15:00Z"
     },
     {
       "source_match_id": "5868529",
@@ -1081,7 +1081,15 @@
       "home_team": "科尔多瓦",
       "away_team": "休达",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T17:30:00.000Z"
+      "kickoff_at": "2026-11-07T17:30:00Z"
+    },
+    {
+      "source_match_id": "5868532",
+      "match_id": "fotmob:5868532",
+      "home_team": "莱加内斯",
+      "away_team": "阿尔瓦塞特",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T17:30:00Z"
     }
   ]
 }

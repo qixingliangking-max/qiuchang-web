@@ -889,7 +889,7 @@
       "home_team": "马拉加",
       "away_team": "桑坦德竞技",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T13:00:00.000Z"
+      "kickoff_at": "2026-11-07T13:00:00Z"
     },
     {
       "source_match_id": "5868124",
@@ -897,7 +897,7 @@
       "home_team": "西班牙人",
       "away_team": "拉科鲁尼亚",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T15:15:00.000Z"
+      "kickoff_at": "2026-11-07T15:15:00Z"
     },
     {
       "source_match_id": "5868126",
@@ -905,7 +905,15 @@
       "home_team": "奥萨苏纳",
       "away_team": "毕尔巴鄂竞技",
       "match_date": "2026-11-07",
-      "kickoff_at": "2026-11-07T17:30:00.000Z"
+      "kickoff_at": "2026-11-07T17:30:00Z"
+    },
+    {
+      "source_match_id": "5868129",
+      "match_id": "fotmob:5868129",
+      "home_team": "瓦伦西亚",
+      "away_team": "皇家马德里",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T20:00:00Z"
     },
     {
       "source_match_id": "5868088",
