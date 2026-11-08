@@ -7,7 +7,7 @@
   <title>球场档案｜今日速览</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://oqtloldkfjxildoribkf.supabase.co" crossorigin>
-  <style>/* Show loading placeholders immediately; only defer the footer until bootstrap finishes. */body.qc-overview-booting .footer-note{visibility:hidden}</style>
+  <style>/* Do not flash an unnecessary login prompt before a fixture date is confirmed. */body.qc-overview-booting .footer-note{visibility:hidden}.qc-overview-page .jc-prediction-shell[hidden]{display:none!important}.qc-overview-page.qc-overview-no-fixtures #qcOverviewLoginBar{display:none!important}</style>
   <link rel="stylesheet" href="styles.css?v=20261103handicapone">
   <link rel="stylesheet" href="footer-compact.css?v=20261010footer1">
   <!-- Static review rows must respond before the deferred app bundle loads. -->
@@ -153,7 +153,7 @@
       <div id="jcYesterdayCards"><div class="jc-review-empty">昨日完整赛果尚在核验，全部完赛后将自动更新</div></div>
     </section>
 
-    <section class="jc-fixtures-shell jc-prediction-shell">
+    <section class="jc-fixtures-shell jc-prediction-shell" hidden>
       <div class="section-title jc-home-section-title jc-prediction-heading">
         <span class="bar"></span>
         <span id="jcPredictionTitle">今日预测</span>
@@ -223,7 +223,7 @@
 <script defer src="home-auth-prime.js?v=20261029parallelrls4"></script>
 <script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
 <script defer src="overview-live-static.js?v=20261027manifestttl1"></script>
-<script defer src="app.js?v=20261109emptydayhistory2"></script>
+<script defer src="app.js?v=20261109guestemptyhide3"></script>
 <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
 </body>
 </html>
