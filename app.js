@@ -2871,13 +2871,13 @@ async function loadJcFrontend(){
     }).catch(()=>{});
   }
 
-  const error=currentResult.error||previousResult.error;
-  if(error){
-    console.error('读取竞彩前台数据失败',error);
-    cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
-    if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
-    document.body.classList.remove('qc-overview-booting');
-    return;
+  // Keep date controls and independent previous-day history working even
+  // when the current-day source has a transient network error. A valid
+  // zero-fixture date takes the normal non-error path above.
+  const initialCurrentLoadError=Boolean(currentResult.error||previousResult.error);
+  if(initialCurrentLoadError){
+    console.warn('首页当天赛程暂时不可用，保留日期导航和昨日回看',currentResult.error||previousResult.error);
+    currentResult={data:[],error:null,fromCurrentLoadError:true};
   }
 
   let allRows=[...(currentResult.data||[]),...(previousResult.data||[])].filter(m=>m.match_date);
@@ -3035,7 +3035,12 @@ async function loadJcFrontend(){
       if(error) return {data:[],error};
       rows=qcCompleteStaticRows(data,ds);
     }
-    if(!rows && ds>today) return {data:[],error:null,fromUnpublishedFuture:true};
+    // An empty published day is valid (e.g. Nov 9 has no scheduled matches).
+    // Do not make the whole home page fail or disable date navigation.
+    if(!rows && ds>=today) return {
+      data:[],error:null,fromUnpublishedDate:true,
+      fromUnpublishedFuture:ds>today
+    };
     if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
     return {
       data:rows.map(m=>({
@@ -3432,7 +3437,7 @@ async function loadJcFrontend(){
         ? '会员状态暂时无法验证'
         : accessDisplayPhase==='verifying'
         ? (window.qcOverviewKnownGuestFirstPaint ? '' : '正在确认登录状态…')
-        : selectedDate>today && !dateRows.length
+        : selectedDate>=today && !dateRows.length
         ? '赛程尚未发布'
         : predictionRestricted
           ? '今日竞彩日'+(Number.isFinite(todayPredictionCount)?' · '+todayPredictionCount+'场':'')
@@ -3444,7 +3449,7 @@ async function loadJcFrontend(){
       $('#jcYesterdayMeta').textContent=previousDate.slice(5)+' · '+reviewCount+'场';
     }
     if($('#jcPredictionTitle')){
-      $('#jcPredictionTitle').textContent=selectedDate>today && !dateRows.length
+      $('#jcPredictionTitle').textContent=selectedDate>=today && !dateRows.length
         ? '当日赛程'
         : predictionRestricted
           ? '今日预测'
@@ -3478,8 +3483,13 @@ async function loadJcFrontend(){
 
     try{
       if(predictionShell) predictionShell.hidden=false;
-      if(selectedDate>today && !dateRows.length){
-        qcReconcileOverviewTable(cards,'<div class="profile-card">该日期赛程尚未发布</div>');
+      if(selectedDate>=today && !dateRows.length){
+        qcReconcileOverviewTable(cards,
+          '<div class="profile-card">'+
+          (initialCurrentLoadError && selectedDate===initialDate
+             ? '赛程暂时无法读取，可切换日期或稍后刷新'
+             : '当日暂无赛程，请切换其他日期')+
+          '</div>');
       }else if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
@@ -3500,6 +3510,16 @@ async function loadJcFrontend(){
           window.qcOverviewKnownGuestFirstPaint
             ? qcPremiumGateHtml({loggedIn:false,isPro:false},'prediction','today')
             : '<div class="profile-card" role="status" aria-live="polite">正在确认登录状态…</div>');
+      }else if(predictionRestricted && selectedDate>today && dateRows.length){
+        // Public future fixtures may be browsed by guests, but always strip
+        // any model data. Locked predictions stay server/RLS protected.
+        const publicFutureFixtures=dateRows.map(m=>({
+          ...m,jc_model_outputs:[],_jcModelsLoaded:true,
+          _jcModelsLoading:false,_jcModelLoadFailed:false
+        }));
+        qcReconcileOverviewTable(cards,
+          jcRenderOverviewTable(publicFutureFixtures,calendarToday,'today'));
+        jcBindOverviewRows(cards);
       }else if(predictionRestricted){
         qcReconcileOverviewTable(cards,qcPremiumGateHtml(access,'prediction','today'));
       }else{
