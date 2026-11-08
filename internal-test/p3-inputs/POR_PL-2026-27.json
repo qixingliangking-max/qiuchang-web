@@ -746,6 +746,22 @@
       "away_team": "莫雷拉人",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T20:30:00Z"
+    },
+    {
+      "source_match_id": "5887676",
+      "match_id": "fotmob:5887676",
+      "home_team": "葡萄牙国民",
+      "away_team": "维塞乌学院",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T15:30:00.000Z"
+    },
+    {
+      "source_match_id": "5887678",
+      "match_id": "fotmob:5887678",
+      "home_team": "圣克拉拉",
+      "away_team": "吉维森特",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T15:30:00.000Z"
     }
   ]
 }

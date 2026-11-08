@@ -1,18 +1,29 @@
 {
   "league_code": "SWE_AS",
   "season": "2026",
-  "run_at": "2026-11-08T16:45:24.540Z",
+  "run_at": "2026-11-08T19:30:02.113Z",
   "discovered_fixtures": 240,
-  "discovered_finished": 221,
-  "in_scope_finished": 221,
+  "discovered_finished": 224,
+  "in_scope_finished": 224,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 221,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 3,
+  "added_source_match_ids": [
+    "5107653",
+    "5107657",
+    "5107659"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 221,
+  "mapped_finished": 224,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 81.8,
+  "published_blob_sha": "56230c4762a3e1a13aa11fb8d1cd9322be665fc2"
 }

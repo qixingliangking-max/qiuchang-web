@@ -1090,6 +1090,22 @@
       "away_team": "阿尔瓦塞特",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T17:30:00Z"
+    },
+    {
+      "source_match_id": "5868530",
+      "match_id": "fotmob:5868530",
+      "home_team": "赫罗纳",
+      "away_team": "阿尔梅里亚",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868535",
+      "match_id": "fotmob:5868535",
+      "home_team": "希洪竞技",
+      "away_team": "巴拉多利德",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T17:30:00.000Z"
     }
   ]
 }

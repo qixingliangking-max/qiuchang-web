@@ -634,6 +634,14 @@
       "away_team": "勒沃库森",
       "match_date": "2026-11-08",
       "kickoff_at": "2026-11-08T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881217",
+      "match_id": "fotmob:5881217",
+      "home_team": "弗赖堡",
+      "away_team": "柏林联合",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T16:30:00.000Z"
     }
   ]
 }

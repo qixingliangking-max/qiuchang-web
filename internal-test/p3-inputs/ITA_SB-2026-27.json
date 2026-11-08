@@ -866,6 +866,14 @@
       "away_team": "摩德纳",
       "match_date": "2026-11-08",
       "kickoff_at": "2026-11-08T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967141",
+      "match_id": "fotmob:5967141",
+      "home_team": "凯勒雷斯",
+      "away_team": "桑普多利亚",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T16:15:00.000Z"
     }
   ]
 }
