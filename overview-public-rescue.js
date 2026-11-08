@@ -26,7 +26,7 @@
   }
   function pending(el){
     return el && !el.dataset?.qcPublicRescue &&
-      /正在加载中|完整赛果尚在核验|读取失败|^\s*$/.test(String(el.textContent||'').trim());
+      /正在加载中|完整赛果尚在核验|^\s*$/.test(String(el.textContent||'').trim());
   }
   async function staticJSON(url){
     var res=await fetch(url,{cache:'no-cache'});
@@ -128,36 +128,6 @@
       show(el,rows,ds,'yesterday',document.getElementById('jcYesterdayMeta'));
       return;
     }
-    // A day with unfinished fixtures still has genuine, PUBLIC, verified FT/HT.
-    // Never turn missing FINAL archive into a blank yesterday review.
-    try{
-      var fixtureResult=typeof window.qcFetchLiveScheduleDate==='function'
-        ? await window.qcFetchLiveScheduleDate(ds) : null;
-      var fixtureRows=Array.isArray(fixtureResult?.data)?fixtureResult.data:null;
-      if(!fixtureRows){
-        var index=await staticJSON('data/overview/live-schedule-manifest.json');
-        var day=index?.dates?.[ds];
-        if(day && /^data\/overview\/live\/[\w.-]+\.json$/.test(day.file)){
-          fixtureRows=validRows(await staticJSON(day.file),ds,false);
-        }
-      }
-      if(fixtureRows?.length){
-        var verified=fixtureRows.filter(function(m){
-          var raw=m.raw||{};
-          return /已结束|完赛|已完成|finished|final/i.test(
-            String(m.match_status||'')+' '+String(raw.matchStatusName||'')) &&
-            /^\d{1,2}[:-]\d{1,2}$/.test(String(raw.sectionsNo999||'')) &&
-            /^\d{1,2}[:-]\d{1,2}$/.test(String(raw.sectionsNo1||''));
-        });
-        if(verified.length){
-          show(el,verified,ds,'yesterday',document.getElementById('jcYesterdayMeta'));
-          var summary=document.getElementById('jcYesterdayMeta');
-          if(summary && verified.length<fixtureRows.length)
-            summary.textContent=ds.slice(5)+' · 已完赛'+verified.length+'/'+fixtureRows.length+'场';
-          return;
-        }
-      }
-    }catch(error){ console.warn('昨日真实赛果备用读取失败',error); }
     // GitHub scheduled workflows are best-effort. If the final-day archive is
     // late, query the PUBLIC settled-history snapshot and independently verify
     // that its IDs match the full schedule. No Pro/admin/member queries.
@@ -223,12 +193,6 @@
       var review=document.getElementById('jcYesterdayCards');
       if(pending(review)) rescueHistory(addDays(ds,-1));
     },700);
-    // A long/failed app initialization must not permanently blank public
-    // yesterday scores. This retry never touches any protected prediction.
-    setTimeout(function(){
-      var review=document.getElementById('jcYesterdayCards');
-      if(pending(review)) rescueHistory(addDays(ds,-1));
-    },6500);
   }
   // This script is placed after the homepage markup. Start as soon as its
   // public placeholders exist, even while heavyweight deferred app scripts
