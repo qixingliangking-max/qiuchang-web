@@ -770,6 +770,30 @@
       "away_team": "沃尔夫斯堡",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T19:30:00Z"
+    },
+    {
+      "source_match_id": "5881717",
+      "match_id": "fotmob:5881717",
+      "home_team": "波鸿",
+      "away_team": "卡尔斯鲁厄",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881719",
+      "match_id": "fotmob:5881719",
+      "home_team": "海登海姆",
+      "away_team": "汉诺威96",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T12:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881722",
+      "match_id": "fotmob:5881722",
+      "home_team": "马格德堡",
+      "away_team": "圣保利",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T12:30:00.000Z"
     }
   ]
 }

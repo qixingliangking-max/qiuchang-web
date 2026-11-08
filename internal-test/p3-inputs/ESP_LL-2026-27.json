@@ -916,6 +916,14 @@
       "kickoff_at": "2026-11-07T20:00:00Z"
     },
     {
+      "source_match_id": "5868123",
+      "match_id": "fotmob:5868123",
+      "home_team": "埃尔切",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T13:00:00.000Z"
+    },
+    {
       "source_match_id": "5868088",
       "match_id": "fotmob:5868088",
       "home_team": "巴列卡诺",

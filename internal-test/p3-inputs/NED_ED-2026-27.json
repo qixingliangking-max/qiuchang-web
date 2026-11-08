@@ -826,6 +826,14 @@
       "away_team": "前进之鹰",
       "match_date": "2026-11-07",
       "kickoff_at": "2026-11-07T20:00:00Z"
+    },
+    {
+      "source_match_id": "5781797",
+      "match_id": "fotmob:5781797",
+      "home_team": "海伦芬",
+      "away_team": "费耶诺德",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T11:15:00.000Z"
     }
   ]
 }
