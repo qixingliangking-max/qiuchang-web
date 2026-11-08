@@ -78,9 +78,35 @@
     state[key]=Math.max(-7,Math.min(7,(state[key]||0)+direction));
     var label=document.getElementById('jcDateLabel');
     if(label){
-      label.textContent='正在准备日期切换…';
+      label.textContent='正在切换日期…';
       label.setAttribute('aria-busy','true');
     }
+    // If the big deferred bundle never attaches navigation (slow/blocked
+    // WebView), preserve the user's date taps using a normal URL transition.
+    // No protected predictions or auth flags are passed in this URL.
+    clearTimeout(state.homeFallbackTimer);
+    state.homeFallbackTimer=setTimeout(function(){
+      if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
+      try{
+        var u=new URL(location.href);
+        var initial=u.searchParams.get('date');
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(initial||'')){
+          var pieces=Object.fromEntries(new Intl.DateTimeFormat('en-US',{
+            timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'
+          }).formatToParts(new Date()).map(function(part){return [part.type,part.value]}));
+          initial=pieces.year+'-'+pieces.month+'-'+pieces.day;
+        }
+        var date=new Date(initial+'T12:00:00+08:00');
+        date.setUTCDate(date.getUTCDate()+Number(state[key]||0));
+        var ds=date.toISOString().slice(0,10);
+        if(/^\d{4}-\d{2}-\d{2}$/.test(ds)){
+          u.searchParams.set('date',ds);
+          location.assign(u.toString());
+        }
+      }catch(e){
+        if(label){label.textContent='日期切换未完成，请刷新重试';label.removeAttribute('aria-busy');}
+      }
+    },6000);
   },true);
 })();
 </script>
@@ -190,14 +216,14 @@
   </nav>
 </div>
 
-<script src="overview-public-rescue.js?v=20261029finalguard1"></script>
+<script src="overview-public-rescue.js?v=20261109partialhistory2"></script>
 <script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
 <script defer src="supabase-config.js"></script>
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
 <script defer src="home-auth-prime.js?v=20261029parallelrls4"></script>
 <script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
 <script defer src="overview-live-static.js?v=20261027manifestttl1"></script>
-<script defer src="app.js?v=20261109emptyschedulefix1"></script>
+<script defer src="app.js?v=20261109emptydayhistory2"></script>
 <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
 </body>
 </html>
