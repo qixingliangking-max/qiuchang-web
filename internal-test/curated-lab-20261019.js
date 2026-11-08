@@ -266,7 +266,57 @@ function renderHistory(){
  if(host.parentElement)host.parentElement.style.display=rows.length?'':'none';
  if(heading)heading.style.display=rows.length?'':'none';
 }
-function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
+/* Read-only plan exposure from the published qc_v2_public response.
+   Historical locked plans are never reselected or altered by this view. */
+function renderDiversity(){
+ var host=$('diversityPanel');if(!host)return;
+ var day=state.day,pack=db.selectedPlans&&db.selectedPlans[day];
+ if(day<'2026-10-23'||!pack||pack.rule!=='QCDA_INDEPENDENT_3_ANALYSTS_V2'){host.hidden=true;return;}
+ host.hidden=false;
+ var isR3Period=day>='2026-11-09';
+ $('diversityVersion').textContent=isR3Period?'V2.4-R3 · 规则生效期':'历史正式方案 · 原样保留';
+ var analysts=[
+  {name:'顾衡',entries:pack.entries||[]},
+  {name:'沈策',entries:(pack.aiSelector&&pack.aiSelector.entries)||[]},
+  {name:'陆野',entries:(pack.analystSelector&&pack.analystSelector.entries)||[]}
+ ];
+ var formats=Object.create(null),overall=Object.create(null),totalPlans=0;
+ var cards=analysts.map(function(a){
+  var usages=Object.create(null),slots=0;
+  a.entries.forEach(function(p){
+   if(!p||!Array.isArray(p.legs)||!p.legs.length)return;
+   totalPlans++;
+   var signature=p.legs.map(function(leg){
+    var match=String(leg&&leg.row&&leg.row.num||'');
+    if(match){usages[match]=(usages[match]||0)+1;overall[match]=(overall[match]||0)+1;slots++;}
+    var picks=(leg.picks||[]).map(function(o){return String(o.key||o.name||'')}).sort().join('+');
+    return match+':'+String(leg.market||'')+':'+picks;
+   }).sort().join('|');
+   var code=String(p.format||p.type||'');
+   (formats[code]||(formats[code]=[])).push(signature);
+  });
+  var unique=Object.keys(usages).length,maxRepeat=Object.keys(usages).reduce(function(n,k){return Math.max(n,usages[k])},0);
+  return '<div class="diversity-item"><span class="diversity-name">'+esc(a.name)+'</span><strong>'+
+   unique+'场 <small>/ '+slots+'个选择位</small></strong><p>'+a.entries.length+
+   '套方案 · 单场最多重复'+maxRepeat+'次</p></div>';
+ });
+ $('diversityGrid').innerHTML=cards.join('');
+ var codes=Object.keys(formats),allSame=codes.filter(function(k){return formats[k].length===3&&new Set(formats[k]).size===1}).length;
+ var shared=codes.filter(function(k){return formats[k].length>=2&&new Set(formats[k]).size<formats[k].length}).length;
+ var maxGlobal=Object.keys(overall).reduce(function(n,k){return Math.max(n,overall[k])},0);
+ var uniqueGlobal=Object.keys(overall).length;
+ if(!totalPlans){
+  $('diversityFoot').textContent='当日尚无已提交方案，分散度暂无实测值。R3自11月9日开始适用；不显示模拟数据。';
+  return;
+ }
+ var complete=totalPlans===33?'已提交33/33套':'已读取'+totalPlans+'/33套';
+ $('diversityFoot').innerHTML='<strong>'+esc(complete)+'</strong> · 三人合计覆盖'+uniqueGlobal+
+  '场 · 单场最多被使用'+maxGlobal+'次 · 同玩法重复组合'+shared+'种'+
+  (allSame?'（其中'+allSame+'种三人完全相同）':'')+'。'+
+  (isR3Period?'当前统计来自已发布方案，不能以规则生效日期代替实际分散表现。':
+     '本日为历史锁定方案；V2.4-R3从11月9日开始适用，旧方案不会事后重选。');
+}
+function renderAll(){renderTabs();renderDate();renderPlans();renderDiversity();renderHistory();if(state.open)renderDialog()}
 function calendar(){
  var y=state.month.getFullYear(),mo=state.month.getMonth(),first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate(),html='';
  $('monthLabel').textContent=y+'年'+(mo+1)+'月';
