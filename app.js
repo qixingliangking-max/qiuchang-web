@@ -3081,7 +3081,7 @@ async function loadJcFrontend(){
     // Guests see only confirmed FT+HT results. They never need the complete
     // future/pending fixture roster, so avoid fetching and merging it for
     // every initial review/date switch. Pro retains the existing full roster.
-    const pendingPublicSchedule=access.loggedIn && !archived && ds>=qcAddDays(today,-3) &&
+    const pendingPublicSchedule=!archived && ds>=qcAddDays(today,-3) &&
       typeof window.qcFetchLiveScheduleDate==='function'
       ? window.qcFetchLiveScheduleDate(ds).catch(()=>null) : null;
     const pendingPrediction=access.isPro && !archived
@@ -3109,6 +3109,9 @@ async function loadJcFrontend(){
         }catch(_){}
       }
       if(!schedule.length || (expected>0 && schedule.length<expected)) return history;
+      // Reuse public HT+FT already confirmed in the fixed roster even when
+      // yesterday's final archive is still partial or its RPC is unavailable.
+      const confirmedCount=schedule.filter(m=>jcScoreInfo(m).finished).length;
       const finishedById=new Map((history.data||[]).filter(m=>jcScoreInfo(m).finished)
         .map(m=>[String(m.id),m]));
       const rows=schedule.map(m=>{
@@ -3129,9 +3132,13 @@ async function loadJcFrontend(){
         };
       });
       return {...history,data:rows,error:null,fromHistorySnapshot:true,
-        fromCompletePublicSchedule:true};
+        finishedCount:Math.max(Number(history.finishedCount||0),confirmedCount),
+        matchCount:schedule.length,fromCompletePublicSchedule:true};
     };
-    if(!access.isPro) return access.loggedIn ? ensureCompletePublicReview() : history;
+    // No login required for genuine public finished scores. Guests still
+    // receive ONLY FT/HT rows through jcGuestFinishedReviewRows; the roster
+    // contains no protected predictions or analyst reports.
+    if(!access.isPro) return ensureCompletePublicReview();
 
     // Once yesterday's COMPLETE final history includes every locked prediction,
     // that single public static file suffices even for Pro users.
@@ -3147,12 +3154,18 @@ async function loadJcFrontend(){
     const protectedSnapshot=await (pendingPrediction || qcFetchProOverviewDate(ds));
     if(!protectedSnapshot?.data?.length) return ensureCompletePublicReview();
 
-    const finishedById=new Map((history.data||[]).map(row=>[String(row.id),row]));
+    // Never rely on a late final-archive API call for display-only FT/HT.
+    // Merge public confirmed results onto the independently authorized Pro
+    // frozen rows. Model and market fields remain frozen and unchanged.
+    const publicReview=await ensureCompletePublicReview();
+    const finishedById=new Map((publicReview.data||[])
+      .filter(m=>jcScoreInfo(m).finished)
+      .map(row=>[String(row.id),row]));
     const merged=(protectedSnapshot.data||[]).map(row=>{
       const finished=finishedById.get(String(row.id));
       return finished?preserveOverviewStaticData(finished,row):row;
     });
-    return {...history,data:merged,fromHistorySnapshot:true};
+    return {...publicReview,data:merged,error:null,fromHistorySnapshot:true};
   }
 
   function resultOrEmpty(result){
