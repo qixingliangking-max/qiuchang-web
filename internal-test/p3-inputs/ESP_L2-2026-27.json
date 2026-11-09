@@ -1097,7 +1097,7 @@
       "home_team": "赫罗纳",
       "away_team": "阿尔梅里亚",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:15:00.000Z"
+      "kickoff_at": "2026-11-08T15:15:00Z"
     },
     {
       "source_match_id": "5868535",
@@ -1105,7 +1105,23 @@
       "home_team": "希洪竞技",
       "away_team": "巴拉多利德",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T17:30:00.000Z"
+      "kickoff_at": "2026-11-08T17:30:00Z"
+    },
+    {
+      "source_match_id": "5868533",
+      "match_id": "fotmob:5868533",
+      "home_team": "拉斯帕尔马斯",
+      "away_team": "埃登斯",
+      "match_date": "2026-11-09",
+      "kickoff_at": "2026-11-09T19:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868534",
+      "match_id": "fotmob:5868534",
+      "home_team": "萨瓦德尔",
+      "away_team": "皇家社会B",
+      "match_date": "2026-11-09",
+      "kickoff_at": "2026-11-09T19:30:00.000Z"
     }
   ]
 }
