@@ -2851,7 +2851,11 @@ async function loadJcFrontend(){
   let availableDates=overviewSelectableDates;
   if(access.loggedIn){
     jcFetchAvailableDates().then(dates=>{
-      if(Array.isArray(dates) && dates.length) availableDates=dates;
+      if(Array.isArray(dates) && dates.length)
+        // A zero-fixture day is still a navigable calendar date. The public
+        // business-date index contains fixtures only, so keep the recent
+        // dates alongside it (including yesterday with 0 matches).
+        availableDates=[...new Set([...overviewSelectableDates,...dates])].sort();
     }).catch(err=>console.warn('日期索引延后读取失败',err));
   }
 
@@ -2944,7 +2948,29 @@ async function loadJcFrontend(){
     };
   }
 
+  async function qcIsVerifiedEmptyOverviewDay(ds){
+    // Public fixture identities are readable for guests and members. A clean
+    // empty response proves zero games; errors must never be interpreted as 0.
+    try{
+      const result=await window.qcSupabase.from('jc_matches')
+        .select('id').eq('business_date',ds).limit(1);
+      return !result.error && Array.isArray(result.data) && result.data.length===0;
+    }catch(error){
+      console.warn('空赛程日公开核验失败',error);
+      return false;
+    }
+  }
+
   async function fetchOverviewDatePreferred(ds){
+    // The recent public calendar includes days with no published fixture.
+    // On those days there is deliberately no frozen match archive/schedule.
+    // Check the verified zero-game fact BEFORE slow historical bootstrap
+    // paths, otherwise mobile date navigation times out and rolls back.
+    if(ds<today && ds>=overviewMinDate){
+      const manifest=qcFrozenOverviewManifestCache || await qcLoadFrozenOverviewManifest();
+      if(!manifest?.dates?.[ds] && await qcIsVerifiedEmptyOverviewDay(ds))
+        return {data:[],error:null,fromVerifiedNoFixtureDay:true};
+    }
     // When the previous-day review is already fully and authoritatively
     // settled in memory, guest/basic date arrows must not fetch the same
     // archived match list a second time (especially slow on iOS WebKit).
@@ -3040,21 +3066,9 @@ async function loadJcFrontend(){
       if(error) return {data:[],error};
       rows=qcCompleteStaticRows(data,ds);
     }
-    if(!rows && ds===today){
-      // A valid empty fixture day has no schedule snapshot. The previous
-      // behavior treated that as a transport failure, blocking date changes.
-      // Verify zero public fixture IDs before accepting a no-games day;
-      // never turn an actual API error or unpublished real games into "0".
-      try{
-        const emptyCheck=await window.qcSupabase
-          .from('jc_matches').select('id')
-          .eq('business_date',ds).limit(1);
-        if(!emptyCheck.error && Array.isArray(emptyCheck.data) &&
-           emptyCheck.data.length===0)
-          return {data:[],error:null,fromVerifiedNoFixtureDay:true};
-      }catch(error){
-        console.warn('空赛程日公开身份核验失败',error);
-      }
+    if(!rows && ds<=today && await qcIsVerifiedEmptyOverviewDay(ds)){
+      // Current AND historic genuine no-fixture days are valid dates.
+      return {data:[],error:null,fromVerifiedNoFixtureDay:true};
     }
     if(!rows && ds>today) return {data:[],error:null,fromUnpublishedFuture:true};
     if(!rows) return {data:[],error:new Error('完整静态赛程暂不可用')};
@@ -3452,7 +3466,7 @@ async function loadJcFrontend(){
     // Only show the confirmed public no-games message AFTER membership
     // verification has succeeded. Pending/failed auth retains its own status;
     // guests retain the login gate and no protected predictions are exposed.
-    const signedInEmptyDay=selectedDate===today && selectedDayVerifiedEmpty &&
+    const signedInEmptyDay=selectedDate<=today && selectedDayVerifiedEmpty &&
       dateRows.length===0 && access.loggedIn===true &&
       access.verificationPending!==true && accessDisplayPhase==='ready';
 
@@ -3514,7 +3528,8 @@ async function loadJcFrontend(){
       if(predictionShell) predictionShell.hidden=false;
       if(signedInEmptyDay){
         qcReconcileOverviewTable(cards,
-          '<div class="jc-review-empty" role="status">今日暂无竞彩赛事</div>');
+          '<div class="jc-review-empty" role="status">'+
+          (selectedDate===today?'今日暂无竞彩赛事':'当日暂无竞彩赛事')+'</div>');
       }else if(accessDisplayPhase==='unavailable'){
         // Never confuse a failed authorization request with a genuine guest.
         // A network issue never grants access to protected model content.
@@ -3708,7 +3723,7 @@ async function loadJcFrontend(){
         // A complete published prediction replaces placeholders for Pro.
         // With no locked snapshot, continue showing the static fixture table.
         // Only unavailable public fixtures have no table to display.
-        const nextPhase=selectedDayVerifiedEmpty && ds===today
+        const nextPhase=selectedDayVerifiedEmpty && ds<=today
           ? 'ready'
           : allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
           ? 'ready' : 'unavailable';
@@ -3734,7 +3749,7 @@ async function loadJcFrontend(){
       }catch(error){
         console.warn('Pro静态快照后台补齐失败，保留完整公开赛程与待生成占位',error);
         if(token===loadToken && selectedDate===ds){
-          accessDisplayPhase=selectedDayVerifiedEmpty && ds===today
+          accessDisplayPhase=selectedDayVerifiedEmpty && ds<=today
             ? 'ready'
             : allRows.some(m=>jcBusinessDate(m)===ds && qcJcIsVisibleMatch(m))
             ? 'ready' : 'unavailable';
