@@ -14,11 +14,11 @@
       "match_date": "2026-11-11",
       "match_time": "03:00:00",
       "kickoff_at": "2026-11-10T19:00:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:3",
+        "sectionsNo1": "0:1"
       },
       "_homeLogoUrl": "",
       "_awayLogoUrl": "",
@@ -35,11 +35,11 @@
       "match_date": "2026-11-11",
       "match_time": "03:30:00",
       "kickoff_at": "2026-11-10T19:30:00+00:00",
-      "match_status": "1",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "待开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "1:2",
+        "sectionsNo1": "1:1"
       },
       "_homeLogoUrl": "",
       "_awayLogoUrl": "",
