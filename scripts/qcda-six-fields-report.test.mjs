@@ -50,8 +50,8 @@ test('blocks contradictory double/single rather than silently rearranging',()=>{
 });
 test('does not invent independent single probability from the 1X2 model',()=>{
   const r=convertSixFields({...model27,'TEST单选':'胜',home_prob:67.5});
-  assert.equal(r.status,'blocked');
-  assert.match(r.errors.join(','),/TEST单选概率/);
+  assert.equal(r.status,'ready');
+  assert.equal(r.fields['单选倾向'],'胜');
 });
 test('all 17 true 2026-10-28 fixtures block unfinished data and report',()=>{
   const roster=JSON.parse(fs.readFileSync(new URL('./fixtures/20261028-roster-validation.json',import.meta.url),'utf8'));
@@ -69,9 +69,80 @@ test('four chapters / seven paragraphs and forbidden phrases enforced',()=>{
   const chapters=STANDARD.report.chapters.map(c=>({title:c.title,
     paragraphs:c.fields.map(()=> '双方近期比赛特点与人员条件是本场分析的重点。')}));
   const evidence=[{kind:'official',url:'https://example.org/test-only',seen_before_kickoff:true}];
-  assert.equal(validateReport({chapters},six,evidence).status,'ready_for_review');
+  // This generic draft has valid chapter lengths but not the exact six-pick
+  // lead-ins; the stricter gate must reject it even before forbidden words.
+  assert.equal(validateReport({chapters},six,evidence).status,'blocked');
   chapters[1].paragraphs[0]='中央数据库采集后确认模型方向。';
   const failed=validateReport({chapters},six,evidence);
   assert.equal(failed.status,'blocked');
   assert.match(failed.errors.join(','),/中央数据库/);
+});
+
+
+// 2026-11-10 regression: team-named no-draw direction and optional single %.
+test('Nov10 001 team-specific direction + no invented probability',()=>{
+  const r=convertSixFields({
+    home_team_name:'伯顿',away_team_name:'诺茨郡',
+    '主方向':'伯顿不败','官方让球保护':'让负／让胜',
+    'TEST单选':'胜','半全场':'胜/胜、平/胜',
+    '总进球':'3、2、4','TOP3比分':'21 22 20',
+    handicap_line:'-1','M7':'诺茨郡 +0.25','M8':'小2.75'
+  });
+  assert.equal(r.status,'ready',JSON.stringify(r.errors));
+  assert.deepEqual(Object.keys(r.fields),STANDARD.fields.map(f=>f.label));
+  assert.equal(r.fields['核心方向'],'胜 / 平');
+  assert.equal(r.fields['单选倾向'],'胜');
+  assert.equal(r.fields['官方让球'],'让负／让胜（-1）');
+  assert.equal(r.fields['总进球'],'3球、2球、4球');
+  assert.equal(r.fields['比分参考'],'2-1、2-2、2-0');
+  assert.equal(Object.keys(r.fields).length,6);
+});
+test('Nov10 002 away team-specific direction + untouched handicap pick order',()=>{
+  const r=convertSixFields({
+    home_team_name:'布罗姆利',away_team_name:'米尔顿凯恩斯',
+    '主方向':'米尔顿凯恩斯不败','官方让球保护':'让胜／让负',
+    'TEST单选':'负','半全场':'负/负、平/负',
+    '总进球':'3、4、2','TOP3比分':'12 22 13',handicap_line:'+1'
+  });
+  assert.equal(r.status,'ready',JSON.stringify(r.errors));
+  assert.equal(r.fields['核心方向'],'负 / 平');
+  assert.equal(r.fields['单选倾向'],'负');
+  assert.equal(r.fields['官方让球'],'让胜／让负（+1）');
+  assert.equal(r.fields['比分参考'],'1-2、2-2、1-3');
+});
+test('blocks missing verified handicap line; does not fabricate it',()=>{
+  const r=convertSixFields({
+    '主方向':'主队不败','TEST单选':'胜',
+    '官方让球':'让负／让胜','半全场':'胜/胜、平/胜',
+    '总进球':'3、2、4','TOP3比分':'21 22 20'
+  });
+  assert.equal(r.status,'blocked');
+  assert.match(r.errors.join(','),/缺少已核实官方让球数/);
+});
+test('rejects false or out-of-range probability rather than synthesizing one',()=>{
+  const bad=convertSixFields({...model27,'TEST单选':'胜',single_prob:'105'});
+  assert.equal(bad.status,'blocked');
+  assert.match(bad.errors.join(','),/超出范围/);
+});
+test('report cannot pass with wrong six-field order or wrong article prefix',()=>{
+  const six=convertSixFields(model27);
+  const values=['胜 / 平','胜｜67.5%','让胜／让负','胜/胜、平/胜',
+    '3球、2球、4球','2-1、3-1、2-0'];
+  const paragraphs=['比赛背景真实可核实。',
+    '核心方向：'+values[0]+'。主队争取优势。',
+    '单选倾向：'+values[1]+'。保留风险。',
+    '官方让球：'+values[2]+'。按原序保护。',
+    '半全场：'+values[3]+'。时间路径独立。',
+    '总进球：'+values[4]+'。各球数独立。',
+    '比分参考：'+values[5]+'。各比分独立。'];
+  const chapters=STANDARD.report.chapters.map((c,i)=>({
+    title:c.title,paragraphs:i===0?[paragraphs[0]]:paragraphs.slice(i===1?1:i===2?3:5,i===1?3:i===2?5:7)
+  }));
+  const evidence=[{kind:'official',url:'https://example.org/verified-fixture',seen_before_kickoff:true}];
+  assert.equal(validateReport({chapters},six,evidence).status,'ready_for_review');
+  chapters[3].paragraphs[1]='比分参考：2-1、2-0、3-1。悄悄调换顺序。';
+  assert.equal(validateReport({chapters},six,evidence).status,'blocked');
+  chapters[3].paragraphs[1]='比分参考：'+values[5]+'。恢复原序。';
+  chapters[2].paragraphs[0]='让球保护：'+values[2]+'。旧字段名。';
+  assert.equal(validateReport({chapters},six,evidence).status,'blocked');
 });
