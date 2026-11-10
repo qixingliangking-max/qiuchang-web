@@ -29,8 +29,14 @@ function choices(v){
   if(Array.isArray(v))return v.map(trim).filter(Boolean);
   return trim(v).split(/[、，,；;｜|]/).map(trim).filter(Boolean);
 }
-function getDirection(v){
+function getDirection(v,raw={}){
   const t=trim(v).replace(/\s+/g,'').replace(/（[^）]*）/g,'');
+  // Team-specific 不败 must be resolved against the SAME fixture, never
+  // guessed from a remembered home/away pairing.
+  const home=trim(raw.home_team_name??raw.home).replace(/\s+/g,'');
+  const away=trim(raw.away_team_name??raw.away).replace(/\s+/g,'');
+  if(home && t===home+'不败')return ['胜','平'];
+  if(away && t===away+'不败')return ['负','平'];
   if(['主队不败','主不败','胜平'].includes(t))return ['胜','平'];
   if(['客队不败','客不败','负平'].includes(t))return ['负','平'];
   if(['胜负','分胜负'].includes(t))return ['胜','负'];
@@ -70,7 +76,7 @@ export function convertSixFields(input){
     for(const f of fields)v[f.key]=readField(raw,f.key);
   }catch(e){return {status:'blocked',errors:[e.message],fields:null};}
   const errors=[];
-  const direction=getDirection(v.direction);
+  const direction=getDirection(v.direction,raw);
   if(!direction)errors.push('缺少核心方向');
   const single=getSingle(v.single);
   if(!picks.has(single.pick))errors.push('缺少TEST单选');
@@ -80,11 +86,16 @@ export function convertSixFields(input){
   // TEST probability is independent of home/draw/away model probabilities.
   let probability=single.probability;
   if(!probability){
-    const s=trim(raw.single_prob??raw.raw_input?.single_prob).replace(/%$/,'');
-    if(/^\d+(?:\.\d+)?$/.test(s))probability=s;
+    const supplied=trim(raw.single_prob??raw.raw_input?.single_prob).replace(/%$/,'');
+    if(supplied){
+      if(/^\d+(?:\.\d+)?$/.test(supplied))probability=supplied;
+      else errors.push('TEST单选概率格式无效');
+    }
   }
-  if(!probability)errors.push('缺少TEST单选概率');
-  else if(Number(probability)<0||Number(probability)>100)errors.push('TEST概率超出范围');
+  // Approved V1.3: a missing probability is NULL, not an error and
+  // NEVER an invitation to borrow home_prob/draw_prob/away_prob.
+  if(probability!==null && (Number(probability)<0||Number(probability)>100))
+    errors.push('TEST概率超出范围');
   let handicap=trim(v.handicap);
   // The official +/- goal is sometimes a separate locked raw_input field.
   // Reattach it for public display only; never recompute or reorder picks.
@@ -94,6 +105,16 @@ export function convertSixFields(input){
     else errors.push('官方让球数值无法确认');
   }
   if(!handicap)errors.push('缺少官方让球');
+  else{
+    const selected=handicap.replace(/[（(][+-]?\d+(?:\.\d+)?[)）]/g,'')
+      .split(/[／/｜|、，,]/).map(trim).filter(Boolean);
+    if(!selected.length||selected.length>3||
+       new Set(selected).size!==selected.length||
+       selected.some(x=>!['让胜','让平','让负'].includes(x)))
+      errors.push('官方让球选项格式不合法');
+    if(!/[（(][+-]?\d+(?:\.\d+)?[)）]/.test(handicap))
+      errors.push('缺少已核实官方让球数');
+  }
   const htft=getHTFT(v.htft);
   if(!htft)errors.push('缺少半全场');
   const goals=getGoals(v.goals);
@@ -136,6 +157,30 @@ export function validateReport(report,six,evidence=[]){
   for(const word of STANDARD.report.reportProhibitedWords){
     if(text.includes(word))errors.push('对外禁词：'+word);
   }
+  // Seven paragraphs MUST explain the exact six displayed selections in
+  // approved order. A four-chapter article with wrong picks is NOT valid.
+  const expected=[
+    ['核心方向',1,0,'核心方向：'],
+    ['单选倾向',1,1,'单选倾向：'],
+    ['官方让球',2,0,'官方让球：'],
+    ['半全场',2,1,'半全场：'],
+    ['总进球',3,0,'总进球：'],
+    ['比分参考',3,1,'比分参考：']
+  ];
+  const normalize=x=>trim(x).replace(/[\s／/｜|、，,]/g,'').replace(/[（(][+-]?\d+(?:\.\d+)?[)）]/g,'');
+  for(const [label,chapter,index,prefix] of expected){
+    const paragraph=trim(chapters[chapter]?.paragraphs?.[index]);
+    if(!paragraph.startsWith(prefix)){
+      errors.push(label+'段落缺少正式前缀：'+prefix);
+      continue;
+    }
+    const stated=paragraph.slice(prefix.length).split(/[。；;\n]/)[0];
+    const saved=six?.fields?.[label];
+    if(!saved || normalize(stated)!==normalize(saved))
+      errors.push(label+'正文首句与网站六项原值不一致');
+  }
+  if(chapters.flatMap(c=>c.paragraphs||[]).filter(x=>trim(x)).length!==STANDARD.report.requiredParagraphs)
+    errors.push('七段正文数量不符');
   return {status:errors.length?'blocked':'ready_for_review',errors,
     paragraphs:chapters.reduce((n,c)=>n+(c.paragraphs?.length||0),0)};
 }
