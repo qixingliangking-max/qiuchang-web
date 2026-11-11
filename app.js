@@ -662,7 +662,10 @@ function jcDisplayModelDirection(model,m){
   // the handicap-result vocabulary; show the actual protected choices directly.
   if(!jcHasOrdinaryResult(m)){
     const pick=jcCompactHandicapPick(model?.direction);
-    if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) return pick;
+    if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) {
+      const line=String(model?.raw_input?.handicap_line??'').trim();
+      return pick+(/^[+-]\d+(?:\.\d+)?$/.test(line)?'（'+line+'）':'');
+    }
   }
   return jcCompactResultPick(model?.direction,m);
 }
@@ -683,7 +686,9 @@ function jcDisplaySingleSuffix(model,m){
   const p=model?.raw_input?.single_prob;
   if(p==null || p==='') return '';
   const n=Number(p);
-  return '｜'+(Number.isFinite(n)?n.toFixed(1):String(p))+'%';
+  const decimals=String(p).split('.')[1]?.length||0;
+  const precision=Math.max(1,Math.min(2,decimals));
+  return '｜'+(Number.isFinite(n)?n.toFixed(precision):String(p))+'%';
 }
 
 function jcOverviewActualDirection(model,m,score){
