@@ -11,6 +11,11 @@ var types={direction:{label:'胜平负',desc:'胜平负组合观察。',color:'#
 var modes={balanced:'平均分配',hot:'常规优先',cold:'逆向观察',hybrid:'攻防平衡'};
 var state={day:null,type:'direction',budget:1000,mode:'balanced',month:null,open:null,origin:null,reveal:false};
 var dates=[];
+function knownDates(){
+ var persisted=Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'});
+ var indexed=Array.isArray(window.QC_CURATED_AVAILABLE_DATES)?window.QC_CURATED_AVAILABLE_DATES:[];
+ return Array.from(new Set(persisted.concat(indexed,[currentBusinessDate()]))).sort().reverse();
+}
 var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
@@ -231,14 +236,17 @@ function renderPlans(){
  if(band){
   var error=(window.QC_CURATED_DAY_ERRORS||{})[state.day];
   var cached=(window.QC_CURATED_CACHE_DATES||{})[state.day];
-  if(error&&!plans.length){
+  var fetching=(window.QC_CURATED_DAY_LOADING||{})[state.day];
+  if(fetching&&!plans.length){
+   band.textContent='正在读取该日期的历史精选方案…';
+  }else if(error&&!plans.length){
    band.innerHTML='当日方案读取失败，后台已提交记录不会消失。 <button type="button" class="curated-retry" data-retry-curated>重新读取</button>';
   }else if(cached){
    band.textContent='正在核对上次成功读取的方案，显示内容可能尚未包含最新结算。';
   }else if(!plans.length){
    band.innerHTML='本日期暂无可显示的正式方案。 <button type="button" class="curated-retry" data-retry-curated>重新读取</button>';
   }else{band.textContent='';}
-  band.style.display=(error&&!plans.length)||cached||!plans.length?'':'none';
+  band.style.display=fetching||(error&&!plans.length)||cached||!plans.length?'':'none';
  }
 }
 function renderHistory(){
@@ -283,7 +291,14 @@ function calendar(){
  $('prevMonth').disabled=current<=monthPresent[monthPresent.length-1];
  $('nextMonth').disabled=current>=monthPresent[0];
 }
-function selectDay(v){if(!dates.includes(v))return;liveAutoFollow=false;state.day=v;state.month=new Date(v+'T12:00:00');$('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');renderAll()}
+function selectDay(v){
+ if(!dates.includes(v))return;
+ liveAutoFollow=false;state.day=v;state.month=new Date(v+'T12:00:00');
+ $('calendar').hidden=true;$('dateLabel').setAttribute('aria-expanded','false');
+ if(!Object.prototype.hasOwnProperty.call(db.selectedPlans||{},v)&&window.QC_CURATED_RETRY_DAY)
+  window.QC_CURATED_RETRY_DAY(v);
+ renderAll();
+}
 function strategyDescription(mode){
  if(mode==='balanced')return '所有组合等额分配，方便比较不同选项数量与赔率结构。';
  if(mode==='hot')return '更侧重较低赔率的常规结果。';
@@ -368,7 +383,7 @@ function showRealFrozenHistoryOnly(){
 function init(){
  showRealFrozenHistoryOnly();
  all=(Array.isArray(db.matches)?db.matches:[]).filter(function(r){return score(r.ft)&&score(r.ht)&&r.mk&&r.id&&r.d});
- dates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
+ dates=knownDates();
  state.day=dates.includes(currentBusinessDate())?currentBusinessDate():dates[0];state.month=new Date(state.day+'T12:00:00');renderMetrics();attach();renderAll();document.body.classList.remove('curated-booting');if(window.QC_CURATED_INITIAL_ERROR){var band=$('infoBand');if(band){band.style.display='';band.textContent='当前精选数据暂未同步，请刷新重试；不会显示旧版方案。';}}
 }
 
@@ -378,12 +393,13 @@ Promise.resolve(window.QC_CURATED_DB_READY).then(function(){
    if(e&&e.detail&&e.detail.date===state.day)renderAll();
   });
   window.addEventListener('qc-curated-db-update',function(){
-  var nextDates=Array.from(new Set(Object.keys(db.selectedPlans||{}).filter(function(day){return day>='2026-10-19'}).concat([currentBusinessDate()]))).sort().reverse();
+  var nextDates=knownDates();
   if(!nextDates.length)return;
   var before=state.day;
   dates=nextDates;
   var today=currentBusinessDate();if(liveAutoFollow&&dates.includes(today)&&today!==before){state.day=today;state.month=new Date(state.day+'T12:00:00')}
   renderAll();
+  if(!$('calendar').hidden)calendar();
  });
 }).catch(function(){init()});
 })();
