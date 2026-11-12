@@ -3,6 +3,8 @@
 var db=window.QC_CURATED_LAB_DATA||(window.QC_CURATED_LAB_DATA={matches:[],selectedPlans:{}});
 window.QC_CURATED_DAY_ERRORS=window.QC_CURATED_DAY_ERRORS||{};
 window.QC_CURATED_CACHE_DATES=window.QC_CURATED_CACHE_DATES||{};
+window.QC_CURATED_AVAILABLE_DATES=window.QC_CURATED_AVAILABLE_DATES||[];
+window.QC_CURATED_DAY_LOADING=window.QC_CURATED_DAY_LOADING||{};
 var cachePrefix='qcda-curated-approved-v24:';
 function restoreVerifiedDay(day){
  try{
@@ -98,6 +100,15 @@ async function rpc(name,args){
 
 }
 
+async function loadAvailableDates(){
+ var dates=await rpc('qc_v2_available_dates_public',{});
+ if(!Array.isArray(dates))throw Error('Invalid history date index');
+ window.QC_CURATED_AVAILABLE_DATES=Array.from(new Set(dates.filter(function(day){
+  return typeof day==='string' && /^\d{4}-\d{2}-\d{2}$/.test(day) && day>='2026-10-22';
+ }))).sort().reverse();
+ window.dispatchEvent(new Event('qc-curated-db-update'));
+ return window.QC_CURATED_AVAILABLE_DATES;
+}
 function buildV2Entry(day,p){
  var results=Array.isArray(p.leg_results)?p.leg_results:[];
  return {id:p.id,type:p.market_group,format:p.version,gate:'',legs:(p.legs||[]).map(function(leg){
@@ -261,12 +272,40 @@ function businessDay(){
  return new Date(stamp).toISOString().slice(0,10);
 }
 var initialDay=businessDay();
+var pendingDayReads=Object.create(null);
 function fetchSelectedDay(day){
- return loadDay(day).then(function(){
+ if(pendingDayReads[day])return pendingDayReads[day];
+ window.QC_CURATED_DAY_LOADING[day]=true;
+ pendingDayReads[day]=loadDay(day).then(function(){
+  delete window.QC_CURATED_DAY_LOADING[day];delete pendingDayReads[day];
   delete window.QC_CURATED_INITIAL_ERROR;
   updated(day);
   return true;
- }).catch(function(error){updateFailed(day,error);throw error;});
+ }).catch(function(error){
+  delete window.QC_CURATED_DAY_LOADING[day];delete pendingDayReads[day];
+  updateFailed(day,error);throw error;
+ });
+ return pendingDayReads[day];
+}
+function warmHistoricalDays(available){
+ // Keep first paint fast: archive bodies hydrate only after the live view.
+ var recent=new Set(recentDays());
+ var past=available.filter(function(day){
+  return day<businessDay() && !recent.has(day)
+   && !Object.prototype.hasOwnProperty.call(db.selectedPlans||{},day);
+ }).sort().reverse();
+ var index=0,active=0;
+ function pump(){
+  while(active<2 && index<past.length){
+   (function(day){
+    active++;
+    fetchSelectedDay(day).catch(function(error){
+     console.warn('历史精选日期暂未读取',day,String(error));
+    }).then(function(){active--;setTimeout(pump,180);});
+   })(past[index++]);
+  }
+ }
+ pump();
 }
 window.QC_CURATED_RETRY_DAY=function(day){
  return fetchSelectedDay(day).catch(function(error){
@@ -283,6 +322,11 @@ window.QC_CURATED_DB_READY=cached?Promise.resolve(true):
   });},350);
  });});
 if(cached)setTimeout(function(){window.QC_CURATED_RETRY_DAY(initialDay);},120);
-window.QC_CURATED_DB_READY.then(function(){setTimeout(refresh,2500)});
+window.QC_CURATED_DB_READY.then(function(){
+ setTimeout(refresh,2500);
+ loadAvailableDates().then(function(dates){
+  setTimeout(function(){warmHistoricalDays(dates);},4000);
+ }).catch(function(error){console.warn('历史日期索引暂未读取',String(error));});
+});
 setInterval(refresh,120000);
 })();
