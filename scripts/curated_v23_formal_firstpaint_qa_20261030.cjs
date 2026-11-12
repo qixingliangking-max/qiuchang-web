@@ -6,7 +6,8 @@ const loader=fs.readFileSync(path.join(root,'curated-db-direct-20261022.js'),'ut
 const app=fs.readFileSync(path.join(root,'curated-lab-20261019.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'curated-lab-20261019.html'),'utf8');
 test('first paint waits for live data without showing embedded legacy cards',()=>{
- assert.match(loader,/window\.QC_CURATED_DB_READY=loadDay\(initialDay\)/);
+ assert.match(loader,/window\.QC_CURATED_DB_READY=cached\?Promise\.resolve\(true\):/);
+ assert.match(loader,/fetchSelectedDay\(initialDay\)\.catch/);
  assert.match(loader,/var initialDay=businessDay\(\)/);
  assert.match(html,/<body class="curated-booting">/);
  assert.match(html,/body\.curated-booting #plans/);
@@ -23,8 +24,10 @@ test('all 12 formal submitted groups are allowed and public management text is a
  for(const forbidden of ['V2.3正式精选','三组正式方案','旧版方案已作废','锁板赛事','12场独立评估']){
    assert.equal(app.includes(forbidden),false,forbidden+' must not be visible to site visitors');
  }
- assert.match(html,/curated-db-direct-20261022\.js\?v=20261030fourmarket1/);
- assert.match(html,/curated-lab-20261019\.js\?v=20261030fourmarket1/);
+ const directVersion=html.match(/curated-db-direct-20261022\.js\?v=(20\d{6}[a-z0-9]+)/);
+ const appVersion=html.match(/curated-lab-20261019\.js\?v=(20\d{6}[a-z0-9]+)/);
+ assert.ok(directVersion&&appVersion,'both scripts must have dated cache keys');
+ assert.equal(directVersion[1],appVersion[1],'data and UI script versions must stay in sync');
  for(const label of ['胜平负','半全场','总进球','比分'])
    assert.match(html,new RegExp('<strong>'+label+'</strong><span>精选方案</span>'));
 });
@@ -45,4 +48,18 @@ test('each of four tabs contains one card from every analyst',()=>{
   assert.equal(shown.length,3,type);
   assert.deepEqual(Array.from(shown,x=>x.index),[1,2,3],type);
  }
+});
+
+test('complete public history dates remain selectable beyond the recent refresh window',()=>{
+ assert.match(loader,/rpc\('qc_v2_available_dates_public'/);
+ assert.match(loader,/function warmHistoricalDays\(available\)/);
+ assert.match(app,/window\.QC_CURATED_RETRY_DAY\(v\)/);
+ const a=app.indexOf('function knownDates(){'),b=app.indexOf('\n}',a)+2;
+ assert.ok(a>=0&&b>a);
+ const context={db:{selectedPlans:{'2026-11-11':{},'2026-10-19':{}}},
+  window:{QC_CURATED_AVAILABLE_DATES:['2026-10-23','2026-11-10']},
+  currentBusinessDate:()=> '2026-11-11'};
+ vm.createContext(context);
+ vm.runInContext(app.slice(a,b),context);
+ assert.deepEqual(Array.from(context.knownDates()),['2026-11-11','2026-11-10','2026-10-23','2026-10-19']);
 });
