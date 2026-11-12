@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Publish PUBLIC post-game overview archives from final/partial history snapshots.
+"""Publish public FT/HT-only archives from score-verified fixture snapshots.
 
-The service_role key is never used. No prediction tables, model runs, or
-database writes occur; only publicly readable post-game snapshot rows are used.
+The service_role key is never used. No prediction tables, model runs, or database writes occur. Public archives
+must contain only team/fixture facts and confirmed FT/HT; no predictions.
 """
 import datetime as dt
 import json
@@ -44,15 +44,61 @@ def request_json(endpoint, *, params=None, body=None):
         return json.load(res)
 
 
+def sanitize_public_row(row):
+    """A public archive is an FT/HT scoreboard, never a model export."""
+    keys = ("id", "match_num", "business_date", "league_name", "league_short_name",
+            "home_team_name", "away_team_name", "match_date", "match_time",
+            "kickoff_at", "match_status", "_homeLogoUrl", "_awayLogoUrl")
+    clean = {k: row[k] for k in keys if k in row}
+    raw = row.get("raw") if isinstance(row.get("raw"), dict) else {}
+    clean["raw"] = {
+        "sectionsNo999": raw.get("sectionsNo999") or "",
+        "sectionsNo1": raw.get("sectionsNo1") or "",
+        "matchStatusName": raw.get("matchStatusName") or ""
+    }
+    return clean
+
+
 def public_history(start, before):
-    # The RLS policy on this table allows public post-game snapshots only.
-    return request_json("/rest/v1/jc_history_overview_snapshots", params={
-        "select": "business_date,match_count,finished_count,is_final,source,generated_at,payload",
+    """Derive only confirmed public scores from the independent fixture snapshots.
+
+    The prediction/history-snapshot table is Pro-only and MUST NOT be queried
+    with a public key. Never serialize locked_model_outputs to GitHub Pages.
+    """
+    snapshots = request_json("/rest/v1/jc_overview_schedule_snapshots", params={
+        "select": "business_date,match_count,payload",
         "business_date": f"gte.{start}",
         "order": "business_date.asc",
-        "limit": "40"
+        "limit": "100",
     })
-
+    records = []
+    final_re = re.compile(r"已结束|完赛|已完成|finished|final", re.I)
+    score_re = re.compile(r"^\\d{1,2}[:-]\\d{1,2}$")
+    for snap in snapshots or []:
+        day = str(snap.get("business_date") or "")[:10]
+        if day >= before:
+            continue
+        original = (snap.get("payload") or {}).get("rows") or []
+        count = int(snap.get("match_count") or 0)
+        if not isinstance(original, list):
+            continue
+        done = 0
+        for row in original:
+            raw = row.get("raw") if isinstance(row.get("raw"), dict) else {}
+            status = str(row.get("match_status") or "") + str(raw.get("matchStatusName") or "")
+            if (score_re.fullmatch(str(raw.get("sectionsNo999") or "")) and
+                    score_re.fullmatch(str(raw.get("sectionsNo1") or "")) and
+                    final_re.search(status)):
+                done += 1
+        is_final = count > 0 and len(original) == count and done == count
+        records.append({
+            "business_date": day, "match_count": count,
+            "finished_count": done, "is_final": is_final,
+            "source": "public_final_scores_only",
+            "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+            "payload": {"rows": [sanitize_public_row(row) for row in original]}
+        })
+    return records
 
 
 def public_schedule_ids(day):
@@ -100,8 +146,10 @@ def check_final_history(record, schedule_ids):
         if not score_re.fullmatch(ft) or not score_re.fullmatch(ht) or not re.search(
                 r"已结束|完赛|已完成|finished|final", status, re.I):
             return False, "unverified FT/HT in a supposedly FINAL history"
-        if not isinstance(row.get("jc_model_outputs"), list) or not row["jc_model_outputs"]:
-            return False, "missing frozen prediction in post-game archive"
+        if any(key in row for key in ("jc_model_outputs", "jc_match_ai_analysis",
+                                        "top_scores", "single_pick", "direction",
+                                        "htft_top1", "htft_top2", "goal_range")):
+            return False, "private prediction field in public score archive"
     return True, "complete"
 
 
@@ -131,7 +179,9 @@ def archived_final_matches(candidate, schedule_ids):
     return (count > 0 and count == int(candidate.get("finished_count") or 0)
             and len(rows) == count and schedule_ids is not None
             and {str(r.get("id") or "") for r in rows} == schedule_ids
-            and len(schedule_ids) == count)
+            and len(schedule_ids) == count
+            and not any("jc_model_outputs" in r or "single_pick" in r or
+                        "top_scores" in r or "direction" in r for r in rows))
 
 
 def embed_crest_links(rows):
@@ -218,8 +268,9 @@ def publish():
                 raise RuntimeError("Frozen match disappeared from database " + day)
             newcomers = [row for row in rows if str(row.get("id")) not in existing_by_id]
             embed_crest_links(newcomers)
-            rows = existing + newcomers
+            rows = [sanitize_public_row(r) for r in existing + newcomers]
         else:
+            rows = [sanitize_public_row(r) for r in rows]
             embed_crest_links(rows)
         if len(rows) != len(schedule_ids):
             raise RuntimeError("Append-only archive count mismatch: " + day)

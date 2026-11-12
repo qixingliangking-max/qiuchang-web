@@ -24,7 +24,6 @@ def row(number):
         "match_status": "已结束",
         "raw": {"sectionsNo999": "2:1", "sectionsNo1": "1:0",
                 "matchStatusName": "已结束"},
-        "jc_model_outputs": [{"id": "locked-%d" % number}],
         "jc_market_snapshots": [],
     }
 
@@ -66,14 +65,14 @@ class FinalArchiveSafetyTests(unittest.TestCase):
         got["payload"]["rows"][16]["id"] = "fixture-wrong"
         self.assertFalse(pub.check_final_history(got, ids(17))[0])
 
-    def test_missing_half_time_or_model_never_publishes(self):
+    def test_missing_half_time_or_leaked_private_model_never_publishes(self):
         for missing in ("ht", "model"):
             with self.subTest(missing=missing):
                 r = record("2026-10-28", 17)
                 if missing == "ht":
                     r["payload"]["rows"][0]["raw"]["sectionsNo1"] = ""
                 else:
-                    r["payload"]["rows"][0]["jc_model_outputs"] = []
+                    r["payload"]["rows"][0]["jc_model_outputs"] = [{"id": "must-not-publish"}]
                 self.assertFalse(pub.check_final_history(r, ids(17))[0])
 
     def test_unavailable_schedule_fails_closed(self):
@@ -100,7 +99,7 @@ class FinalArchiveSafetyTests(unittest.TestCase):
                 r["business_date"] = day
             # Prior frozen row deliberately differs from live DB. New FINAL
             # must preserve it as it was first written, byte-for-byte logically.
-            frozen[0]["jc_model_outputs"][0]["id"] = "original-locked-model"
+            frozen[0]["jc_model_outputs"] = [{"id": "old-private-snapshot"}]
             partial = {"version": 2, "business_date": day, "is_final": False,
                        "match_count": 16, "finished_count": 16, "rows": frozen}
             partial_file = data / (day + ".history.v2.json")
@@ -139,8 +138,7 @@ class FinalArchiveSafetyTests(unittest.TestCase):
                 self.assertEqual(final["finished_count"], 17)
                 self.assertTrue(final["is_final"])
                 self.assertEqual(len(final["rows"]), 17)
-                self.assertEqual(final["rows"][0]["jc_model_outputs"][0]["id"],
-                                 "original-locked-model")
+                self.assertNotIn("jc_model_outputs", final["rows"][0])
                 self.assertEqual(partial_file.read_text(encoding="utf-8"), partial_bytes)
 
                 before = published_path.read_bytes()
