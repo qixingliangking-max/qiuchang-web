@@ -8,15 +8,18 @@ test('legacy static archive never flashes before the live first render',()=>{
  assert.match(html,/<body class="curated-booting">/);
  assert.match(html,/body\.curated-booting #plans/);
  assert.match(html,/body\.curated-booting #tabs/);
- assert.match(html,/curated-db-direct-20261022\.js\?v=20261030fourmarket1/);
- assert.match(html,/curated-lab-20261019\.js\?v=20261030fourmarket1/);
+ assert.match(html,/curated-db-direct-20261022\.js\?v=20\d{6}[a-z0-9]+/);
+ assert.match(html,/curated-lab-20261019\.js\?v=20\d{6}[a-z0-9]+/);
  assert.match(ui,/document\.body\.classList\.remove\('curated-booting'\)/);
- assert.match(data,/window\.QC_CURATED_DB_READY=loadDay\(initialDay\)/);
+ assert.match(data,/window\.QC_CURATED_DB_READY=cached\?Promise\.resolve\(true\):/);
  assert.doesNotMatch(data,/window\.QC_CURATED_DB_READY=Promise\.resolve\(\)/);
 });
 test('first business day is awaited before archived history background refresh',()=>{
- const start=data.indexOf('window.QC_CURATED_DB_READY=loadDay(initialDay)');
- const refresh=data.indexOf('window.QC_CURATED_DB_READY.then(function(){setTimeout(refresh,0)});');
- assert.ok(start>0&&refresh>start);
+ const start=data.indexOf('window.QC_CURATED_DB_READY=cached?Promise.resolve(true):');
+ const liveFetch=data.indexOf('fetchSelectedDay(initialDay).catch',start);
+ const refresh=data.indexOf('window.QC_CURATED_DB_READY.then(function(){',start);
+ assert.ok(start>0&&liveFetch>start&&refresh>liveFetch);
+ assert.match(data,/setTimeout\(refresh,2500\)/);
+ assert.match(data,/setTimeout\(function\(\)\{warmHistoricalDays\(dates\);\},4000\)/);
  assert.match(data,/setInterval\(refresh,120000\)/);
 });
