@@ -33,33 +33,14 @@ if (source) {
       return !score.test(String(raw.sectionsNo999 || '')) ||
         !score.test(String(raw.sectionsNo1 || '')) ||
         !/(已结束|完赛|已完成|finished|final)/i.test(String(r.match_status || '') + String(raw.matchStatusName || '')) ||
-        false;
+        !Array.isArray(r.jc_model_outputs) || !r.jc_model_outputs.length;
     })) throw Error('Unsettled/incomplete public history');
-    // PUBLIC first paint is intentionally scoreboard only. NEVER pre-render
-    // locked choices, model predictions or analysis into GitHub Pages HTML.
-    const esc = value => String(value ?? '').replace(/[&<>"']/g,
-      c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const safeRows = rows.map(r => {
-      const id = String(r.id || '');
-      if(!/^[0-9a-f-]{36}$/i.test(id)) throw Error('Invalid public fixture ID');
-      const ft = String(r.raw.sectionsNo999).replace(':','-');
-      const ht = String(r.raw.sectionsNo1).replace(':','-');
-      const href = 'jc-match.html?id=' + id;
-      const time = String(r.match_time || '').slice(0,5);
-      return '<tr class="jc-overview-row" data-match-id="'+id+'" data-href="'+href+'">'+
-        '<td class="jc-num"><b>'+esc(String(r.match_num||'').slice(-3))+'</b></td>'+
-        '<td class="jc-time"><time>'+esc(time)+'</time></td>'+
-        '<td><span class="jc-overview-league">'+esc(r.league_short_name||r.league_name||'')+'</span></td>'+
-        '<td><a class="jc-review-match" href="'+href+'">'+
-          '<span>'+esc(r.home_team_name)+'</span>'+
-          '<span class="jc-score-stack"><strong class="jc-score-full">'+esc(ft)+'</strong>'+
-          '<span class="jc-score-half">半 '+esc(ht)+'</span></span>'+
-          '<span>'+esc(r.away_team_name)+'</span></a></td>'+
-        '<td class="jc-overview-market">🔒 会员专属</td></tr>';
-    }).join('');
-    markup = '<div class="jc-review-table-wrap"><table class="jc-review-table jc-overview-table">'+
-      '<thead><tr><th>编号</th><th>时间</th><th>赛事</th><th>主队 比分 客队</th>'+
-      '<th>分析</th></tr></thead><tbody>'+safeRows+'</tbody></table></div>';
+    // Use exactly the existing public hit/score renderer, not a new scoring model.
+    const ctx = {window: {QC_TEAM_LOGO_CATALOG: {}}, document: {addEventListener() {}},
+      location: {}, localStorage: {}, sessionStorage: {}, console: {log() {}, warn() {}, error() {}}};
+    vm.createContext(ctx);
+    vm.runInContext(read('app.js'), ctx, {filename: 'app.js', timeout: 5000});
+    markup = ctx.jcRenderYesterdayReview(rows, today);
     if ((markup.match(/class="jc-overview-row"/g) || []).length !== count ||
         /<script|onerror=|onload=/i.test(markup)) throw Error('Unsafe pre-rendered HTML');
   }
