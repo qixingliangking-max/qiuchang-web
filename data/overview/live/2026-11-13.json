@@ -125,11 +125,11 @@
       "match_date": "2026-11-14",
       "match_time": "01:00:00",
       "kickoff_at": "2026-11-13T17:00:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "2:1",
+        "sectionsNo1": "1:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-5794.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8265.png",
@@ -248,11 +248,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:5",
+        "sectionsNo1": "0:2"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-10150.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8536.png",
@@ -371,11 +371,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "2:1",
+        "sectionsNo1": "0:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8498.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8260.png",
@@ -494,11 +494,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "1:3",
+        "sectionsNo1": "0:2"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8205.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8570.png",
@@ -617,11 +617,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:1",
+        "sectionsNo1": "0:1"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-5792.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8261.png",
@@ -740,11 +740,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "2:2",
+        "sectionsNo1": "1:1"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-8497.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-8269.png",
@@ -863,11 +863,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "0:0",
+        "sectionsNo1": "0:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-5787.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-6717.png",
@@ -986,11 +986,11 @@
       "match_date": "2026-11-14",
       "match_time": "03:45:00",
       "kickoff_at": "2026-11-13T19:45:00+00:00",
-      "match_status": "2",
+      "match_status": "已结束",
       "raw": {
-        "matchStatusName": "已开售",
-        "sectionsNo999": "",
-        "sectionsNo1": ""
+        "matchStatusName": "已结束",
+        "sectionsNo999": "7:0",
+        "sectionsNo1": "5:0"
       },
       "_homeLogoUrl": "assets/team-logos/fotmob-6708.png",
       "_awayLogoUrl": "assets/team-logos/fotmob-6383.png",
