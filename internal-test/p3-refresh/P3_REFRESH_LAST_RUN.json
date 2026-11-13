@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-13T21:30:43.104Z",
+  "run_at": "2026-11-13T22:53:05.236Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 2,
-  "noop_leagues": 22,
+  "promoted_leagues": 1,
+  "noop_leagues": 23,
   "blocked_leagues": 0,
   "results": [
     {
@@ -65,15 +65,15 @@
     {
       "league_code": "ESP_L2",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 141,
-      "baseline_finished_matches": 140,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 141,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -318,9 +318,9 @@
       "league_code": "UEFA_UNL",
       "season": "2026/27",
       "status": "PROMOTED",
-      "discovered_finished": 113,
-      "baseline_finished_matches": 112,
-      "new_finished_matches": 1,
+      "discovered_finished": 122,
+      "baseline_finished_matches": 113,
+      "new_finished_matches": 9,
       "gate_status": "PASS",
       "collection_coverage_pct": 100,
       "unmapped_count": 0,

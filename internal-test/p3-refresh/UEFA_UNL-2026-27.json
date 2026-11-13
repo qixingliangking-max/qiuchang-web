@@ -9,7 +9,7 @@
     "9809"
   ],
   "fotmob_ccode3": "INT",
-  "baseline_finished_matches": 113,
+  "baseline_finished_matches": 122,
   "team_map": {
     "Italy": "意大利",
     "Malta": "马耳他",
@@ -66,6 +66,6 @@
     "Northern Ireland": "北爱尔兰",
     "Bosnia and Herzegovina": "波黑"
   },
-  "last_successful_refresh_at": "2026-11-13T21:30:35.350Z",
-  "last_published_blob_sha": "a2b0b3e66899832f52d18b4426da32c3e626efcd"
+  "last_successful_refresh_at": "2026-11-13T22:52:56.122Z",
+  "last_published_blob_sha": "8a1e5cad739fe17a457da32d02c14fb1e600ca2b"
 }
