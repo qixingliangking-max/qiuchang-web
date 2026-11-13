@@ -1113,7 +1113,7 @@
       "home_team": "拉斯帕尔马斯",
       "away_team": "埃登斯",
       "match_date": "2026-11-09",
-      "kickoff_at": "2026-11-09T19:30:00.000Z"
+      "kickoff_at": "2026-11-09T19:30:00Z"
     },
     {
       "source_match_id": "5868534",
@@ -1121,7 +1121,15 @@
       "home_team": "萨瓦德尔",
       "away_team": "皇家社会B",
       "match_date": "2026-11-09",
-      "kickoff_at": "2026-11-09T19:30:00.000Z"
+      "kickoff_at": "2026-11-09T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868541",
+      "match_id": "fotmob:5868541",
+      "home_team": "莱加内斯",
+      "away_team": "布尔戈斯",
+      "match_date": "2026-11-13",
+      "kickoff_at": "2026-11-13T19:30:00.000Z"
     }
   ]
 }
