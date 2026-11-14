@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-14T06:53:34.597Z",
+  "run_at": "2026-11-14T18:17:18.129Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 0,
-  "noop_leagues": 24,
+  "promoted_leagues": 3,
+  "noop_leagues": 21,
   "blocked_leagues": 0,
   "results": [
     {
@@ -65,15 +65,15 @@
     {
       "league_code": "ESP_L2",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 141,
+      "status": "PROMOTED",
+      "discovered_finished": 143,
       "baseline_finished_matches": 141,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 2,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -233,15 +233,15 @@
     {
       "league_code": "NED_EE",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 139,
+      "status": "PROMOTED",
+      "discovered_finished": 140,
       "baseline_finished_matches": 139,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -317,15 +317,15 @@
     {
       "league_code": "UEFA_UNL",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 122,
+      "status": "PROMOTED",
+      "discovered_finished": 123,
       "baseline_finished_matches": 122,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {

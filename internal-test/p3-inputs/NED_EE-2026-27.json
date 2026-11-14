@@ -1113,7 +1113,15 @@
       "home_team": "埃门",
       "away_team": "马斯特里赫特",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:45:00.000Z"
+      "kickoff_at": "2026-11-08T15:45:00Z"
+    },
+    {
+      "source_match_id": "5832945",
+      "match_id": "fotmob:5832945",
+      "home_team": "布雷达",
+      "away_team": "埃门",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T15:30:00.000Z"
     }
   ]
 }

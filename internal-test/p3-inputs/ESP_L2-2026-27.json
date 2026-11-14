@@ -1129,7 +1129,23 @@
       "home_team": "莱加内斯",
       "away_team": "布尔戈斯",
       "match_date": "2026-11-13",
-      "kickoff_at": "2026-11-13T19:30:00.000Z"
+      "kickoff_at": "2026-11-13T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868546",
+      "match_id": "fotmob:5868546",
+      "home_team": "巴拉多利德",
+      "away_team": "卡斯特利翁",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868544",
+      "match_id": "fotmob:5868544",
+      "home_team": "皇家社会B",
+      "away_team": "希洪竞技",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T15:15:00.000Z"
     }
   ]
 }
