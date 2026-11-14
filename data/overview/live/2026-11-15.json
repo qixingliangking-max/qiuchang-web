@@ -191,12 +191,12 @@
           "pool_code": "had",
           "goal_line": null,
           "outcomes": {
-            "a": 3.6,
-            "d": 3.75,
-            "h": 1.68
+            "a": 3.8,
+            "d": 3.8,
+            "h": 1.63
           },
-          "captured_at": "2026-11-13T06:00:33.655208+00:00",
-          "official_update_time": "2026-11-13 09:35:44"
+          "captured_at": "2026-11-14T05:08:59.123924+00:00",
+          "official_update_time": "2026-11-14 12:21:12"
         },
         {
           "jc_match_id": "31c46e1f-46b5-4579-b12c-7d85d3e20bdb",
@@ -213,20 +213,20 @@
             "hd": 14,
             "hh": 2.6
           },
-          "captured_at": "2026-11-13T06:00:33.655208+00:00",
-          "official_update_time": "2026-11-13 09:35:44"
+          "captured_at": "2026-11-14T05:08:59.419248+00:00",
+          "official_update_time": "2026-11-14 12:21:18"
         },
         {
           "jc_match_id": "31c46e1f-46b5-4579-b12c-7d85d3e20bdb",
           "pool_code": "hhad",
           "goal_line": "-1",
           "outcomes": {
-            "a": 1.88,
-            "d": 3.6,
-            "h": 3.05
+            "a": 1.94,
+            "d": 3.5,
+            "h": 2.96
           },
-          "captured_at": "2026-11-13T06:00:33.655208+00:00",
-          "official_update_time": "2026-11-13 09:35:43"
+          "captured_at": "2026-11-14T05:08:59.419248+00:00",
+          "official_update_time": "2026-11-14 12:21:07"
         },
         {
           "jc_match_id": "31c46e1f-46b5-4579-b12c-7d85d3e20bdb",
@@ -437,12 +437,12 @@
           "pool_code": "had",
           "goal_line": null,
           "outcomes": {
-            "a": 2.9,
-            "d": 3.7,
-            "h": 1.91
+            "a": 2.98,
+            "d": 3.75,
+            "h": 1.86
           },
-          "captured_at": "2026-11-13T06:00:33.655208+00:00",
-          "official_update_time": "2026-11-13 09:35:43"
+          "captured_at": "2026-11-14T05:08:59.419248+00:00",
+          "official_update_time": "2026-11-14 10:13:05"
         },
         {
           "jc_match_id": "cb9036f4-788d-4f20-b462-ac3cb3b5ec83",
@@ -467,12 +467,12 @@
           "pool_code": "hhad",
           "goal_line": "-1",
           "outcomes": {
-            "a": 1.65,
-            "d": 3.85,
-            "h": 3.65
+            "a": 1.68,
+            "d": 3.8,
+            "h": 3.56
           },
-          "captured_at": "2026-11-13T06:00:33.655208+00:00",
-          "official_update_time": "2026-11-13 09:35:44"
+          "captured_at": "2026-11-14T05:08:59.419248+00:00",
+          "official_update_time": "2026-11-14 10:13:12"
         },
         {
           "jc_match_id": "cb9036f4-788d-4f20-b462-ac3cb3b5ec83",
