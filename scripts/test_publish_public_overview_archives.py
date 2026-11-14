@@ -86,6 +86,36 @@ class FinalArchiveSafetyTests(unittest.TestCase):
             "rows": [row(i) for i in range(1, 17)]
         }, ids(17)))
 
+    def test_final_archive_is_stale_when_source_has_missing_market_pool(self):
+        archived = record("2026-10-28", 1)
+        source = record("2026-10-28", 1)
+        source["payload"]["rows"][0]["jc_market_snapshots"] = [
+            {"pool_code": "had", "outcomes": {"h": 1.8, "d": 3.2, "a": 4.1}}
+        ]
+        candidate = {
+            "is_final": True, "match_count": 1, "finished_count": 1,
+            "rows": archived["payload"]["rows"]
+        }
+        self.assertFalse(pub.archived_final_matches(
+            candidate, ids(1), source["payload"]["rows"]))
+
+    def test_merge_missing_market_pools_preserves_frozen_market_values(self):
+        existing = row(1)
+        existing["jc_market_snapshots"] = [
+            {"pool_code": "had", "outcomes": {"h": 1.8, "d": 3.2, "a": 4.1}}
+        ]
+        incoming = row(1)
+        incoming["jc_market_snapshots"] = [
+            {"pool_code": "had", "outcomes": {"h": 1.7, "d": 3.3, "a": 4.2}},
+            {"pool_code": "hhad", "goal_line": "-1",
+             "outcomes": {"h": 2.0, "d": 3.4, "a": 3.1}}
+        ]
+        merged = pub.merge_missing_market_snapshots(existing, incoming)
+        self.assertEqual([x["pool_code"] for x in merged], ["had", "hhad"])
+        self.assertEqual(merged[0]["outcomes"]["h"], 1.8)
+        self.assertEqual(merged[1]["goal_line"], "-1")
+        self.assertEqual(existing["jc_market_snapshots"][0]["outcomes"]["h"], 1.8)
+
     def test_partial_hidden_then_appended_to_full_final_without_rewriting_existing(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
