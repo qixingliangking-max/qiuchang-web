@@ -1002,6 +1002,46 @@
       "away_team": "威尔士",
       "match_date": "2026-11-14",
       "kickoff_at": "2026-11-14T17:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181809",
+      "match_id": "fotmob:5181809",
+      "home_team": "北爱尔兰",
+      "away_team": "乌克兰",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5181821",
+      "match_id": "fotmob:5181821",
+      "home_team": "奥地利",
+      "away_team": "爱尔兰",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5181845",
+      "match_id": "fotmob:5181845",
+      "home_team": "罗马尼亚",
+      "away_team": "波兰",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5181846",
+      "match_id": "fotmob:5181846",
+      "home_team": "瑞典",
+      "away_team": "波黑",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5181870",
+      "match_id": "fotmob:5181870",
+      "home_team": "葡萄牙",
+      "away_team": "丹麦",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T19:45:00.000Z"
     }
   ]
 }

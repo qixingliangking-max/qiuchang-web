@@ -1162,6 +1162,14 @@
       "away_team": "科尔多瓦",
       "match_date": "2026-11-14",
       "kickoff_at": "2026-11-14T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868543",
+      "match_id": "fotmob:5868543",
+      "home_team": "奥维耶多",
+      "away_team": "赫罗纳",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T20:00:00.000Z"
     }
   ]
 }
