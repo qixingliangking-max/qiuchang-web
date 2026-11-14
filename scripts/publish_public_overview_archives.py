@@ -123,15 +123,53 @@ def latest_existing_archive(day, mapped_file):
     return None
 
 
-def archived_final_matches(candidate, schedule_ids):
+def market_rows(row):
+    values = row.get("jc_market_snapshots") if isinstance(row, dict) else []
+    if not isinstance(values, list):
+        return []
+    return [item for item in values
+            if isinstance(item, dict) and item.get("pool_code")]
+
+
+def merge_missing_market_snapshots(existing, incoming):
+    """Append only missing official pre-kickoff pools; preserve frozen values."""
+    current = market_rows(existing)
+    source = market_rows(incoming)
+    merged = list(current)
+    seen = {str(item.get("pool_code")) for item in current}
+    for item in source:
+        code = str(item.get("pool_code") or "")
+        if code and code not in seen:
+            merged.append(item)
+            seen.add(code)
+    return merged
+
+
+def archived_final_matches(candidate, schedule_ids, source_rows=None):
     if not isinstance(candidate, dict) or candidate.get("is_final") is not True:
         return False
     rows = candidate.get("rows") or []
     count = int(candidate.get("match_count") or 0)
-    return (count > 0 and count == int(candidate.get("finished_count") or 0)
-            and len(rows) == count and schedule_ids is not None
-            and {str(r.get("id") or "") for r in rows} == schedule_ids
-            and len(schedule_ids) == count)
+    valid = (count > 0 and count == int(candidate.get("finished_count") or 0)
+             and len(rows) == count and schedule_ids is not None
+             and {str(r.get("id") or "") for r in rows} == schedule_ids
+             and len(schedule_ids) == count)
+    if not valid or source_rows is None:
+        return valid
+
+    # A FINAL file with the right scores/IDs can still be stale when a market
+    # pool arrived after the first archive build. Compare only required pools.
+    archived_by_id = {str(row.get("id") or ""): row for row in rows}
+    for source in source_rows:
+        match_id = str(source.get("id") or "")
+        archived = archived_by_id.get(match_id)
+        if not archived:
+            return False
+        required = {str(item.get("pool_code")) for item in market_rows(source)}
+        available = {str(item.get("pool_code")) for item in market_rows(archived)}
+        if not required.issubset(available):
+            return False
+    return True
 
 
 def embed_crest_links(rows):
@@ -200,15 +238,18 @@ def publish():
                 changed.append(day + ": hide stale/incomplete indexed archive")
             continue
 
-        checked_final_dates.append((day, schedule_ids))
-        if old_file and archived_final_matches(old, schedule_ids):
-            # A valid FINAL remains immutable, including scores and models.
+        source_rows = list((record.get("payload") or {}).get("rows") or [])
+        checked_final_dates.append((day, schedule_ids, source_rows))
+        if old_file and archived_final_matches(old, schedule_ids, source_rows):
+            # A FINAL remains immutable once its IDs, scores, models and
+            # available pre-kickoff market pools have all been published.
             continue
 
-        rows = list((record.get("payload") or {}).get("rows") or [])
+        rows = source_rows
         if old:
-            # Preserve every previously published row byte-for-byte at the
-            # object level; append only newly completed frozen matches.
+            # Preserve every previously published prediction and score.
+            # The sole allowed repair is appending missing pre-kickoff pools;
+            # newly finished fixtures are still append-only.
             existing = old.get("rows") or []
             existing_by_id = {str(row.get("id") or ""): row for row in existing}
             incoming_by_id = {str(row.get("id") or ""): row for row in rows}
@@ -216,9 +257,26 @@ def publish():
                 raise RuntimeError("Duplicate frozen match in archive " + day)
             if not set(existing_by_id).issubset(incoming_by_id):
                 raise RuntimeError("Frozen match disappeared from database " + day)
+            repaired_existing = []
+            repaired_market_rows = 0
+            for frozen in existing:
+                incoming = incoming_by_id[str(frozen.get("id") or "")]
+                merged_markets = merge_missing_market_snapshots(frozen, incoming)
+                if len(merged_markets) > len(market_rows(frozen)):
+                    repaired = dict(frozen)
+                    repaired["jc_market_snapshots"] = merged_markets
+                    repaired_existing.append(repaired)
+                    repaired_market_rows += 1
+                else:
+                    repaired_existing.append(frozen)
             newcomers = [row for row in rows if str(row.get("id")) not in existing_by_id]
             embed_crest_links(newcomers)
-            rows = existing + newcomers
+            rows = repaired_existing + newcomers
+            if repaired_market_rows:
+                changed.append(
+                    f"{day}: repaired missing pre-kickoff markets for "
+                    f"{repaired_market_rows} frozen rows"
+                )
         else:
             embed_crest_links(rows)
         if len(rows) != len(schedule_ids):
@@ -239,7 +297,7 @@ def publish():
             "finished_count": len(rows),
             "rows": rows,
         }
-        if not archived_final_matches(published, schedule_ids):
+        if not archived_final_matches(published, schedule_ids, rows):
             raise RuntimeError("Final archive integrity failed: " + day)
         (ROOT / relative).write_text(
             json.dumps(published, ensure_ascii=False, separators=(",", ":")),
@@ -250,12 +308,12 @@ def publish():
 
     # Do not report success if the database was FINAL but the generated public
     # index is stale/incomplete. GitHub will retry on its next scheduled/event run.
-    for day, schedule_ids in checked_final_dates:
+    for day, schedule_ids, source_rows in checked_final_dates:
         source = dates.get(day)
         if not source or not (ROOT / source).is_file():
             raise RuntimeError("FINAL database but public archive absent: " + day)
         archive = json.loads((ROOT / source).read_text(encoding="utf-8"))
-        if not archived_final_matches(archive, schedule_ids):
+        if not archived_final_matches(archive, schedule_ids, source_rows):
             raise RuntimeError("FINAL database/public archive mismatch: " + day)
 
     if changed:
