@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-15T00:12:26.543Z",
+  "run_at": "2026-11-15T02:48:54.480Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 1,
@@ -24,8 +24,8 @@
       "league_code": "BRA_SA",
       "season": "2026",
       "status": "PROMOTED",
-      "discovered_finished": 340,
-      "baseline_finished_matches": 339,
+      "discovered_finished": 341,
+      "baseline_finished_matches": 340,
       "new_finished_matches": 1,
       "gate_status": "PASS",
       "collection_coverage_pct": 100,

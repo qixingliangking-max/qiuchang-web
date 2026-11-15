@@ -2722,6 +2722,14 @@
       "away_team": "米内罗竞技",
       "match_date": "2026-11-14",
       "kickoff_at": "2026-11-14T21:30:00Z"
+    },
+    {
+      "source_match_id": "5103573",
+      "match_id": "fotmob:5103573",
+      "home_team": "沙佩科恩斯",
+      "away_team": "瓦斯科达伽马",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T23:30:00Z"
     }
   ]
 }
