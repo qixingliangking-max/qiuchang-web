@@ -1186,6 +1186,22 @@
       "away_team": "拉斯帕尔马斯",
       "match_date": "2026-11-15",
       "kickoff_at": "2026-11-15T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868538",
+      "match_id": "fotmob:5868538",
+      "home_team": "埃瓦尔",
+      "away_team": "加的斯",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868539",
+      "match_id": "fotmob:5868539",
+      "home_team": "埃登斯",
+      "away_team": "萨瓦德尔",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T17:30:00.000Z"
     }
   ]
 }
