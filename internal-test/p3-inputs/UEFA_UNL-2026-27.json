@@ -985,7 +985,7 @@
       "home_team": "科索沃",
       "away_team": "以色列",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T14:00:00.000Z"
+      "kickoff_at": "2026-11-14T14:00:00Z"
     },
     {
       "source_match_id": "5181808",
@@ -993,7 +993,7 @@
       "home_team": "格鲁吉亚",
       "away_team": "匈牙利",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T17:00:00.000Z"
+      "kickoff_at": "2026-11-14T17:00:00Z"
     },
     {
       "source_match_id": "5181869",
@@ -1001,7 +1001,7 @@
       "home_team": "挪威",
       "away_team": "威尔士",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T17:00:00.000Z"
+      "kickoff_at": "2026-11-14T17:00:00Z"
     },
     {
       "source_match_id": "5181809",
@@ -1009,7 +1009,7 @@
       "home_team": "北爱尔兰",
       "away_team": "乌克兰",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T19:45:00.000Z"
+      "kickoff_at": "2026-11-14T19:45:00Z"
     },
     {
       "source_match_id": "5181821",
@@ -1017,7 +1017,7 @@
       "home_team": "奥地利",
       "away_team": "爱尔兰",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T19:45:00.000Z"
+      "kickoff_at": "2026-11-14T19:45:00Z"
     },
     {
       "source_match_id": "5181845",
@@ -1025,7 +1025,7 @@
       "home_team": "罗马尼亚",
       "away_team": "波兰",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T19:45:00.000Z"
+      "kickoff_at": "2026-11-14T19:45:00Z"
     },
     {
       "source_match_id": "5181846",
@@ -1033,7 +1033,7 @@
       "home_team": "瑞典",
       "away_team": "波黑",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T19:45:00.000Z"
+      "kickoff_at": "2026-11-14T19:45:00Z"
     },
     {
       "source_match_id": "5181870",
@@ -1041,7 +1041,23 @@
       "home_team": "葡萄牙",
       "away_team": "丹麦",
       "match_date": "2026-11-14",
-      "kickoff_at": "2026-11-14T19:45:00.000Z"
+      "kickoff_at": "2026-11-14T19:45:00Z"
+    },
+    {
+      "source_match_id": "5181931",
+      "match_id": "fotmob:5181931",
+      "home_team": "塞浦路斯",
+      "away_team": "黑山",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5181932",
+      "match_id": "fotmob:5181932",
+      "home_team": "拉脱维亚",
+      "away_team": "亚美尼亚",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T14:00:00.000Z"
     }
   ]
 }
