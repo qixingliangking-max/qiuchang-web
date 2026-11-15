@@ -2714,6 +2714,14 @@
       "away_team": "弗鲁米嫩塞",
       "match_date": "2026-11-06",
       "kickoff_at": "2026-11-06T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103708",
+      "match_id": "fotmob:5103708",
+      "home_team": "米拉索尔",
+      "away_team": "米内罗竞技",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T21:30:00Z"
     }
   ]
 }
