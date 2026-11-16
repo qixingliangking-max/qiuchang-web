@@ -27,3 +27,5 @@ jobs:
         env:
           NODE_PATH: /tmp/qcda-full-click/node_modules
         run: node scripts/full_site_click_audit_20261024.cjs
+
+# 2026-11-16 isolated branch run: read-only live-site click latency measurement.
