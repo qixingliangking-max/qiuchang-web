@@ -15,6 +15,7 @@ on:
     # Off-peak: check for new fixture assets, NOT to update match scores.
     - cron: '19 0-2,12-23 * * *'
   push:
+    branches: [main]
     paths:
       - 'scripts/cache_static_team_logos.py'
       - 'app.js'
