@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "business_date": "2026-11-18",
+  "match_count": 4,
+  "rows": [
+    {
+      "id": "d029c115-4463-4b23-8c6b-9fe1933fc139",
+      "match_num": "周三001",
+      "business_date": "2026-11-18",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "科里蒂巴",
+      "away_team_name": "桑托斯",
+      "match_date": "2026-11-19",
+      "match_time": "06:30:00",
+      "kickoff_at": "2026-11-18T22:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9767.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8514.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "bbf32b4c-c0ea-4dec-9e5d-b501c9b7752f",
+      "match_num": "周三002",
+      "business_date": "2026-11-18",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "弗拉门戈",
+      "away_team_name": "巴拉纳竞技",
+      "match_date": "2026-11-19",
+      "match_time": "07:30:00",
+      "kickoff_at": "2026-11-18T23:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9770.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10273.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d498822a-0322-45d4-b3ec-35613e4e23a9",
+      "match_num": "周三003",
+      "business_date": "2026-11-18",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "科林蒂安",
+      "away_team_name": "博塔弗戈",
+      "match_date": "2026-11-19",
+      "match_time": "08:30:00",
+      "kickoff_at": "2026-11-19T00:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9808.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8517.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "685f99cf-6f63-473a-97bd-d468f07978e4",
+      "match_num": "周三004",
+      "business_date": "2026-11-18",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "格雷米奥",
+      "away_team_name": "巴伊亚",
+      "match_date": "2026-11-19",
+      "match_time": "08:30:00",
+      "kickoff_at": "2026-11-19T00:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9769.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-7877.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
