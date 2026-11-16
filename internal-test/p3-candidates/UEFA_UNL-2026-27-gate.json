@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 143,
-  "collected_matches": 143,
+  "input_matches": 148,
+  "collected_matches": 148,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 54,
-  "aggregate_players": 1732,
+  "aggregate_players": 1740,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -66,7 +66,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "北马其顿",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -91,7 +91,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "塞尔维亚",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -116,12 +116,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "希腊",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "德国",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -156,7 +156,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "斯洛文尼亚",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -206,7 +206,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "瑞士",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -216,7 +216,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "直布罗陀",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -241,7 +241,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "苏格兰",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -251,7 +251,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "荷兰",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -276,7 +276,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "马耳他",
-      "matches": 3
+      "matches": 4
     },
     {
       "type": "LIMITED_SAMPLE",
