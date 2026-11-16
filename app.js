@@ -2903,6 +2903,26 @@ async function loadJcFrontend(){
   let modelsLoaded=false;
   let loadToken=0;
 
+  // Warm only the nearest immutable public history files after first paint.
+  // This is deliberately bounded to adjacent dates (never a bulk archive load),
+  // and it never prefetches Pro predictions, AI reports, odds, or live rows.
+  const overviewWarmRequested=new Set();
+  function warmOverviewHistoryNeighbors(ds){
+    if(!isValidOverviewDate(ds) || ds>today || overviewWarmRequested.has(ds)) return;
+    const dates=[-1,1,-2,2].map(offset=>qcAddDays(ds,offset))
+      .filter(candidate=>candidate<today &&
+        (access.loggedIn || isOverviewDateAllowed(candidate)));
+    if(!dates.length) return;
+    overviewWarmRequested.add(ds);
+    const warm=()=>{
+      if(selectedDate!==ds) return;
+      qcPrimeFrozenOverviewDates(dates).catch(()=>{});
+    };
+    if(typeof window.requestIdleCallback==='function')
+      window.requestIdleCallback(warm,{timeout:120});
+    else setTimeout(warm,60);
+  }
+
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
   const next=$('#jcNextDate');
@@ -3420,6 +3440,7 @@ async function loadJcFrontend(){
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
     if(token!==loadToken || selectedDate!==ds) return;
     render();
+    warmOverviewHistoryNeighbors(ds);
 
     if(!readyReview){
       // Incremental review completion only repaints the public history area.
@@ -3625,6 +3646,7 @@ async function loadJcFrontend(){
   // Display complete authorized snapshots immediately, never hydrate by match.
   render();
   if(initialToken!==loadToken) return;
+  warmOverviewHistoryNeighbors(initialDate);
   // Keep the existing previous-day skeleton (or a complete cached history)
   // until the separate review request has finished. Do not flash 4–6 rows.
   previousReadyPromise.then(result=>{
