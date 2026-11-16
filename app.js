@@ -2781,21 +2781,6 @@ async function loadJcFrontend(){
   const initialDate=access.loggedIn
     ? candidateDate
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
-
-  // Prime just one extra immutable public archive (two days behind the
-  // selected day). The previous-day review is already loaded separately.
-  // This starts beside the initial fetch, never blocks first paint, and never
-  // requests protected Pro models, odds, reports, or live match rows.
-  const overviewWarmRequested=new Set();
-  function warmOverviewPreviousArchive(ds){
-    if(!isValidOverviewDate(ds) || overviewWarmRequested.has(ds)) return;
-    const target=qcAddDays(ds,-2);
-    if(target>=today || (!access.loggedIn && !isOverviewDateAllowed(target))) return;
-    overviewWarmRequested.add(ds);
-    qcPrimeFrozenOverviewDates([target]).catch(()=>{});
-  }
-  warmOverviewPreviousArchive(initialDate);
-
   // Date is public metadata: paint it before waiting for ANY network fetch.
   const initialDateLabel=$('#jcDateLabel');
   if(initialDateLabel) initialDateLabel.textContent=qcDateLabel(initialDate);
@@ -3387,10 +3372,20 @@ async function loadJcFrontend(){
         previousValue=result;
         return result;
       });
+    // The initial previous-day review is already being resolved in parallel
+    // with first paint. Reuse that exact authorized promise when the user
+    // immediately switches to it; avoid a second manifest/empty-day lookup.
+    const selectedDayPromise=ds===initialPrevDate
+      ? previousReadyPromise.then(result=>{
+          if(result && !result.error && !result.embeddedInHtml &&
+             Array.isArray(result.data) && result.data.length) return result;
+          return fetchOverviewDateReady(ds);
+        })
+      : fetchOverviewDateReady(ds);
     let timer, nextCurrent;
     try{
       nextCurrent=await Promise.race([
-        fetchOverviewDateReady(ds),
+        selectedDayPromise,
         new Promise(resolve=>{
           timer=setTimeout(()=>resolve({
             data:[],error:new Error('overview_date_timeout')
@@ -3435,7 +3430,6 @@ async function loadJcFrontend(){
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
     if(token!==loadToken || selectedDate!==ds) return;
     render();
-    warmOverviewPreviousArchive(ds);
 
     if(!readyReview){
       // Incremental review completion only repaints the public history area.
