@@ -2781,6 +2781,21 @@ async function loadJcFrontend(){
   const initialDate=access.loggedIn
     ? candidateDate
     : (isOverviewDateAllowed(candidateDate)?candidateDate:initialToday);
+
+  // Prime just one extra immutable public archive (two days behind the
+  // selected day). The previous-day review is already loaded separately.
+  // This starts beside the initial fetch, never blocks first paint, and never
+  // requests protected Pro models, odds, reports, or live match rows.
+  const overviewWarmRequested=new Set();
+  function warmOverviewPreviousArchive(ds){
+    if(!isValidOverviewDate(ds) || overviewWarmRequested.has(ds)) return;
+    const target=qcAddDays(ds,-2);
+    if(target>=today || (!access.loggedIn && !isOverviewDateAllowed(target))) return;
+    overviewWarmRequested.add(ds);
+    qcPrimeFrozenOverviewDates([target]).catch(()=>{});
+  }
+  warmOverviewPreviousArchive(initialDate);
+
   // Date is public metadata: paint it before waiting for ANY network fetch.
   const initialDateLabel=$('#jcDateLabel');
   if(initialDateLabel) initialDateLabel.textContent=qcDateLabel(initialDate);
@@ -2902,26 +2917,6 @@ async function loadJcFrontend(){
     Array.isArray(currentResult.data) && currentResult.data.length===0);
   let modelsLoaded=false;
   let loadToken=0;
-
-  // Warm only the nearest immutable public history files after first paint.
-  // This is deliberately bounded to adjacent dates (never a bulk archive load),
-  // and it never prefetches Pro predictions, AI reports, odds, or live rows.
-  const overviewWarmRequested=new Set();
-  function warmOverviewHistoryNeighbors(ds){
-    if(!isValidOverviewDate(ds) || ds>today || overviewWarmRequested.has(ds)) return;
-    const dates=[-1,1,-2,2].map(offset=>qcAddDays(ds,offset))
-      .filter(candidate=>candidate<today &&
-        (access.loggedIn || isOverviewDateAllowed(candidate)));
-    if(!dates.length) return;
-    overviewWarmRequested.add(ds);
-    const warm=()=>{
-      if(selectedDate!==ds) return;
-      qcPrimeFrozenOverviewDates(dates).catch(()=>{});
-    };
-    if(typeof window.requestIdleCallback==='function')
-      window.requestIdleCallback(warm,{timeout:120});
-    else setTimeout(warm,60);
-  }
 
   const label=$('#jcDateLabel');
   const prev=$('#jcPrevDate');
@@ -3440,7 +3435,7 @@ async function loadJcFrontend(){
     if(ds===today) todayPredictionCount=(nextCurrent.data||[]).filter(qcJcIsVisibleMatch).length;
     if(token!==loadToken || selectedDate!==ds) return;
     render();
-    warmOverviewHistoryNeighbors(ds);
+    warmOverviewPreviousArchive(ds);
 
     if(!readyReview){
       // Incremental review completion only repaints the public history area.
@@ -3646,7 +3641,6 @@ async function loadJcFrontend(){
   // Display complete authorized snapshots immediately, never hydrate by match.
   render();
   if(initialToken!==loadToken) return;
-  warmOverviewHistoryNeighbors(initialDate);
   // Keep the existing previous-day skeleton (or a complete cached history)
   // until the separate review request has finished. Do not flash 4–6 rows.
   previousReadyPromise.then(result=>{
