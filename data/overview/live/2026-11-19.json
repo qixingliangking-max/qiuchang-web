@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "business_date": "2026-11-19",
+  "match_count": 4,
+  "rows": [
+    {
+      "id": "5df124c4-9875-46cc-aefd-f0a879e9397d",
+      "match_num": "周四001",
+      "business_date": "2026-11-19",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "维多利亚",
+      "away_team_name": "布拉干蒂诺RB",
+      "match_date": "2026-11-20",
+      "match_time": "06:30:00",
+      "kickoff_at": "2026-11-19T22:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-7733.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-109705.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "00fa5bae-997f-4cb5-b197-6e84a14e034b",
+      "match_num": "周四002",
+      "business_date": "2026-11-19",
+      "league_name": "巴甲",
+      "league_short_name": "巴甲",
+      "home_team_name": "圣保罗",
+      "away_team_name": "弗鲁米嫩塞",
+      "match_date": "2026-11-20",
+      "match_time": "08:30:00",
+      "kickoff_at": "2026-11-20T00:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10277.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9863.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "0ce17560-7178-49a1-92cd-cd7f5c9ba6b6",
+      "match_num": "周四003",
+      "business_date": "2026-11-19",
+      "league_name": "美职",
+      "league_short_name": "美职",
+      "home_team_name": "奥兰多城",
+      "away_team_name": "辛辛那提FC",
+      "match_date": "2026-11-20",
+      "match_time": "08:30:00",
+      "kickoff_at": "2026-11-20T00:30:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-267810.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-722265.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "1e6073e9-45e3-4029-be46-e2866c025069",
+      "match_num": "周四004",
+      "business_date": "2026-11-19",
+      "league_name": "美职",
+      "league_short_name": "美职",
+      "home_team_name": "西雅图海湾人",
+      "away_team_name": "皇家盐湖城",
+      "match_date": "2026-11-20",
+      "match_time": "11:00:00",
+      "kickoff_at": "2026-11-20T03:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-130394.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-6606.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
