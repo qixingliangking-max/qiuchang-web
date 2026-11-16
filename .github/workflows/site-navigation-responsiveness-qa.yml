@@ -110,3 +110,5 @@ jobs:
             console.log('QCDA_NAVIGATION_PASS='+results.length);
           })().catch(e=>{console.error(e.stack||String(e));process.exit(1)});
           JS
+
+# 2026-11-16 isolated branch run: read-only live-site click latency measurement.
