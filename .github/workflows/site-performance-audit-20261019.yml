@@ -40,3 +40,5 @@ jobs:
           path: .github/reports/production-perf-20261019.json
           if-no-files-found: warn
           retention-days: 14
+
+# 2026-11-16 isolated branch run: read-only live-site click latency measurement.
