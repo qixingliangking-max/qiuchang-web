@@ -1,7 +1,7 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-16T07:03:02.775Z",
+  "run_at": "2026-11-16T20:43:59.346Z",
   "discovered_fixtures": 380,
   "discovered_finished": 110,
   "in_scope_finished": 110,
@@ -10,9 +10,99 @@
   "baseline_finished_matches": 110,
   "new_finished_matches": 0,
   "added_source_match_ids": [],
-  "removed_source_match_ids": [],
-  "mapped_finished": 110,
-  "unmapped_count": 0,
-  "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "removed_source_match_ids": [
+    "5967044",
+    "5967051",
+    "5967063",
+    "5967074",
+    "5967088",
+    "5967095",
+    "5967100",
+    "5967113",
+    "5967125",
+    "5967135",
+    "5967145"
+  ],
+  "mapped_finished": 99,
+  "unmapped_count": 11,
+  "unmapped": [
+    {
+      "source_match_id": "1000024295",
+      "home_source": "Vicenza",
+      "away_source": "Catanzaro",
+      "home_mapped": null,
+      "away_mapped": "卡坦扎罗"
+    },
+    {
+      "source_match_id": "1000024296",
+      "home_source": "Avellino",
+      "away_source": "Vicenza",
+      "home_mapped": "阿维利诺",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024298",
+      "home_source": "Virtus Entella",
+      "away_source": "Vicenza",
+      "home_mapped": "恩特拉",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024299",
+      "home_source": "Vicenza",
+      "away_source": "Juve Stabia",
+      "home_mapped": null,
+      "away_mapped": "史泰比亚"
+    },
+    {
+      "source_match_id": "1000024300",
+      "home_source": "Hellas Verona",
+      "away_source": "Vicenza",
+      "home_mapped": "维罗纳",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024301",
+      "home_source": "Vicenza",
+      "away_source": "Pisa",
+      "home_mapped": null,
+      "away_mapped": "比萨"
+    },
+    {
+      "source_match_id": "1000024303",
+      "home_source": "Benevento",
+      "away_source": "Vicenza",
+      "home_mapped": "贝内文托",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024304",
+      "home_source": "Empoli",
+      "away_source": "Vicenza",
+      "home_mapped": "恩波利",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024305",
+      "home_source": "Vicenza",
+      "away_source": "Modena",
+      "home_mapped": null,
+      "away_mapped": "摩德纳"
+    },
+    {
+      "source_match_id": "1000024307",
+      "home_source": "Palermo",
+      "away_source": "Vicenza",
+      "home_mapped": "巴勒莫",
+      "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024308",
+      "home_source": "Vicenza",
+      "away_source": "Cremonese",
+      "home_mapped": null,
+      "away_mapped": "克雷莫纳"
+    }
+  ],
+  "status": "BLOCKED_UNMAPPED_TEAM"
 }
