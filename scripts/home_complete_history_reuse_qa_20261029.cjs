@@ -11,7 +11,9 @@ async function check({pro=false,rows=makeRows(),count=2,finishedCount=2,final=tr
  const calls={frozen:0,review:0};
  const history=new Map([[day,{data:rows,matchCount:count,finishedCount,isFinal:final}]]);
  const frozen={data:[{id:'frozen'}],error:null,historyFinal:true};
- const context={today,access:{isPro:pro,loggedIn:pro},qcHistoryOverviewRowsCache:history,
+ const context={today,overviewMinDate:'2026-10-26',access:{isPro:pro,loggedIn:pro},
+   qcFrozenOverviewManifestCache:{dates:{[day]:'data/overview/2026-10-28.json'}},
+   qcHistoryOverviewRowsCache:history,
    jcBusinessDate:r=>r.business_date,jcScoreInfo:r=>({finished:Boolean(r.finished)}),
    async qcFetchFrozenOverviewDate(){calls.frozen++;return frozen;},
    async fetchHistoryReviewDateReady(){calls.review++;return {data:[],error:null};},

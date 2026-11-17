@@ -89,6 +89,6 @@ test('homepage removes only three redundant script tags, retains safe real data 
   }else{
     assert.match(html,/昨日完整赛果尚在核验|昨日赛果/);
   }
- assert.match(html,/app\.js\?v=20261030sixfields2/);
+ assert.match(html,/app\.js\?v=20261117navcache1/);
  assert.doesNotMatch(html,/src="[^"]*admin-home\.js/);
 });
