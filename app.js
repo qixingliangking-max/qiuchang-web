@@ -2663,6 +2663,19 @@ async function loadJcFrontend(){
     ? Promise.resolve(embeddedYesterday)
     : qcFetchHistoryOverviewDate(candidatePreviousDate);
 
+  // Warm only the one immutable public archive already embedded in today's review.
+  // Start in parallel with the current-day bootstrap, without awaiting it or
+  // delaying first paint. This gives iOS WebKit a head start on the cold archive.
+  // No adjacent dates, live scores, or protected prediction data are prefetched.
+  if(bakedYesterdayReady && !navigator.connection?.saveData){
+    const warmPreviousArchive=()=>qcPrimeFrozenOverviewDates([candidatePreviousDate]).catch(()=>{});
+    if(typeof window.requestIdleCallback==='function'){
+      window.requestIdleCallback(warmPreviousArchive,{timeout:250});
+    }else{
+      setTimeout(warmPreviousArchive,80);
+    }
+  }
+
   // A detail link already has its PUBLIC fixture identity on this page.
   // Transfer only basic fixture/score/crest fields, never model or AI data.
   // This lets both 今日速览 and 昨日回看 skip re-querying jc_matches on click.
@@ -3640,18 +3653,7 @@ async function loadJcFrontend(){
   });
   refreshOverviewDynamicState(selectedDate,initialToken)
     .catch(err=>console.warn('速览动态比分补充失败',err));
-  // Warm only the one public archive already embedded in today's review.
-  // This runs after the first render and lets the first date-arrow tap reuse
-  // the immutable snapshot instead of waiting for a cold manifest/archive read.
-  // It does not fetch adjacent dates, live scores, or protected prediction data.
-  if(initialDate===today && bakedYesterdayReady && !navigator.connection?.saveData){
-    const warmPreviousArchive=()=>qcPrimeFrozenOverviewDates([candidatePreviousDate]).catch(()=>{});
-    if(typeof window.requestIdleCallback==='function'){
-      window.requestIdleCallback(warmPreviousArchive,{timeout:1200});
-    }else{
-      setTimeout(warmPreviousArchive,350);
-    }
-  }
+
 
   async function refreshOverviewLive(){
     if(document.hidden) return;
