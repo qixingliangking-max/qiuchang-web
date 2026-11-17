@@ -54,12 +54,12 @@
       "quality_tier": "LIMITED",
       "teams": 54,
       "published_path": "internal-test/p3-data/UEFA_UNL-2026-27.json",
-      "blob_sha": "89b24d145d8c054dac6c9f999f2bc4a030eb2133",
+      "blob_sha": "232d26b1082282413083619abf22e3b00583a053",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UNL-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-11-16T22:19:00.266Z",
-      "finished_matches": 148,
+      "last_incremental_refresh_at": "2026-11-17T23:04:06.026Z",
+      "finished_matches": 156,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
