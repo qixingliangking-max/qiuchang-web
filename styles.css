@@ -5657,3 +5657,48 @@ button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
     font-size:9px!important; white-space:nowrap!important;
   }
 }
+
+/* 2026-11-17 Android in-app WebView: readable overview without affecting iOS or access controls.
+   Keep seven table columns, preserve all prediction content and existing click behavior. */
+@media (max-width:760px){
+  html.qc-android-overview{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  html.qc-android-overview .qc-overview-page .jc-review-table th{
+    height:40px!important;font-size:9px!important;letter-spacing:-.15px!important;
+  }
+  html.qc-android-overview .qc-overview-page .jc-review-table td{
+    height:64px!important;font-size:11px!important;padding:7px 1px!important;line-height:1.2!important;
+  }
+  html.qc-android-overview .qc-overview-page .jc-overview-table th:nth-child(3),
+  html.qc-android-overview .qc-overview-page .jc-overview-table td:nth-child(3){width:11%!important;}
+  html.qc-android-overview .qc-overview-page .jc-overview-table th:nth-child(4),
+  html.qc-android-overview .qc-overview-page .jc-overview-table td:nth-child(4){width:39%!important;}
+  html.qc-android-overview .qc-overview-page .jc-overview-table th:nth-child(7),
+  html.qc-android-overview .qc-overview-page .jc-overview-table td:nth-child(7){width:9%!important;}
+  html.qc-android-overview .qc-overview-page .jc-num b{font-size:12px!important;}
+  html.qc-android-overview .qc-overview-page .jc-time time{font-size:11px!important;}
+  html.qc-android-overview .qc-overview-page .jc-overview-league{
+    font-size:10px!important;letter-spacing:0!important;
+  }
+  html.qc-android-overview .qc-overview-page .jc-review-match>span:first-child,
+  html.qc-android-overview .qc-overview-page .jc-review-match>span:last-child{
+    font-size:11px!important;letter-spacing:-.25px!important;line-height:1.15!important;
+    white-space:nowrap!important;overflow:hidden!important;
+  }
+  html.qc-android-overview .qc-overview-page .jc-score-full{font-size:15px!important;}
+  html.qc-android-overview .qc-overview-page .jc-score-half{font-size:9px!important;}
+  html.qc-android-overview .qc-overview-page .jc-goal-choices,
+  html.qc-android-overview .qc-overview-page .jc-goal-choices span,
+  html.qc-android-overview .qc-overview-page .jc-choice-stack,
+  html.qc-android-overview .qc-overview-page .jc-choice-stack span{font-size:11px!important;}
+  html.qc-android-overview .qc-overview-page .jc-choice-inline,
+  html.qc-android-overview .qc-overview-page .jc-choice-inline .jc-choice-primary,
+  html.qc-android-overview .qc-overview-page .jc-choice-inline .jc-choice-secondary,
+  html.qc-android-overview .qc-overview-page .jc-choice-inline .jc-choice-sep{
+    font-size:10px!important;letter-spacing:-.2px!important;
+  }
+  html.qc-android-overview .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-primary,
+  html.qc-android-overview .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-secondary,
+  html.qc-android-overview .qc-overview-page .jc-overview-market .jc-choice-inline.jc-handicap-inline .jc-choice-sep{
+    font-size:9.5px!important;white-space:nowrap!important;
+  }
+}
