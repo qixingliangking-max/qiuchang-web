@@ -3640,8 +3640,18 @@ async function loadJcFrontend(){
   });
   refreshOverviewDynamicState(selectedDate,initialToken)
     .catch(err=>console.warn('速览动态比分补充失败',err));
-  // Do not prefetch adjacent dates on initial load; they are requested only
-  // when the user changes the date.
+  // Warm only the one public archive already embedded in today's review.
+  // This runs after the first render and lets the first date-arrow tap reuse
+  // the immutable snapshot instead of waiting for a cold manifest/archive read.
+  // It does not fetch adjacent dates, live scores, or protected prediction data.
+  if(initialDate===today && bakedYesterdayReady && !navigator.connection?.saveData){
+    const warmPreviousArchive=()=>qcPrimeFrozenOverviewDates([candidatePreviousDate]).catch(()=>{});
+    if(typeof window.requestIdleCallback==='function'){
+      window.requestIdleCallback(warmPreviousArchive,{timeout:1200});
+    }else{
+      setTimeout(warmPreviousArchive,350);
+    }
+  }
 
   async function refreshOverviewLive(){
     if(document.hidden) return;
