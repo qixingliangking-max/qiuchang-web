@@ -1,10 +1,10 @@
 {
-  "run_at": "2026-11-17T12:23:46.481Z",
+  "run_at": "2026-11-17T20:03:47.104Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 0,
-  "noop_leagues": 23,
-  "blocked_leagues": 1,
+  "noop_leagues": 22,
+  "blocked_leagues": 2,
   "results": [
     {
       "league_code": "AFC_ACLE",
@@ -79,8 +79,8 @@
     {
       "league_code": "ESP_LL",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 120,
+      "status": "BLOCKED_FINISHED_SET_REGRESSION",
+      "discovered_finished": 119,
       "baseline_finished_matches": 120,
       "new_finished_matches": 0,
       "gate_status": null,
@@ -88,7 +88,7 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
+      "exit_code": 4
     },
     {
       "league_code": "FIN_VL",
