@@ -11,7 +11,7 @@ var leagueFilter='全部',searchTerm='',detailTab='predictions';
 var pages={
  home:'site-next-ui-20261119.html',
  matches:'site-next-ui-20261119-matches.html',
- reviews:'site-next-ui-20261119-reviews.html',
+ profile:'site-next-ui-20261119-profile.html',
  detail:'site-next-ui-20261119-detail.html'
 };
 var $=function(id){return document.getElementById(id);};
@@ -49,7 +49,7 @@ function panelHead(title,desc,more){
 }
 
 function resultFlag(r,key){
- if(!r.ft) return '<span class="qc-grade qc-grade-locked">登录查看</span>';
+ if(!r.ft) return '<span class="qc-grade qc-grade-pending">待赛后</span>';
  var state=r.review&&r.review[key];
  if(state===true)return '<span class="qc-grade qc-grade-hit"><b>✓</b> 命中</span>';
  if(state===false)return '<span class="qc-grade qc-grade-miss"><b>×</b> 未命中</span>';
@@ -58,7 +58,7 @@ function resultFlag(r,key){
 function comparisonGrid(r,extended){
  var fields=extended?
  [['direction','核心方向'],['handicap','官方让球'],['single','单选倾向'],['htft','半全场'],['goals','总进球'],['score','参考比分']]:
- [['direction','胜平负 / 让球'],['goals','总进球'],['htft','半全场']];
+ [['direction','胜平负／让球'],['goals','总进球'],['htft','半全场']];
  return '<div class="qc-check-grid'+(extended?' qc-check-six':'')+'">'+fields.map(function(v){
   return '<div class="qc-check-item"><span class="qc-check-name">'+enc(v[1])+'</span>'+resultFlag(r,v[0])+'</div>';
  }).join('')+'</div>';
@@ -120,7 +120,7 @@ function renderHero(){
  '<h2>每一场比赛，<br><em>都有值得看的细节。</em></h2>'+
  '<p>从今日赛程到赛后比分，把赛事信息整理得更清晰。切换日期、查看比赛、回顾赛果，都在这里完成。</p>'+
  '<div class="hero-actions">'+link(pages.matches+'?date='+encodeURIComponent(focusDay),'查看今日赛程 <span>↗</span>','class="hero-button"')+
- link(pages.reviews,'回看近期赛果 ↗','class="hero-link"')+'</div></div>'+
+ link((pages.home+'#review'),'回看近期赛果 ↗','class="hero-link"')+'</div></div>'+
  '<div class="hero-right">'+link(matchUrl(r),'<div class="feature-match"><div class="feature-top"><span>今日焦点 · '+enc(r.league)+'</span><b>'+enc(r.number)+'</b></div>'+
  '<div class="feature-score"><div class="feature-team">'+crest(r.homeLogo)+'<b>'+enc(r.home)+'</b></div>'+
  '<div class="feature-score-value">'+enc(score(r))+'</div>'+
@@ -134,27 +134,22 @@ function renderHome(){
  return pageHead('今日速览','今日速览','')+
  '<div class="qc-today-summary"><div><small>今日赛程</small><strong>'+enc(dayLabel(focusDay))+'</strong></div>'+
  '<div><small>比赛场次</small><strong>'+nfmt(todayRows.length)+'场</strong></div>'+
- '<div><small>已完赛回看</small><strong>'+nfmt(recent.length)+'场</strong></div></div>'+
- '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">01</span><h2>昨日回看</h2>'+
- '<small>'+enc(dayLabel(yesterday&&yesterday.day))+' · '+(complete.length?'已确认 '+complete.length+' 场赛果':'赛果更新中')+'</small></div>'+
- link(pages.reviews,'历史回看 ›')+'</div>'+
- (complete.length?reviewLegend():'')+
- overviewRows(yesterdayRows)+
- '</section>'+
+ '<div><small>最近完赛</small><strong>'+nfmt(recent.length)+'场</strong></div></div>'+
+ '<section class="qc-timeline-panel" id="review"><div class="qc-timeline-head"><div><span class="qc-section-index">01</span><h2>昨日回看</h2>'+
+ '<small>'+enc(dayLabel(yesterday&&yesterday.day))+' · '+(complete.length?'已完赛 '+complete.length+' 场':'赛果更新中')+'</small></div>'+
+ '<span class="qc-section-aside">比赛结果</span></div>'+
+ (complete.length?reviewLegend():'')+overviewRows(yesterdayRows)+'</section>'+
  '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">02</span><h2>今日预测</h2>'+
  '<small>'+enc(dayLabel(focusDay))+' · '+nfmt(todayRows.length)+'场比赛</small></div>'+
- link(pages.matches+'?date='+focusDay,'全部赛程 ›')+'</div>'+
- overviewRows(todayRows)+
- '</section>'+
- '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">03</span><h2>最近完赛</h2>'+
+ link(pages.matches+'?date='+focusDay,'查看全部 ›')+'</div>'+overviewRows(todayRows)+'</section>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">03</span><h2>近期赛果</h2>'+
  '<small>'+enc(dayLabel(last&&last.day))+' · 已确认比分</small></div>'+
- link(pages.reviews+'?date='+encodeURIComponent(last&&last.day||''),'查看全部 ›')+'</div>'+
- reviewLegend()+overviewRows(recent.slice(0,4))+'</section>';
+ '<span class="qc-section-aside">往期回看</span></div>'+
+ reviewLegend()+overviewRows(recent)+'</section>';
 }
 function lockedContent(message){
- return '<div class="locked-card"><div class="lock-symbol" aria-hidden="true">🔒</div>'+
- '<h3>登录后查看完整分析</h3><p>'+enc(message||'精彩赛事分析，登录后查看。')+'</p>'+
- '<a href="../login.html">前往登录 ›</a></div>';
+ return '<div class="qc-article-preview"><h3>赛事分析</h3><p>'+enc(message||'暂无详细文字分析。')+'</p>'+
+ '<div class="qc-article-actions">'+link(pages.matches,'查看竞彩足球 ›')+'</div></div>';
 }
 function dateChips(active,onlyFinished){
  return '<div class="quick-date">'+days.filter(function(d){return !onlyFinished||d.archived;}).map(function(d){
@@ -181,7 +176,7 @@ function renderMatches(){
  var search=new URLSearchParams(location.search).get('date');
  if(search&&getDay(search))activeDate=search;
  var day=getDay(activeDate);
- return pageHead('全部赛程','比赛日程','按日期查看赛程与比赛信息。')+
+ return pageHead('竞彩足球','竞彩足球','按日期查看赛程与比赛信息。')+
  '<div id="matchDates">'+dateChips(activeDate,false)+'</div>'+
  '<div class="section-top"><h2 id="fixtureDayTitle">'+enc(dayLabel(activeDate))+' · 比赛安排</h2><span class="text-muted" id="fixtureTotal">'+nfmt(day?day.rows.length:0)+'场比赛</span></div>'+
  '<div id="matchFilters">'+filters(day)+'</div>'+
@@ -240,22 +235,22 @@ function overviewTab(r){
 function detailTabHtml(r){
  if(detailTab==='markets')return detailMarkets(r);
  if(detailTab==='predictions')return '<h3 class="qc-detail-section-title">赛前判断与赛后结果</h3>'+
- '<p class="qc-detail-intro">逐项查看赛果核对状态。赛前具体选择登录后查看。</p>'+
- comparisonGrid(r,true)+(!r.ft?'<div class="qc-tip">赛事结束后显示对应结果。</div>':'');
- if(detailTab==='analysis')return lockedContent('完整的赛前判断、比赛进程与比分分析，可在登录后阅读。');
+ '<p class="qc-detail-intro">'+(r.ft?'以下是赛后各项核对结果。':'比赛结束后显示赛后结果。')+'</p>'+
+ comparisonGrid(r,true)+(!r.ft?'<div class="qc-tip">赛果确认后更新。</div>':'');
+ if(detailTab==='analysis')return lockedContent(r.ft?'完赛比分和结果已收录，文字解读暂未更新。':'本场赛前资料可在其他栏目查看。');
  return overviewTab(r);
 }
-
 function renderDetail(){
  var id=new URLSearchParams(location.search).get('id');
  var r=byId.get(id);
- if(!r)return pageHead('赛事详情','赛事未找到','请返回比赛列表重新选择。')+
+ if(r)visit(r.id);
+ if(!r)return pageHead('赛事详情','赛事未找到','请选择想查看的比赛。')+
  '<div class="panel"><div class="empty">没有找到对应的比赛记录。'+link(pages.matches,'返回全部赛程')+'</div></div>';
  var back=pages.matches+'?date='+encodeURIComponent(r.businessDate);
  var tabs=[['predictions','赛前判断'],['overview','比赛概览'],['markets','竞彩玩法'],['analysis','赛事分析']];
  return '<div class="path">'+link(pages.home,'球场档案')+' / '+link(back,'全部赛程')+' / 赛事详情</div>'+
  '<div class="pagehead"><div><h1>赛事详情</h1><p>'+enc(r.league)+' · '+enc(r.number)+' · '+enc(dayLabel(r.date))+'</p></div>'+
- '<div class="page-actions">'+link(back,'← 返回赛程')+'</div></div>'+
+ '<div class="page-actions">'+favoriteButton(r)+link(back,'← 返回赛程')+'</div></div>'+
  '<section class="detail-hero"><div class="detail-upper"><span>'+enc(r.league)+' · '+enc(r.number)+'</span><span>'+enc(r.ft?'比赛已结束':'比赛安排')+'</span></div>'+
  '<div class="detail-face"><div class="detail-person">'+crest(r.homeLogo)+'<b>'+enc(r.home)+'</b></div>'+
  '<div class="detail-center"><strong>'+enc(score(r))+'</strong><small>'+enc(r.ft?'全场比分':'比赛未结束')+'</small></div>'+
@@ -268,25 +263,76 @@ function renderDetail(){
  '<div class="info-grid" style="grid-template-columns:repeat(2,1fr);padding:0 14px 16px">'+
  '<div class="info-item"><small>比赛编号</small><b>'+enc(r.number)+'</b></div>'+
  '<div class="info-item"><small>比赛时间</small><b>'+enc(r.time)+'</b></div></div></section>'+
- '<section class="panel">'+panelHead('查看完整内容','赛事相关内容')+
- '<div style="padding:0 14px 16px">'+link('../jc-match.html?id='+encodeURIComponent(r.id),'查看完整赛事 ›','class="hero-button" style="display:flex;justify-content:center;background:#e0eecf"')+'</div></section></aside></div>';
+ '<section class="panel">'+panelHead('关注赛事','我的关注')+
+ '<div style="padding:0 14px 16px">'+link(pages.matches+'?date='+encodeURIComponent(r.businessDate),'返回竞彩足球 ›','class="hero-button" style="display:flex;justify-content:center;background:#e0eecf"')+'</div></section></aside></div>';
 }
+
+var savedKey='qc_next_ui_favorites_v1',seenKey='qc_next_ui_seen_v1',fallbackSaved=[],fallbackSeen=[];
+function safeList(key,fallback){
+ try{
+  var a=JSON.parse(localStorage.getItem(key)||'null');
+  return Array.isArray(a)?a.filter(function(id){return typeof id==='string'&&byId.has(id);}).slice(0,35):fallback;
+ }catch(_){return fallback;}
+}
+function storeList(key,a){try{localStorage.setItem(key,JSON.stringify(a.slice(0,35)));}catch(_){}}
+function favorites(){return safeList(savedKey,fallbackSaved);}
+function recentViews(){return safeList(seenKey,fallbackSeen);}
+function visit(id){
+ if(!byId.has(id))return;
+ fallbackSeen=[id].concat(recentViews().filter(function(x){return x!==id;})).slice(0,20);
+ storeList(seenKey,fallbackSeen);
+}
+function toggleFavorite(id){
+ if(!byId.has(id))return;
+ var old=favorites();
+ fallbackSaved=(old.includes(id)?old.filter(function(x){return x!==id;}):[id].concat(old)).slice(0,35);
+ storeList(savedKey,fallbackSaved);
+}
+function favoriteButton(r){
+ var on=favorites().includes(r.id);
+ return '<button type="button" class="qc-favorite'+(on?' active':'')+'" data-favorite="'+enc(r.id)+'" aria-pressed="'+(on?'true':'false')+'">'+(on?'★ 已关注':'☆ 关注比赛')+'</button>';
+}
+function profileMatch(r){
+ return '<div class="qc-profile-match"><div><small>'+enc(r.league)+' · '+enc(dayLabel(r.date))+' '+enc(r.time)+'</small>'+
+ '<strong>'+enc(r.home)+' <em>'+enc(score(r))+'</em> '+enc(r.away)+'</strong></div>'+
+ '<div class="qc-profile-match-actions">'+link(matchUrl(r),'详情 ›')+favoriteButton(r)+'</div></div>';
+}
+function renderProfile(){
+ var saved=favorites().map(function(id){return byId.get(id);}).filter(Boolean);
+ var seen=recentViews().map(function(id){return byId.get(id);}).filter(Boolean);
+ return pageHead('个人中心','个人中心','你关注的赛事和最近看过的比赛。')+
+ '<div class="qc-profile-hero"><div class="qc-profile-avatar">档</div><div><small>我的球场档案</small><strong>我的赛事</strong><p>收藏喜欢的比赛，随时回看。</p></div></div>'+
+ '<div class="qc-profile-stats"><div><small>关注比赛</small><b>'+saved.length+'</b></div><div><small>最近浏览</small><b>'+seen.length+'</b></div><div><small>已完赛关注</small><b>'+saved.filter(function(x){return !!x.ft;}).length+'</b></div></div>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">★</span><h2>我的关注</h2>'+
+ '<small>'+saved.length+'场</small></div>'+link(pages.matches,'发现比赛 ›')+'</div>'+
+ (saved.length?'<div class="qc-profile-list">'+saved.map(profileMatch).join('')+'</div>':
+ '<div class="qc-profile-empty"><strong>还没有关注的比赛</strong><p>浏览竞彩足球，点击☆就能收藏比赛。</p>'+
+ link(pages.matches,'前往竞彩足球 ›','class="qc-profile-cta"')+'</div>')+'</section>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">◷</span>'+
+ '<h2>最近浏览</h2></div></div>'+
+ (seen.length?'<div class="qc-profile-list">'+seen.slice(0,8).map(profileMatch).join('')+'</div>':
+ '<div class="qc-profile-empty"><strong>暂无浏览记录</strong><p>打开赛事详情后会显示在这里。</p></div>')+'</section>'+
+ '<div class="qc-profile-note">关注记录仅保存在当前设备，不会同步至正式网站账户。</div>';
+}
+
 function render(){
  var page=pageName();
  navMark(page==='detail'?'matches':page);
- var html=page==='home'?renderHome():page==='matches'?renderMatches():page==='reviews'?renderReviews():renderDetail();
+ var html=page==='home'?renderHome():page==='matches'?renderMatches():page==='profile'?renderProfile():renderDetail();
  root.innerHTML=html;
- var labels={home:'今日速览',matches:'比赛日程',reviews:'赛后回看',detail:'赛事详情'};
+ var labels={home:'今日速览',matches:'竞彩足球',profile:'个人中心',detail:'赛事详情'};
  document.title='球场档案｜'+labels[page];
  var headerDate=$('headerDate');if(headerDate)headerDate.textContent=dayLabel(focusDay);
 }
 function navigate(url){
- history.pushState(null,'',url.pathname+url.search);
+ history.pushState(null,'',url.pathname+url.search+url.hash);
  if(pageName()==='detail')detailTab='predictions';
  if(pageName()==='matches')searchTerm='';
- render();window.scrollTo({top:0,behavior:'auto'});
+ render();if(url.hash==='#review'){var x=document.getElementById('review');if(x&&x.scrollIntoView)x.scrollIntoView({block:'start'});}else window.scrollTo({top:0,behavior:'auto'});
 }
 document.addEventListener('click',function(e){
+ var button=e.target.closest('button[data-favorite]');
+ if(button){toggleFavorite(button.dataset.favorite);render();return;}
  var target=e.target.closest('a[data-ui-link]');
  if(target){
   var href=new URL(target.href),name=href.pathname.split('/').pop();
