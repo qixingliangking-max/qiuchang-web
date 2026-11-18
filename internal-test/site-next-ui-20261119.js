@@ -210,7 +210,7 @@ document.addEventListener('click',function(e){
   }
  }
  var date=e.target.closest('button[data-day]');
- if(date){pickedDay=date.dataset.day;league='全部';query='';paint();return;}
+ if(date){pickedDay=date.dataset.day;league='全部';query='';history.replaceState(null,'',location.pathname+'?date='+encodeURIComponent(pickedDay));paint();return;}
  var filter=e.target.closest('button[data-league]');
  if(filter){league=filter.dataset.league;var list=el('fixtureList');if(list)list.innerHTML=fixtureList();
   document.querySelectorAll('[data-league]').forEach(function(b){b.classList.toggle('active',b.dataset.league===league);});return;
