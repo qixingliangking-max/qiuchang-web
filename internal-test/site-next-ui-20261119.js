@@ -111,7 +111,7 @@ function fixtureCard(r){
  '<div class="fixture-score">'+enc(score(r))+'<small>'+(r.ft?'半场 '+enc(r.ht||'—'):'尚未完赛')+'</small></div>'+
  '<div class="fixture-team">'+crest(r.awayLogo)+'<b>'+enc(r.away)+'</b></div></div>')+
  comparisonGrid(r,false)+
- '<div class="cardfoot"><small>'+(r.ft?'赛果已确认':'赛前信息')+'</small>'+link(matchUrl(r),'查看赛事详情 ›')+'</div></article>';
+ '<div class="cardfoot"><small>'+(r.ft?'赛果已确认':'赛前信息')+'</small><div class="qc-fixture-actions">'+favoriteButton(r)+link(matchUrl(r),'查看详情 ›')+'</div></div></article>';
 }
 function firstFocus(){var d=getDay(focusDay);return d&&d.rows.length?d.rows[0]:all.find(function(r){return !r.ft;});}
 function renderHero(){
@@ -264,7 +264,7 @@ function renderDetail(){
  '<div class="info-item"><small>比赛编号</small><b>'+enc(r.number)+'</b></div>'+
  '<div class="info-item"><small>比赛时间</small><b>'+enc(r.time)+'</b></div></div></section>'+
  '<section class="panel">'+panelHead('关注赛事','我的关注')+
- '<div style="padding:0 14px 16px">'+link(pages.matches+'?date='+encodeURIComponent(r.businessDate),'返回竞彩足球 ›','class="hero-button" style="display:flex;justify-content:center;background:#e0eecf"')+'</div></section></aside></div>';
+ '<div style="padding:0 14px 16px">'+favoriteButton(r)+'</div></section></aside></div>';
 }
 
 var savedKey='qc_next_ui_favorites_v1',seenKey='qc_next_ui_seen_v1',fallbackSaved=[],fallbackSeen=[];
