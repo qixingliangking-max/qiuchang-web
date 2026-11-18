@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>球场档案｜本赛季全联赛比分排行榜（测试）</title>
+<link rel="icon" sizes="32x32" href="../favicon-32.png">
+<style>
+:root{--navy:#143454;--gold:#b99660;--red:#b52f39;--cream:#f2e9d7;--ink:#203b53;--muted:#8594a0;--line:#e6e9eb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#f8f7f4;color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92b4d5;outline-offset:2px}
+.topbar{background:white;border-bottom:1px solid var(--line)}.topinner{max-width:1230px;height:66px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}.mark{display:grid;place-items:center;width:35px;height:35px;background:var(--navy);color:var(--cream);border-radius:10px;font-size:20px;font-weight:900}
+.brand strong{font-size:18px}.brand small{display:block;font-size:9px;letter-spacing:.13em;color:#a49b88;font-weight:800}.nav-note{display:flex;gap:12px;align-items:center;font-size:12px;font-weight:800}.nav-note span{border-radius:50px;background:#f4ede0;color:#91754b;padding:6px 10px}.nav-note a{border:1px solid var(--line);border-radius:9px;padding:7px 12px;text-decoration:none;color:#54708a}
+.page{max-width:1230px;margin:auto;padding:22px 22px 64px}
+.hero{border-radius:19px;padding:30px 34px;color:white;background:linear-gradient(116deg,#112d49,#214a6b);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-50px;top:-130px;width:300px;height:300px;border-radius:50%;box-shadow:0 0 0 50px #ffffff0b,0 0 0 110px #ffffff08;border:1px solid #ffffff30}
+.hero small{position:relative;color:#d8be8d;font-weight:900;letter-spacing:.13em;font-size:11px}.hero h1{position:relative;font-size:30px;margin:10px 0}.hero p{position:relative;color:#d5e4f1;font-size:13px;max-width:740px;line-height:1.9;margin:0}
+.meta{position:relative;display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}.meta span{font-size:11px;color:#dce8ee;border:1px solid #ffffff32;background:#ffffff10;border-radius:8px;padding:5px 10px}
+.totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:13px 0 18px}
+.total{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 17px}.total span{font-size:11px;color:#9aa4ad;font-weight:800}.total b{display:block;font-size:24px;color:var(--navy);font-variant-numeric:tabular-nums;margin-top:4px}
+.layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:14px;align-items:start}
+.sidebar,.panel,.note{border:1px solid var(--line);background:#fff;border-radius:14px}
+.sidebar{position:sticky;top:14px;overflow:hidden}.sidehead{padding:16px;border-bottom:1px solid var(--line)}.sidehead b{font-size:15px}.sidehead small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.groups{padding:12px 10px 8px;display:flex;gap:5px;flex-wrap:wrap}.groups button{border:1px solid var(--line);background:#fff;color:#7b8a9a;border-radius:8px;padding:5px 9px;font-size:11px;font-weight:800}.groups button.active{background:#f4efdf;color:#9b7749;border-color:#dec9a4}
+#leagueSearch{margin:4px 10px 9px;padding:9px 10px;border:1px solid #e2e7eb;border-radius:8px;width:calc(100% - 20px);outline:none}
+#leagueList{padding:0 8px 10px;max-height:610px;overflow:auto}.league-btn{width:100%;padding:10px;border:0;background:#fff;border-radius:8px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#506781;font-size:12px;font-weight:800}.league-btn:hover{background:#f6f8f9}.league-btn.active{background:#eaf0f5;color:var(--navy)}
+.league-btn em{font-size:10px;color:#99a4ad;font-style:normal}
+.panel{overflow:hidden}.panel-top{padding:20px 22px;border-bottom:1px solid var(--line)}.kicker{color:var(--gold);font-size:10px;letter-spacing:.13em;font-weight:950}.name-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.name-row h2{font-size:26px;margin:3px 0;color:var(--navy)}.season{border-radius:8px;background:#f2eee5;color:#988053;font-size:11px;font-weight:900;padding:5px 9px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.metric{padding:12px;background:#f9fafb;border-radius:10px;border:1px solid #eef0f1}.metric small{display:block;color:#95a1ab;font-size:10px}.metric b{display:block;color:#193c5a;font-size:21px;margin-top:3px}
+.section{padding:18px 22px;border-bottom:1px solid var(--line)}.section:last-child{border:0}.sect-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.sect-head h3{margin:0;font-size:16px}.sect-head small{color:#9ba6ae;font-size:11px}
+.top3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.highlight{background:#fbf8f2;border:1px solid #ece8df;border-radius:11px;padding:13px}.highlight:first-child{background:#f6f0e3;border-color:#e4d1ae}.highlight small{color:#a5865a;font-size:10px;font-weight:900}.highlight b{display:block;font-size:26px;color:var(--navy)}.highlight span{color:#84939f;font-size:11px}
+.band-list{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.band{padding:9px 7px;border:1px solid #edf0f2;border-radius:9px;background:#fafbfc}.band b{display:block;font-size:12px;color:#50647b}.band strong{display:block;font-size:17px;color:var(--navy);margin-top:5px}.band small{font-size:10px;color:#9fa9b2}
+.bar{height:5px;background:#e8ebef;border-radius:30px;overflow:hidden;margin:5px 0}.bar i{height:100%;background:var(--gold);display:block;border-radius:30px}
+.filters{display:flex;gap:7px;flex-wrap:wrap}.filters input,.filters select,.filters button{border:1px solid #e0e6eb;border-radius:8px;background:white;padding:8px 10px;color:#45647c;font-size:12px;height:36px}
+.filters input{width:130px}.filters button{background:#f4f7fa;font-weight:850}
+.table-box{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:570px;font-size:12px;font-variant-numeric:tabular-nums}
+th{padding:10px;text-align:left;background:#f8f9fa;color:#8a98a4;font-weight:900;font-size:11px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid #f0f2f3;color:#677d90}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfcfc}
+td.score{font-size:16px;font-weight:950;color:#24445d}td.number{font-weight:900;color:#385b78}td.rank{font-weight:850;color:#a0a8b2}tr.top td.rank{color:#af8757}
+.track{height:7px;border-radius:50px;background:#e9edf0;min-width:90px;overflow:hidden}.track i{display:block;height:100%;background:#9fb5c5;border-radius:50px}tr.top .track i{background:var(--gold)}
+.empty{padding:22px;text-align:center;color:#9aa4b0}
+.note{font-size:11px;color:#82919c;line-height:1.85;padding:13px 16px;margin-top:13px}.note b{color:#577087}
+.foot{text-align:center;font-size:11px;color:#9aa5af;margin-top:18px}
+#mobileSelect{display:none}
+@media(max-width:800px){.layout{grid-template-columns:190px minmax(0,1fr)}.band-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:680px){
+.topinner{height:55px;padding:0 13px}.brand strong{font-size:16px}.mark{width:31px;height:31px}.nav-note span{display:none}
+.page{padding:12px 10px 45px}.hero{padding:21px 17px;border-radius:13px}.hero h1{font-size:24px}.hero p{font-size:12px}
+.totals{gap:7px;margin:9px 0}.total{padding:11px 8px}.total b{font-size:19px}.total span{font-size:9px}
+.layout{display:block}.sidebar{display:none}.panel-top{padding:16px 14px}.name-row h2{font-size:22px}
+#mobileSelect{display:block;width:100%;border:1px solid #dce4e9;background:white;border-radius:8px;height:39px;margin-top:10px;color:#294c68;padding:0 8px;font-weight:850}
+.metrics{gap:5px}.metric{padding:10px 7px}.metric small{font-size:9px}.metric b{font-size:17px}
+.section{padding:15px 12px}.top3{gap:6px}.highlight{padding:10px 7px}.highlight b{font-size:22px}.highlight span{font-size:9px}
+.band-list{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.band{padding:9px 6px}
+.filters{width:100%}.filters input{flex:1;min-width:70px}.filters select{flex:1;min-width:115px}.sect-head.filter-head{align-items:flex-start;flex-direction:column}
+table{min-width:560px}
+}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topinner">
+<a href="../index.html" class="brand"><span class="mark">档</span><span><strong>球场档案</strong><small>FOOTBALL DATA ARCHIVE</small></span></a>
+<div class="nav-note"><span>独立测试页面</span><a href="../index.html">返回首页</a></div>
+</div></header>
+<main class="page">
+<div class="hero"><small>球场档案 · DATA LAB / 本赛季全比分档案</small>
+<h1>联赛比分排行榜</h1>
+<p>以各联赛本赛季全部完赛比赛为样本，逐个比分统计真实出现次数、频率、排名与最近出现日期。不分球队主客场、不截取TOP6，所有比分均保留。</p>
+<div class="meta"><span>仅统计已完赛</span><span>主队比分在前</span><span id="snapshotAt">加载数据中…</span></div></div>
+<div class="totals"><div class="total"><span>联赛 / 赛事</span><b id="totalLeagues">—</b></div>
+<div class="total"><span>累计完赛场次</span><b id="totalMatches">—</b></div>
+<div class="total"><span>不同比分种类合计</span><b id="totalScores">—</b></div></div>
+<div class="layout">
+<aside class="sidebar"><div class="sidehead"><b>联赛列表</b><small>点击切换本赛季完整榜单</small></div>
+<div class="groups" id="groups"></div>
+<input id="leagueSearch" type="search" placeholder="搜索联赛" aria-label="搜索联赛" autocomplete="off">
+<div id="leagueList"></div></aside>
+<div>
+<section class="panel">
+<div class="panel-top"><div class="kicker">SEASON · SCORE FREQUENCY</div>
+<div class="name-row"><h2 id="leagueName">正在读取…</h2><span id="leagueSeason" class="season"></span></div>
+<select id="mobileSelect" aria-label="选择联赛"></select>
+<div class="metrics"><div class="metric"><small>赛季已完赛</small><b id="nMatches">—</b></div>
+<div class="metric"><small>不同比分种类</small><b id="nTypes">—</b></div>
+<div class="metric"><small>最高频比分</small><b id="mostFrequent">—</b></div></div></div>
+<div class="section"><div class="sect-head"><h3>高频前三</h3><small>完整榜单见下方</small></div><div class="top3" id="top3"></div></div>
+<div class="section"><div class="sect-head"><h3>赛季总进球分布</h3><small>从全部比分聚合</small></div><div class="band-list" id="bands"></div></div>
+<div class="section"><div class="sect-head filter-head"><div><h3>所有比分排行</h3><small id="shownCount">按出现次数排序</small></div>
+<div class="filters"><input id="scoreSearch" type="search" placeholder="搜索如 1-1" aria-label="按比分搜索" autocomplete="off">
+<select id="goalFilter" aria-label="筛选总进球"><option value="all">全部比分</option><option value="4">4球以上（含4）</option><option value="5">5球以上（含5）</option><option value="6">6球以上（含6）</option></select>
+<button type="button" id="export">导出CSV</button></div></div>
+<div class="table-box"><table><thead><tr><th>排名</th><th>全场比分</th><th>出现次数</th><th>占比</th><th>频率</th><th>最近出现</th></tr></thead>
+<tbody id="rows"><tr><td colspan="6" class="empty">加载中…</td></tr></tbody></table></div></div>
+</section>
+<div class="note"><b>统计口径：</b>仅当前赛季的全部有效完赛比分。每个联赛独立计算，比分格式为主队进球-客队进球；保留所有比分及高尾情况，不与其他赛事、球队主客场TOP6混合。<b>本页为只读静态测试快照，暂不自动实时刷新；</b>正式数据库继续按既有任务更新。</div>
+<div class="foot">球场档案 · 独立测试展示｜不影响正式网站预测、FINAL或会员系统</div>
+</div></div></main>
+<script src="./league-score-frequency-season-2026-data.js"></script>
+<script>
+(function(){
+'use strict';
+var d=window.QC_LEAGUE_SCORE_FREQUENCY_SNAPSHOT, byId=function(i){return document.getElementById(i);};
+var fmt=function(n){return Number(n||0).toLocaleString('zh-CN');};
+var safe=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+if(!d||!Array.isArray(d.leagues)||!d.leagues.length){byId('leagueName').textContent='暂时无法读取数据';byId('rows').innerHTML='<tr><td colspan="6" class="empty">比分快照加载失败，请刷新页面。</td></tr>';return;}
+var leagues=d.leagues,chosen=new URLSearchParams(location.search).get('league')||'BRA_SA',region='全部',nameFilter='',scoreFilter='',goalFilter='all';
+if(!leagues.some(function(l){return l.code===chosen;}))chosen=leagues[0].code;
+var kinds=['全部','欧洲','亚洲','美洲','洲际'];
+var area=function(code){if(/^(JPN|KOR|AFC)/.test(code))return '亚洲';if(/^(BRA|USA)/.test(code))return '美洲';if(/^UEFA/.test(code))return '洲际';return '欧洲';};
+var current=function(){return leagues.find(function(l){return l.code===chosen;})||leagues[0];};
+byId('snapshotAt').textContent='数据快照：'+d.generatedAtBjt+'（北京时间）';
+byId('totalLeagues').textContent=fmt(leagues.length);
+byId('totalMatches').textContent=fmt(leagues.reduce(function(a,l){return a+Number(l.sample);},0));
+byId('totalScores').textContent=fmt(leagues.reduce(function(a,l){return a+l.scores.length;},0));
+byId('mobileSelect').innerHTML=leagues.map(function(l){return '<option value="'+safe(l.code)+'">'+safe(l.name)+' · '+safe(l.season)+'</option>';}).join('');
+function renderGroups(){
+byId('groups').innerHTML=kinds.map(function(g){return '<button type="button" data-area="'+safe(g)+'" class="'+(region===g?'active':'')+'">'+safe(g)+'</button>';}).join('');
+byId('groups').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){region=b.dataset.area;renderGroups();renderList();});});
+}
+function renderList(){
+var visible=leagues.filter(function(l){return (region==='全部'||area(l.code)===region)&&(!nameFilter||(l.name+l.code).toLowerCase().includes(nameFilter.toLowerCase()));});
+byId('leagueList').innerHTML=visible.length?visible.map(function(l){return '<button class="league-btn '+(l.code===chosen?'active':'')+'" data-code="'+safe(l.code)+'" type="button"><span>'+safe(l.name)+'</span><em>'+fmt(l.sample)+'场</em></button>';}).join(''):'<div class="empty">没有匹配的联赛</div>';
+byId('leagueList').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){selectLeague(b.dataset.code);});});
+}
+function selectLeague(code){if(!leagues.some(function(l){return l.code===code;}))return;chosen=code;scoreFilter='';goalFilter='all';byId('scoreSearch').value='';byId('goalFilter').value='all';
+try{var url=new URL(location.href);url.searchParams.set('league',code);history.replaceState(null,'',url.pathname+url.search);}catch(e){}
+renderList();renderCurrent();}
+function goals(s){var x=s.split('-').map(Number);return x[0]+x[1];}
+function filterRows(l){
+var q=scoreFilter.trim().replace(/[:：－–—]/g,'-').replace(/\s/g,'');
+return l.scores.filter(function(s){return (goalFilter==='all'||goals(s[1])>=Number(goalFilter))&&(!q||s[1].includes(q)||s[1].replace('-','').includes(q));});}
+function renderTable(){var l=current(),s=filterRows(l),max=Number(l.scores[0]&&l.scores[0][3])||1;
+byId('shownCount').textContent='显示 '+s.length+' 种 / 全部 '+l.scores.length+' 种比分';
+byId('rows').innerHTML=s.length?s.map(function(r){var rank=Number(r[0]),pct=Number(r[3]),width=Math.max(3,100*pct/max);return '<tr class="'+(rank<=3?'top':'')+'"><td class="rank">#'+rank+'</td><td class="score">'+safe(r[1])+'</td><td class="number">'+fmt(r[2])+' 次</td><td class="number">'+pct.toFixed(2)+'%</td><td><div class="track"><i style="width:'+Math.min(100,width).toFixed(2)+'%"></i></div></td><td>'+safe(r[4]||'—')+'</td></tr>';}).join(''):'<tr><td colspan="6" class="empty">没有符合条件的比分</td></tr>';
+}
+function renderCurrent(){var l=current();byId('mobileSelect').value=l.code;byId('leagueName').textContent=l.name;byId('leagueSeason').textContent=l.season+' 赛季';
+byId('nMatches').textContent=fmt(l.sample);byId('nTypes').textContent=fmt(l.scores.length);byId('mostFrequent').textContent=l.scores[0]?l.scores[0][1]:'—';
+byId('top3').innerHTML=l.scores.slice(0,3).map(function(s,i){return '<div class="highlight"><small>NO.0'+(i+1)+'</small><b>'+safe(s[1])+'</b><span>'+fmt(s[2])+' 次 · '+Number(s[3]).toFixed(2)+'%</span></div>';}).join('');
+var bands=[0,0,0,0,0,0,0];l.scores.forEach(function(s){bands[Math.min(6,goals(s[1]))]+=Number(s[2]);});
+var top=Math.max.apply(null,bands.concat([1]));
+byId('bands').innerHTML=bands.map(function(n,i){var width=n?Math.max(3,100*n/top):0;return '<div class="band"><b>'+i+(i===6?'球+':'球')+'</b><strong>'+fmt(n)+'</strong><div class="bar"><i style="width:'+width.toFixed(1)+'%"></i></div><small>'+(l.sample?(100*n/l.sample):0).toFixed(1)+'%</small></div>';}).join('');
+renderTable();
+}
+byId('leagueSearch').addEventListener('input',function(e){nameFilter=e.target.value.trim();renderList();});
+byId('mobileSelect').addEventListener('change',function(e){selectLeague(e.target.value);});
+byId('scoreSearch').addEventListener('input',function(e){scoreFilter=e.target.value;renderTable();});
+byId('goalFilter').addEventListener('change',function(e){goalFilter=e.target.value;renderTable();});
+byId('export').addEventListener('click',function(){var l=current(),header='联赛,赛季,排名,比分,次数,总场次,占比(%),最近出现日期';
+var rows=filterRows(l).map(function(s){return [l.name,l.season,s[0],s[1],s[2],l.sample,s[3],s[4]].join(',');});
+var blob=new Blob(['\uFEFF'+[header].concat(rows).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+a.href=url;a.download='球场档案_'+l.code+'_全比分排行.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);});
+renderGroups();renderList();renderCurrent();
+})();
+</script>
+</body></html>
