@@ -47,6 +47,38 @@ function pageHead(path,title,subtitle,extra){
 function panelHead(title,desc,more){
  return '<div class="panel-head"><div><h2>'+enc(title)+'</h2>'+(desc?'<p>'+enc(desc)+'</p>':'')+'</div>'+(more||'')+'</div>';
 }
+
+function resultFlag(r,key){
+ if(!r.ft) return '<span class="qc-grade qc-grade-locked">登录查看</span>';
+ var state=r.review&&r.review[key];
+ if(state===true)return '<span class="qc-grade qc-grade-hit"><b>✓</b> 命中</span>';
+ if(state===false)return '<span class="qc-grade qc-grade-miss"><b>×</b> 未命中</span>';
+ return '<span class="qc-grade qc-grade-none">—</span>';
+}
+function comparisonGrid(r,extended){
+ var fields=extended?
+ [['direction','核心方向'],['handicap','官方让球'],['single','单选倾向'],['htft','半全场'],['goals','总进球'],['score','参考比分']]:
+ [['direction','胜平负 / 让球'],['goals','总进球'],['htft','半全场']];
+ return '<div class="qc-check-grid'+(extended?' qc-check-six':'')+'">'+fields.map(function(v){
+  return '<div class="qc-check-item"><span class="qc-check-name">'+enc(v[1])+'</span>'+resultFlag(r,v[0])+'</div>';
+ }).join('')+'</div>';
+}
+function reviewLegend(){
+ return '<div class="qc-review-legend" aria-label="结果标记说明"><span class="qc-grade qc-grade-hit"><b>✓</b> 命中</span>'+
+ '<span class="qc-grade qc-grade-miss"><b>×</b> 未命中</span><span class="qc-grade qc-grade-none">— 暂无判定</span></div>';
+}
+function overviewLine(r){
+ var label=r.ft?'已完赛':'待完赛',no=String(r.number||'').replace(/^周[一二三四五六日天]/,'');
+ return '<article class="qc-match-line">'+link(matchUrl(r),'<div class="qc-match-line-head"><span class="qc-match-number">'+enc(no)+'</span>'+
+ '<time>'+enc(r.time)+'</time><span>'+enc(r.league)+'</span><span class="qc-match-status'+(r.ft?' finished':'')+'">'+label+'</span><span class="qc-match-arrow">详情 ›</span></div>'+
+ '<div class="qc-match-line-versus"><strong>'+enc(r.home)+'</strong><span class="qc-match-ft">'+enc(score(r))+
+ '<small>'+(r.ht?'半场 '+enc(r.ht):(r.ft?'全场比分':'赛前'))+'</small></span><strong>'+enc(r.away)+'</strong></div>')+
+ comparisonGrid(r,false)+'</article>';
+}
+function overviewRows(rows){
+ return rows.length?'<div class="qc-match-list">'+rows.map(overviewLine).join('')+'</div>':
+ '<div class="empty">这一天暂无可显示的赛事。</div>';
+}
 function quickRecord(r,kind){
  var label=kind==='review'?'半场 '+(r.ht||'—'):(r.ft?'已完赛':'查看赛事');
  return link(matchUrl(r),'<span class="row-meta"><strong>'+enc(r.league)+'</strong><small>'+enc(r.number)+'</small></span>'+
@@ -72,12 +104,14 @@ function oddsSmall(r){
  }).join('')+'</div>';
 }
 function fixtureCard(r){
- return '<article class="fixture-card"><div class="fixture-top"><span>'+enc(r.league)+' · '+enc(r.number)+'</span><small>'+enc(dayLabel(r.date))+' '+enc(r.time)+'</small></div>'+
- '<div class="fixture-main"><div class="fixture-team">'+crest(r.homeLogo)+'<b>'+enc(r.home)+'</b></div>'+
- '<div class="fixture-score">'+enc(score(r))+'<small>'+(r.ft?'已完赛':'即将开始')+'</small></div>'+
- '<div class="fixture-team">'+crest(r.awayLogo)+'<b>'+enc(r.away)+'</b></div></div>'+
- oddsSmall(r)+'<div class="cardfoot"><small>'+enc(r.ft?'全场赛果已记录':'北京时间 · '+r.time)+'</small>'+
- link(matchUrl(r),'查看详情 ›')+'</div></article>';
+ var no=String(r.number||'').replace(/^周[一二三四五六日天]/,'');
+ return '<article class="fixture-card qc-fixture-card"><div class="fixture-top"><span><b>'+enc(no)+'</b> · '+enc(r.league)+'</span>'+
+ '<small>'+enc(dayLabel(r.date))+' '+enc(r.time)+'</small></div>'+
+ link(matchUrl(r),'<div class="fixture-main"><div class="fixture-team">'+crest(r.homeLogo)+'<b>'+enc(r.home)+'</b></div>'+
+ '<div class="fixture-score">'+enc(score(r))+'<small>'+(r.ft?'半场 '+enc(r.ht||'—'):'尚未完赛')+'</small></div>'+
+ '<div class="fixture-team">'+crest(r.awayLogo)+'<b>'+enc(r.away)+'</b></div></div>')+
+ comparisonGrid(r,false)+
+ '<div class="cardfoot"><small>'+(r.ft?'赛果已确认':'赛前信息')+'</small>'+link(matchUrl(r),'查看赛事详情 ›')+'</div></article>';
 }
 function firstFocus(){var d=getDay(focusDay);return d&&d.rows.length?d.rows[0]:all.find(function(r){return !r.ft;});}
 function renderHero(){
@@ -94,35 +128,33 @@ function renderHero(){
  '<div class="feature-bottom"><span>'+enc(dayLabel(r.date))+' '+enc(r.time)+' · 北京时间</span><span>比赛详情 ›</span></div></div>')+'</div></section>';
 }
 function renderHome(){
- var today=getDay(focusDay),prev=getDay('2026-11-18'),lastFinished=days.filter(function(d){return d.archived;}).slice(-1)[0];
- var todayRows=today?today.rows:[],latestDone=lastFinished?lastFinished.rows.filter(function(r){return !!r.ft;}):[];
- var leagues=new Set(todayRows.map(function(x){return x.league;}));
- var prevDone=prev?prev.rows.filter(function(r){return r.ft;}):[];
- var reviewInfo=prevDone.length?'近期完赛比分':'赛果尚在更新';
- var yday=prevDone.length?prevDone:latestDone;
- return pageHead('今日速览','今日速览','把今天的比赛与近期赛果放在同一个清晰的视图中。')+
- renderHero()+
- '<div class="metrics"><div class="metric"><small>今日赛事</small><b>'+nfmt(todayRows.length)+'</b><i>今日赛程</i></div>'+
- '<div class="metric"><small>涉及赛事</small><b>'+nfmt(leagues.size)+'</b><i>独立赛事类别</i></div>'+
- '<div class="metric"><small>最近已完赛</small><b>'+nfmt(latestDone.length)+'</b><i>'+enc(dayLabel(lastFinished&&lastFinished.day))+'</i></div></div>'+
- '<div class="home-grid"><div class="column">'+
- '<section class="panel">'+panelHead('今日预测','先看完整赛程，点击比赛了解详情。',link(pages.matches+'?date='+focusDay,'全部赛事 ›'))+
- '<div class="stack-rows">'+(todayRows.length?todayRows.map(function(r){return quickRecord(r,'today');}).join(''):'<div class="empty">今日暂无比赛安排</div>')+'</div></section>'+
- '<section class="panel">'+panelHead('最近赛后回看',enc(dayLabel(lastFinished&&lastFinished.day))+' · 已完赛比分',link(pages.reviews,'完整回看 ›'))+
- '<div class="stack-rows">'+(latestDone.slice(0,5).map(function(r){return quickRecord(r,'review');}).join('')||'<div class="empty">暂无可回看的比赛</div>')+'</div></section>'+
- '</div><div class="column">'+
- '<section class="panel">'+panelHead('昨日回看',prev?'11月18日 · '+reviewInfo:'暂无相关比赛',link(pages.reviews,'历史赛果 ›'))+
- (prevDone.length?'<div class="review-rows">'+prevDone.slice(0,5).map(reviewRecord).join('')+'</div>':
- '<div class="empty">该日比赛的赛果仍待完整确认，可先查看最近已完成的比赛。</div>')+
- '<div class="review-foot">已确认的完赛结果将统一显示在赛后回看中。</div></section>'+
- '<section class="panel">'+panelHead('赛事分析','完整观点与赛前研究')+
- lockedContent('赛事分析在正式网站登录后查看。')+'</section>'+
- '</div></div>';
+ var today=getDay(focusDay),yesterday=getDay('2026-11-18'),last=days.filter(function(d){return d.archived;}).slice(-1)[0];
+ var todayRows=today?today.rows:[],yesterdayRows=yesterday?yesterday.rows:[],complete=yesterdayRows.filter(function(r){return !!r.ft;});
+ var recent=last?last.rows.filter(function(r){return !!r.ft;}):[];
+ return pageHead('今日速览','今日速览','')+
+ '<div class="qc-today-summary"><div><small>今日赛程</small><strong>'+enc(dayLabel(focusDay))+'</strong></div>'+
+ '<div><small>比赛场次</small><strong>'+nfmt(todayRows.length)+'场</strong></div>'+
+ '<div><small>已完赛回看</small><strong>'+nfmt(recent.length)+'场</strong></div></div>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">01</span><h2>昨日回看</h2>'+
+ '<small>'+enc(dayLabel(yesterday&&yesterday.day))+' · '+(complete.length?'已确认 '+complete.length+' 场赛果':'赛果更新中')+'</small></div>'+
+ link(pages.reviews,'历史回看 ›')+'</div>'+
+ (complete.length?reviewLegend():'')+
+ overviewRows(yesterdayRows)+
+ '</section>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">02</span><h2>今日预测</h2>'+
+ '<small>'+enc(dayLabel(focusDay))+' · '+nfmt(todayRows.length)+'场比赛</small></div>'+
+ link(pages.matches+'?date='+focusDay,'全部赛程 ›')+'</div>'+
+ overviewRows(todayRows)+
+ '</section>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">03</span><h2>最近完赛</h2>'+
+ '<small>'+enc(dayLabel(last&&last.day))+' · 已确认比分</small></div>'+
+ link(pages.reviews+'?date='+encodeURIComponent(last&&last.day||''),'查看全部 ›')+'</div>'+
+ reviewLegend()+overviewRows(recent.slice(0,4))+'</section>';
 }
 function lockedContent(message){
- return '<div style="padding:0 14px 15px"><div class="locked-card"><div class="lock-symbol" aria-hidden="true">🔒</div>'+
- '<h3>解锁完整赛事分析</h3><p>'+enc(message||'登录后可查看对应比赛的完整内容。')+'</p>'+
- '<a href="../index.html">前往球场档案 ›</a></div></div>';
+ return '<div class="locked-card"><div class="lock-symbol" aria-hidden="true">🔒</div>'+
+ '<h3>登录后查看完整分析</h3><p>'+enc(message||'精彩赛事分析，登录后查看。')+'</p>'+
+ '<a href="../login.html">前往登录 ›</a></div>';
 }
 function dateChips(active,onlyFinished){
  return '<div class="quick-date">'+days.filter(function(d){return !onlyFinished||d.archived;}).map(function(d){
@@ -149,12 +181,12 @@ function renderMatches(){
  var search=new URLSearchParams(location.search).get('date');
  if(search&&getDay(search))activeDate=search;
  var day=getDay(activeDate);
- return pageHead('全部赛程','比赛日程','选择日期或赛事，查看全场比分、官方公开数据和比赛详情。')+
+ return pageHead('全部赛程','比赛日程','按日期查看赛程与比赛信息。')+
  '<div id="matchDates">'+dateChips(activeDate,false)+'</div>'+
  '<div class="section-top"><h2 id="fixtureDayTitle">'+enc(dayLabel(activeDate))+' · 比赛安排</h2><span class="text-muted" id="fixtureTotal">'+nfmt(day?day.rows.length:0)+'场比赛</span></div>'+
  '<div id="matchFilters">'+filters(day)+'</div>'+
  '<div id="matchGrid" class="fixture-grid">'+matchListHtml()+'</div>'+
- '<div class="note"><b>说明：</b>已结束的比赛显示正式记录的比分；尚未完赛的比赛显示赛程和已公开的信息。实际赛况请以正式网站更新为准。</div>';
+ '';
 }
 function statsFor(day){
  var rows=(day?day.rows:[]).filter(function(r){return !!r.ft;});
@@ -166,25 +198,17 @@ function renderReviews(){
  var date=new URLSearchParams(location.search).get('date');
  if(date&&getDay(date)&&getDay(date).archived)reviewDate=date;
  var day=getDay(reviewDate),st=statsFor(day);
- return pageHead('赛后回看','赛后回看','按比赛日整理已确认的赛果，半场和全场比分一目了然。')+
- '<section class="preview-banner"><div class="eyebrow">赛果档案 · 历史回顾</div>'+
- '<h2>回看比赛，<br>看清每一个结果。</h2><p>按日期查看比分记录，点击任意比赛进入完整赛事页面。</p></section>'+
- '<div class="section-top"><h2>选择比赛日</h2><span class="text-muted">按日期整理</span></div>'+
+ return pageHead('赛后回看','赛后回看','查看已完赛比赛的赛前选择与实际结果。')+
  '<div id="reviewDates">'+dateChips(reviewDate,true)+'</div>'+
- '<div class="review-stats"><div class="review-stat"><small>完赛场次</small><b id="resultCount">'+st.rows.length+'</b></div>'+
- '<div class="review-stat"><small>累计进球</small><b id="goalCount">'+st.total+'</b></div>'+
- '<div class="review-stat"><small>平局场次</small><b id="drawCount">'+st.draws+'</b></div></div>'+
- '<div class="section-top"><h2 id="reviewLabel">'+enc(dayLabel(reviewDate))+' · 全部赛果</h2></div>'+
- '<div id="reviewList" class="full-review">'+reviewListHtml(st.rows)+'</div>'+
- '<div class="note">所有比分均按比赛主队在前、客队在后展示。未确认完赛的比赛不会计入回看。</div>';
+ '<div class="qc-review-meta"><span><b id="resultCount">'+st.rows.length+'</b>场已完赛</span>'+
+ '<span><b id="goalCount">'+st.total+'</b>个总进球</span>'+
+ '<span><b id="drawCount">'+st.draws+'</b>场平局</span></div>'+
+ '<section class="qc-timeline-panel"><div class="qc-timeline-head"><div><span class="qc-section-index">↗</span>'+
+ '<h2 id="reviewLabel">'+enc(dayLabel(reviewDate))+' · 全部赛果</h2></div></div>'+
+ reviewLegend()+'<div id="reviewList" class="full-review">'+reviewListHtml(st.rows)+'</div></section>';
 }
 function reviewListHtml(rows){
- return rows.length?rows.map(function(r){
- var scoreLabel=r.ft||'—';
- return link(matchUrl(r),'<div class="review-match-meta"><strong>'+enc(r.league)+'</strong><small>'+enc(r.number)+'</small></div>'+
- '<div class="review-match-teams"><span>'+enc(r.home)+'</span><b>'+enc(scoreLabel)+'</b><span>'+enc(r.away)+'</span></div>'+
- '<div class="review-match-end">'+enc(r.time)+'<strong>半场 '+enc(r.ht||'—')+'</strong></div>','class="review-match"');
- }).join(''):'<div class="empty">暂无已确认的赛果。</div>';
+ return overviewRows(rows);
 }
 function marketCard(title,labels,market){
  if(!market||!market.outcomes)return '';
@@ -201,7 +225,7 @@ function detailMarkets(r){
   if(items.length)blocks+='<div class="market-block"><h3>总进球</h3><div class="more-market">'+items.map(function(x){return '<span>'+enc(x[0].slice(1))+'球 · '+enc(x[1])+'</span>';}).join('')+'</div></div>';
  }
  if(!blocks)blocks='<div class="empty">这场比赛的公开赛前数据尚未更新。</div>';
- return blocks+'<div class="note">以上为已有的公开赛前资料，仅供赛事信息查阅。具体数据以正式网站为准。</div>';
+ return blocks+'';
 }
 function overviewTab(r){
  return '<div class="info-grid"><div class="info-item"><small>比赛日期</small><b>'+enc(dayLabel(r.date))+'</b></div>'+
@@ -210,20 +234,25 @@ function overviewTab(r){
  '<div class="info-item"><small>比赛状态</small><b>'+enc(r.ft?'已结束':'未完赛')+'</b></div>'+
  '<div class="info-item"><small>半场比分</small><b>'+enc(r.ht||'—')+'</b></div>'+
  '<div class="info-item"><small>全场比分</small><b>'+enc(r.ft||'—')+'</b></div></div>'+
- '<div class="note"><b>赛况提示：</b>比赛记录按北京时间展示，完赛比分在确认后更新。</div>';
+ '';
 }
+
 function detailTabHtml(r){
  if(detailTab==='markets')return detailMarkets(r);
- if(detailTab==='analysis')return lockedContent('赛事预测、详细解读及相关观点请在正式网站登录后查看。');
+ if(detailTab==='predictions')return '<h3 class="qc-detail-section-title">赛前判断与赛后结果</h3>'+
+ '<p class="qc-detail-intro">逐项查看赛果核对状态。赛前具体选择登录后查看。</p>'+
+ comparisonGrid(r,true)+(!r.ft?'<div class="qc-tip">赛事结束后显示对应结果。</div>':'');
+ if(detailTab==='analysis')return lockedContent('完整的赛前判断、比赛进程与比分分析，可在登录后阅读。');
  return overviewTab(r);
 }
+
 function renderDetail(){
  var id=new URLSearchParams(location.search).get('id');
  var r=byId.get(id);
  if(!r)return pageHead('赛事详情','赛事未找到','请返回比赛列表重新选择。')+
  '<div class="panel"><div class="empty">没有找到对应的比赛记录。'+link(pages.matches,'返回全部赛程')+'</div></div>';
  var back=pages.matches+'?date='+encodeURIComponent(r.businessDate);
- var tabs=[['overview','比赛概览'],['markets','官方公开数据'],['analysis','赛事分析']];
+ var tabs=[['overview','比赛概览'],['predictions','预测结果'],['markets','竞彩玩法'],['analysis','赛事分析']];
  return '<div class="path">'+link(pages.home,'球场档案')+' / '+link(back,'全部赛程')+' / 赛事详情</div>'+
  '<div class="pagehead"><div><h1>赛事详情</h1><p>'+enc(r.league)+' · '+enc(r.number)+' · '+enc(dayLabel(r.date))+'</p></div>'+
  '<div class="page-actions">'+link(back,'← 返回赛程')+'</div></div>'+
