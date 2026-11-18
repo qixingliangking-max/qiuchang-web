@@ -7,7 +7,7 @@ var days=data.days,all=days.flatMap(function(d){return d.rows.map(function(r){re
 var byId=new Map(all.map(function(r){return [r.id,r];}));
 var focusDay=data.demoDate||'2026-11-19';
 var activeDate=focusDay,reviewDate=(days.filter(function(d){return d.archived;}).slice(-1)[0]||days[0]).day;
-var leagueFilter='全部',searchTerm='',detailTab='overview';
+var leagueFilter='全部',searchTerm='',detailTab='predictions';
 var pages={
  home:'site-next-ui-20261119.html',
  matches:'site-next-ui-20261119-matches.html',
@@ -252,7 +252,7 @@ function renderDetail(){
  if(!r)return pageHead('赛事详情','赛事未找到','请返回比赛列表重新选择。')+
  '<div class="panel"><div class="empty">没有找到对应的比赛记录。'+link(pages.matches,'返回全部赛程')+'</div></div>';
  var back=pages.matches+'?date='+encodeURIComponent(r.businessDate);
- var tabs=[['overview','比赛概览'],['predictions','预测结果'],['markets','竞彩玩法'],['analysis','赛事分析']];
+ var tabs=[['predictions','赛前判断'],['overview','比赛概览'],['markets','竞彩玩法'],['analysis','赛事分析']];
  return '<div class="path">'+link(pages.home,'球场档案')+' / '+link(back,'全部赛程')+' / 赛事详情</div>'+
  '<div class="pagehead"><div><h1>赛事详情</h1><p>'+enc(r.league)+' · '+enc(r.number)+' · '+enc(dayLabel(r.date))+'</p></div>'+
  '<div class="page-actions">'+link(back,'← 返回赛程')+'</div></div>'+
@@ -268,8 +268,8 @@ function renderDetail(){
  '<div class="info-grid" style="grid-template-columns:repeat(2,1fr);padding:0 14px 16px">'+
  '<div class="info-item"><small>比赛编号</small><b>'+enc(r.number)+'</b></div>'+
  '<div class="info-item"><small>比赛时间</small><b>'+enc(r.time)+'</b></div></div></section>'+
- '<section class="panel">'+panelHead('查看完整内容','获取正式赛事信息')+
- '<div style="padding:0 14px 16px">'+link('../jc-match.html?id='+encodeURIComponent(r.id),'前往正式赛事页 ↗','class="hero-button" style="display:flex;justify-content:center;background:#e0eecf"')+'</div></section></aside></div>';
+ '<section class="panel">'+panelHead('查看完整内容','赛事相关内容')+
+ '<div style="padding:0 14px 16px">'+link('../jc-match.html?id='+encodeURIComponent(r.id),'查看完整赛事 ›','class="hero-button" style="display:flex;justify-content:center;background:#e0eecf"')+'</div></section></aside></div>';
 }
 function render(){
  var page=pageName();
@@ -282,7 +282,7 @@ function render(){
 }
 function navigate(url){
  history.pushState(null,'',url.pathname+url.search);
- if(pageName()==='detail')detailTab='overview';
+ if(pageName()==='detail')detailTab='predictions';
  if(pageName()==='matches')searchTerm='';
  render();window.scrollTo({top:0,behavior:'auto'});
 }
@@ -332,6 +332,6 @@ document.addEventListener('input',function(e){
   var list=$('matchGrid');if(list)list.innerHTML=matchListHtml();
  }
 });
-window.addEventListener('popstate',function(){detailTab='overview';render();});
+window.addEventListener('popstate',function(){detailTab='predictions';render();});
 render();
 })();
