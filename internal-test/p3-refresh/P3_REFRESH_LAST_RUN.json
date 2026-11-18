@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-17T23:04:15.007Z",
+  "run_at": "2026-11-18T02:20:36.796Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 1,
@@ -326,7 +326,7 @@
       "unmapped_count": 0,
       "strict_errors": 0,
       "collection_failures": 0,
-      "exit_code": 0
+      "exit_code": 1
     },
     {
       "league_code": "USA_MLS",
