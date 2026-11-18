@@ -255,7 +255,7 @@ function navigate(url){
  history.pushState(null,'',url.pathname+url.search);
  if(pageName()==='detail')detailTab='overview';
  if(pageName()==='matches')searchTerm='';
- render();window.scrollTo({top:0,behavior:'instant'});
+ render();window.scrollTo({top:0,behavior:'auto'});
 }
 document.addEventListener('click',function(e){
  var target=e.target.closest('a[data-ui-link]');
