@@ -378,6 +378,7 @@ document.addEventListener('input',function(e){
   var list=$('matchGrid');if(list)list.innerHTML=matchListHtml();
  }
 });
-window.addEventListener('popstate',function(){detailTab='predictions';render();});
+window.addEventListener('popstate',function(){detailTab='predictions';render(); if(location.hash==='#review'){var section=document.getElementById('review');if(section&&section.scrollIntoView)section.scrollIntoView({block:'start'});}});
 render();
+if(location.hash==='#review'){var section=document.getElementById('review');if(section&&section.scrollIntoView)section.scrollIntoView({block:'start'});}
 })();
