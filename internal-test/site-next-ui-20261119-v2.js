@@ -108,10 +108,10 @@ function allOdds(r){
  return '<section class="market-block"><h3>'+esc(title)+(p&&p.line?'　'+esc(p.line):'')+'</h3><div class="market-grid">'+
  [['h','主胜'],['d','平局'],['a','客胜']].map(it=>'<span><small>'+it[1]+'</small><b>'+esc(o[it[0]]??'—')+'</b></span>').join('')+'</div></section>';}
  let out=market('胜平负',d.had)+market('让球胜平负',d.hhad);
- if(d.ttg)out+='<section class="market-block"><h3>总进球</h3>'+marketChips(d.ttg,k=>/^s\d$/.test(k)?k.slice(1)+'球':k)+'</section>';
+ if(d.ttg)out+='<section class="market-block"><h3>总进球</h3>'+marketChips(d.ttg,k=>/^s\d$/.test(k)?(k==='s7'?'7球及以上':k.slice(1)+'球'):k)+'</section>';
  if(d.hafu){const names={hh:'胜/胜',hd:'胜/平',ha:'胜/负',dh:'平/胜',dd:'平/平',da:'平/负',ah:'负/胜',ad:'负/平',aa:'负/负'};
  out+='<section class="market-block"><h3>半全场</h3>'+marketChips(d.hafu,k=>names[k]||k)+'</section>';}
- if(d.crs)out+='<section class="market-block"><h3>比分</h3>'+marketChips(d.crs,k=>{const m=k.match(/^s(\d\d)s(\d\d)$/);return m?(Number(m[1])+'-'+Number(m[2])):k;})+'</section>';
+ if(d.crs)out+='<section class="market-block"><h3>比分</h3>'+marketChips(d.crs,k=>{const m=k.match(/^s(\d\d)s(\d\d)$/);return m?(Number(m[1])+'-'+Number(m[2])):({ 's-1sh':'其他主胜','s-1sd':'其他平局','s-1sa':'其他客胜'}[k]||'其他比分');})+'</section>';
  return out;
 }
 function gameInfo(r){return '<div class="info-list">'+[['比赛编号',r.number],['赛事',r.league],['比赛日期',dateText(r.date)],['开赛时间',r.time],['半场比分',r.ht||'—'],['全场比分',r.ft||'—']].map(it=>
@@ -196,7 +196,7 @@ window.addEventListener('popstate',()=>{detailTab='picks';const d=new URLSearchP
 async function loadReal(){
  const client=window.qcSupabase;if(!client||!client.auth)return;
  try{
- const session=await client.auth.getSession();
+ let session=null;try{session=await client.auth.getSession();}catch(_){}
  user=session&&session.data&&session.data.session&&session.data.session.user||null;checked=true;if(route()==='profile')draw();
  const ids=records.map(r=>r.id);
  const req=[
