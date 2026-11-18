@@ -8,7 +8,7 @@ var records=days.flatMap(function(d){return d.rows.map(function(r){return Object
 var recordIndex=new Map(records.map(function(r){return [String(r.id),r];}));
 var pageUrls={home:'site-next-ui-20261119.html',matches:'site-next-ui-20261119-matches.html',profile:'site-next-ui-20261119-profile.html',detail:'site-next-ui-20261119-detail.html'};
 var today=source.demoDate||days[days.length-1].day;
-var pickedDay=today,league='全部',query='',detailTab='judgments';
+var pickedDay=today,homeDay=today,league='全部',query='',detailTab='judgments';
 var savedKey='qc_next_ui_favorites_v1',viewedKey='qc_next_ui_seen_v1';
 var savedBackup=[],viewedBackup=[];
 var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
@@ -55,18 +55,23 @@ function section(title,sub,content,anchor,extra){
  (sub?'<p>'+sub+'</p>':'')+'</div>'+(extra||'')+'</header>'+content+'</section>';
 }
 function renderHome(){
- var previous=days.find(function(d){return d.day==='2026-11-18';});
- var recent=days.filter(function(d){return d.rows.some(function(r){return !!r.ft;});}).sort(function(a,b){return a.day.localeCompare(b.day);}).slice(-1)[0];
+ var index=availableDays().indexOf(homeDay);
+ var previous=index>0?days[index-1]:null;
  var prevRows=previous?dayRows(previous.day).filter(isDone):[];
+ var recent=days.filter(function(d){return d.day<homeDay&&d.rows.some(function(r){return !!r.ft;});})
+  .sort(function(a,b){return a.day.localeCompare(b.day);}).slice(-1)[0];
  var reviewDay=prevRows.length?previous.day:(recent&&recent.day);
  var reviewRows=prevRows.length?prevRows:(reviewDay?dayRows(reviewDay).filter(isDone):[]);
  var reviewSub=reviewDay?dText(reviewDay)+' · '+reviewRows.length+'场已完赛'+(previous&&reviewDay!==previous.day?'（最近已确认赛果）':''):'暂无已确认赛果';
- var nowRows=dayRows(today);
- return '<div class="page-intro"><div><h1>今日速览</h1><p>'+esc(dText(today))+' · 赛事与结果一目了然</p></div>'+
- link(pageUrls.matches,'查看竞彩足球 ›','class="subtle-action"')+'</div>'+
+ var nowRows=dayRows(homeDay);
+ var controls='<div class="home-date"><button type="button" data-home-step="-1" aria-label="上一天"'+(index<=0?' disabled':'')+'>‹</button>'+
+ '<strong>'+esc(dText(homeDay))+'</strong>'+
+ '<button type="button" data-home-step="1" aria-label="下一天"'+(index>=days.length-1?' disabled':'')+'>›</button>'+
+ (homeDay!==today?'<button type="button" class="home-today" data-home-today>回到今日</button>':'')+'</div>';
+ return '<div class="page-intro"><div><h1>今日速览</h1><p>赛前信息与赛后结果</p></div>'+controls+'</div>'+
  section('昨日回看',reviewSub,legend()+rowTable(reviewRows),'review')+
- section('今日预测',dText(today)+' · '+nowRows.length+'场比赛',
- (nowRows.some(function(r){return !r.ft;})?'<div class="brief-note">赛前选择尚未发布的项目以“—”显示，开赛后按已确认结果更新。</div>':'')+
+ section(homeDay===today?'今日预测':'当日预测',dText(homeDay)+' · '+nowRows.length+'场比赛',
+ (nowRows.some(function(r){return !r.ft;})?'<div class="brief-note">暂未发布的赛前选择以“—”显示，赛后结果确认后更新。</div>':'')+
  rowTable(nowRows),'today');
 }
 function dateNav(){
@@ -209,6 +214,9 @@ document.addEventListener('click',function(e){
    e.preventDefault();move(url);return;
   }
  }
+ var homeStep=e.target.closest('button[data-home-step]');
+ if(homeStep){var list=availableDays(),next=list.indexOf(homeDay)+Number(homeStep.dataset.homeStep);if(next>=0&&next<list.length){homeDay=list[next];history.replaceState(null,'',location.pathname+(homeDay===today?'':'?date='+encodeURIComponent(homeDay)));paint();}return;}
+ var homeToday=e.target.closest('button[data-home-today]');if(homeToday){homeDay=today;history.replaceState(null,'',location.pathname);paint();return;}
  var date=e.target.closest('button[data-day]');
  if(date){pickedDay=date.dataset.day;league='全部';query='';history.replaceState(null,'',location.pathname+'?date='+encodeURIComponent(pickedDay));paint();return;}
  var filter=e.target.closest('button[data-league]');
@@ -223,7 +231,8 @@ document.addEventListener('input',function(e){
  if(e.target.id==='filterInput'){query=String(e.target.value||'').toLowerCase().trim();var list=el('fixtureList');if(list)list.innerHTML=fixtureList();
  var title=el('listTitle');if(title)title.textContent=dText(pickedDay)+' · '+filteredMatches().length+'场比赛';}
 });
-window.addEventListener('popstate',function(){detailTab='judgments';paint();if(location.hash==='#review'){var node=el('review');if(node&&node.scrollIntoView)node.scrollIntoView({block:'start'});}});
+window.addEventListener('popstate',function(){detailTab='judgments';var selected=new URLSearchParams(location.search).get('date');if(route()==='home')homeDay=selected&&availableDays().includes(selected)?selected:today;paint();if(location.hash==='#review'){var node=el('review');if(node&&node.scrollIntoView)node.scrollIntoView({block:'start'});}});
+if(route()==='home'){var selected=new URLSearchParams(location.search).get('date');if(selected&&availableDays().includes(selected))homeDay=selected;}
 paint();
 if(location.hash==='#review'){var node=el('review');if(node&&node.scrollIntoView)node.scrollIntoView({block:'start'});}
 })();
