@@ -3652,6 +3652,24 @@ async function loadJcFrontend(){
       setTimeout(warmPreviousArchive,350);
     }
   }
+  // Prepare the next publicly published fixture day only AFTER first paint.
+  // This primes the same verified same-origin reader used by the date arrow;
+  // it never reads Pro predictions, mutates match rows or bypasses membership.
+  // Live manifest/version checks still run when the user opens that date.
+  if(initialDate===today && !navigator.connection?.saveData &&
+     typeof window.qcFetchLiveScheduleDate==='function'){
+    const warmTomorrowPublic=()=>{
+      if(document.hidden || access.isPro) return;
+      const tomorrow=qcAddDays(today,1);
+      if(!isOverviewDateAllowed(tomorrow)) return;
+      Promise.resolve(window.qcFetchLiveScheduleDate(tomorrow)).catch(()=>{});
+    };
+    if(typeof window.requestIdleCallback==='function'){
+      window.requestIdleCallback(warmTomorrowPublic,{timeout:2500});
+    }else{
+      setTimeout(warmTomorrowPublic,900);
+    }
+  }
 
   async function refreshOverviewLive(){
     if(document.hidden) return;
