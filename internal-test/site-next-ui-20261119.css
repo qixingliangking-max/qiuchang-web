@@ -194,3 +194,11 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #9bba
 .mobile-nav .nav-glyph{font-size:19px;line-height:1.2}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* 日期快捷切换 */
+.home-date{display:flex;align-items:center;gap:6px}
+.home-date strong{font-size:12px;font-weight:900;color:#48687f;white-space:nowrap;margin:0 4px}
+.home-date button{border:1px solid #dfe7ed;border-radius:8px;background:#fff;color:#50738c;height:32px;min-width:32px;font-size:16px;font-weight:900}
+.home-date button:disabled{opacity:.35;cursor:default}
+.home-date button.home-today{font-size:10px;min-width:auto;padding:0 9px;font-weight:800}
+@media(max-width:740px){.home-date{gap:4px}.home-date button{height:29px;min-width:29px}.home-date strong{font-size:11px;margin:0 2px}}
