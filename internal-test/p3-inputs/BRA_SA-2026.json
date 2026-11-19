@@ -2762,6 +2762,22 @@
       "away_team": "帕尔梅拉斯",
       "match_date": "2026-11-18",
       "kickoff_at": "2026-11-18T23:30:00Z"
+    },
+    {
+      "source_match_id": "5103707",
+      "match_id": "fotmob:5103707",
+      "home_team": "科林蒂安",
+      "away_team": "博塔弗戈",
+      "match_date": "2026-11-19",
+      "kickoff_at": "2026-11-19T00:30:00.000Z"
+    },
+    {
+      "source_match_id": "5103710",
+      "match_id": "fotmob:5103710",
+      "home_team": "格雷米奥",
+      "away_team": "巴伊亚",
+      "match_date": "2026-11-19",
+      "kickoff_at": "2026-11-19T00:30:00.000Z"
     }
   ]
 }
