@@ -2730,6 +2730,22 @@
       "away_team": "瓦斯科达伽马",
       "match_date": "2026-11-14",
       "kickoff_at": "2026-11-14T23:30:00Z"
+    },
+    {
+      "source_match_id": "5103711",
+      "match_id": "fotmob:5103711",
+      "home_team": "科里蒂巴",
+      "away_team": "桑托斯",
+      "match_date": "2026-11-18",
+      "kickoff_at": "2026-11-18T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103713",
+      "match_id": "fotmob:5103713",
+      "home_team": "雷莫",
+      "away_team": "沙佩科恩斯",
+      "match_date": "2026-11-18",
+      "kickoff_at": "2026-11-18T23:00:00Z"
     }
   ]
 }
