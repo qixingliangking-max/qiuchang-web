@@ -2746,6 +2746,22 @@
       "away_team": "沙佩科恩斯",
       "match_date": "2026-11-18",
       "kickoff_at": "2026-11-18T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103704",
+      "match_id": "fotmob:5103704",
+      "home_team": "弗拉门戈",
+      "away_team": "巴拉纳竞技",
+      "match_date": "2026-11-18",
+      "kickoff_at": "2026-11-18T23:30:00Z"
+    },
+    {
+      "source_match_id": "5103709",
+      "match_id": "fotmob:5103709",
+      "home_team": "克鲁塞罗",
+      "away_team": "帕尔梅拉斯",
+      "match_date": "2026-11-18",
+      "kickoff_at": "2026-11-18T23:30:00Z"
     }
   ]
 }
