@@ -1209,7 +1209,15 @@
       "home_team": "阿尔瓦塞特",
       "away_team": "塞尔塔B",
       "match_date": "2026-11-16",
-      "kickoff_at": "2026-11-16T19:30:00.000Z"
+      "kickoff_at": "2026-11-16T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868547",
+      "match_id": "fotmob:5868547",
+      "home_team": "安道尔FC",
+      "away_team": "莱加内斯",
+      "match_date": "2026-11-20",
+      "kickoff_at": "2026-11-20T19:30:00.000Z"
     }
   ]
 }
