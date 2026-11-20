@@ -291,10 +291,18 @@ body.curated-booting #tabs,
 body.curated-booting #dailyTitle,
 body.curated-booting #dailyMeta,
 body.curated-booting #plans,
+body.curated-booting #analystRoster,
 body.curated-booting #historyHeading,
 body.curated-booting #history {visibility:hidden}
 .info-band .curated-retry{margin-left:8px;padding:5px 12px;border:1px solid #9db0d1;border-radius:8px;background:#fff;color:#244a85;font-size:13px;font-weight:700;cursor:pointer}
 .info-band .curated-retry:disabled{opacity:.6;cursor:wait}
+/* Four named analyst statuses are informational; never create placeholder plan cards. */
+.analyst-roster{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.analyst-roster[hidden]{display:none}
+.analyst-roster-entry{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.analyst-roster-entry strong{font-size:12px;color:#30496a;white-space:nowrap}
+.analyst-roster-entry small{font-size:10px;color:#8494a7;text-align:right}
+@media(max-width:660px){.analyst-roster{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body class="curated-booting">
@@ -305,6 +313,7 @@ body.curated-booting #history {visibility:hidden}
 <nav class="tabs" id="tabs" role="tablist" aria-label="方案类别"><button class="tab active" role="tab" data-type="direction" aria-selected="true"><strong>胜平负</strong><span>精选方案</span></button><button class="tab" role="tab" data-type="htft" aria-selected="false"><strong>半全场</strong><span>精选方案</span></button><button class="tab" role="tab" data-type="goals" aria-selected="false"><strong>总进球</strong><span>精选方案</span></button><button class="tab" role="tab" data-type="score" aria-selected="false"><strong>比分</strong><span>精选方案</span></button></nav>
 <div class="info-band" id="infoBand" role="status">正在读取精选方案…</div>
 <div class="section-bar"><h2 id="dailyTitle">当日方案</h2><span id="dailyMeta"></span></div>
+<div class="analyst-roster" id="analystRoster" aria-live="polite" aria-label="当日四位分析师状态" hidden></div>
 <section class="panels" id="plans" aria-live="polite"></section>
 <div class="section-bar" id="historyHeading"><h2>历史回看</h2><span>10月19日起 · 赛前冻结记录</span></div>
 <section class="history" id="history" aria-label="历史方案回看">
@@ -317,6 +326,6 @@ body.curated-booting #history {visibility:hidden}
 <script src="curated-lab-data-20261019.js?v=20261021publicclean1"></script>
 <script src="../supabase-config.js"></script>
 <script src="curated-db-direct-20261022.js?v=20261121fouranalysts1"></script>
-<script src="curated-lab-20261019.js?v=20261121fouranalysts1"></script>
+<script src="curated-lab-20261019.js?v=20261121fourroster1"></script>
 </body>
 </html>
