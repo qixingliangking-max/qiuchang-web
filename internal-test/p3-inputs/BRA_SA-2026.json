@@ -2769,7 +2769,7 @@
       "home_team": "科林蒂安",
       "away_team": "博塔弗戈",
       "match_date": "2026-11-19",
-      "kickoff_at": "2026-11-19T00:30:00.000Z"
+      "kickoff_at": "2026-11-19T00:30:00Z"
     },
     {
       "source_match_id": "5103710",
@@ -2777,7 +2777,23 @@
       "home_team": "格雷米奥",
       "away_team": "巴伊亚",
       "match_date": "2026-11-19",
-      "kickoff_at": "2026-11-19T00:30:00.000Z"
+      "kickoff_at": "2026-11-19T00:30:00Z"
+    },
+    {
+      "source_match_id": "5103705",
+      "match_id": "fotmob:5103705",
+      "home_team": "瓦斯科达伽马",
+      "away_team": "巴西国际",
+      "match_date": "2026-11-19",
+      "kickoff_at": "2026-11-19T22:30:00Z"
+    },
+    {
+      "source_match_id": "5103712",
+      "match_id": "fotmob:5103712",
+      "home_team": "维多利亚",
+      "away_team": "布拉干蒂诺RB",
+      "match_date": "2026-11-19",
+      "kickoff_at": "2026-11-19T22:30:00Z"
     }
   ]
 }
