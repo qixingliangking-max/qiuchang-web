@@ -19,10 +19,10 @@ function knownDates(){
 var all=[];
 var liveAutoFollow=true;
 var liveFetchPending=false;
-var personaNames={1:'顾衡',2:'沈策',3:'陆野'};
+var personaNames={1:'顾衡',2:'沈策',3:'陆野',4:'程砚'};
 function personaPlan(index){return (personaNames[index]||'')+'方案'}
-/* Three analysts keep the same identity color in cards and detail dialogs. */
-var analystColorKey={1:'guheng',2:'shence',3:'luye'};
+/* Each analyst keeps an individual identity color in cards and dialogs. */
+var analystColorKey={1:'guheng',2:'shence',3:'luye',4:'chengyan'};
 function analystCardClass(plan){return ' analyst-'+(analystColorKey[plan.index]||'guheng')}
 function formatLabel(code){var names={direction_2_0:'2.0版',direction_3_0:'3.0版',htft_single:'单场版',htft_double:'双场版',htft_triple:'三场版',goals_1:'单场版',goals_2:'双场版',goals_3:'三场版',score_1:'单场版',score_2:'双场版',score_3:'三场版'};return names[code]||''}
 function personaPlanLive(plan){var pack=db.selectedPlans&&db.selectedPlans[plan.day];if(pack&&pack.rule==='QCDA_V23_CURATED_FORMAL')return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'');var streak=pack&&pack.streaks&&Number(pack.streaks[plan.index]);return personaPlan(plan.index)+(plan.format&&formatLabel(plan.format)?' · '+formatLabel(plan.format):'')+(!plan.replay&&streak>=2?' · '+streak+'连红':'')}
@@ -87,7 +87,8 @@ function plansFor(day,type){
    var versions=[
      {entries:pack.entries||[],label:'顾衡方案',id:'original',shadow:false,index:1},
      pack.aiSelector&&{entries:pack.aiSelector.entries||[],label:'沈策方案',id:'shadow-v1',shadow:true,index:2},
-     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野方案',id:'analyst',shadow:true,index:3}
+     pack.analystSelector&&{entries:pack.analystSelector.entries||[],label:'陆野方案',id:'analyst',shadow:true,index:3},
+     pack.newSelector&&{entries:pack.newSelector.entries||[],label:'程砚方案',id:'probation',shadow:true,index:4}
    ].filter(Boolean);
    return versions.flatMap(function(version){
      return version.entries.filter(function(e){return e.type===type}).map(function(record){
