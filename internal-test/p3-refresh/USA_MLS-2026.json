@@ -6,7 +6,7 @@
     "130"
   ],
   "fotmob_ccode3": "USA",
-  "baseline_finished_matches": 511,
+  "baseline_finished_matches": 512,
   "team_map": {
     "Austin FC": "奥斯汀FC",
     "DC United": "华盛顿联",
@@ -40,6 +40,6 @@
     "Sporting Kansas City": "堪萨斯城竞技",
     "New England Revolution": "新英格兰革命"
   },
-  "last_successful_refresh_at": "2026-11-20T04:15:58.228Z",
-  "last_published_blob_sha": "9df70842f4e36ed2b91bf826da2776a7f4aef371"
+  "last_successful_refresh_at": "2026-11-20T07:39:02.045Z",
+  "last_published_blob_sha": "0151dfcdfe7b267ed7e6ffdd1a03bed0cfedce74"
 }

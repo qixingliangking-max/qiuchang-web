@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-20T04:16:11.793Z",
+  "run_at": "2026-11-20T07:39:31.204Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 2,
-  "noop_leagues": 20,
+  "promoted_leagues": 1,
+  "noop_leagues": 21,
   "blocked_leagues": 2,
   "results": [
     {
@@ -23,15 +23,15 @@
     {
       "league_code": "BRA_SA",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 350,
-      "baseline_finished_matches": 349,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 350,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -332,8 +332,8 @@
       "league_code": "USA_MLS",
       "season": "2026",
       "status": "PROMOTED",
-      "discovered_finished": 511,
-      "baseline_finished_matches": 510,
+      "discovered_finished": 512,
+      "baseline_finished_matches": 511,
       "new_finished_matches": 1,
       "gate_status": "PASS",
       "collection_coverage_pct": 100,

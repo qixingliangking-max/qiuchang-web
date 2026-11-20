@@ -4090,6 +4090,14 @@
       "away_team": "辛辛那提FC",
       "match_date": "2026-11-20",
       "kickoff_at": "2026-11-20T00:30:00.000Z"
+    },
+    {
+      "source_match_id": "6580834",
+      "match_id": "fotmob:6580834",
+      "home_team": "西雅图海湾人",
+      "away_team": "皇家盐湖城",
+      "match_date": "2026-11-20",
+      "kickoff_at": "2026-11-20T03:00:00.000Z"
     }
   ]
 }
