@@ -225,6 +225,25 @@ function planCard(plan){
  }
  return '<article class="plan'+colorClass+'"><div class="plan-head"><span class="plan-id">'+esc(personaPlanLive(plan))+'</span></div><div class="legs">'+planLegs(plan).map(miniLeg).join('')+'</div><div class="plan-foot"><div class="plan-return"><small>模拟返还 · '+money(state.budget)+'点</small><strong class="'+(calc.covered?'':'null')+'">'+money(calc.returns)+' <span style="font-size:12px">点</span></strong></div><button class="inspect" data-open-date="'+esc(plan.day)+'" data-open-index="'+plan.index+'"'+detailAttr(plan)+'>方案详情 →</button></div></article>';
 }
+function renderAnalystRoster(){
+ var host=$('analystRoster');if(!host)return;
+ if(!state.day||state.day<'2026-11-21'){host.hidden=true;host.innerHTML='';return;}
+ var pack=db.selectedPlans&&db.selectedPlans[state.day];
+ var fetching=(window.QC_CURATED_DAY_LOADING||{})[state.day];
+ var error=(window.QC_CURATED_DAY_ERRORS||{})[state.day];
+ var sources=[
+  {name:'顾衡',key:'guheng',entries:pack&&pack.entries},
+  {name:'沈策',key:'shence',entries:pack&&pack.aiSelector&&pack.aiSelector.entries},
+  {name:'陆野',key:'luye',entries:pack&&pack.analystSelector&&pack.analystSelector.entries},
+  {name:'程砚',key:'chengyan',entries:pack&&pack.newSelector&&pack.newSelector.entries}
+ ];
+ host.innerHTML=sources.map(function(p){
+  var count=Array.isArray(p.entries)?p.entries.length:0;
+  var status=!pack?(error?'读取失败':fetching?'读取中':'待同步'):(count?'已发布 '+count+' 组':'暂无正式方案');
+  return '<div class="analyst-roster-entry analyst-'+p.key+'"><strong>'+p.name+'</strong><small>'+status+'</small></div>';
+ }).join('');
+ host.hidden=false;
+}
 function renderPlans(){
  var plans=plansFor(state.day,state.type);
  var pack=db.selectedPlans&&db.selectedPlans[state.day];
@@ -275,7 +294,7 @@ function renderHistory(){
  if(host.parentElement)host.parentElement.style.display=rows.length?'':'none';
  if(heading)heading.style.display=rows.length?'':'none';
 }
-function renderAll(){renderTabs();renderDate();renderPlans();renderHistory();if(state.open)renderDialog()}
+function renderAll(){renderTabs();renderDate();renderAnalystRoster();renderPlans();renderHistory();if(state.open)renderDialog()}
 function calendar(){
  var y=state.month.getFullYear(),mo=state.month.getMonth(),first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate(),html='';
  $('monthLabel').textContent=y+'年'+(mo+1)+'月';
