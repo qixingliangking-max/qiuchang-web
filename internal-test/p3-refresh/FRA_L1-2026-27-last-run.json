@@ -1,18 +1,30 @@
 {
   "league_code": "FRA_L1",
   "season": "2026/27",
-  "run_at": "2026-11-21T20:59:29.527Z",
+  "run_at": "2026-11-21T21:50:29.273Z",
   "discovered_fixtures": 306,
-  "discovered_finished": 92,
-  "in_scope_finished": 92,
+  "discovered_finished": 96,
+  "in_scope_finished": 96,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 92,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 4,
+  "added_source_match_ids": [
+    "5802991",
+    "5802992",
+    "5802995",
+    "5802998"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 92,
+  "mapped_finished": 96,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 26.3,
+  "published_blob_sha": "7658a58167231a9bbc238e891becf1faeec69e4f"
 }
