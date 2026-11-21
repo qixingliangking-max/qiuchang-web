@@ -72,44 +72,81 @@
     });
   }
 
-  // A single SDK-native sign-in both validates the credentials and persists
-  // the session. The previous token-fetch -> setSession path could perform an
-  // additional remote user verification and misreport a successful login as a
-  // 7-second session timeout on slow mobile networks.
-  let loginAttemptId=0;
-  async function authenticate(email,password,attemptId){
-    if(!loginClient?.auth?.signInWithPassword)
-      return {error:{code:'AUTH_UNAVAILABLE'}};
-    const request=Promise.resolve()
-      .then(()=>loginClient.auth.signInWithPassword({email,password}))
-      .then(({data,error})=>{
-        if(error)return {error:{
-          code:String(error.code||error.name||'AUTH_FAILED'),
-          message:String(error.message||''),
-          status:Number(error.status||0)
-        }};
-        if(data?.session?.user)return {user:data.session.user};
-        return {error:{code:'AUTH_NO_SESSION'}};
-      },error=>({error:{
-        code:'AUTH_NETWORK',message:String(error?.message||''),status:0
-      }}));
-
-    // This is a UI waiting budget, not an abort: a late successful response
-    // must still be accepted and navigate rather than drop the user's session.
+  // A few Android in-app browsers silently stall fetch or ignore abort.
+  // Race both response headers AND body against a deadline; a second bounded
+  // attempt is permitted only for transport failures, never for 4xx/429.
+  // No credentials or tokens are persisted in diagnostic logs.
+  async function passwordTokenAttempt(email,password,deadlineMs){
+    const controller=new AbortController();
     let timer;
-    const pending=new Promise(resolve=>{
-      timer=setTimeout(()=>resolve({pending:true}),18000);
-    });
-    const first=await Promise.race([request,pending]);
-    clearTimeout(timer);
-    if(!first?.pending)return first;
-    request.then(late=>{
-      if(late?.user && loginAttemptId===attemptId && form.isConnected){
-        show('登录验证成功，正在进入网站…','success');
-        navigate();
-      }
-    }).catch(()=>{});
-    return {error:{code:'AUTH_PENDING_SLOW'}};
+    try{
+      const request=fetch(window.QC_SUPABASE_URL+'/auth/v1/token?grant_type=password',{
+        method:'POST',mode:'cors',cache:'no-store',signal:controller.signal,
+        headers:{'Content-Type':'application/json','apikey':window.QC_SUPABASE_PUBLISHABLE_KEY},
+        body:JSON.stringify({email,password})
+      }).then(async response=>{
+        let payload={};
+        try{payload=await response.json();}catch(_){}
+        return {response,payload};
+      });
+      const timeout=new Promise(resolve=>{
+        timer=setTimeout(()=>{
+          controller.abort();
+          resolve({timeout:true});
+        },deadlineMs);
+      });
+      const result=await Promise.race([request,timeout]);
+      if(result?.timeout)return {error:{code:'AUTH_NETWORK_TIMEOUT',status:0}};
+      const {response,payload}=result;
+      if(!response.ok)return {error:{
+        code:String(payload?.code||payload?.error_code||'AUTH_FAILED'),
+        message:String(payload?.message||payload?.error_description||payload?.error||''),
+        status:response.status
+      }};
+      if(!payload?.access_token || !payload?.refresh_token)
+        return {error:{code:'AUTH_INVALID_RESPONSE'}};
+      return {payload};
+    }catch(error){
+      return {error:{code:error?.name==='AbortError'?'AUTH_NETWORK_TIMEOUT':'AUTH_NETWORK',
+        message:String(error?.name||''),status:0}};
+    }finally{
+      clearTimeout(timer);
+    }
+  }
+
+  async function authenticate(email,password){
+    if(!loginClient || !window.QC_SUPABASE_URL || !window.QC_SUPABASE_PUBLISHABLE_KEY)
+      return {error:{code:'AUTH_UNAVAILABLE'}};
+    let payload=null;
+    for(let attempt=0;attempt<2;attempt++){
+      const result=await passwordTokenAttempt(email,password,6000);
+      if(!result.error){payload=result.payload;break;}
+      if(attempt===0 && ['AUTH_NETWORK_TIMEOUT','AUTH_NETWORK'].includes(result.error.code))
+        continue;
+      return {error:result.error};
+    }
+    if(!payload)return {error:{code:'AUTH_NETWORK_TIMEOUT'}};
+
+    // setSession writes to the same protected storage used across the site.
+    // Do not replace Supabase storage with an unaudited custom token cache.
+    let gate;
+    let timer;
+    try{
+      gate=await Promise.race([
+        loginClient.auth.setSession({
+          access_token:payload.access_token,
+          refresh_token:payload.refresh_token
+        }),
+        new Promise(resolve=>{
+          timer=setTimeout(()=>resolve({error:{code:'AUTH_SESSION_TIMEOUT'}}),7000);
+        })
+      ]);
+    }catch(error){
+      gate={error:{code:'AUTH_SESSION_ERROR',message:String(error?.message||'')}};
+    }finally{clearTimeout(timer);}
+    if(gate?.error)return {error:gate.error};
+    if(!gate?.data?.session?.user)return {error:{code:'AUTH_NO_SESSION'}};
+    return {user:gate.data.session.user};
   }
   const errorText=error=>{
     const code=String(error?.code||''),message=String(error?.message||'');
@@ -119,9 +156,7 @@
     if(code==='AUTH_NETWORK_TIMEOUT')return inApp()
       ? '当前内置浏览器未能连接账号服务。请点右上角“…”选择“在浏览器打开”，用系统浏览器重新登录。'
       : '账号服务连接超时，请检查 Wi-Fi / 移动网络后重试。';
-    if(code==='AUTH_PENDING_SLOW')return '账号服务响应较慢，验证仍在等待。如果稍后成功会自动进入网站；请先检查网络，避免连续点击。';
-    if(Number(error?.status)>=500)return '账号服务暂时繁忙，请稍后重试；无需修改密码。';
-    if(/AuthRetryableFetchError|NetworkError|Failed to fetch|Load failed|fetch failed|abort|timeout/i.test(code+' '+message))return networkMessage();
+    if(code==='AUTH_SESSION_TIMEOUT')return '账号已通过验证，但登录状态同步较慢，请返回首页查看后再决定是否重试。';
     if(/AUTH_NETWORK|AUTH_UNAVAILABLE|AUTH_INVALID_RESPONSE|AUTH_SESSION_ERROR|AUTH_NO_SESSION/.test(code))
       return networkMessage();
     return '登录失败，请稍后重试';
@@ -139,14 +174,7 @@
     show('正在验证账号，请勿重复点击。');
     window.qcSetAutoLoginPreference?.(Boolean(remember?.checked));
     try{
-      const attemptId=++loginAttemptId;
-      const slowNotice=setTimeout(()=>{
-        if(form.dataset.authSubmitting==='1')
-          show('账号服务响应较慢，正在安全验证，请勿重复提交。');
-      },6000);
-      let result;
-      try{result=await authenticate(email,password,attemptId);}
-      finally{clearTimeout(slowNotice);}
+      const result=await authenticate(email,password);
       if(result.error){show(errorText(result.error),'error');return;}
       show('登录成功，正在进入网站…','success');
       // Existing audit is noncritical: do not hold up the navigation on it.
