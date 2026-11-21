@@ -1242,6 +1242,14 @@
       "away_team": "埃登斯",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868557",
+      "match_id": "fotmob:5868557",
+      "home_team": "特内里费",
+      "away_team": "马略卡",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T20:00:00.000Z"
     }
   ]
 }

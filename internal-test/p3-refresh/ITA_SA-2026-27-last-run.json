@@ -1,27 +1,18 @@
 {
   "league_code": "ITA_SA",
   "season": "2026/27",
-  "run_at": "2026-11-21T21:50:46.195Z",
+  "run_at": "2026-11-21T22:23:09.599Z",
   "discovered_fixtures": 380,
   "discovered_finished": 114,
   "in_scope_finished": 114,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 113,
-  "new_finished_matches": 1,
-  "added_source_match_ids": [
-    "5749757"
-  ],
+  "baseline_finished_matches": 114,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 114,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 31.4,
-  "published_blob_sha": "e16d4e4d2aa6dc0bf255f2c62069af8f2a719871"
+  "status": "NO_NEW_FINISHED"
 }
