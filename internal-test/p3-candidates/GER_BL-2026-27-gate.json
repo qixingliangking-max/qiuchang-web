@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 82,
-  "collected_matches": 82,
+  "input_matches": 87,
+  "collected_matches": 87,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -20,42 +20,12 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "勒沃库森",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "埃尔弗斯堡",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "多特蒙德",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "奥格斯堡",
       "matches": 9
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "帕德博恩",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "弗赖堡",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "斯图加特",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "柏林联合",
       "matches": 9
     },
     {
@@ -70,31 +40,11 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "法兰克福",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "美因茨",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "莱比锡",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "门兴格拉德巴赫",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "霍芬海姆",
       "matches": 9
     }
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 15.2
+  "avg_team_depth_coverage_pct": 17.7
 }

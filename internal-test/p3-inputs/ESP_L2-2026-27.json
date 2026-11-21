@@ -1217,7 +1217,15 @@
       "home_team": "安道尔FC",
       "away_team": "莱加内斯",
       "match_date": "2026-11-20",
-      "kickoff_at": "2026-11-20T19:30:00.000Z"
+      "kickoff_at": "2026-11-20T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868555",
+      "match_id": "fotmob:5868555",
+      "home_team": "萨瓦德尔",
+      "away_team": "格拉纳达",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T13:00:00.000Z"
     }
   ]
 }

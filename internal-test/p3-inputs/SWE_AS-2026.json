@@ -1761,7 +1761,7 @@
       "home_team": "哥德堡",
       "away_team": "马尔默",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T13:00:00.000Z"
+      "kickoff_at": "2026-11-08T13:00:00Z"
     },
     {
       "source_match_id": "5107660",
@@ -1769,7 +1769,7 @@
       "home_team": "哈尔姆斯塔德",
       "away_team": "佐加顿斯",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T13:00:00.000Z"
+      "kickoff_at": "2026-11-08T13:00:00Z"
     },
     {
       "source_match_id": "5107653",
@@ -1777,7 +1777,7 @@
       "home_team": "AIK索尔纳",
       "away_team": "赫根",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:30:00.000Z"
+      "kickoff_at": "2026-11-08T15:30:00Z"
     },
     {
       "source_match_id": "5107657",
@@ -1785,7 +1785,7 @@
       "home_team": "布洛马波卡纳",
       "away_team": "米亚尔比",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:30:00.000Z"
+      "kickoff_at": "2026-11-08T15:30:00Z"
     },
     {
       "source_match_id": "5107659",
@@ -1793,7 +1793,23 @@
       "home_team": "卡尔马",
       "away_team": "天狼星",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:30:00.000Z"
+      "kickoff_at": "2026-11-08T15:30:00Z"
+    },
+    {
+      "source_match_id": "5107661",
+      "match_id": "fotmob:5107661",
+      "home_team": "AIK索尔纳",
+      "away_team": "代格福什",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107666",
+      "match_id": "fotmob:5107666",
+      "home_team": "米亚尔比",
+      "away_team": "马尔默",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00.000Z"
     }
   ]
 }

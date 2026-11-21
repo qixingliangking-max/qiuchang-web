@@ -1673,7 +1673,15 @@
       "home_team": "莫尔德",
       "away_team": "博德闪耀",
       "match_date": "2026-11-20",
-      "kickoff_at": "2026-11-20T18:00:00.000Z"
+      "kickoff_at": "2026-11-20T18:00:00Z"
+    },
+    {
+      "source_match_id": "5105052",
+      "match_id": "fotmob:5105052",
+      "home_team": "特罗姆瑟",
+      "away_team": "维京",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T13:00:00.000Z"
     }
   ]
 }
