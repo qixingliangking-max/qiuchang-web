@@ -1682,6 +1682,14 @@
       "away_team": "维京",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105049",
+      "match_id": "fotmob:5105049",
+      "home_team": "汉坎",
+      "away_team": "腓特烈斯塔",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T15:00:00.000Z"
     }
   ]
 }

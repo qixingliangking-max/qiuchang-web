@@ -833,7 +833,7 @@
       "home_team": "海伦芬",
       "away_team": "费耶诺德",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T11:15:00.000Z"
+      "kickoff_at": "2026-11-08T11:15:00Z"
     },
     {
       "source_match_id": "5781803",
@@ -841,7 +841,7 @@
       "home_team": "特温特",
       "away_team": "阿贾克斯",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T13:30:00.000Z"
+      "kickoff_at": "2026-11-08T13:30:00Z"
     },
     {
       "source_match_id": "5781796",
@@ -849,7 +849,7 @@
       "home_team": "坎布尔",
       "away_team": "埃因霍温",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:45:00.000Z"
+      "kickoff_at": "2026-11-08T15:45:00Z"
     },
     {
       "source_match_id": "5781798",
@@ -857,7 +857,7 @@
       "home_team": "阿尔克马尔",
       "away_team": "格罗宁根",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:45:00.000Z"
+      "kickoff_at": "2026-11-08T15:45:00Z"
     },
     {
       "source_match_id": "5781795",
@@ -865,7 +865,15 @@
       "home_team": "乌德勒支",
       "away_team": "奈梅亨",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T19:00:00.000Z"
+      "kickoff_at": "2026-11-08T19:00:00Z"
+    },
+    {
+      "source_match_id": "5781805",
+      "match_id": "fotmob:5781805",
+      "home_team": "奈梅亨",
+      "away_team": "埃因霍温",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T15:30:00.000Z"
     }
   ]
 }

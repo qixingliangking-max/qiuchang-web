@@ -1226,6 +1226,14 @@
       "away_team": "格拉纳达",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5868554",
+      "match_id": "fotmob:5868554",
+      "home_team": "皇家社会B",
+      "away_team": "加的斯",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T15:15:00.000Z"
     }
   ]
 }
