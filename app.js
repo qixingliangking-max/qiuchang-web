@@ -663,6 +663,9 @@ function jcDisplayModelDirection(model,m){
   if(!jcHasOrdinaryResult(m)){
     const pick=jcCompactHandicapPick(model?.direction);
     if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) {
+      // Preserve the user's explicit website display rule for flagged FINAL:
+      // core direction has no handicap bracket, official handicap does.
+      if(model?.raw_input?.direction_no_handicap_line===true) return pick;
       const line=String(model?.raw_input?.handicap_line??'').trim();
       return pick+(/^[+-]\d+(?:\.\d+)?$/.test(line)?'（'+line+'）':'');
     }
