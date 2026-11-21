@@ -13,7 +13,7 @@ function restoreVerifiedDay(day){
   var saved=JSON.parse(raw);
   if(!saved||!saved.pack||!Number.isFinite(saved.at)||Date.now()-saved.at>36*3600000)return false;
   var pack=saved.pack;
-  var count=(pack.entries||[]).length+((pack.aiSelector||{}).entries||[]).length+((pack.analystSelector||{}).entries||[]).length+((pack.newSelector||{}).entries||[]).length;
+  var count=(pack.entries||[]).length+((pack.aiSelector||{}).entries||[]).length+((pack.analystSelector||{}).entries||[]).length;
   if(!count)return false;
   db.selectedPlans=db.selectedPlans||{};
   db.selectedPlans[day]=pack;
@@ -180,22 +180,21 @@ async function loadIndependentDay(day){
  if(day==='2026-10-30')return loadV23PreviewDay(day);
  var raw=await rpc('qc_v2_public',{p_business_date:day});
  var sources=Array.isArray(raw&&raw.analysts)?raw.analysts:[];
- if(sources.length<3 || (day>='2026-11-21' && sources.length<4))throw Error('Public analyst response incomplete for '+day);
+ if(sources.length!==3)throw Error('Public analyst response incomplete for '+day);
  var byId={};
  sources.forEach(function(a){byId[a.id]=a});
- var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0},a4=byId.chengyan||{plans:[],streak:0};
+ var a1=byId.guheng||{plans:[],streak:0},a2=byId.shence||{plans:[],streak:0},a3=byId.luye||{plans:[],streak:0};
  db.selectedPlans=db.selectedPlans||{};
  var pack={
-  rule:day>='2026-11-21'?'QCDA_INDEPENDENT_4_ANALYSTS_V2':'QCDA_INDEPENDENT_3_ANALYSTS_V2',
+  rule:'QCDA_INDEPENDENT_3_ANALYSTS_V2',
   entries:(a1.plans||[]).map(function(p){return buildV2Entry(day,p)}),
   aiSelector:{entries:(a2.plans||[]).map(function(p){return buildV2Entry(day,p)})},
   analystSelector:{entries:(a3.plans||[]).map(function(p){return buildV2Entry(day,p)})},
-  newSelector:{entries:(a4.plans||[]).map(function(p){return buildV2Entry(day,p)})},
-  streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0,4:Number(a4.streak)||0}
+  streaks:{1:Number(a1.streak)||0,2:Number(a2.streak)||0,3:Number(a3.streak)||0}
  };
- var count=pack.entries.length+pack.aiSelector.entries.length+pack.analystSelector.entries.length+(pack.newSelector?pack.newSelector.entries.length:0);
+ var count=pack.entries.length+pack.aiSelector.entries.length+pack.analystSelector.entries.length;
  var previous=db.selectedPlans[day];
- var previousCount=previous?(previous.entries||[]).length+((previous.aiSelector||{}).entries||[]).length+((previous.analystSelector||{}).entries||[]).length+((previous.newSelector||{}).entries||[]).length:0;
+ var previousCount=previous?(previous.entries||[]).length+((previous.aiSelector||{}).entries||[]).length+((previous.analystSelector||{}).entries||[]).length:0;
  if(!count&&previousCount)throw Error('Empty live plan list; retained last valid submitted day');
  if(count>0)rememberVerifiedDay(day,pack);
  if(JSON.stringify(db.selectedPlans[day])===JSON.stringify(pack)){
