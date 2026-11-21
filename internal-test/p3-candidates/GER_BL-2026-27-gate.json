@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 87,
-  "collected_matches": 87,
+  "input_matches": 88,
+  "collected_matches": 88,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 18,
@@ -25,17 +25,7 @@
     },
     {
       "type": "LIMITED_SAMPLE",
-      "team": "斯图加特",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
       "team": "汉堡",
-      "matches": 9
-    },
-    {
-      "type": "LIMITED_SAMPLE",
-      "team": "沙尔克04",
       "matches": 9
     },
     {
@@ -46,5 +36,5 @@
   ],
   "gate_status": "PASS",
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 17.7
+  "avg_team_depth_coverage_pct": 18.2
 }

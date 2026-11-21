@@ -1690,6 +1690,14 @@
       "away_team": "腓特烈斯塔",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T15:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105050",
+      "match_id": "fotmob:5105050",
+      "home_team": "瓦勒伦加",
+      "away_team": "斯达",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T17:00:00.000Z"
     }
   ]
 }

@@ -1810,6 +1810,14 @@
       "away_team": "马尔默",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T14:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107663",
+      "match_id": "fotmob:5107663",
+      "home_team": "哥德堡盖斯",
+      "away_team": "瓦斯特拉斯",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T16:30:00.000Z"
     }
   ]
 }

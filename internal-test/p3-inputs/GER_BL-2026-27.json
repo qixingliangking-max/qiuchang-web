@@ -698,6 +698,14 @@
       "away_team": "莱比锡",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881230",
+      "match_id": "fotmob:5881230",
+      "home_team": "沙尔克04",
+      "away_team": "斯图加特",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T17:30:00.000Z"
     }
   ]
 }

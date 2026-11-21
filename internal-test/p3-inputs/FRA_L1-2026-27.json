@@ -729,7 +729,15 @@
       "home_team": "特鲁瓦",
       "away_team": "勒阿弗尔",
       "match_date": "2026-11-20",
-      "kickoff_at": "2026-11-20T19:45:00.000Z"
+      "kickoff_at": "2026-11-20T19:45:00Z"
+    },
+    {
+      "source_match_id": "5802996",
+      "match_id": "fotmob:5802996",
+      "home_team": "尼斯",
+      "away_team": "巴黎圣日耳曼",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T16:15:00.000Z"
     }
   ]
 }
