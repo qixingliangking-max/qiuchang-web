@@ -1,22 +1,20 @@
 {
   "league_code": "JPN_J1",
   "season": "2026/27",
-  "run_at": "2026-11-21T07:34:22.177Z",
+  "run_at": "2026-11-21T08:53:43.520Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 147,
-  "in_scope_finished": 147,
+  "discovered_finished": 149,
+  "in_scope_finished": 149,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 143,
-  "new_finished_matches": 4,
+  "baseline_finished_matches": 147,
+  "new_finished_matches": 2,
   "added_source_match_ids": [
-    "5803663",
-    "5803664",
-    "5803665",
-    "5803666"
+    "5803658",
+    "5803662"
   ],
   "removed_source_match_ids": [],
-  "mapped_finished": 147,
+  "mapped_finished": 149,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -25,6 +23,6 @@
   "strict_errors": 0,
   "collection_failures": 0,
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 48.6,
-  "published_blob_sha": "73da416ebfec4e29d2c481be645ed0cd00742eb8"
+  "avg_team_depth_coverage_pct": 50.5,
+  "published_blob_sha": "75237e62bb2577a5e8b2d5298c301c8f48e858c5"
 }
