@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-21T08:54:07.069Z",
+  "run_at": "2026-11-21T09:54:45.199Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 21,
+  "promoted_leagues": 2,
+  "noop_leagues": 20,
   "blocked_leagues": 2,
   "results": [
     {
@@ -192,9 +192,9 @@
       "league_code": "JPN_J1",
       "season": "2026/27",
       "status": "PROMOTED",
-      "discovered_finished": 149,
-      "baseline_finished_matches": 147,
-      "new_finished_matches": 2,
+      "discovered_finished": 150,
+      "baseline_finished_matches": 149,
+      "new_finished_matches": 1,
       "gate_status": "PASS",
       "collection_coverage_pct": 100,
       "unmapped_count": 0,
@@ -205,15 +205,15 @@
     {
       "league_code": "KOR_K1",
       "season": "2026",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 212,
+      "status": "PROMOTED",
+      "discovered_finished": 214,
       "baseline_finished_matches": 212,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 2,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {

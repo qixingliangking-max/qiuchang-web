@@ -1698,6 +1698,22 @@
       "away_team": "安养FC",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "6503839",
+      "match_id": "fotmob:6503839",
+      "home_team": "江原FC",
+      "away_team": "大田韩亚市民",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T07:30:00.000Z"
+    },
+    {
+      "source_match_id": "6503840",
+      "match_id": "fotmob:6503840",
+      "home_team": "仁川联",
+      "away_team": "蔚山HD",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T07:30:00.000Z"
     }
   ]
 }

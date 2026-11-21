@@ -1,18 +1,28 @@
 {
   "league_code": "KOR_K1",
   "season": "2026",
-  "run_at": "2026-11-21T08:53:47.743Z",
+  "run_at": "2026-11-21T09:54:15.121Z",
   "discovered_fixtures": 228,
-  "discovered_finished": 212,
-  "in_scope_finished": 212,
+  "discovered_finished": 214,
+  "in_scope_finished": 214,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 212,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 2,
+  "added_source_match_ids": [
+    "6503839",
+    "6503840"
+  ],
   "removed_source_match_ids": [],
-  "mapped_finished": 212,
+  "mapped_finished": 214,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "PILOT_FULL",
+  "avg_team_depth_coverage_pct": 93.9,
+  "published_blob_sha": "5032cedce6251a0bfc7ffb7109233696da1859e8"
 }
