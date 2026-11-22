@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-23T00:42:53+08:00",
+  "updated_at": "2026-11-23T01:41:36+08:00",
   "dates": {
     "2026-11-21": {
       "file": "data/overview/live/2026-11-21.json",
@@ -9,7 +9,7 @@
     },
     "2026-11-22": {
       "file": "data/overview/live/2026-11-22.json",
-      "version": "b8ea61b6ddeed154",
+      "version": "b50496c63aaa7183",
       "match_count": 18
     }
   }
