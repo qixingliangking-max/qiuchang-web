@@ -1282,6 +1282,14 @@
       "away_team": "埃瓦尔",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868548",
+      "match_id": "fotmob:5868548",
+      "home_team": "布尔戈斯",
+      "away_team": "阿尔瓦塞特",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T20:00:00.000Z"
     }
   ]
 }

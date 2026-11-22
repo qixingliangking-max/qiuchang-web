@@ -6,7 +6,7 @@
     "53"
   ],
   "fotmob_ccode3": "FRA",
-  "baseline_finished_matches": 98,
+  "baseline_finished_matches": 99,
   "team_map": {
     "Lens": "朗斯",
     "Lyon": "里昂",
@@ -27,6 +27,6 @@
     "Strasbourg": "斯特拉斯堡",
     "Paris Saint-Germain": "巴黎圣日耳曼"
   },
-  "last_successful_refresh_at": "2026-11-22T19:50:38.276Z",
-  "last_published_blob_sha": "b7fd4a474413c27687f23edc995ce5b50516bdb3"
+  "last_successful_refresh_at": "2026-11-22T22:03:55.997Z",
+  "last_published_blob_sha": "658f8fb363f3df08b9cee3478c9c7d9dad4b0db0"
 }
