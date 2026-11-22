@@ -4105,7 +4105,23 @@
       "home_team": "新英格兰革命",
       "away_team": "费城联合",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T19:00:00.000Z"
+      "kickoff_at": "2026-11-21T19:00:00Z"
+    },
+    {
+      "source_match_id": "6580836",
+      "match_id": "fotmob:6580836",
+      "home_team": "达拉斯FC",
+      "away_team": "波特兰伐木工",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T21:00:00Z"
+    },
+    {
+      "source_match_id": "6580837",
+      "match_id": "fotmob:6580837",
+      "home_team": "迈阿密国际",
+      "away_team": "哥伦布机员",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T23:00:00Z"
     }
   ]
 }
