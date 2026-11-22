@@ -1714,6 +1714,22 @@
       "away_team": "罗森博格",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T16:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105053",
+      "match_id": "fotmob:5105053",
+      "home_team": "奥斯陆KFUM",
+      "away_team": "布兰",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5105056",
+      "match_id": "fotmob:5105056",
+      "home_team": "萨普斯堡",
+      "away_team": "利勒斯特罗姆",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T18:15:00.000Z"
     }
   ]
 }
