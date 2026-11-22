@@ -1,15 +1,16 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-22T08:08:12.004Z",
+  "run_at": "2026-11-22T16:44:40.767Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 118,
-  "in_scope_finished": 118,
+  "discovered_finished": 119,
+  "in_scope_finished": 119,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 110,
-  "new_finished_matches": 7,
+  "new_finished_matches": 8,
   "added_source_match_ids": [
+    "5967151",
     "5967152",
     "5967153",
     "5967154",
@@ -31,7 +32,7 @@
     "5967135",
     "5967145"
   ],
-  "mapped_finished": 106,
+  "mapped_finished": 107,
   "unmapped_count": 12,
   "unmapped": [
     {

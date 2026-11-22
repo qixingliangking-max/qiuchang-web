@@ -737,7 +737,7 @@
       "home_team": "尼斯",
       "away_team": "巴黎圣日耳曼",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T16:15:00.000Z"
+      "kickoff_at": "2026-11-21T16:15:00Z"
     },
     {
       "source_match_id": "5802991",
@@ -745,7 +745,7 @@
       "home_team": "朗斯",
       "away_team": "图卢兹",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T19:45:00.000Z"
+      "kickoff_at": "2026-11-21T19:45:00Z"
     },
     {
       "source_match_id": "5802992",
@@ -753,7 +753,7 @@
       "home_team": "里尔",
       "away_team": "里昂",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T19:45:00.000Z"
+      "kickoff_at": "2026-11-21T19:45:00Z"
     },
     {
       "source_match_id": "5802995",
@@ -761,7 +761,7 @@
       "home_team": "摩纳哥",
       "away_team": "欧塞尔",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T19:45:00.000Z"
+      "kickoff_at": "2026-11-21T19:45:00Z"
     },
     {
       "source_match_id": "5802998",
@@ -769,7 +769,15 @@
       "home_team": "斯特拉斯堡",
       "away_team": "布雷斯特",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T19:45:00.000Z"
+      "kickoff_at": "2026-11-21T19:45:00Z"
+    },
+    {
+      "source_match_id": "5802997",
+      "match_id": "fotmob:5802997",
+      "home_team": "巴黎FC",
+      "away_team": "昂热",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T14:00:00.000Z"
     }
   ]
 }
