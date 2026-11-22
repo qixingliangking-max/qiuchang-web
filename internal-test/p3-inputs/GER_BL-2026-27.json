@@ -714,6 +714,14 @@
       "away_team": "美因茨",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T14:30:00.000Z"
+    },
+    {
+      "source_match_id": "5881232",
+      "match_id": "fotmob:5881232",
+      "home_team": "云达不莱梅",
+      "away_team": "汉堡",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T16:30:00.000Z"
     }
   ]
 }

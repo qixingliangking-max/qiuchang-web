@@ -1266,6 +1266,22 @@
       "away_team": "拉斯帕尔马斯",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T15:15:00.000Z"
+    },
+    {
+      "source_match_id": "5868550",
+      "match_id": "fotmob:5868550",
+      "home_team": "塞尔塔B",
+      "away_team": "巴拉多利德",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T17:30:00.000Z"
+    },
+    {
+      "source_match_id": "5868553",
+      "match_id": "fotmob:5868553",
+      "home_team": "赫罗纳",
+      "away_team": "埃瓦尔",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T17:30:00.000Z"
     }
   ]
 }
