@@ -1834,6 +1834,14 @@
       "away_team": "佐加顿斯",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T13:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107667",
+      "match_id": "fotmob:5107667",
+      "home_team": "布洛马波卡纳",
+      "away_team": "哈尔姆斯塔德",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T15:30:00.000Z"
     }
   ]
 }
