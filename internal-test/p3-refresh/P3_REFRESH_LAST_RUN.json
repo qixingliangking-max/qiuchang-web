@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-22T07:16:32.799Z",
+  "run_at": "2026-11-22T08:08:34.699Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 21,
+  "promoted_leagues": 0,
+  "noop_leagues": 22,
   "blocked_leagues": 2,
   "results": [
     {
@@ -205,15 +205,15 @@
     {
       "league_code": "KOR_K1",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 216,
-      "baseline_finished_matches": 214,
-      "new_finished_matches": 2,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 216,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
