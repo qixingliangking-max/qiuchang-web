@@ -663,11 +663,12 @@ function jcDisplayModelDirection(model,m){
   if(!jcHasOrdinaryResult(m)){
     const pick=jcCompactHandicapPick(model?.direction);
     if(/^让(?:胜|平|负)(?:\s*\/\s*让(?:胜|平|负))+$/.test(pick)) {
-      // Preserve the user's explicit website display rule for flagged FINAL:
-      // core direction has no handicap bracket, official handicap does.
-      if(model?.raw_input?.direction_no_handicap_line===true) return pick;
-      const line=String(model?.raw_input?.handicap_line??'').trim();
-      return pick+(/^[+-]\d+(?:\.\d+)?$/.test(line)?'（'+line+'）':'');
+      // The core direction is the choice vocabulary only.  Never append a
+      // handicap number here; it belongs only to the independent official
+      // handicap field rendered by jcDisplayOfficialHandicap.
+      // This also covers static prediction snapshots which intentionally
+      // project only the probability and handicap line from raw_input.
+      return pick;
     }
   }
   return jcCompactResultPick(model?.direction,m);
