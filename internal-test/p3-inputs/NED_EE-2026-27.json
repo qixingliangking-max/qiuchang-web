@@ -1257,7 +1257,31 @@
       "home_team": "FC埃因霍温",
       "away_team": "瓦尔韦克",
       "match_date": "2026-11-21",
-      "kickoff_at": "2026-11-21T15:30:00.000Z"
+      "kickoff_at": "2026-11-21T15:30:00Z"
+    },
+    {
+      "source_match_id": "5832943",
+      "match_id": "fotmob:5832943",
+      "home_team": "维特斯",
+      "away_team": "格拉夫夏普",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832963",
+      "match_id": "fotmob:5832963",
+      "home_team": "阿贾克斯青年队",
+      "away_team": "阿尔克马尔青年队",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5832964",
+      "match_id": "fotmob:5832964",
+      "home_team": "埃因霍温青年队",
+      "away_team": "乌德勒支青年队",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T19:00:00.000Z"
     }
   ]
 }

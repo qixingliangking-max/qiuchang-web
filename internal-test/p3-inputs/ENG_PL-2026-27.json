@@ -865,7 +865,7 @@
       "home_team": "赫尔城",
       "away_team": "布莱顿",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T14:00:00.000Z"
+      "kickoff_at": "2026-11-22T14:00:00Z"
     },
     {
       "source_match_id": "5795521",
@@ -873,7 +873,15 @@
       "home_team": "利物浦",
       "away_team": "曼联",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T16:30:00.000Z"
+      "kickoff_at": "2026-11-22T16:30:00Z"
+    },
+    {
+      "source_match_id": "5795517",
+      "match_id": "fotmob:5795517",
+      "home_team": "布伦特福德",
+      "away_team": "埃弗顿",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T20:00:00.000Z"
     }
   ]
 }

@@ -1825,7 +1825,7 @@
       "home_team": "赫根",
       "away_team": "埃尔夫斯堡",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T13:00:00.000Z"
+      "kickoff_at": "2026-11-22T13:00:00Z"
     },
     {
       "source_match_id": "5107668",
@@ -1833,7 +1833,7 @@
       "home_team": "天狼星",
       "away_team": "佐加顿斯",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T13:00:00.000Z"
+      "kickoff_at": "2026-11-22T13:00:00Z"
     },
     {
       "source_match_id": "5107667",
@@ -1841,7 +1841,23 @@
       "home_team": "布洛马波卡纳",
       "away_team": "哈尔姆斯塔德",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T15:30:00.000Z"
+      "kickoff_at": "2026-11-22T15:30:00Z"
+    },
+    {
+      "source_match_id": "5107662",
+      "match_id": "fotmob:5107662",
+      "home_team": "哈马比",
+      "away_team": "哥德堡",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5107664",
+      "match_id": "fotmob:5107664",
+      "home_team": "奥尔格里特",
+      "away_team": "卡尔马",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T18:00:00.000Z"
     }
   ]
 }
