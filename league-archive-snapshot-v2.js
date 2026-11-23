@@ -154,7 +154,7 @@
     ).join('');
     const panels=scopes.map(([scope,label],i)=>{
       const all=Array.isArray(byScope[scope])?byScope[scope]:[];
-      const top=all.slice().sort((a,b)=>Number(a.rank||99)-Number(b.rank||99)).slice(0,6);
+      const top=all.filter(row=>Number(row.occurrences||0)>0).sort((a,b)=>Number(a.rank||99)-Number(b.rank||99)).slice(0,6);
       const count=Number(all[0]?.sample_size||0);
       const meta=label+'有效样本 N='+count+(count>0&&count<10?' · 小样本，仅供参考':'');
       return '<div class="qc-team-htft-panel" data-qc-htft-panel="'+scope+'"'+(i?' hidden':'')+'>'+
