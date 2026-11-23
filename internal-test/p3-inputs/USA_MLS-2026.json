@@ -4122,6 +4122,22 @@
       "away_team": "哥伦布机员",
       "match_date": "2026-11-21",
       "kickoff_at": "2026-11-21T23:00:00Z"
+    },
+    {
+      "source_match_id": "6665006",
+      "match_id": "fotmob:6665006",
+      "home_team": "纳什维尔",
+      "away_team": "辛辛那提FC",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T21:00:00Z"
+    },
+    {
+      "source_match_id": "6580835",
+      "match_id": "fotmob:6580835",
+      "home_team": "芝加哥火焰",
+      "away_team": "夏洛特FC",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T23:30:00Z"
     }
   ]
 }
