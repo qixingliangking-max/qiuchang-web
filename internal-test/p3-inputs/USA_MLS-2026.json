@@ -4138,6 +4138,14 @@
       "away_team": "夏洛特FC",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T23:30:00Z"
+    },
+    {
+      "source_match_id": "6665007",
+      "match_id": "fotmob:6665007",
+      "home_team": "温哥华白帽",
+      "away_team": "皇家盐湖城",
+      "match_date": "2026-11-23",
+      "kickoff_at": "2026-11-23T01:30:00.000Z"
     }
   ]
 }

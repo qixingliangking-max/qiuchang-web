@@ -26,12 +26,12 @@
       "quality_tier": "PILOT_FULL",
       "teams": 30,
       "published_path": "internal-test/p3-data/USA_MLS-2026.json",
-      "blob_sha": "a00cbd0bc2a6f9d50050abc6c7d4a9a4dc02be2b",
+      "blob_sha": "8a8754672e03e5a6d7ecb5853e464500429e9ae4",
       "gate_status": "PASS",
       "avg_team_depth_coverage_pct": 87.6,
       "gate_report": "internal-test/p3-candidates/USA_MLS-2026-gate.json",
-      "last_incremental_refresh_at": "2026-11-23T02:31:39.802Z",
-      "finished_matches": 517,
+      "last_incremental_refresh_at": "2026-11-23T08:00:22.297Z",
+      "finished_matches": 518,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL"
     },
     {
