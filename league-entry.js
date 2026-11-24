@@ -57,7 +57,7 @@
     if(!scriptsPromise){
       // P3 only defines UI helpers; actual P3 data remains on-demand.
       scriptsPromise=loadScript('league-p3-public.js?v=20261022p3single1')
-        .then(()=>loadScript('league-archive-snapshot-v2.js?v=20261125teamtotalgoals1'));
+        .then(()=>loadScript('league-archive-snapshot-v2.js?v=20261125teamscoringrate1'));
     }
     return scriptsPromise;
   }
