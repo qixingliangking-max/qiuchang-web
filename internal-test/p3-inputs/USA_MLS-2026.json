@@ -4145,7 +4145,15 @@
       "home_team": "温哥华白帽",
       "away_team": "皇家盐湖城",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T01:30:00.000Z"
+      "kickoff_at": "2026-11-23T01:30:00Z"
+    },
+    {
+      "source_match_id": "6580840",
+      "match_id": "fotmob:6580840",
+      "home_team": "圣路易斯城",
+      "away_team": "洛杉矶FC",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T01:20:00.000Z"
     }
   ]
 }
