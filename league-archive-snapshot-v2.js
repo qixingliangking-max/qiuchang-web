@@ -293,8 +293,6 @@
   }
 
   function teamHtml(t){
-    const avgFor=t.played?Number(t.goals_for)/Number(t.played):null;
-    const avgAgainst=t.played?Number(t.goals_against)/Number(t.played):null;
     const points=3*Number(t.wins)+Number(t.draws);
     return '<div class="qc-league-team-item" data-team-item="'+esc(t.team_name)+'">'+
       '<button type="button" class="qc-league-team-row" data-team-name="'+esc(t.team_name)+'">'+
@@ -303,8 +301,8 @@
         '<div><small>胜</small>'+esc(t.wins)+'</div>'+
         '<div><small>平</small>'+esc(t.draws)+'</div>'+
         '<div><small>负</small>'+esc(t.losses)+'</div>'+
-        '<div><small>进球</small>'+esc(avgFor==null?'—':avgFor.toFixed(2))+'</div>'+
-        '<div><small>失球</small>'+esc(avgAgainst==null?'—':avgAgainst.toFixed(2))+'</div>'+
+        '<div><small>进球</small>'+esc(t.goals_for==null?'—':t.goals_for)+'</div>'+
+        '<div><small>失球</small>'+esc(t.goals_against==null?'—':t.goals_against)+'</div>'+
         '<div class="qc-league-points"><small>积分</small>'+esc(points)+'</div>'+
       '</button>'+
       '<div class="qc-team-detail" data-team-detail="'+esc(t.team_name)+'" hidden></div>'+
