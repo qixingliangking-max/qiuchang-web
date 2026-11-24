@@ -1537,7 +1537,71 @@
       "home_team": "伯恩利",
       "away_team": "布莱克本",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T12:00:00.000Z"
+      "kickoff_at": "2026-11-22T12:00:00Z"
+    },
+    {
+      "source_match_id": "5836946",
+      "match_id": "fotmob:5836946",
+      "home_team": "布里斯托尔城",
+      "away_team": "雷克瑟姆",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836947",
+      "match_id": "fotmob:5836947",
+      "home_team": "卡迪夫城",
+      "away_team": "普雷斯顿",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836948",
+      "match_id": "fotmob:5836948",
+      "home_team": "查尔顿",
+      "away_team": "林肯城",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836949",
+      "match_id": "fotmob:5836949",
+      "home_team": "米德尔斯堡",
+      "away_team": "斯旺西",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836950",
+      "match_id": "fotmob:5836950",
+      "home_team": "诺维奇",
+      "away_team": "女王公园巡游者",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836951",
+      "match_id": "fotmob:5836951",
+      "home_team": "朴茨茅斯",
+      "away_team": "西汉姆联",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836952",
+      "match_id": "fotmob:5836952",
+      "home_team": "谢菲尔德联",
+      "away_team": "南安普敦",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:45:00.000Z"
+    },
+    {
+      "source_match_id": "5836953",
+      "match_id": "fotmob:5836953",
+      "home_team": "狼队",
+      "away_team": "德比郡",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
     }
   ]
 }

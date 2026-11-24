@@ -594,6 +594,62 @@
       "away_team": "阿斯顿维拉",
       "match_date": "2026-11-24",
       "kickoff_at": "2026-11-24T17:45:00.000Z"
+    },
+    {
+      "source_match_id": "6106243",
+      "match_id": "fotmob:6106243",
+      "home_team": "皇家马德里",
+      "away_team": "埃因霍温",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106256",
+      "match_id": "fotmob:6106256",
+      "home_team": "曼城",
+      "away_team": "那不勒斯",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106259",
+      "match_id": "fotmob:6106259",
+      "home_team": "阿森纳",
+      "away_team": "多特蒙德",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106307",
+      "match_id": "fotmob:6106307",
+      "home_team": "费耶诺德",
+      "away_team": "波尔图",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106325",
+      "match_id": "fotmob:6106325",
+      "home_team": "莱比锡",
+      "away_team": "朗斯",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106394",
+      "match_id": "fotmob:6106394",
+      "home_team": "布拉迪斯拉发",
+      "away_team": "皇家贝蒂斯",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
+    },
+    {
+      "source_match_id": "6106412",
+      "match_id": "fotmob:6106412",
+      "home_team": "科莫",
+      "away_team": "雅典AEK",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T20:00:00.000Z"
     }
   ]
 }
