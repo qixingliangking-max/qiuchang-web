@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "business_date": "2026-11-26",
+  "match_count": 12,
+  "rows": [
+    {
+      "id": "c75a442c-d49e-4390-86af-5019b54112eb",
+      "match_num": "周四001",
+      "business_date": "2026-11-26",
+      "league_name": "亚冠乙",
+      "league_short_name": "亚冠乙",
+      "home_team_name": "淡宾尼士流浪",
+      "away_team_name": "上海申花",
+      "match_date": "2026-11-26",
+      "match_time": "18:00:00",
+      "kickoff_at": "2026-11-26T10:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-7998.png",
+      "_awayLogoUrl": "assets/team-logos/espn-soccer-977.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "ee356827-1e54-4874-a7aa-609921c4238f",
+      "match_num": "周四002",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "萨格勒布迪纳摩",
+      "away_team_name": "勒沃库森",
+      "match_date": "2026-11-27",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-11-26T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10156.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8178.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "1d9cfb74-4ad8-4cea-8e39-f6c6dd31b4f8",
+      "match_num": "周四003",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "奥林匹亚科斯",
+      "away_team_name": "AC米兰",
+      "match_date": "2026-11-27",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-11-26T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8638.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8564.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "d3cf23df-7a14-4e39-8530-bbab2159e42a",
+      "match_num": "周四004",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "比尔森",
+      "away_team_name": "本菲卡",
+      "match_date": "2026-11-27",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-11-26T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/espn-soccer-11706.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9772.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c45c48c6-8308-41c8-a245-e9b88177610a",
+      "match_num": "周四005",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "维戈塞尔塔",
+      "away_team_name": "伯恩茅斯",
+      "match_date": "2026-11-27",
+      "match_time": "01:45:00",
+      "kickoff_at": "2026-11-26T17:45:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9910.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8678.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "a27066b8-70a6-4d65-a9b1-56aa9e7f433f",
+      "match_num": "周四006",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "布拉格斯巴达",
+      "away_team_name": "阿尔克马尔",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10247.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10229.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f70699bb-d82d-43e8-9fa6-b877bad78972",
+      "match_num": "周四007",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "水晶宫",
+      "away_team_name": "皇家社会",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-9826.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8560.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "20f818ac-9a79-4122-8e96-12ddc29ac207",
+      "match_num": "周四008",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "桑德兰",
+      "away_team_name": "比亚韦斯托克",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8472.png",
+      "_awayLogoUrl": "assets/team-logos/espn-soccer-11505.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "f951a716-227f-4b67-ac64-f6657ed4ead1",
+      "match_num": "周四009",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "霍芬海姆",
+      "away_team_name": "格拉茨风暴",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8226.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-10014.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "c4532e99-660d-466e-85f7-1d2f0e75d7cb",
+      "match_num": "周四010",
+      "business_date": "2026-11-26",
+      "league_name": "欧罗巴",
+      "league_short_name": "欧罗巴",
+      "home_team_name": "奈梅亨",
+      "away_team_name": "雷恩",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8464.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-9851.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "ebd50076-effe-4c32-aeeb-43e90ec7dc25",
+      "match_num": "周四011",
+      "business_date": "2026-11-26",
+      "league_name": "欧协联",
+      "league_short_name": "欧协联",
+      "home_team_name": "弗赖堡",
+      "away_team_name": "特温特",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-8358.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-8611.png",
+      "_jcScheduleSnapshot": true
+    },
+    {
+      "id": "8c5ac86e-c556-47f5-b4cd-a29a99153cdf",
+      "match_num": "周四012",
+      "business_date": "2026-11-26",
+      "league_name": "欧协联",
+      "league_short_name": "欧协联",
+      "home_team_name": "布拉加",
+      "away_team_name": "库奥皮奥",
+      "match_date": "2026-11-27",
+      "match_time": "04:00:00",
+      "kickoff_at": "2026-11-26T20:00:00+00:00",
+      "match_status": "1",
+      "raw": {
+        "matchStatusName": "待开售",
+        "sectionsNo999": "",
+        "sectionsNo1": ""
+      },
+      "_homeLogoUrl": "assets/team-logos/fotmob-10264.png",
+      "_awayLogoUrl": "assets/team-logos/fotmob-1693.png",
+      "_jcScheduleSnapshot": true
+    }
+  ]
+}
