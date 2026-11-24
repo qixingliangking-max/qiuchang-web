@@ -1,14 +1,14 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-24T18:00:38.864Z",
+  "run_at": "2026-11-24T20:51:17.240Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 120,
-  "in_scope_finished": 120,
+  "discovered_finished": 124,
+  "in_scope_finished": 124,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 110,
-  "new_finished_matches": 9,
+  "new_finished_matches": 12,
   "added_source_match_ids": [
     "5967149",
     "5967151",
@@ -18,7 +18,10 @@
     "5967155",
     "5967156",
     "5967157",
-    "5967158"
+    "5967158",
+    "5967160",
+    "5967162",
+    "5967163"
   ],
   "removed_source_match_ids": [
     "5967044",
@@ -33,8 +36,8 @@
     "5967135",
     "5967145"
   ],
-  "mapped_finished": 108,
-  "unmapped_count": 12,
+  "mapped_finished": 111,
+  "unmapped_count": 13,
   "unmapped": [
     {
       "source_match_id": "1000024295",
@@ -119,6 +122,13 @@
       "away_source": "Vicenza",
       "home_mapped": "阿斯科利",
       "away_mapped": null
+    },
+    {
+      "source_match_id": "1000024310",
+      "home_source": "Vicenza",
+      "away_source": "Carrarese",
+      "home_mapped": null,
+      "away_mapped": "凯勒雷斯"
     }
   ],
   "status": "BLOCKED_UNMAPPED_TEAM"
