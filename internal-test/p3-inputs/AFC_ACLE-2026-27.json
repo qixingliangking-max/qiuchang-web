@@ -513,7 +513,7 @@
       "home_team": "费尔干纳石油",
       "away_team": "利雅得新月",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T13:45:00.000Z"
+      "kickoff_at": "2026-11-23T13:45:00Z"
     },
     {
       "source_match_id": "6050097",
@@ -521,7 +521,7 @@
       "home_team": "艾因",
       "away_team": "德黑兰独立",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T16:00:00.000Z"
+      "kickoff_at": "2026-11-23T16:00:00Z"
     },
     {
       "source_match_id": "6050098",
@@ -529,7 +529,7 @@
       "home_team": "舒马尔",
       "away_team": "吉达国民",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T16:00:00.000Z"
+      "kickoff_at": "2026-11-23T16:00:00Z"
     },
     {
       "source_match_id": "6050099",
@@ -537,7 +537,7 @@
       "home_team": "大不里士拖拉机",
       "away_team": "迪拜祈祷",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T16:00:00.000Z"
+      "kickoff_at": "2026-11-23T16:00:00Z"
     },
     {
       "source_match_id": "6050100",
@@ -545,7 +545,7 @@
       "home_team": "吉达联合",
       "away_team": "塔什干棉农",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T18:15:00.000Z"
+      "kickoff_at": "2026-11-23T18:15:00Z"
     },
     {
       "source_match_id": "6050101",
@@ -553,7 +553,15 @@
       "home_team": "巴格达空军",
       "away_team": "加拉法",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T18:15:00.000Z"
+      "kickoff_at": "2026-11-23T18:15:00Z"
+    },
+    {
+      "source_match_id": "6050008",
+      "match_id": "fotmob:6050008",
+      "home_team": "纽卡斯尔喷气机",
+      "away_team": "柏太阳神",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T07:45:00.000Z"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-24T06:26:26.766Z",
+  "run_at": "2026-11-24T10:05:35.672Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
   "promoted_leagues": 1,
@@ -9,15 +9,15 @@
     {
       "league_code": "AFC_ACLE",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 69,
+      "status": "PROMOTED",
+      "discovered_finished": 70,
       "baseline_finished_matches": 69,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -331,15 +331,15 @@
     {
       "league_code": "USA_MLS",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 519,
-      "baseline_finished_matches": 518,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 519,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     }
   ]
