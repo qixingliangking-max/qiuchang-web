@@ -1,29 +1,18 @@
 {
   "league_code": "NED_EE",
   "season": "2026/27",
-  "run_at": "2026-11-23T22:39:04.485Z",
+  "run_at": "2026-11-24T02:29:25.216Z",
   "discovered_fixtures": 380,
   "discovered_finished": 160,
   "in_scope_finished": 160,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 157,
-  "new_finished_matches": 3,
-  "added_source_match_ids": [
-    "5832943",
-    "5832963",
-    "5832964"
-  ],
+  "baseline_finished_matches": 160,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "mapped_finished": 160,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 55,
-  "published_blob_sha": "abc6957ae87f61eda021331edf4b6dc6e780be05"
+  "status": "NO_NEW_FINISHED"
 }
