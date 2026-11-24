@@ -100,6 +100,11 @@
   function pctCount(n,d){
     return d?((Number(n||0)/Number(d))*100).toFixed(0)+'%':'—';
   }
+  function countRate(n,d,showDenominator=false){
+    if(n==null||d==null||Number(d)<=0) return '—';
+    const count=Number(n),total=Number(d);
+    return (showDenominator?count+'/'+total:count)+'场 '+pctCount(count,total);
+  }
 
   function splitBox(title,played,wins,draws,losses,gf,ga,extra=''){
     const p=Number(played||0);
@@ -212,16 +217,17 @@
   function teamDetailHtml(t,recentMap,goalDist,scoreRows,htftRows,matchRows,leagueName){
     const r5=recentMap.get('5')||null;
     const r10=recentMap.get('10')||null;
-    const scoringDisplay=t.scoring_matches==null?'—':Number(t.scoring_matches)+'场 '+pctCount(t.scoring_matches,t.played);
     const overallExtra=
-      '<div class="qc-team-split-line"><span>本队进球</span><b>'+esc(scoringDisplay)+'</b></div>'+
-      '<div class="qc-team-split-line"><span>零封</span><b>'+pctCount(t.clean_sheets,t.played)+'</b></div>'+
-      '<div class="qc-team-split-line"><span>双方进球</span><b>'+pctCount(t.btts_matches,t.played)+'</b></div>';
+      '<div class="qc-team-split-line"><span>本队进球</span><b>'+esc(countRate(t.scoring_matches,t.played))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>零封</span><b>'+esc(countRate(t.clean_sheets,t.played))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>双方进球</span><b>'+esc(countRate(t.btts_matches,t.played))+'</b></div>';
+    const homeExtra='<div class="qc-team-split-line"><span>主场进球</span><b>'+esc(countRate(t.home_scoring_matches,t.home_played,true))+'</b></div>';
+    const awayExtra='<div class="qc-team-split-line"><span>客场进球</span><b>'+esc(countRate(t.away_scoring_matches,t.away_played,true))+'</b></div>';
     const recentBox=(label,r)=>{
       if(!r) return splitBox(label,0,0,0,0,0,0);
       const extra=
-        '<div class="qc-team-split-line"><span>零封</span><b>'+pctCount(r.clean_sheets,r.played)+'</b></div>'+
-        '<div class="qc-team-split-line"><span>双方进球</span><b>'+pctCount(r.btts_matches,r.played)+'</b></div>'+
+        '<div class="qc-team-split-line"><span>零封</span><b>'+esc(countRate(r.clean_sheets,r.played))+'</b></div>'+
+        '<div class="qc-team-split-line"><span>双方进球</span><b>'+esc(countRate(r.btts_matches,r.played))+'</b></div>'+
         '<div class="qc-team-split-line"><span>3+球</span><b>'+pctCount(r.over_25_matches,r.played)+'</b></div>';
       return splitBox(label+(Number(r.played)<Number(r.window_size)?'（'+r.played+'场）':''),r.played,r.wins,r.draws,r.losses,r.goals_for,r.goals_against,extra);
     };
@@ -231,8 +237,8 @@
     return '<div class="qc-team-detail-title"><strong>'+esc(t.team_name)+'｜详细档案</strong><span>点击球队再次收起</span></div>'+
       '<div class="qc-team-detail-grid">'+
         splitBox('赛季总体',t.played,t.wins,t.draws,t.losses,t.goals_for,t.goals_against,overallExtra)+
-        splitBox('主场',t.home_played,t.home_wins,t.home_draws,t.home_losses,t.home_goals_for,t.home_goals_against)+
-        splitBox('客场',t.away_played,t.away_wins,t.away_draws,t.away_losses,t.away_goals_for,t.away_goals_against)+
+        splitBox('主场',t.home_played,t.home_wins,t.home_draws,t.home_losses,t.home_goals_for,t.home_goals_against,homeExtra)+
+        splitBox('客场',t.away_played,t.away_wins,t.away_draws,t.away_losses,t.away_goals_for,t.away_goals_against,awayExtra)+
         recentCards+
       '</div>'+
       teamGoalDistributionHtml(goalDist)+
