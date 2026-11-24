@@ -56,10 +56,11 @@
     .qc-league-goal-cell em{display:block;margin-top:2px;color:#96a0b0;font-size:9px;font-style:normal}
     .qc-league-team-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
     .qc-league-team-item{border:1px solid #edf1f5;border-radius:10px;overflow:hidden;background:#fff}
-    .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(6,48px);align-items:center;width:100%;border:0;background:#fff;color:inherit;padding:0;text-align:inherit;cursor:pointer}
+    .qc-league-team-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(7,46px);align-items:center;width:100%;border:0;background:#fff;color:inherit;padding:0;text-align:inherit;cursor:pointer}
     .qc-league-team-row>div{padding:9px 7px;text-align:center;border-left:1px solid #f0f3f6;font-size:11px}
     .qc-league-team-row>div:first-child{border-left:0;text-align:left;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .qc-league-team-row small{display:block;color:#95a0b1;font-size:8px;margin-bottom:2px}
+    .qc-league-team-row .qc-league-points{color:#244e81;font-weight:900}
     .qc-league-team-item.is-open{border-color:#cbd8eb;box-shadow:0 3px 10px rgba(31,42,68,.05)}
     .qc-league-team-item.is-open .qc-league-team-row{background:#f9fbfe}
     .qc-team-detail{border-top:1px solid #edf1f5;background:#fbfcfe;padding:10px}
@@ -139,7 +140,7 @@
       .qc-league-team-item{min-width:0}
       .qc-league-team-item.is-open{grid-column:1/-1}
       .qc-league-team-item.is-open .qc-team-detail{padding:14px}
-      .qc-league-team-item.is-open .qc-league-team-row{grid-template-columns:minmax(180px,1fr) repeat(6,minmax(64px,80px))}
+      .qc-league-team-item.is-open .qc-league-team-row{grid-template-columns:minmax(180px,1fr) repeat(7,minmax(56px,75px))}
       .qc-team-detail-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
       .qc-team-split{padding:10px}
       .qc-team-score-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
@@ -180,8 +181,9 @@
       .qc-league-goals-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
       .qc-league-goal-cell{padding:7px 4px}
       .qc-league-team-list{grid-template-columns:1fr;padding:9px}
-      .qc-league-team-row{grid-template-columns:minmax(0,1fr) repeat(6,42px)}
-      .qc-league-team-row>div{padding:8px 5px;font-size:10px}
+      .qc-league-team-row{grid-template-columns:repeat(7,minmax(0,1fr))}
+      .qc-league-team-row>div{padding:7px 3px;font-size:10px}
+      .qc-league-team-row>div:first-child{grid-column:1/-1;border-left:0;border-bottom:1px solid #f0f3f6;padding:8px 10px}
       .qc-team-detail{padding:8px}
       .qc-team-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
       .qc-team-split{padding:7px}
@@ -253,6 +255,6 @@
 <script defer src="supabase-config.js"></script>
 <script defer src="supabase-client.js?v=20260927autologin1"></script>
 <!-- Heavy league/P2/P3 modules are injected only after verified Pro access. -->
-<script defer src="league-entry.js?v=20261029authlazy2"></script>
+<script defer src="league-entry.js?v=20261125teampoints1"></script>
 </body>
 </html>
