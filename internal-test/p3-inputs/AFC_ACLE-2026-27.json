@@ -578,6 +578,38 @@
       "away_team": "浦项制铁",
       "match_date": "2026-11-24",
       "kickoff_at": "2026-11-24T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050011",
+      "match_id": "fotmob:6050011",
+      "home_team": "河内公安",
+      "away_team": "神户胜利船",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050012",
+      "match_id": "fotmob:6050012",
+      "home_team": "拉查布里",
+      "away_team": "柔佛新山",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050013",
+      "match_id": "fotmob:6050013",
+      "home_team": "上海海港",
+      "away_team": "武里南联",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "6050102",
+      "match_id": "fotmob:6050102",
+      "home_team": "迪拜青年国民",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T16:00:00.000Z"
     }
   ]
 }
