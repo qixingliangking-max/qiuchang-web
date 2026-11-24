@@ -212,7 +212,7 @@
   function teamDetailHtml(t,recentMap,goalDist,scoreRows,htftRows,matchRows,leagueName){
     const r5=recentMap.get('5')||null;
     const r10=recentMap.get('10')||null;
-    const scoringDisplay=t.scoring_matches==null?'—':Number(t.scoring_matches)+'场（'+pctCount(t.scoring_matches,t.played)+'）';
+    const scoringDisplay=t.scoring_matches==null?'—':Number(t.scoring_matches)+'场 '+pctCount(t.scoring_matches,t.played);
     const overallExtra=
       '<div class="qc-team-split-line"><span>本队进球</span><b>'+esc(scoringDisplay)+'</b></div>'+
       '<div class="qc-team-split-line"><span>零封</span><b>'+pctCount(t.clean_sheets,t.played)+'</b></div>'+
