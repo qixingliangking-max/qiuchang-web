@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 70,
-  "collected_matches": 70,
+  "input_matches": 72,
+  "collected_matches": 72,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
@@ -21,7 +21,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "京都不死鸟",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -46,7 +46,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "北京国安",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -76,7 +76,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "大田韩亚市民",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -126,7 +126,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "浦项制铁",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",

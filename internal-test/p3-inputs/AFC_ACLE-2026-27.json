@@ -562,6 +562,22 @@
       "away_team": "柏太阳神",
       "match_date": "2026-11-24",
       "kickoff_at": "2026-11-24T07:45:00.000Z"
+    },
+    {
+      "source_match_id": "6050009",
+      "match_id": "fotmob:6050009",
+      "home_team": "大田韩亚市民",
+      "away_team": "北京国安",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050010",
+      "match_id": "fotmob:6050010",
+      "home_team": "京都不死鸟",
+      "away_team": "浦项制铁",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T10:00:00.000Z"
     }
   ]
 }
