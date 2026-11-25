@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { classifyFixtureStatus, reconcilePriorFixtures } from './p3-fixture-safety.mjs';
 
 const configPath=process.argv[2];
 if(!configPath){
@@ -58,7 +59,11 @@ for(const leagueId of cfg.fotmob_league_ids||[]){
   }
 }
 
-const finished=[...all.values()].filter(m=>m?.status?.finished===true);
+const nowMs=Date.now();
+const sourceFinished=[...all.values()].filter(m=>m?.status?.finished===true);
+const invalidFinishedTime=sourceFinished.filter(m=>classifyFixtureStatus(m,nowMs)==='invalid_finished_time');
+const prematureFinished=sourceFinished.filter(m=>classifyFixtureStatus(m,nowMs)==='premature_finished');
+const finished=sourceFinished.filter(m=>classifyFixtureStatus(m,nowMs)==='verified_finished');
 // Only these specifically audited fixture IDs are out of scope for the 36-team
 // league-stage archive. An unknown unmapped fixture MUST still block publication.
 const excludedIds=new Set((cfg.excluded_source_match_ids||[]).map(String));
@@ -94,13 +99,18 @@ for(const m of scopedFinished){
 }
 matches.sort((a,b)=>String(a.kickoff_at||a.match_date||'').localeCompare(String(b.kickoff_at||b.match_date||''))||a.source_match_id.localeCompare(b.source_match_id));
 
-let previousIds=[];
+let previousMatches=[];
 if(fs.existsSync(inputPath)){
   try{
     const prev=JSON.parse(fs.readFileSync(inputPath,'utf8'));
-    previousIds=(prev.matches||[]).map(x=>String(x.source_match_id)).sort();
+    previousMatches=Array.isArray(prev.matches)?prev.matches:[];
   }catch{}
 }
+const previousIds=previousMatches.map(x=>String(x.source_match_id)).sort();
+const retainedIds=new Set((cfg.verified_retained_finished_source_match_ids||[]).map(String));
+const reconciled=reconcilePriorFixtures(previousMatches,matches,retainedIds,nowMs);
+for(const previous of reconciled.retained) matches.push(previous);
+matches.sort((a,b)=>String(a.kickoff_at||a.match_date||'').localeCompare(String(b.kickoff_at||b.match_date||''))||a.source_match_id.localeCompare(b.source_match_id));
 const currentIds=matches.map(x=>String(x.source_match_id)).sort();
 const previousSet=new Set(previousIds);
 const currentSet=new Set(currentIds);
@@ -112,7 +122,10 @@ const report={
   season,
   run_at:new Date().toISOString(),
   discovered_fixtures:all.size,
-  discovered_finished:finished.length,
+  discovered_finished:sourceFinished.length,
+  verified_past_finished:finished.length,
+  source_invalid_finished_time:invalidFinishedTime.map(m=>String(m.id)),
+  source_premature_finished:prematureFinished.map(m=>String(m.id)),
   in_scope_finished:scopedFinished.length,
   excluded_out_of_scope_count:excluded.length,
   excluded_out_of_scope_source_match_ids:excluded,
@@ -120,6 +133,9 @@ const report={
   new_finished_matches:addedIds.length,
   added_source_match_ids:addedIds,
   removed_source_match_ids:removedIds,
+  retained_verified_finished_source_match_ids:reconciled.retained.map(m=>String(m.source_match_id)),
+  discarded_previous_future_ids:reconciled.futureRemoved,
+  unverified_removed_source_match_ids:reconciled.unverifiedRemoved,
   mapped_finished:matches.length,
   unmapped_count:unmapped.length,
   unmapped,
@@ -127,6 +143,12 @@ const report={
 };
 fs.mkdirSync(path.dirname(reportPath),{recursive:true});
 
+if(invalidFinishedTime.length){
+  report.status='BLOCKED_INVALID_FINISHED_KICKOFF';
+  fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
+  console.error(JSON.stringify(report,null,2));
+  process.exit(7);
+}
 if(unmapped.length){
   report.status='BLOCKED_UNMAPPED_TEAM';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
@@ -139,7 +161,7 @@ if(removedIds.length){
   console.error(JSON.stringify(report,null,2));
   process.exit(4);
 }
-if(previousIds.length && addedIds.length===0){
+if(previousIds.length && addedIds.length===0 && reconciled.futureRemoved.length===0){
   report.status='NO_NEW_FINISHED';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
@@ -201,7 +223,7 @@ if(fs.existsSync(manifestPath)){
     row.avg_team_depth_coverage_pct=gate.avg_team_depth_coverage_pct;
     row.gate_report=gatePath;
     row.last_incremental_refresh_at=report.run_at;
-    row.finished_matches=finished.length;
+    row.finished_matches=matches.length;
     row.build_mode='P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL';
   }
   fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
