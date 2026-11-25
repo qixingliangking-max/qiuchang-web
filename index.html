@@ -11,6 +11,15 @@
   <style>/* Show loading placeholders immediately; only defer the footer until bootstrap finishes. */body.qc-overview-booting .footer-note{visibility:hidden}</style>
   <link rel="stylesheet" href="styles.css?v=20261117androidoverview1">
   <link rel="stylesheet" href="footer-compact.css?v=20261010footer1">
+  <!-- Start fetching deferred dependencies early; keep execution order after HTML parsing. -->
+  <script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
+  <script defer src="supabase-config.js"></script>
+  <script defer src="supabase-client.js?v=20260927autologin1"></script>
+  <script defer src="home-auth-prime.js?v=20261029parallelrls4"></script>
+  <script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
+  <script defer src="overview-live-static.js?v=20261125coalescereads1"></script>
+  <script defer src="app.js?v=20261123r68corechoice1"></script>
+  <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
   <!-- Static review rows must respond before the deferred app bundle loads. -->
   <script>
 (function(){
@@ -193,13 +202,5 @@
 </div>
 
 <script src="overview-public-rescue.js?v=20261029finalguard1"></script>
-<script defer src="assets/vendor/supabase-js-2.117.3.js"></script>
-<script defer src="supabase-config.js"></script>
-<script defer src="supabase-client.js?v=20260927autologin1"></script>
-<script defer src="home-auth-prime.js?v=20261029parallelrls4"></script>
-<script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
-<script defer src="overview-live-static.js?v=20261027manifestttl1"></script>
-<script defer src="app.js?v=20261123r68corechoice1"></script>
-<script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
 </body>
 </html>
