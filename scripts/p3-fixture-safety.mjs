@@ -21,3 +21,12 @@ export function reconcilePriorFixtures(previousMatches, currentMatches, verified
   }
   return {retained,futureRemoved,unverifiedRemoved};
 }
+
+/**
+ * Input files may advance before a gated build succeeds. Never treat the
+ * mere existence of an input file as proof that its P3 snapshot was published.
+ */
+export function canSkipP3Build({previousCount,addedCount,discardedFutureCount,currentCount,publishedCount,publishedSha}) {
+  return previousCount>0 && addedCount===0 && discardedFutureCount===0
+    && currentCount===publishedCount && Boolean(publishedSha);
+}
