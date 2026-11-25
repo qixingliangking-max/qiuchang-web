@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: p3-scheduled-offline-refresh
+  group: p3-offline-serial-writers
   cancel-in-progress: false
 
 jobs:
