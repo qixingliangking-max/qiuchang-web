@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { classifyFixtureStatus, reconcilePriorFixtures } from './p3-fixture-safety.mjs';
+import { classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build } from './p3-fixture-safety.mjs';
 
 const configPath=process.argv[2];
 if(!configPath){
@@ -161,7 +161,14 @@ if(reconciled.unverifiedRemoved.length){
   console.error(JSON.stringify(report,null,2));
   process.exit(4);
 }
-if(previousIds.length && addedIds.length===0 && reconciled.futureRemoved.length===0){
+if(canSkipP3Build({
+  previousCount:previousIds.length,
+  addedCount:addedIds.length,
+  discardedFutureCount:reconciled.futureRemoved.length,
+  currentCount:matches.length,
+  publishedCount:Number(cfg.baseline_finished_matches||0),
+  publishedSha:cfg.last_published_blob_sha
+})){
   report.status='NO_NEW_FINISHED';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
