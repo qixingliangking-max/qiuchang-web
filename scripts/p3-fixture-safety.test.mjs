@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build} from './p3-fixture-safety.mjs';
+import {classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build, dedupeAuditedFixtureAliases} from './p3-fixture-safety.mjs';
 
 const now=Date.parse('2026-11-25T01:00:00Z');
 const fixture=(id,kickoff,finished=true)=>({id,status:{finished,utcTime:kickoff}});
@@ -44,4 +44,22 @@ test('no-op is allowed only if input and last successfully promoted fixture base
 });
 test('removing a previously mislabeled future fixture always rebuilds',()=>{
   assert.equal(canSkipP3Build({previousCount:120,addedCount:0,discardedFutureCount:1,currentCount:119,publishedCount:120,publishedSha:'verified'}),false);
+});
+
+test('verified historical Vicenza match keeps its canonical P3 source ID over a verified duplicate alias',()=>{
+  const old=[{source_match_id:'5967044',home_team:'维琴察',away_team:'卡坦扎罗',kickoff_at:'2026-08-21T18:30:00Z'}];
+  const current=[{source_match_id:'1000024295',home_team:'维琴察',away_team:'卡坦扎罗',kickoff_at:'2026-08-21T18:30:00.000Z'}];
+  const result=dedupeAuditedFixtureAliases(current,old,new Set(['5967044']));
+  assert.equal(result.unique.length,0);
+  assert.deepEqual(result.excludedDuplicateAliases,[{source_match_id:'1000024295',canonical_source_match_id:'5967044'}]);
+});
+test('unknown or different kickoff match is never automatically dropped',()=>{
+  const old=[{source_match_id:'5967044',home_team:'维琴察',away_team:'卡坦扎罗',kickoff_at:'2026-08-21T18:30:00Z'}];
+  const current=[{source_match_id:'1000024295',home_team:'维琴察',away_team:'卡坦扎罗',kickoff_at:'2026-08-22T18:30:00Z'}];
+  assert.equal(dedupeAuditedFixtureAliases(current,old,new Set(['5967044'])).unique.length,1);
+  assert.equal(dedupeAuditedFixtureAliases(current,old,new Set()).unique.length,1);
+});
+test('newly finished Vicenza matches do not get discarded as previous duplicates',()=>{
+  const current=[{source_match_id:'1000024310',home_team:'维琴察',away_team:'凯勒雷斯',kickoff_at:'2026-11-24T19:00:00Z'}];
+  assert.equal(dedupeAuditedFixtureAliases(current,[],new Set()).unique.length,1);
 });
