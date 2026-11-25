@@ -79,7 +79,20 @@
       });
     return manifestPromise;
   }
-  async function qcFetchLiveScheduleDate(dateStr,force=false){
+  // Share concurrent same-date reads; forced refresh remains independent.
+  const pendingReads=new Map();
+  function qcFetchLiveScheduleDate(dateStr,force=false){
+    const ds=String(dateStr||'');
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(ds)) return Promise.resolve(null);
+    const key=ds+'|'+(force?'force':'normal');
+    if(pendingReads.has(key)) return pendingReads.get(key);
+    const work=readLiveScheduleDate(ds,force).finally(()=>{
+      if(pendingReads.get(key)===work) pendingReads.delete(key);
+    });
+    pendingReads.set(key,work);
+    return work;
+  }
+  async function readLiveScheduleDate(dateStr,force=false){
     const ds=String(dateStr||'');
     if(!/^\d{4}-\d{2}-\d{2}$/.test(ds)) return null;
     const cached=memory.get(ds);
@@ -128,18 +141,14 @@
         }
         return null;
       }
-      if(!force && local?.version===entry.version && local?.payload){
+      if(!force && local?.version===entry.version && local?.payload &&
+         Number(local.payload.match_count)===Number(entry.match_count)){
         const rows=normalizeRows(local.payload,ds);
         if(rows){
           const result={data:rows,error:null,fromScheduleSnapshot:true,fromLiveStaticSchedule:true,fromLocalCache:true};
           memory.set(ds,{version:entry.version,result});
-          // Refresh the static file quietly; the cached copy already painted.
-          fetch(entry.file+'?v='+encodeURIComponent(entry.version),{cache:'force-cache'})
-            .then(res=>res.ok?res.json():null)
-            .then(payload=>{
-              if(!payload || Number(payload.match_count)!==Number(entry.match_count)) return;
-              writeJson(localKey(ds),{version:entry.version,payload});
-            }).catch(()=>{});
+          // The manifest version and validated local row count agree.
+          // A versioned immutable file needs no duplicate background download.
           return result;
         }
       }
