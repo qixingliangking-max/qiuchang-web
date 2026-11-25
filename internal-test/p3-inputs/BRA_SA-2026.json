@@ -2874,6 +2874,14 @@
       "away_team": "格雷米奥",
       "match_date": "2026-11-24",
       "kickoff_at": "2026-11-24T00:00:00.000Z"
+    },
+    {
+      "source_match_id": "5103733",
+      "match_id": "fotmob:5103733",
+      "home_team": "沙佩科恩斯",
+      "away_team": "帕尔梅拉斯",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T21:00:00.000Z"
     }
   ]
 }

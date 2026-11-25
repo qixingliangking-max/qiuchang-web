@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-24T22:36:34.767Z",
+  "run_at": "2026-11-25T00:01:06.752Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 2,
-  "noop_leagues": 20,
+  "promoted_leagues": 1,
+  "noop_leagues": 21,
   "blocked_leagues": 2,
   "results": [
     {
@@ -23,29 +23,29 @@
     {
       "league_code": "BRA_SA",
       "season": "2026",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 359,
+      "status": "PROMOTED",
+      "discovered_finished": 360,
       "baseline_finished_matches": 359,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
+      "exit_code": 0
+    },
+    {
+      "league_code": "ENG_CH",
+      "season": "2026/27",
+      "status": "NO_NEW_FINISHED",
+      "discovered_finished": 200,
+      "baseline_finished_matches": 200,
       "new_finished_matches": 0,
       "gate_status": null,
       "collection_coverage_pct": null,
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
-    },
-    {
-      "league_code": "ENG_CH",
-      "season": "2026/27",
-      "status": "PROMOTED",
-      "discovered_finished": 200,
-      "baseline_finished_matches": 192,
-      "new_finished_matches": 8,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
-      "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
       "exit_code": 0
     },
     {
@@ -74,7 +74,7 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
+      "exit_code": 1
     },
     {
       "league_code": "ESP_LL",
@@ -144,7 +144,7 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
+      "exit_code": 1
     },
     {
       "league_code": "GER_BL",
@@ -172,7 +172,7 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 0
+      "exit_code": 1
     },
     {
       "league_code": "ITA_SB",
@@ -289,15 +289,15 @@
     {
       "league_code": "UEFA_UCL",
       "season": "2026/27",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 81,
-      "baseline_finished_matches": 74,
-      "new_finished_matches": 7,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 81,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
