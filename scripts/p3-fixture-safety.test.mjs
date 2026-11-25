@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {classifyFixtureStatus, reconcilePriorFixtures} from './p3-fixture-safety.mjs';
+import {classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build} from './p3-fixture-safety.mjs';
 
 const now=Date.parse('2026-11-25T01:00:00Z');
 const fixture=(id,kickoff,finished=true)=>({id,status:{finished,utcTime:kickoff}});
@@ -33,4 +33,15 @@ test('existing matched historical match is never duplicated by retention',()=>{
   const old=[prev('5967044','2026-10-03T15:00:00Z')];
   const r=reconcilePriorFixtures(old,old,new Set(['5967044']),now);
   assert.equal(r.retained.length,0);assert.equal(r.futureRemoved.length,0);
+});
+
+test('previous unpromoted input must be retried even if no new IDs were discovered',()=>{
+  assert.equal(canSkipP3Build({previousCount:124,addedCount:0,discardedFutureCount:0,currentCount:124,publishedCount:110,publishedSha:'old'}),false);
+});
+test('no-op is allowed only if input and last successfully promoted fixture baseline agree',()=>{
+  assert.equal(canSkipP3Build({previousCount:124,addedCount:0,discardedFutureCount:0,currentCount:124,publishedCount:124,publishedSha:'verified'}),true);
+  assert.equal(canSkipP3Build({previousCount:124,addedCount:0,discardedFutureCount:0,currentCount:124,publishedCount:124,publishedSha:''}),false);
+});
+test('removing a previously mislabeled future fixture always rebuilds',()=>{
+  assert.equal(canSkipP3Build({previousCount:120,addedCount:0,discardedFutureCount:1,currentCount:119,publishedCount:120,publishedSha:'verified'}),false);
 });
