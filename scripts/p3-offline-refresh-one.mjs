@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build } from './p3-fixture-safety.mjs';
+import { classifyFixtureStatus, reconcilePriorFixtures, canSkipP3Build, dedupeAuditedFixtureAliases } from './p3-fixture-safety.mjs';
 
 const configPath=process.argv[2];
 if(!configPath){
@@ -108,6 +108,9 @@ if(fs.existsSync(inputPath)){
 }
 const previousIds=previousMatches.map(x=>String(x.source_match_id)).sort();
 const retainedIds=new Set((cfg.verified_retained_finished_source_match_ids||[]).map(String));
+const deduped=dedupeAuditedFixtureAliases(matches,previousMatches,retainedIds);
+matches.length=0;
+matches.push(...deduped.unique);
 const reconciled=reconcilePriorFixtures(previousMatches,matches,retainedIds,nowMs);
 for(const previous of reconciled.retained) matches.push(previous);
 matches.sort((a,b)=>String(a.kickoff_at||a.match_date||'').localeCompare(String(b.kickoff_at||b.match_date||''))||a.source_match_id.localeCompare(b.source_match_id));
@@ -134,6 +137,7 @@ const report={
   added_source_match_ids:addedIds,
   removed_source_match_ids:removedIds,
   retained_verified_finished_source_match_ids:reconciled.retained.map(m=>String(m.source_match_id)),
+  excluded_exact_duplicate_source_aliases:deduped.excludedDuplicateAliases,
   discarded_previous_future_ids:reconciled.futureRemoved,
   unverified_removed_source_match_ids:reconciled.unverifiedRemoved,
   mapped_finished:matches.length,

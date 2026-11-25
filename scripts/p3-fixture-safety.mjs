@@ -30,3 +30,30 @@ export function canSkipP3Build({previousCount,addedCount,discardedFutureCount,cu
   return previousCount>0 && addedCount===0 && discardedFutureCount===0
     && currentCount===publishedCount && Boolean(publishedSha);
 }
+
+/**
+ * Some league indexes duplicate a verified match with a new source ID.
+ * Only collapse the alias when its teams AND exact kickoff agree with
+ * an explicitly verified previous fixture. Never fuzzy-match by team alone.
+ */
+export function dedupeAuditedFixtureAliases(currentMatches, previousMatches, verifiedRetainedIds) {
+  const historical=new Map();
+  for(const previous of previousMatches){
+    if(!verifiedRetainedIds.has(String(previous.source_match_id))) continue;
+    const at=Date.parse(previous.kickoff_at||'');
+    if(!Number.isFinite(at)) continue;
+    historical.set([previous.home_team,previous.away_team,at].join('|'),String(previous.source_match_id));
+  }
+  const excludedDuplicateAliases=[];
+  const unique=[];
+  for(const current of currentMatches){
+    const at=Date.parse(current.kickoff_at||'');
+    const canonical=Number.isFinite(at)
+      ? historical.get([current.home_team,current.away_team,at].join('|'))
+      : null;
+    if(canonical && canonical!==String(current.source_match_id)){
+      excludedDuplicateAliases.push({source_match_id:String(current.source_match_id),canonical_source_match_id:canonical});
+    } else unique.push(current);
+  }
+  return {unique,excludedDuplicateAliases};
+}

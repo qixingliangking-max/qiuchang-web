@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: p3-unl-incremental-refresh-test
+  group: p3-offline-serial-writers
   cancel-in-progress: false
 
 jobs:
