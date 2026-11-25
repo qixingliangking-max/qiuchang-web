@@ -6,7 +6,7 @@
     "86"
   ],
   "fotmob_ccode3": "ITA",
-  "baseline_finished_matches": 127,
+  "baseline_finished_matches": 130,
   "team_map": {
     "Pisa": "比萨",
     "Arezzo": "阿雷佐",
@@ -30,8 +30,8 @@
     "Virtus Entella": "恩特拉",
     "Vicenza": "维琴察"
   },
-  "last_successful_refresh_at": "2026-11-25T20:29:49.023Z",
-  "last_published_blob_sha": "16579458acd141ff8d037eccce535eb163db6e6f",
+  "last_successful_refresh_at": "2026-11-25T22:45:39.214Z",
+  "last_published_blob_sha": "34c4a6c57a0af8d7354971a0ffd105120d84b678",
   "verified_retained_finished_source_match_ids": [
     "5967044",
     "5967051",

@@ -1,20 +1,22 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-25T20:29:49.023Z",
+  "run_at": "2026-11-25T22:45:39.214Z",
   "discovered_fixtures": 380,
-  "discovered_finished": 127,
-  "verified_past_finished": 127,
+  "discovered_finished": 130,
+  "verified_past_finished": 130,
   "source_invalid_finished_time": [],
   "source_premature_finished": [],
-  "in_scope_finished": 127,
+  "in_scope_finished": 130,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 126,
-  "new_finished_matches": 1,
+  "baseline_finished_matches": 127,
+  "new_finished_matches": 3,
   "added_source_match_ids": [
-    "5967161"
+    "5967165",
+    "5967166",
+    "5967168"
   ],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [
@@ -79,7 +81,7 @@
   "discarded_previous_future_ids": [],
   "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
-  "mapped_finished": 127,
+  "mapped_finished": 130,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -88,6 +90,6 @@
   "strict_errors": 0,
   "collection_failures": 0,
   "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 48.6,
-  "published_blob_sha": "16579458acd141ff8d037eccce535eb163db6e6f"
+  "avg_team_depth_coverage_pct": 52.7,
+  "published_blob_sha": "34c4a6c57a0af8d7354971a0ffd105120d84b678"
 }

@@ -1,21 +1,26 @@
 {
   "league_code": "UEFA_UCL",
   "season": "2026/27",
-  "run_at": "2026-11-25T20:30:07.894Z",
+  "run_at": "2026-11-25T22:45:58.238Z",
   "discovered_fixtures": 144,
-  "discovered_finished": 83,
-  "verified_past_finished": 83,
+  "discovered_finished": 90,
+  "verified_past_finished": 90,
   "source_invalid_finished_time": [],
   "source_premature_finished": [],
-  "in_scope_finished": 83,
+  "in_scope_finished": 90,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 81,
-  "new_finished_matches": 2,
+  "baseline_finished_matches": 83,
+  "new_finished_matches": 7,
   "added_source_match_ids": [
-    "6106391",
-    "6106421"
+    "6106235",
+    "6106253",
+    "6106269",
+    "6106279",
+    "6106294",
+    "6106310",
+    "6106336"
   ],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
@@ -23,7 +28,7 @@
   "discarded_previous_future_ids": [],
   "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
-  "mapped_finished": 83,
+  "mapped_finished": 90,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -33,5 +38,5 @@
   "collection_failures": 0,
   "quality_tier": "LIMITED",
   "avg_team_depth_coverage_pct": 0,
-  "published_blob_sha": "6d03d35ddeab3a93c577c2d8acf24b15f4ae10ec"
+  "published_blob_sha": "fc722b600b08f6516910296113ceb50a7f4c0195"
 }

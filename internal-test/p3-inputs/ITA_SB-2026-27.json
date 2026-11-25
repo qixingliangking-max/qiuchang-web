@@ -1018,6 +1018,30 @@
       "away_team": "阿维利诺",
       "match_date": "2026-11-25",
       "kickoff_at": "2026-11-25T18:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967165",
+      "match_id": "fotmob:5967165",
+      "home_team": "曼托瓦",
+      "away_team": "阿雷佐",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967166",
+      "match_id": "fotmob:5967166",
+      "home_team": "帕多瓦",
+      "away_team": "桑普多利亚",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T19:00:00.000Z"
+    },
+    {
+      "source_match_id": "5967168",
+      "match_id": "fotmob:5967168",
+      "home_team": "比萨",
+      "away_team": "摩德纳",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T19:00:00.000Z"
     }
   ]
 }
