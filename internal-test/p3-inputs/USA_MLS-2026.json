@@ -4153,7 +4153,15 @@
       "home_team": "圣路易斯城",
       "away_team": "洛杉矶FC",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T01:20:00.000Z"
+      "kickoff_at": "2026-11-24T01:20:00Z"
+    },
+    {
+      "source_match_id": "6580839",
+      "match_id": "fotmob:6580839",
+      "home_team": "圣何塞地震",
+      "away_team": "休斯敦迪纳摩",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T03:00:00.000Z"
     }
   ]
 }
