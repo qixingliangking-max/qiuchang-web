@@ -1028,14 +1028,6 @@
       "kickoff_at": "2026-11-01T17:30:00Z"
     },
     {
-      "source_match_id": "5868523",
-      "match_id": "fotmob:5868523",
-      "home_team": "特内里费",
-      "away_team": "安道尔FC",
-      "match_date": "2026-11-02",
-      "kickoff_at": "2026-11-02T13:00:00Z"
-    },
-    {
       "source_match_id": "5868521",
       "match_id": "fotmob:5868521",
       "home_team": "奥维耶多",
@@ -1297,7 +1289,7 @@
       "home_team": "休达",
       "away_team": "阿尔梅里亚",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T19:30:00.000Z"
+      "kickoff_at": "2026-11-23T19:30:00Z"
     }
   ]
 }

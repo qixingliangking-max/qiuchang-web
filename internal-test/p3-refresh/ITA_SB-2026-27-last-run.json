@@ -1,7 +1,7 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-25T01:39:13.648Z",
+  "run_at": "2026-11-25T01:42:09.319Z",
   "discovered_fixtures": 380,
   "discovered_finished": 126,
   "verified_past_finished": 126,
@@ -10,26 +10,10 @@
   "in_scope_finished": 126,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
-  "baseline_finished_matches": 110,
-  "new_finished_matches": 16,
-  "added_source_match_ids": [
-    "1000024309",
-    "1000024310",
-    "5967149",
-    "5967151",
-    "5967152",
-    "5967153",
-    "5967154",
-    "5967155",
-    "5967156",
-    "5967157",
-    "5967158",
-    "5967159",
-    "5967160",
-    "5967162",
-    "5967163",
-    "5967167"
-  ],
+  "excluded_confirmed_abandoned_source_match_ids": [],
+  "baseline_finished_matches": 126,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [
     "5967044",
@@ -91,16 +75,10 @@
     }
   ],
   "discarded_previous_future_ids": [],
+  "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
   "mapped_finished": 126,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 46.8,
-  "published_blob_sha": "18cd1432dcc281bf9c1dccac23eadf837645c584"
+  "status": "NO_NEW_FINISHED"
 }
