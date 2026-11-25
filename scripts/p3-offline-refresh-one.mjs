@@ -155,7 +155,7 @@ if(unmapped.length){
   console.error(JSON.stringify(report,null,2));
   process.exit(3);
 }
-if(removedIds.length){
+if(reconciled.unverifiedRemoved.length){
   report.status='BLOCKED_FINISHED_SET_REGRESSION';
   fs.writeFileSync(reportPath,JSON.stringify(report,null,2)+'\n');
   console.error(JSON.stringify(report,null,2));
