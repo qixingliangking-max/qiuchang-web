@@ -37,5 +37,14 @@
     "Sporting Gijón": "希洪竞技"
   },
   "last_successful_refresh_at": "2026-11-23T22:38:21.559Z",
-  "last_published_blob_sha": "a00309918490f6c550a9dd1a4d18e02d031190c7"
+  "last_published_blob_sha": "a00309918490f6c550a9dd1a4d18e02d031190c7",
+  "confirmed_abandoned_source_match_ids": [
+    "5868523"
+  ],
+  "confirmed_abandoned_audit": {
+    "reviewed_at": "2026-11-25",
+    "match": "2026-11-02 特内里费 vs 安道尔FC",
+    "reason": "P1 league_matches.status=abandoned and raw.qc_exclusion.reason=abandoned; FotMob league source incorrectly states finished. Provisional 2-2 does not count as completed.",
+    "protection": "Exclude only this explicitly verified source ID from P3; all other past disappearances remain blocking."
+  }
 }
