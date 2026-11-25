@@ -1,10 +1,10 @@
 {
-  "run_at": "2026-11-25T00:01:06.752Z",
+  "run_at": "2026-11-25T01:39:44.607Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 24,
-  "promoted_leagues": 1,
-  "noop_leagues": 21,
-  "blocked_leagues": 2,
+  "promoted_leagues": 2,
+  "noop_leagues": 22,
+  "blocked_leagues": 0,
   "results": [
     {
       "league_code": "AFC_ACLE",
@@ -23,15 +23,15 @@
     {
       "league_code": "BRA_SA",
       "season": "2026",
-      "status": "PROMOTED",
+      "status": "NO_NEW_FINISHED",
       "discovered_finished": 360,
-      "baseline_finished_matches": 359,
-      "new_finished_matches": 1,
-      "gate_status": "PASS",
-      "collection_coverage_pct": 100,
+      "baseline_finished_matches": 360,
+      "new_finished_matches": 0,
+      "gate_status": null,
+      "collection_coverage_pct": null,
       "unmapped_count": 0,
-      "strict_errors": 0,
-      "collection_failures": 0,
+      "strict_errors": null,
+      "collection_failures": null,
       "exit_code": 0
     },
     {
@@ -74,21 +74,21 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 1
+      "exit_code": 0
     },
     {
       "league_code": "ESP_LL",
       "season": "2026/27",
-      "status": "BLOCKED_FINISHED_SET_REGRESSION",
+      "status": "PROMOTED",
       "discovered_finished": 129,
       "baseline_finished_matches": 120,
       "new_finished_matches": 10,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
-      "exit_code": 4
+      "strict_errors": 0,
+      "collection_failures": 0,
+      "exit_code": 0
     },
     {
       "league_code": "FIN_VL",
@@ -144,7 +144,7 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 1
+      "exit_code": 0
     },
     {
       "league_code": "GER_BL",
@@ -172,21 +172,21 @@
       "unmapped_count": 0,
       "strict_errors": null,
       "collection_failures": null,
-      "exit_code": 1
+      "exit_code": 0
     },
     {
       "league_code": "ITA_SB",
       "season": "2026/27",
-      "status": "BLOCKED_UNMAPPED_TEAM",
+      "status": "PROMOTED",
       "discovered_finished": 126,
       "baseline_finished_matches": 110,
-      "new_finished_matches": 14,
-      "gate_status": null,
-      "collection_coverage_pct": null,
-      "unmapped_count": 13,
-      "strict_errors": null,
-      "collection_failures": null,
-      "exit_code": 3
+      "new_finished_matches": 16,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
+      "unmapped_count": 0,
+      "strict_errors": 0,
+      "collection_failures": 0,
+      "exit_code": 0
     },
     {
       "league_code": "JPN_J1",

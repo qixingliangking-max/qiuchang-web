@@ -1,9 +1,12 @@
 {
   "league_code": "ESP_LL",
   "season": "2026/27",
-  "run_at": "2026-11-25T00:00:30.670Z",
+  "run_at": "2026-11-25T01:38:50.826Z",
   "discovered_fixtures": 380,
   "discovered_finished": 129,
+  "verified_past_finished": 129,
+  "source_invalid_finished_time": [],
+  "source_premature_finished": [],
   "in_scope_finished": 129,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
@@ -24,8 +27,21 @@
   "removed_source_match_ids": [
     "5868088"
   ],
+  "retained_verified_finished_source_match_ids": [],
+  "excluded_exact_duplicate_source_aliases": [],
+  "discarded_previous_future_ids": [
+    "5868088"
+  ],
+  "unverified_removed_source_match_ids": [],
   "mapped_finished": 129,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "BLOCKED_FINISHED_SET_REGRESSION"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 45.5,
+  "published_blob_sha": "c891a98ea1c06638e9f9102341876f8f92baaa4b"
 }

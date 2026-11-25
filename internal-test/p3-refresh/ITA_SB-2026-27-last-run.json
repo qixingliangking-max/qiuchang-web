@@ -1,15 +1,20 @@
 {
   "league_code": "ITA_SB",
   "season": "2026/27",
-  "run_at": "2026-11-25T00:00:42.935Z",
+  "run_at": "2026-11-25T01:39:13.648Z",
   "discovered_fixtures": 380,
   "discovered_finished": 126,
+  "verified_past_finished": 126,
+  "source_invalid_finished_time": [],
+  "source_premature_finished": [],
   "in_scope_finished": 126,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "baseline_finished_matches": 110,
-  "new_finished_matches": 14,
+  "new_finished_matches": 16,
   "added_source_match_ids": [
+    "1000024309",
+    "1000024310",
     "5967149",
     "5967151",
     "5967152",
@@ -25,7 +30,8 @@
     "5967163",
     "5967167"
   ],
-  "removed_source_match_ids": [
+  "removed_source_match_ids": [],
+  "retained_verified_finished_source_match_ids": [
     "5967044",
     "5967051",
     "5967063",
@@ -38,100 +44,63 @@
     "5967135",
     "5967145"
   ],
-  "mapped_finished": 113,
-  "unmapped_count": 13,
-  "unmapped": [
+  "excluded_exact_duplicate_source_aliases": [
     {
       "source_match_id": "1000024295",
-      "home_source": "Vicenza",
-      "away_source": "Catanzaro",
-      "home_mapped": null,
-      "away_mapped": "卡坦扎罗"
+      "canonical_source_match_id": "5967044"
     },
     {
       "source_match_id": "1000024296",
-      "home_source": "Avellino",
-      "away_source": "Vicenza",
-      "home_mapped": "阿维利诺",
-      "away_mapped": null
+      "canonical_source_match_id": "5967051"
     },
     {
       "source_match_id": "1000024298",
-      "home_source": "Virtus Entella",
-      "away_source": "Vicenza",
-      "home_mapped": "恩特拉",
-      "away_mapped": null
+      "canonical_source_match_id": "5967063"
     },
     {
       "source_match_id": "1000024299",
-      "home_source": "Vicenza",
-      "away_source": "Juve Stabia",
-      "home_mapped": null,
-      "away_mapped": "史泰比亚"
+      "canonical_source_match_id": "5967074"
     },
     {
       "source_match_id": "1000024300",
-      "home_source": "Hellas Verona",
-      "away_source": "Vicenza",
-      "home_mapped": "维罗纳",
-      "away_mapped": null
+      "canonical_source_match_id": "5967088"
     },
     {
       "source_match_id": "1000024301",
-      "home_source": "Vicenza",
-      "away_source": "Pisa",
-      "home_mapped": null,
-      "away_mapped": "比萨"
+      "canonical_source_match_id": "5967095"
     },
     {
       "source_match_id": "1000024303",
-      "home_source": "Benevento",
-      "away_source": "Vicenza",
-      "home_mapped": "贝内文托",
-      "away_mapped": null
+      "canonical_source_match_id": "5967100"
     },
     {
       "source_match_id": "1000024304",
-      "home_source": "Empoli",
-      "away_source": "Vicenza",
-      "home_mapped": "恩波利",
-      "away_mapped": null
+      "canonical_source_match_id": "5967113"
     },
     {
       "source_match_id": "1000024305",
-      "home_source": "Vicenza",
-      "away_source": "Modena",
-      "home_mapped": null,
-      "away_mapped": "摩德纳"
+      "canonical_source_match_id": "5967125"
     },
     {
       "source_match_id": "1000024307",
-      "home_source": "Palermo",
-      "away_source": "Vicenza",
-      "home_mapped": "巴勒莫",
-      "away_mapped": null
+      "canonical_source_match_id": "5967135"
     },
     {
       "source_match_id": "1000024308",
-      "home_source": "Vicenza",
-      "away_source": "Cremonese",
-      "home_mapped": null,
-      "away_mapped": "克雷莫纳"
-    },
-    {
-      "source_match_id": "1000024309",
-      "home_source": "Ascoli",
-      "away_source": "Vicenza",
-      "home_mapped": "阿斯科利",
-      "away_mapped": null
-    },
-    {
-      "source_match_id": "1000024310",
-      "home_source": "Vicenza",
-      "away_source": "Carrarese",
-      "home_mapped": null,
-      "away_mapped": "凯勒雷斯"
+      "canonical_source_match_id": "5967145"
     }
   ],
-  "status": "BLOCKED_UNMAPPED_TEAM"
+  "discarded_previous_future_ids": [],
+  "unverified_removed_source_match_ids": [],
+  "mapped_finished": 126,
+  "unmapped_count": 0,
+  "unmapped": [],
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 46.8,
+  "published_blob_sha": "18cd1432dcc281bf9c1dccac23eadf837645c584"
 }

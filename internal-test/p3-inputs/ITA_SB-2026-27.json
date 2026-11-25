@@ -865,7 +865,7 @@
       "home_team": "恩特拉",
       "away_team": "摩德纳",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T14:00:00.000Z"
+      "kickoff_at": "2026-11-08T14:00:00Z"
     },
     {
       "source_match_id": "5967141",
@@ -873,7 +873,7 @@
       "home_team": "凯勒雷斯",
       "away_team": "桑普多利亚",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T16:15:00.000Z"
+      "kickoff_at": "2026-11-08T16:15:00Z"
     },
     {
       "source_match_id": "5967145",
@@ -882,6 +882,134 @@
       "away_team": "克雷莫纳",
       "match_date": "2026-11-08",
       "kickoff_at": "2026-11-08T18:30:00.000Z"
+    },
+    {
+      "source_match_id": "5967158",
+      "match_id": "fotmob:5967158",
+      "home_team": "维罗纳",
+      "away_team": "切塞纳",
+      "match_date": "2026-11-20",
+      "kickoff_at": "2026-11-20T19:30:00Z"
+    },
+    {
+      "source_match_id": "1000024309",
+      "match_id": "fotmob:1000024309",
+      "home_team": "阿斯科利",
+      "away_team": "维琴察",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967152",
+      "match_id": "fotmob:5967152",
+      "home_team": "凯勒雷斯",
+      "away_team": "恩特拉",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967155",
+      "match_id": "fotmob:5967155",
+      "home_team": "摩德纳",
+      "away_team": "史泰比亚",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967156",
+      "match_id": "fotmob:5967156",
+      "home_team": "桑普多利亚",
+      "away_team": "贝内文托",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967157",
+      "match_id": "fotmob:5967157",
+      "home_team": "南蒂罗尔",
+      "away_team": "克雷莫纳",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967153",
+      "match_id": "fotmob:5967153",
+      "home_team": "卡坦扎罗",
+      "away_team": "巴勒莫",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T16:15:00Z"
+    },
+    {
+      "source_match_id": "5967154",
+      "match_id": "fotmob:5967154",
+      "home_team": "恩波利",
+      "away_team": "比萨",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T18:30:00Z"
+    },
+    {
+      "source_match_id": "5967151",
+      "match_id": "fotmob:5967151",
+      "home_team": "阿维利诺",
+      "away_team": "曼托瓦",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T14:00:00Z"
+    },
+    {
+      "source_match_id": "5967149",
+      "match_id": "fotmob:5967149",
+      "home_team": "阿雷佐",
+      "away_team": "帕多瓦",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T16:15:00Z"
+    },
+    {
+      "source_match_id": "5967163",
+      "match_id": "fotmob:5967163",
+      "home_team": "史泰比亚",
+      "away_team": "卡坦扎罗",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T18:00:00Z"
+    },
+    {
+      "source_match_id": "1000024310",
+      "match_id": "fotmob:1000024310",
+      "home_team": "维琴察",
+      "away_team": "凯勒雷斯",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967159",
+      "match_id": "fotmob:5967159",
+      "home_team": "贝内文托",
+      "away_team": "恩波利",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967160",
+      "match_id": "fotmob:5967160",
+      "home_team": "切塞纳",
+      "away_team": "阿斯科利",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967162",
+      "match_id": "fotmob:5967162",
+      "home_team": "恩特拉",
+      "away_team": "维罗纳",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967167",
+      "match_id": "fotmob:5967167",
+      "home_team": "巴勒莫",
+      "away_team": "南蒂罗尔",
+      "match_date": "2026-11-24",
+      "kickoff_at": "2026-11-24T19:00:00Z"
     }
   ]
 }
