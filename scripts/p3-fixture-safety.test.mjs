@@ -63,3 +63,15 @@ test('newly finished Vicenza matches do not get discarded as previous duplicates
   const current=[{source_match_id:'1000024310',home_team:'维琴察',away_team:'凯勒雷斯',kickoff_at:'2026-11-24T19:00:00Z'}];
   assert.equal(dedupeAuditedFixtureAliases(current,[],new Set()).unique.length,1);
 });
+
+test('historical abandoned match is safely excluded only when explicitly audited',()=>{
+  const old=[{source_match_id:'5868523',home_team:'特内里费',away_team:'安道尔FC',kickoff_at:'2026-11-02T13:00:00Z'}];
+  const audited=reconcilePriorFixtures(old,[],new Set(),now,new Set(['5868523']));
+  assert.deepEqual(audited.abandonedRemoved,['5868523']);
+  assert.equal(audited.unverifiedRemoved.length,0);
+  const unaudited=reconcilePriorFixtures(old,[],new Set(),now);
+  assert.deepEqual(unaudited.unverifiedRemoved,['5868523']);
+});
+test('excluded abandoned fixture forces a new safe snapshot build',()=>{
+  assert.equal(canSkipP3Build({previousCount:162,addedCount:0,discardedFutureCount:0,removedAbandonedCount:1,currentCount:161,publishedCount:162,publishedSha:'previous'}),false);
+});

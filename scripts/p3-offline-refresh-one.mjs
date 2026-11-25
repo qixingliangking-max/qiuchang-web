@@ -67,9 +67,14 @@ const finished=sourceFinished.filter(m=>classifyFixtureStatus(m,nowMs)==='verifi
 // Only these specifically audited fixture IDs are out of scope for the 36-team
 // league-stage archive. An unknown unmapped fixture MUST still block publication.
 const excludedIds=new Set((cfg.excluded_source_match_ids||[]).map(String));
-const excluded=[];
+const confirmedAbandonedIds=new Set((cfg.confirmed_abandoned_source_match_ids||[]).map(String));
+const excluded=[],excludedAbandoned=[];
 const scopedFinished=[];
 for(const m of finished){
+  if(confirmedAbandonedIds.has(String(m.id))){
+    excludedAbandoned.push(String(m.id));
+    continue;
+  }
   if(!excludedIds.has(String(m.id))){scopedFinished.push(m);continue;}
   const h=cfg.team_map?.[m?.home?.name];
   const a=cfg.team_map?.[m?.away?.name];
@@ -111,7 +116,7 @@ const retainedIds=new Set((cfg.verified_retained_finished_source_match_ids||[]).
 const deduped=dedupeAuditedFixtureAliases(matches,previousMatches,retainedIds);
 matches.length=0;
 matches.push(...deduped.unique);
-const reconciled=reconcilePriorFixtures(previousMatches,matches,retainedIds,nowMs);
+const reconciled=reconcilePriorFixtures(previousMatches,matches,retainedIds,nowMs,confirmedAbandonedIds);
 for(const previous of reconciled.retained) matches.push(previous);
 matches.sort((a,b)=>String(a.kickoff_at||a.match_date||'').localeCompare(String(b.kickoff_at||b.match_date||''))||a.source_match_id.localeCompare(b.source_match_id));
 const currentIds=matches.map(x=>String(x.source_match_id)).sort();
@@ -132,6 +137,7 @@ const report={
   in_scope_finished:scopedFinished.length,
   excluded_out_of_scope_count:excluded.length,
   excluded_out_of_scope_source_match_ids:excluded,
+  excluded_confirmed_abandoned_source_match_ids:excludedAbandoned,
   baseline_finished_matches:baseline,
   new_finished_matches:addedIds.length,
   added_source_match_ids:addedIds,
@@ -139,6 +145,7 @@ const report={
   retained_verified_finished_source_match_ids:reconciled.retained.map(m=>String(m.source_match_id)),
   excluded_exact_duplicate_source_aliases:deduped.excludedDuplicateAliases,
   discarded_previous_future_ids:reconciled.futureRemoved,
+  discarded_previous_abandoned_ids:reconciled.abandonedRemoved,
   unverified_removed_source_match_ids:reconciled.unverifiedRemoved,
   mapped_finished:matches.length,
   unmapped_count:unmapped.length,
@@ -169,6 +176,7 @@ if(canSkipP3Build({
   previousCount:previousIds.length,
   addedCount:addedIds.length,
   discardedFutureCount:reconciled.futureRemoved.length,
+  removedAbandonedCount:reconciled.abandonedRemoved.length,
   currentCount:matches.length,
   publishedCount:Number(cfg.baseline_finished_matches||0),
   publishedSha:cfg.last_published_blob_sha
