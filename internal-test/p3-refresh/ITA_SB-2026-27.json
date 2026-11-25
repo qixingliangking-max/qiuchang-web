@@ -27,7 +27,8 @@
     "LR Vicenza": "维琴察",
     "Juve Stabia": "史泰比亚",
     "Hellas Verona": "维罗纳",
-    "Virtus Entella": "恩特拉"
+    "Virtus Entella": "恩特拉",
+    "Vicenza": "维琴察"
   },
   "last_successful_refresh_at": "2026-11-08T23:03:32.249Z",
   "last_published_blob_sha": "7b4d9c2ddca2ff40a9114bf26b62e9580903e7f3",
@@ -48,6 +49,7 @@
     "reviewed_at": "2026-11-25",
     "policy": "retain only these 11 known past finished Vicenza fixtures missing from refreshed FotMob league listing; do not infer any unknown historical matches",
     "evidence": "local public.league_match_p2_stats source_match_id linked to league_matches.status=finished, dated 2026-08-21 through 2026-11-08; 11/11 verified",
-    "safeguard": "collector only retains listed IDs from earlier P3 input; any other past disappearance blocks promotion"
+    "safeguard": "collector only retains listed IDs from earlier P3 input; any other past disappearance blocks promotion",
+    "duplicate_source_resolution": "11 original canonical source match IDs verified against P1/P2; matched duplicate 'Vicenza' aliases are suppressed only on exact normalized home, away and kickoff timestamp. New Nov21/Nov24 Vicenza fixtures remain eligible and were checked via source matchDetails (finished, matchId, score, lineup)."
   }
 }
