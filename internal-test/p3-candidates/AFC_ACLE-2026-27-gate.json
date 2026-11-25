@@ -3,8 +3,8 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 77,
-  "collected_matches": 77,
+  "input_matches": 79,
+  "collected_matches": 79,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 32,
@@ -26,7 +26,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "全北现代",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -81,7 +81,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "大阪钢巴",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -121,7 +121,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "泰港",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",
@@ -171,7 +171,7 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "鹿岛鹿角",
-      "matches": 4
+      "matches": 5
     }
   ],
   "gate_status": "PASS",

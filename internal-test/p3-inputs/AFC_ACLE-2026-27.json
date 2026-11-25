@@ -561,7 +561,7 @@
       "home_team": "纽卡斯尔喷气机",
       "away_team": "柏太阳神",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T07:45:00.000Z"
+      "kickoff_at": "2026-11-24T07:45:00Z"
     },
     {
       "source_match_id": "6050009",
@@ -569,7 +569,7 @@
       "home_team": "大田韩亚市民",
       "away_team": "北京国安",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T10:00:00.000Z"
+      "kickoff_at": "2026-11-24T10:00:00Z"
     },
     {
       "source_match_id": "6050010",
@@ -577,7 +577,7 @@
       "home_team": "京都不死鸟",
       "away_team": "浦项制铁",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T10:00:00.000Z"
+      "kickoff_at": "2026-11-24T10:00:00Z"
     },
     {
       "source_match_id": "6050011",
@@ -585,7 +585,7 @@
       "home_team": "河内公安",
       "away_team": "神户胜利船",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T12:15:00.000Z"
+      "kickoff_at": "2026-11-24T12:15:00Z"
     },
     {
       "source_match_id": "6050012",
@@ -593,7 +593,7 @@
       "home_team": "拉查布里",
       "away_team": "柔佛新山",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T12:15:00.000Z"
+      "kickoff_at": "2026-11-24T12:15:00Z"
     },
     {
       "source_match_id": "6050013",
@@ -601,7 +601,7 @@
       "home_team": "上海海港",
       "away_team": "武里南联",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T12:15:00.000Z"
+      "kickoff_at": "2026-11-24T12:15:00Z"
     },
     {
       "source_match_id": "6050102",
@@ -609,7 +609,7 @@
       "home_team": "迪拜青年国民",
       "away_team": "卡迪西亚",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T16:00:00.000Z"
+      "kickoff_at": "2026-11-24T16:00:00Z"
     },
     {
       "source_match_id": "6050103",
@@ -617,7 +617,23 @@
       "home_team": "利雅得胜利",
       "away_team": "萨德",
       "match_date": "2026-11-24",
-      "kickoff_at": "2026-11-24T18:15:00.000Z"
+      "kickoff_at": "2026-11-24T18:15:00Z"
+    },
+    {
+      "source_match_id": "6050014",
+      "match_id": "fotmob:6050014",
+      "home_team": "大阪钢巴",
+      "away_team": "泰港",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00.000Z"
+    },
+    {
+      "source_match_id": "6050015",
+      "match_id": "fotmob:6050015",
+      "home_team": "鹿岛鹿角",
+      "away_team": "全北现代",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00.000Z"
     }
   ]
 }
