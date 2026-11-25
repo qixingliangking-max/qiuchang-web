@@ -1010,6 +1010,14 @@
       "away_team": "南蒂罗尔",
       "match_date": "2026-11-24",
       "kickoff_at": "2026-11-24T19:00:00Z"
+    },
+    {
+      "source_match_id": "5967161",
+      "match_id": "fotmob:5967161",
+      "home_team": "克雷莫纳",
+      "away_team": "阿维利诺",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T18:00:00.000Z"
     }
   ]
 }
