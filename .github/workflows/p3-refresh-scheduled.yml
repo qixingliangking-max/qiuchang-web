@@ -11,6 +11,9 @@ on:
     branches: [ main ]
     paths:
       - ".github/workflows/p3-refresh-scheduled.yml"
+      - "scripts/p3-fixture-safety.mjs"
+      - "scripts/p3-fixture-safety.test.mjs"
+      - "scripts/p3-offline-refresh-one.mjs"
 
 permissions:
   contents: write
@@ -39,7 +42,10 @@ jobs:
 
       - name: Syntax check
         run: |
+          node --check scripts/p3-fixture-safety.mjs
+          node --check scripts/p3-fixture-safety.test.mjs
           node --check scripts/p3-offline-refresh-one.mjs
+          node --test scripts/p3-fixture-safety.test.mjs
           node --check scripts/p3-refresh-all.mjs
           node --check scripts/p3-offline-collect-and-build.mjs
           node --check scripts/p3-offline-builder-core.js
