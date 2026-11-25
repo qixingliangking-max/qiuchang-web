@@ -30,5 +30,24 @@
     "Virtus Entella": "恩特拉"
   },
   "last_successful_refresh_at": "2026-11-08T23:03:32.249Z",
-  "last_published_blob_sha": "7b4d9c2ddca2ff40a9114bf26b62e9580903e7f3"
+  "last_published_blob_sha": "7b4d9c2ddca2ff40a9114bf26b62e9580903e7f3",
+  "verified_retained_finished_source_match_ids": [
+    "5967044",
+    "5967051",
+    "5967063",
+    "5967074",
+    "5967088",
+    "5967095",
+    "5967100",
+    "5967113",
+    "5967125",
+    "5967135",
+    "5967145"
+  ],
+  "verified_retention_audit": {
+    "reviewed_at": "2026-11-25",
+    "policy": "retain only these 11 known past finished Vicenza fixtures missing from refreshed FotMob league listing; do not infer any unknown historical matches",
+    "evidence": "local public.league_match_p2_stats source_match_id linked to league_matches.status=finished, dated 2026-08-21 through 2026-11-08; 11/11 verified",
+    "safeguard": "collector only retains listed IDs from earlier P3 input; any other past disappearance blocks promotion"
+  }
 }
