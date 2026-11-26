@@ -129,14 +129,14 @@
       "quality_tier": "LIMITED",
       "teams": 36,
       "published_path": "internal-test/p3-data/UEFA_UEL-2026-27.json",
-      "blob_sha": "aedc5c2bde6e0db07e195f8a776c669d9d377c4e",
+      "blob_sha": "933364dc64da4904246550d75d08c791487315b6",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "avg_team_depth_coverage_pct": 0,
       "gate_report": "internal-test/p3-candidates/UEFA_UEL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-11-05T22:19:56.681Z",
-      "finished_matches": 72
+      "last_incremental_refresh_at": "2026-11-26T21:28:53.057Z",
+      "finished_matches": 80
     },
     {
       "league_code": "GER_BL",
@@ -400,12 +400,12 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/SAU_PL-2026-27.json",
-      "blob_sha": "7ddb89c001eea9aee06269a6a68caa614fc777d3",
+      "blob_sha": "a1f9d50a8ac73bf761ee498b0e54adda5ffac0ea",
       "gate_status": "PASS",
-      "avg_team_depth_coverage_pct": 37.4,
+      "avg_team_depth_coverage_pct": 37.9,
       "gate_report": "internal-test/p3-candidates/SAU_PL-2026-27-gate.json",
-      "last_incremental_refresh_at": "2026-11-26T16:39:36.076Z",
-      "finished_matches": 106,
+      "last_incremental_refresh_at": "2026-11-26T21:28:41.604Z",
+      "finished_matches": 108,
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; limited-weight"
     }
