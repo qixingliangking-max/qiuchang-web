@@ -1,0 +1,33 @@
+{
+  "league_code": "JPN_J2",
+  "season": "2026/27",
+  "competition_id": "d57a72fc-a90b-4c92-bf3f-8d8d43fe07e3",
+  "fotmob_league_ids": [
+    "8974"
+  ],
+  "fotmob_ccode3": "JPN",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Iwaki FC": "磐城FC",
+    "FC Imabari": "FC今治",
+    "Sagan Tosu": "鸟栖砂岩",
+    "Yokohama FC": "横滨FC",
+    "Fujieda MYFC": "藤枝MYFC",
+    "Jubilo Iwata": "磐田喜悦",
+    "Oita Trinita": "大分三神",
+    "Júbilo Iwata": "磐田喜悦",
+    "Vegalta Sendai": "仙台七夕",
+    "Ventforet Kofu": "甲府风林",
+    "Albirex Niigata": "新潟天鹅",
+    "Blaublitz Akita": "秋田蓝闪电",
+    "Kataller Toyama": "富山胜利",
+    "RB Omiya Ardija": "大宫松鼠",
+    "Shonan Bellmare": "湘南海洋",
+    "Tochigi City FC": "栃木市",
+    "Tokushima Vortis": "德岛漩涡",
+    "Montedio Yamagata": "山形山神",
+    "Vanraure Hachinohe": "八户云罗里",
+    "Tegevajaro Miyazaki": "宫崎特格瓦加罗",
+    "Hokkaido Consadole Sapporo": "札幌冈萨多"
+  }
+}
