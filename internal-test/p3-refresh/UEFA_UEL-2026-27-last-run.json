@@ -1,7 +1,7 @@
 {
   "league_code": "UEFA_UEL",
   "season": "2026/27",
-  "run_at": "2026-11-26T23:06:16.849Z",
+  "run_at": "2026-11-26T23:57:16.389Z",
   "discovered_fixtures": 144,
   "discovered_finished": 90,
   "verified_past_finished": 90,
@@ -11,20 +11,9 @@
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 80,
-  "new_finished_matches": 10,
-  "added_source_match_ids": [
-    "6112252",
-    "6112261",
-    "6112280",
-    "6112302",
-    "6112322",
-    "6112332",
-    "6112352",
-    "6112359",
-    "6112367",
-    "6112371"
-  ],
+  "baseline_finished_matches": 90,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
   "excluded_exact_duplicate_source_aliases": [],
@@ -34,12 +23,5 @@
   "mapped_finished": 90,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 0,
-  "published_blob_sha": "ad5628911bcc6d78ced0ee6cbd0c6961c37dd7a5"
+  "status": "NO_NEW_FINISHED"
 }
