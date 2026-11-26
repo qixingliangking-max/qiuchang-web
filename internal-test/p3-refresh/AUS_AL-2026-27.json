@@ -1,0 +1,24 @@
+{
+  "league_code": "AUS_AL",
+  "season": "2026/27",
+  "competition_id": "ec1b9233-de75-48ae-a2f1-348904b58797",
+  "fotmob_league_ids": [
+    "113"
+  ],
+  "fotmob_ccode3": "AUS",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Sydney FC": "悉尼FC",
+    "Auckland FC": "奥克兰FC",
+    "Perth Glory": "珀斯光荣",
+    "Macarthur FC": "麦克阿瑟FC",
+    "Newcastle Jets": "纽卡斯尔喷气机",
+    "Adelaide United": "阿德莱德联",
+    "Brisbane Roar FC": "布里斯班狮吼",
+    "Melbourne City FC": "墨尔本城",
+    "Melbourne Victory": "墨尔本胜利",
+    "Wellington Phoenix": "惠灵顿凤凰",
+    "Central Coast Mariners": "中央海岸水手",
+    "Western Sydney Wanderers FC": "西悉尼流浪者"
+  }
+}
