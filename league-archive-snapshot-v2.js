@@ -8,7 +8,7 @@
     const country=String(c.country_cn||'');
     if(['英格兰','西班牙','意大利','德国','法国','荷兰','葡萄牙'].includes(country)) return '欧洲';
     if(['芬兰','瑞典','挪威'].includes(country)) return '北欧';
-    if(['日本','韩国'].includes(country)) return '亚洲';
+    if(['日本','韩国','沙特阿拉伯','澳大利亚'].includes(country) || ['SAU_PL','AUS_AL'].includes(String(c.code||''))) return '亚洲';
     if(['美国','巴西'].includes(country)) return '美洲';
     return '其他';
   };
