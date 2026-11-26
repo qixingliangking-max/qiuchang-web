@@ -1,0 +1,1527 @@
+{
+  "league_code": "JPN_J2",
+  "competition_id": "d57a72fc-a90b-4c92-bf3f-8d8d43fe07e3",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5836208",
+      "match_id": "fotmob:5836208",
+      "home_team": "札幌冈萨多",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T05:45:00Z"
+    },
+    {
+      "source_match_id": "5836207",
+      "match_id": "fotmob:5836207",
+      "home_team": "藤枝MYFC",
+      "away_team": "仙台七夕",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836216",
+      "match_id": "fotmob:5836216",
+      "home_team": "八户云罗里",
+      "away_team": "富山胜利",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836210",
+      "match_id": "fotmob:5836210",
+      "home_team": "磐田喜悦",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836212",
+      "match_id": "fotmob:5836212",
+      "home_team": "大分三神",
+      "away_team": "湘南海洋",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836213",
+      "match_id": "fotmob:5836213",
+      "home_team": "大宫松鼠",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836215",
+      "match_id": "fotmob:5836215",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "横滨FC",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836214",
+      "match_id": "fotmob:5836214",
+      "home_team": "鸟栖砂岩",
+      "away_team": "甲府风林",
+      "match_date": "2026-08-08",
+      "kickoff_at": "2026-08-08T10:30:00Z"
+    },
+    {
+      "source_match_id": "5836209",
+      "match_id": "fotmob:5836209",
+      "home_team": "磐城FC",
+      "away_team": "FC今治",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836211",
+      "match_id": "fotmob:5836211",
+      "home_team": "山形山神",
+      "away_team": "栃木市",
+      "match_date": "2026-08-09",
+      "kickoff_at": "2026-08-09T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836218",
+      "match_id": "fotmob:5836218",
+      "home_team": "秋田蓝闪电",
+      "away_team": "富山胜利",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836223",
+      "match_id": "fotmob:5836223",
+      "home_team": "栃木市",
+      "away_team": "八户云罗里",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836219",
+      "match_id": "fotmob:5836219",
+      "home_team": "藤枝MYFC",
+      "away_team": "磐城FC",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836217",
+      "match_id": "fotmob:5836217",
+      "home_team": "新潟天鹅",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836220",
+      "match_id": "fotmob:5836220",
+      "home_team": "FC今治",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836221",
+      "match_id": "fotmob:5836221",
+      "home_team": "甲府风林",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836222",
+      "match_id": "fotmob:5836222",
+      "home_team": "湘南海洋",
+      "away_team": "山形山神",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836225",
+      "match_id": "fotmob:5836225",
+      "home_team": "仙台七夕",
+      "away_team": "大分三神",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836226",
+      "match_id": "fotmob:5836226",
+      "home_team": "横滨FC",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836224",
+      "match_id": "fotmob:5836224",
+      "home_team": "德岛漩涡",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-08-16",
+      "kickoff_at": "2026-08-16T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836229",
+      "match_id": "fotmob:5836229",
+      "home_team": "札幌冈萨多",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T06:00:00Z"
+    },
+    {
+      "source_match_id": "5836236",
+      "match_id": "fotmob:5836236",
+      "home_team": "八户云罗里",
+      "away_team": "仙台七夕",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836228",
+      "match_id": "fotmob:5836228",
+      "home_team": "秋田蓝闪电",
+      "away_team": "甲府风林",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836235",
+      "match_id": "fotmob:5836235",
+      "home_team": "富山胜利",
+      "away_team": "FC今治",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836227",
+      "match_id": "fotmob:5836227",
+      "home_team": "新潟天鹅",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836230",
+      "match_id": "fotmob:5836230",
+      "home_team": "磐田喜悦",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836231",
+      "match_id": "fotmob:5836231",
+      "home_team": "山形山神",
+      "away_team": "横滨FC",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836232",
+      "match_id": "fotmob:5836232",
+      "home_team": "大分三神",
+      "away_team": "磐城FC",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836233",
+      "match_id": "fotmob:5836233",
+      "home_team": "鸟栖砂岩",
+      "away_team": "栃木市",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836234",
+      "match_id": "fotmob:5836234",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "湘南海洋",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836238",
+      "match_id": "fotmob:5836238",
+      "home_team": "磐城FC",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836241",
+      "match_id": "fotmob:5836241",
+      "home_team": "栃木市",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836243",
+      "match_id": "fotmob:5836243",
+      "home_team": "富山胜利",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836244",
+      "match_id": "fotmob:5836244",
+      "home_team": "八户云罗里",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836237",
+      "match_id": "fotmob:5836237",
+      "home_team": "FC今治",
+      "away_team": "山形山神",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836239",
+      "match_id": "fotmob:5836239",
+      "home_team": "甲府风林",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836240",
+      "match_id": "fotmob:5836240",
+      "home_team": "大宫松鼠",
+      "away_team": "湘南海洋",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836242",
+      "match_id": "fotmob:5836242",
+      "home_team": "德岛漩涡",
+      "away_team": "大分三神",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836245",
+      "match_id": "fotmob:5836245",
+      "home_team": "仙台七夕",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836246",
+      "match_id": "fotmob:5836246",
+      "home_team": "横滨FC",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836248",
+      "match_id": "fotmob:5836248",
+      "home_team": "藤枝MYFC",
+      "away_team": "八户云罗里",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836251",
+      "match_id": "fotmob:5836251",
+      "home_team": "山形山神",
+      "away_team": "甲府风林",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836253",
+      "match_id": "fotmob:5836253",
+      "home_team": "鸟栖砂岩",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836254",
+      "match_id": "fotmob:5836254",
+      "home_team": "湘南海洋",
+      "away_team": "仙台七夕",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836255",
+      "match_id": "fotmob:5836255",
+      "home_team": "德岛漩涡",
+      "away_team": "磐城FC",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836249",
+      "match_id": "fotmob:5836249",
+      "home_team": "札幌冈萨多",
+      "away_team": "栃木市",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836247",
+      "match_id": "fotmob:5836247",
+      "home_team": "秋田蓝闪电",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836256",
+      "match_id": "fotmob:5836256",
+      "home_team": "横滨FC",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836250",
+      "match_id": "fotmob:5836250",
+      "home_team": "磐田喜悦",
+      "away_team": "富山胜利",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836252",
+      "match_id": "fotmob:5836252",
+      "home_team": "大分三神",
+      "away_team": "FC今治",
+      "match_date": "2026-09-06",
+      "kickoff_at": "2026-09-06T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836258",
+      "match_id": "fotmob:5836258",
+      "home_team": "秋田蓝闪电",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836260",
+      "match_id": "fotmob:5836260",
+      "home_team": "磐城FC",
+      "away_team": "横滨FC",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836264",
+      "match_id": "fotmob:5836264",
+      "home_team": "富山胜利",
+      "away_team": "栃木市",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836265",
+      "match_id": "fotmob:5836265",
+      "home_team": "八户云罗里",
+      "away_team": "湘南海洋",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836259",
+      "match_id": "fotmob:5836259",
+      "home_team": "FC今治",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836261",
+      "match_id": "fotmob:5836261",
+      "home_team": "甲府风林",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836262",
+      "match_id": "fotmob:5836262",
+      "home_team": "大宫松鼠",
+      "away_team": "大分三神",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836263",
+      "match_id": "fotmob:5836263",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836257",
+      "match_id": "fotmob:5836257",
+      "home_team": "新潟天鹅",
+      "away_team": "山形山神",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836266",
+      "match_id": "fotmob:5836266",
+      "home_team": "仙台七夕",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836275",
+      "match_id": "fotmob:5836275",
+      "home_team": "八户云罗里",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-09-18",
+      "kickoff_at": "2026-09-18T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836269",
+      "match_id": "fotmob:5836269",
+      "home_team": "札幌冈萨多",
+      "away_team": "大分三神",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836268",
+      "match_id": "fotmob:5836268",
+      "home_team": "藤枝MYFC",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836267",
+      "match_id": "fotmob:5836267",
+      "home_team": "新潟天鹅",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836270",
+      "match_id": "fotmob:5836270",
+      "home_team": "甲府风林",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836271",
+      "match_id": "fotmob:5836271",
+      "home_team": "山形山神",
+      "away_team": "富山胜利",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836272",
+      "match_id": "fotmob:5836272",
+      "home_team": "鸟栖砂岩",
+      "away_team": "磐城FC",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836273",
+      "match_id": "fotmob:5836273",
+      "home_team": "湘南海洋",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836276",
+      "match_id": "fotmob:5836276",
+      "home_team": "横滨FC",
+      "away_team": "FC今治",
+      "match_date": "2026-09-19",
+      "kickoff_at": "2026-09-19T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836274",
+      "match_id": "fotmob:5836274",
+      "home_team": "栃木市",
+      "away_team": "仙台七夕",
+      "match_date": "2026-09-20",
+      "kickoff_at": "2026-09-20T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836277",
+      "match_id": "fotmob:5836277",
+      "home_team": "秋田蓝闪电",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836278",
+      "match_id": "fotmob:5836278",
+      "home_team": "FC今治",
+      "away_team": "湘南海洋",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836279",
+      "match_id": "fotmob:5836279",
+      "home_team": "磐城FC",
+      "away_team": "仙台七夕",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836280",
+      "match_id": "fotmob:5836280",
+      "home_team": "磐田喜悦",
+      "away_team": "八户云罗里",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836281",
+      "match_id": "fotmob:5836281",
+      "home_team": "山形山神",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836282",
+      "match_id": "fotmob:5836282",
+      "home_team": "大分三神",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836283",
+      "match_id": "fotmob:5836283",
+      "home_team": "大宫松鼠",
+      "away_team": "甲府风林",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836284",
+      "match_id": "fotmob:5836284",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836285",
+      "match_id": "fotmob:5836285",
+      "home_team": "德岛漩涡",
+      "away_team": "栃木市",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836286",
+      "match_id": "fotmob:5836286",
+      "home_team": "富山胜利",
+      "away_team": "横滨FC",
+      "match_date": "2026-09-26",
+      "kickoff_at": "2026-09-26T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836287",
+      "match_id": "fotmob:5836287",
+      "home_team": "新潟天鹅",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836289",
+      "match_id": "fotmob:5836289",
+      "home_team": "藤枝MYFC",
+      "away_team": "湘南海洋",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836291",
+      "match_id": "fotmob:5836291",
+      "home_team": "甲府风林",
+      "away_team": "富山胜利",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T07:00:00Z"
+    },
+    {
+      "source_match_id": "5836292",
+      "match_id": "fotmob:5836292",
+      "home_team": "大分三神",
+      "away_team": "山形山神",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836294",
+      "match_id": "fotmob:5836294",
+      "home_team": "栃木市",
+      "away_team": "FC今治",
+      "match_date": "2026-10-03",
+      "kickoff_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "source_match_id": "5836290",
+      "match_id": "fotmob:5836290",
+      "home_team": "札幌冈萨多",
+      "away_team": "磐城FC",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836295",
+      "match_id": "fotmob:5836295",
+      "home_team": "八户云罗里",
+      "away_team": "横滨FC",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836288",
+      "match_id": "fotmob:5836288",
+      "home_team": "秋田蓝闪电",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836296",
+      "match_id": "fotmob:5836296",
+      "home_team": "仙台七夕",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T06:00:00Z"
+    },
+    {
+      "source_match_id": "5836293",
+      "match_id": "fotmob:5836293",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-10-04",
+      "kickoff_at": "2026-10-04T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836301",
+      "match_id": "fotmob:5836301",
+      "home_team": "大宫松鼠",
+      "away_team": "八户云罗里",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836302",
+      "match_id": "fotmob:5836302",
+      "home_team": "鸟栖砂岩",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836304",
+      "match_id": "fotmob:5836304",
+      "home_team": "德岛漩涡",
+      "away_team": "FC今治",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836306",
+      "match_id": "fotmob:5836306",
+      "home_team": "横滨FC",
+      "away_team": "大分三神",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836299",
+      "match_id": "fotmob:5836299",
+      "home_team": "甲府风林",
+      "away_team": "栃木市",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T07:00:00Z"
+    },
+    {
+      "source_match_id": "5836298",
+      "match_id": "fotmob:5836298",
+      "home_team": "磐田喜悦",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836300",
+      "match_id": "fotmob:5836300",
+      "home_team": "山形山神",
+      "away_team": "仙台七夕",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T04:05:00Z"
+    },
+    {
+      "source_match_id": "5836305",
+      "match_id": "fotmob:5836305",
+      "home_team": "富山胜利",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836297",
+      "match_id": "fotmob:5836297",
+      "home_team": "磐城FC",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T06:00:00Z"
+    },
+    {
+      "source_match_id": "5836303",
+      "match_id": "fotmob:5836303",
+      "home_team": "湘南海洋",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836307",
+      "match_id": "fotmob:5836307",
+      "home_team": "藤枝MYFC",
+      "away_team": "山形山神",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836308",
+      "match_id": "fotmob:5836308",
+      "home_team": "札幌冈萨多",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836309",
+      "match_id": "fotmob:5836309",
+      "home_team": "FC今治",
+      "away_team": "八户云罗里",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836311",
+      "match_id": "fotmob:5836311",
+      "home_team": "大分三神",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836312",
+      "match_id": "fotmob:5836312",
+      "home_team": "鸟栖砂岩",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836314",
+      "match_id": "fotmob:5836314",
+      "home_team": "栃木市",
+      "away_team": "横滨FC",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836316",
+      "match_id": "fotmob:5836316",
+      "home_team": "仙台七夕",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836315",
+      "match_id": "fotmob:5836315",
+      "home_team": "富山胜利",
+      "away_team": "湘南海洋",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836313",
+      "match_id": "fotmob:5836313",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836310",
+      "match_id": "fotmob:5836310",
+      "home_team": "磐城FC",
+      "away_team": "甲府风林",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836320",
+      "match_id": "fotmob:5836320",
+      "home_team": "山形山神",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836317",
+      "match_id": "fotmob:5836317",
+      "home_team": "新潟天鹅",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836318",
+      "match_id": "fotmob:5836318",
+      "home_team": "磐田喜悦",
+      "away_team": "大分三神",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836319",
+      "match_id": "fotmob:5836319",
+      "home_team": "甲府风林",
+      "away_team": "横滨FC",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836321",
+      "match_id": "fotmob:5836321",
+      "home_team": "大宫松鼠",
+      "away_team": "富山胜利",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836322",
+      "match_id": "fotmob:5836322",
+      "home_team": "湘南海洋",
+      "away_team": "磐城FC",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836323",
+      "match_id": "fotmob:5836323",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836324",
+      "match_id": "fotmob:5836324",
+      "home_team": "栃木市",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836325",
+      "match_id": "fotmob:5836325",
+      "home_team": "德岛漩涡",
+      "away_team": "八户云罗里",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836326",
+      "match_id": "fotmob:5836326",
+      "home_team": "仙台七夕",
+      "away_team": "FC今治",
+      "match_date": "2026-10-21",
+      "kickoff_at": "2026-10-21T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836329",
+      "match_id": "fotmob:5836329",
+      "home_team": "藤枝MYFC",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836333",
+      "match_id": "fotmob:5836333",
+      "home_team": "大宫松鼠",
+      "away_team": "横滨FC",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836327",
+      "match_id": "fotmob:5836327",
+      "home_team": "新潟天鹅",
+      "away_team": "仙台七夕",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836328",
+      "match_id": "fotmob:5836328",
+      "home_team": "秋田蓝闪电",
+      "away_team": "FC今治",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836331",
+      "match_id": "fotmob:5836331",
+      "home_team": "山形山神",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836332",
+      "match_id": "fotmob:5836332",
+      "home_team": "大分三神",
+      "away_team": "甲府风林",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836334",
+      "match_id": "fotmob:5836334",
+      "home_team": "鸟栖砂岩",
+      "away_team": "八户云罗里",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836336",
+      "match_id": "fotmob:5836336",
+      "home_team": "富山胜利",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836330",
+      "match_id": "fotmob:5836330",
+      "home_team": "磐城FC",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T06:00:00Z"
+    },
+    {
+      "source_match_id": "5836335",
+      "match_id": "fotmob:5836335",
+      "home_team": "湘南海洋",
+      "away_team": "栃木市",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T09:00:00Z"
+    },
+    {
+      "source_match_id": "5836339",
+      "match_id": "fotmob:5836339",
+      "home_team": "札幌冈萨多",
+      "away_team": "湘南海洋",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836337",
+      "match_id": "fotmob:5836337",
+      "home_team": "新潟天鹅",
+      "away_team": "富山胜利",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836338",
+      "match_id": "fotmob:5836338",
+      "home_team": "秋田蓝闪电",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836341",
+      "match_id": "fotmob:5836341",
+      "home_team": "磐田喜悦",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836342",
+      "match_id": "fotmob:5836342",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "大分三神",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836343",
+      "match_id": "fotmob:5836343",
+      "home_team": "栃木市",
+      "away_team": "磐城FC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836344",
+      "match_id": "fotmob:5836344",
+      "home_team": "德岛漩涡",
+      "away_team": "横滨FC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836345",
+      "match_id": "fotmob:5836345",
+      "home_team": "八户云罗里",
+      "away_team": "山形山神",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836346",
+      "match_id": "fotmob:5836346",
+      "home_team": "仙台七夕",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836340",
+      "match_id": "fotmob:5836340",
+      "home_team": "FC今治",
+      "away_team": "甲府风林",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T05:05:00Z"
+    },
+    {
+      "source_match_id": "5836355",
+      "match_id": "fotmob:5836355",
+      "home_team": "富山胜利",
+      "away_team": "仙台七夕",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T04:55:00Z"
+    },
+    {
+      "source_match_id": "5836347",
+      "match_id": "fotmob:5836347",
+      "home_team": "藤枝MYFC",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836349",
+      "match_id": "fotmob:5836349",
+      "home_team": "甲府风林",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836350",
+      "match_id": "fotmob:5836350",
+      "home_team": "山形山神",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836351",
+      "match_id": "fotmob:5836351",
+      "home_team": "大分三神",
+      "away_team": "八户云罗里",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836352",
+      "match_id": "fotmob:5836352",
+      "home_team": "大宫松鼠",
+      "away_team": "磐城FC",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836353",
+      "match_id": "fotmob:5836353",
+      "home_team": "湘南海洋",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836354",
+      "match_id": "fotmob:5836354",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "栃木市",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836356",
+      "match_id": "fotmob:5836356",
+      "home_team": "横滨FC",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836348",
+      "match_id": "fotmob:5836348",
+      "home_team": "FC今治",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-11-03",
+      "kickoff_at": "2026-11-03T05:50:00Z"
+    },
+    {
+      "source_match_id": "5836357",
+      "match_id": "fotmob:5836357",
+      "home_team": "新潟天鹅",
+      "away_team": "FC今治",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836358",
+      "match_id": "fotmob:5836358",
+      "home_team": "秋田蓝闪电",
+      "away_team": "大分三神",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836359",
+      "match_id": "fotmob:5836359",
+      "home_team": "磐城FC",
+      "away_team": "山形山神",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836361",
+      "match_id": "fotmob:5836361",
+      "home_team": "鸟栖砂岩",
+      "away_team": "富山胜利",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836363",
+      "match_id": "fotmob:5836363",
+      "home_team": "德岛漩涡",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836366",
+      "match_id": "fotmob:5836366",
+      "home_team": "横滨FC",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836364",
+      "match_id": "fotmob:5836364",
+      "home_team": "八户云罗里",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836360",
+      "match_id": "fotmob:5836360",
+      "home_team": "磐田喜悦",
+      "away_team": "湘南海洋",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836362",
+      "match_id": "fotmob:5836362",
+      "home_team": "栃木市",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836365",
+      "match_id": "fotmob:5836365",
+      "home_team": "仙台七夕",
+      "away_team": "甲府风林",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T06:00:00Z"
+    },
+    {
+      "source_match_id": "5836367",
+      "match_id": "fotmob:5836367",
+      "home_team": "新潟天鹅",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836368",
+      "match_id": "fotmob:5836368",
+      "home_team": "藤枝MYFC",
+      "away_team": "甲府风林",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836371",
+      "match_id": "fotmob:5836371",
+      "home_team": "大分三神",
+      "away_team": "栃木市",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836372",
+      "match_id": "fotmob:5836372",
+      "home_team": "大宫松鼠",
+      "away_team": "山形山神",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836373",
+      "match_id": "fotmob:5836373",
+      "home_team": "湘南海洋",
+      "away_team": "横滨FC",
+      "match_date": "2026-11-14",
+      "kickoff_at": "2026-11-14T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836369",
+      "match_id": "fotmob:5836369",
+      "home_team": "札幌冈萨多",
+      "away_team": "鸟栖砂岩",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836375",
+      "match_id": "fotmob:5836375",
+      "home_team": "八户云罗里",
+      "away_team": "磐城FC",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T04:00:00Z"
+    },
+    {
+      "source_match_id": "5836376",
+      "match_id": "fotmob:5836376",
+      "home_team": "仙台七夕",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T04:05:00Z"
+    },
+    {
+      "source_match_id": "5836370",
+      "match_id": "fotmob:5836370",
+      "home_team": "FC今治",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836374",
+      "match_id": "fotmob:5836374",
+      "home_team": "富山胜利",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-11-15",
+      "kickoff_at": "2026-11-15T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836377",
+      "match_id": "fotmob:5836377",
+      "home_team": "秋田蓝闪电",
+      "away_team": "山形山神",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836378",
+      "match_id": "fotmob:5836378",
+      "home_team": "藤枝MYFC",
+      "away_team": "FC今治",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836379",
+      "match_id": "fotmob:5836379",
+      "home_team": "磐田喜悦",
+      "away_team": "大宫松鼠",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836380",
+      "match_id": "fotmob:5836380",
+      "home_team": "甲府风林",
+      "away_team": "八户云罗里",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836381",
+      "match_id": "fotmob:5836381",
+      "home_team": "鸟栖砂岩",
+      "away_team": "仙台七夕",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836382",
+      "match_id": "fotmob:5836382",
+      "home_team": "宫崎特格瓦加罗",
+      "away_team": "磐城FC",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836383",
+      "match_id": "fotmob:5836383",
+      "home_team": "栃木市",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836385",
+      "match_id": "fotmob:5836385",
+      "home_team": "富山胜利",
+      "away_team": "大分三神",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836386",
+      "match_id": "fotmob:5836386",
+      "home_team": "横滨FC",
+      "away_team": "札幌冈萨多",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836384",
+      "match_id": "fotmob:5836384",
+      "home_team": "德岛漩涡",
+      "away_team": "湘南海洋",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T05:00:00Z"
+    },
+    {
+      "source_match_id": "5836388",
+      "match_id": "fotmob:5836388",
+      "home_team": "FC今治",
+      "away_team": "宫崎特格瓦加罗",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836395",
+      "match_id": "fotmob:5836395",
+      "home_team": "八户云罗里",
+      "away_team": "新潟天鹅",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T09:30:00Z"
+    },
+    {
+      "source_match_id": "5836387",
+      "match_id": "fotmob:5836387",
+      "home_team": "札幌冈萨多",
+      "away_team": "藤枝MYFC",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836389",
+      "match_id": "fotmob:5836389",
+      "home_team": "磐城FC",
+      "away_team": "富山胜利",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836390",
+      "match_id": "fotmob:5836390",
+      "home_team": "山形山神",
+      "away_team": "磐田喜悦",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836391",
+      "match_id": "fotmob:5836391",
+      "home_team": "大宫松鼠",
+      "away_team": "德岛漩涡",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836392",
+      "match_id": "fotmob:5836392",
+      "home_team": "鸟栖砂岩",
+      "away_team": "大分三神",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836393",
+      "match_id": "fotmob:5836393",
+      "home_team": "湘南海洋",
+      "away_team": "甲府风林",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836394",
+      "match_id": "fotmob:5836394",
+      "home_team": "栃木市",
+      "away_team": "秋田蓝闪电",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836396",
+      "match_id": "fotmob:5836396",
+      "home_team": "横滨FC",
+      "away_team": "仙台七夕",
+      "match_date": "2026-11-25",
+      "kickoff_at": "2026-11-25T10:00:00Z"
+    }
+  ]
+}

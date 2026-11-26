@@ -6,7 +6,7 @@
     "8974"
   ],
   "fotmob_ccode3": "JPN",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 190,
   "team_map": {
     "Iwaki FC": "磐城FC",
     "FC Imabari": "FC今治",
@@ -29,5 +29,7 @@
     "Vanraure Hachinohe": "八户云罗里",
     "Tegevajaro Miyazaki": "宫崎特格瓦加罗",
     "Hokkaido Consadole Sapporo": "札幌冈萨多"
-  }
+  },
+  "last_successful_refresh_at": "2026-11-26T16:35:55.223Z",
+  "last_published_blob_sha": "9217e6d017aaa3e9ab2b677acc2a80d6ad5dc429"
 }
