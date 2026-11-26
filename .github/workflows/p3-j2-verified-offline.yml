@@ -1,0 +1,114 @@
+name: P3 J2 Verified Offline Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:45 and 23:45 Beijing time, offset from the other P3 refresh job
+    - cron: "45 0,15 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/p3-j2-trigger.txt"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-offline-serial-writers
+  cancel-in-progress: false
+
+jobs:
+  j2-safe-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Verify offline builder and safety gate syntax
+        run: |
+          node --check scripts/p3-fixture-safety.mjs
+          node --check scripts/p3-offline-refresh-one.mjs
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-offline-builder-core.js
+          node --check scripts/p3-promotion-gate.mjs
+          node --test scripts/p3-fixture-safety.test.mjs
+      - name: Collect and gate J2 P3 completely offline
+        id: build
+        continue-on-error: true
+        run: |
+          node scripts/p3-offline-refresh-one.mjs internal-test/p3-refresh/JPN_J2-2026-27.json
+      - name: Update published manifest only after strict PASS
+        if: always()
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const base='internal-test/p3-refresh/JPN_J2-2026-27-last-run.json';
+          if(!fs.existsSync(base))process.exit(0);
+          const report=JSON.parse(fs.readFileSync(base,'utf8'));
+          if(report.status!=='PROMOTED')process.exit(0);
+          const gatePath='internal-test/p3-candidates/JPN_J2-2026-27-gate.json';
+          const gate=JSON.parse(fs.readFileSync(gatePath,'utf8'));
+          if(gate.gate_status!=='PASS' || Number(gate.collection_coverage_pct)!==100 ||
+             (gate.strict_errors||[]).length || (gate.collection_failures||[]).length)process.exit(5);
+          const manifestPath='internal-test/p3-data/P3_PROMOTION_MANIFEST.json';
+          const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+          const entry={
+            league_code:'JPN_J2',season:'2026/27',quality_tier:gate.quality_tier,
+            teams:20,published_path:'internal-test/p3-data/JPN_J2-2026-27.json',
+            blob_sha:report.published_blob_sha,gate_status:'PASS',
+            avg_team_depth_coverage_pct:gate.avg_team_depth_coverage_pct,
+            gate_report:gatePath,last_incremental_refresh_at:report.run_at,
+            finished_matches:report.mapped_finished,
+            build_mode:'P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL',
+            model_read_rule:gate.quality_tier==='LIMITED'
+              ?'P3_VALID + LOW_SAMPLE/LIMITED; player/depth factors remain limited-weight'
+              :'P3_VALID + PILOT_FULL; validated offline P3 pilot'
+          };
+          const idx=(manifest.promoted||[]).findIndex(x=>x.league_code==='JPN_J2' && x.season==='2026/27');
+          if(idx>=0)manifest.promoted[idx]=entry;else manifest.promoted.push(entry);
+          fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
+          NODE
+      - name: Commit only J2 candidate, gate and verified publication
+        if: always()
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A internal-test/p3-refresh/JPN_J2-2026-27.json
+          for path in \
+            internal-test/p3-refresh/JPN_J2-2026-27-last-run.json \
+            internal-test/p3-inputs/JPN_J2-2026-27.json \
+            internal-test/p3-candidates/JPN_J2-2026-27.json \
+            internal-test/p3-candidates/JPN_J2-2026-27-gate.json \
+            internal-test/p3-data/JPN_J2-2026-27.json \
+            internal-test/p3-data/P3_PROMOTION_MANIFEST.json; do
+            if [ -f "$path" ]; then git add "$path"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "No J2 changes"
+          else
+            git commit -m "Stage gated J2 P3 offline snapshot"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Enforce source coverage and promotion gate
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const report=JSON.parse(fs.readFileSync('internal-test/p3-refresh/JPN_J2-2026-27-last-run.json','utf8'));
+          console.log('J2 safe P3 status',report.status,report.mapped_finished,report.collection_coverage_pct);
+          if(!['PROMOTED','NO_NEW_FINISHED'].includes(report.status))process.exit(1);
+          if(report.status==='PROMOTED'){
+            const gate=JSON.parse(fs.readFileSync('internal-test/p3-candidates/JPN_J2-2026-27-gate.json','utf8'));
+            if(gate.gate_status!=='PASS'||Number(gate.collection_coverage_pct)!==100)process.exit(1);
+          }
+          NODE
