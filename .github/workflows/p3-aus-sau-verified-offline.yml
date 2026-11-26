@@ -1,0 +1,120 @@
+name: P3 AUS and Saudi Verified Offline Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Separate from main P3 and J2 jobs; one-hour cadence is unnecessary
+    - cron: "0 1,16 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/p3-aus-sau-trigger.txt"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: p3-offline-serial-writers
+  cancel-in-progress: false
+
+jobs:
+  safe-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Syntax check
+        run: |
+          node --check scripts/p3-offline-refresh-one.mjs
+          node --check scripts/p3-offline-collect-and-build.mjs
+          node --check scripts/p3-promotion-gate.mjs
+          node --test scripts/p3-fixture-safety.test.mjs
+      - name: Build AUS and SAU independently
+        continue-on-error: true
+        run: |
+          set +e
+          node scripts/p3-offline-refresh-one.mjs internal-test/p3-refresh/AUS_AL-2026-27.json
+          aus=$?
+          node scripts/p3-offline-refresh-one.mjs internal-test/p3-refresh/SAU_PL-2026-27.json
+          sau=$?
+          echo "AUS_exit=$aus SAU_exit=$sau"
+          exit $((aus != 0 || sau != 0))
+      - name: Register only validated promoted outputs
+        if: always()
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const path='internal-test/p3-data/P3_PROMOTION_MANIFEST.json';
+          const manifest=JSON.parse(fs.readFileSync(path,'utf8'));
+          let modified=false;
+          for(const [league,teams] of [['AUS_AL',12],['SAU_PL',18]]){
+            const p='internal-test/p3-refresh/'+league+'-2026-27-last-run.json';
+            if(!fs.existsSync(p))continue;
+            const report=JSON.parse(fs.readFileSync(p,'utf8'));
+            if(report.status!=='PROMOTED')continue;
+            const gatePath='internal-test/p3-candidates/'+league+'-2026-27-gate.json';
+            const gate=JSON.parse(fs.readFileSync(gatePath,'utf8'));
+            if(gate.gate_status!=='PASS'||Number(gate.collection_coverage_pct)!==100
+              ||(gate.strict_errors||[]).length||(gate.collection_failures||[]).length
+              ||Number(gate.teams)!==teams)process.exit(4);
+            const row={league_code:league,season:'2026/27',quality_tier:gate.quality_tier,
+              teams,published_path:'internal-test/p3-data/'+league+'-2026-27.json',
+              blob_sha:report.published_blob_sha,gate_status:'PASS',
+              avg_team_depth_coverage_pct:gate.avg_team_depth_coverage_pct,
+              gate_report:gatePath,last_incremental_refresh_at:report.run_at,
+              finished_matches:report.mapped_finished,
+              build_mode:'P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL',
+              model_read_rule:gate.quality_tier==='LIMITED'
+                ?'P3_VALID + LOW_SAMPLE/LIMITED; limited-weight'
+                :'P3_VALID + PILOT_FULL; offline verified'};
+            const idx=(manifest.promoted||[]).findIndex(x=>x.league_code===league&&x.season==='2026/27');
+            if(idx<0)manifest.promoted.push(row);else manifest.promoted[idx]=row;
+            modified=true;
+          }
+          if(modified)fs.writeFileSync(path,JSON.stringify(manifest,null,2)+'\n');
+          NODE
+      - name: Commit isolated artifacts and reports
+        if: always()
+        run: |
+          git config user.name "qiuchang-p3-bot"
+          git config user.email "actions@users.noreply.github.com"
+          for code in AUS_AL SAU_PL; do
+            for path in \
+              internal-test/p3-refresh/${code}-2026-27.json \
+              internal-test/p3-refresh/${code}-2026-27-last-run.json \
+              internal-test/p3-inputs/${code}-2026-27.json \
+              internal-test/p3-candidates/${code}-2026-27.json \
+              internal-test/p3-candidates/${code}-2026-27-gate.json \
+              internal-test/p3-data/${code}-2026-27.json; do
+              if [ -f "$path" ]; then git add "$path"; fi
+            done
+          done
+          git add internal-test/p3-data/P3_PROMOTION_MANIFEST.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Collect and promote gated AUS and SAU P3 pilots offline"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Require both independent strict gates
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          let errors=0;
+          for(const code of ['AUS_AL','SAU_PL']){
+            const r=JSON.parse(fs.readFileSync('internal-test/p3-refresh/'+code+'-2026-27-last-run.json','utf8'));
+            console.log(code,r.status,r.gate_status,r.collection_coverage_pct,r.quality_tier);
+            if(!['PROMOTED','NO_NEW_FINISHED'].includes(r.status))errors++;
+          }
+          if(errors)process.exit(1);
+          NODE
