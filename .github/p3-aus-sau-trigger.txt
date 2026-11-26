@@ -1,0 +1,1 @@
+2026-11-27 AUS_AL and SAU_PL 2026/27 offline P3 pilot built after verifying JPN_J2 P2 190/190 and completing J2 offline P3 190/190. Safe Github Builder/Gate only.
