@@ -24,6 +24,9 @@
     BRA_SA:{season:'2026',url:'internal-test/p3-data/BRA_SA-2026.json?v=20261006bra1',version:'P3_V5_BRA_SA_PILOT',label:'巴甲P3 V5试点',quality:'PILOT_FULL'},
     NOR_ES:{season:'2026',url:'internal-test/p3-data/NOR_ES-2026.json',version:'P3_V5_NOR_ES_PILOT',label:'挪超P3 V5试点',quality:'PILOT_FULL'},
     JPN_J1:{season:'2026/27',url:'internal-test/p3-data/JPN_J1-2026-27.json?v=20261002offline1',version:'P3_V5_JPN_J1_PILOT',label:'日职P3 V5试点',quality:'LIMITED'},
+    JPN_J2:{season:'2026/27',url:'internal-test/p3-data/JPN_J2-2026-27.json?v=20261127p3safe1',version:'P3_V5_JPN_J2_PILOT',label:'日乙P3 V5试点',quality:'PILOT_FULL'},
+    AUS_AL:{season:'2026/27',url:'internal-test/p3-data/AUS_AL-2026-27.json?v=20261127p3safe1',version:'P3_V5_AUS_AL_PILOT',label:'澳超P3 V5（样本有限）',quality:'LIMITED'},
+    SAU_PL:{season:'2026/27',url:'internal-test/p3-data/SAU_PL-2026-27.json?v=20261127p3safe1',version:'P3_V5_SAU_PL_PILOT',label:'沙超P3 V5（深度覆盖有限）',quality:'LIMITED'},
     SWE_AS:{season:'2026',url:'internal-test/p3-data/SWE_AS-2026.json?v=20261002swe1',version:'P3_V5_SWE_AS_PILOT',label:'瑞典超P3 V5试点',quality:'PILOT_FULL'},
     FIN_VL:{season:'2026',url:'internal-test/p3-data/FIN_VL-2026.json?v=20261002fin1',version:'P3_V5_FIN_VL_PILOT',label:'芬超P3 V5试点',quality:'PILOT_FULL'},
     UEFA_UCL:{season:'2026/27',url:'internal-test/p3-data/UEFA_UCL-2026-27.json?v=20261002bulk1',version:'P3_V5_UEFA_UCL_PILOT',label:'欧冠P3 V5试点',quality:'LIMITED'},
@@ -99,7 +102,7 @@
     const formations=Array.isArray(s.formation_samples)?s.formation_samples:[];
 
     return '<div class="p3-legacy-wrap">'+
-      '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+'</span></div></div>'+
+      '<div class="p3-legacy-titlebar"><div><strong>P3｜球员与阵容贡献模块</strong><span>'+esc(data.identity?.team_name||'')+'｜'+esc(data.identity?.season||'')+(ctx?.quality==='LIMITED'?'｜阵容样本/深度受限':'')+'</span></div></div>'+
       '<div class="p3-grid">'+
         kpi('比赛样本',(s.squad_matches??0)+'场')+
         kpi('首发连续性',n(s.avg_starter_continuity,1)+'%')+
