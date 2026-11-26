@@ -1,0 +1,1 @@
+2026-11-27 JPN_J2 2026/27 P3 safe offline full-season collection after official P2 190/190 verification. Trigger once; routine updates via dedicated schedule.
