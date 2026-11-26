@@ -136,21 +136,22 @@
   }
 
   function highFreqScoreHtml(played,rows){
-    const top=(rows||[]).slice().sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,6);
-    if(!top.length) return '';
+    // The season archive now supplies every observed score, still ranked by
+    // occurrence count; the original TOP6 table remains unchanged for models.
+    const ranked=(rows||[]).slice().sort((a,b)=>Number(a.rank)-Number(b.rank));
+    if(!ranked.length) return '';
     const total=Number(played||0);
-    const title=total<10?'当前样本高频比分':'高频比分 TOP6';
     return '<div class="qc-team-score-frequency">'+
-      '<div class="qc-team-score-title"><strong>'+title+'</strong><span>本队-对手｜后台TOP6｜N='+total+'</span></div>'+
-      '<div class="qc-team-score-grid">'+top.map(row=>
+      '<div class="qc-team-score-title"><strong>赛季比分分布</strong><span>本队-对手｜全部出现比分｜N='+total+'</span></div>'+
+      '<div class="qc-team-score-grid">'+ranked.map(row=>
         '<div class="qc-team-score-item"><small>TOP'+Number(row.rank)+'</small><b>'+esc(row.score_text)+'</b><em>'+Number(row.occurrences||0)+'次｜'+(row.share_pct==null?'—':Number(row.share_pct).toFixed(1)+'%')+'</em></div>'
       ).join('')+'</div>'+
     '</div>';
   }
 
 
-  // Read the per-team nine-category archive statistics, display only the
-  // six most frequent paths for each of three independent venue scopes.
+  // Keep the original occurrence-descending ranks in all three HT/FT scopes,
+  // but display all nine categories including those with zero occurrences.
   function highFreqHtftHtml(team,frequency){
     const byScope=frequency&&typeof frequency==='object'?frequency:{};
     const scopes=[['season','全赛季'],['home','主场'],['away','客场']];
@@ -159,7 +160,7 @@
     ).join('');
     const panels=scopes.map(([scope,label],i)=>{
       const all=Array.isArray(byScope[scope])?byScope[scope]:[];
-      const top=all.filter(row=>Number(row.occurrences||0)>0).sort((a,b)=>Number(a.rank||99)-Number(b.rank||99)).slice(0,6);
+      const top=all.slice().sort((a,b)=>Number(a.rank||99)-Number(b.rank||99));
       const count=Number(all[0]?.sample_size||0);
       const meta=label+'有效样本 N='+count+(count>0&&count<10?' · 小样本，仅供参考':'');
       return '<div class="qc-team-htft-panel" data-qc-htft-panel="'+scope+'"'+(i?' hidden':'')+'>'+
@@ -172,7 +173,7 @@
       '</div>';
     }).join('');
     return '<div class="qc-team-score-frequency qc-team-htft-frequency" data-qc-htft-root>'+
-      '<div class="qc-team-score-title"><strong>半全场高频 TOP6</strong><span>本队视角｜后台保留9类</span></div>'+
+      '<div class="qc-team-score-title"><strong>半全场九形态分布</strong><span>本队视角｜出现次数降序排列</span></div>'+
       '<div class="qc-team-htft-tabs" role="group" aria-label="'+esc(team?.team_name||'球队')+'半全场统计范围">'+tabs+'</div>'+
       panels+
     '</div>';
@@ -221,8 +222,14 @@
       '<div class="qc-team-split-line"><span>本队进球</span><b>'+esc(countRate(t.scoring_matches,t.played))+'</b></div>'+
       '<div class="qc-team-split-line"><span>零封</span><b>'+esc(countRate(t.clean_sheets,t.played))+'</b></div>'+
       '<div class="qc-team-split-line"><span>双方进球</span><b>'+esc(countRate(t.btts_matches,t.played))+'</b></div>';
-    const homeExtra='<div class="qc-team-split-line"><span>主场进球</span><b>'+esc(countRate(t.home_scoring_matches,t.home_played,true))+'</b></div>';
-    const awayExtra='<div class="qc-team-split-line"><span>客场进球</span><b>'+esc(countRate(t.away_scoring_matches,t.away_played,true))+'</b></div>';
+    const homeExtra=
+      '<div class="qc-team-split-line"><span>主场进球</span><b>'+esc(countRate(t.home_scoring_matches,t.home_played,true))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>主场零封</span><b>'+esc(countRate(t.home_clean_sheets,t.home_played,true))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>双方进球</span><b>'+esc(countRate(t.home_btts_matches,t.home_played,true))+'</b></div>';
+    const awayExtra=
+      '<div class="qc-team-split-line"><span>客场进球</span><b>'+esc(countRate(t.away_scoring_matches,t.away_played,true))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>客场零封</span><b>'+esc(countRate(t.away_clean_sheets,t.away_played,true))+'</b></div>'+
+      '<div class="qc-team-split-line"><span>双方进球</span><b>'+esc(countRate(t.away_btts_matches,t.away_played,true))+'</b></div>';
     const recentBox=(label,r)=>{
       if(!r) return splitBox(label,0,0,0,0,0,0);
       const extra=
@@ -245,7 +252,7 @@
       highFreqScoreHtml(t.played,scoreRows)+
        highFreqHtftHtml(t,htftRows)+
       teamRecentMatchesHtml(t.team_name,matchRows,leagueName)+
-      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>比分TOP6</span><span>半全场TOP6</span><span>最近比赛</span></div>';
+      '<div class="qc-team-detail-foot"><span>赛季基线</span><span>主客场拆分</span><span>近5'+(Number(t.played)>10?'/10':'')+'</span><span>0–7+</span><span>全部比分</span><span>半全场9形态</span><span>最近比赛</span></div>';
   }
 
   function p2ScopeLabel(scope){
@@ -486,7 +493,7 @@
           team,
           recentMap,
           team.goal_distribution||null,
-          Array.isArray(team.score_frequency)?team.score_frequency:[],
+          Array.isArray(team.score_distribution_all)?team.score_distribution_all:(Array.isArray(team.score_frequency)?team.score_frequency:[]),
            team.htft_frequency||{},
           Array.isArray(team.recent_matches)?team.recent_matches:[],
           comp.name_cn
