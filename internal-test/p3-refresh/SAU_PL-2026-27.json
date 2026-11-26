@@ -1,0 +1,30 @@
+{
+  "league_code": "SAU_PL",
+  "season": "2026/27",
+  "competition_id": "8454670c-206e-457b-acd6-9b80ee6ed9b1",
+  "fotmob_league_ids": [
+    "536"
+  ],
+  "fotmob_ccode3": "KSA",
+  "baseline_finished_matches": 0,
+  "team_map": {
+    "Abha": "艾卜哈",
+    "Al Ahli": "吉达国民",
+    "Neom SC": "新未来城",
+    "Al Hazem": "哈森姆",
+    "Al Hilal": "利雅得新月",
+    "Al-Fayha": "费哈",
+    "Al Riyadh": "利雅得体育",
+    "Al Shabab": "利雅得青年",
+    "Al Diriyah": "德里耶",
+    "Al Ittihad": "吉达联合",
+    "Al Khaleej": "赛哈特海湾",
+    "Al Kholood": "拉斯永恒",
+    "Al Qadsiah": "卡迪西亚",
+    "Al-Ettifaq": "达曼协作",
+    "Al-Faisaly": "费萨里哈曼",
+    "Al-Taawoun": "布赖代合作",
+    "Al Fateh FC": "哈萨征服",
+    "Al Nassr FC": "利雅得胜利"
+  }
+}
