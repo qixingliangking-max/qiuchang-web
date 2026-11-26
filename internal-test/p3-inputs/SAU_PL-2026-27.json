@@ -1,0 +1,855 @@
+{
+  "league_code": "SAU_PL",
+  "competition_id": "8454670c-206e-457b-acd6-9b80ee6ed9b1",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "5969046",
+      "match_id": "fotmob:5969046",
+      "home_team": "艾卜哈",
+      "away_team": "哈森姆",
+      "match_date": "2026-08-13",
+      "kickoff_at": "2026-08-13T16:15:00Z"
+    },
+    {
+      "source_match_id": "5969047",
+      "match_id": "fotmob:5969047",
+      "home_team": "利雅得青年",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-08-13",
+      "kickoff_at": "2026-08-13T18:00:00Z"
+    },
+    {
+      "source_match_id": "5969048",
+      "match_id": "fotmob:5969048",
+      "home_team": "德里耶",
+      "away_team": "吉达国民",
+      "match_date": "2026-08-13",
+      "kickoff_at": "2026-08-13T18:00:00Z"
+    },
+    {
+      "source_match_id": "5969049",
+      "match_id": "fotmob:5969049",
+      "home_team": "新未来城",
+      "away_team": "费哈",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14T16:50:00Z"
+    },
+    {
+      "source_match_id": "5969050",
+      "match_id": "fotmob:5969050",
+      "home_team": "达曼协作",
+      "away_team": "利雅得体育",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14T18:00:00Z"
+    },
+    {
+      "source_match_id": "5969051",
+      "match_id": "fotmob:5969051",
+      "home_team": "利雅得新月",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-08-14",
+      "kickoff_at": "2026-08-14T18:00:00Z"
+    },
+    {
+      "source_match_id": "5969052",
+      "match_id": "fotmob:5969052",
+      "home_team": "布赖代合作",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T16:15:00Z"
+    },
+    {
+      "source_match_id": "5969053",
+      "match_id": "fotmob:5969053",
+      "home_team": "吉达联合",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T18:00:00Z"
+    },
+    {
+      "source_match_id": "5969054",
+      "match_id": "fotmob:5969054",
+      "home_team": "利雅得胜利",
+      "away_team": "哈萨征服",
+      "match_date": "2026-08-15",
+      "kickoff_at": "2026-08-15T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970090",
+      "match_id": "fotmob:5970090",
+      "home_team": "费哈",
+      "away_team": "利雅得新月",
+      "match_date": "2026-08-20",
+      "kickoff_at": "2026-08-20T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970091",
+      "match_id": "fotmob:5970091",
+      "home_team": "利雅得体育",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21T16:00:00Z"
+    },
+    {
+      "source_match_id": "5970092",
+      "match_id": "fotmob:5970092",
+      "home_team": "哈森姆",
+      "away_team": "德里耶",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21T16:15:00Z"
+    },
+    {
+      "source_match_id": "5970093",
+      "match_id": "fotmob:5970093",
+      "home_team": "费萨里哈曼",
+      "away_team": "新未来城",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970094",
+      "match_id": "fotmob:5970094",
+      "home_team": "卡迪西亚",
+      "away_team": "吉达联合",
+      "match_date": "2026-08-21",
+      "kickoff_at": "2026-08-21T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970095",
+      "match_id": "fotmob:5970095",
+      "home_team": "哈萨征服",
+      "away_team": "达曼协作",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T15:45:00Z"
+    },
+    {
+      "source_match_id": "5970096",
+      "match_id": "fotmob:5970096",
+      "home_team": "拉斯永恒",
+      "away_team": "布赖代合作",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T16:10:00Z"
+    },
+    {
+      "source_match_id": "5970097",
+      "match_id": "fotmob:5970097",
+      "home_team": "吉达国民",
+      "away_team": "艾卜哈",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970098",
+      "match_id": "fotmob:5970098",
+      "home_team": "赛哈特海湾",
+      "away_team": "利雅得青年",
+      "match_date": "2026-08-22",
+      "kickoff_at": "2026-08-22T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970099",
+      "match_id": "fotmob:5970099",
+      "home_team": "新未来城",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24T16:40:00Z"
+    },
+    {
+      "source_match_id": "5970100",
+      "match_id": "fotmob:5970100",
+      "home_team": "吉达联合",
+      "away_team": "哈森姆",
+      "match_date": "2026-08-24",
+      "kickoff_at": "2026-08-24T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970101",
+      "match_id": "fotmob:5970101",
+      "home_team": "艾卜哈",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T16:05:00Z"
+    },
+    {
+      "source_match_id": "5970102",
+      "match_id": "fotmob:5970102",
+      "home_team": "布赖代合作",
+      "away_team": "费哈",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T16:10:00Z"
+    },
+    {
+      "source_match_id": "5970103",
+      "match_id": "fotmob:5970103",
+      "home_team": "达曼协作",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970104",
+      "match_id": "fotmob:5970104",
+      "home_team": "利雅得青年",
+      "away_team": "利雅得体育",
+      "match_date": "2026-08-25",
+      "kickoff_at": "2026-08-25T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970105",
+      "match_id": "fotmob:5970105",
+      "home_team": "费萨里哈曼",
+      "away_team": "哈萨征服",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26T16:00:00Z"
+    },
+    {
+      "source_match_id": "5970106",
+      "match_id": "fotmob:5970106",
+      "home_team": "德里耶",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-08-26",
+      "kickoff_at": "2026-08-26T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970107",
+      "match_id": "fotmob:5970107",
+      "home_team": "利雅得体育",
+      "away_team": "新未来城",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28T15:50:00Z"
+    },
+    {
+      "source_match_id": "5970108",
+      "match_id": "fotmob:5970108",
+      "home_team": "费哈",
+      "away_team": "艾卜哈",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28T16:00:00Z"
+    },
+    {
+      "source_match_id": "5970109",
+      "match_id": "fotmob:5970109",
+      "home_team": "赛哈特海湾",
+      "away_team": "利雅得新月",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970110",
+      "match_id": "fotmob:5970110",
+      "home_team": "利雅得胜利",
+      "away_team": "布赖代合作",
+      "match_date": "2026-08-28",
+      "kickoff_at": "2026-08-28T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970111",
+      "match_id": "fotmob:5970111",
+      "home_team": "拉斯永恒",
+      "away_team": "吉达国民",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T16:05:00Z"
+    },
+    {
+      "source_match_id": "5970112",
+      "match_id": "fotmob:5970112",
+      "home_team": "达曼协作",
+      "away_team": "德里耶",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970113",
+      "match_id": "fotmob:5970113",
+      "home_team": "哈萨征服",
+      "away_team": "吉达联合",
+      "match_date": "2026-08-29",
+      "kickoff_at": "2026-08-29T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970114",
+      "match_id": "fotmob:5970114",
+      "home_team": "哈森姆",
+      "away_team": "利雅得青年",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T16:05:00Z"
+    },
+    {
+      "source_match_id": "5970115",
+      "match_id": "fotmob:5970115",
+      "home_team": "卡迪西亚",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-08-30",
+      "kickoff_at": "2026-08-30T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970116",
+      "match_id": "fotmob:5970116",
+      "home_team": "利雅得新月",
+      "away_team": "吉达国民",
+      "match_date": "2026-09-01",
+      "kickoff_at": "2026-09-01T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970117",
+      "match_id": "fotmob:5970117",
+      "home_team": "费哈",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-09-03",
+      "kickoff_at": "2026-09-03T15:55:00Z"
+    },
+    {
+      "source_match_id": "5970118",
+      "match_id": "fotmob:5970118",
+      "home_team": "新未来城",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-09-03",
+      "kickoff_at": "2026-09-03T16:30:00Z"
+    },
+    {
+      "source_match_id": "5970119",
+      "match_id": "fotmob:5970119",
+      "home_team": "德里耶",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-09-03",
+      "kickoff_at": "2026-09-03T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970120",
+      "match_id": "fotmob:5970120",
+      "home_team": "艾卜哈",
+      "away_team": "达曼协作",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04T16:00:00Z"
+    },
+    {
+      "source_match_id": "5970121",
+      "match_id": "fotmob:5970121",
+      "home_team": "吉达国民",
+      "away_team": "利雅得体育",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970122",
+      "match_id": "fotmob:5970122",
+      "home_team": "利雅得青年",
+      "away_team": "利雅得新月",
+      "match_date": "2026-09-04",
+      "kickoff_at": "2026-09-04T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970123",
+      "match_id": "fotmob:5970123",
+      "home_team": "费萨里哈曼",
+      "away_team": "哈森姆",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T15:50:00Z"
+    },
+    {
+      "source_match_id": "5970124",
+      "match_id": "fotmob:5970124",
+      "home_team": "布赖代合作",
+      "away_team": "哈萨征服",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T15:55:00Z"
+    },
+    {
+      "source_match_id": "5970125",
+      "match_id": "fotmob:5970125",
+      "home_team": "吉达联合",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-09-05",
+      "kickoff_at": "2026-09-05T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970126",
+      "match_id": "fotmob:5970126",
+      "home_team": "赛哈特海湾",
+      "away_team": "利雅得体育",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07T15:30:00Z"
+    },
+    {
+      "source_match_id": "5970127",
+      "match_id": "fotmob:5970127",
+      "home_team": "利雅得新月",
+      "away_team": "新未来城",
+      "match_date": "2026-09-07",
+      "kickoff_at": "2026-09-07T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970128",
+      "match_id": "fotmob:5970128",
+      "home_team": "达曼协作",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T15:30:00Z"
+    },
+    {
+      "source_match_id": "5970129",
+      "match_id": "fotmob:5970129",
+      "home_team": "哈森姆",
+      "away_team": "布赖代合作",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T15:55:00Z"
+    },
+    {
+      "source_match_id": "5970130",
+      "match_id": "fotmob:5970130",
+      "home_team": "吉达联合",
+      "away_team": "费哈",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970131",
+      "match_id": "fotmob:5970131",
+      "home_team": "卡迪西亚",
+      "away_team": "吉达国民",
+      "match_date": "2026-09-08",
+      "kickoff_at": "2026-09-08T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970132",
+      "match_id": "fotmob:5970132",
+      "home_team": "拉斯永恒",
+      "away_team": "利雅得青年",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T15:55:00Z"
+    },
+    {
+      "source_match_id": "5970133",
+      "match_id": "fotmob:5970133",
+      "home_team": "哈萨征服",
+      "away_team": "德里耶",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970134",
+      "match_id": "fotmob:5970134",
+      "home_team": "利雅得胜利",
+      "away_team": "艾卜哈",
+      "match_date": "2026-09-09",
+      "kickoff_at": "2026-09-09T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970139",
+      "match_id": "fotmob:5970139",
+      "home_team": "卡迪西亚",
+      "away_team": "达曼协作",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11T15:25:00Z"
+    },
+    {
+      "source_match_id": "5970137",
+      "match_id": "fotmob:5970137",
+      "home_team": "费萨里哈曼",
+      "away_team": "吉达联合",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11T15:45:00Z"
+    },
+    {
+      "source_match_id": "5970135",
+      "match_id": "fotmob:5970135",
+      "home_team": "吉达国民",
+      "away_team": "哈森姆",
+      "match_date": "2026-09-11",
+      "kickoff_at": "2026-09-11T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970142",
+      "match_id": "fotmob:5970142",
+      "home_team": "布赖代合作",
+      "away_team": "利雅得新月",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T15:50:00Z"
+    },
+    {
+      "source_match_id": "5970138",
+      "match_id": "fotmob:5970138",
+      "home_team": "赛哈特海湾",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970141",
+      "match_id": "fotmob:5970141",
+      "home_team": "利雅得青年",
+      "away_team": "费哈",
+      "match_date": "2026-09-12",
+      "kickoff_at": "2026-09-12T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970143",
+      "match_id": "fotmob:5970143",
+      "home_team": "新未来城",
+      "away_team": "哈萨征服",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T16:20:00Z"
+    },
+    {
+      "source_match_id": "5970136",
+      "match_id": "fotmob:5970136",
+      "home_team": "德里耶",
+      "away_team": "艾卜哈",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970140",
+      "match_id": "fotmob:5970140",
+      "home_team": "利雅得体育",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-09-13",
+      "kickoff_at": "2026-09-13T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970150",
+      "match_id": "fotmob:5970150",
+      "home_team": "拉斯永恒",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T13:50:00Z"
+    },
+    {
+      "source_match_id": "5970146",
+      "match_id": "fotmob:5970146",
+      "home_team": "哈萨征服",
+      "away_team": "吉达国民",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T14:55:00Z"
+    },
+    {
+      "source_match_id": "5970151",
+      "match_id": "fotmob:5970151",
+      "home_team": "利雅得胜利",
+      "away_team": "德里耶",
+      "match_date": "2026-10-09",
+      "kickoff_at": "2026-10-09T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970148",
+      "match_id": "fotmob:5970148",
+      "home_team": "哈森姆",
+      "away_team": "新未来城",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T13:50:00Z"
+    },
+    {
+      "source_match_id": "5970145",
+      "match_id": "fotmob:5970145",
+      "home_team": "达曼协作",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T14:55:00Z"
+    },
+    {
+      "source_match_id": "5970149",
+      "match_id": "fotmob:5970149",
+      "home_team": "利雅得新月",
+      "away_team": "吉达联合",
+      "match_date": "2026-10-10",
+      "kickoff_at": "2026-10-10T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970147",
+      "match_id": "fotmob:5970147",
+      "home_team": "费哈",
+      "away_team": "利雅得体育",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T13:40:00Z"
+    },
+    {
+      "source_match_id": "5970152",
+      "match_id": "fotmob:5970152",
+      "home_team": "利雅得青年",
+      "away_team": "布赖代合作",
+      "match_date": "2026-10-11",
+      "kickoff_at": "2026-10-11T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970155",
+      "match_id": "fotmob:5970155",
+      "home_team": "费萨里哈曼",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T13:40:00Z"
+    },
+    {
+      "source_match_id": "5970158",
+      "match_id": "fotmob:5970158",
+      "home_team": "赛哈特海湾",
+      "away_team": "费哈",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T14:50:00Z"
+    },
+    {
+      "source_match_id": "5970156",
+      "match_id": "fotmob:5970156",
+      "home_team": "哈森姆",
+      "away_team": "哈萨征服",
+      "match_date": "2026-10-15",
+      "kickoff_at": "2026-10-15T15:15:00Z"
+    },
+    {
+      "source_match_id": "5970159",
+      "match_id": "fotmob:5970159",
+      "home_team": "卡迪西亚",
+      "away_team": "艾卜哈",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T13:15:00Z"
+    },
+    {
+      "source_match_id": "5970161",
+      "match_id": "fotmob:5970161",
+      "home_team": "新未来城",
+      "away_team": "达曼协作",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T15:40:00Z"
+    },
+    {
+      "source_match_id": "5970154",
+      "match_id": "fotmob:5970154",
+      "home_team": "德里耶",
+      "away_team": "布赖代合作",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970165",
+      "match_id": "fotmob:5970165",
+      "home_team": "哈萨征服",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970166",
+      "match_id": "fotmob:5970166",
+      "home_team": "费哈",
+      "away_team": "吉达国民",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T15:05:00Z"
+    },
+    {
+      "source_match_id": "5970167",
+      "match_id": "fotmob:5970167",
+      "home_team": "利雅得新月",
+      "away_team": "哈森姆",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970169",
+      "match_id": "fotmob:5970169",
+      "home_team": "利雅得青年",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-10-19",
+      "kickoff_at": "2026-10-19T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970163",
+      "match_id": "fotmob:5970163",
+      "home_team": "德里耶",
+      "away_team": "利雅得体育",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T15:00:00Z"
+    },
+    {
+      "source_match_id": "5970170",
+      "match_id": "fotmob:5970170",
+      "home_team": "布赖代合作",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T15:10:00Z"
+    },
+    {
+      "source_match_id": "5970164",
+      "match_id": "fotmob:5970164",
+      "home_team": "达曼协作",
+      "away_team": "吉达联合",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970168",
+      "match_id": "fotmob:5970168",
+      "home_team": "利雅得胜利",
+      "away_team": "新未来城",
+      "match_date": "2026-10-20",
+      "kickoff_at": "2026-10-20T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970174",
+      "match_id": "fotmob:5970174",
+      "home_team": "哈森姆",
+      "away_team": "费哈",
+      "match_date": "2026-10-22",
+      "kickoff_at": "2026-10-22T13:40:00Z"
+    },
+    {
+      "source_match_id": "5970173",
+      "match_id": "fotmob:5970173",
+      "home_team": "哈萨征服",
+      "away_team": "利雅得青年",
+      "match_date": "2026-10-22",
+      "kickoff_at": "2026-10-22T14:45:00Z"
+    },
+    {
+      "source_match_id": "5970172",
+      "match_id": "fotmob:5970172",
+      "home_team": "费萨里哈曼",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T13:30:00Z"
+    },
+    {
+      "source_match_id": "5970175",
+      "match_id": "fotmob:5970175",
+      "home_team": "吉达联合",
+      "away_team": "德里耶",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T15:30:00Z"
+    },
+    {
+      "source_match_id": "5970171",
+      "match_id": "fotmob:5970171",
+      "home_team": "吉达国民",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970177",
+      "match_id": "fotmob:5970177",
+      "home_team": "卡迪西亚",
+      "away_team": "利雅得新月",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970181",
+      "match_id": "fotmob:5970181",
+      "home_team": "新未来城",
+      "away_team": "艾卜哈",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T14:00:00Z"
+    },
+    {
+      "source_match_id": "5970176",
+      "match_id": "fotmob:5970176",
+      "home_team": "拉斯永恒",
+      "away_team": "达曼协作",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T15:05:00Z"
+    },
+    {
+      "source_match_id": "5970179",
+      "match_id": "fotmob:5970179",
+      "home_team": "利雅得体育",
+      "away_team": "布赖代合作",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970144",
+      "match_id": "fotmob:5970144",
+      "home_team": "艾卜哈",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-10-27",
+      "kickoff_at": "2026-10-27T12:40:00Z"
+    },
+    {
+      "source_match_id": "5970191",
+      "match_id": "fotmob:5970191",
+      "home_team": "赛哈特海湾",
+      "away_team": "哈森姆",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T14:35:00Z"
+    },
+    {
+      "source_match_id": "5970193",
+      "match_id": "fotmob:5970193",
+      "home_team": "利雅得胜利",
+      "away_team": "拉斯永恒",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970194",
+      "match_id": "fotmob:5970194",
+      "home_team": "利雅得体育",
+      "away_team": "卡迪西亚",
+      "match_date": "2026-10-29",
+      "kickoff_at": "2026-10-29T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970182",
+      "match_id": "fotmob:5970182",
+      "home_team": "艾卜哈",
+      "away_team": "吉达联合",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T12:30:00Z"
+    },
+    {
+      "source_match_id": "5970184",
+      "match_id": "fotmob:5970184",
+      "home_team": "德里耶",
+      "away_team": "新未来城",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T14:50:00Z"
+    },
+    {
+      "source_match_id": "5970195",
+      "match_id": "fotmob:5970195",
+      "home_team": "利雅得青年",
+      "away_team": "吉达国民",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970196",
+      "match_id": "fotmob:5970196",
+      "home_team": "布赖代合作",
+      "away_team": "达曼协作",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T13:30:00Z"
+    },
+    {
+      "source_match_id": "5970187",
+      "match_id": "fotmob:5970187",
+      "home_team": "费哈",
+      "away_team": "费萨里哈曼",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T14:55:00Z"
+    },
+    {
+      "source_match_id": "5970189",
+      "match_id": "fotmob:5970189",
+      "home_team": "利雅得新月",
+      "away_team": "哈萨征服",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T18:00:00Z"
+    },
+    {
+      "source_match_id": "5970153",
+      "match_id": "fotmob:5970153",
+      "home_team": "吉达国民",
+      "away_team": "利雅得胜利",
+      "match_date": "2026-11-20",
+      "kickoff_at": "2026-11-20T17:30:00Z"
+    },
+    {
+      "source_match_id": "1000021471",
+      "match_id": "fotmob:1000021471",
+      "home_team": "哈萨征服",
+      "away_team": "利雅得体育",
+      "match_date": "2026-11-26",
+      "kickoff_at": "2026-11-26T14:25:00.000Z"
+    }
+  ]
+}

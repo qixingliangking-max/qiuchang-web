@@ -1,0 +1,231 @@
+{
+  "league_code": "AUS_AL",
+  "competition_id": "ec1b9233-de75-48ae-a2f1-348904b58797",
+  "season": "2026/27",
+  "matches": [
+    {
+      "source_match_id": "1000017557",
+      "match_id": "fotmob:1000017557",
+      "home_team": "悉尼FC",
+      "away_team": "西悉尼流浪者",
+      "match_date": "2026-10-16",
+      "kickoff_at": "2026-10-16T09:00:00Z"
+    },
+    {
+      "source_match_id": "1000017558",
+      "match_id": "fotmob:1000017558",
+      "home_team": "奥克兰FC",
+      "away_team": "墨尔本城",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017559",
+      "match_id": "fotmob:1000017559",
+      "home_team": "麦克阿瑟FC",
+      "away_team": "珀斯光荣",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T06:00:00Z"
+    },
+    {
+      "source_match_id": "1000017560",
+      "match_id": "fotmob:1000017560",
+      "home_team": "中央海岸水手",
+      "away_team": "纽卡斯尔喷气机",
+      "match_date": "2026-10-17",
+      "kickoff_at": "2026-10-17T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017561",
+      "match_id": "fotmob:1000017561",
+      "home_team": "惠灵顿凤凰",
+      "away_team": "墨尔本胜利",
+      "match_date": "2026-10-18",
+      "kickoff_at": "2026-10-18T02:00:00Z"
+    },
+    {
+      "source_match_id": "1000017563",
+      "match_id": "fotmob:1000017563",
+      "home_team": "布里斯班狮吼",
+      "away_team": "珀斯光荣",
+      "match_date": "2026-10-23",
+      "kickoff_at": "2026-10-23T09:00:00Z"
+    },
+    {
+      "source_match_id": "1000017564",
+      "match_id": "fotmob:1000017564",
+      "home_team": "纽卡斯尔喷气机",
+      "away_team": "麦克阿瑟FC",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017565",
+      "match_id": "fotmob:1000017565",
+      "home_team": "西悉尼流浪者",
+      "away_team": "奥克兰FC",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T06:00:00Z"
+    },
+    {
+      "source_match_id": "1000017566",
+      "match_id": "fotmob:1000017566",
+      "home_team": "墨尔本胜利",
+      "away_team": "墨尔本城",
+      "match_date": "2026-10-24",
+      "kickoff_at": "2026-10-24T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017567",
+      "match_id": "fotmob:1000017567",
+      "home_team": "惠灵顿凤凰",
+      "away_team": "中央海岸水手",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T02:00:00Z"
+    },
+    {
+      "source_match_id": "1000017568",
+      "match_id": "fotmob:1000017568",
+      "home_team": "悉尼FC",
+      "away_team": "阿德莱德联",
+      "match_date": "2026-10-25",
+      "kickoff_at": "2026-10-25T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017569",
+      "match_id": "fotmob:1000017569",
+      "home_team": "布里斯班狮吼",
+      "away_team": "奥克兰FC",
+      "match_date": "2026-10-30",
+      "kickoff_at": "2026-10-30T09:00:00Z"
+    },
+    {
+      "source_match_id": "1000017570",
+      "match_id": "fotmob:1000017570",
+      "home_team": "纽卡斯尔喷气机",
+      "away_team": "惠灵顿凤凰",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017571",
+      "match_id": "fotmob:1000017571",
+      "home_team": "墨尔本城",
+      "away_team": "悉尼FC",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T06:00:00Z"
+    },
+    {
+      "source_match_id": "1000017572",
+      "match_id": "fotmob:1000017572",
+      "home_team": "麦克阿瑟FC",
+      "away_team": "西悉尼流浪者",
+      "match_date": "2026-10-31",
+      "kickoff_at": "2026-10-31T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017573",
+      "match_id": "fotmob:1000017573",
+      "home_team": "墨尔本胜利",
+      "away_team": "中央海岸水手",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017574",
+      "match_id": "fotmob:1000017574",
+      "home_team": "珀斯光荣",
+      "away_team": "阿德莱德联",
+      "match_date": "2026-11-01",
+      "kickoff_at": "2026-11-01T08:00:00Z"
+    },
+    {
+      "source_match_id": "1000017575",
+      "match_id": "fotmob:1000017575",
+      "home_team": "悉尼FC",
+      "away_team": "中央海岸水手",
+      "match_date": "2026-11-06",
+      "kickoff_at": "2026-11-06T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017576",
+      "match_id": "fotmob:1000017576",
+      "home_team": "奥克兰FC",
+      "away_team": "惠灵顿凤凰",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017577",
+      "match_id": "fotmob:1000017577",
+      "home_team": "墨尔本城",
+      "away_team": "西悉尼流浪者",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017578",
+      "match_id": "fotmob:1000017578",
+      "home_team": "珀斯光荣",
+      "away_team": "纽卡斯尔喷气机",
+      "match_date": "2026-11-07",
+      "kickoff_at": "2026-11-07T10:45:00Z"
+    },
+    {
+      "source_match_id": "1000017579",
+      "match_id": "fotmob:1000017579",
+      "home_team": "麦克阿瑟FC",
+      "away_team": "布里斯班狮吼",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017580",
+      "match_id": "fotmob:1000017580",
+      "home_team": "阿德莱德联",
+      "away_team": "墨尔本胜利",
+      "match_date": "2026-11-08",
+      "kickoff_at": "2026-11-08T06:00:00Z"
+    },
+    {
+      "source_match_id": "1000017581",
+      "match_id": "fotmob:1000017581",
+      "home_team": "西悉尼流浪者",
+      "away_team": "阿德莱德联",
+      "match_date": "2026-11-20",
+      "kickoff_at": "2026-11-20T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017582",
+      "match_id": "fotmob:1000017582",
+      "home_team": "奥克兰FC",
+      "away_team": "墨尔本胜利",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T04:00:00Z"
+    },
+    {
+      "source_match_id": "1000017583",
+      "match_id": "fotmob:1000017583",
+      "home_team": "中央海岸水手",
+      "away_team": "珀斯光荣",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T06:00:00Z"
+    },
+    {
+      "source_match_id": "1000017584",
+      "match_id": "fotmob:1000017584",
+      "home_team": "布里斯班狮吼",
+      "away_team": "悉尼FC",
+      "match_date": "2026-11-21",
+      "kickoff_at": "2026-11-21T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017585",
+      "match_id": "fotmob:1000017585",
+      "home_team": "惠灵顿凤凰",
+      "away_team": "麦克阿瑟FC",
+      "match_date": "2026-11-22",
+      "kickoff_at": "2026-11-22T02:00:00Z"
+    }
+  ]
+}

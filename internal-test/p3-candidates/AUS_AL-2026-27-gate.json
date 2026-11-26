@@ -1,0 +1,80 @@
+{
+  "league_code": "AUS_AL",
+  "season": "2026/27",
+  "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
+  "source": "FotMob matchDetails",
+  "input_matches": 28,
+  "collected_matches": 28,
+  "collection_coverage_pct": 100,
+  "collection_failures": [],
+  "teams": 12,
+  "aggregate_players": 263,
+  "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
+  "strict_gate_ok": true,
+  "strict_errors": [],
+  "strict_warnings": [
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "中央海岸水手",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "奥克兰FC",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "布里斯班狮吼",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "悉尼FC",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "惠灵顿凤凰",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "珀斯光荣",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "纽卡斯尔喷气机",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "西悉尼流浪者",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "阿德莱德联",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "麦克阿瑟FC",
+      "matches": 5
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "墨尔本城",
+      "matches": 4
+    },
+    {
+      "type": "LIMITED_SAMPLE",
+      "team": "墨尔本胜利",
+      "matches": 5
+    }
+  ],
+  "gate_status": "PASS",
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 0
+}

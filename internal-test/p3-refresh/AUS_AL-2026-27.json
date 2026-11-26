@@ -6,7 +6,7 @@
     "113"
   ],
   "fotmob_ccode3": "AUS",
-  "baseline_finished_matches": 0,
+  "baseline_finished_matches": 28,
   "team_map": {
     "Sydney FC": "悉尼FC",
     "Auckland FC": "奥克兰FC",
@@ -20,5 +20,7 @@
     "Wellington Phoenix": "惠灵顿凤凰",
     "Central Coast Mariners": "中央海岸水手",
     "Western Sydney Wanderers FC": "西悉尼流浪者"
-  }
+  },
+  "last_successful_refresh_at": "2026-11-26T16:39:32.397Z",
+  "last_published_blob_sha": "0a43b6baf4f41e2922e2fe1acef8960764a250e9"
 }
