@@ -226,6 +226,14 @@
       "away_team": "麦克阿瑟FC",
       "match_date": "2026-11-22",
       "kickoff_at": "2026-11-22T02:00:00Z"
+    },
+    {
+      "source_match_id": "1000017586",
+      "match_id": "fotmob:1000017586",
+      "home_team": "麦克阿瑟FC",
+      "away_team": "墨尔本城",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T08:40:00.000Z"
     }
   ]
 }

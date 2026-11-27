@@ -3,12 +3,12 @@
   "season": "2026/27",
   "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS",
   "source": "FotMob matchDetails",
-  "input_matches": 28,
-  "collected_matches": 28,
+  "input_matches": 29,
+  "collected_matches": 29,
   "collection_coverage_pct": 100,
   "collection_failures": [],
   "teams": 12,
-  "aggregate_players": 263,
+  "aggregate_players": 264,
   "schema_contract": "P3_V5_KOR_STABLE_SCHEMA_CONTRACT_R2_1",
   "strict_gate_ok": true,
   "strict_errors": [],
@@ -61,12 +61,12 @@
     {
       "type": "LIMITED_SAMPLE",
       "team": "麦克阿瑟FC",
-      "matches": 5
+      "matches": 6
     },
     {
       "type": "LIMITED_SAMPLE",
       "team": "墨尔本城",
-      "matches": 4
+      "matches": 5
     },
     {
       "type": "LIMITED_SAMPLE",

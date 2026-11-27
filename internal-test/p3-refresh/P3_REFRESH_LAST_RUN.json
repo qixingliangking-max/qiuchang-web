@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-11-27T08:56:15.973Z",
+  "run_at": "2026-11-27T10:57:29.230Z",
   "schedule_policy": "08:30 + 23:30 Asia/Shanghai",
   "total_leagues": 27,
-  "promoted_leagues": 0,
-  "noop_leagues": 27,
+  "promoted_leagues": 1,
+  "noop_leagues": 26,
   "blocked_leagues": 0,
   "results": [
     {
@@ -23,15 +23,15 @@
     {
       "league_code": "AUS_AL",
       "season": "2026/27",
-      "status": "NO_NEW_FINISHED",
-      "discovered_finished": 28,
+      "status": "PROMOTED",
+      "discovered_finished": 29,
       "baseline_finished_matches": 28,
-      "new_finished_matches": 0,
-      "gate_status": null,
-      "collection_coverage_pct": null,
+      "new_finished_matches": 1,
+      "gate_status": "PASS",
+      "collection_coverage_pct": 100,
       "unmapped_count": 0,
-      "strict_errors": null,
-      "collection_failures": null,
+      "strict_errors": 0,
+      "collection_failures": 0,
       "exit_code": 0
     },
     {
