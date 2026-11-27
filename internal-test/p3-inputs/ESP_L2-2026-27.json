@@ -1290,6 +1290,14 @@
       "away_team": "阿尔梅里亚",
       "match_date": "2026-11-23",
       "kickoff_at": "2026-11-23T19:30:00Z"
+    },
+    {
+      "source_match_id": "5868564",
+      "match_id": "fotmob:5868564",
+      "home_team": "莱加内斯",
+      "away_team": "萨瓦德尔",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T19:30:00.000Z"
     }
   ]
 }

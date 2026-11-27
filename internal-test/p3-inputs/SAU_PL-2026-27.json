@@ -849,7 +849,7 @@
       "home_team": "哈萨征服",
       "away_team": "利雅得体育",
       "match_date": "2026-11-26",
-      "kickoff_at": "2026-11-26T14:25:00.000Z"
+      "kickoff_at": "2026-11-26T14:25:00Z"
     },
     {
       "source_match_id": "1000021469",
@@ -857,7 +857,7 @@
       "home_team": "艾卜哈",
       "away_team": "利雅得青年",
       "match_date": "2026-11-26",
-      "kickoff_at": "2026-11-26T15:05:00.000Z"
+      "kickoff_at": "2026-11-26T15:05:00Z"
     },
     {
       "source_match_id": "1000021475",
@@ -865,7 +865,31 @@
       "home_team": "费萨里哈曼",
       "away_team": "德里耶",
       "match_date": "2026-11-26",
-      "kickoff_at": "2026-11-26T17:30:00.000Z"
+      "kickoff_at": "2026-11-26T17:30:00Z"
+    },
+    {
+      "source_match_id": "1000021474",
+      "match_id": "fotmob:1000021474",
+      "home_team": "拉斯永恒",
+      "away_team": "赛哈特海湾",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T12:15:00.000Z"
+    },
+    {
+      "source_match_id": "1000021476",
+      "match_id": "fotmob:1000021476",
+      "home_team": "卡迪西亚",
+      "away_team": "费哈",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T14:20:00.000Z"
+    },
+    {
+      "source_match_id": "1000021473",
+      "match_id": "fotmob:1000021473",
+      "home_team": "吉达联合",
+      "away_team": "新未来城",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T17:30:00.000Z"
     }
   ]
 }

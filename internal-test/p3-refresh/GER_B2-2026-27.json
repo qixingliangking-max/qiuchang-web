@@ -6,7 +6,7 @@
     "146"
   ],
   "fotmob_ccode3": "GER",
-  "baseline_finished_matches": 108,
+  "baseline_finished_matches": 110,
   "team_map": {
     "Bochum": "波鸿",
     "Darmstadt": "达姆施塔特",
@@ -27,6 +27,6 @@
     "Arminia Bielefeld": "比勒费尔德",
     "Eintracht Braunschweig": "布伦瑞克"
   },
-  "last_successful_refresh_at": "2026-11-22T16:44:16.564Z",
-  "last_published_blob_sha": "f2f756bbb0a6c5927a50219d178f2c23bde3b03c"
+  "last_successful_refresh_at": "2026-11-27T21:27:52.850Z",
+  "last_published_blob_sha": "73c5d27f63d1944e30b5f525bde2b916df3dc291"
 }

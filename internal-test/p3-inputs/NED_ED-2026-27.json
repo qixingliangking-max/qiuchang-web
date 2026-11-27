@@ -913,7 +913,7 @@
       "home_team": "特温特",
       "away_team": "威廉二世",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T11:15:00.000Z"
+      "kickoff_at": "2026-11-22T11:15:00Z"
     },
     {
       "source_match_id": "5781804",
@@ -921,7 +921,7 @@
       "home_team": "阿贾克斯",
       "away_team": "海牙",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T13:30:00.000Z"
+      "kickoff_at": "2026-11-22T13:30:00Z"
     },
     {
       "source_match_id": "5781810",
@@ -929,7 +929,7 @@
       "home_team": "鹿特丹斯巴达",
       "away_team": "阿尔克马尔",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T13:30:00.000Z"
+      "kickoff_at": "2026-11-22T13:30:00Z"
     },
     {
       "source_match_id": "5781809",
@@ -937,7 +937,15 @@
       "home_team": "前进之鹰",
       "away_team": "锡塔德幸运",
       "match_date": "2026-11-22",
-      "kickoff_at": "2026-11-22T15:45:00.000Z"
+      "kickoff_at": "2026-11-22T15:45:00Z"
+    },
+    {
+      "source_match_id": "5781815",
+      "match_id": "fotmob:5781815",
+      "home_team": "格罗宁根",
+      "away_team": "威廉二世",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T19:00:00.000Z"
     }
   ]
 }

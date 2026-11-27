@@ -6,7 +6,7 @@
     "536"
   ],
   "fotmob_ccode3": "KSA",
-  "baseline_finished_matches": 108,
+  "baseline_finished_matches": 111,
   "team_map": {
     "Abha": "艾卜哈",
     "Al Ahli": "吉达国民",
@@ -27,6 +27,6 @@
     "Al Fateh FC": "哈萨征服",
     "Al Nassr FC": "利雅得胜利"
   },
-  "last_successful_refresh_at": "2026-11-26T21:28:41.604Z",
-  "last_published_blob_sha": "a1f9d50a8ac73bf761ee498b0e54adda5ffac0ea"
+  "last_successful_refresh_at": "2026-11-27T21:28:32.008Z",
+  "last_published_blob_sha": "82349291cf82d768c28e0a7371681a368567cf94"
 }

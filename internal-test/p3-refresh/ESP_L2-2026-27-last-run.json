@@ -1,29 +1,38 @@
 {
   "league_code": "ESP_L2",
   "season": "2026/27",
-  "run_at": "2026-11-27T10:56:49.278Z",
+  "run_at": "2026-11-27T21:27:38.018Z",
   "discovered_fixtures": 462,
-  "discovered_finished": 162,
-  "verified_past_finished": 162,
+  "discovered_finished": 163,
+  "verified_past_finished": 163,
   "source_invalid_finished_time": [],
   "source_premature_finished": [],
-  "in_scope_finished": 161,
+  "in_scope_finished": 162,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [
     "5868523"
   ],
   "baseline_finished_matches": 161,
-  "new_finished_matches": 0,
-  "added_source_match_ids": [],
+  "new_finished_matches": 1,
+  "added_source_match_ids": [
+    "5868564"
+  ],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
   "excluded_exact_duplicate_source_aliases": [],
   "discarded_previous_future_ids": [],
   "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
-  "mapped_finished": 161,
+  "mapped_finished": 162,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "NO_NEW_FINISHED"
+  "status": "PROMOTED",
+  "gate_status": "PASS",
+  "collection_coverage_pct": 100,
+  "strict_errors": 0,
+  "collection_failures": 0,
+  "quality_tier": "LIMITED",
+  "avg_team_depth_coverage_pct": 56.2,
+  "published_blob_sha": "b47af1049f76930a2516d8424ca75f57b54c4ea4"
 }
