@@ -881,7 +881,15 @@
       "home_team": "布伦特福德",
       "away_team": "埃弗顿",
       "match_date": "2026-11-23",
-      "kickoff_at": "2026-11-23T20:00:00.000Z"
+      "kickoff_at": "2026-11-23T20:00:00Z"
+    },
+    {
+      "source_match_id": "5795533",
+      "match_id": "fotmob:5795533",
+      "home_team": "诺丁汉森林",
+      "away_team": "切尔西",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T20:00:00.000Z"
     }
   ]
 }

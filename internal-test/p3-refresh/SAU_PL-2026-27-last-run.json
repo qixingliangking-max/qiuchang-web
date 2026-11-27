@@ -1,7 +1,7 @@
 {
   "league_code": "SAU_PL",
   "season": "2026/27",
-  "run_at": "2026-11-27T21:28:32.008Z",
+  "run_at": "2026-11-27T21:58:27.223Z",
   "discovered_fixtures": 306,
   "discovered_finished": 111,
   "verified_past_finished": 111,
@@ -11,13 +11,9 @@
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 108,
-  "new_finished_matches": 3,
-  "added_source_match_ids": [
-    "1000021473",
-    "1000021474",
-    "1000021476"
-  ],
+  "baseline_finished_matches": 111,
+  "new_finished_matches": 0,
+  "added_source_match_ids": [],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
   "excluded_exact_duplicate_source_aliases": [],
@@ -27,12 +23,5 @@
   "mapped_finished": 111,
   "unmapped_count": 0,
   "unmapped": [],
-  "status": "PROMOTED",
-  "gate_status": "PASS",
-  "collection_coverage_pct": 100,
-  "strict_errors": 0,
-  "collection_failures": 0,
-  "quality_tier": "LIMITED",
-  "avg_team_depth_coverage_pct": 37.9,
-  "published_blob_sha": "82349291cf82d768c28e0a7371681a368567cf94"
+  "status": "NO_NEW_FINISHED"
 }
