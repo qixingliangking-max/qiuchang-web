@@ -219,14 +219,14 @@
       "quality_tier": "LIMITED",
       "teams": 18,
       "published_path": "internal-test/p3-data/POR_PL-2026-27.json",
-      "blob_sha": "af88b797e6497c229af1a260adc75ba38780c9e7",
+      "blob_sha": "d6776e0d1c93c41b488903017dbcdf681c9c6c6e",
       "gate_status": "PASS",
       "build_mode": "P3_SAFE_BUILD_R2_GITHUB_ACTIONS_INCREMENTAL",
-      "avg_team_depth_coverage_pct": 16.2,
+      "avg_team_depth_coverage_pct": 17.7,
       "gate_report": "internal-test/p3-candidates/POR_PL-2026-27-gate.json",
       "model_read_rule": "P3_VALID + LOW_SAMPLE/LIMITED; structural P3 reading is allowed, but player/depth factors must remain limited-weight until FULL sample quality is reached.",
-      "last_incremental_refresh_at": "2026-11-08T23:04:23.462Z",
-      "finished_matches": 98
+      "last_incremental_refresh_at": "2026-11-27T23:01:30.380Z",
+      "finished_matches": 99
     },
     {
       "league_code": "ESP_LL",

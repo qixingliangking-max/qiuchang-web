@@ -753,7 +753,7 @@
       "home_team": "葡萄牙国民",
       "away_team": "维塞乌学院",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:30:00.000Z"
+      "kickoff_at": "2026-11-08T15:30:00Z"
     },
     {
       "source_match_id": "5887678",
@@ -761,7 +761,7 @@
       "home_team": "圣克拉拉",
       "away_team": "吉维森特",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T15:30:00.000Z"
+      "kickoff_at": "2026-11-08T15:30:00Z"
     },
     {
       "source_match_id": "5887680",
@@ -769,7 +769,7 @@
       "home_team": "吉马良斯",
       "away_team": "波尔图",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T18:00:00.000Z"
+      "kickoff_at": "2026-11-08T18:00:00Z"
     },
     {
       "source_match_id": "5887673",
@@ -777,7 +777,7 @@
       "home_team": "阿马多拉之星",
       "away_team": "本菲卡",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T20:30:00.000Z"
+      "kickoff_at": "2026-11-08T20:30:00Z"
     },
     {
       "source_match_id": "5887677",
@@ -785,7 +785,15 @@
       "home_team": "里奥阿维",
       "away_team": "布拉加",
       "match_date": "2026-11-08",
-      "kickoff_at": "2026-11-08T20:30:00.000Z"
+      "kickoff_at": "2026-11-08T20:30:00Z"
+    },
+    {
+      "source_match_id": "5887685",
+      "match_id": "fotmob:5887685",
+      "home_team": "马里迪莫",
+      "away_team": "葡萄牙国民",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T20:15:00.000Z"
     }
   ]
 }
