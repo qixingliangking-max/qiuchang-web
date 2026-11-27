@@ -2890,6 +2890,14 @@
       "away_team": "科林蒂安",
       "match_date": "2026-11-25",
       "kickoff_at": "2026-11-25T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103726",
+      "match_id": "fotmob:5103726",
+      "home_team": "圣保罗",
+      "away_team": "雷莫",
+      "match_date": "2026-11-26",
+      "kickoff_at": "2026-11-26T23:00:00Z"
     }
   ]
 }
