@@ -1522,6 +1522,14 @@
       "away_team": "仙台七夕",
       "match_date": "2026-11-25",
       "kickoff_at": "2026-11-25T10:00:00Z"
+    },
+    {
+      "source_match_id": "5836402",
+      "match_id": "fotmob:5836402",
+      "home_team": "大宫松鼠",
+      "away_team": "FC今治",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T05:00:00.000Z"
     }
   ]
 }

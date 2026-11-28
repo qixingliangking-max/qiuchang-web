@@ -1,20 +1,20 @@
 {
   "league_code": "USA_MLS",
   "season": "2026",
-  "run_at": "2026-11-28T03:50:14.311Z",
+  "run_at": "2026-11-28T08:17:14.779Z",
   "discovered_fixtures": 528,
-  "discovered_finished": 521,
-  "verified_past_finished": 521,
+  "discovered_finished": 522,
+  "verified_past_finished": 522,
   "source_invalid_finished_time": [],
   "source_premature_finished": [],
-  "in_scope_finished": 521,
+  "in_scope_finished": 522,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 520,
+  "baseline_finished_matches": 521,
   "new_finished_matches": 1,
   "added_source_match_ids": [
-    "6580842"
+    "6665016"
   ],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
@@ -22,7 +22,7 @@
   "discarded_previous_future_ids": [],
   "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
-  "mapped_finished": 521,
+  "mapped_finished": 522,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -32,5 +32,5 @@
   "collection_failures": 0,
   "quality_tier": "PILOT_FULL",
   "avg_team_depth_coverage_pct": 87.6,
-  "published_blob_sha": "d46b633cbdb513c3d4fae340bfa8fef3d0e976b7"
+  "published_blob_sha": "ba6dd300b91fcd5ca48ed5b059ca895d89d36805"
 }

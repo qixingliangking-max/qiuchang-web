@@ -1209,7 +1209,7 @@
       "home_team": "福冈黄蜂",
       "away_team": "横滨水手",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803669",
@@ -1217,7 +1217,7 @@
       "home_team": "千叶市原",
       "away_team": "名古屋鲸八",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803670",
@@ -1225,7 +1225,7 @@
       "home_team": "FC东京",
       "away_team": "广岛三箭",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803671",
@@ -1233,7 +1233,7 @@
       "home_team": "水户蜀葵",
       "away_team": "东京绿茵",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803672",
@@ -1241,7 +1241,7 @@
       "home_team": "冈山绿雉",
       "away_team": "清水心跳",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803674",
@@ -1249,7 +1249,7 @@
       "home_team": "长崎成功丸",
       "away_team": "川崎前锋",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:00:00.000Z"
+      "kickoff_at": "2026-11-25T10:00:00Z"
     },
     {
       "source_match_id": "5803673",
@@ -1257,7 +1257,39 @@
       "home_team": "浦和红钻",
       "away_team": "大阪樱花",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T10:30:00.000Z"
+      "kickoff_at": "2026-11-25T10:30:00Z"
+    },
+    {
+      "source_match_id": "5803678",
+      "match_id": "fotmob:5803678",
+      "home_team": "京都不死鸟",
+      "away_team": "大阪樱花",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803682",
+      "match_id": "fotmob:5803682",
+      "home_team": "清水心跳",
+      "away_team": "浦和红钻",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T05:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803675",
+      "match_id": "fotmob:5803675",
+      "home_team": "鹿岛鹿角",
+      "away_team": "冈山绿雉",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T06:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803683",
+      "match_id": "fotmob:5803683",
+      "home_team": "神户胜利船",
+      "away_team": "千叶市原",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T06:00:00.000Z"
     }
   ]
 }

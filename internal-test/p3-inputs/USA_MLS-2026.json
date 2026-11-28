@@ -4170,6 +4170,14 @@
       "away_team": "迈阿密国际",
       "match_date": "2026-11-28",
       "kickoff_at": "2026-11-28T01:00:00.000Z"
+    },
+    {
+      "source_match_id": "6665016",
+      "match_id": "fotmob:6665016",
+      "home_team": "皇家盐湖城",
+      "away_team": "温哥华白帽",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T03:30:00.000Z"
     }
   ]
 }
