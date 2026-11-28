@@ -233,7 +233,15 @@
       "home_team": "麦克阿瑟FC",
       "away_team": "墨尔本城",
       "match_date": "2026-11-27",
-      "kickoff_at": "2026-11-27T08:40:00.000Z"
+      "kickoff_at": "2026-11-27T08:40:00Z"
+    },
+    {
+      "source_match_id": "1000017587",
+      "match_id": "fotmob:1000017587",
+      "home_team": "中央海岸水手",
+      "away_team": "奥克兰FC",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T08:40:00.000Z"
     }
   ]
 }

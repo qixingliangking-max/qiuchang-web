@@ -6,7 +6,7 @@
     "113"
   ],
   "fotmob_ccode3": "AUS",
-  "baseline_finished_matches": 29,
+  "baseline_finished_matches": 30,
   "team_map": {
     "Sydney FC": "悉尼FC",
     "Auckland FC": "奥克兰FC",
@@ -21,6 +21,6 @@
     "Central Coast Mariners": "中央海岸水手",
     "Western Sydney Wanderers FC": "西悉尼流浪者"
   },
-  "last_successful_refresh_at": "2026-11-27T10:56:39.675Z",
-  "last_published_blob_sha": "cd612a6ae14250bbf97152b78627db263880f20a"
+  "last_successful_refresh_at": "2026-11-28T11:38:25.374Z",
+  "last_published_blob_sha": "eb7103bad556b11cdf18c9dd0759edc33738f8e9"
 }
