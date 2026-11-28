@@ -1290,6 +1290,14 @@
       "away_team": "千叶市原",
       "match_date": "2026-11-28",
       "kickoff_at": "2026-11-28T06:00:00.000Z"
+    },
+    {
+      "source_match_id": "5803676",
+      "match_id": "fotmob:5803676",
+      "home_team": "柏太阳神",
+      "away_team": "广岛三箭",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T07:00:00.000Z"
     }
   ]
 }

@@ -1,21 +1,21 @@
 {
   "league_code": "KOR_K1",
   "season": "2026",
-  "run_at": "2026-11-28T08:16:43.087Z",
+  "run_at": "2026-11-28T10:32:14.010Z",
   "discovered_fixtures": 228,
-  "discovered_finished": 218,
-  "verified_past_finished": 218,
+  "discovered_finished": 220,
+  "verified_past_finished": 220,
   "source_invalid_finished_time": [],
   "source_premature_finished": [],
-  "in_scope_finished": 218,
+  "in_scope_finished": 220,
   "excluded_out_of_scope_count": 0,
   "excluded_out_of_scope_source_match_ids": [],
   "excluded_confirmed_abandoned_source_match_ids": [],
-  "baseline_finished_matches": 216,
+  "baseline_finished_matches": 218,
   "new_finished_matches": 2,
   "added_source_match_ids": [
-    "6503841",
-    "6503957"
+    "6503958",
+    "6503959"
   ],
   "removed_source_match_ids": [],
   "retained_verified_finished_source_match_ids": [],
@@ -23,7 +23,7 @@
   "discarded_previous_future_ids": [],
   "discarded_previous_abandoned_ids": [],
   "unverified_removed_source_match_ids": [],
-  "mapped_finished": 218,
+  "mapped_finished": 220,
   "unmapped_count": 0,
   "unmapped": [],
   "status": "PROMOTED",
@@ -33,5 +33,5 @@
   "collection_failures": 0,
   "quality_tier": "PILOT_FULL",
   "avg_team_depth_coverage_pct": 93.9,
-  "published_blob_sha": "fce47a07f7a894f22f384c1df9e98b1570feb51c"
+  "published_blob_sha": "c89647021e501d835692d6d150ea14ad28b4315f"
 }
