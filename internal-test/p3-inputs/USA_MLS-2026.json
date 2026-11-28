@@ -4161,7 +4161,15 @@
       "home_team": "圣何塞地震",
       "away_team": "休斯敦迪纳摩",
       "match_date": "2026-11-25",
-      "kickoff_at": "2026-11-25T03:00:00.000Z"
+      "kickoff_at": "2026-11-25T03:00:00Z"
+    },
+    {
+      "source_match_id": "6580842",
+      "match_id": "fotmob:6580842",
+      "home_team": "哥伦布机员",
+      "away_team": "迈阿密国际",
+      "match_date": "2026-11-28",
+      "kickoff_at": "2026-11-28T01:00:00.000Z"
     }
   ]
 }

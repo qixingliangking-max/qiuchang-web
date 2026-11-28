@@ -2898,6 +2898,14 @@
       "away_team": "雷莫",
       "match_date": "2026-11-26",
       "kickoff_at": "2026-11-26T23:00:00Z"
+    },
+    {
+      "source_match_id": "5103724",
+      "match_id": "fotmob:5103724",
+      "home_team": "弗鲁米嫩塞",
+      "away_team": "克鲁塞罗",
+      "match_date": "2026-11-27",
+      "kickoff_at": "2026-11-27T23:00:00Z"
     }
   ]
 }
