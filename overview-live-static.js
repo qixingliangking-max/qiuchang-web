@@ -48,6 +48,17 @@
       return m;
     });
   }
+  // Terminate stalled same-origin fetches, including a stalled response body.
+  // Only public static files use this helper; Auth/RLS requests are unchanged.
+  async function fetchPublicJSON(url,cache){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),3000);
+    try{
+      const res=await fetch(url,{cache,signal:controller.signal});
+      if(!res.ok) throw new Error('public static HTTP '+res.status);
+      return await res.json();
+    }finally{clearTimeout(timer);}
+  }
   async function loadManifest(force=false){
     const now=Date.now();
     const cached=readJson(manifestKey);
@@ -62,10 +73,8 @@
       return manifestPromise;
     }
     manifestCheckedAt=now;
-    manifestPromise=fetch('data/overview/live-schedule-manifest.json',{cache:'no-cache'})
-      .then(async res=>{
-        if(!res.ok) throw new Error('live schedule manifest HTTP '+res.status);
-        const value=await res.json();
+    manifestPromise=fetchPublicJSON('data/overview/live-schedule-manifest.json','no-cache')
+      .then(value=>{
         if(value?.version!==1 || !value?.dates || typeof value.dates!=='object')
           throw new Error('invalid live schedule manifest');
         manifestCheckedAt=Date.now();
@@ -100,7 +109,8 @@
     // Active/future official odds change before kickoff. Verify the tiny
     // public version index before accepting a previously cached roster.
     // Completed history retains its original instant cache path.
-    const beijingToday=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
+    // The previous calendar day remains live until 10:00 Beijing.
+    const beijingToday=new Date(Date.now()-2*3600000).toISOString().slice(0,10);
     let freshManifest=null;
     if(!force && ds>=beijingToday){
       try{ freshManifest=await loadManifest(false); }
@@ -118,9 +128,7 @@
         if(!freshManifest) loadManifest(true).then(async manifest=>{
           const entry=manifest.dates?.[ds];
           if(!entry || entry.version===local.version) return;
-          const response=await fetch(entry.file+'?v='+encodeURIComponent(entry.version),{cache:'force-cache'});
-          if(!response.ok) return;
-          const payload=await response.json();
+          const payload=await fetchPublicJSON(entry.file+'?v='+encodeURIComponent(entry.version),'force-cache');
           if(payload?.business_date!==ds || Number(payload.match_count)!==Number(entry.match_count)) return;
           const rows=normalizeRows(payload,ds);
           if(!rows) return;
@@ -152,9 +160,7 @@
           return result;
         }
       }
-      const response=await fetch(entry.file+'?v='+encodeURIComponent(entry.version),{cache:'force-cache'});
-      if(!response.ok) throw new Error('live schedule HTTP '+response.status);
-      const payload=await response.json();
+      const payload=await fetchPublicJSON(entry.file+'?v='+encodeURIComponent(entry.version),'force-cache');
       if(payload?.business_date!==ds || Number(payload.match_count)!==Number(entry.match_count))
         throw new Error('live schedule integrity check failed');
       const rows=normalizeRows(payload,ds);

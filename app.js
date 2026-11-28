@@ -1845,6 +1845,16 @@ function qcBindFootballGuestLoginCta(){
 
 // Prefer the small public schedule snapshot for the first football-page paint.
 // Live FT/HT/status is refreshed from jc_matches without holding the first frame.
+// Bound data-only reads; never turn a timeout into an empty day or a Pro grant.
+async function qcDateRead(work,ms=5500){
+  try{
+    const result=await qcAuthDeadline(work,ms);
+    return result.timeout
+      ? {data:[],error:new Error('date_read_timeout')}
+      : (result.value||{data:[],error:new Error('date_read_unavailable')});
+  }catch(error){ return {data:[],error}; }
+}
+
 async function jcFetchFootballScheduleRows(dateStr){
   // Active/future fixture dates use same-origin static JSON first. This keeps
   // the initial public cards independent of a slow Supabase request.
@@ -1942,7 +1952,7 @@ async function loadJcFootball(){
 
   // Public fixtures start immediately; Safari session checks cannot gate them.
   // The preview contains only public match data, never Pro predictions.
-  const candidatePromise=jcFetchFootballScheduleRows(candidateDate);
+  const candidatePromise=qcDateRead(jcFetchFootballScheduleRows(candidateDate),6500);
   const accessPromise=qcGetAccessState();
   const quickLabel=$('#jcFootballDateLabel');
   if(quickLabel){
@@ -1960,7 +1970,8 @@ async function loadJcFootball(){
       if(counter) counter.textContent='共'+visible.length+'场';
     }).catch(()=>{});
   }
-  const access=await accessPromise;
+  // The public page remains usable even if the existing auth promise rejects.
+  const access=await accessPromise.catch(()=>({loggedIn:false,isPro:false,verificationPending:true}));
   // Published future fixtures remain visible before the 10:00 business-day
   // rollover; this checks public roster only and never bypasses Pro access.
   const candidatePublic=Boolean((await candidatePromise)?.fromLiveStaticSchedule);
@@ -1970,11 +1981,12 @@ async function loadJcFootball(){
     ? candidateDate : today;
   const initial=initialDate===candidateDate
     ? await candidatePromise
-    : await jcFetchFootballScheduleRows(initialDate);
+    : await qcDateRead(jcFetchFootballScheduleRows(initialDate),6500);
   const {data,error}=initial;
 
   if(error){
-    cards.innerHTML='<div class="profile-card">竞彩足球数据暂时读取失败，请稍后刷新。</div>';
+    cards.innerHTML='<div class="profile-card" role="status">竞彩足球数据暂时读取失败。日期按钮仍可使用，或 <button type="button" class="btn btn-outline" data-qc-date-retry>重试</button></div>';
+    cards.querySelector('[data-qc-date-retry]')?.addEventListener('click',()=>location.reload());
     return;
   }
 
@@ -2887,7 +2899,8 @@ async function loadJcFrontend(){
   const error=currentResult.error||previousResult.error;
   if(error){
     console.error('读取竞彩前台数据失败',error);
-    cards.innerHTML='<div class="profile-card">竞彩数据暂时读取失败，请稍后刷新。</div>';
+    cards.innerHTML='<div class="profile-card" role="status">竞彩数据暂时读取失败。日期按钮仍可使用，或 <button type="button" class="btn btn-outline" data-qc-date-retry>重试</button></div>';
+    cards.querySelector('[data-qc-date-retry]')?.addEventListener('click',()=>location.reload());
     if(reviewCards) reviewCards.innerHTML='<div class="jc-review-empty">昨日回看暂时读取失败</div>';
     document.body.classList.remove('qc-overview-booting');
     return;
@@ -2971,6 +2984,29 @@ async function loadJcFrontend(){
   }
 
   async function fetchOverviewDatePreferred(ds){
+    // At midnight the calendar day advances but the preceding sale day is
+    // still active until 10:00 Beijing. It is NOT a settled archive yet.
+    // Read its validated public roster first; Pro remains server-gated.
+    if(ds<today && ds===qcBeijingBusinessToday() &&
+       typeof window.qcFetchLiveScheduleDate==='function'){
+      const local=await qcDateRead(window.qcFetchLiveScheduleDate(ds),3500);
+      if(!local.error && Array.isArray(local.data) && local.data.length){
+        if(!access.isPro) return local;
+        const protectedDay=await qcDateRead(qcFetchProOverviewDate(ds),3500);
+        const ids=new Set(local.data.map(m=>String(m.id)));
+        if(!protectedDay.error && protectedDay.data?.length===ids.size &&
+           new Set(protectedDay.data.map(m=>String(m.id))).size===ids.size &&
+           protectedDay.data.every(m=>ids.has(String(m.id)) && jcBusinessDate(m)===ds)){
+          return qcAttachPublishedScoresToPro(protectedDay,{
+            business_date:ds,match_count:local.data.length,payload:{rows:local.data}
+          },ds);
+        }
+        // Never present a timed-out protected read as an unlocked forecast.
+        // This is only the public roster; normal verified refresh can upgrade.
+        return {...local,data:local.data.map(m=>({...m,jc_model_outputs:[],
+          _jcModelLoadFailed:true,_jcModelsLoading:false})),fromPublicNavigationFallback:true};
+      }
+    }
     // The recent public calendar includes days with no published fixture.
     // On those days there is deliberately no frozen match archive/schedule.
     // Check the verified zero-game fact BEFORE slow historical bootstrap
@@ -3209,7 +3245,7 @@ async function loadJcFrontend(){
     // 当前选中日期只在官方确认完赛后一次性写入FT/HT及命中圈。
     // Historical and future dates are static browsing only. The current
     // Beijing calendar day alone needs post-match score/status refreshes.
-    if(ds!==today) return;
+    if(ds!==today && ds!==qcBeijingBusinessToday()) return;
     // Public schedule is complete. Before its FIRST kickoff, only use the
     // fixed fixture card: there cannot yet be any post-game FT to collect.
     // Unknown kickoff timestamps deliberately retain the old network path.
@@ -3267,7 +3303,7 @@ async function loadJcFrontend(){
   async function refreshNewLockedDaySnapshot(ds,token){
     // A day may be locked after the Pro user opened it. Read ONLY the newly
     // published complete static bundle, never individual model outputs.
-    if(ds!==today || !access.isPro || token!==loadToken || selectedDate!==ds ||
+    if((ds!==today && ds!==qcBeijingBusinessToday()) || !access.isPro || token!==loadToken || selectedDate!==ds ||
        typeof window.qcFetchOverviewBootstrap!=='function') return;
     const oldDay=allRows.filter(m=>jcBusinessDate(m)===ds);
     if(!oldDay.length || oldDay.every(m=>Array.isArray(m.jc_model_outputs) && m.jc_model_outputs.length)) return;
@@ -3396,6 +3432,8 @@ async function loadJcFrontend(){
     if(nextCurrent?.error || !Array.isArray(nextCurrent?.data)){
       requestedDate=selectedDate;
       reflectOverviewDateIntent(selectedDate,false);
+      const meta=$('#jcPredictionMeta');
+      if(meta) meta.textContent='日期切换失败，请再次点击重试';
       console.warn('日期切换读取失败，保留已显示内容',nextCurrent?.error);
       return;
     }
@@ -3454,6 +3492,11 @@ async function loadJcFrontend(){
       }).catch(error=>console.warn('赛后回看异步更新失败',error));
     }
     // The selected date is now responsive even when history is still loading.
+    if(ds===today || ds===qcBeijingBusinessToday()){
+      refreshOverviewDynamicState(ds,token).catch(err=>console.warn('切换日期后比分补查失败',err));
+      if(nextCurrent.fromPublicNavigationFallback)
+        refreshNewLockedDaySnapshot(ds,token).catch(err=>console.warn('切换日期后预测补查失败',err));
+    }
   }
 
   function render(){

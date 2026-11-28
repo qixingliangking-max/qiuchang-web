@@ -17,8 +17,8 @@
   <script defer src="supabase-client.js?v=20260927autologin1"></script>
   <script defer src="home-auth-prime.js?v=20261029parallelrls4"></script>
   <script defer src="assets/team-logos/catalog.js?v=20261027crestshared1"></script>
-  <script defer src="overview-live-static.js?v=20261125coalescereads1"></script>
-  <script defer src="app.js?v=20261123r68corechoice1"></script>
+  <script defer src="overview-live-static.js?v=20261129datefix1"></script>
+  <script defer src="app.js?v=20261129datefix1"></script>
   <script defer src="overview-bootstrap.js?v=20261017historyfast2"></script>
   <!-- Static review rows must respond before the deferred app bundle loads. -->
   <script>
@@ -82,10 +82,32 @@
     var target=event.target&&event.target.closest&&event.target.closest('button');
     if(!target) return;
     var direction=target.id==='jcPrevDate'?-1:(target.id==='jcNextDate'?1:0);
-    if(!direction) return;
+    var backToday=target.id==='jcTodayBtn';
+    if(!direction && !backToday) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    state[key]=Math.max(-7,Math.min(7,(state[key]||0)+direction));
+    // A stalled initial read must not trap date taps forever. Navigate to
+    // an explicit date using the existing page and existing access checks.
+    var natural=new Date(Date.now()+8*3600000).toISOString().slice(0,10);
+    var today=natural;
+    var url=new URL(location.href);
+    var base=url.searchParams.get('date')||today;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(base) || !Number.isFinite(Date.parse(base))) base=today;
+    var d=new Date(base+'T12:00:00+08:00');
+    var offset=backToday?0:Math.max(-7,Math.min(7,(state[key]||0)+direction));
+    state[key]=offset;
+    d.setUTCDate(d.getUTCDate()+offset);
+    var requested=backToday?today:d.toISOString().slice(0,10);
+    var minDate=new Date(Date.parse(today+'T12:00:00+08:00')-3*86400000).toISOString().slice(0,10);
+    var maxDate=new Date(Date.parse(natural+'T12:00:00+08:00')+86400000).toISOString().slice(0,10);
+    if(requested<minDate || requested>maxDate){state[key]=0;return;}
+    if(backToday){url.searchParams.set('date',today);location.assign(url.href);return;}
+    clearTimeout(window.__qcEarlyDateFallbackTimer);
+    window.__qcEarlyDateFallbackTimer=setTimeout(function(){
+      if(window.qcDateHandlersReady&&window.qcDateHandlersReady[key]) return;
+      url.searchParams.set('date',requested);
+      location.assign(url.href);
+    },4500);
     var label=document.getElementById('jcDateLabel');
     if(label){
       label.textContent='正在准备日期切换…';
